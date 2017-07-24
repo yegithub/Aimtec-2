@@ -17,6 +17,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
             {
                 return;
             }
+            return;
 
             if (SpellConfig.E.Ready && TargetedSpells.Contains(args.SpellData.Name))
             {

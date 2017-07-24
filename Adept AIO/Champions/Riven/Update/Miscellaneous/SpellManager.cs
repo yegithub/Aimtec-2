@@ -62,7 +62,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                 }
                 else
                 {
-                    var time = 780 + Game.Ping;
+                    var time = 800 + Game.Ping;
                     if (Environment.TickCount - Extensions.LastQTime > (Extensions.CurrentQCount != 3
                             ? time
                             : time + 40))
