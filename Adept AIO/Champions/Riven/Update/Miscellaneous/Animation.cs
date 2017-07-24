@@ -63,7 +63,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
         private static int GetDelay(int temp)
         {
             var primary = (int) (temp - ObjectManager.GetLocalPlayer().AttackSpeedMod * 9 + Game.Ping); // Just broscienced this bullshit. Still needs a lot of work.
-            Console.WriteLine(primary);
+            //Console.WriteLine(primary);
             //var target = TargetSelector.GetTarget(ObjectManager.GetLocalPlayer().AttackRange);
             //var minion = GameObjects.Minions.FirstOrDefault(x => x.IsInRange(1000));
 
