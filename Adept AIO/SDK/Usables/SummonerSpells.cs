@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Aimtec;
+﻿using Aimtec;
 using Spell = Aimtec.SDK.Spell;
 
 namespace Adept_AIO.SDK.Usables

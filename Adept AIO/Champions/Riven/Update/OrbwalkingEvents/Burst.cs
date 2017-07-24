@@ -13,16 +13,8 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
 {
     internal class Burst
     {
-
-        public static void OnPostAttack()
+        public static void OnPostAttack(Obj_AI_Base target)
         {
-
-            var target = TargetSelector.GetSelectedTarget();
-            if (target == null)
-            {
-                return;
-            }
-
             if (SpellConfig.R.Ready && Extensions.UltimateMode == UltimateMode.Second)
             {
                 SpellConfig.R2.Cast(target);

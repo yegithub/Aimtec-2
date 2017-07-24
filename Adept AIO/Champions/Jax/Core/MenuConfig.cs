@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Adept_AIO.SDK.Extensions;
 using Aimtec.SDK.Menu;
 using Aimtec.SDK.Menu.Components;
 using Aimtec.SDK.Orbwalking;
@@ -58,12 +59,6 @@ namespace Adept_AIO.Champions.Jax.Core
                 new MenuBool("E", "Draw E-Q Time")
             };
 
-            var Credits = new Menu("Credits", "Credits")
-            {
-                new MenuSeperator("WhyAreYouReadingThis", "Written by: Nechrito | Haki | Adept"),
-                new MenuSeperator("ThisStringIsUtterlyUseless", "Platform: LeageTec 2017"),
-            };
-
             foreach (var menu in new List<Menu>
             {
                 Combo,
@@ -71,9 +66,9 @@ namespace Adept_AIO.Champions.Jax.Core
                 Clear,
                 Killsteal,
                 Drawings,
-                Credits
+                MenuShortcut.Credits
             })
-                MainMenu.Add(menu);
+            MainMenu.Add(menu);
         }
     }
 }

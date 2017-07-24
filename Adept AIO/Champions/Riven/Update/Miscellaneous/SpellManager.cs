@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using Adept_AIO.Champions.Riven.Core;
 using Adept_AIO.SDK.Usables;
 using Aimtec;
@@ -76,6 +77,25 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
             }
         }
 
+        public static void ER(Obj_AI_Base target)
+        {
+            
+        }
+
+        public static void WQ()
+        {
+            if (SpellConfig.Q.Ready && SpellConfig.W.Ready && Environment.TickCount - Extensions.LastETime < 400)
+            {
+                CanUseW = true;
+                CanUseQ = true;
+            }
+        }
+
+        public static void QWQ(Obj_AI_Base target)
+        {
+            
+        }
+
         public static void CastQ(Obj_AI_Base target)
         {
             if (target.HasBuff("FioraW") || target.HasBuff("PoppyW"))
@@ -85,17 +105,17 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 
             Unit = target;
             CanUseQ = true;
-            DelayAction.Queue(150, () => CanUseQ = false);
+            DelayAction.Queue(150, () => CanUseQ = false, new CancellationToken(true));
         }
 
         public static void CastQ(Vector3 position)
         {
             qPosition = position;
             CanUseQ = true;
-            DelayAction.Queue(150, () => CanUseQ = false);
+            DelayAction.Queue(150, () => CanUseQ = false, new CancellationToken(true));
         }
 
-        public static void CastW(Obj_AI_Base target, bool doublecast = false)
+        public static void CastW(Obj_AI_Base target)
         {
             if (target.HasBuff("FioraW"))
             {
@@ -104,13 +124,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 
             CanUseW = SpellConfig.W.Ready && InsideKiBurst(target);
             Unit = target;  
-
-            if (doublecast && SpellConfig.Q.Ready)
-            {
-                CanUseQ = true;
-            }
-
-            DelayAction.Queue(300, () => CanUseW = false);
+            DelayAction.Queue(300, () => CanUseW = false, new CancellationToken(true));
         }
 
         public static void CastR2(Obj_AI_Base target)
@@ -123,7 +137,6 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
             }
 
             SpellConfig.R2.Cast(target);
-            Unit = target;
         }
 
         public static void UseTiamat()

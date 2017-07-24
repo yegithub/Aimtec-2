@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Linq;
 using Adept_AIO.Champions.Riven.Core;
 using Aimtec;
-using Aimtec.SDK.Extensions;
 using Aimtec.SDK.Orbwalking;
-using Aimtec.SDK.TargetSelector;
 using Aimtec.SDK.Util;
-using Aimtec.SDK.Util.Cache;
 
 namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 {
@@ -62,18 +58,8 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 
         private static int GetDelay(int temp)
         {
-            var primary = (int) (temp - ObjectManager.GetLocalPlayer().AttackSpeedMod * 9 + Game.Ping); // Just broscienced this bullshit. Still needs a lot of work.
-            Console.WriteLine(primary);
-            //var target = TargetSelector.GetTarget(ObjectManager.GetLocalPlayer().AttackRange);
-            //var minion = GameObjects.Minions.FirstOrDefault(x => x.IsInRange(1000));
-
-            //if (Extensions.AttackedStructure || target != null && target.HasPath ||
-            //                                    minion != null && minion.HasPath)
-            //{
-            //    return (int)(primary * 1.125);
-            //}
-
-            return (int) primary;
+            // Just broscienced this bullshit. Still needs a lot of work.
+            return (int)(temp - ObjectManager.GetLocalPlayer().AttackSpeedMod * 9 + Game.Ping);
         }
     }
 }

@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using Adept_AIO.SDK.Extensions;
 using Aimtec.SDK.Menu;
 using Aimtec.SDK.Menu.Components;
 using Aimtec.SDK.Orbwalking;
-using Aimtec.SDK.Util.Cache;
+using GameObjects = Aimtec.SDK.Util.Cache.GameObjects;
 
 namespace Adept_AIO.Champions.Rengar.Core
 {
@@ -71,12 +72,6 @@ namespace Adept_AIO.Champions.Rengar.Core
                 new MenuBool("E", "Draw E Range")
             };
 
-            var Credits = new Menu("Credits", "Credits")
-            {
-                new MenuSeperator("WhyAreYouReadingThis", "Written by: Nechrito | Haki | Adept"),
-                new MenuSeperator("ThisStringIsUtterlyUseless", "Platform: LeageTec 2017"),
-            };
-
             foreach (var menu in new List<Menu>
             {
                 AssassinManager,
@@ -85,7 +80,7 @@ namespace Adept_AIO.Champions.Rengar.Core
                 JungleClear,
                 Killsteal,
                 Drawings,
-                Credits
+                MenuShortcut.Credits
             })
             MainMenu.Add(menu);
         }

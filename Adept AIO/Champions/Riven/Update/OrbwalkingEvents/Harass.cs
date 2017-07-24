@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Adept_AIO.Champions.Riven.Core;
 using Adept_AIO.Champions.Riven.Update.Miscellaneous;
 using Adept_AIO.SDK.Extensions;
@@ -13,21 +12,12 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
 {
     public class Harass
     {
-        public static void OnPostAttack()
+        public static void OnPostAttack(Obj_AI_Base target)
         {
-            var target = TargetSelector.GetTarget(Extensions.GetRange() + 100);
-
-            if (target == null)
+            if (!MenuConfig.Harass[((Obj_AI_Hero)target).ChampionName].Enabled)
             {
                 return;
             }
-
-            if (!MenuConfig.Harass[target.ChampionName].Enabled)
-            {
-                return;
-            }
-
-            var antiPosition = GetDashPosition(target);
 
             switch (Extensions.Current)
             {

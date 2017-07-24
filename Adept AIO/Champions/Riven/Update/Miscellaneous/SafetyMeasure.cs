@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using Adept_AIO.Champions.Riven.Core;
 using Aimtec;
-using Aimtec.SDK.Extensions;
 
 namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 {

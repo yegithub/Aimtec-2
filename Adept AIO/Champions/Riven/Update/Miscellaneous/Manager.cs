@@ -19,7 +19,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
             switch (Orbwalker.Implementation.Mode)
             {
                 case OrbwalkingMode.Combo:
-                    Combo.OnUpdate();
+                   Combo.OnUpdate();
                     break;
                     case OrbwalkingMode.Mixed:
                     Harass.OnUpdate();
@@ -56,44 +56,45 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                 return;
             }
 
+            var target = args.Target as Obj_AI_Base;
+
             if (MenuConfig.BurstMode.Active)
             {
-                Burst.OnPostAttack();
+                Burst.OnPostAttack(target);
             }
-
-            switch (Orbwalker.Implementation.Mode)
+            else
             {
-                case OrbwalkingMode.Combo:
-                    Combo.OnPostAttack();
-                    break;
-                case OrbwalkingMode.Custom:
-                    Burst.OnPostAttack();
-                    break;
-                case OrbwalkingMode.Mixed:
-                    Harass.OnPostAttack();
-                    break;
-                case OrbwalkingMode.Laneclear:
-                    switch (args.Target.Type)
-                    {
-                        case GameObjectType.obj_AI_Minion:
-                            Lane.OnPostAttack();
-                            Jungle.OnPostAttack();
-                            break;
-                        case GameObjectType.obj_AI_Turret:
-                        case GameObjectType.obj_HQ:
-                        case GameObjectType.obj_BarracksDampener:
-                        case GameObjectType.BasicLevelProp:
+                switch (Orbwalker.Implementation.Mode)
+                {
+                    case OrbwalkingMode.Combo:
+                        Combo.OnPostAttack(target);
+                        break;
+                    case OrbwalkingMode.Mixed:
+                        Harass.OnPostAttack(target);
+                        break;
+                    case OrbwalkingMode.Laneclear:
+                        switch (args.Target.Type)
                         {
-                            if (!SpellConfig.Q.Ready)
+                            case GameObjectType.obj_AI_Minion:
+                                Lane.OnPostAttack();
+                                Jungle.OnPostAttack();
+                                break;
+                            case GameObjectType.obj_AI_Turret:
+                            case GameObjectType.obj_HQ:
+                            case GameObjectType.obj_BarracksDampener:
+                            case GameObjectType.BasicLevelProp:
                             {
-                                return;
+                                if (!SpellConfig.Q.Ready)
+                                {
+                                    return;
+                                }
+                                Extensions.AttackedStructure = true;
+                                SpellConfig.Q.Cast(ObjectManager.GetLocalPlayer().ServerPosition.Extend(Game.CursorPos, 400));
                             }
-                            Extensions.AttackedStructure = true;
-                            SpellConfig.Q.Cast(ObjectManager.GetLocalPlayer().ServerPosition.Extend(Game.CursorPos, 400));
+                                break;
                         }
-                            break;
-                    }
-                    break;
+                        break;
+                }
             }
         }
     }

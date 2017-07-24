@@ -1,5 +1,4 @@
-﻿using System;
-using Adept_AIO.Champions.Irelia.Core;
+﻿using Adept_AIO.Champions.Irelia.Core;
 using Adept_AIO.Champions.Irelia.Drawings;
 using Adept_AIO.Champions.Irelia.Update.Miscellaneous;
 using Aimtec;

@@ -1,0 +1,16 @@
+C:\Users\Nechrito\documents\visual studio 2017\Projects\Adept AIO\Adept AIO\obj\Debug\Adept AIO.csprojResolveAssemblyReference.cache
+C:\Users\Nechrito\documents\visual studio 2017\Projects\Adept AIO\Adept AIO\bin\Debug\Adept AIO.exe.config
+C:\Users\Nechrito\documents\visual studio 2017\Projects\Adept AIO\Adept AIO\bin\Debug\Adept AIO.exe.manifest
+C:\Users\Nechrito\documents\visual studio 2017\Projects\Adept AIO\Adept AIO\bin\Debug\Adept AIO.application
+C:\Users\Nechrito\documents\visual studio 2017\Projects\Adept AIO\Adept AIO\bin\Debug\Adept AIO.exe
+C:\Users\Nechrito\documents\visual studio 2017\Projects\Adept AIO\Adept AIO\bin\Debug\Adept AIO.pdb
+C:\Users\Nechrito\documents\visual studio 2017\Projects\Adept AIO\Adept AIO\bin\Debug\Aimtec.dll
+C:\Users\Nechrito\documents\visual studio 2017\Projects\Adept AIO\Adept AIO\bin\Debug\Aimtec.SDK.dll
+C:\Users\Nechrito\documents\visual studio 2017\Projects\Adept AIO\Adept AIO\bin\Debug\NLog.dll
+C:\Users\Nechrito\documents\visual studio 2017\Projects\Adept AIO\Adept AIO\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Nechrito\documents\visual studio 2017\Projects\Adept AIO\Adept AIO\bin\Debug\Aimtec.SDK.pdb
+C:\Users\Nechrito\documents\visual studio 2017\Projects\Adept AIO\Adept AIO\bin\Debug\Aimtec.SDK.xml
+C:\Users\Nechrito\documents\visual studio 2017\Projects\Adept AIO\Adept AIO\obj\Debug\Adept AIO.exe.manifest
+C:\Users\Nechrito\documents\visual studio 2017\Projects\Adept AIO\Adept AIO\obj\Debug\Adept AIO.application
+C:\Users\Nechrito\documents\visual studio 2017\Projects\Adept AIO\Adept AIO\obj\Debug\Adept AIO.exe
+C:\Users\Nechrito\documents\visual studio 2017\Projects\Adept AIO\Adept AIO\obj\Debug\Adept AIO.pdb

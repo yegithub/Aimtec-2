@@ -42,7 +42,7 @@ namespace Adept_AIO.Champions.Riven.Core
             Combo = new Menu("Combo", "Combo")
             {
                 new MenuBool("Walljump", "WallJump"),
-                new MenuBool("Exhaust", "Exhaust"),
+              //  new MenuBool("Exhaust", "Exhaust"),
                 new MenuBool("Flash", "Flash").SetToolTip("Will flash when an target is safely killable."),
                 new MenuBool("Q", "Use Q"),
                 new MenuBool("W", "Use W"),
@@ -121,7 +121,7 @@ namespace Adept_AIO.Champions.Riven.Core
                 Killsteal,
                 Drawings,
                 Miscellaneous,
-                SDK.Extensions.MenuShortcut.Credits
+                MenuShortcut.Credits
             })
                 MainMenu.Add(menu);
         }

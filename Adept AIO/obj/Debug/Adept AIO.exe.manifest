@@ -42,14 +42,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Adept AIO.exe" size="72704">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Adept AIO.exe" size="68096">
       <assemblyIdentity name="Adept AIO" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>EidLA84Fs8g8sZHAGE7GBNqkFAa9u5+QneEl2OMxxiE=</dsig:DigestValue>
+        <dsig:DigestValue>KadpHyp49crDsGnan9pev+Oy2ERj3VXbLjtmnGnIrWY=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

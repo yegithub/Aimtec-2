@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Adept_AIO.SDK.Extensions
+﻿namespace Adept_AIO.SDK.Extensions
 {
     class RenderExtension
     {

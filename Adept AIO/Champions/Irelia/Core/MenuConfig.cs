@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Adept_AIO.SDK.Extensions;
 using Aimtec.SDK.Menu;
 using Aimtec.SDK.Menu.Components;
 using Aimtec.SDK.Orbwalking;
@@ -67,18 +68,6 @@ namespace Adept_AIO.Champions.Irelia.Core
                 new MenuBool("R", "R Range")
             };
 
-            var Credits = new Menu("Credits", "Credits")
-            {
-                new MenuSeperator("WhyAreYouReadingThis", "Written by: Nechrito | Haki | Adept"),
-                new MenuSeperator("ThisStringIsUtterlyUseless", "Platform: LeageTec 2017"),
-            };
-
-            //Miscellaneous = new Menu("Miscellaneous", "Miscellaneous")
-            //{
-            //    new MenuBool("Gapclose", "(Q) Anti Gapclose"),
-            //    new MenuBool("Interrupt", "(E) Interrupt")
-            //};
-
             foreach (var menu in new List<Menu>
             {
                 Combo,
@@ -86,7 +75,7 @@ namespace Adept_AIO.Champions.Irelia.Core
                 Clear,
                 Killsteal,
                 Drawings,
-                Credits
+                MenuShortcut.Credits
             })
             MainMenu.Add(menu);
         }
