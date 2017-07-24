@@ -32,14 +32,13 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
             switch (Extensions.Current)
             {
                 case HarassPattern.SemiCombo:
-                    if (SpellConfig.Q.Ready && Extensions.CurrentQCount == 2)
-                    {
-                        SpellManager.CastQ(target);
-                    }
-
                     if (SpellConfig.W.Ready && SpellManager.InsideKiBurst(target))
                     {
                         SpellManager.CastW(target);
+                    }
+                    if (SpellConfig.Q.Ready && Extensions.CurrentQCount >= 2)
+                    {
+                        SpellManager.CastQ(target);
                     }
                     break;
                 case HarassPattern.AvoidTarget:
@@ -90,19 +89,12 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
             {
                 case HarassPattern.SemiCombo:
                     #region SemiCombo
-                    if (SpellConfig.Q.Ready)
+                    if (SpellConfig.Q.Ready && SpellConfig.W.Ready && Extensions.CurrentQCount == 1 && qwRange)
                     {
-                        switch (Extensions.CurrentQCount)
-                        {
-                            case 1: SpellManager.CastQ(target);
-                                break;
-                            case 3:
-                                SpellConfig.Q.Cast(antiPosition);
-                                break;
-                        }
+                        SpellManager.CastQ(target.ServerPosition);
                     }
-
-                    if (SpellConfig.E.Ready && Extensions.CurrentQCount == 3 && !Orbwalker.Implementation.CanAttack() && Orbwalker.Implementation.CanMove())
+                   
+                    if (!SpellConfig.Q.Ready && SpellConfig.E.Ready && Extensions.CurrentQCount == 1 && !Orbwalker.Implementation.CanAttack())
                     {
                         SpellConfig.E.Cast(antiPosition);
                     }
@@ -187,6 +179,6 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
         private static readonly string[] Melee = { "Fiora", "Irelia", "Akali", "Udyr", "Rengar", "Jarvan IV" };
 
         // Mostly fighters
-        private static readonly string[] SemiCombo = { "Yasuo", "LeeSin", "Xin Zhao", "Aatrox" };
+        private static readonly string[] SemiCombo = { "Yasuo", "LeeSin", "XinZhao", "Aatrox" };
     }
 }

@@ -17,20 +17,20 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
             {
                 return;
             }
-            return;
+            
 
-            if (SpellConfig.E.Ready && TargetedSpells.Contains(args.SpellData.Name))
+            if (SpellConfig.E.Ready && TargetedSpells.Contains(args.SpellData.Name) && args.Target.IsMe)
             {
                 SpellConfig.E.Cast(Game.CursorPos);
             }
-            else if (SpellConfig.W.Ready && InterrupterSpell.Any(x => x.Contains(args.SpellData.Name)))
-            {
-                SpellConfig.W.Cast();
-            }
-            else if (SpellConfig.Q.Ready && AntigapclosingSpells.Any(x => x.Contains(args.SpellData.Name)) && args.Sender.Distance(args.Target) < 300)
-            {
-                SpellManager.CastQ(args.Sender);
-            }
+            //else if (SpellConfig.W.Ready && InterrupterSpell.Any(x => x.Contains(args.SpellData.Name)))
+            //{
+            //    SpellConfig.W.Cast();
+            //}
+            //else if (SpellConfig.Q.Ready && AntigapclosingSpells.Any(x => x.Contains(args.SpellData.Name)) && args.Sender.Distance(args.Target) < 300)
+            //{
+            //    SpellManager.CastQ(args.Sender);
+            //}
         }
 
         private static readonly string[] AntigapclosingSpells =

@@ -23,23 +23,23 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
             {
                 return;
             }
-
+            const int delay = 265;
             switch (args.Animation)
             {
                 case "Spell1a":
                     Extensions.LastQTime = Environment.TickCount;
                     Extensions.CurrentQCount = 2;
-                    DelayAction.Queue(GetDelay(255), Reset);
+                    DelayAction.Queue(GetDelay(delay), Reset);
                     break;
                 case "Spell1b":
                     Extensions.LastQTime = Environment.TickCount;
                     Extensions.CurrentQCount = 3;
-                    DelayAction.Queue(GetDelay(255), Reset);
+                    DelayAction.Queue(GetDelay(delay + 15), Reset);
                     break;
                 case "Spell1c":
                     Extensions.LastQTime = Environment.TickCount;
                     Extensions.CurrentQCount = 1;
-                    DelayAction.Queue(GetDelay(270), Reset);
+                    DelayAction.Queue(GetDelay(delay + 50), Reset);
                     break;
                 case "Spell2":
                     Extensions.LastWTime = Environment.TickCount;

@@ -70,7 +70,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
 
             if (SpellConfig.E.Ready && MenuConfig.Combo["E"].Enabled)
             {
-                SpellConfig.E.Cast(target);
+                SpellConfig.E.CastOnUnit(target);
             }
 
             if (Environment.TickCount - Extensions.LastETime > 300 + Game.Ping / 2f &&

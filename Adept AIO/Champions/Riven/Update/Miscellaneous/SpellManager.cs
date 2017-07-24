@@ -5,6 +5,7 @@ using Adept_AIO.SDK.Usables;
 using Aimtec;
 using Aimtec.SDK.Damage;
 using Aimtec.SDK.Extensions;
+using Aimtec.SDK.Orbwalking;
 using Aimtec.SDK.Util;
 
 namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
@@ -62,10 +63,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                 }
                 else
                 {
-                    var time = 800 + Game.Ping;
-                    if (Environment.TickCount - Extensions.LastQTime > (Extensions.CurrentQCount != 3
-                            ? time
-                            : time + 40))
+                    if(Orbwalker.Implementation.CanMove())
                     {
                         ObjectManager.GetLocalPlayer().SpellBook.CastSpell(SpellSlot.Q, Unit);
                     }
