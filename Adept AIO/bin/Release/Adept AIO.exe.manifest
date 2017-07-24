@@ -49,7 +49,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>DAhI+G4k0ncD9yah+E7vOyo3oLenVkN77esEl5xEIFM=</dsig:DigestValue>
+        <dsig:DigestValue>+7AgI5IO/H8QrwJNT1iNxRybS8Nk+Gj14SsGvOiu9WI=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -66,14 +66,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Aimtec.SDK.dll" size="518656">
-      <assemblyIdentity name="Aimtec.SDK" version="1.0.0.12" language="neutral" processorArchitecture="x86" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Aimtec.SDK.dll" size="513024">
+      <assemblyIdentity name="Aimtec.SDK" version="1.0.0.10" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>h6jMdFfxcRtsHbADISMBtzN+LHbYIHqo8goe3U8Hg/E=</dsig:DigestValue>
+        <dsig:DigestValue>pWRwMLCGV0egUpgIusE32CdSNfN2VoYcj5EViM42u7A=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
