@@ -1,18 +1,18 @@
 ﻿using System.Linq;
 using Adept_AIO.Champions.Irelia;
 using Adept_AIO.Champions.Jax;
+using Adept_AIO.Champions.Rengar;
 using Adept_AIO.Champions.Riven;
+using Adept_AIO.Champions.Yasuo;
 using Adept_AIO.SDK.Usables;
 using Aimtec;
 using Aimtec.SDK.Events;
-using Adept_AIO.Champions.Rengar;
-using Adept_AIO.Champions.Yasuo;
 
 namespace Adept_AIO
 {
     internal class Bootstrap
     {
-        private static void Main(string[] args)
+        private static void Main()
         {
             GameEvents.GameStart += GameEvents_GameStart;
         }
@@ -23,8 +23,6 @@ namespace Adept_AIO
             {
                 return;
             }
-
-           
             
             switch (ObjectManager.GetLocalPlayer().ChampionName)
             {

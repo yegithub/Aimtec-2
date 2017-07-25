@@ -57,6 +57,11 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 
             if (CanUseQ)
             {
+                if (Extensions.CurrentQCount == 3)
+                {
+                    Items.CastTiamat();
+                }
+
                 if (qPosition != Vector3.Zero)
                 {
                     ObjectManager.GetLocalPlayer().SpellBook.CastSpell(SpellSlot.Q, qPosition);
@@ -73,6 +78,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 
             if (CanUseW)
             {
+                Items.CastTiamat();
                 SpellConfig.W.Cast();
             }
         }
@@ -135,13 +141,8 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
             {
                 return;
             }
-
+            Items.CastTiamat();
             SpellConfig.R2.Cast(target);
-        }
-
-        public static void UseTiamat()
-        {
-            Items.CastItem(GetTiamat);
         }
 
         private static int Time(GameObject target)
@@ -156,8 +157,8 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
         public static bool InsideKiBurst(GameObject target)
         {
             return ObjectManager.GetLocalPlayer().HasBuff("RivenFengShuiEngine")
-                 ? ObjectManager.GetLocalPlayer().Distance(target) <= 330 + target.BoundingRadius
-                 : ObjectManager.GetLocalPlayer().Distance(target) <= 215 + target.BoundingRadius;
+                 ? ObjectManager.GetLocalPlayer().Distance(target) <= 265 + target.BoundingRadius
+                 : ObjectManager.GetLocalPlayer().Distance(target) <= 195 + target.BoundingRadius;
         }
     }
 }

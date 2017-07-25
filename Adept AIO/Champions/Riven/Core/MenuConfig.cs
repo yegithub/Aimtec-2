@@ -19,6 +19,7 @@ namespace Adept_AIO.Champions.Riven.Core
                            Jungle,
                            Killsteal,
                            Miscellaneous,
+                           Animation,
                            Drawings;
 
         public static OrbwalkerMode BurstMode, FleeMode;
@@ -38,6 +39,15 @@ namespace Adept_AIO.Champions.Riven.Core
             orbwalker.AddMode(BurstMode);
             orbwalker.AddMode(FleeMode);
             orbwalker.Attach(MainMenu);
+
+            Animation = new Menu("Animation", "Animation")
+            {
+                new MenuBool("Ping", "Use Game Ping"),
+                new MenuSlider("AttackSpeedMod", "AttackSpeedMod Multiplier", 9, 1, 20),
+                new MenuSlider("Q1", "Q1 Delay", 265, 200, 350),
+                new MenuSlider("Q2", "Q2 Delay", 270, 200, 350),
+                new MenuSlider("Q3", "Q3 Delay", 305, 200, 435),
+            };
 
             Combo = new Menu("Combo", "Combo")
             {
@@ -88,10 +98,18 @@ namespace Adept_AIO.Champions.Riven.Core
             Killsteal = new Menu("Killsteal", "Killsteal")
             {
                 new MenuBool("Ignite", "Ignite"),
-               // new MenuBool("Items", "Items"),
+                new MenuBool("Items", "Items"),
                 new MenuBool("Q", "Q"),
                 new MenuBool("W", "W"),
                 new MenuBool("R2", "R2"),
+            };
+
+            Miscellaneous = new Menu("Miscellaneous", "Miscellaneous")
+            {
+                new MenuBool("Walljump", "Walljump During Flee"),
+               // new MenuBool("Items", "Use Items"),
+                new MenuBool("Active", "Keep Q Active"),
+                new MenuBool("Interrupt", "Dodge Certain Spells"),
             };
 
             Drawings = new Menu("Drawings", "Drawings")
@@ -103,16 +121,9 @@ namespace Adept_AIO.Champions.Riven.Core
                 new MenuBool("Harass", "Harass Pattern")
             };
 
-            Miscellaneous = new Menu("Miscellaneous", "Miscellaneous")
-            {
-                new MenuBool("Walljump", "Walljump During Flee"),
-               // new MenuBool("Items", "Use Items"),
-                new MenuBool("Active", "Keep Q Active"),
-                new MenuBool("Interrupt", "Dodge Certain Spells"),
-            };
-
             foreach (var menu in new List<Menu>
             {
+                Animation,
                 Combo,
                 BurstMenu,
                 Harass,

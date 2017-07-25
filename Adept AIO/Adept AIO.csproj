@@ -4,39 +4,23 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E0D036BA-8655-4B0B-884B-E94B5BBF5E1D}</ProjectGuid>
+    <ProjectGuid>{26E904A9-26D9-4A4F-A53C-13E0BCA11D29}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>Adept_AIO</RootNamespace>
     <AssemblyName>Adept AIO</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
-    <PublishUrl>publish\</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>0.0.0.0</ApplicationVersion>
-    <UseApplicationTrust>false</UseApplicationTrust>
-    <PublishWizardCompleted>true</PublishWizardCompleted>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>0</WarningLevel>
+    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -48,24 +32,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>B3714BC81B13EA5CA6E9E8A3984BE602195FA3FB</ManifestCertificateThumbprint>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ManifestKeyFile>Adept AIO_TemporaryKey.pfx</ManifestKeyFile>
-  </PropertyGroup>
-  <PropertyGroup>
-    <GenerateManifests>true</GenerateManifests>
-  </PropertyGroup>
-  <PropertyGroup>
-    <SignManifests>false</SignManifests>
+    <StartupObject>Adept_AIO.Bootstrap</StartupObject>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Aimtec, Version=1.0.6411.34536, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Aimtec">
       <HintPath>C:\Users\Nechrito\AppData\Local\AimtecLoader\Data\System\Aimtec.dll</HintPath>
     </Reference>
-    <Reference Include="Aimtec.SDK, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Aimtec.SDK">
       <HintPath>C:\Users\Nechrito\AppData\Local\AimtecLoader\Data\System\Aimtec.SDK.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -119,7 +92,19 @@
     <Compile Include="Champions\Riven\Core\Extensions.cs" />
     <Compile Include="Champions\Riven\Core\MenuConfig.cs" />
     <Compile Include="Champions\Riven\Core\SpellConfig.cs" />
+    <Compile Include="Champions\Riven\Drawings\DrawManager.cs" />
+    <Compile Include="Champions\Riven\Riven.cs" />
+    <Compile Include="Champions\Riven\Update\Miscellaneous\Animation.cs" />
+    <Compile Include="Champions\Riven\Update\Miscellaneous\Killsteal.cs" />
+    <Compile Include="Champions\Riven\Update\Miscellaneous\Manager.cs" />
     <Compile Include="Champions\Riven\Update\Miscellaneous\SafetyMeasure.cs" />
+    <Compile Include="Champions\Riven\Update\Miscellaneous\SpellManager.cs" />
+    <Compile Include="Champions\Riven\Update\OrbwalkingEvents\Burst.cs" />
+    <Compile Include="Champions\Riven\Update\OrbwalkingEvents\Combo.cs" />
+    <Compile Include="Champions\Riven\Update\OrbwalkingEvents\Flee.cs" />
+    <Compile Include="Champions\Riven\Update\OrbwalkingEvents\Harass.cs" />
+    <Compile Include="Champions\Riven\Update\OrbwalkingEvents\Jungle.cs" />
+    <Compile Include="Champions\Riven\Update\OrbwalkingEvents\Lane.cs" />
     <Compile Include="Champions\Yasuo\Core\Dmg.cs" />
     <Compile Include="Champions\Yasuo\Core\Extension.cs" />
     <Compile Include="Champions\Yasuo\Core\MenuConfig.cs" />
@@ -132,44 +117,19 @@
     <Compile Include="Champions\Yasuo\Update\OrbwalkingEvents\JungleClear.cs" />
     <Compile Include="Champions\Yasuo\Update\OrbwalkingEvents\LaneClear.cs" />
     <Compile Include="Champions\Yasuo\Yasuo.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SDK\Extensions\GameObjects.cs" />
     <Compile Include="SDK\Extensions\MenuShortcut.cs" />
     <Compile Include="SDK\Extensions\RenderExtension.cs" />
+    <Compile Include="SDK\Extensions\WallExtension.cs" />
     <Compile Include="SDK\Usables\Items.cs" />
     <Compile Include="SDK\Usables\SummonerSpells.cs" />
-    <Compile Include="SDK\Extensions\WallExtension.cs" />
-    <Compile Include="Champions\Riven\Drawings\DrawManager.cs" />
-    <Compile Include="Champions\Riven\Riven.cs" />
-    <Compile Include="Champions\Riven\Update\Miscellaneous\Animation.cs" />
-    <Compile Include="Champions\Riven\Update\Miscellaneous\Killsteal.cs" />
-    <Compile Include="Champions\Riven\Update\Miscellaneous\Manager.cs" />
-    <Compile Include="Champions\Riven\Update\Miscellaneous\SpellManager.cs" />
-    <Compile Include="Champions\Riven\Update\OrbwalkingEvents\Combo.cs" />
-    <Compile Include="Champions\Riven\Update\OrbwalkingEvents\Flee.cs" />
-    <Compile Include="Champions\Riven\Update\OrbwalkingEvents\Harass.cs" />
-    <Compile Include="Champions\Riven\Update\OrbwalkingEvents\Jungle.cs" />
-    <Compile Include="Champions\Riven\Update\OrbwalkingEvents\Lane.cs" />
-    <Compile Include="Champions\Riven\Update\OrbwalkingEvents\Burst.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Adept AIO_TemporaryKey.pfx" />
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Champions\Kayn\" />
-  </ItemGroup>
-  <ItemGroup>
-    <BootstrapperPackage Include=".NETFramework,Version=v4.6.2">
-      <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4.6.2 %28x86 and x64%29</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

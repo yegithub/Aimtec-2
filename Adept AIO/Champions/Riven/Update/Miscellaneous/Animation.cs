@@ -19,23 +19,23 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
             {
                 return;
             }
-            const int delay = 265;
+          
             switch (args.Animation)
             {
                 case "Spell1a":
                     Extensions.LastQTime = Environment.TickCount;
                     Extensions.CurrentQCount = 2;
-                    DelayAction.Queue(GetDelay(delay), Reset);
+                    DelayAction.Queue(GetDelay(MenuConfig.Animation["Q1"].Value), Reset);
                     break;
                 case "Spell1b":
                     Extensions.LastQTime = Environment.TickCount;
                     Extensions.CurrentQCount = 3;
-                    DelayAction.Queue(GetDelay(delay + 15), Reset);
+                    DelayAction.Queue(GetDelay(MenuConfig.Animation["Q2"].Value), Reset);
                     break;
                 case "Spell1c":
                     Extensions.LastQTime = Environment.TickCount;
                     Extensions.CurrentQCount = 1;
-                    DelayAction.Queue(GetDelay(delay + 50), Reset);
+                    DelayAction.Queue(GetDelay(MenuConfig.Animation["Q3"].Value), Reset);
                     break;
                 case "Spell2":
                     Extensions.LastWTime = Environment.TickCount;
@@ -58,8 +58,8 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 
         private static int GetDelay(int temp)
         {
-            // Just broscienced this bullshit. Still needs a lot of work.
-            return (int)(temp - ObjectManager.GetLocalPlayer().AttackSpeedMod * 9 + Game.Ping);
+            // Still needs a lot of work.
+            return (int)(temp - ObjectManager.GetLocalPlayer().AttackSpeedMod * MenuConfig.Animation["AttackSpeedMod"].Value + (MenuConfig.Animation["Ping"].Enabled ? Game.Ping : 0));
         }
     }
 }

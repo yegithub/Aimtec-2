@@ -1,25 +1,68 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Aimtec;
 
 namespace Adept_AIO.SDK.Usables
 {
     internal class Items
     {
-        public static bool CastItem(uint item)
+        private static readonly string[] Tiamats = {"ItemTiamatCleave", "ItemTitanicHydraCleave", "ItemTiamatCleave"};
+
+        public static void CastTiamat()
         {
-            if (item == 0)
+            SpellSlot? slot = null;
+            foreach (var tiamat in Tiamats)
             {
-                return false;
+                if (CanUseItem(tiamat))
+                {
+                    slot = GetItemSlot(tiamat);
+                }
             }
-            return false; // Fuck this shit.
+            
+            if (slot != null)
+            {
+                ObjectManager.GetLocalPlayer().SpellBook.CastSpell((SpellSlot) slot);
+            }
         }
 
-        public static bool CastItemHOTFIX(string name)
+        public static void CastItem(string itemName, Obj_AI_Base target = null)
         {
-            return ObjectManager.GetLocalPlayer()
-                .SpellBook.Spells.Where(x => x.Name == name)
-                .Select(x => ObjectManager.GetLocalPlayer().SpellBook.CastSpell(x.Slot))
-                .FirstOrDefault();
+            var slot = GetItemSlot(itemName);
+            if (!CanUseItem(itemName))
+            {
+                return;
+            }
+
+            if (target == null)
+            {
+                ObjectManager.GetLocalPlayer().SpellBook.CastSpell(slot);
+            }
+            else
+            {
+                ObjectManager.GetLocalPlayer().SpellBook.CastSpell(slot, target);
+            }
+        }
+
+        public static bool CanUseItem(string itemName)
+        {
+            var slot = GetItemSlot(itemName);
+
+            if (slot != SpellSlot.Unknown)
+            {
+                return ObjectManager.GetLocalPlayer().SpellBook.GetSpellState(slot) == SpellState.Ready;
+            }
+            return false;
+        }
+
+        private static SpellSlot GetItemSlot(string itemName)
+        {
+            var slot = ObjectManager.GetLocalPlayer().Inventory.Slots.FirstOrDefault(x => string.Equals(itemName, x.SpellName, StringComparison.CurrentCultureIgnoreCase));
+
+            if (slot != null && slot.SpellSlot != SpellSlot.Unknown)
+            {
+                return slot.SpellSlot;
+            }
+            return SpellSlot.Unknown;
         }
     }
 }
