@@ -14,6 +14,8 @@ namespace Adept_AIO.Champions.Yasuo.Update.Miscellaneous
                  args.Sender == null ||
                  sender == null ||
                  sender.IsMe ||
+                 sender.IsAlly || 
+                 args.Sender.IsAlly ||
                 !args.Sender.IsHero ||
                 args.Target.IsMe && sender.Distance(ObjectManager.GetLocalPlayer()) < 200 || 
                 ObjectManager.GetLocalPlayer().HasBuff("YasuoPassive") && args.SpellData.ConsideredAsAutoAttack)
