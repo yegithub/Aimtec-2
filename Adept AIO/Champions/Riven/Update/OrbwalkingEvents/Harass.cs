@@ -4,7 +4,6 @@ using Adept_AIO.Champions.Riven.Update.Miscellaneous;
 using Adept_AIO.SDK.Extensions;
 using Aimtec;
 using Aimtec.SDK.Extensions;
-using Aimtec.SDK.Orbwalking;
 using Aimtec.SDK.TargetSelector;
 using Aimtec.SDK.Util;
 
@@ -84,7 +83,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
                         SpellManager.CastQ(target);
                     }
                    
-                    if (!SpellConfig.Q.Ready && SpellConfig.E.Ready && Extensions.CurrentQCount == 1 && !Orbwalker.Implementation.CanAttack())
+                    if (!SpellConfig.Q.Ready && SpellConfig.E.Ready && Extensions.CurrentQCount == 1 && !GlobalExtension.Orbwalker.CanAttack())
                     {
                         SpellConfig.E.Cast(antiPosition);
                     }
@@ -98,7 +97,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
                         SpellManager.CastQ(target);
                     }
 
-                    if (SpellConfig.Q.Ready && SpellConfig.E.Ready && Extensions.CurrentQCount == 3 && !Orbwalker.Implementation.CanAttack())
+                    if (SpellConfig.Q.Ready && SpellConfig.E.Ready && Extensions.CurrentQCount == 3 && !GlobalExtension.Orbwalker.CanAttack())
                     {
                         SpellConfig.E.Cast(antiPosition);
                         DelayAction.Queue(190, () => SpellConfig.Q.Cast(antiPosition));
@@ -117,7 +116,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
                         SpellManager.CastQ(target);
                     }
 
-                    if (SpellConfig.Q.Ready && SpellConfig.E.Ready && Extensions.CurrentQCount == 3 && !Orbwalker.Implementation.CanAttack())
+                    if (SpellConfig.Q.Ready && SpellConfig.E.Ready && Extensions.CurrentQCount == 3 && !GlobalExtension.Orbwalker.CanAttack())
                     {
                         SpellConfig.E.Cast(antiPosition);
                         DelayAction.Queue(210, () => SpellConfig.Q.Cast(target.ServerPosition));

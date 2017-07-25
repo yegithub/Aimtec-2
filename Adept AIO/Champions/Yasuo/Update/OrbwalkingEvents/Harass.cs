@@ -1,7 +1,7 @@
 ﻿using Adept_AIO.Champions.Yasuo.Core;
+using Adept_AIO.SDK.Extensions;
 using Aimtec;
 using Aimtec.SDK.Extensions;
-using Aimtec.SDK.Orbwalking;
 using Aimtec.SDK.TargetSelector;
 
 namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
@@ -15,13 +15,13 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
 
         public static void OnUpdate()
         {
-            if (Orbwalker.Implementation.IsWindingUp)
+            if (GlobalExtension.Orbwalker.IsWindingUp)
             {
                 return;
             }
 
             var target = TargetSelector.GetTarget(1100);
-            if (target == null || Orbwalker.Implementation.IsWindingUp)
+            if (target == null || GlobalExtension.Orbwalker.IsWindingUp)
             {
                 return;
             }

@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using Adept_AIO.Champions.Yasuo.Core;
+using Adept_AIO.SDK.Extensions;
 using Aimtec;
 using Aimtec.SDK.Damage;
 using Aimtec.SDK.Extensions;
-using Aimtec.SDK.Orbwalking;
 using GameObjects = Adept_AIO.SDK.Extensions.GameObjects;
 
 namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
@@ -18,10 +18,22 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                 return;
             }
 
+            if (SpellConfig.E.Ready && MenuConfig.LaneClear["Mode"].Value == 2)
+            {
+                var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(ObjectManager.GetLocalPlayer()) <= SpellConfig.E.Range &&
+                                                                          x.Distance(Game.CursorPos) < MenuConfig.Combo["Range"].Value &&
+                                                                          !x.HasBuff("YasuoDashWrapper"));
+                if (minion == null || minion.IsUnderEnemyTurret())
+                {
+                    return;
+                }
+                SpellConfig.E.CastOnUnit(minion);
+            }
+
             if (SpellConfig.Q.Ready)
             {
-                var stackableMinion = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsEnemy && x.IsValidTarget(SpellConfig.Q.Range));
-                if (stackableMinion == null)
+                var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(ObjectManager.GetLocalPlayer()) <= SpellConfig.Q.Range);
+                if (minion == null)
                 {
                     return;
                 }
@@ -29,7 +41,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                 switch (Extension.CurrentMode)
                 {
                         case Mode.Normal:
-                            SpellConfig.Q.Cast(stackableMinion);
+                            SpellConfig.Q.Cast(minion);
                         break;
                 }
             }
@@ -42,20 +54,24 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                 switch (Extension.CurrentMode)
                 {
                     case Mode.Tornado:
-                        foreach (var m in GameObjects.EnemyMinions.Where(x => x.IsEnemy && x.IsMinion && x.IsValidTarget(SpellConfig.Q.Range)))
+                    case Mode.Normal:
+                        var m = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsValidTarget(SpellConfig.Q.Range));
+                        if (m == null)
                         {
-                            if (SpellConfig.Q.GetPrediction(m).AoeTargetsHitCount >= MenuConfig.LaneClear["Q3"].Value && MenuConfig.LaneClear["Q3"].Enabled)
-                            {
-                                SpellConfig.Q.Cast(m);
-                            }
+                            return;
+                        }
+
+                        if (MenuConfig.LaneClear["Q3"].Enabled)
+                        {
+                            ObjectManager.GetLocalPlayer().SpellBook.CastSpell(SpellSlot.Q, SpellConfig.Q.GetPrediction(m).CastPosition);
                         }
                         break;
                     case Mode.DashingTornado:
                     case Mode.Dashing:
-                        var dashM = GameObjects.EnemyMinions.Where(x => x.IsEnemy && x.IsMinion && x.Distance(ObjectManager.GetLocalPlayer()) <= 220);
+                        var dashM = GameObjects.EnemyMinions.Where(x => Extension.DashDistance(x, (Obj_AI_Base) GlobalExtension.Orbwalker.GetOrbwalkingTarget()) <= 220);
 
                         var minions = dashM as Obj_AI_Minion[] ?? dashM.ToArray();
-                        if (minions.Length > 2)
+                        if (minions.Length >= 3)
                         {
                             SpellConfig.Q.Cast(minions.FirstOrDefault());
                         }
@@ -73,12 +89,12 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                 return;
             }
            
-            if (SpellConfig.E.Ready || Orbwalker.Implementation.IsWindingUp)
+            if (SpellConfig.E.Ready || GlobalExtension.Orbwalker.IsWindingUp)
             {
                 switch (MenuConfig.LaneClear["Mode"].Value)
                 {
                     case 1:
-                        if (minion.Health > ObjectManager.GetLocalPlayer().GetSpellDamage(minion, SpellSlot.E))
+                        if (MenuConfig.LaneClear["EAA"].Enabled)
                         {
                             return;
                         }

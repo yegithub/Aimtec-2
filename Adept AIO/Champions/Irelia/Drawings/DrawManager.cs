@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using Adept_AIO.Champions.Irelia.Core;
+using Adept_AIO.SDK.Extensions;
 using Aimtec;
 using Aimtec.SDK.Orbwalking;
 
@@ -14,7 +15,7 @@ namespace Adept_AIO.Champions.Irelia.Drawings
                 return;
             }
 
-            if (MenuConfig.Drawings["Engage"].Enabled && Orbwalker.Implementation.Mode != OrbwalkingMode.None)
+            if (MenuConfig.Drawings["Engage"].Enabled && GlobalExtension.Orbwalker.Mode != OrbwalkingMode.None)
             {
                 // Could turn into ? : statement as well.
                 switch (MenuConfig.Combo["Mode"].Value)

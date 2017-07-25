@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using Adept_AIO.SDK.Extensions;
 using Aimtec;
 using Aimtec.SDK.Extensions;
-using Aimtec.SDK.Util.Cache;
 
 namespace Adept_AIO.Champions.Riven.Core
 {
@@ -44,7 +44,7 @@ namespace Adept_AIO.Champions.Riven.Core
         public static float LastWTime = 0;
         public static bool AttackedStructure;
         public static string[] InvulnerableList = { "FioraW", "kindrednodeathbuff", "Undying Rage", "JudicatorIntervention" };
-        public static IEnumerable<Obj_AI_Hero> Enemies = GameObjects.EnemyHeroes.Where(x => x.IsValidTarget(GetRange()));
+       // public static IEnumerable<Obj_AI_Hero> Enemies = GameObjects.EnemyHeroes.Where(x => x.IsValidTarget(GetRange()));
         public static HarassPattern Current;
         public static UltimateMode UltimateMode;
         public static CancellationToken CancellationToken;

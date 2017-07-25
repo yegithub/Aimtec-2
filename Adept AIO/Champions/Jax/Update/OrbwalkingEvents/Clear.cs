@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using Adept_AIO.Champions.Jax.Core;
+using Adept_AIO.SDK.Extensions;
 using Adept_AIO.SDK.Usables;
 using Aimtec;
 using Aimtec.SDK.Extensions;
-using Aimtec.SDK.Orbwalking;
 using GameObjects = Adept_AIO.SDK.Extensions.GameObjects;
 
 namespace Adept_AIO.Champions.Jax.Update.OrbwalkingEvents
@@ -21,7 +21,7 @@ namespace Adept_AIO.Champions.Jax.Update.OrbwalkingEvents
             {
                 SpellConfig.W.Cast();
                 Items.CastTiamat();
-                Orbwalker.Implementation.ResetAutoAttackTimer();
+                GlobalExtension.Orbwalker.ResetAutoAttackTimer();
             }
 
             if (SpellConfig.E.Ready && MenuConfig.Clear["E"].Enabled && ObjectManager.GetLocalPlayer().ManaPercent() >= 75 || ObjectManager.GetLocalPlayer().HealthPercent() <= 35)

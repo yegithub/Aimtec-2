@@ -1,6 +1,7 @@
 ﻿using System;
 using Adept_AIO.Champions.Riven.Core;
 using Adept_AIO.Champions.Riven.Update.OrbwalkingEvents;
+using Adept_AIO.SDK.Extensions;
 using Aimtec;
 using Aimtec.SDK.Extensions;
 using Aimtec.SDK.Orbwalking;
@@ -16,14 +17,14 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                 return;
             }
 
-            switch (Orbwalker.Implementation.Mode)
+            switch (GlobalExtension.Orbwalker.Mode)
             {
                 case OrbwalkingMode.Combo:
                    Combo.OnUpdate();
                     break;
-                    case OrbwalkingMode.Mixed:
+                case OrbwalkingMode.Mixed:
                     Harass.OnUpdate();
-                        break;
+                    break;
                 case OrbwalkingMode.Laneclear:
                     Lane.OnUpdate();
                     Jungle.OnUpdate();
@@ -64,7 +65,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
             }
             else
             {
-                switch (Orbwalker.Implementation.Mode)
+                switch (GlobalExtension.Orbwalker.Mode)
                 {
                     case OrbwalkingMode.Combo:
                         Combo.OnPostAttack(target);

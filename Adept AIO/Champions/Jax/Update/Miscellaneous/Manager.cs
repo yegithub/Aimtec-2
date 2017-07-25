@@ -1,6 +1,7 @@
 ﻿using System;
 using Adept_AIO.Champions.Jax.Core;
 using Adept_AIO.Champions.Jax.Update.OrbwalkingEvents;
+using Adept_AIO.SDK.Extensions;
 using Aimtec;
 using Aimtec.SDK.Orbwalking;
 
@@ -10,7 +11,7 @@ namespace Adept_AIO.Champions.Jax.Update.Miscellaneous
     {
         public static void PostAttack(object sender, PostAttackEventArgs args)
         {
-            switch (Orbwalker.Implementation.Mode)
+            switch (GlobalExtension.Orbwalker.Mode)
             {
                     case OrbwalkingMode.Combo:
                     Combo.OnPostAttack();
@@ -36,7 +37,7 @@ namespace Adept_AIO.Champions.Jax.Update.Miscellaneous
                 SpellConfig.CounterStrikeTime = 0;
             }
           
-            switch (Orbwalker.Implementation.Mode)
+            switch (GlobalExtension.Orbwalker.Mode)
             {
                     case OrbwalkingMode.Combo:
                     Combo.OnUpdate();

@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using Adept_AIO.Champions.Rengar.Core;
+using Adept_AIO.SDK.Extensions;
 using Aimtec;
 using Aimtec.SDK.Damage;
 using Aimtec.SDK.Extensions;
-using Aimtec.SDK.Util.Cache;
 
 namespace Adept_AIO.Champions.Rengar.Update.OrbwalkingEvents
 {

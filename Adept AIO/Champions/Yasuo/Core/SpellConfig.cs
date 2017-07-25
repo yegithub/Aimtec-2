@@ -35,11 +35,11 @@ namespace Adept_AIO.Champions.Yasuo.Core
                 case Mode.Dashing:
                 case Mode.DashingTornado:
                     Q.SetSkillshot(0, 375, int.MaxValue, false, SkillshotType.Circle);
-                    Q.Range = 220;
+                    Q.Range = 475;
                     break;
                 case Mode.Tornado:
                     Q.SetSkillshot(0.3f, 90, 1200, false, SkillshotType.Line);
-                    Q.Range = 900;
+                    Q.Range = 1200;
                     break;
             }
         }

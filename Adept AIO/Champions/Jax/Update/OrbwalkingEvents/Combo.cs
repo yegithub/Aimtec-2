@@ -2,12 +2,12 @@
 using System.Linq;
 using Adept_AIO.Champions.Jax.Core;
 using Adept_AIO.Champions.Jax.Update.Miscellaneous;
+using Adept_AIO.SDK.Extensions;
 using Adept_AIO.SDK.Usables;
 using Aimtec;
 using Aimtec.SDK.Extensions;
-using Aimtec.SDK.Orbwalking;
 using Aimtec.SDK.TargetSelector;
-using Aimtec.SDK.Util.Cache;
+using GameObjects = Aimtec.SDK.Util.Cache.GameObjects;
 
 namespace Adept_AIO.Champions.Jax.Update.OrbwalkingEvents
 {
@@ -19,7 +19,7 @@ namespace Adept_AIO.Champions.Jax.Update.OrbwalkingEvents
             {
                 SpellConfig.W.Cast();
                 Items.CastTiamat();
-                Orbwalker.Implementation.ResetAutoAttackTimer();
+                GlobalExtension.Orbwalker.ResetAutoAttackTimer();
             }
             var target = GameObjects.EnemyHeroes.FirstOrDefault(x => x.IsValidAutoRange());
             if (target == null)

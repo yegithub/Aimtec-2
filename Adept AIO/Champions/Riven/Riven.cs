@@ -2,8 +2,8 @@
 using Adept_AIO.Champions.Riven.Core;
 using Adept_AIO.Champions.Riven.Drawings;
 using Adept_AIO.Champions.Riven.Update.Miscellaneous;
+using Adept_AIO.SDK.Extensions;
 using Aimtec;
-using Aimtec.SDK.Orbwalking;
 
 namespace Adept_AIO.Champions.Riven
 {
@@ -22,7 +22,7 @@ namespace Adept_AIO.Champions.Riven
             Obj_AI_Base.OnProcessSpellCast += SpellManager.OnProcessSpellCast;
             Obj_AI_Base.OnProcessSpellCast += SafetyMeasure.OnProcessSpellCast;
 
-            Orbwalker.Implementation.PostAttack += Manager.PostAttack;
+            GlobalExtension.Orbwalker.PostAttack += Manager.PostAttack;
             Render.OnRender += DrawManager.RenderManager;
             Extensions.CancellationToken = new CancellationToken(true);
         }

@@ -1,11 +1,12 @@
 ﻿using System.Linq;
 using Adept_AIO.Champions.Irelia.Core;
+using Adept_AIO.SDK.Extensions;
 using Aimtec;
 using Aimtec.SDK.Damage;
 using Aimtec.SDK.Extensions;
 using Aimtec.SDK.Orbwalking;
 using Aimtec.SDK.TargetSelector;
-using Aimtec.SDK.Util.Cache;
+using GameObjects = Aimtec.SDK.Util.Cache.GameObjects;
 
 namespace Adept_AIO.Champions.Irelia.Update.OrbwalkingEvents
 {
@@ -31,12 +32,12 @@ namespace Adept_AIO.Champions.Irelia.Update.OrbwalkingEvents
             }
 
             SpellConfig.W.Cast();
-            Orbwalker.Implementation.ResetAutoAttackTimer();
+            GlobalExtension.Orbwalker.ResetAutoAttackTimer();
         }
 
         public static void OnUpdate()
         {
-            if (Orbwalker.Implementation.IsWindingUp)
+            if (GlobalExtension.Orbwalker.IsWindingUp)
             {
                 return;
             }

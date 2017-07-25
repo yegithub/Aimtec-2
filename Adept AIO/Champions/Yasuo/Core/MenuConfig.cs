@@ -1,8 +1,11 @@
 ﻿using System.Collections.Generic;
+using Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents;
+using Adept_AIO.SDK.Extensions;
 using Aimtec.SDK.Menu;
 using Aimtec.SDK.Menu.Components;
 using Aimtec.SDK.Orbwalking;
-using Aimtec.SDK.Util.Cache;
+using Aimtec.SDK.Util;
+using GameObjects = Aimtec.SDK.Util.Cache.GameObjects;
 
 namespace Adept_AIO.Champions.Yasuo.Core
 {
@@ -18,13 +21,22 @@ namespace Adept_AIO.Champions.Yasuo.Core
                            Killsteal,
                            Drawings;
 
+        
+
         public static void Attach()
         {
             MainMenu = new Menu(string.Empty, "Adept AIO", true);
             MainMenu.Attach();
 
-            var orbwalker = new Orbwalker();
-            orbwalker.Attach(MainMenu);
+            GlobalExtension.Orbwalker = new Orbwalker();
+
+            Extension.FleeMode     = new OrbwalkerMode("Flee", KeyCode.A, null, Flee.OnKeyPressed);
+            Extension.BeybladeMode = new OrbwalkerMode("Beyblade", KeyCode.T, null, Beyblade.OnKeyPressed);
+
+            GlobalExtension.Orbwalker.AddMode(Extension.FleeMode);
+            GlobalExtension.Orbwalker.AddMode(Extension.BeybladeMode);
+         
+            GlobalExtension.Orbwalker.Attach(MainMenu);
 
             Whitelist= new Menu("Whitelist", "Whitelist");
             foreach (var hero in GameObjects.EnemyHeroes)
@@ -34,6 +46,7 @@ namespace Adept_AIO.Champions.Yasuo.Core
 
             Combo = new Menu("Combo", "Combo")
             {
+                new MenuBool("Dodge", "Windwall Targetted Spells"),
                 new MenuBool("Delay", "Delay R").SetToolTip("Tries to Knockup -> AA -> R"),
                 new MenuBool("Flash", "Use Flash (Beyblade)").SetToolTip("Will try to E-Q -> Flash. Known as Beyblade"),
                 new MenuBool("Turret", "Avoid Using E Under Turret"),
@@ -53,7 +66,8 @@ namespace Adept_AIO.Champions.Yasuo.Core
             {
                 new MenuBool("Check", "Don't Clear When Enemies Nearby"),
                 new MenuBool("Turret", "Don't Clear Under Turret"),
-                new MenuSliderBool("Q3", "Min. Hit For Q3", false, 2, 1, 7),
+                new MenuBool("Q3", "Use Q3"),
+                new MenuBool("EAA", "Only E After AA (Fast Clear)"),
                 new MenuList("Mode", "E Mode: ", new []{"Disabled", "Lasthit", "Fast Clear"}, 1)
             };
 
@@ -75,6 +89,7 @@ namespace Adept_AIO.Champions.Yasuo.Core
             {
                 new MenuSlider("Segments", "Segments", 200, 100, 300).SetToolTip("Smoothness of the circles. Less equals more FPS."),
                 new MenuBool("R", "Draw R Range"),
+                new MenuBool("Debug", "Debug")
             };
 
             var Credits = new Menu("Credits", "Credits")

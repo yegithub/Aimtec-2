@@ -1,5 +1,6 @@
 ﻿using Adept_AIO.Champions.Irelia.Core;
 using Adept_AIO.Champions.Irelia.Update.OrbwalkingEvents;
+using Adept_AIO.SDK.Extensions;
 using Aimtec;
 using Aimtec.SDK.Orbwalking;
 
@@ -9,7 +10,7 @@ namespace Adept_AIO.Champions.Irelia.Update.Miscellaneous
     {
         public static void OnPreAttack(object sender, PreAttackEventArgs preAttackEventArgs)
         {
-            switch (Orbwalker.Implementation.Mode)
+            switch (GlobalExtension.Orbwalker.Mode)
             {
                     case OrbwalkingMode.Laneclear:
                     Clear.OnPreAttack(preAttackEventArgs.Target, preAttackEventArgs);
@@ -22,7 +23,7 @@ namespace Adept_AIO.Champions.Irelia.Update.Miscellaneous
 
         public static void PostAttack(object sender, PostAttackEventArgs args)
         {
-            switch (Orbwalker.Implementation.Mode)
+            switch (GlobalExtension.Orbwalker.Mode)
             {
                 case OrbwalkingMode.Combo:
                     Combo.OnPostAttack(args.Target);
@@ -43,7 +44,7 @@ namespace Adept_AIO.Champions.Irelia.Update.Miscellaneous
                 return;
             }
 
-            switch (Orbwalker.Implementation.Mode)
+            switch (GlobalExtension.Orbwalker.Mode)
             {
                     case OrbwalkingMode.Combo:
                     Combo.OnUpdate();

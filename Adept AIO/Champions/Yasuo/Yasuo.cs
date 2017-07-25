@@ -1,8 +1,8 @@
 ﻿using Adept_AIO.Champions.Yasuo.Core;
 using Adept_AIO.Champions.Yasuo.Drawings;
 using Adept_AIO.Champions.Yasuo.Update.Miscellaneous;
+using Adept_AIO.SDK.Extensions;
 using Aimtec;
-using Aimtec.SDK.Orbwalking;
 
 namespace Adept_AIO.Champions.Yasuo
 {
@@ -15,7 +15,9 @@ namespace Adept_AIO.Champions.Yasuo
 
             Game.OnUpdate += Manager.OnUpdate;
             Obj_AI_Base.OnPlayAnimation += Manager.OnPlayAnimation;
-            Orbwalker.Implementation.PostAttack += Manager.PostAttack;
+            Obj_AI_Base.OnProcessSpellCast += SafetyMeasure.OnProcessSpellCast;
+            GlobalExtension.Orbwalker.PostAttack += Manager.PostAttack;
+
             Render.OnRender += DrawManager.RenderManager;
             BuffManager.OnAddBuff += Manager.BuffManagerOnOnAddBuff;
             BuffManager.OnRemoveBuff += Manager.BuffManagerOnOnRemoveBuff;

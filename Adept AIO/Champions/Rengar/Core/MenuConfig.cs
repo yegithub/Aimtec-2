@@ -23,8 +23,8 @@ namespace Adept_AIO.Champions.Rengar.Core
             MainMenu = new Menu(string.Empty, "Adept AIO", true);
             MainMenu.Attach();
 
-            var orbwalker = new Orbwalker();
-            orbwalker.Attach(MainMenu);
+            GlobalExtension.Orbwalker = new Orbwalker();
+            GlobalExtension.Orbwalker.Attach(MainMenu);
 
             AssassinManager = new Menu("AssassinManager", "Assassin Manager");
             foreach (var hero in GameObjects.EnemyHeroes)

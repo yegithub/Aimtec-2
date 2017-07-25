@@ -1,11 +1,11 @@
 ﻿using System.Linq;
 using Adept_AIO.Champions.Yasuo.Core;
+using Adept_AIO.SDK.Extensions;
 using Adept_AIO.SDK.Usables;
 using Aimtec;
 using Aimtec.SDK.Extensions;
 using Aimtec.SDK.TargetSelector;
 using Aimtec.SDK.Util;
-using Aimtec.SDK.Util.Cache;
 
 namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
 {
@@ -38,9 +38,8 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
             }
 
             var distance = target.Distance(ObjectManager.GetLocalPlayer());
-            var dashDistance = ObjectManager.GetLocalPlayer().ServerPosition.Extend(target.ServerPosition, 475f).Distance(target.ServerPosition);
-
             var minion = Extension.GetDashableMinion(target);
+            var dashDistance = Extension.DashDistance(minion, target);
 
             if (SpellConfig.E.Ready)
             {
@@ -53,12 +52,9 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                 {
                     SpellConfig.E.CastOnUnit(target);
                 }
-                else if (distance > SpellConfig.E.Range)
+                else if (distance > SpellConfig.E.Range && target.HasBuff("YasuoDashWrapper") && minion != null || distance < ObjectManager.GetLocalPlayer().AttackRange)
                 {
-                    if (minion != null || distance < ObjectManager.GetLocalPlayer().AttackRange)
-                    {
-                        SpellConfig.E.CastOnUnit(minion);
-                    }
+                    SpellConfig.E.CastOnUnit(minion);
                 }
             }
 
@@ -66,12 +62,11 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
             {
                 switch (Extension.CurrentMode)
                 {
-                  
                     case Mode.DashingTornado:
                     case Mode.Dashing:
                         if (minion != null)
                         {
-                            if (MenuConfig.Combo["Flash"].Enabled && target.IsValidTarget(425) && (Dmg.Damage(target) * 1.25 > target.Health || target.CountEnemyHeroesInRange(220) >= 2))
+                            if (MenuConfig.Combo["Flash"].Enabled && dashDistance > 400 && target.IsValidTarget(425) && (Dmg.Damage(target) * 1.25 > target.Health || target.CountEnemyHeroesInRange(220) >= 2))
                             {
                                 DelayAction.Queue(190, () =>
                                 {
@@ -80,7 +75,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                                 });
                             }
                         }
-                        else if (dashDistance <= 65)
+                        else if (dashDistance <= 220)
                         {
                             SpellConfig.Q.Cast(target);
                         }
@@ -88,12 +83,12 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                     case Mode.Tornado:
                         if (target.IsValidTarget(SpellConfig.Q.Range))
                         {
-                            if (minion != null && ObjectManager.GetLocalPlayer().IsFacing(minion) && distance > SpellConfig.Q.Range / 2)
+                            if (minion != null && distance > SpellConfig.Q.Range / 2)
                             {
                                 return;
                             }
 
-                            SpellConfig.Q.Cast(target);
+                            ObjectManager.GetLocalPlayer().SpellBook.CastSpell(SpellSlot.Q, SpellConfig.Q.GetPrediction(target).CastPosition);
                         }
                         break;
                     case Mode.Normal:
@@ -101,7 +96,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                         {
                             SpellConfig.Q.CastOnUnit(target);
                         }
-                        else if(distance > 800)
+                        else if(distance > 900)
                         {
                             var stackableMinion = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsEnemy && x.Distance(ObjectManager.GetLocalPlayer()) <= SpellConfig.Q.Range);
                             if (stackableMinion == null)
@@ -115,7 +110,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                 }
             }
 
-            if (SpellConfig.R.Ready && Extension.KnockedUp(target) && (distance > 800 || distance > 500 && minion == null))
+            if (SpellConfig.R.Ready && Extension.KnockedUp(target) && (distance > 650 || distance > 450 && minion == null))
             {
                 DelayAction.Queue(MenuConfig.Combo["Delay"].Enabled ? 375 + Game.Ping / 2 : 100 + Game.Ping / 2, () => SpellConfig.R.Cast());
             }

@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using Adept_AIO.Champions.Riven.Core;
+using Adept_AIO.SDK.Extensions;
 using Aimtec;
 using Aimtec.SDK.Orbwalking;
 
@@ -14,7 +15,7 @@ namespace Adept_AIO.Champions.Riven.Drawings
                 return;
             }
 
-            if (MenuConfig.Drawings["Harass"].Enabled && Orbwalker.Implementation.Mode == OrbwalkingMode.Mixed)
+            if (MenuConfig.Drawings["Harass"].Enabled && GlobalExtension.Orbwalker.Mode == OrbwalkingMode.Mixed)
             {
                 Vector2 screenPos;
                 Render.WorldToScreen(ObjectManager.GetLocalPlayer().Position, out screenPos);

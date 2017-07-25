@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using Adept_AIO.Champions.Yasuo.Core;
+using Adept_AIO.SDK.Extensions;
 using Aimtec;
 using Aimtec.SDK.Orbwalking;
 
@@ -14,10 +15,17 @@ namespace Adept_AIO.Champions.Yasuo.Drawings
                 return;
             }
 
-            if (MenuConfig.Combo["Dash"].Value == 0 && Orbwalker.Implementation.Mode != OrbwalkingMode.None)
+            if (MenuConfig.Combo["Dash"].Value == 0 && GlobalExtension.Orbwalker.Mode != OrbwalkingMode.None)
             {
                 Render.Circle(Game.CursorPos, MenuConfig.Combo["Range"].Value,
                     (uint)MenuConfig.Drawings["Segments"].Value, Color.White);
+            }
+
+            if (MenuConfig.Drawings["Debug"].Enabled)
+            {
+                Vector2 temp;
+                Render.WorldToScreen(ObjectManager.GetLocalPlayer().Position, out temp);
+                Render.Text(new Vector2(temp.X - 55, temp.Y + 40), Color.White, "Q Mode: " + Extension.CurrentMode + "- Range: " + SpellConfig.Q.Range);
             }
 
             if (SpellConfig.R.Ready)

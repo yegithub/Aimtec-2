@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Adept_AIO.Champions.Irelia.Core;
+using Adept_AIO.SDK.Extensions;
 using Aimtec;
 using Aimtec.SDK.Damage;
 using Aimtec.SDK.Extensions;
@@ -27,7 +28,7 @@ namespace Adept_AIO.Champions.Irelia.Update.OrbwalkingEvents
             if (SpellConfig.W.Ready && MenuConfig.Clear["W"].Enabled)
             {
                 SpellConfig.W.Cast();
-                Orbwalker.Implementation.ResetAutoAttackTimer();
+                GlobalExtension.Orbwalker.ResetAutoAttackTimer();
             }
         }
 

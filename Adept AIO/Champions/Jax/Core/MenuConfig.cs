@@ -21,8 +21,8 @@ namespace Adept_AIO.Champions.Jax.Core
             MainMenu = new Menu(string.Empty, "Adept AIO", true);
             MainMenu.Attach();
 
-            var orbwalker = new Orbwalker();
-            orbwalker.Attach(MainMenu);
+            GlobalExtension.Orbwalker = new Orbwalker();
+            GlobalExtension.Orbwalker.Attach(MainMenu);
 
             Combo = new Menu("Combo", "Combo")
             {

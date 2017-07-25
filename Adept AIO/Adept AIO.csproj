@@ -112,13 +112,17 @@
     <Compile Include="Champions\Yasuo\Drawings\DrawManager.cs" />
     <Compile Include="Champions\Yasuo\Update\Miscellaneous\Killsteal.cs" />
     <Compile Include="Champions\Yasuo\Update\Miscellaneous\Manager.cs" />
+    <Compile Include="Champions\Yasuo\Update\Miscellaneous\SafetyMeasure.cs" />
+    <Compile Include="Champions\Yasuo\Update\OrbwalkingEvents\Beyblade.cs" />
     <Compile Include="Champions\Yasuo\Update\OrbwalkingEvents\Combo.cs" />
+    <Compile Include="Champions\Yasuo\Update\OrbwalkingEvents\Flee.cs" />
     <Compile Include="Champions\Yasuo\Update\OrbwalkingEvents\Harass.cs" />
     <Compile Include="Champions\Yasuo\Update\OrbwalkingEvents\JungleClear.cs" />
     <Compile Include="Champions\Yasuo\Update\OrbwalkingEvents\LaneClear.cs" />
     <Compile Include="Champions\Yasuo\Yasuo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SDK\Extensions\GameObjects.cs" />
+    <Compile Include="SDK\Extensions\GlobalExtension.cs" />
     <Compile Include="SDK\Extensions\MenuShortcut.cs" />
     <Compile Include="SDK\Extensions\RenderExtension.cs" />
     <Compile Include="SDK\Extensions\WallExtension.cs" />

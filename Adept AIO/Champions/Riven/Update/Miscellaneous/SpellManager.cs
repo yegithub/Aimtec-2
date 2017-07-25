@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Linq;
-using System.Threading;
 using Adept_AIO.Champions.Riven.Core;
+using Adept_AIO.SDK.Extensions;
 using Adept_AIO.SDK.Usables;
 using Aimtec;
 using Aimtec.SDK.Damage;
 using Aimtec.SDK.Extensions;
-using Aimtec.SDK.Orbwalking;
 using Aimtec.SDK.Util;
 
 namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
@@ -60,8 +59,8 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                 {
                     Items.CastTiamat();
                 }
-               // Console.WriteLine((int)Orbwalker.Implementation.WindUpTime);
-                if (Orbwalker.Implementation.CanMove())
+               // Console.WriteLine((int)GlobalExtension.Orbwalker.WindUpTime);
+                if (GlobalExtension.Orbwalker.CanMove())
                 {
                     ObjectManager.GetLocalPlayer().SpellBook.CastSpell(SpellSlot.Q, Unit);
                 }

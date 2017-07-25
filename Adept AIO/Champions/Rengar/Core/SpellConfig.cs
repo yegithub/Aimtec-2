@@ -1,6 +1,6 @@
-﻿using Aimtec;
+﻿using Adept_AIO.SDK.Extensions;
+using Aimtec;
 using Aimtec.SDK.Extensions;
-using Aimtec.SDK.Orbwalking;
 using Aimtec.SDK.Prediction.Skillshots;
 using Spell = Aimtec.SDK.Spell;
 
@@ -54,7 +54,7 @@ namespace Adept_AIO.Champions.Rengar.Core
             }
 
             Q.Cast(target);
-            Orbwalker.Implementation.ResetAutoAttackTimer();
+            GlobalExtension.Orbwalker.ResetAutoAttackTimer();
         }
     }
 }

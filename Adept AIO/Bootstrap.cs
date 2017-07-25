@@ -4,6 +4,7 @@ using Adept_AIO.Champions.Jax;
 using Adept_AIO.Champions.Rengar;
 using Adept_AIO.Champions.Riven;
 using Adept_AIO.Champions.Yasuo;
+using Adept_AIO.SDK.Extensions;
 using Adept_AIO.SDK.Usables;
 using Aimtec;
 using Aimtec.SDK.Events;
@@ -44,6 +45,7 @@ namespace Adept_AIO
             }
 
             SummonerSpells.Init();
+            GameObjects.Initialize();
         }
 
         private static readonly string[] Valid = { "Riven", "Irelia", "Jax", "Rengar", "Yasuo"};

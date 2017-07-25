@@ -1,6 +1,10 @@
-﻿using Adept_AIO.Champions.Yasuo.Core;
+﻿using System;
+using System.Linq;
+using Adept_AIO.Champions.Yasuo.Core;
 using Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents;
+using Adept_AIO.SDK.Extensions;
 using Aimtec;
+using Aimtec.SDK.Extensions;
 using Aimtec.SDK.Orbwalking;
 using Aimtec.SDK.Util;
 
@@ -10,7 +14,12 @@ namespace Adept_AIO.Champions.Yasuo.Update.Miscellaneous
     {
         public static void PostAttack(object sender, PostAttackEventArgs args)
         {
-            switch (Orbwalker.Implementation.Mode)
+            if (Extension.BeybladeMode.Active)
+            {
+                Beyblade.OnPostAttack();
+            }
+
+            switch (GlobalExtension.Orbwalker.Mode)
             {
                 case OrbwalkingMode.Combo:
                     Combo.OnPostAttack();
@@ -31,8 +40,8 @@ namespace Adept_AIO.Champions.Yasuo.Update.Miscellaneous
             {
                 return;
             }
-            //Console.WriteLine(Extension.CurrentMode);
-            switch (Orbwalker.Implementation.Mode)
+
+            switch (GlobalExtension.Orbwalker.Mode)
             {
                 case OrbwalkingMode.Combo:
                     Combo.OnUpdate();
@@ -42,7 +51,6 @@ namespace Adept_AIO.Champions.Yasuo.Update.Miscellaneous
                     break;
                 case OrbwalkingMode.Laneclear:
                     LaneClear.OnUpdate();
-                    JungleClear.OnUpdate();
                     break;
             }
         }
@@ -99,14 +107,16 @@ namespace Adept_AIO.Champions.Yasuo.Update.Miscellaneous
                     {
                         Extension.CurrentMode = Mode.DashingTornado;
                         SpellConfig.SetSkill(Mode.DashingTornado);
+                        DelayAction.Queue(500, () => Extension.CurrentMode = Mode.Normal);
                     }
                     else
                     {
+                       
                         Extension.CurrentMode = Mode.Dashing;
                         SpellConfig.SetSkill(Mode.Dashing);
+                        DelayAction.Queue(500, () => Extension.CurrentMode = Mode.Normal);
                     }
-
-                    DelayAction.Queue(500, () => Extension.CurrentMode = Mode.Normal);
+                   
                     break;
             }
         }

@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Threading;
 using Adept_AIO.Champions.Riven.Core;
 using Adept_AIO.Champions.Riven.Update.Miscellaneous;
+using Adept_AIO.SDK.Extensions;
 using Adept_AIO.SDK.Usables;
 using Aimtec;
 using Aimtec.SDK.Extensions;
-using Aimtec.SDK.Orbwalking;
 using Aimtec.SDK.TargetSelector;
 using Aimtec.SDK.Util;
 
@@ -46,9 +45,9 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
 
             var distance = target.Distance(ObjectManager.GetLocalPlayer());
 
-            if (Orbwalker.Implementation.CanAttack() && distance <= ObjectManager.GetLocalPlayer().AttackRange + 65)
+            if (GlobalExtension.Orbwalker.CanAttack() && distance <= ObjectManager.GetLocalPlayer().AttackRange + 65)
             {
-                Orbwalker.Implementation.Attack(target);
+                GlobalExtension.Orbwalker.Attack(target);
             }
             
             Extensions.AllIn = SummonerSpells.Flash != null && SummonerSpells.Flash.Ready;

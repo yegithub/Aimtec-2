@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Threading;
 using Adept_AIO.Champions.Riven.Core;
+using Adept_AIO.SDK.Extensions;
 using Aimtec;
 using Aimtec.SDK.Orbwalking;
 using Aimtec.SDK.Util;
@@ -27,19 +27,19 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                     Extensions.LastQTime = Environment.TickCount;
                     Extensions.CurrentQCount = 2;
                     DelayAction.Queue(GetDelay(MenuConfig.Animation["Q1"].Value), Reset);
-                    //DelayAction.Queue(GetDelay((int)(Orbwalker.Implementation.WindUpTime + Game.Ping / 2f)), Reset);
+                    //DelayAction.Queue(GetDelay((int)(GlobalExtension.Orbwalker.WindUpTime + Game.Ping / 2f)), Reset);
                     break;
                 case "Spell1b":
                     Extensions.LastQTime = Environment.TickCount;
                     Extensions.CurrentQCount = 3;
                     DelayAction.Queue(GetDelay(MenuConfig.Animation["Q2"].Value), Reset);
-                    //DelayAction.Queue(GetDelay((int)(Orbwalker.Implementation.WindUpTime + Game.Ping / 2f)), Reset);
+                    //DelayAction.Queue(GetDelay((int)(GlobalExtension.Orbwalker.WindUpTime + Game.Ping / 2f)), Reset);
                     break;
                 case "Spell1c":
                     Extensions.LastQTime = Environment.TickCount;
                     Extensions.CurrentQCount = 1;
                     DelayAction.Queue(GetDelay(MenuConfig.Animation["Q3"].Value), Reset);
-                   // DelayAction.Queue(GetDelay((int) (Orbwalker.Implementation.WindUpTime + Game.Ping / 2f + 50)), Reset);
+                   // DelayAction.Queue(GetDelay((int) (GlobalExtension.Orbwalker.WindUpTime + Game.Ping / 2f + 50)), Reset);
                     break;
                 case "Spell2":
                     Extensions.LastWTime = Environment.TickCount;
@@ -52,13 +52,16 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 
         private static void Reset()
         {
-            if (Orbwalker.Implementation.Mode == OrbwalkingMode.None)
+            if (GlobalExtension.Orbwalker.Mode == OrbwalkingMode.None)
             {
                 return;
             }
-            
-            Orbwalker.Implementation.ResetAutoAttackTimer();
-            ObjectManager.GetLocalPlayer().IssueOrder(OrderType.MoveTo, Game.CursorPos);
+
+          
+            GlobalExtension.Orbwalker.ResetAutoAttackTimer();
+            GlobalExtension.Orbwalker.Move(Game.CursorPos);
+          
+            //ObjectManager.GetLocalPlayer().IssueOrder(OrderType.MoveTo, Game.CursorPos);
         }
 
         // Still needs a lot of work.
