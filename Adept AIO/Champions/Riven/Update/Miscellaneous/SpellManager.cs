@@ -16,7 +16,6 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
         private static bool CanUseQ;
         private static bool CanUseW;
         private static Obj_AI_Base Unit;
-        private static Vector3 qPosition;
       
         /// <summary>
         /// Tracks spells recently used by Riven
@@ -61,18 +60,10 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                 {
                     Items.CastTiamat();
                 }
-
-                if (qPosition != Vector3.Zero)
+               // Console.WriteLine((int)Orbwalker.Implementation.WindUpTime);
+                if (Orbwalker.Implementation.CanMove())
                 {
-                    ObjectManager.GetLocalPlayer().SpellBook.CastSpell(SpellSlot.Q, qPosition);
-                    qPosition = Vector3.Zero;
-                }
-                else
-                {
-                    if(Orbwalker.Implementation.CanMove())
-                    {
-                        ObjectManager.GetLocalPlayer().SpellBook.CastSpell(SpellSlot.Q, Unit);
-                    }
+                    ObjectManager.GetLocalPlayer().SpellBook.CastSpell(SpellSlot.Q, Unit);
                 }
             }
 
@@ -111,14 +102,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 
             Unit = target;
             CanUseQ = true;
-            DelayAction.Queue(150, () => CanUseQ = false, new CancellationToken(true));
-        }
-
-        public static void CastQ(Vector3 position)
-        {
-            qPosition = position;
-            CanUseQ = true;
-            DelayAction.Queue(150, () => CanUseQ = false, new CancellationToken(true));
+            DelayAction.Queue(150, () => CanUseQ = false);
         }
 
         public static void CastW(Obj_AI_Base target)
@@ -130,7 +114,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 
             CanUseW = SpellConfig.W.Ready && InsideKiBurst(target);
             Unit = target;  
-            DelayAction.Queue(300, () => CanUseW = false, new CancellationToken(true));
+            DelayAction.Queue(300, () => CanUseW = false);
         }
 
         public static void CastR2(Obj_AI_Base target)

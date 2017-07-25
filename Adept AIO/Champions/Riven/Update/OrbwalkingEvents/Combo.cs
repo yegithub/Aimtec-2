@@ -22,7 +22,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
             }
             else
             {
-                if (SpellConfig.Q.Ready && MenuConfig.Combo["Q"].Enabled)
+                if (SpellConfig.Q.Ready)
                 {
                     SpellManager.CastQ(target);
                 }
@@ -37,7 +37,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
                     SpellConfig.R.Cast();
                 }
 
-                if (MenuConfig.Combo["W"].Enabled && SpellManager.InsideKiBurst(target))
+                if (SpellManager.InsideKiBurst(target))
                 {
                     SpellManager.CastW(target);
                 }
@@ -66,13 +66,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
                 return;
             }
 
-            if (target.Distance(ObjectManager.GetLocalPlayer()) > ObjectManager.GetLocalPlayer().AttackRange &&
-                Environment.TickCount - Extensions.LastETime > 700 && !SpellConfig.E.Ready)
-            {
-                SpellManager.CastQ(target);
-            }
-
-            if (SpellConfig.E.Ready && MenuConfig.Combo["E"].Enabled)
+            if (SpellConfig.E.Ready)
             {
                 SpellConfig.E.CastOnUnit(target);
             }
@@ -99,7 +93,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
 
             SummonerSpells.Flash.Cast(target);
 
-            if (MenuConfig.Combo["W"].Enabled && SpellManager.InsideKiBurst(target))
+            if (SpellManager.InsideKiBurst(target))
             {
                 SpellManager.CastW(target);
             }
@@ -107,7 +101,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
 
         private static bool AutoBeforeR2(GameObject target)
         {
-            return target.Distance(ObjectManager.GetLocalPlayer()) < ObjectManager.GetLocalPlayer().AttackRange + 100
+            return target.Distance(ObjectManager.GetLocalPlayer()) < ObjectManager.GetLocalPlayer().AttackRange
                    && SpellConfig.R2.Ready
                    && Extensions.UltimateMode == UltimateMode.Second
                    && MenuConfig.Combo["R2"].Value == 1;

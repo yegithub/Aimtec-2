@@ -1,4 +1,5 @@
-﻿using Adept_AIO.Champions.Riven.Core;
+﻿using System.Threading;
+using Adept_AIO.Champions.Riven.Core;
 using Adept_AIO.Champions.Riven.Drawings;
 using Adept_AIO.Champions.Riven.Update.Miscellaneous;
 using Aimtec;
@@ -23,6 +24,7 @@ namespace Adept_AIO.Champions.Riven
 
             Orbwalker.Implementation.PostAttack += Manager.PostAttack;
             Render.OnRender += DrawManager.RenderManager;
+            Extensions.CancellationToken = new CancellationToken(true);
         }
     }
 }

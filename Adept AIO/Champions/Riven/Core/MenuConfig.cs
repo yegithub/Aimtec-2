@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Adept_AIO.Champions.Riven.Update.OrbwalkingEvents;
 using Adept_AIO.SDK.Extensions;
 using Aimtec.SDK.Menu;
@@ -43,20 +44,17 @@ namespace Adept_AIO.Champions.Riven.Core
             Animation = new Menu("Animation", "Animation")
             {
                 new MenuBool("Ping", "Use Game Ping"),
-                new MenuSlider("AttackSpeedMod", "AttackSpeedMod Multiplier", 9, 1, 20),
-                new MenuSlider("Q1", "Q1 Delay", 265, 200, 350),
-                new MenuSlider("Q2", "Q2 Delay", 270, 200, 350),
-                new MenuSlider("Q3", "Q3 Delay", 305, 200, 435),
+                new MenuSlider("AttackSpeedMod", "Multiplier", 9, 1, 25).SetToolTip("AttackSpeedMod Multiplier"),
+                new MenuSlider("Q1", "Q1 Delay", 265, 260, 360),
+                new MenuSlider("Q2", "Q2 Delay", 270, 260, 360),
+                new MenuSlider("Q3", "Q3 Delay", 305, 285, 390),
             };
 
             Combo = new Menu("Combo", "Combo")
             {
-                new MenuBool("Walljump", "WallJump"),
+              //  new MenuBool("Walljump", "WallJump"),
               //  new MenuBool("Exhaust", "Exhaust"),
                 new MenuBool("Flash", "Flash").SetToolTip("Will flash when an target is safely killable."),
-                new MenuBool("Q", "Use Q"),
-                new MenuBool("W", "Use W"),
-                new MenuBool("E", "Use E"),
                 new MenuList("R",  "R1 Mode: ",  new []{"Never", "Always", "Killable"}, 2),
                 new MenuList("R2", "R2 Mode: ",  new []{"Never", "Always"}, 1)
             };
@@ -135,6 +133,11 @@ namespace Adept_AIO.Champions.Riven.Core
                 MenuShortcut.Credits
             })
                 MainMenu.Add(menu);
+            Console.WriteLine("::RECOMMENDED ANIMATION SETTINGS:: \n" + 
+                              "Ping: On \n" +
+                              "Multiplier: 25 \n" +
+                              "Q1, Q2 -> ~300 \n" + 
+                              "Q3     -> ~340+");
         }
     }
 }

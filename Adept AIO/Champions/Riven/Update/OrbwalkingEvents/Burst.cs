@@ -22,7 +22,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
                 {
                     SpellManager.CastQ(target);
                     SpellManager.CastW(target);
-                }, new CancellationToken(true));
+                });
             }
             else if (SpellConfig.Q.Ready)
             {
@@ -69,7 +69,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
             if (Environment.TickCount - Extensions.LastETime >= 180 && Extensions.AllIn && distance < 720 && SpellConfig.W.Ready && SpellConfig.R.Ready)
             {
                 ObjectManager.GetLocalPlayer().SpellBook.CastSpell(SpellSlot.W);
-                SummonerSpells.Flash?.Cast(target.ServerPosition);
+                SummonerSpells.Flash?.Cast(target.ServerPosition.Extend(ObjectManager.GetLocalPlayer().ServerPosition, target.BoundingRadius));
             }   
             else if (SpellConfig.E.Ready)
             {

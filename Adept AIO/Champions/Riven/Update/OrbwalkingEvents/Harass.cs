@@ -81,7 +81,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
                     #region SemiCombo
                     if (SpellConfig.Q.Ready && SpellConfig.W.Ready && Extensions.CurrentQCount == 1 && qwRange)
                     {
-                        SpellManager.CastQ(target.ServerPosition);
+                        SpellManager.CastQ(target);
                     }
                    
                     if (!SpellConfig.Q.Ready && SpellConfig.E.Ready && Extensions.CurrentQCount == 1 && !Orbwalker.Implementation.CanAttack())
@@ -95,7 +95,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
 
                     if (SpellConfig.Q.Ready && SpellConfig.W.Ready && Extensions.CurrentQCount == 1 && qwRange)
                     {
-                        SpellManager.CastQ(target.ServerPosition);
+                        SpellManager.CastQ(target);
                     }
 
                     if (SpellConfig.Q.Ready && SpellConfig.E.Ready && Extensions.CurrentQCount == 3 && !Orbwalker.Implementation.CanAttack())
@@ -114,7 +114,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
 
                     if (SpellConfig.Q.Ready && SpellConfig.W.Ready && Extensions.CurrentQCount == 1 && qwRange)
                     {
-                        SpellManager.CastQ(target.ServerPosition);
+                        SpellManager.CastQ(target);
                     }
 
                     if (SpellConfig.Q.Ready && SpellConfig.E.Ready && Extensions.CurrentQCount == 3 && !Orbwalker.Implementation.CanAttack())

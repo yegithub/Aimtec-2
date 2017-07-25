@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using Aimtec;
 using Aimtec.SDK.Extensions;
 using Aimtec.SDK.Util.Cache;
@@ -46,6 +47,7 @@ namespace Adept_AIO.Champions.Riven.Core
         public static IEnumerable<Obj_AI_Hero> Enemies = GameObjects.EnemyHeroes.Where(x => x.IsValidTarget(GetRange()));
         public static HarassPattern Current;
         public static UltimateMode UltimateMode;
+        public static CancellationToken CancellationToken;
     }
 
     public enum HarassPattern

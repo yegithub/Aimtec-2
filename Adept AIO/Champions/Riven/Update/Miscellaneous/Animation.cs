@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using Adept_AIO.Champions.Riven.Core;
 using Aimtec;
 using Aimtec.SDK.Orbwalking;
@@ -26,16 +27,19 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                     Extensions.LastQTime = Environment.TickCount;
                     Extensions.CurrentQCount = 2;
                     DelayAction.Queue(GetDelay(MenuConfig.Animation["Q1"].Value), Reset);
+                    //DelayAction.Queue(GetDelay((int)(Orbwalker.Implementation.WindUpTime + Game.Ping / 2f)), Reset);
                     break;
                 case "Spell1b":
                     Extensions.LastQTime = Environment.TickCount;
                     Extensions.CurrentQCount = 3;
                     DelayAction.Queue(GetDelay(MenuConfig.Animation["Q2"].Value), Reset);
+                    //DelayAction.Queue(GetDelay((int)(Orbwalker.Implementation.WindUpTime + Game.Ping / 2f)), Reset);
                     break;
                 case "Spell1c":
                     Extensions.LastQTime = Environment.TickCount;
                     Extensions.CurrentQCount = 1;
                     DelayAction.Queue(GetDelay(MenuConfig.Animation["Q3"].Value), Reset);
+                   // DelayAction.Queue(GetDelay((int) (Orbwalker.Implementation.WindUpTime + Game.Ping / 2f + 50)), Reset);
                     break;
                 case "Spell2":
                     Extensions.LastWTime = Environment.TickCount;
@@ -52,14 +56,18 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
             {
                 return;
             }
+            
             Orbwalker.Implementation.ResetAutoAttackTimer();
             ObjectManager.GetLocalPlayer().IssueOrder(OrderType.MoveTo, Game.CursorPos);
         }
 
+        // Still needs a lot of work.
         private static int GetDelay(int temp)
         {
-            // Still needs a lot of work.
-            return (int)(temp - ObjectManager.GetLocalPlayer().AttackSpeedMod * MenuConfig.Animation["AttackSpeedMod"].Value + (MenuConfig.Animation["Ping"].Enabled ? Game.Ping : 0));
+            var delay = (int)(temp - ObjectManager.GetLocalPlayer().AttackSpeedMod * MenuConfig.Animation["AttackSpeedMod"].Value + (MenuConfig.Animation["Ping"].Enabled ? Game.Ping : 0));
+            //Console.WriteLine("ANIMATION: " + delay);
+           
+            return delay;
         }
     }
 }
