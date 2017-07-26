@@ -1,14 +1,14 @@
 ﻿using System.Linq;
-using Adept_AIO.Champions.Kayn.Core;
+using Adept_AIO.Champions.LeeSin.Core;
 using Adept_AIO.SDK.Extensions;
 using Adept_AIO.SDK.Usables;
 using Aimtec;
 using Aimtec.SDK.Damage;
 using Aimtec.SDK.Extensions;
 
-namespace Adept_AIO.Champions.Kayn.Update.Miscellaneous
+namespace Adept_AIO.Champions.LeeSin.Update.Miscellaneous
 {
-    internal class Killsteal
+    class Killsteal
     {
         public static void OnUpdate()
         {
@@ -19,18 +19,21 @@ namespace Adept_AIO.Champions.Kayn.Update.Miscellaneous
                 return;
             }
 
+            if (MenuConfig.Killsteal["Smite"].Enabled && SummonerSpells.Smite != null && SummonerSpells.Smite.Ready && target.Health < SummonerSpells.SmiteChampions())
+            {
+                SummonerSpells.Smite.CastOnUnit(target);
+            }
             if (SpellConfig.Q.Ready && target.Health < ObjectManager.GetLocalPlayer().GetSpellDamage(target, SpellSlot.Q) &&
                 target.IsValidTarget(SpellConfig.Q.Range) &&
                 MenuConfig.Killsteal["Q"].Enabled)
             {
                 SpellConfig.Q.Cast(target);
-                SpellConfig.CastTiamat();
             }
-            else if (SpellConfig.W.Ready && target.Health < ObjectManager.GetLocalPlayer().GetSpellDamage(target, SpellSlot.W) &&
-                     target.IsValidTarget(SpellConfig.W.Range) &&
-                     MenuConfig.Killsteal["W"].Enabled)
+            else if (SpellConfig.E.Ready && target.Health < ObjectManager.GetLocalPlayer().GetSpellDamage(target, SpellSlot.E) &&
+                     target.IsValidTarget(SpellConfig.E.Range) &&
+                     MenuConfig.Killsteal["E"].Enabled)
             {
-                SpellConfig.W.Cast(target);
+                SpellConfig.E.Cast();
             }
             else if (SpellConfig.R.Ready && target.Health < ObjectManager.GetLocalPlayer().GetSpellDamage(target, SpellSlot.R) &&
                      target.IsValidTarget(SpellConfig.R.Range) &&

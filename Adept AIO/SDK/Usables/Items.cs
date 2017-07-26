@@ -25,7 +25,7 @@ namespace Adept_AIO.SDK.Usables
             }
         }
 
-        public static void CastItem(string itemName, Obj_AI_Base target = null)
+        public static void CastItem(string itemName, Vector3 position = new Vector3())
         {
             var slot = GetItemSlot(itemName);
             if (!CanUseItem(itemName))
@@ -33,13 +33,13 @@ namespace Adept_AIO.SDK.Usables
                 return;
             }
 
-            if (target == null)
+            if (position == Vector3.Zero)
             {
                 ObjectManager.GetLocalPlayer().SpellBook.CastSpell(slot);
             }
             else
             {
-                ObjectManager.GetLocalPlayer().SpellBook.CastSpell(slot, target);
+                ObjectManager.GetLocalPlayer().SpellBook.CastSpell(slot, position);
             }
         }
 

@@ -10,25 +10,35 @@ namespace Adept_AIO.Champions.Kayn.Update.OrbwalkingEvents
 {
     class Combo
     {
-        private static bool BeybladeActive;
-
         public static void OnPostAttack(AttackableUnit target)
         {
-            if (!BeybladeActive || !MenuConfig.Combo["R"].Enabled || !SpellConfig.R.Ready || target == null)
+            if (target == null)
+            {
+                return;
+            }
+
+            Items.CastTiamat();
+
+            if (target.HealthPercent() >= 40 || !MenuConfig.Combo["R"].Enabled || !SpellConfig.R.Ready)
             {
                 return;
             }
 
             SpellConfig.R.CastOnUnit(target);
-            BeybladeActive = false;
         }
 
         public static void OnUpdate()
         {
+            var target = GlobalExtension.TargetSelector.GetTarget(SpellConfig.R.Range);
+            if (target == null)
+            {
+                return;
+            }
 
             if (SpellConfig.E.Ready && MenuConfig.Combo["E"].Enabled)
             {
-                var point = WallExtension.GeneratePoint(ObjectManager.GetLocalPlayer().ServerPosition, ObjectManager.GetLocalPlayer().ServerPosition.Extend(Game.CursorPos, SpellConfig.E.Range)).FirstOrDefault();
+                var end = ObjectManager.GetLocalPlayer().Position.Extend(Game.CursorPos, 500);
+                var point = WallExtension.GeneratePoint(ObjectManager.GetLocalPlayer().Position, end).OrderBy(x => x.Distance(ObjectManager.GetLocalPlayer().Position)).FirstOrDefault();
 
                 if (ObjectManager.GetLocalPlayer().HasBuffOfType(BuffType.Slow) || point != Vector3.Zero)
                 {
@@ -36,48 +46,33 @@ namespace Adept_AIO.Champions.Kayn.Update.OrbwalkingEvents
                 }
             }
 
-            if (SpellConfig.W.Ready && MenuConfig.Combo["W"].Enabled)
+            if (SpellConfig.W.Ready && MenuConfig.Combo["W"].Enabled && target.IsValidTarget(SpellConfig.W.Range))
             {
-                var target = GlobalExtension.TargetSelector.GetTarget(SpellConfig.W.Range);
-                if (target != null)
-                {
-                    SpellConfig.W.Cast(target);
-                }
+                SpellConfig.W.Cast(target);
             }
 
             if (SpellConfig.Q.Ready && MenuConfig.Combo["Q"].Enabled)
             {
                 if (SpellConfig.R.Ready && MenuConfig.Combo["Beyblade"].Enabled && SummonerSpells.Flash != null &&
-                    SummonerSpells.Flash.Ready)
+                    SummonerSpells.Flash.Ready && target.Distance(ObjectManager.GetLocalPlayer()) > SpellConfig.Q.Range && Dmg.Damage(target) * 1.5f >= target.Health)
                 {
-                    var target = GlobalExtension.TargetSelector.GetTarget(425 + 65 + 550);
-                    if (target != null && target.Distance(ObjectManager.GetLocalPlayer()) > SpellConfig.Q.Range && Dmg.Damage(target) * 1.2f >= target.Health)
-                    {
-                        BeybladeActive = true;
-                        ObjectManager.GetLocalPlayer().SpellBook.CastSpell(SpellSlot.Q, target.ServerPosition);
-                        SummonerSpells.Flash.Cast(target.ServerPosition);
-
-                        DelayAction.Queue(3500, () =>
-                        {
-                            BeybladeActive = false;
-                        });
-                    }
+                    ObjectManager.GetLocalPlayer().SpellBook.CastSpell(SpellSlot.Q, target.ServerPosition);
+                    SummonerSpells.Flash.Cast(target.ServerPosition);
                 }
                 else
                 {
-                    var target = GlobalExtension.TargetSelector.GetTarget(SpellConfig.Q.Range);
-                    if (target != null)
+                    if (target.IsValidTarget(SpellConfig.Q.Range))
                     {
-                        SpellConfig.Q.Cast(target);
+                        SpellConfig.Q.Cast(target);  
+                        SpellConfig.CastTiamat();
                     }
                 }
             }
 
-            if (SpellConfig.R.Ready && MenuConfig.Combo["R"].Enabled && MenuConfig.Combo["R"].Value <=
-                ObjectManager.GetLocalPlayer().HealthPercent())
+            if (SpellConfig.R.Ready && MenuConfig.Combo["R"].Enabled && (MenuConfig.Combo["R"].Value >=
+                ObjectManager.GetLocalPlayer().HealthPercent() || Dmg.Damage(target) > target.Health))
             {
-                var target = GameObjects.EnemyHeroes.FirstOrDefault(x => x.IsValidTarget(SpellConfig.R.Range));
-                if (target != null && MenuConfig.Whitelist[target.ChampionName].Enabled)
+                if (MenuConfig.Whitelist[target.ChampionName].Enabled)
                 {
                     SpellConfig.R.CastOnUnit(target);
                 }

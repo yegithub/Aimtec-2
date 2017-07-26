@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using Adept_AIO.Champions.Kayn;
+
 using Adept_AIO.SDK.Extensions;
 using Adept_AIO.SDK.Usables;
 using Aimtec;
@@ -7,6 +7,8 @@ using Aimtec.SDK.Events;
 
 namespace Adept_AIO
 {
+    using Champions.Kayn;
+   // using Champions.LeeSin;
     using Champions.Irelia;
     using Champions.Jax;
     using Champions.Rengar;
@@ -20,7 +22,7 @@ namespace Adept_AIO
             GameEvents.GameStart += GameEvents_GameStart;
         }
 
-        private static readonly string[] Valid = { "Riven", "Irelia", "Jax", "Rengar", "Yasuo", "Kayn" };
+        private static readonly string[] Valid = { "Riven", "Irelia", "Jax", "Rengar", "Yasuo", "Kayn", "LeeSin" };
 
         private static void GameEvents_GameStart()
         {
@@ -44,6 +46,9 @@ namespace Adept_AIO
                 case "Kayn":
                     Kayn.Init();
                     break;
+                //case "LeeSin":
+                //    LeeSin.Init();
+                //    break;
                 case "Rengar":
                     Rengar.Init();
                     break;

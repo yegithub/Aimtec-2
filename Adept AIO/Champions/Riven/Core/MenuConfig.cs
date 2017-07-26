@@ -112,7 +112,7 @@ namespace Adept_AIO.Champions.Riven.Core
             Drawings = new Menu("Drawings", "Drawings")
             {
                 new MenuSlider("Segments", "Segments", 200, 100, 300).SetToolTip("Smoothness of the circles. Less equals more FPS."),
-                new MenuBool("Damage", "Damage"),
+             //   new MenuBool("Damage", "Damage"),
                 new MenuBool("Engage", "Engage Range"),
                 new MenuBool("R2", "R2 Range", false),
                 new MenuBool("Harass", "Harass Pattern")
