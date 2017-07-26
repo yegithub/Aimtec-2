@@ -33,7 +33,6 @@ namespace Adept_AIO.Champions.Riven.Core
             MainMenu = new Menu(string.Empty, "Adept AIO", true);
             MainMenu.Attach();
 
-            GlobalExtension.Orbwalker = new Orbwalker();
             BurstMode = new OrbwalkerMode("Burst", KeyCode.T, null, Burst.OnUpdate);
             FleeMode = new OrbwalkerMode("Flee", KeyCode.A, null, Flee.OnKeyPressed);
 

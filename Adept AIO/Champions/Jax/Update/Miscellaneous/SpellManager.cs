@@ -5,7 +5,7 @@ using Aimtec.SDK.Extensions;
 
 namespace Adept_AIO.Champions.Jax.Update.Miscellaneous
 {
-    class SpellManager
+    internal class SpellManager
     {
         private static bool CanUseE;
         private static Obj_AI_Base Unit;

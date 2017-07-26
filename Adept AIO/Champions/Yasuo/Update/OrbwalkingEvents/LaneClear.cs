@@ -8,7 +8,7 @@ using GameObjects = Adept_AIO.SDK.Extensions.GameObjects;
 
 namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
 {
-    class LaneClear
+    internal class LaneClear
     {
     
         public static void OnPostAttack()

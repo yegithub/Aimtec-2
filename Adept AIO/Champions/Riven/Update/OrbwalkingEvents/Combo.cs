@@ -6,7 +6,6 @@ using Adept_AIO.SDK.Usables;
 using Aimtec;
 using Aimtec.SDK.Damage;
 using Aimtec.SDK.Extensions;
-using Aimtec.SDK.TargetSelector;
 
 namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
 {
@@ -45,7 +44,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
 
         public static void OnUpdate()
         {
-            var target = TargetSelector.GetTarget(SpellConfig.R2.Range);
+            var target = GlobalExtension.TargetSelector.GetTarget(SpellConfig.R2.Range);
             if (target != null && Extensions.UltimateMode == UltimateMode.Second && !AutoBeforeR2(target) && target.HealthPercent() <= 50)
             {
                 SpellManager.CastR2(target);
@@ -59,7 +58,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
 
         private static void ExecuteCombo()
         {
-            var target = TargetSelector.GetTarget(Extensions.GetRange());
+            var target = GlobalExtension.TargetSelector.GetTarget(Extensions.EngageRange());
             if (target == null)
             {
                 return;
@@ -73,7 +72,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
 
         private static void Flash()
         {
-            var target = TargetSelector.GetTarget(1200);
+            var target = GlobalExtension.TargetSelector.GetTarget(1200);
             if (target == null || target.IsUnderEnemyTurret())
             {
                 return;

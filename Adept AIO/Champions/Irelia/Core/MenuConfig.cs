@@ -2,7 +2,6 @@
 using Adept_AIO.SDK.Extensions;
 using Aimtec.SDK.Menu;
 using Aimtec.SDK.Menu.Components;
-using Aimtec.SDK.Orbwalking;
 
 namespace Adept_AIO.Champions.Irelia.Core
 {
@@ -21,7 +20,6 @@ namespace Adept_AIO.Champions.Irelia.Core
             MainMenu = new Menu(string.Empty, "Adept AIO", true);
             MainMenu.Attach();
 
-            GlobalExtension.Orbwalker = new Orbwalker();
             GlobalExtension.Orbwalker.Attach(MainMenu);
 
             Combo = new Menu("Combo", "Combo")

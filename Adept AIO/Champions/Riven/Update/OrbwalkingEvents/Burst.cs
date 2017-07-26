@@ -5,7 +5,6 @@ using Adept_AIO.SDK.Extensions;
 using Adept_AIO.SDK.Usables;
 using Aimtec;
 using Aimtec.SDK.Extensions;
-using Aimtec.SDK.TargetSelector;
 using Aimtec.SDK.Util;
 
 namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
@@ -20,7 +19,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
                 DelayAction.Queue(1, () =>
                 {
                     SpellManager.CastQ(target);
-                    SpellManager.CastW(target);
+                    SpellManager.CastW(target); // Extra check
                 });
             }
             else if (SpellConfig.Q.Ready)
@@ -36,8 +35,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
 
         public static void OnUpdate()
         {
-          
-            var target = TargetSelector.GetSelectedTarget();
+            var target = GlobalExtension.TargetSelector.GetSelectedTarget();
             if (target == null || !MenuConfig.BurstMenu[target.ChampionName].Enabled)
             {
                 return;
@@ -59,13 +57,13 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
 
             if (SpellConfig.R.Ready &&
                 Extensions.UltimateMode == UltimateMode.First &&
-                SpellConfig.E.Ready && distance < Extensions.GetRange())
+                SpellConfig.E.Ready && distance < Extensions.FlashRange(target))
             {
                 SpellConfig.E.Cast(target.ServerPosition);
                 SpellConfig.R.Cast();
             }
 
-            if (Environment.TickCount - Extensions.LastETime >= 180 && Extensions.AllIn && distance < 720 && SpellConfig.W.Ready && SpellConfig.R.Ready)
+            if (Environment.TickCount - Extensions.LastETime >= 180 && Extensions.AllIn && distance < Extensions.FlashRange(target) && SpellConfig.W.Ready && SpellConfig.R.Ready)
             {
                 ObjectManager.GetLocalPlayer().SpellBook.CastSpell(SpellSlot.W);
                 SummonerSpells.Flash?.Cast(target.ServerPosition.Extend(ObjectManager.GetLocalPlayer().ServerPosition, target.BoundingRadius));

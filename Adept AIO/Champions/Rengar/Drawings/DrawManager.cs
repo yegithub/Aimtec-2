@@ -5,7 +5,7 @@ using Aimtec.SDK.Util;
 
 namespace Adept_AIO.Champions.Rengar.Drawings
 {
-    class DrawManager
+    internal class DrawManager
     {
         public static void RenderManager()
         {

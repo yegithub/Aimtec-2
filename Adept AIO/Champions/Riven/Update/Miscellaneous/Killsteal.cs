@@ -45,7 +45,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
             {
                 Items.CastTiamat();
             }
-            else if (MenuConfig.Killsteal["Ignite"].Enabled && SummonerSpells.Ignite != null && SummonerSpells.Ignite.Ready && target.Health < SummonerSpells.IgniteDamage)
+            else if (MenuConfig.Killsteal["Ignite"].Enabled && SummonerSpells.Ignite != null && SummonerSpells.Ignite.Ready && target.Health < SummonerSpells.IgniteDamage(target))
             {
                 SummonerSpells.Ignite.Cast(target);
             }

@@ -4,7 +4,7 @@ using Spell = Aimtec.SDK.Spell;
 
 namespace Adept_AIO.Champions.Yasuo.Core
 {
-    class SpellConfig
+    internal class SpellConfig
     {
         public static Spell Q, W, E, R;
 
@@ -32,15 +32,16 @@ namespace Adept_AIO.Champions.Yasuo.Core
                     Q.SetSkillshot(0.25f, 55, int.MaxValue, false, SkillshotType.Line);
                     Q.Range = 475;
                     break;
+                case Mode.Tornado:
+                    Q.SetSkillshot(0.3f, 90, 1600, false, SkillshotType.Line);
+                    Q.Range = 1200;
+                    break;
                 case Mode.Dashing:
                 case Mode.DashingTornado:
                     Q.SetSkillshot(0, 375, int.MaxValue, false, SkillshotType.Circle);
-                    Q.Range = 475;
+                    Q.Range = 220;
                     break;
-                case Mode.Tornado:
-                    Q.SetSkillshot(0.3f, 90, 1200, false, SkillshotType.Line);
-                    Q.Range = 1200;
-                    break;
+             
             }
         }
     }

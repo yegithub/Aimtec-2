@@ -24,7 +24,7 @@ namespace Adept_AIO.Champions.Riven.Drawings
 
             if (MenuConfig.Drawings["Engage"].Enabled)
             {
-                Render.Circle(ObjectManager.GetLocalPlayer().Position, Extensions.GetRange(),
+                Render.Circle(ObjectManager.GetLocalPlayer().Position, Extensions.EngageRange(),
                     (uint) MenuConfig.Drawings["Segments"].Value, Extensions.AllIn ? Color.Yellow : Color.White);
             }
 

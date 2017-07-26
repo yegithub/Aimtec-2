@@ -2,11 +2,10 @@
 using Adept_AIO.SDK.Extensions;
 using Aimtec;
 using Aimtec.SDK.Extensions;
-using Aimtec.SDK.TargetSelector;
 
 namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
 {
-    class Harass
+    internal class Harass
     {
         public static void OnPostAttack()
         {
@@ -20,7 +19,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                 return;
             }
 
-            var target = TargetSelector.GetTarget(1100);
+            var target = GlobalExtension.TargetSelector.GetTarget(1100);
             if (target == null || GlobalExtension.Orbwalker.IsWindingUp)
             {
                 return;

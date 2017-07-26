@@ -4,7 +4,6 @@ using Adept_AIO.Champions.Riven.Update.Miscellaneous;
 using Adept_AIO.SDK.Extensions;
 using Aimtec;
 using Aimtec.SDK.Extensions;
-using Aimtec.SDK.TargetSelector;
 using Aimtec.SDK.Util;
 
 namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
@@ -57,7 +56,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
 
         public static void OnUpdate()
         {
-            var target = TargetSelector.GetTarget(Extensions.GetRange() + 1000);
+            var target = GlobalExtension.TargetSelector.GetTarget(Extensions.EngageRange() + 1000);
 
             if (target == null)
             {

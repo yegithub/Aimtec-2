@@ -12,7 +12,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
     {
         public static void OnPostAttack()
         {
-            var mob = GameObjects.Jungle.FirstOrDefault(x => x.Distance(ObjectManager.GetLocalPlayer()) < Extensions.GetRange() &&
+            var mob = GameObjects.Jungle.FirstOrDefault(x => x.Distance(ObjectManager.GetLocalPlayer()) < Extensions.EngageRange() &&
                                                              x.MaxHealth > 5 &&
                                                              x.Health > ObjectManager.GetLocalPlayer().GetAutoAttackDamage(x));
             if (mob == null)

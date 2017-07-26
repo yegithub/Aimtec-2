@@ -5,7 +5,6 @@ using Aimtec;
 using Aimtec.SDK.Damage;
 using Aimtec.SDK.Extensions;
 using Aimtec.SDK.Orbwalking;
-using Aimtec.SDK.TargetSelector;
 using GameObjects = Aimtec.SDK.Util.Cache.GameObjects;
 
 namespace Adept_AIO.Champions.Irelia.Update.OrbwalkingEvents
@@ -48,13 +47,13 @@ namespace Adept_AIO.Champions.Irelia.Update.OrbwalkingEvents
 
             if (SpellConfig.Q.Ready)
             {
-                var killable = TargetSelector.GetTarget(SpellConfig.Q.Range);
+                var killable = GlobalExtension.TargetSelector.GetTarget(SpellConfig.Q.Range);
                 if (killable != null && ganked || Dmg.Damage(killable)*1.2 > killable?.Health)
                 {
                     SpellConfig.Q.CastOnUnit(killable);
                 }
 
-                var longRangeTarget = TargetSelector.GetTarget(SpellConfig.Q.Range * 3);
+                var longRangeTarget = GlobalExtension.TargetSelector.GetTarget(SpellConfig.Q.Range * 3);
 
                 if (longRangeTarget == null || 
                     longRangeTarget.IsUnderEnemyTurret() && MenuConfig.Combo["Turret"].Enabled && longRangeTarget.Health > Dmg.Damage(longRangeTarget))
@@ -87,7 +86,7 @@ namespace Adept_AIO.Champions.Irelia.Update.OrbwalkingEvents
                 }
             }
 
-            var target = TargetSelector.GetTarget(SpellConfig.R.Range);
+            var target = GlobalExtension.TargetSelector.GetTarget(SpellConfig.R.Range);
             if (target == null)
             {
                 return;

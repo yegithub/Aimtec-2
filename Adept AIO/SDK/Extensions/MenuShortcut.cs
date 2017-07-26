@@ -3,7 +3,7 @@ using Aimtec.SDK.Menu.Components;
 
 namespace Adept_AIO.SDK.Extensions
 {
-    class MenuShortcut
+    internal class MenuShortcut
     {
         public static Menu Credits = new Menu("Credits", "Credits")
         {

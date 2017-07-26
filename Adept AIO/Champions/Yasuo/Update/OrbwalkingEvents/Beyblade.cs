@@ -1,23 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Adept_AIO.Champions.Yasuo.Core;
 using Adept_AIO.SDK.Extensions;
 using Adept_AIO.SDK.Usables;
 using Aimtec;
 using Aimtec.SDK.Extensions;
-using Aimtec.SDK.TargetSelector;
 using Aimtec.SDK.Util;
 
 namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
 {
-    class Beyblade
+    internal class Beyblade
     {
         public static void OnPostAttack()
         {
-            var target = TargetSelector.GetSelectedTarget();
+            var target = GlobalExtension.TargetSelector.GetSelectedTarget();
             if (target == null)
             {
                 return;
@@ -35,7 +30,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
 
         public static void OnKeyPressed()
         {
-            var target = TargetSelector.GetSelectedTarget();
+            var target = GlobalExtension.TargetSelector.GetSelectedTarget();
             if (target == null)
             {
                 return;

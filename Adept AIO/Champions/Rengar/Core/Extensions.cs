@@ -3,7 +3,7 @@ using Aimtec.SDK.Extensions;
 
 namespace Adept_AIO.Champions.Rengar.Core
 {
-    class Extensions
+    internal class Extensions
     {
         public static Obj_AI_Hero AssassinTarget = null;
 

@@ -6,7 +6,7 @@ using Aimtec.SDK.Orbwalking;
 
 namespace Adept_AIO.Champions.Yasuo.Drawings
 {
-    class DrawManager
+    internal class DrawManager
     {
         public static void RenderManager()
         {

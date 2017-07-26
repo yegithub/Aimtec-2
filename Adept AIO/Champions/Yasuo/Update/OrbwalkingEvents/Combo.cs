@@ -4,16 +4,15 @@ using Adept_AIO.SDK.Extensions;
 using Adept_AIO.SDK.Usables;
 using Aimtec;
 using Aimtec.SDK.Extensions;
-using Aimtec.SDK.TargetSelector;
 using Aimtec.SDK.Util;
 
 namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
 {
-    class Combo
+    internal class Combo
     {
         public static void OnPostAttack()
         {
-            var target = TargetSelector.GetTarget(SpellConfig.R.Range);
+            var target = GlobalExtension.TargetSelector.GetTarget(SpellConfig.R.Range);
             if (target == null)
             {
                 return;
@@ -31,7 +30,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
 
         public static void OnUpdate()
         {
-            var target = TargetSelector.GetTarget(1800);
+            var target = GlobalExtension.TargetSelector.GetTarget(1800);
             if (target == null)
             {
                 return;
@@ -110,7 +109,10 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                 }
             }
 
-            if (SpellConfig.R.Ready && Extension.KnockedUp(target) && (distance > 650 || distance > 450 && minion == null))
+            var airbourneTargets = GameObjects.EnemyHeroes.Where(x => Extension.KnockedUp(x) && x.Distance(ObjectManager.GetLocalPlayer()) <= SpellConfig.R.Range);
+            var amount = airbourneTargets as Obj_AI_Hero[] ?? airbourneTargets.ToArray();
+
+            if (SpellConfig.R.Ready && Extension.KnockedUp(target) && (amount.Length >= MenuConfig.Combo["R"].Value || distance > 650 || distance > 450 && minion == null))
             {
                 DelayAction.Queue(MenuConfig.Combo["Delay"].Enabled ? 375 + Game.Ping / 2 : 100 + Game.Ping / 2, () => SpellConfig.R.Cast());
             }

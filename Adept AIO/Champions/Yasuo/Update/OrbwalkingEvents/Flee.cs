@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using Adept_AIO.Champions.Yasuo.Core;
 using Adept_AIO.SDK.Extensions;
 using Aimtec;
@@ -11,7 +7,7 @@ using SpellConfig = Adept_AIO.Champions.Jax.Core.SpellConfig;
 
 namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
 {
-    class Flee
+    internal class Flee
     {
         public static void OnKeyPressed()
         {

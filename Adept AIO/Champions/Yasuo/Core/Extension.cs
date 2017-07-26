@@ -14,7 +14,7 @@ namespace Adept_AIO.Champions.Yasuo.Core
         Tornado
     }
 
-    class Extension
+    internal class Extension
     {
         public static Mode CurrentMode;
 

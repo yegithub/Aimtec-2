@@ -1,9 +1,9 @@
 ﻿using Aimtec;
 using Aimtec.SDK.Damage;
 
-namespace Adept_AIO.Champions.Yasuo.Core
+namespace Adept_AIO.Champions.Kayn.Core
 {
-    internal class Dmg
+    class Dmg
     {
         public static double Damage(Obj_AI_Base target)
         {
@@ -19,9 +19,9 @@ namespace Adept_AIO.Champions.Yasuo.Core
                 dmg += ObjectManager.GetLocalPlayer().GetSpellDamage(target, SpellSlot.Q) + dmg;
             }
 
-            if (SpellConfig.E.Ready)
+            if (SpellConfig.W.Ready)
             {
-                dmg += ObjectManager.GetLocalPlayer().GetSpellDamage(target, SpellSlot.E);
+                dmg += ObjectManager.GetLocalPlayer().GetSpellDamage(target, SpellSlot.W);
             }
 
             if (SpellConfig.R.Ready)

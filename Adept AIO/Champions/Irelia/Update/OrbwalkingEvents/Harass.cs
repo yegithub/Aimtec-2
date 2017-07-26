@@ -4,7 +4,6 @@ using Adept_AIO.SDK.Extensions;
 using Aimtec;
 using Aimtec.SDK.Damage;
 using Aimtec.SDK.Extensions;
-using Aimtec.SDK.TargetSelector;
 using GameObjects = Aimtec.SDK.Util.Cache.GameObjects;
 
 namespace Adept_AIO.Champions.Irelia.Update.OrbwalkingEvents
@@ -37,7 +36,7 @@ namespace Adept_AIO.Champions.Irelia.Update.OrbwalkingEvents
         {
             if (SpellConfig.Q.Ready && MenuConfig.Harass["Q"].Enabled && MenuConfig.Harass["Q"].Value <= ObjectManager.GetLocalPlayer().ManaPercent())
             {
-                var target = TargetSelector.GetTarget(SpellConfig.Q.Range);
+                var target = GlobalExtension.TargetSelector.GetTarget(SpellConfig.Q.Range);
 
                 if (target == null)
                 {
@@ -67,7 +66,7 @@ namespace Adept_AIO.Champions.Irelia.Update.OrbwalkingEvents
 
             if (SpellConfig.E.Ready && MenuConfig.Harass["E"].Enabled && MenuConfig.Harass["E"].Value <= ObjectManager.GetLocalPlayer().ManaPercent())
             {
-                var target = TargetSelector.GetTarget(SpellConfig.E.Range);
+                var target = GlobalExtension.TargetSelector.GetTarget(SpellConfig.E.Range);
 
                 if (target == null)
                 {

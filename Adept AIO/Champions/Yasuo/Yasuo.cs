@@ -6,7 +6,7 @@ using Aimtec;
 
 namespace Adept_AIO.Champions.Yasuo
 {
-    class Yasuo
+    internal class Yasuo
     {
         public static void Init()
         {

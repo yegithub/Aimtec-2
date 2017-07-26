@@ -6,7 +6,6 @@ using Adept_AIO.SDK.Extensions;
 using Adept_AIO.SDK.Usables;
 using Aimtec;
 using Aimtec.SDK.Extensions;
-using Aimtec.SDK.TargetSelector;
 using GameObjects = Aimtec.SDK.Util.Cache.GameObjects;
 
 namespace Adept_AIO.Champions.Jax.Update.OrbwalkingEvents
@@ -34,7 +33,7 @@ namespace Adept_AIO.Champions.Jax.Update.OrbwalkingEvents
 
         public static void OnUpdate()
         {
-            var target = TargetSelector.GetTarget(SpellConfig.Q.Range + 50);
+            var target = GlobalExtension.TargetSelector.GetTarget(SpellConfig.Q.Range);
             if (target == null)
             {
                 return;
@@ -45,7 +44,7 @@ namespace Adept_AIO.Champions.Jax.Update.OrbwalkingEvents
                 SpellConfig.R.Cast();
             }
 
-            if (SpellConfig.E.Ready)
+            if (SpellConfig.E.Ready && target.Distance(ObjectManager.GetLocalPlayer()) <= MenuConfig.Combo["E"].Value && MenuConfig.Combo["E"].Enabled)
             {
                 SpellManager.CastE(target);
             }
@@ -55,7 +54,7 @@ namespace Adept_AIO.Champions.Jax.Update.OrbwalkingEvents
                 return;
             }
 
-            if (MenuConfig.Combo["Delay"].Enabled && (Environment.TickCount - SpellConfig.CounterStrikeTime < 1500 || SpellConfig.E.Ready && SpellConfig.CounterStrikeTime == 0))
+            if (MenuConfig.Combo["Delay"].Enabled && (Environment.TickCount - SpellConfig.CounterStrikeTime < 1500 || SpellConfig.E.Ready && SpellConfig.CounterStrikeTime == 0f))
             {
                 return; 
             }

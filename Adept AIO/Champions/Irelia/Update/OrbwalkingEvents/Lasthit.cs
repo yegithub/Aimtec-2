@@ -7,7 +7,7 @@ using Aimtec.SDK.Extensions;
 
 namespace Adept_AIO.Champions.Irelia.Update.OrbwalkingEvents
 {
-    class Lasthit
+    internal class Lasthit
     {
         public static void OnUpdate()
         {

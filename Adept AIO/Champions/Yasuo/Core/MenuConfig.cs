@@ -9,7 +9,7 @@ using GameObjects = Aimtec.SDK.Util.Cache.GameObjects;
 
 namespace Adept_AIO.Champions.Yasuo.Core
 {
-    class MenuConfig
+    internal class MenuConfig
     {
         private static Menu MainMenu;
 
@@ -21,14 +21,10 @@ namespace Adept_AIO.Champions.Yasuo.Core
                            Killsteal,
                            Drawings;
 
-        
-
         public static void Attach()
         {
             MainMenu = new Menu(string.Empty, "Adept AIO", true);
             MainMenu.Attach();
-
-            GlobalExtension.Orbwalker = new Orbwalker();
 
             Extension.FleeMode     = new OrbwalkerMode("Flee", KeyCode.A, null, Flee.OnKeyPressed);
             Extension.BeybladeMode = new OrbwalkerMode("Beyblade", KeyCode.T, null, Beyblade.OnKeyPressed);
@@ -47,6 +43,7 @@ namespace Adept_AIO.Champions.Yasuo.Core
             Combo = new Menu("Combo", "Combo")
             {
                 new MenuBool("Dodge", "Windwall Targetted Spells"),
+                new MenuSlider("Count", "Use R If X Airbourne", 2, 0, 5),
                 new MenuBool("Delay", "Delay R").SetToolTip("Tries to Knockup -> AA -> R"),
                 new MenuBool("Flash", "Use Flash (Beyblade)").SetToolTip("Will try to E-Q -> Flash. Known as Beyblade"),
                 new MenuBool("Turret", "Avoid Using E Under Turret"),
@@ -80,6 +77,7 @@ namespace Adept_AIO.Champions.Yasuo.Core
 
             Killsteal = new Menu("Killsteal", "Killsteal")
             {
+                new MenuBool("Ignite", "Ignite"),
                 new MenuBool("Q", "Use Q"),
                 new MenuBool("Q3", "Use Q3"),
                 new MenuBool("E", "Use E")
@@ -92,12 +90,6 @@ namespace Adept_AIO.Champions.Yasuo.Core
                 new MenuBool("Debug", "Debug")
             };
 
-            var Credits = new Menu("Credits", "Credits")
-            {
-                new MenuSeperator("WhyAreYouReadingThis", "Written by: Nechrito | Haki | Adept"),
-                new MenuSeperator("ThisStringIsUtterlyUseless", "Platform: LeageTec 2017"),
-            };
-
             foreach (var menu in new List<Menu>
             {
                 Whitelist,
@@ -107,7 +99,7 @@ namespace Adept_AIO.Champions.Yasuo.Core
                 JungleClear,
                 Killsteal,
                 Drawings,
-                Credits
+                MenuShortcut.Credits
             })
             MainMenu.Add(menu);
         }

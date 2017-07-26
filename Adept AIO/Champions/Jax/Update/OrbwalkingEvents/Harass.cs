@@ -3,7 +3,6 @@ using Adept_AIO.Champions.Jax.Core;
 using Adept_AIO.Champions.Jax.Update.Miscellaneous;
 using Adept_AIO.SDK.Extensions;
 using Adept_AIO.SDK.Usables;
-using Aimtec.SDK.TargetSelector;
 
 namespace Adept_AIO.Champions.Jax.Update.OrbwalkingEvents
 {
@@ -23,7 +22,7 @@ namespace Adept_AIO.Champions.Jax.Update.OrbwalkingEvents
 
         public static void OnUpdate()
         {
-            var target = TargetSelector.GetTarget(SpellConfig.Q.Range);
+            var target = GlobalExtension.TargetSelector.GetTarget(SpellConfig.Q.Range);
             if (target == null)
             {
                 return;

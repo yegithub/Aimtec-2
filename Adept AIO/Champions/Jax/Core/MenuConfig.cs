@@ -2,7 +2,6 @@
 using Adept_AIO.SDK.Extensions;
 using Aimtec.SDK.Menu;
 using Aimtec.SDK.Menu.Components;
-using Aimtec.SDK.Orbwalking;
 
 namespace Adept_AIO.Champions.Jax.Core
 {
@@ -21,11 +20,11 @@ namespace Adept_AIO.Champions.Jax.Core
             MainMenu = new Menu(string.Empty, "Adept AIO", true);
             MainMenu.Attach();
 
-            GlobalExtension.Orbwalker = new Orbwalker();
             GlobalExtension.Orbwalker.Attach(MainMenu);
 
             Combo = new Menu("Combo", "Combo")
             {
+                new MenuSliderBool("E", "Start E If Distance <", true, 700, 350, 800),
                 new MenuBool("Jump", "Only Q If E Is Up OR Killable"),
                 new MenuBool("Delay", "Delay Jump When E Is Active"),
                 new MenuSlider("R", "Use R If 'x' Enemies Nearby", 2, 1, 5),

@@ -7,7 +7,7 @@ using GameObjects = Adept_AIO.SDK.Extensions.GameObjects;
 
 namespace Adept_AIO.Champions.Rengar.Update.OrbwalkingEvents
 {
-    class JungleClear
+    internal class JungleClear
     {
         public static void OnPostAttack()
         {

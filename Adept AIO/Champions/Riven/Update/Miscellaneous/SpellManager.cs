@@ -59,8 +59,8 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                 {
                     Items.CastTiamat();
                 }
-               // Console.WriteLine((int)GlobalExtension.Orbwalker.WindUpTime);
-                if (GlobalExtension.Orbwalker.CanMove())
+               
+                if (GlobalExtension.Orbwalker.CanMove()) // Not fast enough
                 {
                     ObjectManager.GetLocalPlayer().SpellBook.CastSpell(SpellSlot.Q, Unit);
                 }
@@ -71,25 +71,6 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                 Items.CastTiamat();
                 SpellConfig.W.Cast();
             }
-        }
-
-        public static void ER(Obj_AI_Base target)
-        {
-            
-        }
-
-        public static void WQ()
-        {
-            if (SpellConfig.Q.Ready && SpellConfig.W.Ready && Environment.TickCount - Extensions.LastETime < 400)
-            {
-                CanUseW = true;
-                CanUseQ = true;
-            }
-        }
-
-        public static void QWQ(Obj_AI_Base target)
-        {
-            
         }
 
         public static void CastQ(Obj_AI_Base target)

@@ -1,12 +1,12 @@
 ﻿using System.Linq;
-using Adept_AIO.Champions.Yasuo.Core;
+using Adept_AIO.Champions.Kayn.Core;
 using Adept_AIO.SDK.Extensions;
 using Adept_AIO.SDK.Usables;
 using Aimtec;
 using Aimtec.SDK.Damage;
 using Aimtec.SDK.Extensions;
 
-namespace Adept_AIO.Champions.Yasuo.Update.Miscellaneous
+namespace Adept_AIO.Champions.Kayn.Update.Miscellaneous
 {
     internal class Killsteal
     {
@@ -23,19 +23,19 @@ namespace Adept_AIO.Champions.Yasuo.Update.Miscellaneous
                 target.IsValidTarget(SpellConfig.Q.Range) &&
                 MenuConfig.Killsteal["Q"].Enabled)
             {
-                if (Extension.CurrentMode == Mode.Tornado && !MenuConfig.Killsteal["Q3"].Enabled)
-                {
-                    return;
-                }
-
                 SpellConfig.Q.Cast(target);
             }
-            else if (SpellConfig.E.Ready && target.Health < ObjectManager.GetLocalPlayer().GetSpellDamage(target, SpellSlot.E) &&
-                     target.IsValidTarget(SpellConfig.E.Range) &&
-                     !target.HasBuff("YasuoDashWrapper") &&
-                     MenuConfig.Killsteal["E"].Enabled)
+            else if (SpellConfig.W.Ready && target.Health < ObjectManager.GetLocalPlayer().GetSpellDamage(target, SpellSlot.W) &&
+                     target.IsValidTarget(SpellConfig.W.Range) &&
+                     MenuConfig.Killsteal["W"].Enabled)
             {
-                SpellConfig.E.CastOnUnit(target);
+                SpellConfig.W.Cast(target);
+            }
+            else if (SpellConfig.R.Ready && target.Health < ObjectManager.GetLocalPlayer().GetSpellDamage(target, SpellSlot.R) &&
+                     target.IsValidTarget(SpellConfig.R.Range) &&
+                     MenuConfig.Killsteal["R"].Enabled)
+            {
+                SpellConfig.R.CastOnUnit(target);
             }
             else if (MenuConfig.Killsteal["Ignite"].Enabled && SummonerSpells.Ignite != null && SummonerSpells.Ignite.Ready && target.Health < SummonerSpells.IgniteDamage(target))
             {

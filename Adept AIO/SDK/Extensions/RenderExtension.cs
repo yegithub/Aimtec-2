@@ -1,6 +1,6 @@
 ﻿namespace Adept_AIO.SDK.Extensions
 {
-    class RenderExtension
+    internal class RenderExtension
     {
         public static void RenderDamage(float damage)
         {

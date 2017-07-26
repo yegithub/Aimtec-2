@@ -9,7 +9,7 @@ using MenuConfig = Adept_AIO.Champions.Rengar.Core.MenuConfig;
 
 namespace Adept_AIO.Champions.Rengar.Update.Miscellaneous
 {
-    class Killsteal
+    internal class Killsteal
     {
         public static void OnUpdate()
         {

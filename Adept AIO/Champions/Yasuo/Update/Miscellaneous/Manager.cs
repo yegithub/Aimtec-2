@@ -1,16 +1,13 @@
-﻿using System;
-using System.Linq;
-using Adept_AIO.Champions.Yasuo.Core;
+﻿using Adept_AIO.Champions.Yasuo.Core;
 using Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents;
 using Adept_AIO.SDK.Extensions;
 using Aimtec;
-using Aimtec.SDK.Extensions;
 using Aimtec.SDK.Orbwalking;
 using Aimtec.SDK.Util;
 
 namespace Adept_AIO.Champions.Yasuo.Update.Miscellaneous
 {
-    class Manager
+    internal class Manager
     {
         public static void PostAttack(object sender, PostAttackEventArgs args)
         {

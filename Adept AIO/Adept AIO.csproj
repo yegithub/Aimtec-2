@@ -77,6 +77,17 @@
     <Compile Include="Champions\Jax\Update\OrbwalkingEvents\Clear.cs" />
     <Compile Include="Champions\Jax\Update\OrbwalkingEvents\Combo.cs" />
     <Compile Include="Champions\Jax\Update\OrbwalkingEvents\Harass.cs" />
+    <Compile Include="Champions\Kayn\Core\Dmg.cs" />
+    <Compile Include="Champions\Kayn\Core\MenuConfig.cs" />
+    <Compile Include="Champions\Kayn\Core\SpellConfig.cs" />
+    <Compile Include="Champions\Kayn\Drawings\DrawManager.cs" />
+    <Compile Include="Champions\Kayn\Kayn.cs" />
+    <Compile Include="Champions\Kayn\Update\Miscellaneous\Killsteal.cs" />
+    <Compile Include="Champions\Kayn\Update\Miscellaneous\Manager.cs" />
+    <Compile Include="Champions\Kayn\Update\OrbwalkingEvents\Combo.cs" />
+    <Compile Include="Champions\Kayn\Update\OrbwalkingEvents\Harass.cs" />
+    <Compile Include="Champions\Kayn\Update\OrbwalkingEvents\JungleClear.cs" />
+    <Compile Include="Champions\Kayn\Update\OrbwalkingEvents\LaneClear.cs" />
     <Compile Include="Champions\Rengar\Core\Dmg.cs" />
     <Compile Include="Champions\Rengar\Core\Extensions.cs" />
     <Compile Include="Champions\Rengar\Core\MenuConfig.cs" />
@@ -132,8 +143,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Champions\Kayn\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

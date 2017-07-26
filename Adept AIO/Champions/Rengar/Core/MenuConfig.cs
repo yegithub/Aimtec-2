@@ -2,7 +2,6 @@
 using Adept_AIO.SDK.Extensions;
 using Aimtec.SDK.Menu;
 using Aimtec.SDK.Menu.Components;
-using Aimtec.SDK.Orbwalking;
 using GameObjects = Aimtec.SDK.Util.Cache.GameObjects;
 
 namespace Adept_AIO.Champions.Rengar.Core
@@ -23,7 +22,6 @@ namespace Adept_AIO.Champions.Rengar.Core
             MainMenu = new Menu(string.Empty, "Adept AIO", true);
             MainMenu.Attach();
 
-            GlobalExtension.Orbwalker = new Orbwalker();
             GlobalExtension.Orbwalker.Attach(MainMenu);
 
             AssassinManager = new Menu("AssassinManager", "Assassin Manager");

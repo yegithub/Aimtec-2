@@ -12,7 +12,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
     {
         public static void OnPostAttack()
         {
-            var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(ObjectManager.GetLocalPlayer()) < Extensions.GetRange() &&
+            var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(ObjectManager.GetLocalPlayer()) < Extensions.EngageRange() &&
                                                                       x.Health > ObjectManager.GetLocalPlayer().GetAutoAttackDamage(x));
 
             if (minion == null || !MenuConfig.Lane["Check"].Enabled && ObjectManager.GetLocalPlayer().CountEnemyHeroesInRange(2000) >= 1)
@@ -36,7 +36,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
 
         public static void OnUpdate()
         {
-            var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(ObjectManager.GetLocalPlayer()) < Extensions.GetRange());
+            var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(ObjectManager.GetLocalPlayer()) < Extensions.EngageRange());
 
             if (minion == null || MenuConfig.Lane["Check"].Enabled &&
                 ObjectManager.GetLocalPlayer().CountEnemyHeroesInRange(1500) >= 1)

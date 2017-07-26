@@ -1,21 +1,20 @@
-﻿using Adept_AIO.Champions.Rengar.Update.OrbwalkingEvents;
+﻿using Adept_AIO.Champions.Kayn.Update.OrbwalkingEvents;
 using Adept_AIO.SDK.Extensions;
 using Aimtec;
 using Aimtec.SDK.Orbwalking;
 
-namespace Adept_AIO.Champions.Rengar.Update.Miscellaneous
+namespace Adept_AIO.Champions.Kayn.Update.Miscellaneous
 {
-    internal class Manager
+    class Manager
     {
         public static void PostAttack(object sender, PostAttackEventArgs args)
         {
             switch (GlobalExtension.Orbwalker.Mode)
             {
                 case OrbwalkingMode.Combo:
-                    Combo.OnPostAttack();
+                    Combo.OnPostAttack(args.Target);
                     break;
-                    case OrbwalkingMode.Laneclear:
-                    LaneClear.OnPostAttack();
+                case OrbwalkingMode.Laneclear:
                     JungleClear.OnPostAttack();
                     break;
             }
@@ -32,6 +31,9 @@ namespace Adept_AIO.Champions.Rengar.Update.Miscellaneous
             {
                 case OrbwalkingMode.Combo:
                     Combo.OnUpdate();
+                    break;
+                case OrbwalkingMode.Mixed:
+                    Harass.OnUpdate();
                     break;
                 case OrbwalkingMode.Laneclear:
                     LaneClear.OnUpdate();

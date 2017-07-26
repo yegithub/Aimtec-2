@@ -148,7 +148,7 @@ namespace Adept_AIO.SDK.Extensions
         /// </summary>
         static GameObjects()
         {
-            Initialize();
+            Init();
         }
 
         #endregion
@@ -492,7 +492,7 @@ namespace Adept_AIO.SDK.Extensions
         /// <summary>
         ///     The initialize method.
         /// </summary>
-        internal static void Initialize()
+        internal static void Init()
         {
             if (initialized)
             {

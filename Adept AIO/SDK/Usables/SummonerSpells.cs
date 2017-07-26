@@ -7,10 +7,12 @@ namespace Adept_AIO.SDK.Usables
     {
         public static Spell Flash, Ignite, Smite, Exhaust;
 
-        public static int IgniteDamage = 50 + 20 * ObjectManager.GetLocalPlayer().Level;
+        public static int IgniteDamage(Obj_AI_Hero target)
+        {
+            return (int) (50 + 20 * ObjectManager.GetLocalPlayer().Level - target.HPRegenRate / 5 * 3);
+        }
 
         //Todo: Improve this bullshit.
-
         public static void Init()
         {
             var spellbookName1 = ObjectManager.GetLocalPlayer().SpellBook.GetSpell(SpellSlot.Summoner1).Name.ToLower();

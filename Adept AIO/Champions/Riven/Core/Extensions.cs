@@ -1,19 +1,20 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using Adept_AIO.SDK.Extensions;
+﻿using System.Threading;
 using Aimtec;
-using Aimtec.SDK.Extensions;
 
 namespace Adept_AIO.Champions.Riven.Core
 {
     internal class Extensions
     {
-        /// <summary>
-        /// Fuck it
-        /// </summary>
-        /// <returns></returns>
-        public static int GetRange()
+        public static int FlashRange(Obj_AI_Base target)
+        {
+            if (AllIn)
+            {
+                return (int) (425 + target.BoundingRadius + SpellConfig.W.Range);
+            }
+            return 0;
+        }
+
+        public static int EngageRange()
         {
             var range = 0f;
            

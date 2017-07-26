@@ -1,15 +1,15 @@
 ﻿using Adept_AIO.Champions.Rengar.Core;
+using Adept_AIO.SDK.Extensions;
 using Aimtec;
 using Aimtec.SDK.Extensions;
-using Aimtec.SDK.TargetSelector;
 
 namespace Adept_AIO.Champions.Rengar.Update.OrbwalkingEvents
 {
-    class Combo
+    internal class Combo
     {
         public static void OnPostAttack()
         {
-            var target = TargetSelector.GetTarget(SpellConfig.Q.Range);
+            var target = GlobalExtension.TargetSelector.GetTarget(SpellConfig.Q.Range);
             if (target == null || !target.IsValid) 
             {
                 return;
@@ -28,14 +28,14 @@ namespace Adept_AIO.Champions.Rengar.Update.OrbwalkingEvents
 
         public static void OnUpdate()
         {
-            var target = TargetSelector.GetTarget(2000);
+            var target = GlobalExtension.TargetSelector.GetTarget(2000);
 
             if (target == null || !target.IsValid)
             {
                 return;
             }
 
-            var assassin = TargetSelector.GetSelectedTarget();
+            var assassin = GlobalExtension.TargetSelector.GetSelectedTarget();
             
             if (ObjectManager.GetLocalPlayer().HasBuff("RengarR"))
             {
