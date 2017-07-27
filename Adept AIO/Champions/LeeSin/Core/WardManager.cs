@@ -16,36 +16,29 @@ namespace Adept_AIO.Champions.LeeSin.Core
        
         public static bool IsWardReady => WardNames.Any(Items.CanUseItem);
 
-        public static Obj_AI_Base Ward(Vector3 Position)
-        {
-            return ObjectManager.Get<Obj_AI_Base>()
-                .Where(x => x.IsAlly && x.Name.ToLower().Contains("ward"))
-                .OrderBy(x => x.Distance(Position) < 920)
-                .FirstOrDefault();
-        }
-
         public static void OnUpdate()
         {
-            if (Environment.TickCount - LastWardCreated < 1000 && WardPosition != Vector3.Zero)
+            if (Environment.TickCount - LastWardCreated < 1500 && Environment.TickCount - LastWardCreated > Game.Ping && LastWardCreated > 0 && WardPosition != Vector3.Zero)
             {
                 JumpToVector(WardPosition);
             }
-            else if (Environment.TickCount - LastWardCreated > 1000)
+            else if (Environment.TickCount - LastWardCreated > 1500)
             {
                 WardPosition = Vector3.Zero;
+                LastWardCreated = 0;
             }
         }
 
         public static Obj_AI_Minion GetBestObject(Vector3 position, bool allowMinions = true)
         {
-            var wards = GameObjects.AllyWards.FirstOrDefault(x => ObjectManager.GetLocalPlayer().Distance(x) <= SpellConfig.W.Range && x.Distance(position) <= 920);
+            var wards = GameObjects.AllyWards.Where(x => x.IsValid).OrderBy(x => x.Distance(position)).FirstOrDefault(x => x.Distance(position) <= 600 && ObjectManager.GetLocalPlayer().Distance(x) <= 600 && x.Distance(WardPosition) <= 10);
 
             if (wards != null)
             {
                 return wards;
             }
-          
-            var minions = GameObjects.EnemyMinions.Where(x => ObjectManager.GetLocalPlayer().Distance(x) <= SpellConfig.W.Range && x.Distance(position) <= 150)
+
+            var minions = GameObjects.EnemyMinions.Where(x => ObjectManager.GetLocalPlayer().Distance(x) <= SpellConfig.W.Range && x.Distance(position) <= 400)
                 .OrderBy(x => x.Distance(position))
                 .FirstOrDefault();
 
@@ -54,7 +47,7 @@ namespace Adept_AIO.Champions.LeeSin.Core
 
         public static void WardJump(Vector3 position, bool maxRange)
         {
-            if (Environment.TickCount - LastWardCreated < 500)
+            if (Environment.TickCount - LastWardCreated < 1000)
             {
                 return;
             }
@@ -71,9 +64,9 @@ namespace Adept_AIO.Champions.LeeSin.Core
                     continue;
                 }
 
-                Items.CastItem(wardName, position);
                 LastWardCreated = Environment.TickCount;
                 WardPosition = position;
+                Items.CastItem(wardName, position);
             }
         }
 

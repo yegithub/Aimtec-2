@@ -21,7 +21,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
 
         private static float DistanceBehindTarget()
         {
-            return Math.Min((ObjectManager.GetLocalPlayer().BoundingRadius + target.BoundingRadius + 50) * 1.25f, SpellConfig.R.Range);
+            return Math.Min((ObjectManager.GetLocalPlayer().BoundingRadius + target.BoundingRadius + 50) * 1.35f, SpellConfig.R.Range);
         }
 
         public static void Kick()
@@ -78,10 +78,10 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
                 if (ObjectManager.GetLocalPlayer().Distance(InsecPosition) <= 300 &&
                     Environment.TickCount - LastWTime <= 800 && WardManager.LastWardCreated > 0)
                 {
-                    Console.WriteLine("OK???");
-                    return;
+                 //   Console.WriteLine("No Need To Flash");
+                    return; 
                 }
-                Console.WriteLine("FLASHING ");
+               // Console.WriteLine("FLASHING");
                 SummonerSpells.Flash.Cast(InsecPosition);
             }
         }
@@ -120,7 +120,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
 
             if (SpellConfig.W.Ready && Extension.IsFirst(SpellConfig.W))
             {
-                if (InsecPosition.Distance(ObjectManager.GetLocalPlayer()) < 500 + DistanceBehindTarget())
+                if (InsecPosition.Distance(ObjectManager.GetLocalPlayer()) < 600)
                 {
                     WardManager.WardJump(InsecPosition, false);
                 }
