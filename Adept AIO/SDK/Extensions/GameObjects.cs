@@ -1,5 +1,6 @@
 ﻿// ReSharper disable ArrangeAccessorOwnerBody
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -573,7 +574,7 @@ namespace Adept_AIO.SDK.Extensions
             {
                 if (minion.Team != GameObjectTeam.Neutral)
                 {
-                    if (minion.Name.Contains("ward"))
+                    if (minion.Name.ToLower().Contains("ward"))
                     {
                         WardsList.Add(minion);
                         if (minion.IsEnemy)

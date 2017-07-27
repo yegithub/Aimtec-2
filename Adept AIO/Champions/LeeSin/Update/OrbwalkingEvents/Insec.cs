@@ -13,6 +13,8 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
 {
     class Insec
     {
+        private static float LastWTime;
+
         private static Obj_AI_Hero target => TargetSelector.GetSelectedTarget();
 
         private static Vector3 InsecPosition => target.ServerPosition + (target.ServerPosition - GetTargetEndPosition()).Normalized() * DistanceBehindTarget();
@@ -34,7 +36,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
                 WardManager.IsWardReady && target.Distance(ObjectManager.GetLocalPlayer()) > SpellConfig.R.Range + 200 &&
                 target.Distance(ObjectManager.GetLocalPlayer()) < 1050)
             {
-                WardManager.Jump(InsecPosition, true);
+                WardManager.WardJump(InsecPosition, false);
             }
 
             if (!target.IsValidTarget(SpellConfig.R.Range) || !SpellConfig.R.Ready)
@@ -46,7 +48,17 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
 
         public static void OnProcessSpellCast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
         {
-            if (sender == null || !sender.IsMe || SummonerSpells.Flash == null || target == null || !MenuConfig.InsecMenu[target.ChampionName].Enabled)
+            if (sender == null || !sender.IsMe)
+            {
+                return;
+            }
+
+            if (args.SpellSlot == SpellSlot.W && args.SpellData.Name.ToLower().Contains("one"))
+            {
+                LastWTime = Environment.TickCount;
+            }
+
+            if (SummonerSpells.Flash == null || target == null || !MenuConfig.InsecMenu[target.ChampionName].Enabled)
             {
                 return;
             }
@@ -63,8 +75,8 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
             else if (MenuConfig.InsecMenu["Kick"].Value == 1 && args.SpellSlot == SpellSlot.R &&
                 SummonerSpells.Flash.Ready)
             {
-                if (ObjectManager.GetLocalPlayer().Distance(InsecPosition) <= 400 &&
-                    Environment.TickCount - WardManager.LastWardCreated <= 1000 && WardManager.LastWardCreated > 0)
+                if (ObjectManager.GetLocalPlayer().Distance(InsecPosition) <= 300 &&
+                    Environment.TickCount - LastWTime <= 800 && WardManager.LastWardCreated > 0)
                 {
                     Console.WriteLine("OK???");
                     return;
@@ -110,7 +122,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
             {
                 if (InsecPosition.Distance(ObjectManager.GetLocalPlayer()) < 500 + DistanceBehindTarget())
                 {
-                    WardManager.Jump(InsecPosition, true);
+                    WardManager.WardJump(InsecPosition, false);
                 }
                 else if (SummonerSpells.Flash != null && SummonerSpells.Flash.Ready)
                 {
@@ -128,13 +140,12 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
             }
             else if (SpellConfig.R.Ready && target.IsValidTarget(SpellConfig.R.Range))
             {
-                if (Environment.TickCount - WardManager.LastWardCreated <= 500 && WardManager.LastWardCreated > 0 &&
-                    ObjectManager.GetLocalPlayer().Distance(InsecPosition) >= 500)
+                if (Environment.TickCount - LastWTime < 300 && ObjectManager.GetLocalPlayer().Distance(InsecPosition) >= 250)
                 {
                     return;
                 }
 
-                if (InsecPosition.Distance(ObjectManager.GetLocalPlayer()) > 100 && (SummonerSpells.Flash == null ||
+                if (InsecPosition.Distance(ObjectManager.GetLocalPlayer()) > 250 && (SummonerSpells.Flash == null ||
                     !SummonerSpells.Flash.Ready))
                 {
                     return; 

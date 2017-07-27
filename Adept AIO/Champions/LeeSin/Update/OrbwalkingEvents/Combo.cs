@@ -61,7 +61,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
             }
             else if (SpellConfig.W.Ready && MenuConfig.Combo["W"].Enabled && MenuConfig.Combo["Ward"].Enabled && distance > (SpellConfig.Q.Ready ? 1750 : 600))
             {
-                WardManager.Jump(target.ServerPosition);
+                WardManager.WardJump(target.ServerPosition, true);
             }
 
             if (SpellConfig.E.Ready && MenuConfig.Combo["E"].Enabled)

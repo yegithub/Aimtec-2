@@ -87,7 +87,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
                     {
                         SummonerSpells.Smite.CastOnUnit(mob);
                     }
-                    WardManager.Jump(Positions.FirstOrDefault());
+                    WardManager.WardJump(Positions.FirstOrDefault(), false);
                 }
 
                 if (Extension.IsQ2)

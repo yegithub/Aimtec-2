@@ -24,7 +24,6 @@ namespace Adept_AIO.Champions.LeeSin
             Render.OnRender += DrawManager.RenderManager;
 
             Obj_AI_Base.OnProcessSpellCast += Insec.OnProcessSpellCast;
-            GameObject.OnCreate += WardManager.OnCreate;
         }
     }
 }
