@@ -44,12 +44,7 @@ namespace Adept_AIO.Champions.LeeSin.Core
             {
                 return wards;
             }
-
-            if (Extension.InsecMode.Active && (SummonerSpells.Flash == null || !SummonerSpells.Flash.Ready))
-            {
-                return null;
-            }
-
+          
             var minions = GameObjects.EnemyMinions.Where(x => ObjectManager.GetLocalPlayer().Distance(x) <= SpellConfig.W.Range && x.Distance(position) <= 150)
                 .OrderBy(x => x.Distance(position))
                 .FirstOrDefault();
