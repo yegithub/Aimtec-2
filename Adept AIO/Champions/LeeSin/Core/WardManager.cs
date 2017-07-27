@@ -4,145 +4,128 @@ using System.Linq;
 using Adept_AIO.SDK.Extensions;
 using Adept_AIO.SDK.Usables;
 using Aimtec;
-using Aimtec.SDK.Damage;
 using Aimtec.SDK.Extensions;
+using Aimtec.SDK.Util;
 
 namespace Adept_AIO.Champions.LeeSin.Core
 {
     class WardManager
     {
-        public static List<Obj_AI_Minion> JumpableObjects;
-
-        public static float LastJumpTick;
         public static float LastWardCreated;
-        private static Vector3 LastPosition;
-
-        public static bool IsJumping => Environment.TickCount - LastJumpTick < Game.Ping / 2f;
-        public static bool CanWardJump => CanCastWard && SpellConfig.W.Ready;
-        public static bool CanCastWard => Environment.TickCount - LastJumpTick > Game.Ping / 2f && Extension.IsFirst(SpellConfig.W);
-
+        public static Vector3 LastPosition;
+      
         public static bool IsWardReady => WardNames.Any(Items.CanUseItem);
+        private static Obj_AI_Base RecentWard;
 
         public static void OnUpdate()
         {
-            if (IsJumping)
+            if (Environment.TickCount - LastWardCreated < 500)
             {
                 JumpToVector(LastPosition);
             }
-        }
 
-        public static void OnProcessSpellCast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
-        {
-            if (!sender.IsMe)
-            {
-                return;
-            }
-
-            if (args.SpellData.Name == ObjectManager.GetLocalPlayer().SpellBook.GetSpell(SpellSlot.W).Name &&
-                args.SpellData.Name.ToLower().Contains("one"))
+            if (Environment.TickCount - LastWardCreated > 1000)
             {
                 LastPosition = Vector3.Zero;
             }
         }
 
-        public static Obj_AI_Minion GetBestObject(Vector3 position)
+        public static Obj_AI_Base GetBestObject(Vector3 position, bool insec = false)
         {
-            var wards = JumpableObjects.Where(x => x.IsValid && !x.IsDead && ObjectManager.GetLocalPlayer().Distance(x) <= SpellConfig.W.Range)
+            if (RecentWard != null)
+            {
+                return RecentWard;
+            }
+
+            var wards = ObjectManager.Get<Obj_AI_Base>().Where(x => !x.IsHero && !x.IsMe && x.IsAlly && 
+            ObjectManager.GetLocalPlayer().Distance(x) <= Math.Pow(700 + 120, 2))
                 .OrderBy(x => x.Distance(position))
-                .LastOrDefault(x => x.Distance(position) <= ObjectManager.GetLocalPlayer().Distance(position));
+                .FirstOrDefault();
 
             if (wards != null)
             {
                 return wards;
             }
 
-            var minions = GameObjects.EnemyMinions.Where(x => x.IsValid && ObjectManager.GetLocalPlayer().Distance(x) <= SpellConfig.W.Range)
-                .OrderBy(x => x.Distance(position))
-                .LastOrDefault(x => x.Distance(position) <= ObjectManager.GetLocalPlayer().Distance(position));
-
-            if (minions != null)
+            if (insec)
             {
-                return minions;
+                return null;
             }
 
-            return null;
+            var minions = GameObjects.EnemyMinions.Where(x => x.IsAlly && x.IsValid && ObjectManager.GetLocalPlayer().Distance(x) <= Math.Pow(700 + 120, 2))
+                .OrderBy(x => x.Distance(position))
+                .FirstOrDefault();
+
+            return minions;
         }
 
-        public static void WardJump(Vector3 position)
+        public static void Jump(Vector3 position, bool insec = false)
         {
-            if (CanWardJump)
+            var bestobject = GetBestObject(position, insec);
+            if (!insec && bestobject != null && !bestobject.IsMe && bestobject.IsAlly && position.Distance(bestobject.ServerPosition) < 600)
             {
-                var end = ObjectManager.GetLocalPlayer().ServerPosition +
-                          (position - ObjectManager.GetLocalPlayer().ServerPosition).Normalized() *
-                          Math.Min(600, ObjectManager.GetLocalPlayer().Distance(position));
+                JumpToVector(position);
+            }
+            else if (Environment.TickCount - LastWardCreated > 500)
+            {
+                if (!insec)
+                {
+                    position = ObjectManager.GetLocalPlayer().ServerPosition.Extend(position, 500);
+                }
 
                 foreach (var wardName in WardNames)
                 {
-                    if (!Items.CanUseItem(wardName) || Environment.TickCount - LastWardCreated < 1000)
+                    if (!Items.CanUseItem(wardName))
                     {
                         continue;
                     }
 
-                    Items.CastItem(wardName, end);
+                    Items.CastItem(wardName, position);
                     LastWardCreated = Environment.TickCount;
-                    LastPosition = end;
+                    LastPosition = position;
                 }
             }
         }
 
         public static void JumpToVector(Vector3 position)
         {
-            if (Extension.IsFirst(SpellConfig.W))
+            if(!Extension.IsFirst(SpellConfig.W))
             {
-                var bestobject = GetBestObject(position);
-                if (bestobject != null && position.Distance(bestobject.ServerPosition) < 600)
-                {
-                    SpellConfig.W.CastOnUnit(bestobject);
-                    LastJumpTick = Environment.TickCount;
-                }
+                return;
+            }
+
+            var bestobject = GetBestObject(position);
+
+            if (RecentWard != null)
+            {
+                SpellConfig.W.CastOnUnit(RecentWard);
+                LastPosition = Vector3.Zero;
+            }
+            else if (bestobject != null && !bestobject.IsMe && bestobject.IsAlly)
+            {
+                SpellConfig.W.CastOnUnit(bestobject);
+                LastPosition = Vector3.Zero;
             }
         }
 
         public static void OnCreate(GameObject sender)
         {
-            if (sender.Name.ToLower().Contains("ward") && sender.IsAlly)
+            if (sender == null || !sender.IsAlly || sender.Distance(ObjectManager.GetLocalPlayer()) > 600 || !WardNames.Contains(sender.Name))
             {
-                var ward = (Obj_AI_Minion) sender;
-                JumpableObjects.Add(ward);
+                return;
             }
-        }
 
-        public static void OnDestroy(GameObject sender)
-        {
-            if (sender.Name.ToLower().Contains("ward") && sender.IsAlly)
-            {
-                var ward = (Obj_AI_Minion)sender;
-                JumpableObjects.Remove(ward);
-            }
+            RecentWard = sender as Obj_AI_Base;
+            LastPosition = sender.ServerPosition;
+            LastWardCreated = Environment.TickCount;
+            DelayAction.Queue(500, () => RecentWard = null);
         }
-
-        //private static readonly uint[] WardsItems =
-        //{
-        //    ItemId.RubySightstone,
-        //    ItemId.Sightstone,
-        //    ItemId.EyeoftheWatchers,
-        //    ItemId.TrackersKnife,
-        //    ItemId.GreaterStealthTotemTrinket,
-        //    ItemId.GreaterVisionTotemTrinket,
-        //    ItemId.ControlWard,
-        //    ItemId.ExplorersWard,
-        //};
 
         private static readonly string[] WardNames =
         {
-            "RubySightstone",
-            "Sightstone",
-            "EyeoftheWatchers",
-            "TrackersKnife",
-            "GreaterStealthTotemTrinket",
-            "GreaterVisionTotemTrinket",
-            "ControlWard",
-            "ExplorersWard"
+            "TrinketTotemLvl1",
+            "ItemGhostWard",
+            "JammerDevice",
         };
     }
 }

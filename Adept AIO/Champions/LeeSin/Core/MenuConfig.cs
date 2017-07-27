@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
+using Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents;
 using Adept_AIO.SDK.Extensions;
 using Aimtec.SDK.Menu;
 using Aimtec.SDK.Menu.Components;
 using Aimtec.SDK.Orbwalking;
 using Aimtec.SDK.Util;
-using GameObjects = Aimtec.SDK.Util.Cache.GameObjects;
 
 namespace Adept_AIO.Champions.LeeSin.Core
 {
@@ -12,7 +12,7 @@ namespace Adept_AIO.Champions.LeeSin.Core
     {
         private static Menu MainMenu;
 
-        public static Menu Insec,
+        public static Menu InsecMenu,
                            Combo,
                            Harass,
                            LaneClear,
@@ -26,11 +26,16 @@ namespace Adept_AIO.Champions.LeeSin.Core
             MainMenu = new Menu(string.Empty, "Adept AIO", true);
             MainMenu.Attach();
 
-            Extension.InsecMode= new OrbwalkerMode("Insec", KeyCode.T, null, null);
+            Extension.InsecMode= new OrbwalkerMode("Insec", KeyCode.T, null, Insec.OnKeyPressed);
+            Extension.WardjumpMode = new OrbwalkerMode("Wardjump", KeyCode.G, null, WardJump.OnKeyPressed);
+            Extension.KickFlashMode = new OrbwalkerMode("Kick Flash", KeyCode.A, null, Insec.Kick);
+
             GlobalExtension.Orbwalker.AddMode(Extension.InsecMode);
+            GlobalExtension.Orbwalker.AddMode(Extension.WardjumpMode);
+            GlobalExtension.Orbwalker.AddMode(Extension.KickFlashMode);
             GlobalExtension.Orbwalker.Attach(MainMenu);
 
-            Insec = new Menu("Insec", "Insec")
+            InsecMenu = new Menu("Insec", "Insec")
             {
                 new MenuBool("Object", "[Q] - All Objects").SetToolTip("Uses Q to gapclose at every valid target"),
                 new MenuList("Position", "Insec Position", new []{"Ally Turret", "Ally Hero"}, 0),
@@ -39,7 +44,7 @@ namespace Adept_AIO.Champions.LeeSin.Core
 
             foreach (var hero in GameObjects.EnemyHeroes)
             {
-                Insec.Add(new MenuBool(hero.ChampionName, "Insec: " + hero.ChampionName));
+                InsecMenu.Add(new MenuBool(hero.ChampionName, "Insec: " + hero.ChampionName));
             }
 
             Combo = new Menu("Combo", "Combo")
@@ -104,7 +109,7 @@ namespace Adept_AIO.Champions.LeeSin.Core
 
             foreach (var menu in new List<Menu>
             {
-                Insec,
+                InsecMenu,
                 Combo,
                 Harass,
                 LaneClear,

@@ -1,4 +1,5 @@
-﻿using Adept_AIO.Champions.LeeSin.Core;
+﻿using System;
+using Adept_AIO.Champions.LeeSin.Core;
 using Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents;
 using Adept_AIO.SDK.Extensions;
 using Aimtec;
@@ -32,28 +33,22 @@ namespace Adept_AIO.Champions.LeeSin.Update.Miscellaneous
                 return;
             }
 
-            if (Extension.InsecMode.Active)
+            switch (GlobalExtension.Orbwalker.Mode)
             {
-                Insec.OnKeyPressed();
+                case OrbwalkingMode.Combo:
+                    Combo.OnUpdate();
+                    break;
+                case OrbwalkingMode.Mixed:
+                    Harass.OnUpdate();
+                    break;
+                case OrbwalkingMode.Laneclear:
+                    LaneClear.OnUpdate();
+                    JungleClear.OnUpdate();
+                    break;
             }
-            else
-            {
-                switch (GlobalExtension.Orbwalker.Mode)
-                {
-                    case OrbwalkingMode.Combo:
-                        Combo.OnUpdate();
-                        break;
-                    case OrbwalkingMode.Mixed:
-                        Harass.OnUpdate();
-                        break;
-                    case OrbwalkingMode.Laneclear:
-                        LaneClear.OnUpdate();
-                        JungleClear.OnUpdate();
-                        break;
-                }
 
-                JungleClear.StealLegendary();
-            }
+            JungleClear.StealLegendary();
+
         }
     }
 }

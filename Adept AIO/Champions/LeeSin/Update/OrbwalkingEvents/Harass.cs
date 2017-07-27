@@ -14,7 +14,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
             {
                 SpellConfig.E.Cast();
             }
-            else if (SpellConfig.W.Ready && MenuConfig.Harass["W"].Enabled && MenuConfig.Harass["W"].Value == 1)
+            else if (SpellConfig.W.Ready && MenuConfig.Harass["Mode"].Enabled && MenuConfig.Harass["W"].Value == 1)
             {
                 SpellConfig.W.CastOnUnit(ObjectManager.GetLocalPlayer());
             }
@@ -46,17 +46,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
 
             if (SpellConfig.W.Ready && Extension.IsFirst(SpellConfig.W) && !SpellConfig.E.Ready && !SpellConfig.Q.Ready && MenuConfig.Harass["Mode"].Value == 0)
             {
-                var objects = WardManager.JumpableObjects.OrderBy(x => x.Distance(target)).LastOrDefault(x => x.Distance(target) < ObjectManager.GetLocalPlayer().Distance(target));
-                if (objects != null)
-                {
-                    SpellConfig.W.CastOnUnit(objects);
-                }
-                else if (WardManager.CanCastWard && WardManager.CanWardJump)
-                {
-                    var turret = GameObjects.AllyTurrets.OrderBy(x => x.Distance(ObjectManager.GetLocalPlayer())).LastOrDefault(x => x.Distance(target) < ObjectManager.GetLocalPlayer().Distance(target));
-                    var pos = turret != null ? turret.ServerPosition : Game.CursorPos;
-                    WardManager.WardJump(pos);
-                }
+               
             }
         }
     }

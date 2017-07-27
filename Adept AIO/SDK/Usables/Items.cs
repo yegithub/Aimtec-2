@@ -46,7 +46,7 @@ namespace Adept_AIO.SDK.Usables
         public static bool CanUseItem(string itemName)
         {
             var slot = GetItemSlot(itemName);
-
+        
             if (slot != SpellSlot.Unknown)
             {
                 return ObjectManager.GetLocalPlayer().SpellBook.GetSpellState(slot) == SpellState.Ready;
@@ -57,7 +57,7 @@ namespace Adept_AIO.SDK.Usables
         private static SpellSlot GetItemSlot(string itemName)
         {
             var slot = ObjectManager.GetLocalPlayer().Inventory.Slots.FirstOrDefault(x => string.Equals(itemName, x.SpellName, StringComparison.CurrentCultureIgnoreCase));
-
+           
             if (slot != null && slot.SpellSlot != SpellSlot.Unknown)
             {
                 return slot.SpellSlot;

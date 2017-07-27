@@ -1,4 +1,5 @@
-﻿using Adept_AIO.Champions.LeeSin.Core;
+﻿using System;
+using Adept_AIO.Champions.LeeSin.Core;
 using Adept_AIO.Champions.LeeSin.Drawings;
 using Adept_AIO.Champions.LeeSin.Update.Miscellaneous;
 using Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents;
@@ -23,10 +24,7 @@ namespace Adept_AIO.Champions.LeeSin
             Render.OnRender += DrawManager.RenderManager;
 
             Obj_AI_Base.OnProcessSpellCast += Insec.OnProcessSpellCast;
-            Obj_AI_Base.OnProcessSpellCast += WardManager.OnProcessSpellCast;
-
             GameObject.OnCreate += WardManager.OnCreate;
-            GameObject.OnDestroy += WardManager.OnDestroy;
         }
     }
 }

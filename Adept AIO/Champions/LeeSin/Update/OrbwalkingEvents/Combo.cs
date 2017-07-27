@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Adept_AIO.Champions.LeeSin.Core;
 using Adept_AIO.SDK.Extensions;
 using Aimtec;
@@ -30,34 +31,22 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
 
         public static void OnUpdate()
         {
-            if (SpellConfig.W.Ready && MenuConfig.Combo["W"].Enabled && MenuConfig.Combo["Ward"].Enabled)
+            var target = GlobalExtension.TargetSelector.GetTarget(SpellConfig.Q.Ready ? 1750 : 850);
+            if (target == null)
             {
-                var target = GlobalExtension.TargetSelector.GetTarget(SpellConfig.Q.Ready ? 1750 : 600);
-                if (target == null || ObjectManager.GetLocalPlayer().Distance(target) < 500)
-                {
-                    return;
-                }
-
-                var objects = WardManager.JumpableObjects.FirstOrDefault();
-                if (objects != null)
-                {
-                    SpellConfig.W.CastOnUnit(objects);
-                }
-                else if (WardManager.CanCastWard && WardManager.CanWardJump)
-                {
-                    WardManager.WardJump(target.Position);
-                }
+                return;
             }
+
+            var distance = target.Distance(ObjectManager.GetLocalPlayer());
 
             if (SpellConfig.Q.Ready && MenuConfig.Combo["Q"].Enabled)
             {
-                var target = GlobalExtension.TargetSelector.GetTarget(1300);
-                if (target == null)
+                if (distance > 1300)
                 {
                     return;
                 }
 
-                if (Extension.IsQ2)
+                if (Extension.HasQ2(target))
                 {
                     if (MenuConfig.Combo["Turret"].Enabled && target.IsUnderEnemyTurret())
                     {
@@ -70,11 +59,14 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
                     SpellConfig.Q.Cast(target);
                 }
             }
+            else if (SpellConfig.W.Ready && MenuConfig.Combo["W"].Enabled && MenuConfig.Combo["Ward"].Enabled && distance > (SpellConfig.Q.Ready ? 1750 : 600))
+            {
+                WardManager.Jump(target.ServerPosition);
+            }
 
             if (SpellConfig.E.Ready && MenuConfig.Combo["E"].Enabled)
             {
-                var target = GlobalExtension.TargetSelector.GetTarget(500);
-                if (target == null)
+                if (distance > 500)
                 {
                     return;
                 }
@@ -86,21 +78,6 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
                 else 
                 {
                     SpellConfig.E.Cast();
-                }
-            }
-
-            if (SpellConfig.R.Ready && MenuConfig.Combo["R"].Enabled)
-            {
-                var target = GlobalExtension.TargetSelector.GetTarget(SpellConfig.R.Range);
-                if (target == null)
-                {
-                    return;
-                }
-
-                var count = SpellConfig.R2.GetPrediction(target).CollisionObjects.Count;
-                if (count >= MenuConfig.Combo["Count"].Value)
-                {
-                    SpellConfig.R.CastOnUnit(target);
                 }
             }
         }
