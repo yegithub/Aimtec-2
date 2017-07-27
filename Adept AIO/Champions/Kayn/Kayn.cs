@@ -17,8 +17,6 @@ namespace Adept_AIO.Champions.Kayn
             Game.OnUpdate += Manager.OnUpdate;
             GlobalExtension.Orbwalker.PostAttack += Manager.PostAttack;
 
-            Obj_AI_Base.OnPlayAnimation += Animation.OnPlayAnimation;
-
             Render.OnRender += DrawManager.RenderManager;
         }
     }

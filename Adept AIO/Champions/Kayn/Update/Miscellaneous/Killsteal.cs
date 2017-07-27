@@ -24,7 +24,6 @@ namespace Adept_AIO.Champions.Kayn.Update.Miscellaneous
                 MenuConfig.Killsteal["Q"].Enabled)
             {
                 SpellConfig.Q.Cast(target);
-                SpellConfig.CastTiamat();
             }
             else if (SpellConfig.W.Ready && target.Health < ObjectManager.GetLocalPlayer().GetSpellDamage(target, SpellSlot.W) &&
                      target.IsValidTarget(SpellConfig.W.Range) &&
@@ -32,7 +31,7 @@ namespace Adept_AIO.Champions.Kayn.Update.Miscellaneous
             {
                 SpellConfig.W.Cast(target);
             }
-            else if (SpellConfig.R.Ready && target.Health < ObjectManager.GetLocalPlayer().GetSpellDamage(target, SpellSlot.R) &&
+            else if (SpellConfig.R.Ready && target.Health < ObjectManager.GetLocalPlayer().GetSpellDamage(target, SpellSlot.R) + ObjectManager.GetLocalPlayer().GetAutoAttackDamage(target) &&
                      target.IsValidTarget(SpellConfig.R.Range) &&
                      MenuConfig.Killsteal["R"].Enabled)
             {

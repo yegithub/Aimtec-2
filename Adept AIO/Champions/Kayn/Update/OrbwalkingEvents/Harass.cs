@@ -1,4 +1,5 @@
-﻿using Adept_AIO.Champions.Kayn.Core;
+﻿using System;
+using Adept_AIO.Champions.Kayn.Core;
 using Adept_AIO.SDK.Extensions;
 using Adept_AIO.SDK.Usables;
 using Aimtec;
@@ -25,7 +26,6 @@ namespace Adept_AIO.Champions.Kayn.Update.OrbwalkingEvents
                 if (target != null)
                 {
                     SpellConfig.Q.Cast(target);
-                    SpellConfig.CastTiamat();
                 }
             }
         }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Adept_AIO.SDK.Extensions;
 using Adept_AIO.SDK.Usables;
 using Aimtec;
 using Aimtec.SDK.Damage;
@@ -46,9 +47,25 @@ namespace Adept_AIO.Champions.LeeSin.Core
 
         public static Obj_AI_Minion GetBestObject(Vector3 position)
         {
-            return JumpableObjects.Where(x => x.IsValid && !x.IsDead && ObjectManager.GetLocalPlayer().Distance(x) <= SpellConfig.W.Range)
-                         .OrderBy(x => x.Distance(position))
-                         .LastOrDefault(x => x.Distance(position) <= ObjectManager.GetLocalPlayer().Distance(position));
+            var wards = JumpableObjects.Where(x => x.IsValid && !x.IsDead && ObjectManager.GetLocalPlayer().Distance(x) <= SpellConfig.W.Range)
+                .OrderBy(x => x.Distance(position))
+                .LastOrDefault(x => x.Distance(position) <= ObjectManager.GetLocalPlayer().Distance(position));
+
+            if (wards != null)
+            {
+                return wards;
+            }
+
+            var minions = GameObjects.EnemyMinions.Where(x => x.IsValid && ObjectManager.GetLocalPlayer().Distance(x) <= SpellConfig.W.Range)
+                .OrderBy(x => x.Distance(position))
+                .LastOrDefault(x => x.Distance(position) <= ObjectManager.GetLocalPlayer().Distance(position));
+
+            if (minions != null)
+            {
+                return minions;
+            }
+
+            return null;
         }
 
         public static void WardJump(Vector3 position)
@@ -68,7 +85,6 @@ namespace Adept_AIO.Champions.LeeSin.Core
 
                     Items.CastItem(wardName, end);
                     LastWardCreated = Environment.TickCount;
-                    LastJumpTick = Environment.TickCount;
                     LastPosition = end;
                 }
             }
@@ -82,6 +98,7 @@ namespace Adept_AIO.Champions.LeeSin.Core
                 if (bestobject != null && position.Distance(bestobject.ServerPosition) < 600)
                 {
                     SpellConfig.W.CastOnUnit(bestobject);
+                    LastJumpTick = Environment.TickCount;
                 }
             }
         }
@@ -104,28 +121,28 @@ namespace Adept_AIO.Champions.LeeSin.Core
             }
         }
 
-        private static readonly uint[] WardsItems =
-        {
-            ItemId.RubySightstone,
-            ItemId.Sightstone,
-            ItemId.EyeoftheWatchers,
-            ItemId.TrackersKnife,
-            ItemId.GreaterStealthTotemTrinket,
-            ItemId.GreaterVisionTotemTrinket,
-            ItemId.ControlWard,
-            ItemId.ExplorersWard,
-        };
+        //private static readonly uint[] WardsItems =
+        //{
+        //    ItemId.RubySightstone,
+        //    ItemId.Sightstone,
+        //    ItemId.EyeoftheWatchers,
+        //    ItemId.TrackersKnife,
+        //    ItemId.GreaterStealthTotemTrinket,
+        //    ItemId.GreaterVisionTotemTrinket,
+        //    ItemId.ControlWard,
+        //    ItemId.ExplorersWard,
+        //};
 
         private static readonly string[] WardNames =
         {
-            ItemId.RubySightstone.ToString(),
-            ItemId.Sightstone.ToString(),
-            ItemId.EyeoftheWatchers.ToString(),
-            ItemId.TrackersKnife.ToString(),
-            ItemId.GreaterStealthTotemTrinket.ToString(),
-            ItemId.GreaterVisionTotemTrinket.ToString(),
-            ItemId.ControlWard.ToString(),
-            ItemId.ExplorersWard.ToString(),
+            "RubySightstone",
+            "Sightstone",
+            "EyeoftheWatchers",
+            "TrackersKnife",
+            "GreaterStealthTotemTrinket",
+            "GreaterVisionTotemTrinket",
+            "ControlWard",
+            "ExplorersWard"
         };
     }
 }

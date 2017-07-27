@@ -82,7 +82,6 @@
     <Compile Include="Champions\Kayn\Core\SpellConfig.cs" />
     <Compile Include="Champions\Kayn\Drawings\DrawManager.cs" />
     <Compile Include="Champions\Kayn\Kayn.cs" />
-    <Compile Include="Champions\Kayn\Update\Miscellaneous\Animation.cs" />
     <Compile Include="Champions\Kayn\Update\Miscellaneous\Killsteal.cs" />
     <Compile Include="Champions\Kayn\Update\Miscellaneous\Manager.cs" />
     <Compile Include="Champions\Kayn\Update\OrbwalkingEvents\Combo.cs" />

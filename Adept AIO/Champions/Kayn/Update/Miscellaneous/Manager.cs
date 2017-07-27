@@ -1,4 +1,6 @@
-﻿using Adept_AIO.Champions.Kayn.Update.OrbwalkingEvents;
+﻿using System;
+using Adept_AIO.Champions.Kayn.Core;
+using Adept_AIO.Champions.Kayn.Update.OrbwalkingEvents;
 using Adept_AIO.SDK.Extensions;
 using Aimtec;
 using Aimtec.SDK.Orbwalking;

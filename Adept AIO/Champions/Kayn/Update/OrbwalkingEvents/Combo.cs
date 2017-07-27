@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Adept_AIO.Champions.Kayn.Core;
 using Adept_AIO.SDK.Extensions;
 using Adept_AIO.SDK.Usables;
@@ -29,20 +30,35 @@ namespace Adept_AIO.Champions.Kayn.Update.OrbwalkingEvents
 
         public static void OnUpdate()
         {
+            if (SpellConfig.E.Ready && MenuConfig.Combo["E"].Enabled)
+            {
+                var end = ObjectManager.GetLocalPlayer().Position.Extend(Game.CursorPos, 100);
+                var point = WallExtension.GeneratePoint(ObjectManager.GetLocalPlayer().Position, end).FirstOrDefault();
+
+                if (point != Vector3.Zero)
+                {
+                    SpellConfig.E.Cast();
+                }
+            }
+
             var target = GlobalExtension.TargetSelector.GetTarget(SpellConfig.R.Range);
             if (target == null)
             {
                 return;
             }
 
-            if (SpellConfig.E.Ready && MenuConfig.Combo["E"].Enabled)
+            if (SpellConfig.Q.Ready && MenuConfig.Combo["Q"].Enabled)
             {
-                var end = ObjectManager.GetLocalPlayer().Position.Extend(Game.CursorPos, 500);
-                var point = WallExtension.GeneratePoint(ObjectManager.GetLocalPlayer().Position, end).OrderBy(x => x.Distance(ObjectManager.GetLocalPlayer().Position)).FirstOrDefault();
-
-                if (ObjectManager.GetLocalPlayer().HasBuffOfType(BuffType.Slow) || point != Vector3.Zero)
+                if (target.IsValidTarget(SpellConfig.W.Range))
                 {
-                    SpellConfig.E.Cast();
+                    ObjectManager.GetLocalPlayer().SpellBook.CastSpell(SpellSlot.Q, target.ServerPosition);
+                    DelayAction.Queue(1050, Items.CastTiamat);
+                }
+                else if (SpellConfig.R.Ready && MenuConfig.Combo["Beyblade"].Enabled && SummonerSpells.Flash != null &&
+                    SummonerSpells.Flash.Ready && target.Distance(ObjectManager.GetLocalPlayer()) > SpellConfig.Q.Range && Dmg.Damage(target) * 1.5f >= target.Health)
+                {
+                    SummonerSpells.Flash.Cast(target.ServerPosition);
+                    ObjectManager.GetLocalPlayer().SpellBook.CastSpell(SpellSlot.Q, target.ServerPosition);
                 }
             }
 
@@ -51,26 +67,10 @@ namespace Adept_AIO.Champions.Kayn.Update.OrbwalkingEvents
                 SpellConfig.W.Cast(target);
             }
 
-            if (SpellConfig.Q.Ready && MenuConfig.Combo["Q"].Enabled)
-            {
-                if (SpellConfig.R.Ready && MenuConfig.Combo["Beyblade"].Enabled && SummonerSpells.Flash != null &&
-                    SummonerSpells.Flash.Ready && target.Distance(ObjectManager.GetLocalPlayer()) > SpellConfig.Q.Range && Dmg.Damage(target) * 1.5f >= target.Health)
-                {
-                    ObjectManager.GetLocalPlayer().SpellBook.CastSpell(SpellSlot.Q, target.ServerPosition);
-                    SummonerSpells.Flash.Cast(target.ServerPosition);
-                }
-                else
-                {
-                    if (target.IsValidTarget(SpellConfig.Q.Range))
-                    {
-                        SpellConfig.Q.Cast(target);  
-                        SpellConfig.CastTiamat();
-                    }
-                }
-            }
-
             if (SpellConfig.R.Ready && MenuConfig.Combo["R"].Enabled && (MenuConfig.Combo["R"].Value >=
-                ObjectManager.GetLocalPlayer().HealthPercent() || Dmg.Damage(target) > target.Health))
+                ObjectManager.GetLocalPlayer().HealthPercent() ||
+                MenuConfig.Combo["R"].Value >= target.HealthPercent() ||
+                Dmg.Damage(target) * 1.5 > target.Health))
             {
                 if (MenuConfig.Whitelist[target.ChampionName].Enabled)
                 {

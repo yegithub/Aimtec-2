@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-
 using Adept_AIO.SDK.Extensions;
 using Adept_AIO.SDK.Usables;
 using Aimtec;
@@ -8,7 +7,7 @@ using Aimtec.SDK.Events;
 namespace Adept_AIO
 {
     using Champions.Kayn;
-   // using Champions.LeeSin;
+    using Champions.LeeSin;
     using Champions.Irelia;
     using Champions.Jax;
     using Champions.Rengar;
@@ -46,9 +45,9 @@ namespace Adept_AIO
                 case "Kayn":
                     Kayn.Init();
                     break;
-                //case "LeeSin":
-                //    LeeSin.Init();
-                //    break;
+                case "LeeSin":
+                    LeeSin.Init();
+                    break;
                 case "Rengar":
                     Rengar.Init();
                     break;

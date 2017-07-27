@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Adept_AIO.Champions.Kayn.Core;
 using Adept_AIO.SDK.Extensions;
 using Adept_AIO.SDK.Usables;
@@ -29,14 +30,13 @@ namespace Adept_AIO.Champions.Kayn.Update.OrbwalkingEvents
             if (SpellConfig.Q.Ready && MenuConfig.JungleClear["Q"].Enabled && MenuConfig.JungleClear["Q"].Value <=
                 ObjectManager.GetLocalPlayer().ManaPercent())
             {
-                var mob = GameObjects.JungleLarge.FirstOrDefault(x => x.IsValidTarget(SpellConfig.Q.Range));
+                var mob = GameObjects.Jungle.FirstOrDefault(x => x.IsValidTarget(SpellConfig.Q.Range));
                 if (mob == null)
                 {
                     return;
                 }
               
                 SpellConfig.Q.Cast(mob);
-                SpellConfig.CastTiamat();
             }
         }
     }

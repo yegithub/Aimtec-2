@@ -8,8 +8,6 @@ namespace Adept_AIO.Champions.Kayn.Core
 {
     class SpellConfig
     {
-        public static float LastQCast;
-
         public static Spell Q, W, E, R;
 
         public static void Load()
@@ -23,14 +21,6 @@ namespace Adept_AIO.Champions.Kayn.Core
             E = new Spell(SpellSlot.E, 800);
 
             R = new Spell(SpellSlot.R, 750); // 550 unless Shadow Asssassin
-        }
-
-        public static void CastTiamat()
-        {
-            if (Environment.TickCount - LastQCast > 600)
-            {
-                Items.CastTiamat();
-            }
         }
     }
 }
