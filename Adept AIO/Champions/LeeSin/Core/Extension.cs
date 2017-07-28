@@ -26,15 +26,5 @@ namespace Adept_AIO.Champions.LeeSin.Core
                    .SpellData.Name.ToLower()
                    .Contains("one");
         }
-
-        public static void QSmite(Obj_AI_Hero target)
-        {
-            var minion = SpellConfig.Q.GetPrediction(target).CollisionObjects[0];
-
-            if (minion != target && SummonerSpells.Smite != null && SummonerSpells.Smite.Ready)
-            {
-                SummonerSpells.Smite.CastOnUnit(minion);
-            }
-        }
     }
 }

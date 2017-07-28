@@ -55,14 +55,25 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
                     {
                         return;
                     }
+                   
                     LastQTime = Environment.TickCount;
                     SpellConfig.Q.Cast();
                 }
                 else
                 {
-                    Extension.QSmite(target);
-                    LastQTime = Environment.TickCount;
-                    SpellConfig.Q.Cast(target);
+                    //var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(ObjectManager.GetLocalPlayer()) <= 1100);
+                    //if (minion != null && GlobalExtension.Rectangle.IsInside(minion.Position.To2D()))
+                    //{
+                    //    ObjectManager.GetLocalPlayer().SpellBook.CastSpell(SpellSlot.Q, target.ServerPosition);
+                    //    SummonerSpells.Smite.CastOnUnit(minion);
+                    //    LastQTime = Environment.TickCount;
+                    //}
+                    //else
+                    {
+                      
+                        LastQTime = Environment.TickCount;
+                        SpellConfig.Q.Cast(target);
+                    }
                 }
             }
             else if (SpellConfig.W.Ready && Extension.IsFirst(SpellConfig.W) && MenuConfig.Combo["W"].Enabled && MenuConfig.Combo["Ward"].Enabled && distance > (SpellConfig.Q.Ready ? 1000 : 600))

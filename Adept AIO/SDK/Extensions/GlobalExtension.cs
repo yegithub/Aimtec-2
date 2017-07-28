@@ -9,7 +9,7 @@ namespace Adept_AIO.SDK.Extensions
         public static IOrbwalker Orbwalker;
         public static ITargetSelector TargetSelector;
         public static IHealthPrediction HealthPrediction;
-
+      
         public static void Init()
         {
             Orbwalker = new Orbwalker();
