@@ -78,7 +78,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
 
             if (mob != null)
             {
-                if (!SmiteOptional.Contains(mob.UnitSkinName))
+                if (!SmiteOptional.Contains(mob.UnitSkinName) || !MenuConfig.JungleClear["Smite"].Enabled)
                 {
                     return;
                 }
@@ -142,13 +142,16 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
                         ShittyHelper = 0;
                     }
 
-                    SummonerSpells.Smite.CastOnUnit(smiteAbleMob);
+                    if (MenuConfig.JungleClear["Smite"].Enabled)
+                    {
+                        SummonerSpells.Smite.CastOnUnit(smiteAbleMob);
+                    }
                 }
             }
 
             var mob = GameObjects.JungleLegendary.FirstOrDefault(x => x.Distance(ObjectManager.GetLocalPlayer()) <= 1500);
           
-            if (mob == null)
+            if (mob == null || !MenuConfig.JungleClear["Smite"].Enabled)
             {
                 return;
             }
