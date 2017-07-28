@@ -30,7 +30,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
 
         public static void OnUpdate()
         {
-            var target = GameObjects.EnemyHeroes.FirstOrDefault(x => x.Distance(ObjectManager.GetLocalPlayer()) <= 3000);
+            var target = GlobalExtension.TargetSelector.GetTarget(2500);
             if (target == null)
             {
                 return;
