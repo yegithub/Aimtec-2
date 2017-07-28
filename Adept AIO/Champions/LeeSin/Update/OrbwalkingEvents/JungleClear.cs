@@ -29,14 +29,30 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
             {
                 SpellConfig.Q.Cast();
             }
-            else if (SpellConfig.W.Ready && MenuConfig.JungleClear["W"].Enabled)
+
+            if (ObjectManager.GetLocalPlayer().Level <= 6)
             {
-                SpellConfig.W.CastOnUnit(ObjectManager.GetLocalPlayer());
+                if (SpellConfig.W.Ready && MenuConfig.JungleClear["W"].Enabled)
+                {
+                    SpellConfig.W.CastOnUnit(ObjectManager.GetLocalPlayer());
+                }
+                else if (SpellConfig.E.Ready && MenuConfig.JungleClear["E"].Enabled && !SpellConfig.W.Ready)
+                {
+                    Items.CastTiamat();
+                    SpellConfig.E.Cast();
+                }
             }
-            else if (SpellConfig.E.Ready && MenuConfig.JungleClear["E"].Enabled)
+            else
             {
-                Items.CastTiamat();
-                SpellConfig.E.Cast();
+                if (SpellConfig.E.Ready && MenuConfig.JungleClear["E"].Enabled)
+                {
+                    Items.CastTiamat();
+                    SpellConfig.E.Cast();
+                }
+                else if (SpellConfig.W.Ready && MenuConfig.JungleClear["W"].Enabled)
+                {
+                    SpellConfig.W.CastOnUnit(ObjectManager.GetLocalPlayer());
+                }
             }
         }
 

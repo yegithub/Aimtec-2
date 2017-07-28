@@ -32,12 +32,10 @@ namespace Adept_AIO.Champions.Yasuo.Core
 
         public static Obj_AI_Minion GetDashableMinion(Obj_AI_Base target)
         {
-            return GameObjects.Minions
-                            .Where(x => !x.HasBuff("YasuoDashWrapper") && !x.IsAlly &&
-                             x.Distance(ObjectManager.GetLocalPlayer()) <= SpellConfig.E.Range &&
-                             x.Distance(Game.CursorPos) <= MenuConfig.Combo["Range"].Value)
-                            .OrderByDescending(x => DashDistance(x, target))
-                            .LastOrDefault(x => DashDistance(x, target, 600) <= target.Distance(ObjectManager.GetLocalPlayer()));
+            return GameObjects.EnemyMinions.Where(x => !x.HasBuff("YasuoDashWrapper") &&
+                                                   x.Distance(ObjectManager.GetLocalPlayer()) <= SpellConfig.E.Range)
+                                                 .FirstOrDefault(x => DashDistance(x, target) > 0 && 
+                                                  x.Distance(target) < ObjectManager.GetLocalPlayer().Distance(target));
         }
 
         public static Obj_AI_Minion GetDashableMinion()

@@ -30,7 +30,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
 
         public static void OnUpdate()
         {
-            var target = GlobalExtension.TargetSelector.GetTarget(1800);
+            var target = GameObjects.EnemyHeroes.FirstOrDefault(x => x.Distance(ObjectManager.GetLocalPlayer()) <= 3000);
             if (target == null)
             {
                 return;
@@ -40,29 +40,17 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
             var minion = Extension.GetDashableMinion(target);
             var dashDistance = Extension.DashDistance(minion, target);
 
-            if (SpellConfig.E.Ready)
-            {
-                if (MenuConfig.Combo["Turret"].Enabled && target.IsUnderEnemyTurret())
-                {
-                    return;
-                }
-
-                if (!target.HasBuff("YasuoDashWrapper") && distance < SpellConfig.E.Range)
-                {
-                    SpellConfig.E.CastOnUnit(target);
-                }
-                else if (distance > SpellConfig.E.Range && target.HasBuff("YasuoDashWrapper") && minion != null || distance < ObjectManager.GetLocalPlayer().AttackRange)
-                {
-                    SpellConfig.E.CastOnUnit(minion);
-                }
-            }
-
             if (SpellConfig.Q.Ready)
             {
                 switch (Extension.CurrentMode)
                 {
-                    case Mode.DashingTornado:
                     case Mode.Dashing:
+                        if (dashDistance <= 220)
+                        {
+                            SpellConfig.Q.Cast(target);
+                        }
+                        break;
+                    case Mode.DashingTornado:
                         if (minion != null)
                         {
                             if (MenuConfig.Combo["Flash"].Enabled && dashDistance > 400 && target.IsValidTarget(425) && (Dmg.Damage(target) * 1.25 > target.Health || target.CountEnemyHeroesInRange(220) >= 2))
@@ -80,22 +68,14 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                         }
                         break;
                     case Mode.Tornado:
-                        if (target.IsValidTarget(SpellConfig.Q.Range))
-                        {
-                            if (minion != null && distance > SpellConfig.Q.Range / 2)
-                            {
-                                return;
-                            }
-
-                            ObjectManager.GetLocalPlayer().SpellBook.CastSpell(SpellSlot.Q, SpellConfig.Q.GetPrediction(target).CastPosition);
-                        }
+                        SpellConfig.Q.Cast(target);
                         break;
                     case Mode.Normal:
-                        if (target.IsValidTarget(SpellConfig.Q.Range))
+                        if (distance <= SpellConfig.Q.Range)
                         {
-                            SpellConfig.Q.CastOnUnit(target);
+                            SpellConfig.Q.Cast(target);
                         }
-                        else if(distance > 900)
+                        else if (distance > 1200)
                         {
                             var stackableMinion = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsEnemy && x.Distance(ObjectManager.GetLocalPlayer()) <= SpellConfig.Q.Range);
                             if (stackableMinion == null)
@@ -109,10 +89,27 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                 }
             }
 
+            if (SpellConfig.E.Ready)
+            {
+                if (!target.HasBuff("YasuoDashWrapper") && distance <= SpellConfig.E.Range)
+                {
+                    SpellConfig.E.CastOnUnit(target);
+                }
+                else if (minion != null)
+                {
+                    if (MenuConfig.Combo["Turret"].Enabled && minion.IsUnderEnemyTurret() || MenuConfig.Combo["Dash"].Value == 0 && minion.Distance(Game.CursorPos) > MenuConfig.Combo["Range"].Value)
+                    {
+                        return;
+                    }
+
+                    SpellConfig.E.CastOnUnit(minion);
+                }
+            }
+
             var airbourneTargets = GameObjects.EnemyHeroes.Where(x => Extension.KnockedUp(x) && x.Distance(ObjectManager.GetLocalPlayer()) <= SpellConfig.R.Range);
             var amount = airbourneTargets as Obj_AI_Hero[] ?? airbourneTargets.ToArray();
 
-            if (SpellConfig.R.Ready && Extension.KnockedUp(target) && (amount.Length >= MenuConfig.Combo["R"].Value || distance > 650 || distance > 450 && minion == null))
+            if (SpellConfig.R.Ready && Extension.KnockedUp(target) && (amount.Length >= MenuConfig.Combo["Count"].Value || distance > 650 || distance > 350 && minion == null))
             {
                 DelayAction.Queue(MenuConfig.Combo["Delay"].Enabled ? 375 + Game.Ping / 2 : 100 + Game.Ping / 2, () => SpellConfig.R.Cast());
             }

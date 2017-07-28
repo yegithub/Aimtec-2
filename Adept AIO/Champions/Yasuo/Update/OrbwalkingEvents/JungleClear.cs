@@ -36,7 +36,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                 {
                     return;
                 }
-                Console.WriteLine("????");
+            
                 ObjectManager.GetLocalPlayer().SpellBook.CastSpell(SpellSlot.Q, minion.ServerPosition);
             }
         }
