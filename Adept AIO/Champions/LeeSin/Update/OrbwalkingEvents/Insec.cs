@@ -60,13 +60,22 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
                 LastQTime = Environment.TickCount;
             }
 
-            if(WardManager.IsWardReady || SummonerSpells.Flash == null || target == null || args.SpellSlot != SpellSlot.R || MenuConfig.InsecMenu["Kick"].Value != 1 ||
-               !SummonerSpells.Flash.Ready)
+            if (!Extension.InsecMode.Active && MenuConfig.InsecMenu["Kick"].Value != 1 || SummonerSpells.Flash == null || target == null || args.SpellSlot != SpellSlot.R ||
+                !SummonerSpells.Flash.Ready)
             {
                 return;
             }
 
-            if (!MenuConfig.InsecMenu[target.ChampionName].Enabled || !Extension.InsecMode.Active && !Extension.KickFlashMode.Active ||
+            if (Extension.KickFlashMode.Active)
+            {
+                SummonerSpells.Flash.Cast(InsecPosition);
+            }
+            if(WardManager.IsWardReady )
+            {
+                return;
+            }
+
+            if (!MenuConfig.InsecMenu[target.ChampionName].Enabled ||
                 ObjectManager.GetLocalPlayer().Distance(InsecPosition) <= 100 ||
                 Environment.TickCount - WardManager.LastWardCreated < 1500 &&
                 !WardFlash)
@@ -139,19 +148,15 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
                 return;
             }
             else if (MenuConfig.InsecMenu["Kick"].Value == 0 && SummonerSpells.Flash != null && SummonerSpells.Flash.Ready &&
-                InsecPosition.Distance(ObjectManager.GetLocalPlayer()) <= 425)
+                InsecPosition.Distance(ObjectManager.GetLocalPlayer()) <= 425 && !(Environment.TickCount - WardManager.LastWardCreated <= 1500 && !WardFlash))
             {
-                if (Environment.TickCount - WardManager.LastWardCreated <= 1500 && !WardFlash)
-                {
-                    return;
-                }
                 SummonerSpells.Flash.Cast(InsecPosition);
             }
             else if (!target.IsValidTarget(SpellConfig.R.Range) || Environment.TickCount - WardManager.LastWardCreated < 250 && ObjectManager.GetLocalPlayer().Distance(InsecPosition) >= 350)
             {
                 return;
             }
-            else if (InsecPosition.Distance(ObjectManager.GetLocalPlayer()) > 200 && (SummonerSpells.Flash == null || !SummonerSpells.Flash.Ready))
+            else if (InsecPosition.Distance(ObjectManager.GetLocalPlayer()) > 350 && (SummonerSpells.Flash == null || !SummonerSpells.Flash.Ready))
             {
                 return; 
             }

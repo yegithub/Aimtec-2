@@ -47,7 +47,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.Miscellaneous
                     break;
             }
 
-            JungleClear.StealLegendary();
+            JungleClear.StealMobs();
 
         }
     }

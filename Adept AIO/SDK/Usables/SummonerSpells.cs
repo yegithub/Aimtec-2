@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
+using System.Linq;
 using Aimtec;
 using Spell = Aimtec.SDK.Spell;
 
@@ -69,6 +70,12 @@ namespace Adept_AIO.SDK.Usables
             int[] Dmg = { 28, 36, 44, 52, 60, 68, 76, 84, 92, 100, 108, 116, 124, 132, 140, 148, 156, 166 };
 
             return Dmg[ObjectManager.GetLocalPlayer().Level - 1];
+        }
+
+        public static int Ammo(string summonerName)
+        {
+            var spell = ObjectManager.GetLocalPlayer().SpellBook.Spells.FirstOrDefault(x => x.Name.Contains(summonerName));
+            return spell?.Ammo ?? 0;
         }
     }
 }

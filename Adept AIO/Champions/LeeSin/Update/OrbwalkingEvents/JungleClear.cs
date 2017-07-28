@@ -47,39 +47,23 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
                 return;
             }
 
-                var mob = GameObjects.JungleLarge.FirstOrDefault(x => x.Distance(ObjectManager.GetLocalPlayer()) < SpellConfig.Q.Range / 2 &&
-                                                             x.MaxHealth > 5);
-
-            var normal = GameObjects.Jungle.FirstOrDefault(x => x.Distance(ObjectManager.GetLocalPlayer()) < SpellConfig.Q.Range / 2);
-
-            var Legendary = GameObjects.JungleLegendary.FirstOrDefault(x => x.Distance(ObjectManager.GetLocalPlayer()) < SpellConfig.Q.Range / 2);
+            var mob = ObjectManager.Get<Obj_AI_Minion>().FirstOrDefault(x => x.Distance(ObjectManager.GetLocalPlayer()) < SpellConfig.Q.Range / 2 && x.GetJungleType() != GameObjects.JungleType.Unknown && x.MaxHealth > 5);
 
             if (mob != null)
             {
-                if (Extension.IsQ2 && mob.Health > ObjectManager.GetLocalPlayer().GetSpellDamage(mob, SpellSlot.Q, DamageStage.SecondCast))
-                {
-                    return;
-                }
-                ShittyHelper = 0;
-            }
-            else if (Legendary != null)
-            {
-                if (Extension.IsQ2 && Legendary.Health > ObjectManager.GetLocalPlayer().GetSpellDamage(Legendary, SpellSlot.Q, DamageStage.SecondCast))
-                {
-                    return;
-                }
-                ShittyHelper = 0;
-                SpellConfig.Q.Cast(Legendary);
-            }
-            else if (normal != null)
-            {
-                if (Extension.IsQ2 && normal.UnitSkinName != "Sru_Crab")
+                if (!SmiteOptional.Contains(mob.UnitSkinName))
                 {
                     return;
                 }
 
+                if (Extension.IsQ2 && mob.UnitSkinName != "Sru_Crab" && mob.Health > ObjectManager.GetLocalPlayer().GetSpellDamage(mob, SpellSlot.Q, DamageStage.SecondCast))
+                {
+                    return;
+                }
+
+                SpellConfig.Q.Cast(mob);
+
                 ShittyHelper = 0;
-                SpellConfig.Q.Cast(normal);
             }
         }
 
@@ -100,8 +84,37 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
            return SummonerSpells.SmiteMonsters() + (Extension.IsQ2? ObjectManager.GetLocalPlayer().GetSpellDamage(mob, SpellSlot.Q, DamageStage.SecondCast) : 0);
         }
 
-        public static void StealLegendary()
+        private static readonly string[] SmiteAlways = { "SRU_Dragon_Air", "SRU_Dragon_Fire", "SRU_Dragon_Earth", "SRU_Dragon_Water", "SRU_Dragon_Elder", "SRU_Baron", "SRU_RiftHerald" };
+        private static readonly string[] SmiteOptional = {"Sru_Crab", "SRU_Razorbreak", "SRU_Krug", "SRU_Murkwolf", "SRU_Gromp", "SRU_Blue", "SRU_Red"};
+
+        public static void StealMobs()
         {
+            var smiteAbleMob = ObjectManager.Get<Obj_AI_Minion>().FirstOrDefault(x => x.Distance(ObjectManager.GetLocalPlayer()) < 1300);
+            if (smiteAbleMob != null)
+            {
+                if (!SmiteAlways.Contains(smiteAbleMob.UnitSkinName) && !SmiteOptional.Contains(smiteAbleMob.UnitSkinName))
+                {
+                    return;
+                }
+
+                Console.WriteLine("??");
+                if (smiteAbleMob.Health < StealDamage(smiteAbleMob) && SummonerSpells.Smite != null && SummonerSpells.Smite.Ready)
+                {
+                    if (SmiteAlways.Contains(smiteAbleMob.UnitSkinName) && SummonerSpells.Ammo("Smite") <= 1 ||
+                        smiteAbleMob.UnitSkinName.ToLower().Contains("blue") && !MenuConfig.JungleClear["Blue"].Enabled)
+                    {
+                        return;
+                    }
+
+                    if (Extension.IsQ2)
+                    {
+                        SpellConfig.Q.Cast();
+                    }
+
+                    SummonerSpells.Smite.CastOnUnit(smiteAbleMob);
+                }
+            }
+
             var mob = GameObjects.JungleLegendary.FirstOrDefault(x => x.Distance(ObjectManager.GetLocalPlayer()) <= 1500);
           
             if (mob == null)

@@ -37,7 +37,7 @@ namespace Adept_AIO.Champions.LeeSin.Core
 
             InsecMenu = new Menu("Insec", "Insec")
             {
-                new MenuBool("Object", "[Q] - All Objects").SetToolTip("Uses Q to gapclose at every valid target"),
+                new MenuBool("Object", "Use Q On Minions").SetToolTip("Uses Q to gapclose to every minion"),
                 new MenuList("Position", "Insec Position", new []{"Ally Turret", "Ally Hero"}, 0),
                 new MenuList("Kick", "Kick Type: ", new []{"Flash R", "R Flash"}, 1),
             };
@@ -68,6 +68,8 @@ namespace Adept_AIO.Champions.LeeSin.Core
 
             JungleClear = new Menu("Jungle", "JungleClear")
             {
+                new MenuBool("Smite", "Smite Big Mobs"),
+                new MenuBool("Blue", "Smite Blue Buff"),
                 new MenuBool("Q", "Q"),
                 new MenuBool("W", "W"),
                 new MenuBool("E", "E"),
