@@ -17,8 +17,7 @@ namespace Adept_AIO.Champions.LeeSin
 
             Game.OnUpdate += Manager.OnUpdate;
             Game.OnUpdate += Killsteal.OnUpdate;
-            Game.OnUpdate += WardManager.OnUpdate;
-
+         
             GlobalExtension.Orbwalker.PostAttack += Manager.PostAttack;
 
             Render.OnRender += DrawManager.RenderManager;

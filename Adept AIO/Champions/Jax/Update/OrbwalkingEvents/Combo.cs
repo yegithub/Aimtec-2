@@ -39,7 +39,7 @@ namespace Adept_AIO.Champions.Jax.Update.OrbwalkingEvents
                 return;
             }
 
-            if (SpellConfig.R.Ready && ObjectManager.GetLocalPlayer().CountEnemyHeroesInRange(SpellConfig.Q.Range) >= MenuConfig.Combo["R"].Value)
+            if (SpellConfig.R.Ready && ObjectManager.GetLocalPlayer().CountEnemyHeroesInRange(SpellConfig.Q.Range) >= MenuConfig.Combo["R"].Value && MenuConfig.Combo["R"].Enabled)
             {
                 SpellConfig.R.Cast();
             }

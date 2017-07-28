@@ -11,19 +11,49 @@ namespace Adept_AIO.Champions.LeeSin.Core
     {
         public static float LastWardCreated;
         public static Vector3 WardPosition;
-       
-        public static bool IsWardReady => WardNames.Any(Items.CanUseItem);
+     
+        public static bool IsWardReady => WardNames.Any(Items.CanUseItem) && Environment.TickCount - LastWardCreated > 1500 || LastWardCreated == 0;
 
-        public static void OnUpdate()
+        private static readonly string[] WardNames =
         {
-            if (Extension.IsFirst(SpellConfig.W) && Environment.TickCount - LastWardCreated < 1500 && LastWardCreated > 0 && Environment.TickCount - LastWardCreated > Game.Ping + 5)
+            "TrinketTotemLvl1",
+            "ItemGhostWard",
+            "JammerDevice",
+        };
+
+        public static void JumpToVector(Vector3 position)
+        {
+            var bestobject = GetBestObject(position);
+
+            if (bestobject != null)
             {
-                JumpToVector(WardPosition);
+                SpellConfig.W.CastOnUnit(bestobject);
             }
-            else if (Environment.TickCount - LastWardCreated > 1500)
+        }
+
+        public static void WardJump(Vector3 position, bool maxRange)
+        {
+            if (Environment.TickCount - LastWardCreated < 1500 && LastWardCreated > 0)
             {
-                WardPosition = Vector3.Zero;
-                LastWardCreated = 0;
+                return;
+            }
+
+            if (maxRange)
+            {
+                position = ObjectManager.GetLocalPlayer().ServerPosition.Extend(position, 495);
+            }
+
+            foreach (var wardName in WardNames)
+            {
+                if (!Items.CanUseItem(wardName))
+                {
+                    continue;
+                }
+
+                Items.CastItem(wardName, position);
+                LastWardCreated = Environment.TickCount;
+                WardPosition = position;
+                ObjectManager.GetLocalPlayer().SpellBook.CastSpell(SpellSlot.W, position);
             }
         }
 
@@ -42,52 +72,5 @@ namespace Adept_AIO.Champions.LeeSin.Core
 
             return allowMinions ? minions : null;
         }
-
-        public static void WardJump(Vector3 position, bool maxRange)
-        {
-            if (Environment.TickCount - LastWardCreated < 1500)
-            {
-                return;
-            }
-
-            if (maxRange)
-            {
-                position = ObjectManager.GetLocalPlayer().ServerPosition.Extend(position, 490);
-            }
-
-            foreach (var wardName in WardNames)
-            {
-                if (!Items.CanUseItem(wardName))
-                {
-                    continue;
-                }
-
-                LastWardCreated = Environment.TickCount;
-                WardPosition = position;
-                Items.CastItem(wardName, position);
-            }
-        }
-
-        public static void JumpToVector(Vector3 position)
-        {
-            if(!Extension.IsFirst(SpellConfig.W))
-            {
-                return;
-            }
-
-            var bestobject = GetBestObject(position);
-
-            if (bestobject != null && !bestobject.IsMe)
-            {
-                SpellConfig.W.CastOnUnit(bestobject);
-            }
-        }
-
-        private static readonly string[] WardNames =
-        {
-            "TrinketTotemLvl1",
-            "ItemGhostWard",
-            "JammerDevice",
-        };
     }
 }

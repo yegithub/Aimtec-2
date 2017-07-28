@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.Contracts;
+﻿using System;
+using System.Diagnostics.Contracts;
 using Aimtec;
 using Spell = Aimtec.SDK.Spell;
 
@@ -26,7 +27,7 @@ namespace Adept_AIO.SDK.Usables
                     Exhaust = new Spell(SpellSlot.Summoner1, 650);
                     break;
                 case "summonersmite":
-                    Smite = new Spell(SpellSlot.Summoner1, 500);
+                    Smite = new Spell(SpellSlot.Summoner1, 700);
                     break;
             }
 
@@ -42,7 +43,7 @@ namespace Adept_AIO.SDK.Usables
                     Exhaust = new Spell(SpellSlot.Summoner2, 650);
                     break;
                 case "summonersmite":
-                    Smite = new Spell(SpellSlot.Summoner1, 700);
+                    Smite = new Spell(SpellSlot.Summoner2, 700);
                     break;
             }
         }

@@ -27,7 +27,7 @@ namespace Adept_AIO.Champions.Jax.Core
                 new MenuSliderBool("E", "Start E If Distance <", true, 700, 350, 800),
                 new MenuBool("Jump", "Only Q If E Is Up OR Killable"),
                 new MenuBool("Delay", "Delay Jump When E Is Active"),
-                new MenuSlider("R", "Use R If 'x' Enemies Nearby", 2, 1, 5),
+                new MenuSliderBool("R", "Use R If 'x' Enemies Nearby", true, 2, 1, 5),
                 new MenuBool("Check", "Check For Enemy Turrets")
             };
 

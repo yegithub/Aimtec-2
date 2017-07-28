@@ -49,8 +49,10 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
                 var mob = GameObjects.JungleLarge.FirstOrDefault(x => x.Distance(ObjectManager.GetLocalPlayer()) < SpellConfig.Q.Range / 2 &&
                                                              x.MaxHealth > 5);
 
-            var normal = GameObjects.Jungle.FirstOrDefault(x => x.Distance(ObjectManager.GetLocalPlayer()) < SpellConfig.Q.Range / 2 &&
-                                                                     x.MaxHealth > 5);
+            var normal = GameObjects.Jungle.FirstOrDefault(x => x.Distance(ObjectManager.GetLocalPlayer()) < SpellConfig.Q.Range / 2);
+
+            var Legendary = GameObjects.JungleLegendary.FirstOrDefault(x => x.Distance(ObjectManager.GetLocalPlayer()) < SpellConfig.Q.Range / 2);
+
             if (mob != null)
             {
                 if (Extension.IsQ2 && mob.Health > ObjectManager.GetLocalPlayer().GetSpellDamage(mob, SpellSlot.Q, DamageStage.SecondCast))
@@ -58,7 +60,15 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
                     return;
                 }
                 ShittyHelper = 0;
-                SpellConfig.Q.Cast(mob);
+            }
+            else if (Legendary != null)
+            {
+                if (Extension.IsQ2 && Legendary.Health > ObjectManager.GetLocalPlayer().GetSpellDamage(Legendary, SpellSlot.Q, DamageStage.SecondCast))
+                {
+                    return;
+                }
+                ShittyHelper = 0;
+                SpellConfig.Q.Cast(Legendary);
             }
             else if (normal != null)
             {
@@ -72,48 +82,45 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
             }
         }
 
-        private static readonly IOrderedEnumerable<Vector3> Positions = new List<Vector3>()
+        private static readonly Vector3[] Positions =
         {
-            new Vector3(5772, 10660, 56),
-            new Vector3(5373, 11180, 57),
-            new Vector3(9107, 4506, 52),
-            new Vector3(9220, 3900, 55),
-            new Vector3(9493, 3569, 64)
-        }.OrderBy(x => x.Distance(ObjectManager.GetLocalPlayer().Position));
+            new Vector3(5740, 56, 10629),
+            new Vector3(5808, 54, 10319),
+            new Vector3(5384, 57, 11282),
+            new Vector3(9076, 53, 4446),
+            new Vector3(9058, 53, 4117),
+            new Vector3(9687, 56, 3490)
+        };
+
+        private static float Q2Time;
 
         private static double StealDamage(Obj_AI_Base mob)
         {
-           return SummonerSpells.SmiteMonsters() + (Extension.IsQ2? ObjectManager.GetLocalPlayer().GetSpellDamage(mob, SpellSlot.Q) : 0);
+           return SummonerSpells.SmiteMonsters() + (Extension.IsQ2? ObjectManager.GetLocalPlayer().GetSpellDamage(mob, SpellSlot.Q, DamageStage.SecondCast) : 0);
         }
 
         public static void StealLegendary()
         {
-            if (!SpellConfig.Q.Ready)
-            {
-                return;
-            }
-
-            var mob = GameObjects.JungleLegendary.FirstOrDefault(x => x.IsValidTarget(1300));
+            var mob = GameObjects.JungleLegendary.FirstOrDefault(x => x.Distance(ObjectManager.GetLocalPlayer()) <= 1500);
+          
             if (mob == null)
             {
                 return;
             }
-
-            if (mob.Position.CountAllyHeroesInRange(700) <= 1 && StealDamage(mob) > mob.Health)
+          
+            if (Q2Time > 0 && Environment.TickCount - Q2Time <= 1500 && SummonerSpells.Smite != null && SummonerSpells.Smite.Ready && StealDamage(mob) > mob.Health)
             {
-                if (ObjectManager.GetLocalPlayer().IsDashing())
+                if (SpellConfig.W.Ready && Extension.IsFirst(SpellConfig.W) && ObjectManager.GetLocalPlayer().Distance(mob) <= 500)
                 {
-                    if (SummonerSpells.Smite != null && SummonerSpells.Smite.Ready)
-                    {
-                        SummonerSpells.Smite.CastOnUnit(mob);
-                    }
+                    SummonerSpells.Smite.CastOnUnit(mob);
                     WardManager.WardJump(Positions.FirstOrDefault(), false);
                 }
+            }
 
-                if (Extension.IsQ2)
-                {
-                    SpellConfig.Q.Cast();
-                }
+            if (mob.Position.CountAllyHeroesInRange(700) <= 1 && SpellConfig.Q.Ready && Extension.IsQ2)
+            {
+                SpellConfig.Q.Cast();
+                Q2Time = Environment.TickCount;
             }
         }
     }
