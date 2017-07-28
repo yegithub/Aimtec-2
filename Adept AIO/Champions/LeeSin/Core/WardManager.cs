@@ -40,7 +40,7 @@ namespace Adept_AIO.Champions.LeeSin.Core
 
             if (maxRange)
             {
-                position = ObjectManager.GetLocalPlayer().ServerPosition.Extend(position, 500);
+                position = ObjectManager.GetLocalPlayer().ServerPosition.Extend(position, 600);
             }
 
             var ward = WardNames.FirstOrDefault(Items.CanUseItem);

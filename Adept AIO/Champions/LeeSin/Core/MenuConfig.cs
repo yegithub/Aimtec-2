@@ -51,6 +51,7 @@ namespace Adept_AIO.Champions.LeeSin.Core
             {
                 new MenuBool("Turret", "Don't Q2 Into Turret"),
                 new MenuBool("Q", "Use Q"),
+                new MenuBool("Q2", "Use Q2"),
                 new MenuBool("W", "Use W"),
                 new MenuBool("Ward", "Use Wards"),
                 new MenuBool("E", "Use E"),

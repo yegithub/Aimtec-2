@@ -18,7 +18,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
 
         public static void OnPostAttack(AttackableUnit mob)
         {
-            if (mob == null)
+            if (mob == null || mob.Health < ObjectManager.GetLocalPlayer().GetAutoAttackDamage((Obj_AI_Base)mob))
             {
                 return;
             }
@@ -32,6 +32,11 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
 
             if (ObjectManager.GetLocalPlayer().Level <= 6)
             {
+                if (Extension.PassiveStack > 0)
+                {
+                    return;
+                }
+
                 if (SpellConfig.W.Ready && MenuConfig.JungleClear["W"].Enabled)
                 {
                     SpellConfig.W.CastOnUnit(ObjectManager.GetLocalPlayer());
@@ -63,7 +68,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
                 ShittyHelper = 0;
             }
 
-            if (!SpellConfig.Q.Ready || !MenuConfig.JungleClear["Q"].Enabled)
+            if (!SpellConfig.Q.Ready || !MenuConfig.JungleClear["Q"].Enabled || Extension.IsQ2)
             {
                 return;
             }

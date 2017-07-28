@@ -49,7 +49,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
                     return;
                 }
 
-                if (Extension.HasQ2(target))
+                if (Extension.HasQ2(target) && MenuConfig.Combo["Q2"].Enabled)
                 {
                     if (MenuConfig.Combo["Turret"].Enabled && target.IsUnderEnemyTurret())
                     {
