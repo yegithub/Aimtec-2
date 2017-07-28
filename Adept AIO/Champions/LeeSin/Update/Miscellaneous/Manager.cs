@@ -33,6 +33,8 @@ namespace Adept_AIO.Champions.LeeSin.Update.Miscellaneous
                 return;
             }
 
+            Insec.OnKeyPressed();
+
             switch (GlobalExtension.Orbwalker.Mode)
             {
                 case OrbwalkingMode.Combo:

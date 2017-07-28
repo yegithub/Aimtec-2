@@ -1,6 +1,8 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using Adept_AIO.Champions.LeeSin.Core;
 using Aimtec;
+using Aimtec.SDK.Extensions;
 
 namespace Adept_AIO.Champions.LeeSin.Drawings
 {
@@ -18,9 +20,9 @@ namespace Adept_AIO.Champions.LeeSin.Drawings
                 Render.Circle(ObjectManager.GetLocalPlayer().Position, SpellConfig.Q.Range, (uint)MenuConfig.Drawings["Segments"].Value, Color.IndianRed);
             }
 
-            if (MenuConfig.Drawings["Position"].Enabled)
+            if (MenuConfig.Drawings["Position"].Enabled && Extension.InsecPosition != Vector3.Zero)
             {
-                // Todo: fix.
+                Render.Circle(Extension.InsecPosition, 65, (uint)MenuConfig.Drawings["Segments"].Value, Color.White);
             }
         }
     }

@@ -8,7 +8,8 @@ namespace Adept_AIO.Champions.LeeSin.Core
     internal class Extension
     {
         public static OrbwalkerMode InsecMode, WardjumpMode, KickFlashMode;
-
+        public static Vector3 InsecPosition;
+     
         public static bool IsQ2 => !IsFirst(SpellConfig.Q) && SpellConfig.Q.Ready;
 
         public static bool HasQ2(Obj_AI_Base target)

@@ -91,10 +91,17 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
         {
             if (target == null || !MenuConfig.InsecMenu[target.ChampionName].Enabled)
             {
+                Extension.InsecPosition = Vector3.Zero;
                 return;
             }
 
-    
+            Extension.InsecPosition = InsecPosition;
+          
+            if (!Extension.InsecMode.Active)
+            {
+                return;
+            }
+
             if (SpellConfig.Q.Ready)
             {
                 if (Extension.IsQ2)

@@ -26,7 +26,7 @@ namespace Adept_AIO.Champions.LeeSin.Core
             MainMenu = new Menu(string.Empty, "Adept AIO", true);
             MainMenu.Attach();
 
-            Extension.InsecMode= new OrbwalkerMode("Insec", KeyCode.T, null, Insec.OnKeyPressed);
+            Extension.InsecMode= new OrbwalkerMode("Insec", KeyCode.T, null, null);
             Extension.WardjumpMode = new OrbwalkerMode("Wardjump", KeyCode.G, null, WardJump.OnKeyPressed);
             Extension.KickFlashMode = new OrbwalkerMode("Kick Flash", KeyCode.A, null, Insec.Kick);
 

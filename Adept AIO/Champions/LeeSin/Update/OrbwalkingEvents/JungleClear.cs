@@ -58,6 +58,11 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
 
         public static void OnUpdate()
         {
+            if (ShittyHelper > 2)
+            {
+                ShittyHelper = 0;
+            }
+
             if (!SpellConfig.Q.Ready || !MenuConfig.JungleClear["Q"].Enabled)
             {
                 return;
@@ -100,7 +105,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
         }
 
         private static readonly string[] SmiteAlways = { "SRU_Dragon_Air", "SRU_Dragon_Fire", "SRU_Dragon_Earth", "SRU_Dragon_Water", "SRU_Dragon_Elder", "SRU_Baron", "SRU_RiftHerald" };
-        private static readonly string[] SmiteOptional = {"Sru_Crab", "SRU_Razorbreak", "SRU_Krug", "SRU_Murkwolf", "SRU_Gromp", "SRU_Blue", "SRU_Red"};
+        private static readonly string[] SmiteOptional = {"Sru_Crab", "SRU_Razorbeak", "SRU_Krug", "SRU_Murkwolf", "SRU_Gromp", "SRU_Blue", "SRU_Red"};
 
         public static void StealMobs()
         {
@@ -112,7 +117,6 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
                     return;
                 }
 
-                Console.WriteLine("??");
                 if (smiteAbleMob.Health < StealDamage(smiteAbleMob) && SummonerSpells.Smite != null && SummonerSpells.Smite.Ready)
                 {
                     if (SmiteAlways.Contains(smiteAbleMob.UnitSkinName) && SummonerSpells.Ammo("Smite") <= 1 ||
