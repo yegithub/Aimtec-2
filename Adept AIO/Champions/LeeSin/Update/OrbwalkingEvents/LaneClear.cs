@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Adept_AIO.Champions.LeeSin.Core;
 using Adept_AIO.SDK.Extensions;
+using Adept_AIO.SDK.Usables;
 using Aimtec;
 using Aimtec.SDK.Damage;
 using Aimtec.SDK.Extensions;
@@ -21,6 +22,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
 
             if (SpellConfig.E.Ready && MenuConfig.JungleClear["E"].Enabled && minion.Health < ObjectManager.GetLocalPlayer().GetSpellDamage(minion, SpellSlot.E))
             {
+                Items.CastTiamat();
                 SpellConfig.E.Cast();
             }
             else if (SpellConfig.W.Ready && MenuConfig.JungleClear["W"].Enabled)

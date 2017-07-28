@@ -43,18 +43,16 @@ namespace Adept_AIO.Champions.LeeSin.Core
                 position = ObjectManager.GetLocalPlayer().ServerPosition.Extend(position, 495);
             }
 
-            foreach (var wardName in WardNames)
+            var ward = WardNames.FirstOrDefault(Items.CanUseItem);
+            if (ward == null)
             {
-                if (!Items.CanUseItem(wardName))
-                {
-                    continue;
-                }
-
-                Items.CastItem(wardName, position);
-                LastWardCreated = Environment.TickCount;
-                WardPosition = position;
-                ObjectManager.GetLocalPlayer().SpellBook.CastSpell(SpellSlot.W, position);
+                return;
             }
+
+            Items.CastItem(ward, position);
+            LastWardCreated = Environment.TickCount;
+            WardPosition = position;
+            ObjectManager.GetLocalPlayer().SpellBook.CastSpell(SpellSlot.W, position);
         }
 
         public static Obj_AI_Minion GetBestObject(Vector3 position, bool allowMinions = true)

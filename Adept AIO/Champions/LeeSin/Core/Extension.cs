@@ -1,4 +1,5 @@
-﻿using Aimtec;
+﻿using Adept_AIO.SDK.Usables;
+using Aimtec;
 using Aimtec.SDK.Extensions;
 using Aimtec.SDK.Orbwalking;
 
@@ -24,6 +25,16 @@ namespace Adept_AIO.Champions.LeeSin.Core
                    .SpellBook.GetSpell(spell.Slot)
                    .SpellData.Name.ToLower()
                    .Contains("one");
+        }
+
+        public static void QSmite(Obj_AI_Hero target)
+        {
+            var minion = SpellConfig.Q.GetPrediction(target).CollisionObjects[0];
+
+            if (minion != target && SummonerSpells.Smite != null && SummonerSpells.Smite.Ready)
+            {
+                SummonerSpells.Smite.CastOnUnit(minion);
+            }
         }
     }
 }

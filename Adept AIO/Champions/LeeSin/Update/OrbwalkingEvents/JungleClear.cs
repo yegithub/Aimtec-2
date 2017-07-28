@@ -35,6 +35,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
             }
             else if (SpellConfig.E.Ready && MenuConfig.JungleClear["E"].Enabled)
             {
+                Items.CastTiamat();
                 SpellConfig.E.Cast();
             }
         }

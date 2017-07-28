@@ -2,6 +2,7 @@
 using System.Linq;
 using Adept_AIO.Champions.LeeSin.Core;
 using Adept_AIO.SDK.Extensions;
+using Adept_AIO.SDK.Usables;
 using Aimtec;
 using Aimtec.SDK.Extensions;
 
@@ -59,6 +60,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
                 }
                 else
                 {
+                    Extension.QSmite(target);
                     LastQTime = Environment.TickCount;
                     SpellConfig.Q.Cast(target);
                 }
@@ -74,6 +76,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
 
             if (SpellConfig.E.Ready && MenuConfig.Combo["E"].Enabled && Extension.IsFirst(SpellConfig.E) && distance <= 350)
             {
+                Items.CastTiamat();
                 SpellConfig.E.Cast(target);
             }
         }
