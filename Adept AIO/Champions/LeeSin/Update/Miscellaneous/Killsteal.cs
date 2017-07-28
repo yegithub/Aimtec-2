@@ -4,6 +4,7 @@ using Adept_AIO.SDK.Extensions;
 using Adept_AIO.SDK.Usables;
 using Aimtec;
 using Aimtec.SDK.Damage;
+using Aimtec.SDK.Damage.JSON;
 using Aimtec.SDK.Extensions;
 
 namespace Adept_AIO.Champions.LeeSin.Update.Miscellaneous
@@ -23,7 +24,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.Miscellaneous
             {
                 SummonerSpells.Smite.CastOnUnit(target);
             }
-            if (SpellConfig.Q.Ready && target.Health < ObjectManager.GetLocalPlayer().GetSpellDamage(target, SpellSlot.Q) &&
+            if (SpellConfig.Q.Ready && (Extension.IsQ2 ? target.Health < ObjectManager.GetLocalPlayer().GetSpellDamage(target, SpellSlot.Q, DamageStage.SecondCast) : target.Health < ObjectManager.GetLocalPlayer().GetSpellDamage(target, SpellSlot.Q)) &&
                 target.IsValidTarget(SpellConfig.Q.Range) &&
                 MenuConfig.Killsteal["Q"].Enabled)
             {

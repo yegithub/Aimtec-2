@@ -102,7 +102,6 @@
     <Compile Include="Champions\LeeSin\Update\OrbwalkingEvents\Harass.cs" />
     <Compile Include="Champions\LeeSin\Update\OrbwalkingEvents\Insec.cs" />
     <Compile Include="Champions\LeeSin\Update\OrbwalkingEvents\JungleClear.cs" />
-    <Compile Include="Champions\LeeSin\Update\OrbwalkingEvents\KickFlash.cs" />
     <Compile Include="Champions\LeeSin\Update\OrbwalkingEvents\LaneClear.cs" />
     <Compile Include="Champions\LeeSin\Update\OrbwalkingEvents\WardJump.cs" />
     <Compile Include="Champions\Rengar\Core\Dmg.cs" />

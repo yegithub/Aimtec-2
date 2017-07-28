@@ -54,7 +54,6 @@ namespace Adept_AIO.Champions.LeeSin.Core
                 new MenuBool("W", "Use W"),
                 new MenuBool("Ward", "Use Wards"),
                 new MenuBool("E", "Use E"),
-                new MenuBool("R", "Use R"),
                 new MenuBool("Star", "Star Combo On Killable")
             };
 

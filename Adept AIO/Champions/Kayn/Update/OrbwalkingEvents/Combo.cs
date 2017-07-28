@@ -47,7 +47,11 @@ namespace Adept_AIO.Champions.Kayn.Update.OrbwalkingEvents
                 return;
             }
 
-            if (SpellConfig.Q.Ready && MenuConfig.Combo["Q"].Enabled)
+            if (SpellConfig.W.Ready && MenuConfig.Combo["W"].Enabled && target.IsValidTarget(SpellConfig.W.Range))
+            {
+                SpellConfig.W.Cast(target);
+            }
+            else if (SpellConfig.Q.Ready && MenuConfig.Combo["Q"].Enabled)
             {
                 if (target.IsValidTarget(SpellConfig.W.Range))
                 {
@@ -60,11 +64,6 @@ namespace Adept_AIO.Champions.Kayn.Update.OrbwalkingEvents
                     SummonerSpells.Flash.Cast(target.ServerPosition);
                     ObjectManager.GetLocalPlayer().SpellBook.CastSpell(SpellSlot.Q, target.ServerPosition);
                 }
-            }
-
-            if (SpellConfig.W.Ready && MenuConfig.Combo["W"].Enabled && target.IsValidTarget(SpellConfig.W.Range))
-            {
-                SpellConfig.W.Cast(target);
             }
 
             if (SpellConfig.R.Ready && MenuConfig.Combo["R"].Enabled && (MenuConfig.Combo["R"].Value >=

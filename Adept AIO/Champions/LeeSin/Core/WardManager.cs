@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using Adept_AIO.SDK.Extensions;
 using Adept_AIO.SDK.Usables;
 using Aimtec;
 using Aimtec.SDK.Extensions;
-using Aimtec.SDK.Util;
 
 namespace Adept_AIO.Champions.LeeSin.Core
 {
@@ -18,7 +16,7 @@ namespace Adept_AIO.Champions.LeeSin.Core
 
         public static void OnUpdate()
         {
-            if (Environment.TickCount - LastWardCreated < 1500 && Environment.TickCount - LastWardCreated > Game.Ping && LastWardCreated > 0 && WardPosition != Vector3.Zero)
+            if (Environment.TickCount - LastWardCreated < 1500 && Environment.TickCount - LastWardCreated > 75 && LastWardCreated > 0 && WardPosition != Vector3.Zero)
             {
                 JumpToVector(WardPosition);
             }
@@ -47,7 +45,7 @@ namespace Adept_AIO.Champions.LeeSin.Core
 
         public static void WardJump(Vector3 position, bool maxRange)
         {
-            if (Environment.TickCount - LastWardCreated < 1000)
+            if (Environment.TickCount - LastWardCreated < 1500)
             {
                 return;
             }
@@ -70,7 +68,7 @@ namespace Adept_AIO.Champions.LeeSin.Core
             }
         }
 
-        public static void JumpToVector(Vector3 position)
+        private static void JumpToVector(Vector3 position)
         {
             if(!Extension.IsFirst(SpellConfig.W))
             {

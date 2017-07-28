@@ -9,6 +9,8 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
 {
     class Combo
     {
+        private static float LastQTime;
+
         public static void OnPostAttack(AttackableUnit target)
         {
             if (target == null)
@@ -31,7 +33,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
 
         public static void OnUpdate()
         {
-            var target = GlobalExtension.TargetSelector.GetTarget(SpellConfig.Q.Ready ? 1750 : 850);
+            var target = GlobalExtension.TargetSelector.GetTarget(1600);
             if (target == null)
             {
                 return;
@@ -52,33 +54,27 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
                     {
                         return;
                     }
+                    LastQTime = Environment.TickCount;
                     SpellConfig.Q.Cast();
                 }
                 else
                 {
+                    LastQTime = Environment.TickCount;
                     SpellConfig.Q.Cast(target);
                 }
             }
-            else if (SpellConfig.W.Ready && MenuConfig.Combo["W"].Enabled && MenuConfig.Combo["Ward"].Enabled && distance > (SpellConfig.Q.Ready ? 1750 : 600))
+            else if (SpellConfig.W.Ready && Extension.IsFirst(SpellConfig.W) && MenuConfig.Combo["W"].Enabled && MenuConfig.Combo["Ward"].Enabled && distance > (SpellConfig.Q.Ready ? 1000 : 600))
             {
-                WardManager.WardJump(target.ServerPosition, true);
-            }
-
-            if (SpellConfig.E.Ready && MenuConfig.Combo["E"].Enabled)
-            {
-                if (distance > 500)
+                if (Environment.TickCount - LastQTime <= 1000 && LastQTime > 0)
                 {
                     return;
                 }
+                WardManager.WardJump(target.Position, true);
+            }
 
-                if (Extension.IsFirst(SpellConfig.E))
-                {
-                    SpellConfig.E.Cast(target);
-                }
-                else 
-                {
-                    SpellConfig.E.Cast();
-                }
+            if (SpellConfig.E.Ready && MenuConfig.Combo["E"].Enabled && Extension.IsFirst(SpellConfig.E) && distance <= 350)
+            {
+                SpellConfig.E.Cast(target);
             }
         }
     }
