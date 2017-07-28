@@ -14,7 +14,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
 {
     internal class JungleClear
     {
-        private static int ShittyHelper;
+        private static int ShittyHelper = 0;
 
         public static void OnPostAttack(AttackableUnit mob)
         {
@@ -28,6 +28,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
             if (SpellConfig.Q.Ready && Extension.IsQ2 && ShittyHelper >= 2)
             {
                 SpellConfig.Q.Cast();
+                ShittyHelper = 0;
             }
 
             if (ObjectManager.GetLocalPlayer().Level <= 6)
