@@ -62,7 +62,6 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
                 }
 
                 SpellConfig.Q.Cast(mob);
-
                 ShittyHelper = 0;
             }
         }
@@ -109,6 +108,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
                     if (Extension.IsQ2)
                     {
                         SpellConfig.Q.Cast();
+                        ShittyHelper = 0;
                     }
 
                     SummonerSpells.Smite.CastOnUnit(smiteAbleMob);
