@@ -27,8 +27,8 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
 
             if (SpellConfig.Q.Ready && Extension.IsQ2 && ShittyHelper >= 2)
             {
-                SpellConfig.Q.Cast();
                 ShittyHelper = 0;
+                SpellConfig.Q.Cast();
             }
 
             if (ObjectManager.GetLocalPlayer().Level <= 6)
@@ -88,8 +88,8 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
                     return;
                 }
 
-                SpellConfig.Q.Cast(mob);
                 ShittyHelper = 0;
+                SpellConfig.Q.Cast(mob);
             }
         }
 
@@ -115,6 +115,11 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
 
         public static void StealMobs()
         {
+            if (ObjectManager.GetLocalPlayer().Level == 1)
+            {
+                return;
+            }
+
             var smiteAbleMob = ObjectManager.Get<Obj_AI_Minion>().FirstOrDefault(x => x.Distance(ObjectManager.GetLocalPlayer()) < 1300);
             if (smiteAbleMob != null)
             {
@@ -125,7 +130,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
 
                 if (smiteAbleMob.Health < StealDamage(smiteAbleMob) && SummonerSpells.Smite != null && SummonerSpells.Smite.Ready)
                 {
-                    if (SmiteAlways.Contains(smiteAbleMob.UnitSkinName) && SummonerSpells.Ammo("Smite") <= 1 ||
+                    if (SmiteOptional.Contains(smiteAbleMob.UnitSkinName) && SummonerSpells.Ammo("Smite") <= 1 ||
                         smiteAbleMob.UnitSkinName.ToLower().Contains("blue") && !MenuConfig.JungleClear["Blue"].Enabled)
                     {
                         return;
