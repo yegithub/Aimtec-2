@@ -9,7 +9,7 @@ using Aimtec.SDK.Util;
 
 namespace Adept_AIO.Champions.Kayn.Update.OrbwalkingEvents
 {
-    class Combo
+    internal class Combo
     {
         public static void OnPostAttack(AttackableUnit target)
         {

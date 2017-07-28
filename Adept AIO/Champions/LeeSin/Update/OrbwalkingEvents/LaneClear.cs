@@ -7,7 +7,7 @@ using Aimtec.SDK.Extensions;
 
 namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
 {
-    class LaneClear
+    internal class LaneClear
     {
         public static void OnPostAttack()
         {

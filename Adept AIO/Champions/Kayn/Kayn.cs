@@ -6,7 +6,7 @@ using Aimtec;
 
 namespace Adept_AIO.Champions.Kayn
 {
-    class Kayn
+    internal class Kayn
     {
         public static void Init()
         {

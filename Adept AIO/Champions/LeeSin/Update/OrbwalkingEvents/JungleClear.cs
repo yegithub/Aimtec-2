@@ -1,54 +1,74 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Adept_AIO.Champions.LeeSin.Core;
 using Adept_AIO.SDK.Extensions;
 using Adept_AIO.SDK.Usables;
 using Aimtec;
 using Aimtec.SDK.Damage;
+using Aimtec.SDK.Damage.JSON;
 using Aimtec.SDK.Events;
 using Aimtec.SDK.Extensions;
 
 namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
 {
-    class JungleClear
+    internal class JungleClear
     {
-        public static void OnPostAttack()
+        private static int ShittyHelper;
+
+        public static void OnPostAttack(AttackableUnit mob)
         {
-            var mob = GameObjects.Jungle.FirstOrDefault(x => x.Distance(ObjectManager.GetLocalPlayer()) < ObjectManager.GetLocalPlayer().AttackRange + x.BoundingRadius &&
-                                                             x.MaxHealth > 5 &&
-                                                             x.Health > ObjectManager.GetLocalPlayer().GetAutoAttackDamage(x));
             if (mob == null)
             {
                 return;
             }
 
-            if (SpellConfig.E.Ready && MenuConfig.JungleClear["E"].Enabled)
+            ShittyHelper++;
+
+            if (SpellConfig.Q.Ready && Extension.IsQ2 && ShittyHelper >= 2)
             {
-                SpellConfig.E.Cast();
+                SpellConfig.Q.Cast();
             }
             else if (SpellConfig.W.Ready && MenuConfig.JungleClear["W"].Enabled)
             {
                 SpellConfig.W.CastOnUnit(ObjectManager.GetLocalPlayer());
             }
+            else if (SpellConfig.E.Ready && MenuConfig.JungleClear["E"].Enabled)
+            {
+                SpellConfig.E.Cast();
+            }
         }
 
         public static void OnUpdate()
         {
-            var mob = GameObjects.JungleLarge.FirstOrDefault(x => x.Distance(ObjectManager.GetLocalPlayer()) < SpellConfig.Q.Range / 2 &&
-                                                             x.MaxHealth > 5);
-            if (mob == null)
+            if (!SpellConfig.Q.Ready || !MenuConfig.JungleClear["Q"].Enabled)
             {
                 return;
             }
 
-            if (SpellConfig.Q.Ready && MenuConfig.JungleClear["Q"].Enabled)
+                var mob = GameObjects.JungleLarge.FirstOrDefault(x => x.Distance(ObjectManager.GetLocalPlayer()) < SpellConfig.Q.Range / 2 &&
+                                                             x.MaxHealth > 5);
+
+            var normal = GameObjects.Jungle.FirstOrDefault(x => x.Distance(ObjectManager.GetLocalPlayer()) < SpellConfig.Q.Range / 2 &&
+                                                                     x.MaxHealth > 5);
+            if (mob != null)
             {
-                if (Extension.IsQ2 && mob.Health > ObjectManager.GetLocalPlayer().GetSpellDamage(mob, SpellSlot.Q))
+                if (Extension.IsQ2 && mob.Health > ObjectManager.GetLocalPlayer().GetSpellDamage(mob, SpellSlot.Q, DamageStage.SecondCast))
+                {
+                    return;
+                }
+                ShittyHelper = 0;
+                SpellConfig.Q.Cast(mob);
+            }
+            else if (normal != null)
+            {
+                if (Extension.IsQ2 && normal.UnitSkinName != "Sru_Crab")
                 {
                     return;
                 }
 
-                SpellConfig.Q.Cast(mob);
+                ShittyHelper = 0;
+                SpellConfig.Q.Cast(normal);
             }
         }
 

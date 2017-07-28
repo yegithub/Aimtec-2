@@ -8,7 +8,7 @@ using Aimtec;
 
 namespace Adept_AIO.Champions.LeeSin
 {
-    class LeeSin
+    internal class LeeSin
     {
         public static void Init()
         {

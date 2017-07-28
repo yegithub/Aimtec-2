@@ -7,7 +7,7 @@ using Aimtec.SDK.Extensions;
 
 namespace Adept_AIO.Champions.Kayn.Update.OrbwalkingEvents
 {
-    class Harass
+    internal class Harass
     {
         public static void OnUpdate()
         {

@@ -4,7 +4,7 @@ using Aimtec;
 
 namespace Adept_AIO.Champions.LeeSin.Update.Miscellaneous
 {
-    class SafetyMeasure
+    internal class SafetyMeasure
     {
         public static void OnProcessSpellCast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
         {

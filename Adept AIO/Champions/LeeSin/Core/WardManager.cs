@@ -7,7 +7,7 @@ using Aimtec.SDK.Extensions;
 
 namespace Adept_AIO.Champions.LeeSin.Core
 {
-    class WardManager
+    internal class WardManager
     {
         public static float LastWardCreated;
         public static Vector3 WardPosition;
@@ -16,7 +16,7 @@ namespace Adept_AIO.Champions.LeeSin.Core
 
         public static void OnUpdate()
         {
-            if (Environment.TickCount - LastWardCreated < 1500 && Environment.TickCount - LastWardCreated > 75 && LastWardCreated > 0 && WardPosition != Vector3.Zero)
+            if (Extension.IsFirst(SpellConfig.W) && Environment.TickCount - LastWardCreated < 1500 && LastWardCreated > 0 && Environment.TickCount - LastWardCreated > Game.Ping + 5)
             {
                 JumpToVector(WardPosition);
             }
@@ -52,7 +52,7 @@ namespace Adept_AIO.Champions.LeeSin.Core
 
             if (maxRange)
             {
-                position = ObjectManager.GetLocalPlayer().ServerPosition.Extend(position, 600);
+                position = ObjectManager.GetLocalPlayer().ServerPosition.Extend(position, 490);
             }
 
             foreach (var wardName in WardNames)
@@ -68,7 +68,7 @@ namespace Adept_AIO.Champions.LeeSin.Core
             }
         }
 
-        private static void JumpToVector(Vector3 position)
+        public static void JumpToVector(Vector3 position)
         {
             if(!Extension.IsFirst(SpellConfig.W))
             {

@@ -8,7 +8,7 @@ using Aimtec.SDK.Extensions;
 
 namespace Adept_AIO.Champions.Kayn.Update.OrbwalkingEvents
 {
-    class JungleClear
+    internal class JungleClear
     {
         public static void OnPostAttack()
         {

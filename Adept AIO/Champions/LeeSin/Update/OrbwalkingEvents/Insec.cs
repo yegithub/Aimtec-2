@@ -13,7 +13,7 @@ using Aimtec.SDK.Util;
 
 namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
 {
-    class Insec
+    internal class Insec
     {
    
         private static Obj_AI_Hero target => TargetSelector.GetSelectedTarget();
@@ -54,18 +54,10 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
                 return;
             }
 
-            if (SummonerSpells.Flash == null || target == null || !MenuConfig.InsecMenu[target.ChampionName].Enabled)
-            {
-                return;
-            }
-
-            if (!Extension.InsecMode.Active && !Extension.KickFlashMode.Active)
-            {
-                return;
-            }
-
-            if (ObjectManager.GetLocalPlayer().Distance(InsecPosition) <= 380 &&
-                Environment.TickCount - WardManager.LastWardCreated < 1500)
+            if (SummonerSpells.Flash == null || target == null || !MenuConfig.InsecMenu[target.ChampionName].Enabled || !Extension.InsecMode.Active && !Extension.KickFlashMode.Active ||
+                ObjectManager.GetLocalPlayer().Distance(InsecPosition) <= 100 ||
+                Environment.TickCount - WardManager.LastWardCreated < 1500 &&
+                ObjectManager.GetLocalPlayer().Distance(InsecPosition) <= 345)
             {
                 return;
             }
@@ -127,11 +119,11 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
             {
                 SummonerSpells.Flash.Cast(InsecPosition);
             }
-            else if (!target.IsValidTarget(SpellConfig.R.Range) || Environment.TickCount - WardManager.LastWardCreated < 100 && ObjectManager.GetLocalPlayer().Distance(InsecPosition) >= 350)
+            else if (!target.IsValidTarget(SpellConfig.R.Range) || Environment.TickCount - WardManager.LastWardCreated < 250 && ObjectManager.GetLocalPlayer().Distance(InsecPosition) >= 350)
             {
                 return;
             }
-            else if (InsecPosition.Distance(ObjectManager.GetLocalPlayer()) > 100 && (SummonerSpells.Flash == null || !SummonerSpells.Flash.Ready))
+            else if (InsecPosition.Distance(ObjectManager.GetLocalPlayer()) > 200 && (SummonerSpells.Flash == null || !SummonerSpells.Flash.Ready))
             {
                 return; 
             }

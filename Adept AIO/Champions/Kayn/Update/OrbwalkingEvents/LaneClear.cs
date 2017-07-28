@@ -8,7 +8,7 @@ using Aimtec.SDK.Extensions;
 
 namespace Adept_AIO.Champions.Kayn.Update.OrbwalkingEvents
 {
-    class LaneClear
+    internal class LaneClear
     {
         public static void OnUpdate()
         {

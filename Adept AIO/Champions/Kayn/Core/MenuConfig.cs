@@ -5,7 +5,7 @@ using Aimtec.SDK.Menu.Components;
 
 namespace Adept_AIO.Champions.Kayn.Core
 {
-    class MenuConfig
+    internal class MenuConfig
     {
         private static Menu MainMenu;
 

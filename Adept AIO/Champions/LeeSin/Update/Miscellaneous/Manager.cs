@@ -7,7 +7,7 @@ using Aimtec.SDK.Orbwalking;
 
 namespace Adept_AIO.Champions.LeeSin.Update.Miscellaneous
 {
-    class Manager
+    internal class Manager
     {
         public static void PostAttack(object sender, PostAttackEventArgs args)
         {
@@ -17,11 +17,11 @@ namespace Adept_AIO.Champions.LeeSin.Update.Miscellaneous
                     Combo.OnPostAttack(args.Target);
                     break;
                 case OrbwalkingMode.Mixed:
-                    Harass.OnPostAttack();
+                    Harass.OnPostAttack(args.Target);
                     break;
                 case OrbwalkingMode.Laneclear:
                     LaneClear.OnPostAttack();
-                    JungleClear.OnPostAttack();
+                    JungleClear.OnPostAttack(args.Target);
                     break;
             }
         }

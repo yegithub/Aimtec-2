@@ -8,7 +8,7 @@ using Aimtec.SDK.Util;
 
 namespace Adept_AIO.Champions.LeeSin.Core
 {
-    class MenuConfig
+    internal class MenuConfig
     {
         private static Menu MainMenu;
 

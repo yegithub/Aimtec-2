@@ -3,7 +3,7 @@ using Aimtec.SDK.Damage;
 
 namespace Adept_AIO.Champions.Kayn.Core
 {
-    class Dmg
+    internal class Dmg
     {
         public static double Damage(Obj_AI_Base target)
         {

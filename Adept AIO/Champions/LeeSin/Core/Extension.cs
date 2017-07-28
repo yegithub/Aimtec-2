@@ -4,7 +4,7 @@ using Aimtec.SDK.Orbwalking;
 
 namespace Adept_AIO.Champions.LeeSin.Core
 {
-    class Extension
+    internal class Extension
     {
         public static OrbwalkerMode InsecMode, WardjumpMode, KickFlashMode;
 

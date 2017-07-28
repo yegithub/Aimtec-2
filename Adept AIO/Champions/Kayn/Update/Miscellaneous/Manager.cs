@@ -7,7 +7,7 @@ using Aimtec.SDK.Orbwalking;
 
 namespace Adept_AIO.Champions.Kayn.Update.Miscellaneous
 {
-    class Manager
+    internal class Manager
     {
         public static void PostAttack(object sender, PostAttackEventArgs args)
         {

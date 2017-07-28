@@ -6,15 +6,19 @@ using Aimtec.SDK.Extensions;
 
 namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
 {
-    class Harass
+    internal class Harass
     {
-        public static void OnPostAttack()
+        public static void OnPostAttack(AttackableUnit target)
         {
+            if (target == null || !target.IsHero)
+            {
+                return;
+            }
             if (SpellConfig.E.Ready && MenuConfig.Harass["E2"].Enabled && !Extension.IsFirst(SpellConfig.E))
             {
                 SpellConfig.E.Cast();
             }
-            else if (SpellConfig.W.Ready && MenuConfig.Harass["Mode"].Enabled && MenuConfig.Harass["W"].Value == 1)
+            else if (SpellConfig.W.Ready && MenuConfig.Harass["Mode"].Value == 1)
             {
                 SpellConfig.W.CastOnUnit(ObjectManager.GetLocalPlayer());
             }
@@ -46,7 +50,8 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
 
             if (SpellConfig.W.Ready && Extension.IsFirst(SpellConfig.W) && !SpellConfig.E.Ready && !SpellConfig.Q.Ready && MenuConfig.Harass["Mode"].Value == 0)
             {
-               
+                var pos = ObjectManager.GetLocalPlayer().ServerPosition + (ObjectManager.GetLocalPlayer().ServerPosition + target.ServerPosition) * 300;
+                WardManager.WardJump(pos, true);
             }
         }
     }

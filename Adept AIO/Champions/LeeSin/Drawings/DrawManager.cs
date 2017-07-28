@@ -4,7 +4,7 @@ using Aimtec;
 
 namespace Adept_AIO.Champions.LeeSin.Drawings
 {
-    class DrawManager
+    internal class DrawManager
     {
         public static void RenderManager()
         {

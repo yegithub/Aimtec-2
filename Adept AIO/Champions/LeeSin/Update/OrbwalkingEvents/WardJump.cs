@@ -3,7 +3,7 @@ using Aimtec;
 
 namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
 {
-    class WardJump
+    internal class WardJump
     {
         public static void OnKeyPressed()
         {
