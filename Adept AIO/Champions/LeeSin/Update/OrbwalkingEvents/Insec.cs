@@ -76,7 +76,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
             }
 
             if (!MenuConfig.InsecMenu[target.ChampionName].Enabled ||
-                ObjectManager.GetLocalPlayer().Distance(InsecPosition) <= 250 ||
+                ObjectManager.GetLocalPlayer().Distance(InsecPosition) <= 100 ||
                 Environment.TickCount - WardManager.LastWardCreated < 1500 &&
                 !WardFlash)
             {
@@ -127,7 +127,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
                         return;
                     }
 
-                    if (minion.Distance(InsecPosition) <= 600)
+                    if (minion.Distance(InsecPosition) <= 500)
                     {
                         WardFlash = false;
                     }
@@ -138,13 +138,13 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
 
             if (SpellConfig.W.Ready && Extension.IsFirst(SpellConfig.W))
             {
-                if (InsecPosition.Distance(ObjectManager.GetLocalPlayer()) < 600)
+                if (InsecPosition.Distance(ObjectManager.GetLocalPlayer()) < 500)
                 {
                     WardFlash = false;
                     WardManager.WardJump(InsecPosition, false);
                 }
                 else if (SummonerSpells.Flash != null && SummonerSpells.Flash.Ready &&
-                         InsecPosition.Distance(ObjectManager.GetLocalPlayer()) < 600 + 425 && Environment.TickCount - LastQTime > 650)
+                         InsecPosition.Distance(ObjectManager.GetLocalPlayer()) < 500 + 425 && Environment.TickCount - LastQTime > 650)
                 {
                     WardFlash = true;
                     WardManager.WardJump(InsecPosition, true);

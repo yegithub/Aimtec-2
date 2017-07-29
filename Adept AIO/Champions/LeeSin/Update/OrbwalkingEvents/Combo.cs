@@ -49,13 +49,13 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
                     return;
                 }
 
-                if (Extension.HasQ2(target) && MenuConfig.Combo["Q2"].Enabled)
+                if (Extension.HasQ2(target) || Extension.IsQ2)
                 {
-                    if (MenuConfig.Combo["Turret"].Enabled && target.IsUnderEnemyTurret())
+                    if (MenuConfig.Combo["Turret"].Enabled && target.IsUnderEnemyTurret() || !MenuConfig.Combo["Q2"].Enabled)
                     {
                         return;
                     }
-                   
+                   Console.WriteLine("??");
                     LastQTime = Environment.TickCount;
                     SpellConfig.Q.Cast();
                 }

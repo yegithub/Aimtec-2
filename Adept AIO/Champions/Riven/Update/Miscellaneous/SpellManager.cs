@@ -79,6 +79,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
             {
                 Items.CastTiamat();
                 SpellConfig.W.Cast();
+                CanUseW = false;
             }
         }
 
