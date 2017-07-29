@@ -11,15 +11,15 @@ namespace Adept_AIO.Champions.Irelia.Update.OrbwalkingEvents
     {
         public static void OnUpdate()
         {
-            if (!SpellConfig.Q.Ready || !MenuConfig.Clear["Lasthit"].Enabled || MenuConfig.Clear["Lasthit"].Value > ObjectManager.GetLocalPlayer().ManaPercent())
+            if (!SpellConfig.Q.Ready || !MenuConfig.Clear["Lasthit"].Enabled || MenuConfig.Clear["Lasthit"].Value > GlobalExtension.Player.ManaPercent())
             {
                 return;
             }
 
-            foreach (var minion in GameObjects.EnemyMinions.Where(x => x.Health < ObjectManager.GetLocalPlayer().GetSpellDamage(x, SpellSlot.Q) && 
-                                                                       x.Distance(ObjectManager.GetLocalPlayer()) < SpellConfig.Q.Range))
+            foreach (var minion in GameObjects.EnemyMinions.Where(x => x.Health < GlobalExtension.Player.GetSpellDamage(x, SpellSlot.Q) && 
+                                                                       x.Distance(GlobalExtension.Player) < SpellConfig.Q.Range))
             {
-                if (!minion.IsValid || minion.Distance(ObjectManager.GetLocalPlayer()) < ObjectManager.GetLocalPlayer().AttackRange || MenuConfig.Clear["Turret"].Enabled && minion.IsUnderEnemyTurret())
+                if (!minion.IsValid || minion.Distance(GlobalExtension.Player) < GlobalExtension.Player.AttackRange || MenuConfig.Clear["Turret"].Enabled && minion.IsUnderEnemyTurret())
                 {
                     continue;
                 }

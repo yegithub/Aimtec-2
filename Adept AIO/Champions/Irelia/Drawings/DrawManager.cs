@@ -10,7 +10,7 @@ namespace Adept_AIO.Champions.Irelia.Drawings
     {
         public static void RenderManager()
         {
-            if (ObjectManager.GetLocalPlayer().IsDead)
+            if (GlobalExtension.Player.IsDead)
             {
                 return;
             }
@@ -21,7 +21,7 @@ namespace Adept_AIO.Champions.Irelia.Drawings
                 switch (MenuConfig.Combo["Mode"].Value)
                 {
                     case 1:
-                        Render.Circle(ObjectManager.GetLocalPlayer().Position, MenuConfig.Combo["Range"].Value, (uint)MenuConfig.Drawings["Segments"].Value, Color.White);
+                        Render.Circle(GlobalExtension.Player.Position, MenuConfig.Combo["Range"].Value, (uint)MenuConfig.Drawings["Segments"].Value, Color.White);
                         break;
                     case 0:
                         Render.Circle(Game.CursorPos, MenuConfig.Combo["Range"].Value, (uint)MenuConfig.Drawings["Segments"].Value, Color.White);
@@ -31,12 +31,12 @@ namespace Adept_AIO.Champions.Irelia.Drawings
 
             if (MenuConfig.Drawings["Q"].Enabled && SpellConfig.Q.Ready)
             {
-                Render.Circle(ObjectManager.GetLocalPlayer().Position, SpellConfig.Q.Range, (uint)MenuConfig.Drawings["Segments"].Value, Color.Aqua);
+                Render.Circle(GlobalExtension.Player.Position, SpellConfig.Q.Range, (uint)MenuConfig.Drawings["Segments"].Value, Color.Aqua);
             }
 
             if (MenuConfig.Drawings["R"].Enabled && SpellConfig.R.Ready)
             {
-                Render.Circle(ObjectManager.GetLocalPlayer().Position, SpellConfig.R.Range, (uint)MenuConfig.Drawings["Segments"].Value, Color.IndianRed);
+                Render.Circle(GlobalExtension.Player.Position, SpellConfig.R.Range, (uint)MenuConfig.Drawings["Segments"].Value, Color.IndianRed);
             }
         }
     }

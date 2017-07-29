@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Adept_AIO.Champions.LeeSin.Core;
+using Adept_AIO.Champions.LeeSin.Update.Miscellaneous;
 using Adept_AIO.SDK.Extensions;
 using Aimtec;
 using Aimtec.SDK.Extensions;
@@ -20,7 +21,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
             }
             else if (SpellConfig.W.Ready && MenuConfig.Harass["Mode"].Value == 1)
             {
-                SpellConfig.W.CastOnUnit(ObjectManager.GetLocalPlayer());
+                SpellConfig.W.CastOnUnit(GlobalExtension.Player);
             }
         }
 
@@ -50,7 +51,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
 
             if (SpellConfig.W.Ready && Extension.IsFirst(SpellConfig.W) && !SpellConfig.E.Ready && !SpellConfig.Q.Ready && MenuConfig.Harass["Mode"].Value == 0)
             {
-                var pos = ObjectManager.GetLocalPlayer().ServerPosition + (ObjectManager.GetLocalPlayer().ServerPosition + target.ServerPosition) * 300;
+                var pos = GlobalExtension.Player.ServerPosition + (GlobalExtension.Player.ServerPosition + target.ServerPosition) * 300;
                 WardManager.WardJump(pos, true);
             }
         }

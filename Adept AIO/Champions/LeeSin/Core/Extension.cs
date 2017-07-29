@@ -1,4 +1,5 @@
-﻿using Adept_AIO.SDK.Usables;
+﻿using Adept_AIO.SDK.Extensions;
+using Adept_AIO.SDK.Usables;
 using Aimtec;
 using Aimtec.SDK.Extensions;
 using Aimtec.SDK.Orbwalking;
@@ -18,11 +19,11 @@ namespace Adept_AIO.Champions.LeeSin.Core
         }
 
         private const string PassiveName = "blindmonkpassive_cosmetic";
-        public static int PassiveStack => ObjectManager.GetLocalPlayer().HasBuff(PassiveName) ? ObjectManager.GetLocalPlayer().GetBuffCount(PassiveName) : 0;
+        public static int PassiveStack => GlobalExtension.Player.HasBuff(PassiveName) ? GlobalExtension.Player.GetBuffCount(PassiveName) : 0;
 
         public static bool IsFirst(Aimtec.SDK.Spell spell)
         {
-            return ObjectManager.GetLocalPlayer()
+            return GlobalExtension.Player
                    .SpellBook.GetSpell(spell.Slot)
                    .SpellData.Name.ToLower()
                    .Contains("one");

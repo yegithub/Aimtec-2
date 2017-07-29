@@ -33,7 +33,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.Miscellaneous
 
         public static void OnUpdate()
         {
-            if (ObjectManager.GetLocalPlayer().IsDead)
+            if (GlobalExtension.Player.IsDead)
             {
                 return;
             }

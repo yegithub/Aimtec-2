@@ -17,7 +17,7 @@ namespace Adept_AIO.SDK.Extensions
             for (var i = 0; i < start.Distance(end); i++)
             {
                 var newPoint = new List<Vector3> {start.Extend(end, i)};
-                var width = GetWallWidth(ObjectManager.GetLocalPlayer().Position, newPoint.FirstOrDefault());
+                var width = GetWallWidth(GlobalExtension.Player.Position, newPoint.FirstOrDefault());
 
                 if (HasFlag(newPoint))
                 {

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Adept_AIO.Champions.Yasuo.Core;
 using Adept_AIO.SDK.Extensions;
 using Adept_AIO.SDK.Usables;
@@ -24,7 +25,30 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
             }
             else if (SpellConfig.Q.Ready)
             {
-                SpellConfig.Q.Cast(target);
+                if (Extension.CurrentMode == Mode.Normal)
+                {
+                    GlobalExtension.Player.SpellBook.CastSpell(SpellSlot.Q, target.ServerPosition);
+                }
+                else
+                {
+                    SpellConfig.Q.Cast(target);
+                }
+            }
+            if (SpellConfig.E.Ready)
+            {
+                var minion = Extension.GetDashableMinion(target);
+                if (!target.HasBuff("YasuoDashWrapper") && target.Distance(GlobalExtension.Player) <= SpellConfig.E.Range)
+                {
+                    SpellConfig.E.CastOnUnit(target);
+                }
+                else if (minion != null)
+                {
+                    if (MenuConfig.Combo["Turret"].Enabled && minion.IsUnderEnemyTurret() || MenuConfig.Combo["Dash"].Value == 0 && minion.Distance(Game.CursorPos) > MenuConfig.Combo["Range"].Value)
+                    {
+                        return;
+                    }
+                    SpellConfig.E.CastOnUnit(minion);
+                }
             }
         }
 
@@ -36,8 +60,11 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                 return;
             }
 
-            var distance = target.Distance(ObjectManager.GetLocalPlayer());
+            var distance = target.Distance(GlobalExtension.Player);
             var minion = Extension.GetDashableMinion(target);
+            var walkDashMinion = Extension.WalkBehindMinion(minion, target);
+            Extension.ExtendedMinion = walkDashMinion;
+
             var dashDistance = Extension.DashDistance(minion, target);
 
             if (SpellConfig.Q.Ready)
@@ -77,7 +104,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                         }
                         else if (distance > 1200)
                         {
-                            var stackableMinion = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsEnemy && x.Distance(ObjectManager.GetLocalPlayer()) <= SpellConfig.Q.Range);
+                            var stackableMinion = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsEnemy && x.Distance(GlobalExtension.Player) <= SpellConfig.Q.Range);
                             if (stackableMinion == null)
                             {
                                 return;
@@ -95,7 +122,11 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                 {
                     SpellConfig.E.CastOnUnit(target);
                 }
-                else if (minion != null)
+                else if (walkDashMinion != Vector3.Zero && MenuConfig.Combo["Walk"].Enabled)
+                {
+                    GlobalExtension.Orbwalker.Move(walkDashMinion);
+                }
+                else if (minion != null && distance > 500)
                 {
                     if (MenuConfig.Combo["Turret"].Enabled && minion.IsUnderEnemyTurret() || MenuConfig.Combo["Dash"].Value == 0 && minion.Distance(Game.CursorPos) > MenuConfig.Combo["Range"].Value)
                     {
@@ -106,7 +137,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                 }
             }
 
-            var airbourneTargets = GameObjects.EnemyHeroes.Where(x => Extension.KnockedUp(x) && x.Distance(ObjectManager.GetLocalPlayer()) <= SpellConfig.R.Range);
+            var airbourneTargets = GameObjects.EnemyHeroes.Where(x => Extension.KnockedUp(x) && x.Distance(GlobalExtension.Player) <= SpellConfig.R.Range);
             var amount = airbourneTargets as Obj_AI_Hero[] ?? airbourneTargets.ToArray();
 
             if (SpellConfig.R.Ready && Extension.KnockedUp(target) && (amount.Length >= MenuConfig.Combo["Count"].Value || distance > 650 || distance > 350 && minion == null))

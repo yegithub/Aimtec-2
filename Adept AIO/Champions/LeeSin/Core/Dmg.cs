@@ -1,4 +1,5 @@
-﻿using Aimtec;
+﻿using Adept_AIO.SDK.Extensions;
+using Aimtec;
 using Aimtec.SDK.Damage;
 
 namespace Adept_AIO.Champions.LeeSin.Core
@@ -12,21 +13,21 @@ namespace Adept_AIO.Champions.LeeSin.Core
                 return 0;
             }
 
-            var dmg = ObjectManager.GetLocalPlayer().GetAutoAttackDamage(target);
+            var dmg = GlobalExtension.Player.GetAutoAttackDamage(target);
 
             if (SpellConfig.E.Ready)
             {
-                dmg += ObjectManager.GetLocalPlayer().GetSpellDamage(target, SpellSlot.E) + dmg;
+                dmg += GlobalExtension.Player.GetSpellDamage(target, SpellSlot.E) + dmg;
             }
 
             if (SpellConfig.Q.Ready)
             {
-                dmg += ObjectManager.GetLocalPlayer().GetSpellDamage(target, SpellSlot.Q) + dmg;
+                dmg += GlobalExtension.Player.GetSpellDamage(target, SpellSlot.Q) + dmg;
             }
 
             if (SpellConfig.R.Ready)
             {
-                dmg += ObjectManager.GetLocalPlayer().GetSpellDamage(target, SpellSlot.R);
+                dmg += GlobalExtension.Player.GetSpellDamage(target, SpellSlot.R);
             }
             return dmg;
         }

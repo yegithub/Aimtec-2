@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Adept_AIO.Champions.LeeSin.Core;
+using Adept_AIO.Champions.LeeSin.Update.Miscellaneous;
 using Adept_AIO.SDK.Extensions;
 using Adept_AIO.SDK.Usables;
 using Aimtec;
@@ -21,7 +22,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
 
             if (SpellConfig.W.Ready && MenuConfig.Combo["W"].Enabled)
             {
-                SpellConfig.W.Cast(ObjectManager.GetLocalPlayer());
+                SpellConfig.W.Cast(GlobalExtension.Player);
             }
             else if (SpellConfig.E.Ready && MenuConfig.Combo["E"].Enabled)
             {
@@ -40,7 +41,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
                 return;
             }
 
-            var distance = target.Distance(ObjectManager.GetLocalPlayer());
+            var distance = target.Distance(GlobalExtension.Player);
 
             if (SpellConfig.Q.Ready && MenuConfig.Combo["Q"].Enabled)
             {

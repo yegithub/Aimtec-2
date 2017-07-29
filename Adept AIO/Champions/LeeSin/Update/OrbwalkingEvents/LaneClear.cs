@@ -12,29 +12,29 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
     {
         public static void OnPostAttack()
         {
-            var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(ObjectManager.GetLocalPlayer()) < ObjectManager.GetLocalPlayer().AttackRange + x.BoundingRadius &&
-                                                                      x.Health > ObjectManager.GetLocalPlayer().GetAutoAttackDamage(x));
+            var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(GlobalExtension.Player) < GlobalExtension.Player.AttackRange + x.BoundingRadius &&
+                                                                      x.Health > GlobalExtension.Player.GetAutoAttackDamage(x));
 
-            if (minion == null || !MenuConfig.LaneClear["Check"].Enabled && ObjectManager.GetLocalPlayer().CountEnemyHeroesInRange(2000) >= 1)
+            if (minion == null || !MenuConfig.LaneClear["Check"].Enabled && GlobalExtension.Player.CountEnemyHeroesInRange(2000) >= 1)
             {
                 return;
             }
 
-            if (SpellConfig.E.Ready && MenuConfig.JungleClear["E"].Enabled && minion.Health < ObjectManager.GetLocalPlayer().GetSpellDamage(minion, SpellSlot.E))
+            if (SpellConfig.E.Ready && MenuConfig.JungleClear["E"].Enabled && minion.Health < GlobalExtension.Player.GetSpellDamage(minion, SpellSlot.E))
             {
                 SpellConfig.CastE(minion);
             }
             else if (SpellConfig.W.Ready && MenuConfig.JungleClear["W"].Enabled)
             {
-                SpellConfig.W.CastOnUnit(ObjectManager.GetLocalPlayer());
+                SpellConfig.W.CastOnUnit(GlobalExtension.Player);
             }
         }
 
         public static void OnUpdate()
         {
-            var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(ObjectManager.GetLocalPlayer()) < SpellConfig.Q.Range + x.BoundingRadius);
+            var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(GlobalExtension.Player) < SpellConfig.Q.Range + x.BoundingRadius);
 
-            if (minion == null || !MenuConfig.LaneClear["Check"].Enabled && ObjectManager.GetLocalPlayer().CountEnemyHeroesInRange(2000) >= 1)
+            if (minion == null || !MenuConfig.LaneClear["Check"].Enabled && GlobalExtension.Player.CountEnemyHeroesInRange(2000) >= 1)
             {
                 return;
             }

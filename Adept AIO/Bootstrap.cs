@@ -25,7 +25,7 @@ namespace Adept_AIO
 
         private static void GameEvents_GameStart()
         {
-            if (Valid.All(x => ObjectManager.GetLocalPlayer().ChampionName != x))
+            if (Valid.All(x => GlobalExtension.Player.ChampionName != x))
             {
                 return;
             }
@@ -34,7 +34,7 @@ namespace Adept_AIO
             GameObjects.Init();
             GlobalExtension.Init();
 
-            switch (ObjectManager.GetLocalPlayer().ChampionName)
+            switch (GlobalExtension.Player.ChampionName)
             {
                 case "Irelia":
                     Irelia.Init();

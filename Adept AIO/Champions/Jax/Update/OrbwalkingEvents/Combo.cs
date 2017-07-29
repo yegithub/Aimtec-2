@@ -39,12 +39,12 @@ namespace Adept_AIO.Champions.Jax.Update.OrbwalkingEvents
                 return;
             }
 
-            if (SpellConfig.R.Ready && ObjectManager.GetLocalPlayer().CountEnemyHeroesInRange(SpellConfig.Q.Range) >= MenuConfig.Combo["R"].Value && MenuConfig.Combo["R"].Enabled)
+            if (SpellConfig.R.Ready && GlobalExtension.Player.CountEnemyHeroesInRange(SpellConfig.Q.Range) >= MenuConfig.Combo["R"].Value && MenuConfig.Combo["R"].Enabled)
             {
                 SpellConfig.R.Cast();
             }
 
-            if (SpellConfig.E.Ready && target.Distance(ObjectManager.GetLocalPlayer()) <= MenuConfig.Combo["E"].Value && MenuConfig.Combo["E"].Enabled)
+            if (SpellConfig.E.Ready && target.Distance(GlobalExtension.Player) <= MenuConfig.Combo["E"].Value && MenuConfig.Combo["E"].Enabled)
             {
                 SpellManager.CastE(target);
             }
@@ -59,11 +59,11 @@ namespace Adept_AIO.Champions.Jax.Update.OrbwalkingEvents
                 return; 
             }
 
-            if (target.Distance(ObjectManager.GetLocalPlayer()) > SpellConfig.Q.Range)
+            if (target.Distance(GlobalExtension.Player) > SpellConfig.Q.Range)
             {
                 var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsValid &&
                                                                           x.Distance(target) < 300 &&
-                                                                          x.Distance(target) < ObjectManager.GetLocalPlayer().Distance(target));
+                                                                          x.Distance(target) < GlobalExtension.Player.Distance(target));
                 if (minion != null)
                 {
                     SpellConfig.Q.CastOnUnit(minion);

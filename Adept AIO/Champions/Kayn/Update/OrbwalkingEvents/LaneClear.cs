@@ -12,13 +12,13 @@ namespace Adept_AIO.Champions.Kayn.Update.OrbwalkingEvents
     {
         public static void OnUpdate()
         {
-            if (MenuConfig.LaneClear["Check"].Enabled && ObjectManager.GetLocalPlayer().CountEnemyHeroesInRange(2000) >= 1)
+            if (MenuConfig.LaneClear["Check"].Enabled && GlobalExtension.Player.CountEnemyHeroesInRange(2000) >= 1)
             {
                 return;
             }
 
             if (SpellConfig.W.Ready && MenuConfig.LaneClear["W"].Enabled && MenuConfig.LaneClear["W"].Value <=
-                ObjectManager.GetLocalPlayer().ManaPercent())
+                GlobalExtension.Player.ManaPercent())
             {
                 var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsValidTarget(SpellConfig.W.Range));
                 if (minion == null)
@@ -30,7 +30,7 @@ namespace Adept_AIO.Champions.Kayn.Update.OrbwalkingEvents
             }
 
             if (SpellConfig.Q.Ready && MenuConfig.LaneClear["Q"].Enabled && MenuConfig.LaneClear["Q"].Value <=
-                ObjectManager.GetLocalPlayer().ManaPercent())
+                GlobalExtension.Player.ManaPercent())
             {
                 var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsValidTarget(SpellConfig.Q.Range));
                 if (minion == null)

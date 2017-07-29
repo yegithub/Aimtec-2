@@ -32,8 +32,8 @@ namespace Adept_AIO.Champions.Kayn.Update.OrbwalkingEvents
         {
             if (SpellConfig.E.Ready && MenuConfig.Combo["E"].Enabled)
             {
-                var end = ObjectManager.GetLocalPlayer().Position.Extend(Game.CursorPos, 100);
-                var point = WallExtension.GeneratePoint(ObjectManager.GetLocalPlayer().Position, end).FirstOrDefault();
+                var end = GlobalExtension.Player.Position.Extend(Game.CursorPos, 100);
+                var point = WallExtension.GeneratePoint(GlobalExtension.Player.Position, end).FirstOrDefault();
 
                 if (point != Vector3.Zero)
                 {
@@ -55,19 +55,19 @@ namespace Adept_AIO.Champions.Kayn.Update.OrbwalkingEvents
             {
                 if (target.IsValidTarget(SpellConfig.W.Range))
                 {
-                    ObjectManager.GetLocalPlayer().SpellBook.CastSpell(SpellSlot.Q, target.ServerPosition);
+                    GlobalExtension.Player.SpellBook.CastSpell(SpellSlot.Q, target.ServerPosition);
                     DelayAction.Queue(1050, Items.CastTiamat);
                 }
                 else if (SpellConfig.R.Ready && MenuConfig.Combo["Beyblade"].Enabled && SummonerSpells.Flash != null &&
-                    SummonerSpells.Flash.Ready && target.Distance(ObjectManager.GetLocalPlayer()) > SpellConfig.Q.Range && Dmg.Damage(target) * 1.5f >= target.Health)
+                    SummonerSpells.Flash.Ready && target.Distance(GlobalExtension.Player) > SpellConfig.Q.Range && Dmg.Damage(target) * 1.5f >= target.Health)
                 {
                     SummonerSpells.Flash.Cast(target.ServerPosition);
-                    ObjectManager.GetLocalPlayer().SpellBook.CastSpell(SpellSlot.Q, target.ServerPosition);
+                    GlobalExtension.Player.SpellBook.CastSpell(SpellSlot.Q, target.ServerPosition);
                 }
             }
 
             if (SpellConfig.R.Ready && MenuConfig.Combo["R"].Enabled && (MenuConfig.Combo["R"].Value >=
-                ObjectManager.GetLocalPlayer().HealthPercent() ||
+                GlobalExtension.Player.HealthPercent() ||
                 MenuConfig.Combo["R"].Value >= target.HealthPercent() ||
                 Dmg.Damage(target) * 1.5 > target.Health))
             {

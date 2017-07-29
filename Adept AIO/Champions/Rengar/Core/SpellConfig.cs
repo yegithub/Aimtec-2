@@ -28,7 +28,7 @@ namespace Adept_AIO.Champions.Rengar.Core
 
         public static void CastW(Obj_AI_Base target)
         {
-            if (ObjectManager.GetLocalPlayer().HasBuff("RengarR"))
+            if (GlobalExtension.Player.HasBuff("RengarR"))
             {
                 return;
             }
@@ -38,7 +38,7 @@ namespace Adept_AIO.Champions.Rengar.Core
 
         public static void CastE(Obj_AI_Base target)
         {
-            if (ObjectManager.GetLocalPlayer().HasBuff("RengarR"))
+            if (GlobalExtension.Player.HasBuff("RengarR"))
             {
                 return;
             }
@@ -48,7 +48,7 @@ namespace Adept_AIO.Champions.Rengar.Core
 
         public static void CastQ(Obj_AI_Base target)
         {
-            if (ObjectManager.GetLocalPlayer().HasBuff("RengarR"))
+            if (GlobalExtension.Player.HasBuff("RengarR"))
             {
                 return;
             }
