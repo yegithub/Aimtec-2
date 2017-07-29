@@ -24,7 +24,14 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
             }
             else if (SpellConfig.Q.Ready)
             {
-                SpellConfig.Q.Cast(target);
+                if (Extension.CurrentMode == Mode.Normal)
+                {
+                    ObjectManager.GetLocalPlayer().SpellBook.CastSpell(SpellSlot.Q, target.ServerPosition);
+                }
+                else
+                {
+                    SpellConfig.Q.Cast(target);
+                }
             }
         }
 

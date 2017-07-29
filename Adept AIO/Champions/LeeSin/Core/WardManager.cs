@@ -38,25 +38,29 @@ namespace Adept_AIO.Champions.LeeSin.Core
                 return;
             }
 
-            if (maxRange)
-            {
-                position = ObjectManager.GetLocalPlayer().ServerPosition.Extend(position, 600);
-            }
-
             var ward = WardNames.FirstOrDefault(Items.CanUseItem);
             if (ward == null)
             {
                 return;
             }
 
+            if (maxRange)
+            {
+                position = ObjectManager.GetLocalPlayer().ServerPosition.Extend(position, 600);
+            }
+
             Items.CastItem(ward, position);
             LastWardCreated = Environment.TickCount;
             WardPosition = position;
-            ObjectManager.GetLocalPlayer().SpellBook.CastSpell(SpellSlot.W, position);
         }
 
-        public static Obj_AI_Minion GetBestObject(Vector3 position, bool allowMinions = true)
+        public static Obj_AI_Minion GetBestObject(Vector3 position, bool allowMinions = true, bool atWall = false)
         {
+            if (atWall)
+            {
+                return GameObjects.AllyWards.FirstOrDefault();
+            }
+
             var wards = GameObjects.AllyWards.Where(x => x.IsValid).OrderBy(x => x.Distance(position)).FirstOrDefault(x => x.Distance(position) <= 600 && ObjectManager.GetLocalPlayer().Distance(x) <= 600 && x.Distance(WardPosition) <= 10);
 
             if (wards != null)
@@ -69,6 +73,19 @@ namespace Adept_AIO.Champions.LeeSin.Core
                 .FirstOrDefault();
 
             return allowMinions ? minions : null;
+        }
+
+        public static void OnCreate(GameObject sender)
+        {
+            var ward = sender as Obj_AI_Minion;
+         
+            if (ward == null || WardPosition.Distance(ward.Position) > 700 || Environment.TickCount - LastWardCreated > 1000 || !Extension.IsFirst(SpellConfig.W))
+            {
+                return;
+            }
+
+            WardPosition = ward.Position;
+            ObjectManager.GetLocalPlayer().SpellBook.CastSpell(SpellSlot.W, ward.Position);
         }
     }
 }

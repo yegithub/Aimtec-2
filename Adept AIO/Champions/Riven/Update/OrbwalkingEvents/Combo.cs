@@ -70,7 +70,6 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
                     SpellConfig.R.Cast();
                 }
             }
-
             else if (SpellManager.InsideKiBurst(target) && SpellConfig.W.Ready && !CanCastR1(target))
             {
                 SpellManager.CastW(target);

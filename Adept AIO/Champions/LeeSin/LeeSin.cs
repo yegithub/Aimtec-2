@@ -5,6 +5,7 @@ using Adept_AIO.Champions.LeeSin.Update.Miscellaneous;
 using Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents;
 using Adept_AIO.SDK.Extensions;
 using Aimtec;
+using Aimtec.SDK.Extensions;
 
 namespace Adept_AIO.Champions.LeeSin
 {
@@ -17,13 +18,26 @@ namespace Adept_AIO.Champions.LeeSin
 
             Game.OnUpdate += Manager.OnUpdate;
             Game.OnUpdate += Killsteal.OnUpdate;
-         
+
             GlobalExtension.Orbwalker.PostAttack += Manager.PostAttack;
 
             Render.OnRender += DrawManager.RenderManager;
 
             Obj_AI_Base.OnProcessSpellCast += Insec.OnProcessSpellCast;
             Obj_AI_Base.OnProcessSpellCast += SpellConfig.OnProcessSpellCast;
+
+            GameObject.OnCreate += WardManager.OnCreate;
+
+            AttackableUnit.OnLeaveVisible += OnLeaveVisible;
+        }
+
+        private static void OnLeaveVisible(AttackableUnit sender, EventArgs eventArgs)
+        {
+            if (sender.Distance(ObjectManager.GetLocalPlayer()) <= 350 && SpellConfig.E.Ready &&
+                Extension.IsFirst(SpellConfig.E) && MenuConfig.Miscellaneous["Stealth"].Enabled)
+            {
+                SpellConfig.E.Cast();
+            }
         }
     }
 }
