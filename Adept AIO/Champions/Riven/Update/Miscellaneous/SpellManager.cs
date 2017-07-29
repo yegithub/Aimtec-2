@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Adept_AIO.Champions.Riven.Core;
 using Adept_AIO.SDK.Extensions;
 using Adept_AIO.SDK.Usables;
@@ -32,6 +33,15 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                 case "RivenTriCleave":
                     CanUseQ = false;
                     Extensions.AttackedStructure = false;
+
+                    Extensions.LastQTime = Environment.TickCount;
+                    Extensions.CurrentQCount++;
+                    if (Extensions.CurrentQCount > 3)
+                    {
+                        Extensions.CurrentQCount = 1;
+                    }
+
+                    DelayAction.Queue(Animation.GetDelay(Game.Ping + Extensions.CurrentQCount < 3 ? 300 : 350), Animation.Reset);
                     break;
                 case "RivenMartyr":
                     CanUseW = false;
@@ -58,7 +68,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                 {
                     Items.CastTiamat();
                 }
-               
+                
                 if (GlobalExtension.Orbwalker.CanMove()) // Not fast enough
                 {
                     ObjectManager.GetLocalPlayer().SpellBook.CastSpell(SpellSlot.Q, Unit);
@@ -112,10 +122,6 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
         {
             return (int)(ObjectManager.GetLocalPlayer().Distance(target) / (SpellConfig.R2.Speed * 1000 + SpellConfig.R2.Delay));
         }
-
-        private static readonly uint GetTiamat = ObjectManager.GetLocalPlayer().HasItem(ItemId.Tiamat)        ? ItemId.Tiamat :
-                                                 ObjectManager.GetLocalPlayer().HasItem(ItemId.RavenousHydra) ? ItemId.RavenousHydra :
-                                                 ObjectManager.GetLocalPlayer().HasItem(ItemId.TitanicHydra)  ? ItemId.TitanicHydra : 0;
 
         public static bool InsideKiBurst(GameObject target)
         {

@@ -120,7 +120,7 @@ namespace Adept_AIO.Champions.Riven.Core
 
             foreach (var menu in new List<Menu>
             {
-                Animation,
+              //  Animation,
                 Combo,
                 BurstMenu,
                 Harass,
@@ -132,11 +132,6 @@ namespace Adept_AIO.Champions.Riven.Core
                 MenuShortcut.Credits
             })
                 MainMenu.Add(menu);
-            Console.WriteLine("::RECOMMENDED ANIMATION SETTINGS:: \n" + 
-                              "Ping: On \n" +
-                              "Multiplier: 25 \n" +
-                              "Q1, Q2 -> ~300 \n" + 
-                              "Q3     -> ~340+");
         }
     }
 }

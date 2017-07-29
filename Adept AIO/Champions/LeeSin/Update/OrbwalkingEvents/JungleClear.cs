@@ -14,48 +14,48 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
 {
     internal class JungleClear
     {
-        private static int ShittyHelper = 0;
-
         public static void OnPostAttack(AttackableUnit mob)
         {
             if (mob == null || mob.Health < ObjectManager.GetLocalPlayer().GetAutoAttackDamage((Obj_AI_Base)mob))
             {
                 return;
             }
-
-            ShittyHelper++;
-
-            if (SpellConfig.Q.Ready && Extension.IsQ2 && ShittyHelper >= 2)
+           
+            if (SpellConfig.Q.Ready && Extension.IsQ2 && SpellConfig.QAboutToEnd)
             {
-                ShittyHelper = 0;
-                SpellConfig.Q.Cast();
+                ObjectManager.GetLocalPlayer().SpellBook.CastSpell(SpellSlot.Q);
             }
 
-            if (ObjectManager.GetLocalPlayer().Level <= 6)
+            if (ObjectManager.GetLocalPlayer().Level <= 8)
             {
                 if (Extension.PassiveStack > 0)
                 {
                     return;
                 }
-
-                if (SpellConfig.W.Ready && MenuConfig.JungleClear["W"].Enabled)
+                if (SpellConfig.W.Ready && MenuConfig.JungleClear["W"].Enabled && !SpellConfig.Q.Ready)
                 {
                     SpellConfig.W.CastOnUnit(ObjectManager.GetLocalPlayer());
                 }
                 else if (SpellConfig.E.Ready && MenuConfig.JungleClear["E"].Enabled && !SpellConfig.W.Ready)
                 {
-                    Items.CastTiamat();
+                    if (Extension.IsFirst(SpellConfig.E))
+                    {
+                       SpellConfig.CastE((Obj_AI_Base)mob);
+                    }
+                   else if (SpellConfig.W.Ready || SpellConfig.Q.Ready)
+                    {
+                        return;
+                    }
                     SpellConfig.E.Cast();
                 }
             }
-            else
+            else 
             {
                 if (SpellConfig.E.Ready && MenuConfig.JungleClear["E"].Enabled)
                 {
-                    Items.CastTiamat();
-                    SpellConfig.E.Cast();
+                    SpellConfig.CastE((Obj_AI_Base)mob);
                 }
-                else if (SpellConfig.W.Ready && MenuConfig.JungleClear["W"].Enabled)
+                else if (SpellConfig.W.Ready && MenuConfig.JungleClear["W"].Enabled && !Extension.IsQ2)
                 {
                     SpellConfig.W.CastOnUnit(ObjectManager.GetLocalPlayer());
                 }
@@ -64,32 +64,31 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
 
         public static void OnUpdate()
         {
-            if (ShittyHelper > 2)
-            {
-                ShittyHelper = 0;
-            }
-
-            if (!SpellConfig.Q.Ready || !MenuConfig.JungleClear["Q"].Enabled || Extension.IsQ2)
+            if (!SpellConfig.Q.Ready || !MenuConfig.JungleClear["Q"].Enabled)
             {
                 return;
             }
 
             var mob = ObjectManager.Get<Obj_AI_Minion>().FirstOrDefault(x => x.Distance(ObjectManager.GetLocalPlayer()) < SpellConfig.Q.Range / 2 && x.GetJungleType() != GameObjects.JungleType.Unknown && x.MaxHealth > 5);
 
-            if (mob != null)
+            if (mob == null)
             {
-                if (!SmiteOptional.Contains(mob.UnitSkinName) || !MenuConfig.JungleClear["Smite"].Enabled)
-                {
-                    return;
-                }
+                return;
+            }
 
-                if (Extension.IsQ2 && mob.UnitSkinName != "Sru_Crab" && mob.Health > ObjectManager.GetLocalPlayer().GetSpellDamage(mob, SpellSlot.Q, DamageStage.SecondCast))
-                {
-                    return;
-                }
+            if (!SmiteOptional.Contains(mob.UnitSkinName))
+            {
+                return;
+            }
 
-                ShittyHelper = 0;
-                SpellConfig.Q.Cast(mob);
+            if (SpellConfig.Q.Ready && Extension.IsQ2 && mob.Health < ObjectManager.GetLocalPlayer().GetSpellDamage(mob, SpellSlot.Q, DamageStage.SecondCast))
+            {
+                ObjectManager.GetLocalPlayer().SpellBook.CastSpell(SpellSlot.Q);
+            }
+
+            if (!Extension.IsQ2 && mob.Distance(ObjectManager.GetLocalPlayer()) >= ObjectManager.GetLocalPlayer().AttackRange + mob.BoundingRadius)
+            {
+                ObjectManager.GetLocalPlayer().SpellBook.CastSpell(SpellSlot.Q, mob.ServerPosition);
             }
         }
 
@@ -103,8 +102,6 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
             new Vector3(9687, 56, 3490)
         };
 
-        private static float Q2Time;
-
         private static double StealDamage(Obj_AI_Base mob)
         {
            return SummonerSpells.SmiteMonsters() + (Extension.IsQ2? ObjectManager.GetLocalPlayer().GetSpellDamage(mob, SpellSlot.Q, DamageStage.SecondCast) : 0);
@@ -112,6 +109,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
 
         private static readonly string[] SmiteAlways = { "SRU_Dragon_Air", "SRU_Dragon_Fire", "SRU_Dragon_Earth", "SRU_Dragon_Water", "SRU_Dragon_Elder", "SRU_Baron", "SRU_RiftHerald" };
         private static readonly string[] SmiteOptional = {"Sru_Crab", "SRU_Razorbeak", "SRU_Krug", "SRU_Murkwolf", "SRU_Gromp", "SRU_Blue", "SRU_Red"};
+        private static float Q2Time;
 
         public static void StealMobs()
         {
@@ -130,8 +128,15 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
 
                 if (smiteAbleMob.Health < StealDamage(smiteAbleMob) && SummonerSpells.Smite != null && SummonerSpells.Smite.Ready)
                 {
-                    if (SmiteOptional.Contains(smiteAbleMob.UnitSkinName) && SummonerSpells.Ammo("Smite") <= 1 ||
-                        smiteAbleMob.UnitSkinName.ToLower().Contains("blue") && !MenuConfig.JungleClear["Blue"].Enabled)
+                    if (SmiteOptional.Contains(smiteAbleMob.UnitSkinName) && SummonerSpells.Ammo("Smite") <= 1 || 
+                        smiteAbleMob.UnitSkinName.ToLower().Contains("blue") && !MenuConfig.JungleClear["Blue"].Enabled ||
+                        smiteAbleMob.UnitSkinName.ToLower().Contains("red"))
+                    {
+                        return;
+                    }
+
+                    if (SmiteOptional.Contains(smiteAbleMob.UnitSkinName) &&
+                        ObjectManager.GetLocalPlayer().HealthPercent() >= 70)
                     {
                         return;
                     }
@@ -139,7 +144,6 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
                     if (Extension.IsQ2)
                     {
                         SpellConfig.Q.Cast();
-                        ShittyHelper = 0;
                     }
 
                     if (MenuConfig.JungleClear["Smite"].Enabled)

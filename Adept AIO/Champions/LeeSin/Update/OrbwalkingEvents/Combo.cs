@@ -76,8 +76,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
 
             if (SpellConfig.E.Ready && MenuConfig.Combo["E"].Enabled && Extension.IsFirst(SpellConfig.E) && distance <= 350)
             {
-                Items.CastTiamat();
-                SpellConfig.E.Cast(target);
+               SpellConfig.CastE(target);
             }
         }
     }

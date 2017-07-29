@@ -44,7 +44,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
             {
                 if (Extension.IsFirst(SpellConfig.E) && MenuConfig.Harass["E"].Enabled && target.IsValidTarget(SpellConfig.E.Range))
                 {
-                    SpellConfig.E.Cast();
+                    SpellConfig.CastE(target);
                 }
             }
 

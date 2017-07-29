@@ -18,27 +18,22 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
             {
                 SpellManager.CastR2(target);
             }
-            else
+
+            if (SpellConfig.Q.Ready)
             {
-                if (SpellConfig.Q.Ready)
-                {
-                    SpellManager.CastQ(target);
-                }
+                SpellManager.CastQ(target);
+            }
 
-                if (MenuConfig.Combo["R"].Value != 0 && SpellConfig.R.Ready &&
-                    Extensions.UltimateMode == UltimateMode.First)
-                {
-                    if (MenuConfig.Combo["R"].Value == 2 && Dmg.Damage(target) < target.Health)
-                    {
-                        return;
-                    }
-                    SpellConfig.R.Cast();
-                }
+            if (MenuConfig.Combo["R"].Value != 0 && SpellConfig.R.Ready &&
+                Extensions.UltimateMode == UltimateMode.First && !(MenuConfig.Combo["R"].Value == 2 && Dmg.Damage(target) < target.Health))
+            {
+                SpellConfig.R.Cast();
+                SpellManager.CastW(target);
+            }
 
-                if (SpellManager.InsideKiBurst(target))
-                {
-                    SpellManager.CastW(target);
-                }
+            if (SpellConfig.W.Ready)
+            {
+                SpellManager.CastW(target);
             }
         }
 
@@ -59,14 +54,25 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
         private static void ExecuteCombo()
         {
             var target = GlobalExtension.TargetSelector.GetTarget(Extensions.EngageRange());
-            if (target == null)
+            if (target == null || GlobalExtension.Orbwalker.IsWindingUp)
             {
                 return;
             }
 
             if (SpellConfig.E.Ready)
             {
-                SpellConfig.E.CastOnUnit(target);
+                ObjectManager.GetLocalPlayer().SpellBook.CastSpell(SpellSlot.E, target.ServerPosition);
+
+                if (MenuConfig.Combo["R"].Value != 0 && SpellConfig.R.Ready &&
+                    Extensions.UltimateMode == UltimateMode.First && Dmg.Damage(target) < target.Health)
+                {
+                    SpellConfig.R.Cast();
+                }
+            }
+
+            if (SpellManager.InsideKiBurst(target) && SpellConfig.W.Ready)
+            {
+                SpellManager.CastW(target);
             }
         }
 

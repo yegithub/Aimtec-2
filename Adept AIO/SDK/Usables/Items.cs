@@ -7,10 +7,11 @@ namespace Adept_AIO.SDK.Usables
     internal class Items
     {
         private static readonly string[] Tiamats = {"ItemTiamatCleave", "ItemTitanicHydraCleave", "ItemTiamatCleave"};
-
+        public static float TiamatCastTime;
         public static void CastTiamat()
         {
             SpellSlot? slot = null;
+          
             foreach (var tiamat in Tiamats)
             {
                 if (CanUseItem(tiamat))
@@ -22,6 +23,7 @@ namespace Adept_AIO.SDK.Usables
             if (slot != null)
             {
                 ObjectManager.GetLocalPlayer().SpellBook.CastSpell((SpellSlot) slot);
+                TiamatCastTime = Environment.TickCount;
             }
         }
 

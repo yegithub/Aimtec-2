@@ -22,8 +22,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
 
             if (SpellConfig.E.Ready && MenuConfig.JungleClear["E"].Enabled && minion.Health < ObjectManager.GetLocalPlayer().GetSpellDamage(minion, SpellSlot.E))
             {
-                Items.CastTiamat();
-                SpellConfig.E.Cast();
+                SpellConfig.CastE(minion);
             }
             else if (SpellConfig.W.Ready && MenuConfig.JungleClear["W"].Enabled)
             {
