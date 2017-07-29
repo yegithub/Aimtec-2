@@ -18,7 +18,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
                 SpellConfig.R2.Cast(target);
                 DelayAction.Queue(1, () =>
                 {
-                    SpellManager.CastQ(target);
+                    SpellManager.CastQ(target); 
                     SpellManager.CastW(target); // Extra check
                 });
             }

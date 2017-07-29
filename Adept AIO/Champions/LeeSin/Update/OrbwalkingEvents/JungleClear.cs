@@ -26,7 +26,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
                 ObjectManager.GetLocalPlayer().SpellBook.CastSpell(SpellSlot.Q);
             }
 
-            if (ObjectManager.GetLocalPlayer().Level <= 8)
+            if (ObjectManager.GetLocalPlayer().Level <= 12)
             {
                 if (Extension.PassiveStack > 0)
                 {

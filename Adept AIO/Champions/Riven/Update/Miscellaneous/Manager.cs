@@ -89,7 +89,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                                 {
                                     return;
                                 }
-                                Extensions.AttackedStructure = true;
+                             
                                 SpellConfig.Q.Cast(ObjectManager.GetLocalPlayer().ServerPosition.Extend(Game.CursorPos, 400));
                             }
                                 break;

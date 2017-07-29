@@ -9,7 +9,7 @@ namespace Adept_AIO.Champions.Riven.Core
         {
             if (AllIn)
             {
-                return (int) (425 + target.BoundingRadius + SpellConfig.W.Range);
+                return (int) (425 + target.BoundingRadius + SpellConfig.W.Range + 65);
             }
             return 0;
         }
@@ -43,12 +43,11 @@ namespace Adept_AIO.Champions.Riven.Core
         public static float LastQTime = 0;
         public static float LastETime = 0;
         public static float LastWTime = 0;
-        public static bool AttackedStructure;
+     
         public static string[] InvulnerableList = { "FioraW", "kindrednodeathbuff", "Undying Rage", "JudicatorIntervention" };
-       // public static IEnumerable<Obj_AI_Hero> Enemies = GameObjects.EnemyHeroes.Where(x => x.IsValidTarget(GetRange()));
+   
         public static HarassPattern Current;
         public static UltimateMode UltimateMode;
-        public static CancellationToken CancellationToken;
     }
 
     public enum HarassPattern

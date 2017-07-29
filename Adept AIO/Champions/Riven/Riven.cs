@@ -18,13 +18,11 @@ namespace Adept_AIO.Champions.Riven
             Game.OnUpdate += SpellManager.OnUpdate;
             Game.OnUpdate += Killsteal.OnUpdate;
 
-            //Obj_AI_Base.OnPlayAnimation    += Animation.OnPlayAnimation;
             Obj_AI_Base.OnProcessSpellCast += SpellManager.OnProcessSpellCast;
             Obj_AI_Base.OnProcessSpellCast += SafetyMeasure.OnProcessSpellCast;
 
             GlobalExtension.Orbwalker.PostAttack += Manager.PostAttack;
             Render.OnRender += DrawManager.RenderManager;
-            Extensions.CancellationToken = new CancellationToken(true);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Adept_AIO.Champions.Riven.Core;
 using Adept_AIO.Champions.Riven.Update.Miscellaneous;
 using Adept_AIO.SDK.Extensions;
@@ -11,6 +12,14 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
 {
     internal class Combo
     {
+        private static bool CanCastR1(Obj_AI_Base target)
+        {
+            return MenuConfig.Combo["R"].Value != 0 && SpellConfig.R.Ready &&
+                   Extensions.UltimateMode == UltimateMode.First &&
+                   !(MenuConfig.Combo["R"].Value == 2 && Dmg.Damage(target) <
+                     target.Health);
+        }
+
         public static void OnPostAttack(Obj_AI_Base target)
         {
             if (AutoBeforeR2(target) && (SpeedItUp(target) || Extensions.CurrentQCount == 1 && !SpellConfig.Q.Ready) &&
@@ -19,21 +28,14 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
                 SpellManager.CastR2(target);
             }
 
+            if (CanCastR1(target))
+            {
+                SpellConfig.R.Cast();
+            }
+        
             if (SpellConfig.Q.Ready)
             {
                 SpellManager.CastQ(target);
-            }
-
-            if (MenuConfig.Combo["R"].Value != 0 && SpellConfig.R.Ready &&
-                Extensions.UltimateMode == UltimateMode.First && !(MenuConfig.Combo["R"].Value == 2 && Dmg.Damage(target) < target.Health))
-            {
-                SpellConfig.R.Cast();
-                SpellManager.CastW(target);
-            }
-
-            if (SpellConfig.W.Ready)
-            {
-                SpellManager.CastW(target);
             }
         }
 
@@ -63,14 +65,13 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
             {
                 ObjectManager.GetLocalPlayer().SpellBook.CastSpell(SpellSlot.E, target.ServerPosition);
 
-                if (MenuConfig.Combo["R"].Value != 0 && SpellConfig.R.Ready &&
-                    Extensions.UltimateMode == UltimateMode.First && Dmg.Damage(target) < target.Health)
+                if (CanCastR1(target) && target.Distance(ObjectManager.GetLocalPlayer()) >= ObjectManager.GetLocalPlayer().AttackRange + SpellConfig.E.Range)
                 {
                     SpellConfig.R.Cast();
                 }
             }
 
-            if (SpellManager.InsideKiBurst(target) && SpellConfig.W.Ready)
+            else if (SpellManager.InsideKiBurst(target) && SpellConfig.W.Ready && !CanCastR1(target))
             {
                 SpellManager.CastW(target);
             }

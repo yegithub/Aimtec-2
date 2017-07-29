@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using Adept_AIO.Champions.Riven.Core;
 using Adept_AIO.SDK.Extensions;
 using Adept_AIO.SDK.Usables;
@@ -32,16 +33,12 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
             {
                 case "RivenTriCleave":
                     CanUseQ = false;
-                    Extensions.AttackedStructure = false;
-
                     Extensions.LastQTime = Environment.TickCount;
                     Extensions.CurrentQCount++;
-                    if (Extensions.CurrentQCount > 3)
-                    {
-                        Extensions.CurrentQCount = 1;
-                    }
+                    if (Extensions.CurrentQCount > 3) { Extensions.CurrentQCount = 1; }
 
-                    DelayAction.Queue(Animation.GetDelay(Game.Ping + Extensions.CurrentQCount < 3 ? 300 : 350), Animation.Reset);
+                    var delay = Game.Ping + Extensions.CurrentQCount < 3 ? 300 : 350;
+                    DelayAction.Queue(Animation.GetDelay(delay), Animation.Reset);
                     break;
                 case "RivenMartyr":
                     CanUseW = false;
@@ -64,13 +61,13 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 
             if (CanUseQ)
             {
-                if (Extensions.CurrentQCount == 3)
-                {
-                    Items.CastTiamat();
-                }
-                
                 if (GlobalExtension.Orbwalker.CanMove()) // Not fast enough
                 {
+                    if (Extensions.CurrentQCount == 3)
+                    {
+                        Items.CastTiamat();
+                    }
+
                     ObjectManager.GetLocalPlayer().SpellBook.CastSpell(SpellSlot.Q, Unit);
                 }
             }
