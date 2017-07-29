@@ -12,15 +12,15 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
     {
         public static void OnPostAttack()
         {
-            var mob = GameObjects.Jungle.FirstOrDefault(x => x.Distance(GlobalExtension.Player) < Extensions.EngageRange() &&
+            var mob = GameObjects.Jungle.FirstOrDefault(x => x.Distance(ObjectManager.GetLocalPlayer()) < Extensions.EngageRange() &&
                                                              x.MaxHealth > 5 &&
-                                                             x.Health > GlobalExtension.Player.GetAutoAttackDamage(x));
+                                                             x.Health > ObjectManager.GetLocalPlayer().GetAutoAttackDamage(x));
             if (mob == null)
             {
                 return;
             }
 
-            if (MenuConfig.Jungle["Check"].Enabled && GlobalExtension.Player.CountEnemyHeroesInRange(1500) >= 1)
+            if (MenuConfig.Jungle["Check"].Enabled && ObjectManager.GetLocalPlayer().CountEnemyHeroesInRange(1500) >= 1)
             {
                 return;
             }
@@ -50,7 +50,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
         {
             if (SpellConfig.Q.Ready)
             {
-                var legendary = GameObjects.JungleLegendary.FirstOrDefault(x => x.Health < GlobalExtension.Player.GetSpellDamage(x, SpellSlot.Q));
+                var legendary = GameObjects.JungleLegendary.FirstOrDefault(x => x.Health < ObjectManager.GetLocalPlayer().GetSpellDamage(x, SpellSlot.Q));
                 if (legendary == null)
                 {
                     return;

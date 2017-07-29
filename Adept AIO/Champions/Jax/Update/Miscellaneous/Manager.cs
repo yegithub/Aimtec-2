@@ -27,7 +27,7 @@ namespace Adept_AIO.Champions.Jax.Update.Miscellaneous
 
         public static void OnUpdate()
         {
-            if (GlobalExtension.Player.IsDead)
+            if (ObjectManager.GetLocalPlayer().IsDead)
             {
                 return;
             }

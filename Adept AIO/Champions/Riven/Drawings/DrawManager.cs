@@ -10,7 +10,7 @@ namespace Adept_AIO.Champions.Riven.Drawings
     {
         public static void RenderManager()
         {
-            if (GlobalExtension.Player.IsDead)
+            if (ObjectManager.GetLocalPlayer().IsDead)
             {
                 return;
             }
@@ -18,19 +18,19 @@ namespace Adept_AIO.Champions.Riven.Drawings
             if (MenuConfig.Drawings["Harass"].Enabled && GlobalExtension.Orbwalker.Mode == OrbwalkingMode.Mixed)
             {
                 Vector2 screenPos;
-                Render.WorldToScreen(GlobalExtension.Player.Position, out screenPos);
+                Render.WorldToScreen(ObjectManager.GetLocalPlayer().Position, out screenPos);
                 Render.Text(new Vector2(screenPos.X - 65, screenPos.Y + 30), Color.Aqua, "PATTERN: " + Extensions.Current.ToString().ToUpper());
             }
 
             if (MenuConfig.Drawings["Engage"].Enabled)
             {
-                Render.Circle(GlobalExtension.Player.Position, Extensions.EngageRange(),
+                Render.Circle(ObjectManager.GetLocalPlayer().Position, Extensions.EngageRange(),
                     (uint) MenuConfig.Drawings["Segments"].Value, Extensions.AllIn ? Color.Yellow : Color.White);
             }
 
             if (MenuConfig.Drawings["R2"].Enabled && SpellConfig.R2.Ready && Extensions.UltimateMode == UltimateMode.Second)
             {
-                Render.Circle(GlobalExtension.Player.Position, SpellConfig.R2.Range, (uint)MenuConfig.Drawings["Segments"].Value, Color.OrangeRed);
+                Render.Circle(ObjectManager.GetLocalPlayer().Position, SpellConfig.R2.Range, (uint)MenuConfig.Drawings["Segments"].Value, Color.OrangeRed);
             }
         }
     }

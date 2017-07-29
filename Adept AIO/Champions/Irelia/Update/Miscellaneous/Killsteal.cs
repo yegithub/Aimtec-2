@@ -11,7 +11,7 @@ namespace Adept_AIO.Champions.Irelia.Update.Miscellaneous
     {
         public static void OnUpdate()
         {
-            var target = GameObjects.EnemyHeroes.FirstOrDefault(x => x.Distance(GlobalExtension.Player) < SpellConfig.R.Range && x.HealthPercent() <= 40);
+            var target = GameObjects.EnemyHeroes.FirstOrDefault(x => x.Distance(ObjectManager.GetLocalPlayer()) < SpellConfig.R.Range && x.HealthPercent() <= 40);
 
             if (target == null || !target.IsValidTarget())
             {
@@ -19,21 +19,21 @@ namespace Adept_AIO.Champions.Irelia.Update.Miscellaneous
             }
 
             if (SpellConfig.Q.Ready && target.Health < Dmg.Damage(target) || (target.Health <
-                GlobalExtension.Player.GetSpellDamage(target, SpellSlot.Q) &&
-                target.Distance(GlobalExtension.Player) < SpellConfig.Q.Range &&
+                ObjectManager.GetLocalPlayer().GetSpellDamage(target, SpellSlot.Q) &&
+                target.Distance(ObjectManager.GetLocalPlayer()) < SpellConfig.Q.Range &&
                 MenuConfig.Killsteal["Q"].Enabled))
             {
                 SpellConfig.Q.CastOnUnit(target);
             }
             else if (SpellConfig.E.Ready && target.Health <
-                GlobalExtension.Player.GetSpellDamage(target, SpellSlot.E) &&
-                target.Distance(GlobalExtension.Player) < SpellConfig.E.Range &&
+                ObjectManager.GetLocalPlayer().GetSpellDamage(target, SpellSlot.E) &&
+                target.Distance(ObjectManager.GetLocalPlayer()) < SpellConfig.E.Range &&
                 MenuConfig.Killsteal["E"].Enabled)
             {
                 SpellConfig.E.CastOnUnit(target);
             }
             else if (SpellConfig.R.Ready && target.Health <
-                     GlobalExtension.Player.GetSpellDamage(target, SpellSlot.R) &&
+                     ObjectManager.GetLocalPlayer().GetSpellDamage(target, SpellSlot.R) &&
                      MenuConfig.Killsteal["R"].Enabled)
             {
                 SpellConfig.R.CastOnUnit(target);

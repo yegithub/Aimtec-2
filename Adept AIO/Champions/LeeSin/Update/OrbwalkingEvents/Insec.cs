@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using Adept_AIO.Champions.LeeSin.Core;
-using Adept_AIO.Champions.LeeSin.Update.Miscellaneous;
 using Adept_AIO.SDK.Extensions;
 using Adept_AIO.SDK.Usables;
 using Aimtec;
@@ -24,7 +23,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
 
         private static float DistanceBehindTarget()
         {
-            return Math.Min((GlobalExtension.Player.BoundingRadius + target.BoundingRadius + 50) * 1.35f, SpellConfig.R.Range);
+            return Math.Min((ObjectManager.GetLocalPlayer().BoundingRadius + target.BoundingRadius + 50) * 1.35f, SpellConfig.R.Range);
         }
 
         public static void Kick()
@@ -36,8 +35,8 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
 
             if (SpellConfig.W.Ready &&
                 Extension.IsFirst(SpellConfig.W) &&
-                WardManager.IsWardReady && target.Distance(GlobalExtension.Player) > SpellConfig.R.Range + 200 &&
-                target.Distance(GlobalExtension.Player) < 1050)
+                WardManager.IsWardReady && target.Distance(ObjectManager.GetLocalPlayer()) > SpellConfig.R.Range + 200 &&
+                target.Distance(ObjectManager.GetLocalPlayer()) < 1050)
             {
                 WardManager.WardJump(InsecPosition, false);
             }
@@ -77,7 +76,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
             }
 
             if (!MenuConfig.InsecMenu[target.ChampionName].Enabled ||
-                GlobalExtension.Player.Distance(InsecPosition) <= 100 ||
+                ObjectManager.GetLocalPlayer().Distance(InsecPosition) <= 100 ||
                 Environment.TickCount - WardManager.LastWardCreated < 1500 &&
                 !WardFlash)
             {
@@ -118,10 +117,10 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
                 else if (MenuConfig.InsecMenu["Object"].Enabled)
                 {
                     var minion = GameObjects.EnemyMinions.Where(x => x.Distance(InsecPosition) < 700 &&
-                                                                     GlobalExtension.Player.Distance(x) <= SpellConfig.Q.Range &&
-                                                                     x.Health > GlobalExtension.Player.GetSpellDamage(x, SpellSlot.Q, DamageStage.AgainstMinions) * 1.75f)
+                                                                     ObjectManager.GetLocalPlayer().Distance(x) <= SpellConfig.Q.Range &&
+                                                                     x.Health > ObjectManager.GetLocalPlayer().GetSpellDamage(x, SpellSlot.Q, DamageStage.AgainstMinions) * 1.75f)
                         .OrderBy(x => x.Distance(InsecPosition))
-                        .FirstOrDefault(x => x.Distance(InsecPosition) < GlobalExtension.Player.Distance(InsecPosition));
+                        .FirstOrDefault(x => x.Distance(InsecPosition) < ObjectManager.GetLocalPlayer().Distance(InsecPosition));
 
                     if (minion == null)
                     {
@@ -139,13 +138,13 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
 
             if (SpellConfig.W.Ready && Extension.IsFirst(SpellConfig.W))
             {
-                if (InsecPosition.Distance(GlobalExtension.Player) < 500)
+                if (InsecPosition.Distance(ObjectManager.GetLocalPlayer()) < 500)
                 {
                     WardFlash = false;
                     WardManager.WardJump(InsecPosition, false);
                 }
                 else if (SummonerSpells.Flash != null && SummonerSpells.Flash.Ready &&
-                         InsecPosition.Distance(GlobalExtension.Player) < 500 + 425 && Environment.TickCount - LastQTime > 650)
+                         InsecPosition.Distance(ObjectManager.GetLocalPlayer()) < 500 + 425 && Environment.TickCount - LastQTime > 650)
                 {
                     WardFlash = true;
                     WardManager.WardJump(InsecPosition, true);
@@ -156,15 +155,15 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
                 return;
             }
             else if (MenuConfig.InsecMenu["Kick"].Value == 0 && SummonerSpells.Flash != null && SummonerSpells.Flash.Ready &&
-                     InsecPosition.Distance(GlobalExtension.Player) <= 425 && !(Environment.TickCount - WardManager.LastWardCreated <= 1500 && !WardFlash))
+                     InsecPosition.Distance(ObjectManager.GetLocalPlayer()) <= 425 && !(Environment.TickCount - WardManager.LastWardCreated <= 1500 && !WardFlash))
             {
                 SummonerSpells.Flash.Cast(InsecPosition);
             }
-            else if (!target.IsValidTarget(SpellConfig.R.Range) || Environment.TickCount - WardManager.LastWardCreated < 500 && GlobalExtension.Player.Distance(InsecPosition) >= 180)
+            else if (!target.IsValidTarget(SpellConfig.R.Range) || Environment.TickCount - WardManager.LastWardCreated < 250 && ObjectManager.GetLocalPlayer().Distance(InsecPosition) >= 350)
             {
                 return;
             }
-            else if (InsecPosition.Distance(GlobalExtension.Player) > 350 && (SummonerSpells.Flash == null || !SummonerSpells.Flash.Ready))
+            else if (InsecPosition.Distance(ObjectManager.GetLocalPlayer()) > 350 && (SummonerSpells.Flash == null || !SummonerSpells.Flash.Ready))
             {
                 return;
             }
@@ -178,7 +177,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents
             {
                 case 0:
                     var ally = GameObjects.AllyHeroes.FirstOrDefault();
-                    var turret = GameObjects.AllyTurrets.Where(x => x.IsValid).OrderBy(x => x.Distance(GlobalExtension.Player)).FirstOrDefault();
+                    var turret = GameObjects.AllyTurrets.Where(x => x.IsValid).OrderBy(x => x.Distance(ObjectManager.GetLocalPlayer())).FirstOrDefault();
                     if (turret != null)
                     {
                         return turret.ServerPosition;

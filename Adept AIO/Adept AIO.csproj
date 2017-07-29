@@ -92,7 +92,7 @@
     <Compile Include="Champions\LeeSin\Core\Extension.cs" />
     <Compile Include="Champions\LeeSin\Core\MenuConfig.cs" />
     <Compile Include="Champions\LeeSin\Core\SpellConfig.cs" />
-    <Compile Include="Champions\LeeSin\Update\Miscellaneous\WardManager.cs" />
+    <Compile Include="Champions\LeeSin\Core\WardManager.cs" />
     <Compile Include="Champions\LeeSin\Drawings\DrawManager.cs" />
     <Compile Include="Champions\LeeSin\LeeSin.cs" />
     <Compile Include="Champions\LeeSin\Update\Miscellaneous\Killsteal.cs" />

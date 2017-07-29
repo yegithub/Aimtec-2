@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using Adept_AIO.SDK.Extensions;
 using Aimtec;
 
 namespace Adept_AIO.SDK.Usables
@@ -23,7 +22,7 @@ namespace Adept_AIO.SDK.Usables
             
             if (slot != null)
             {
-                GlobalExtension.Player.SpellBook.CastSpell((SpellSlot) slot);
+                ObjectManager.GetLocalPlayer().SpellBook.CastSpell((SpellSlot) slot);
                 TiamatCastTime = Environment.TickCount;
             }
         }
@@ -38,11 +37,11 @@ namespace Adept_AIO.SDK.Usables
 
             if (position == Vector3.Zero)
             {
-                GlobalExtension.Player.SpellBook.CastSpell(slot);
+                ObjectManager.GetLocalPlayer().SpellBook.CastSpell(slot);
             }
             else
             {
-                GlobalExtension.Player.SpellBook.CastSpell(slot, position);
+                ObjectManager.GetLocalPlayer().SpellBook.CastSpell(slot, position);
             }
         }
 
@@ -52,14 +51,14 @@ namespace Adept_AIO.SDK.Usables
         
             if (slot != SpellSlot.Unknown)
             {
-                return GlobalExtension.Player.SpellBook.GetSpellState(slot) == SpellState.Ready;
+                return ObjectManager.GetLocalPlayer().SpellBook.GetSpellState(slot) == SpellState.Ready;
             }
             return false;
         }
 
         private static SpellSlot GetItemSlot(string itemName)
         {
-            var slot = GlobalExtension.Player.Inventory.Slots.FirstOrDefault(x => string.Equals(itemName, x.SpellName, StringComparison.CurrentCultureIgnoreCase));
+            var slot = ObjectManager.GetLocalPlayer().Inventory.Slots.FirstOrDefault(x => string.Equals(itemName, x.SpellName, StringComparison.CurrentCultureIgnoreCase));
            
             if (slot != null && slot.SpellSlot != SpellSlot.Unknown)
             {

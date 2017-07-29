@@ -1,5 +1,4 @@
-﻿using Adept_AIO.SDK.Extensions;
-using Aimtec;
+﻿using Aimtec;
 using Aimtec.SDK.Extensions;
 
 namespace Adept_AIO.Champions.Rengar.Core
@@ -10,7 +9,7 @@ namespace Adept_AIO.Champions.Rengar.Core
 
         public static bool HardCC()
         {
-            var me = GlobalExtension.Player;
+            var me = ObjectManager.GetLocalPlayer();
             return (me.HasBuffOfType(BuffType.Blind) ||
                     me.HasBuffOfType(BuffType.Charm) ||
                     me.HasBuffOfType(BuffType.Fear)  ||
@@ -23,12 +22,12 @@ namespace Adept_AIO.Champions.Rengar.Core
 
         public static int Ferocity()
         {
-            return (int) GlobalExtension.Player.Mana;
+            return (int) ObjectManager.GetLocalPlayer().Mana;
         }
 
         public static float ShieldPercent()
         {
-            var player = GlobalExtension.Player;
+            var player = ObjectManager.GetLocalPlayer();
             return 100 * (player.AllShield / player.MaxHealth);
         }
     }

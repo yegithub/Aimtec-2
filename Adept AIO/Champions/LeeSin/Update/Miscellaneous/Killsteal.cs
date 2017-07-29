@@ -13,7 +13,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.Miscellaneous
     {
         public static void OnUpdate()
         {
-            var target = GameObjects.EnemyHeroes.FirstOrDefault(x => x.Distance(GlobalExtension.Player) < SpellConfig.R.Range && x.HealthPercent() <= 40);
+            var target = GameObjects.EnemyHeroes.FirstOrDefault(x => x.Distance(ObjectManager.GetLocalPlayer()) < SpellConfig.R.Range && x.HealthPercent() <= 40);
 
             if (target == null || !target.IsValidTarget())
             {
@@ -24,19 +24,19 @@ namespace Adept_AIO.Champions.LeeSin.Update.Miscellaneous
             {
                 SummonerSpells.Smite.CastOnUnit(target);
             }
-            if (SpellConfig.Q.Ready && (Extension.IsQ2 ? target.Health < GlobalExtension.Player.GetSpellDamage(target, SpellSlot.Q, DamageStage.SecondCast) : target.Health < GlobalExtension.Player.GetSpellDamage(target, SpellSlot.Q)) &&
+            if (SpellConfig.Q.Ready && (Extension.IsQ2 ? target.Health < ObjectManager.GetLocalPlayer().GetSpellDamage(target, SpellSlot.Q, DamageStage.SecondCast) : target.Health < ObjectManager.GetLocalPlayer().GetSpellDamage(target, SpellSlot.Q)) &&
                 target.IsValidTarget(SpellConfig.Q.Range) &&
                 MenuConfig.Killsteal["Q"].Enabled)
             {
                 SpellConfig.Q.Cast(target);
             }
-            else if (SpellConfig.E.Ready && target.Health < GlobalExtension.Player.GetSpellDamage(target, SpellSlot.E) &&
+            else if (SpellConfig.E.Ready && target.Health < ObjectManager.GetLocalPlayer().GetSpellDamage(target, SpellSlot.E) &&
                      target.IsValidTarget(SpellConfig.E.Range) &&
                      MenuConfig.Killsteal["E"].Enabled)
             {
                 SpellConfig.E.Cast();
             }
-            else if (SpellConfig.R.Ready && target.Health < GlobalExtension.Player.GetSpellDamage(target, SpellSlot.R) &&
+            else if (SpellConfig.R.Ready && target.Health < ObjectManager.GetLocalPlayer().GetSpellDamage(target, SpellSlot.R) &&
                      target.IsValidTarget(SpellConfig.R.Range) &&
                      MenuConfig.Killsteal["R"].Enabled)
             {

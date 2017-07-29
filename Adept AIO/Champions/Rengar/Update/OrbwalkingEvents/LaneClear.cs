@@ -11,7 +11,7 @@ namespace Adept_AIO.Champions.Rengar.Update.OrbwalkingEvents
     {
         public static void OnPostAttack()
         {
-            if (MenuConfig.LaneClear["Check"].Enabled && GlobalExtension.Player.CountEnemyHeroesInRange(2000) > 0)
+            if (MenuConfig.LaneClear["Check"].Enabled && ObjectManager.GetLocalPlayer().CountEnemyHeroesInRange(2000) > 0)
             {
                 return;
             }
@@ -22,7 +22,7 @@ namespace Adept_AIO.Champions.Rengar.Update.OrbwalkingEvents
                 return;
             }
 
-            if (SpellConfig.Q.Ready && minion.Health < GlobalExtension.Player.GetSpellDamage(minion, SpellSlot.Q))
+            if (SpellConfig.Q.Ready && minion.Health < ObjectManager.GetLocalPlayer().GetSpellDamage(minion, SpellSlot.Q))
             {
                 if (Extensions.Ferocity() == 4 && !MenuConfig.LaneClear["Q"].Enabled)
                 {
@@ -35,7 +35,7 @@ namespace Adept_AIO.Champions.Rengar.Update.OrbwalkingEvents
 
         public static void OnUpdate()
         {
-            if (MenuConfig.LaneClear["Check"].Enabled && GlobalExtension.Player.CountEnemyHeroesInRange(2000) > 0)
+            if (MenuConfig.LaneClear["Check"].Enabled && ObjectManager.GetLocalPlayer().CountEnemyHeroesInRange(2000) > 0)
             {
                 return;
             }
@@ -46,12 +46,12 @@ namespace Adept_AIO.Champions.Rengar.Update.OrbwalkingEvents
                 return;
             }
 
-            var distance = minion.Distance(GlobalExtension.Player);
+            var distance = minion.Distance(ObjectManager.GetLocalPlayer());
 
             if (SpellConfig.Q.Ready && distance < SpellConfig.Q.Range)
             {
                 if (minion.UnitSkinName.ToLower().Contains("cannon") && minion.Health >
-                    GlobalExtension.Player.GetSpellDamage(minion, SpellSlot.Q))
+                    ObjectManager.GetLocalPlayer().GetSpellDamage(minion, SpellSlot.Q))
                 {
                     return;
                 }

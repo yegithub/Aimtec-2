@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using Adept_AIO.Champions.Yasuo.Core;
-using Adept_AIO.SDK.Extensions;
 using Aimtec;
 using Aimtec.SDK.Extensions;
 using GameObjects = Adept_AIO.SDK.Extensions.GameObjects;
@@ -14,7 +13,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
         {
             if (SpellConfig.E.Ready && MenuConfig.JungleClear["E"].Enabled)
             {
-                var minion = GameObjects.Jungle.FirstOrDefault(x => x.IsValid && x.Distance(GlobalExtension.Player) <= SpellConfig.E.Range && !x.HasBuff("YasuoDashWrapper"));
+                var minion = GameObjects.Jungle.FirstOrDefault(x => x.IsValid && x.Distance(ObjectManager.GetLocalPlayer()) <= SpellConfig.E.Range && !x.HasBuff("YasuoDashWrapper"));
 
                 if (minion == null)
                 {
@@ -26,7 +25,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
 
             if (SpellConfig.Q.Ready)
             {
-                var minion = GameObjects.Jungle.FirstOrDefault(x => x.Distance(GlobalExtension.Player) < SpellConfig.Q.Range && x.Health > 5);
+                var minion = GameObjects.Jungle.FirstOrDefault(x => x.Distance(ObjectManager.GetLocalPlayer()) < SpellConfig.Q.Range && x.Health > 5);
                 if (minion == null)
                 {
                     return;
@@ -38,7 +37,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                     return;
                 }
             
-                GlobalExtension.Player.SpellBook.CastSpell(SpellSlot.Q, minion.ServerPosition);
+                ObjectManager.GetLocalPlayer().SpellBook.CastSpell(SpellSlot.Q, minion.ServerPosition);
             }
         }
     }

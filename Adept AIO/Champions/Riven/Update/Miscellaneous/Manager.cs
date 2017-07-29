@@ -12,7 +12,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
     {
         public static void OnUpdate()
         {
-            if (GlobalExtension.Player.IsDead)
+            if (ObjectManager.GetLocalPlayer().IsDead)
             {
                 return;
             }
@@ -37,7 +37,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
             if (SpellConfig.Q.Ready &&
                 Extensions.CurrentQCount >= 2 &&
                 MenuConfig.Miscellaneous["Active"].Enabled &&
-               !GlobalExtension.Player.HasBuff("Recall") &&
+               !ObjectManager.GetLocalPlayer().HasBuff("Recall") &&
                 Environment.TickCount - Extensions.LastQTime >= 3580 + Game.Ping / 2 &&
                 Environment.TickCount - Extensions.LastQTime <= 3700 + Game.Ping / 2) // Tries to prevents bugs.
             {
@@ -90,7 +90,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                                     return;
                                 }
                              
-                                SpellConfig.Q.Cast(GlobalExtension.Player.ServerPosition.Extend(Game.CursorPos, 400));
+                                SpellConfig.Q.Cast(ObjectManager.GetLocalPlayer().ServerPosition.Extend(Game.CursorPos, 400));
                             }
                                 break;
                         }

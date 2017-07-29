@@ -42,7 +42,6 @@ namespace Adept_AIO.Champions.Yasuo.Core
 
             Combo = new Menu("Combo", "Combo")
             {
-                new MenuBool("Walk", "Walk Behind Minion To Dash"),
                 new MenuBool("Dodge", "Windwall Targetted Spells"),
                 new MenuSlider("Count", "Use R If X Airbourne", 2, 0, 5),
                 new MenuBool("Delay", "Delay R").SetToolTip("Tries to Knockup -> AA -> R"),
@@ -88,7 +87,6 @@ namespace Adept_AIO.Champions.Yasuo.Core
             {
                 new MenuSlider("Segments", "Segments", 200, 100, 300).SetToolTip("Smoothness of the circles. Less equals more FPS."),
                 new MenuBool("R", "Draw R Range"),
-                new MenuBool("Range", "Draw Minion Search Range"),
                 new MenuBool("Debug", "Debug")
             };
 

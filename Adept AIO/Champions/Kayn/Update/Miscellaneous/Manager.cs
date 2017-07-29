@@ -24,7 +24,7 @@ namespace Adept_AIO.Champions.Kayn.Update.Miscellaneous
 
         public static void OnUpdate()
         {
-            if (GlobalExtension.Player.IsDead)
+            if (ObjectManager.GetLocalPlayer().IsDead)
             {
                 return;
             }

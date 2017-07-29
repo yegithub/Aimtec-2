@@ -18,12 +18,13 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
             }
 
             GlobalExtension.Orbwalker.ResetAutoAttackTimer();
-            GlobalExtension.Player.IssueOrder(OrderType.MoveTo, Game.CursorPos);
+            GlobalExtension.Orbwalker.Move(Game.CursorPos);
+            ObjectManager.GetLocalPlayer().IssueOrder(OrderType.MoveTo, Game.CursorPos);
         }
 
         public static int GetDelay(int temp)
         {
-            var delay = (int)(temp - GlobalExtension.Player.AttackSpeedMod * 12 - GlobalExtension.Player.GetSpell(SpellSlot.Q).Level);
+            var delay = (int)(temp - ObjectManager.GetLocalPlayer().AttackSpeedMod * 12 - ObjectManager.GetLocalPlayer().GetSpell(SpellSlot.Q).Level);
            
             return delay;
         }

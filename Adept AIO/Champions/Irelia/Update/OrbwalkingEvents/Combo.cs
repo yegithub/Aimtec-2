@@ -15,7 +15,7 @@ namespace Adept_AIO.Champions.Irelia.Update.OrbwalkingEvents
         {
             if (SpellConfig.E.Ready)
             {
-                if (((Obj_AI_Base)target).HealthPercent() <= GlobalExtension.Player.HealthPercent() || Dmg.Damage((Obj_AI_Base)target) * 2 > target.Health)
+                if (((Obj_AI_Base)target).HealthPercent() <= ObjectManager.GetLocalPlayer().HealthPercent() || Dmg.Damage((Obj_AI_Base)target) * 2 > target.Health)
                 {
                     preAttackEventArgs.Cancel = true;
                     SpellConfig.E.CastOnUnit(target);
@@ -61,8 +61,8 @@ namespace Adept_AIO.Champions.Irelia.Update.OrbwalkingEvents
                     return;
                 }
 
-                var minion = GameObjects.EnemyMinions.Where(x => x.Distance(GlobalExtension.Player) < SpellConfig.Q.Range &&
-                                                                 x.Distance(longRangeTarget) < GlobalExtension.Player.Distance(longRangeTarget) &&
+                var minion = GameObjects.EnemyMinions.Where(x => x.Distance(ObjectManager.GetLocalPlayer()) < SpellConfig.Q.Range &&
+                                                                 x.Distance(longRangeTarget) < ObjectManager.GetLocalPlayer().Distance(longRangeTarget) &&
                                                                  x.Distance(longRangeTarget) < SpellConfig.Q.Range * 3)
                                                                  .OrderBy(x => x.Distance(longRangeTarget))
                                                                  .FirstOrDefault();
@@ -72,14 +72,14 @@ namespace Adept_AIO.Champions.Irelia.Update.OrbwalkingEvents
                     return;
                 }
 
-                if (minion.Health < GlobalExtension.Player.GetSpellDamage(minion, SpellSlot.Q))
+                if (minion.Health < ObjectManager.GetLocalPlayer().GetSpellDamage(minion, SpellSlot.Q))
                 {
                     SpellConfig.Q.CastOnUnit(minion);
                 }
                 else if (SpellConfig.R.Ready && minion.Health >
-                    GlobalExtension.Player.GetSpellDamage(minion, SpellSlot.Q) &&
-                    minion.Health < GlobalExtension.Player.GetSpellDamage(minion, SpellSlot.R) +
-                    GlobalExtension.Player.GetSpellDamage(minion, SpellSlot.Q) &&
+                    ObjectManager.GetLocalPlayer().GetSpellDamage(minion, SpellSlot.Q) &&
+                    minion.Health < ObjectManager.GetLocalPlayer().GetSpellDamage(minion, SpellSlot.R) +
+                    ObjectManager.GetLocalPlayer().GetSpellDamage(minion, SpellSlot.Q) &&
                     (killable?.Health < Dmg.Damage(killable) || killable.HealthPercent() <= 40))
                 {
                     SpellConfig.R.Cast(minion);
@@ -93,12 +93,12 @@ namespace Adept_AIO.Champions.Irelia.Update.OrbwalkingEvents
             }
 
 
-            if (MenuConfig.Combo["Killable"].Enabled && target.Distance(GlobalExtension.Player) < SpellConfig.Q.Range && target.Health < Dmg.Damage(target) && SpellConfig.Q.Ready)
+            if (MenuConfig.Combo["Killable"].Enabled && target.Distance(ObjectManager.GetLocalPlayer()) < SpellConfig.Q.Range && target.Health < Dmg.Damage(target) && SpellConfig.Q.Ready)
             {
                 SpellConfig.Q.CastOnUnit(target);
             }
 
-            if (SpellConfig.E.Ready && target.Distance(GlobalExtension.Player) <= SpellConfig.E.Range)
+            if (SpellConfig.E.Ready && target.Distance(ObjectManager.GetLocalPlayer()) <= SpellConfig.E.Range)
             {
                 if (ganked)
                 {
@@ -109,7 +109,7 @@ namespace Adept_AIO.Champions.Irelia.Update.OrbwalkingEvents
                     SpellConfig.E.CastOnUnit(target);
                 }
 
-                if (target.HealthPercent() <= GlobalExtension.Player.HealthPercent() || Dmg.Damage(target) * 2 > target.Health)
+                if (target.HealthPercent() <= ObjectManager.GetLocalPlayer().HealthPercent() || Dmg.Damage(target) * 2 > target.Health)
                 {
                     SpellConfig.E.CastOnUnit(target);
                 }

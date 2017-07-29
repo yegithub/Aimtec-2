@@ -12,7 +12,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
     {
         public static void OnUpdate()
         {
-            var target = GameObjects.EnemyHeroes.FirstOrDefault(x => x.HealthPercent() <= 40 && x.Distance(GlobalExtension.Player) <= SpellConfig.R2.Range);
+            var target = GameObjects.EnemyHeroes.FirstOrDefault(x => x.HealthPercent() <= 40 && x.Distance(ObjectManager.GetLocalPlayer()) <= SpellConfig.R2.Range);
 
             if (target == null || !target.IsValidTarget())
             {
@@ -21,27 +21,27 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 
             if (SpellConfig.W.Ready
                 && MenuConfig.Killsteal["W"].Enabled
-                && target.Health <= GlobalExtension.Player.GetSpellDamage(target, SpellSlot.W)
-                && target.Distance(GlobalExtension.Player) <= SpellConfig.W.Range)
+                && target.Health <= ObjectManager.GetLocalPlayer().GetSpellDamage(target, SpellSlot.W)
+                && target.Distance(ObjectManager.GetLocalPlayer()) <= SpellConfig.W.Range)
             {
                 SpellManager.CastW(target);
             }
             else if (SpellConfig.Q.Ready
                 && MenuConfig.Killsteal["Q"].Enabled
-                && target.Health <= GlobalExtension.Player.GetSpellDamage(target, SpellSlot.Q)
-                && target.Distance(GlobalExtension.Player) <= SpellConfig.Q.Range)
+                && target.Health <= ObjectManager.GetLocalPlayer().GetSpellDamage(target, SpellSlot.Q)
+                && target.Distance(ObjectManager.GetLocalPlayer()) <= SpellConfig.Q.Range)
             {
                 SpellManager.CastQ(target);
             }
             else if (SpellConfig.R2.Ready
                      && Extensions.UltimateMode == UltimateMode.Second
                      && MenuConfig.Killsteal["R2"].Enabled
-                     && target.Health <= GlobalExtension.Player.GetSpellDamage(target, SpellSlot.R)
-                     && target.Distance(GlobalExtension.Player) <= SpellConfig.R2.Range)
+                     && target.Health <= ObjectManager.GetLocalPlayer().GetSpellDamage(target, SpellSlot.R)
+                     && target.Distance(ObjectManager.GetLocalPlayer()) <= SpellConfig.R2.Range)
             {
                 SpellManager.CastR2(target);
             }
-            else if (MenuConfig.Killsteal["Items"].Enabled && GlobalExtension.Player.HealthPercent() <= 5)
+            else if (MenuConfig.Killsteal["Items"].Enabled && ObjectManager.GetLocalPlayer().HealthPercent() <= 5)
             {
                 Items.CastTiamat();
             }

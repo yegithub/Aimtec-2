@@ -37,7 +37,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
 
             if (SpellConfig.E.Ready && MenuConfig.Harass["E"].Enabled && !target.IsUnderEnemyTurret())
             {
-                var distance = target.Distance(GlobalExtension.Player);
+                var distance = target.Distance(ObjectManager.GetLocalPlayer());
                 var minion = Extension.GetDashableMinion(target);
 
                 if (!target.HasBuff("YasuoDashWrapper") && target.IsValidTarget(SpellConfig.E.Range))
@@ -46,7 +46,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                 }
                 else if (distance > SpellConfig.E.Range)
                 {
-                    if (minion != null || distance < GlobalExtension.Player.AttackRange)
+                    if (minion != null || distance < ObjectManager.GetLocalPlayer().AttackRange)
                     {
                         SpellConfig.E.CastOnUnit(minion);
                     }

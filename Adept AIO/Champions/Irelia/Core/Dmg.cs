@@ -1,5 +1,4 @@
-﻿using Adept_AIO.SDK.Extensions;
-using Aimtec;
+﻿using Aimtec;
 using Aimtec.SDK.Damage;
 
 namespace Adept_AIO.Champions.Irelia.Core
@@ -13,21 +12,21 @@ namespace Adept_AIO.Champions.Irelia.Core
                 return 0;
             }
 
-            var dmg = GlobalExtension.Player.GetAutoAttackDamage(target);
+            var dmg = ObjectManager.GetLocalPlayer().GetAutoAttackDamage(target);
 
             if (SpellConfig.W.Ready)
             {
-                dmg += GlobalExtension.Player.GetSpellDamage(target, SpellSlot.W) + dmg;
+                dmg += ObjectManager.GetLocalPlayer().GetSpellDamage(target, SpellSlot.W) + dmg;
             }
 
             if (SpellConfig.Q.Ready)
             {
-                dmg += GlobalExtension.Player.GetSpellDamage(target, SpellSlot.Q) + dmg;
+                dmg += ObjectManager.GetLocalPlayer().GetSpellDamage(target, SpellSlot.Q) + dmg;
             }
 
             if (SpellConfig.R.Ready)
             {
-                dmg += GlobalExtension.Player.GetSpellDamage(target, SpellSlot.R) * SpellConfig.RCount;
+                dmg += ObjectManager.GetLocalPlayer().GetSpellDamage(target, SpellSlot.R) * SpellConfig.RCount;
             }
             return dmg;
         }

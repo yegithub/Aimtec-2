@@ -1,5 +1,4 @@
-﻿using Adept_AIO.SDK.Extensions;
-using Aimtec;
+﻿using Aimtec;
 using Aimtec.SDK.Damage;
 
 namespace Adept_AIO.Champions.Riven.Core
@@ -13,22 +12,22 @@ namespace Adept_AIO.Champions.Riven.Core
                 return 0;
             }
 
-            var dmg = GlobalExtension.Player.GetAutoAttackDamage(target);
+            var dmg = ObjectManager.GetLocalPlayer().GetAutoAttackDamage(target);
 
             if (SpellConfig.W.Ready)
             {
-                dmg += GlobalExtension.Player.GetSpellDamage(target, SpellSlot.W);
+                dmg += ObjectManager.GetLocalPlayer().GetSpellDamage(target, SpellSlot.W);
             }
 
             if (SpellConfig.Q.Ready)
             {
                 var count = 4 - Extensions.CurrentQCount;
-                dmg += (GlobalExtension.Player.GetSpellDamage(target, SpellSlot.Q) + dmg) * count;
+                dmg += (ObjectManager.GetLocalPlayer().GetSpellDamage(target, SpellSlot.Q) + dmg) * count;
             }
 
             if (SpellConfig.R.Ready)
             {
-                dmg += GlobalExtension.Player.GetSpellDamage(target, SpellSlot.R);
+                dmg += ObjectManager.GetLocalPlayer().GetSpellDamage(target, SpellSlot.R);
             }
             return dmg;
         }

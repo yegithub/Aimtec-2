@@ -1,5 +1,4 @@
 ﻿using System.Threading;
-using Adept_AIO.SDK.Extensions;
 using Aimtec;
 
 namespace Adept_AIO.Champions.Riven.Core
@@ -25,7 +24,7 @@ namespace Adept_AIO.Champions.Riven.Core
             }
             else
             {
-                range += GlobalExtension.Player.AttackRange;
+                range += ObjectManager.GetLocalPlayer().AttackRange;
             }
             if (SpellConfig.E.Ready)
             {
@@ -41,7 +40,9 @@ namespace Adept_AIO.Champions.Riven.Core
 
         public static bool AllIn;
         public static int CurrentQCount = 1;
-        public static float LastQTime, LastETime, LastWTime, LastR2Time = 0;
+        public static float LastQTime = 0;
+        public static float LastETime = 0;
+        public static float LastWTime = 0;
      
         public static string[] InvulnerableList = { "FioraW", "kindrednodeathbuff", "Undying Rage", "JudicatorIntervention" };
    
