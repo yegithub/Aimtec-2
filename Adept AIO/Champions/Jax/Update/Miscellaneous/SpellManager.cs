@@ -33,7 +33,7 @@ namespace Adept_AIO.Champions.Jax.Update.Miscellaneous
                 return;
             }
 
-            if (Environment.TickCount - SpellConfig.CounterStrikeTime > 2000 || Unit.Distance(GlobalExtension.Player) < 300)
+            if (Environment.TickCount - SpellConfig.CounterStrikeTime > 1700 || Unit.Distance(GlobalExtension.Player) <= SpellConfig.E.Range + Unit.BoundingRadius)
             {
                 SpellConfig.E.Cast(Unit);
             }

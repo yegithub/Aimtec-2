@@ -53,7 +53,7 @@ namespace Adept_AIO.Champions.Jax.Update.OrbwalkingEvents
                 return;
             }
 
-            if (MenuConfig.Combo["Delay"].Enabled && (Environment.TickCount - SpellConfig.CounterStrikeTime < 1500 || SpellConfig.E.Ready && SpellConfig.CounterStrikeTime == 0f))
+            if (MenuConfig.Combo["Delay"].Enabled && (Environment.TickCount - SpellConfig.CounterStrikeTime < 800 || SpellConfig.E.Ready && SpellConfig.CounterStrikeTime == 0f))
             {
                 return; 
             }
