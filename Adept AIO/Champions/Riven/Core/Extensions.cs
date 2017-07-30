@@ -38,6 +38,7 @@ namespace Adept_AIO.Champions.Riven.Core
             return (int)range;
         }
 
+        public static bool DidJustAuto;
         public static bool AllIn;
         public static int CurrentQCount = 1;
         public static float LastQTime, LastWTime, LastR2Time = 0;

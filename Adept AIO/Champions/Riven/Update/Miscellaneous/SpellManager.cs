@@ -14,19 +14,14 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
         private static bool CanUseQ;
         private static bool CanUseW;
         private static Obj_AI_Base Unit;
-      
-        /// <summary>
-        /// Tracks spells recently used by Riven
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
+
         public static void OnProcessSpellCast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
         {
             if (!sender.IsMe)
             {
                 return;
             }
-
+    
             switch (args.SpellData.Name)
             {
                 case "RivenTriCleave":
@@ -34,8 +29,12 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                     Extensions.LastQTime = Environment.TickCount;
                     Extensions.CurrentQCount++;
                     if (Extensions.CurrentQCount > 3) { Extensions.CurrentQCount = 1; }
-
-                    var delay = Game.Ping + Extensions.CurrentQCount < 3 ? 300 : 350;
+                
+                    var delay = Game.Ping + Extensions.CurrentQCount < 3 ? 320 : 355;
+                    if (Unit != null && Unit.IsMoving)
+                    {
+                        delay += 25;
+                    }
                     DelayAction.Queue(Animation.GetDelay(delay), Animation.Reset);
                     break;
                 case "RivenMartyr":
@@ -54,16 +53,15 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 
         public static void OnUpdate()
         {
-            /*
-            if (Environment.TickCount - Extensions.LastR2Time >= 14000 && Extensions.LastR2Time > 0)
-            {
-                var target = GlobalExtension.TargetSelector.GetTarget(SpellConfig.R2.Range);
-                if (target != null)
-                {
-                    SpellConfig.R2.Cast(target);
-                }
-            }
-            */
+            
+            //if (Environment.TickCount - Extensions.LastR2Time >= 14000 && Extensions.LastR2Time > 0)
+            //{
+            //    var target = GlobalExtension.TargetSelector.GetTarget(SpellConfig.R2.Range);
+            //    if (target != null)
+            //    {
+            //        SpellConfig.R2.Cast(target);
+            //    }
+            //}
 
             if (Unit == null)
             {
@@ -72,7 +70,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 
             if (CanUseQ)
             {
-                if (GlobalExtension.Orbwalker.CanMove()) // Not fast enough
+                if (Extensions.DidJustAuto)
                 {
                     if (Extensions.CurrentQCount == 3)
                     {
@@ -80,6 +78,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                     }
 
                     GlobalExtension.Player.SpellBook.CastSpell(SpellSlot.Q, Unit);
+                    Extensions.DidJustAuto = false;
                 }
             }
 

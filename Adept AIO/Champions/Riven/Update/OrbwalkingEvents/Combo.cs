@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Adept_AIO.Champions.Riven.Core;
 using Adept_AIO.Champions.Riven.Update.Miscellaneous;
 using Adept_AIO.SDK.Extensions;
@@ -63,11 +64,6 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
             if (SpellConfig.E.Ready)
             {
                 GlobalExtension.Player.SpellBook.CastSpell(SpellSlot.E, target.ServerPosition);
-
-                if (CanCastR1(target) && target.Distance(GlobalExtension.Player) >= GlobalExtension.Player.AttackRange + SpellConfig.E.Range)
-                {
-                    SpellConfig.R.Cast();
-                }
             }
             else if (SpellManager.InsideKiBurst(target) && SpellConfig.W.Ready && !CanCastR1(target))
             {

@@ -20,7 +20,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 
         public static int GetDelay(int temp)
         {
-            var delay = (int)(temp - GlobalExtension.Player.AttackSpeedMod * 12 - GlobalExtension.Player.GetSpell(SpellSlot.Q).Level);
+            var delay = (int)(temp - GlobalExtension.Player.AttackSpeedMod * 17 - GlobalExtension.Player.GetSpell(SpellSlot.Q).Level);
            
             return delay;
         }

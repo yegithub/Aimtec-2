@@ -54,9 +54,12 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
         {
             if (Environment.TickCount - Extensions.LastQTime < 500)
             {
+                Extensions.DidJustAuto = false;
                 return;
             }
 
+            Extensions.DidJustAuto = true;
+            
             var target = args.Target as Obj_AI_Base;
 
             if (MenuConfig.BurstMode.Active)
