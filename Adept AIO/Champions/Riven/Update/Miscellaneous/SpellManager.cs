@@ -54,6 +54,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 
         public static void OnUpdate()
         {
+            /*
             if (Environment.TickCount - Extensions.LastR2Time >= 14000)
             {
                 var target = GlobalExtension.TargetSelector.GetTarget(SpellConfig.R2.Range);
@@ -62,7 +63,8 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                     SpellConfig.R2.Cast(target);
                 }
             }
-
+            */
+            
             if (Unit == null)
             {
                 return;
