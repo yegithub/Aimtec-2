@@ -2,7 +2,6 @@
 using Adept_AIO.Champions.Yasuo.Core;
 using Adept_AIO.SDK.Extensions;
 using Adept_AIO.SDK.Usables;
-using Aimtec;
 using Aimtec.SDK.Extensions;
 using Aimtec.SDK.Util;
 
@@ -37,11 +36,11 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
             }
 
 
-            var distance = target.Distance(ObjectManager.GetLocalPlayer());
+            var distance = target.Distance(GlobalExtension.Player);
             var minion = Extension.GetDashableMinion(target);
             var dashDistance = Extension.DashDistance(minion, target);
 
-            if (GlobalExtension.Orbwalker.CanAttack() && distance <= ObjectManager.GetLocalPlayer().AttackRange + 65)
+            if (GlobalExtension.Orbwalker.CanAttack() && distance <= GlobalExtension.Player.AttackRange + 65)
             {
                 GlobalExtension.Orbwalker.Attack(target);
             }

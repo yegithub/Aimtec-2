@@ -1,4 +1,5 @@
-﻿using Aimtec;
+﻿using Adept_AIO.SDK.Extensions;
+using Aimtec;
 using Aimtec.SDK.Damage;
 
 namespace Adept_AIO.Champions.Kayn.Core
@@ -12,21 +13,21 @@ namespace Adept_AIO.Champions.Kayn.Core
                 return 0;
             }
 
-            var dmg = ObjectManager.GetLocalPlayer().GetAutoAttackDamage(target);
+            var dmg = GlobalExtension.Player.GetAutoAttackDamage(target);
 
             if (SpellConfig.Q.Ready)
             {
-                dmg += ObjectManager.GetLocalPlayer().GetSpellDamage(target, SpellSlot.Q) + dmg;
+                dmg += GlobalExtension.Player.GetSpellDamage(target, SpellSlot.Q) + dmg;
             }
 
             if (SpellConfig.W.Ready)
             {
-                dmg += ObjectManager.GetLocalPlayer().GetSpellDamage(target, SpellSlot.W);
+                dmg += GlobalExtension.Player.GetSpellDamage(target, SpellSlot.W);
             }
 
             if (SpellConfig.R.Ready)
             {
-                dmg += ObjectManager.GetLocalPlayer().GetSpellDamage(target, SpellSlot.R) + dmg;
+                dmg += GlobalExtension.Player.GetSpellDamage(target, SpellSlot.R) + dmg;
             }
             return dmg;
         }

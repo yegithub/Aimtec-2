@@ -12,10 +12,10 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
     {
         public static void OnPostAttack()
         {
-            var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(ObjectManager.GetLocalPlayer()) < Extensions.EngageRange() &&
-                                                                      x.Health > ObjectManager.GetLocalPlayer().GetAutoAttackDamage(x));
+            var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(GlobalExtension.Player) < Extensions.EngageRange() &&
+                                                                      x.Health > GlobalExtension.Player.GetAutoAttackDamage(x));
 
-            if (minion == null || !MenuConfig.Lane["Check"].Enabled && ObjectManager.GetLocalPlayer().CountEnemyHeroesInRange(2000) >= 1)
+            if (minion == null || !MenuConfig.Lane["Check"].Enabled && GlobalExtension.Player.CountEnemyHeroesInRange(2000) >= 1)
             {
                 return;
             }
@@ -26,7 +26,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
             }
 
             if (SpellConfig.W.Ready && MenuConfig.Lane["W"].Enabled &&
-                minion.Health < ObjectManager.GetLocalPlayer().GetSpellDamage(minion, SpellSlot.W) &&
+                minion.Health < GlobalExtension.Player.GetSpellDamage(minion, SpellSlot.W) &&
                 (minion.UnitSkinName == "SRU_ChaosMinionSiege" || minion.UnitSkinName == "SRU_OrderMinionSiege"))
             {
                 SpellManager.CastW(minion);
@@ -36,10 +36,10 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
 
         public static void OnUpdate()
         {
-            var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(ObjectManager.GetLocalPlayer()) < Extensions.EngageRange());
+            var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(GlobalExtension.Player) < Extensions.EngageRange());
 
             if (minion == null || MenuConfig.Lane["Check"].Enabled &&
-                ObjectManager.GetLocalPlayer().CountEnemyHeroesInRange(1500) >= 1)
+                GlobalExtension.Player.CountEnemyHeroesInRange(1500) >= 1)
             {
                 return;
             }

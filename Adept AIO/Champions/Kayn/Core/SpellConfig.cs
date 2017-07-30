@@ -1,6 +1,4 @@
-﻿using System;
-using Adept_AIO.SDK.Usables;
-using Aimtec;
+﻿using Aimtec;
 using Aimtec.SDK.Prediction.Skillshots;
 using Spell = Aimtec.SDK.Spell;
 

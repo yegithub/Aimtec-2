@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using Adept_AIO.Champions.Rengar.Core;
-using Aimtec;
+using Adept_AIO.SDK.Extensions;
 using Aimtec.SDK.Damage;
 using Aimtec.SDK.Extensions;
 using GameObjects = Adept_AIO.SDK.Extensions.GameObjects;
@@ -17,7 +17,7 @@ namespace Adept_AIO.Champions.Rengar.Update.OrbwalkingEvents
                 return;
             }
 
-            if (SpellConfig.Q.Ready && mob.Health > ObjectManager.GetLocalPlayer().GetAutoAttackDamage(mob))
+            if (SpellConfig.Q.Ready && mob.Health > GlobalExtension.Player.GetAutoAttackDamage(mob))
             {
                 if (Extensions.Ferocity() == 4 && !MenuConfig.JungleClear["Q"].Enabled)
                 {
@@ -36,7 +36,7 @@ namespace Adept_AIO.Champions.Rengar.Update.OrbwalkingEvents
                 return;
             }
 
-            var distance = mob.Distance(ObjectManager.GetLocalPlayer());
+            var distance = mob.Distance(GlobalExtension.Player);
 
             if (SpellConfig.W.Ready && distance < SpellConfig.W.Range)
             {

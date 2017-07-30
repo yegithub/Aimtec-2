@@ -68,7 +68,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
                 return;
             }
 
-            var qwRange = target.Distance(ObjectManager.GetLocalPlayer()) < SpellConfig.Q.Range + SpellConfig.W.Range + target.BoundingRadius;
+            var qwRange = target.Distance(GlobalExtension.Player) < SpellConfig.Q.Range + SpellConfig.W.Range + target.BoundingRadius;
             var antiPosition = GetDashPosition(target);
 
             Extensions.Current = Generate(target);
@@ -130,13 +130,13 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
             switch (MenuConfig.Harass["Dodge"].Value)
             {
                 case 0:
-                    var turret = GameObjects.AllyTurrets.Where(x => x.IsValid).OrderBy(x => x.Distance(ObjectManager.GetLocalPlayer())).FirstOrDefault();
+                    var turret = GameObjects.AllyTurrets.Where(x => x.IsValid).OrderBy(x => x.Distance(GlobalExtension.Player)).FirstOrDefault();
                     return turret != null ? turret.ServerPosition : Game.CursorPos;
                 case 1:
                     return Game.CursorPos;
 
                 case 2:
-                    return ObjectManager.GetLocalPlayer().ServerPosition + (ObjectManager.GetLocalPlayer().ServerPosition - target.ServerPosition).Normalized() * 300;
+                    return GlobalExtension.Player.ServerPosition + (GlobalExtension.Player.ServerPosition - target.ServerPosition).Normalized() * 300;
             }
             return Vector3.Zero;
         }

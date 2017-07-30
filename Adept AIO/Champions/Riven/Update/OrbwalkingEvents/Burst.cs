@@ -1,5 +1,4 @@
-﻿using System;
-using Adept_AIO.Champions.Riven.Core;
+﻿using Adept_AIO.Champions.Riven.Core;
 using Adept_AIO.Champions.Riven.Update.Miscellaneous;
 using Adept_AIO.SDK.Extensions;
 using Adept_AIO.SDK.Usables;
@@ -41,9 +40,9 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
                 return;
             }
 
-            var distance = target.Distance(ObjectManager.GetLocalPlayer());
+            var distance = target.Distance(GlobalExtension.Player);
 
-            if (GlobalExtension.Orbwalker.CanAttack() && distance <= ObjectManager.GetLocalPlayer().AttackRange + 65)
+            if (GlobalExtension.Orbwalker.CanAttack() && distance <= GlobalExtension.Player.AttackRange + 65)
             {
                 GlobalExtension.Orbwalker.Attack(target);
             }
@@ -63,10 +62,10 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
                 SpellConfig.R.Cast();
             }
 
-            if (Environment.TickCount - Extensions.LastETime >= 180 && Extensions.AllIn && distance < Extensions.FlashRange(target) && SpellConfig.W.Ready && SpellConfig.R.Ready)
+            if (Extensions.AllIn && distance < Extensions.FlashRange(target) && SpellConfig.W.Ready && SpellConfig.R.Ready)
             {
-                ObjectManager.GetLocalPlayer().SpellBook.CastSpell(SpellSlot.W);
-                SummonerSpells.Flash?.Cast(target.ServerPosition.Extend(ObjectManager.GetLocalPlayer().ServerPosition, target.BoundingRadius));
+                GlobalExtension.Player.SpellBook.CastSpell(SpellSlot.W);
+                SummonerSpells.Flash?.Cast(target.ServerPosition.Extend(GlobalExtension.Player.ServerPosition, target.BoundingRadius));
             }   
             else if (SpellConfig.E.Ready)
             {

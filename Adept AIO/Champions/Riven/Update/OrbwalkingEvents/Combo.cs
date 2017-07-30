@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Adept_AIO.Champions.Riven.Core;
 using Adept_AIO.Champions.Riven.Update.Miscellaneous;
 using Adept_AIO.SDK.Extensions;
@@ -23,7 +22,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
         public static void OnPostAttack(Obj_AI_Base target)
         {
             if (AutoBeforeR2(target) && (SpeedItUp(target) || Extensions.CurrentQCount == 1 && !SpellConfig.Q.Ready) &&
-                target.Health < ObjectManager.GetLocalPlayer().GetAutoAttackDamage(target) + ObjectManager.GetLocalPlayer().GetSpellDamage(target, SpellSlot.R))
+                target.Health < GlobalExtension.Player.GetAutoAttackDamage(target) + GlobalExtension.Player.GetSpellDamage(target, SpellSlot.R))
             {
                 SpellManager.CastR2(target);
             }
@@ -63,14 +62,13 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
 
             if (SpellConfig.E.Ready)
             {
-                ObjectManager.GetLocalPlayer().SpellBook.CastSpell(SpellSlot.E, target.ServerPosition);
+                GlobalExtension.Player.SpellBook.CastSpell(SpellSlot.E, target.ServerPosition);
 
-                if (CanCastR1(target) && target.Distance(ObjectManager.GetLocalPlayer()) >= ObjectManager.GetLocalPlayer().AttackRange + SpellConfig.E.Range)
+                if (CanCastR1(target) && target.Distance(GlobalExtension.Player) >= GlobalExtension.Player.AttackRange + SpellConfig.E.Range)
                 {
                     SpellConfig.R.Cast();
                 }
             }
-
             else if (SpellManager.InsideKiBurst(target) && SpellConfig.W.Ready && !CanCastR1(target))
             {
                 SpellManager.CastW(target);
@@ -88,8 +86,8 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
             Extensions.AllIn = MenuConfig.Combo["Flash"].Enabled &&
                                SummonerSpells.Flash.Ready &&
                                SpeedItUp(target) &&
-                               target.Distance(ObjectManager.GetLocalPlayer()) > 500 &&
-                               target.Distance(ObjectManager.GetLocalPlayer()) < 720;
+                               target.Distance(GlobalExtension.Player) > 500 &&
+                               target.Distance(GlobalExtension.Player) < 720;
 
             if (!Extensions.AllIn)
             {
@@ -106,7 +104,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
 
         private static bool AutoBeforeR2(GameObject target)
         {
-            return target.Distance(ObjectManager.GetLocalPlayer()) < ObjectManager.GetLocalPlayer().AttackRange
+            return target.Distance(GlobalExtension.Player) < GlobalExtension.Player.AttackRange
                    && SpellConfig.R2.Ready
                    && Extensions.UltimateMode == UltimateMode.Second
                    && MenuConfig.Combo["R2"].Value == 1;
@@ -114,8 +112,8 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
 
         private static bool SpeedItUp(Obj_AI_Base target)
         {
-            return target.Health < Dmg.Damage(target) * .35 && ObjectManager.GetLocalPlayer().HealthPercent() >= 65 ||
-                   target.Health < ObjectManager.GetLocalPlayer().GetAutoAttackDamage(target) && GameObjects.AllyHeroes.FirstOrDefault(x => x.Distance(target) < 300) == null ||
+            return target.Health < Dmg.Damage(target) * .35 && GlobalExtension.Player.HealthPercent() >= 65 ||
+                   target.Health < GlobalExtension.Player.GetAutoAttackDamage(target) && GameObjects.AllyHeroes.FirstOrDefault(x => x.Distance(target) < 300) == null ||
                    target.Health < Dmg.Damage(target) * .75f && target.HealthPercent() <= 40;
         }
     }

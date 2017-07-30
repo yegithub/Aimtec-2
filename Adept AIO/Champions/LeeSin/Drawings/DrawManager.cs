@@ -1,28 +1,43 @@
-﻿using System;
-using System.Drawing;
-using Adept_AIO.Champions.LeeSin.Core;
+﻿using System.Drawing;
+using Adept_AIO.Champions.LeeSin.Core.Spells;
+using Adept_AIO.SDK.Extensions;
 using Aimtec;
-using Aimtec.SDK.Extensions;
 
 namespace Adept_AIO.Champions.LeeSin.Drawings
 {
-    internal class DrawManager
+    internal interface IDrawManager
     {
-        public static void RenderManager()
+        void RenderManager();
+    }
+
+    internal class DrawManager : IDrawManager
+    {
+        public bool QEnabled { get; set; }
+        public bool PositionEnabled { get; set; }
+        public int SegmentsValue { get; set; }
+
+        private readonly ISpellConfig SpellConfig;
+
+        public DrawManager(ISpellConfig spellConfig)
         {
-            if (ObjectManager.GetLocalPlayer().IsDead)
+            SpellConfig = spellConfig;
+        }
+           
+        public void RenderManager()
+        {
+            if (GlobalExtension.Player.IsDead)
             {
                 return;
             }
 
-            if (MenuConfig.Drawings["Q"].Enabled && SpellConfig.Q.Ready)
+            if (QEnabled && SpellConfig.Q.Ready)
             {
-                Render.Circle(ObjectManager.GetLocalPlayer().Position, SpellConfig.Q.Range, (uint)MenuConfig.Drawings["Segments"].Value, Color.IndianRed);
+                Render.Circle(GlobalExtension.Player.Position, SpellConfig.Q.Range, (uint)SegmentsValue, Color.IndianRed);
             }
 
-            if (MenuConfig.Drawings["Position"].Enabled && Extension.InsecPosition != Vector3.Zero)
+            if (PositionEnabled && SpellConfig.InsecPosition != Vector3.Zero)
             {
-                Render.Circle(Extension.InsecPosition, 65, (uint)MenuConfig.Drawings["Segments"].Value, Color.White);
+                Render.Circle(SpellConfig.InsecPosition, 65, (uint)SegmentsValue, Color.White);
             }
         }
     }

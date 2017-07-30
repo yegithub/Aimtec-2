@@ -20,6 +20,8 @@ namespace Adept_AIO.Champions.Yasuo.Core
 
         public static OrbwalkerMode FleeMode, BeybladeMode;
 
+        public static Vector3 ExtendedMinion;
+
         public static bool KnockedUp(Obj_AI_Base target)
         {
             if (!MenuConfig.Whitelist[((Obj_AI_Hero) target).ChampionName].Enabled)
@@ -33,14 +35,29 @@ namespace Adept_AIO.Champions.Yasuo.Core
         public static Obj_AI_Minion GetDashableMinion(Obj_AI_Base target)
         {
             return GameObjects.EnemyMinions.Where(x => !x.HasBuff("YasuoDashWrapper") &&
-                                                   x.Distance(ObjectManager.GetLocalPlayer()) <= SpellConfig.E.Range)
-                                                 .FirstOrDefault(x => DashDistance(x, target) > 0 && 
-                                                  x.Distance(target) < ObjectManager.GetLocalPlayer().Distance(target));
+                                                   x.Distance(GlobalExtension.Player) <= SpellConfig.E.Range)
+                                                 .LastOrDefault(x => DashDistance(x, target) > 0 && 
+                                                  x.Distance(target) < GlobalExtension.Player.Distance(target));
         }
 
         public static Obj_AI_Minion GetDashableMinion()
         {
-            return GameObjects.EnemyMinions.LastOrDefault(x => !x.HasBuff("YasuoDashWrapper") && x.Distance(ObjectManager.GetLocalPlayer()) <= SpellConfig.E.Range);
+            return GameObjects.EnemyMinions.LastOrDefault(x => !x.HasBuff("YasuoDashWrapper") && x.Distance(GlobalExtension.Player) <= SpellConfig.E.Range);
+        }
+
+        public static Vector3 WalkBehindMinion(Obj_AI_Minion minion, Obj_AI_Base target)
+        {
+            if (target == null || minion == null)
+            {
+                return Vector3.Zero;
+            }
+
+            var opposite = minion.ServerPosition.Extend(minion.ServerPosition + (minion.ServerPosition - target.ServerPosition).Normalized(), 85);
+            if (opposite.Distance(ObjectManager.GetLocalPlayer()) <= 80 && ObjectManager.GetLocalPlayer().IsFacing(opposite))
+            {
+                return opposite;
+            }
+            return Vector3.Zero;
         }
 
         public static float DashDistance(Obj_AI_Minion minion, Obj_AI_Base target, int overrideValue = 475)
@@ -49,7 +66,7 @@ namespace Adept_AIO.Champions.Yasuo.Core
             {
                 return 0;
             }
-            return ObjectManager.GetLocalPlayer().ServerPosition.Extend(minion.ServerPosition, overrideValue).Distance(target.ServerPosition);
+            return GlobalExtension.Player.ServerPosition.Extend(minion.ServerPosition, overrideValue).Distance(target.ServerPosition);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using Adept_AIO.Champions.Jax.Core;
+using Adept_AIO.SDK.Extensions;
 using Aimtec;
 using Aimtec.SDK.Extensions;
 
@@ -32,7 +33,7 @@ namespace Adept_AIO.Champions.Jax.Update.Miscellaneous
                 return;
             }
 
-            if (Environment.TickCount - SpellConfig.CounterStrikeTime > 2000 || Unit.Distance(ObjectManager.GetLocalPlayer()) < 300)
+            if (Environment.TickCount - SpellConfig.CounterStrikeTime > 2000 || Unit.Distance(GlobalExtension.Player) < 300)
             {
                 SpellConfig.E.Cast(Unit);
             }

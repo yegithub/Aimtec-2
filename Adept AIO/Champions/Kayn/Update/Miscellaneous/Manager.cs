@@ -1,8 +1,5 @@
-﻿using System;
-using Adept_AIO.Champions.Kayn.Core;
-using Adept_AIO.Champions.Kayn.Update.OrbwalkingEvents;
+﻿using Adept_AIO.Champions.Kayn.Update.OrbwalkingEvents;
 using Adept_AIO.SDK.Extensions;
-using Aimtec;
 using Aimtec.SDK.Orbwalking;
 
 namespace Adept_AIO.Champions.Kayn.Update.Miscellaneous
@@ -24,7 +21,7 @@ namespace Adept_AIO.Champions.Kayn.Update.Miscellaneous
 
         public static void OnUpdate()
         {
-            if (ObjectManager.GetLocalPlayer().IsDead)
+            if (GlobalExtension.Player.IsDead)
             {
                 return;
             }

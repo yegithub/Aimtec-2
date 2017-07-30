@@ -34,7 +34,7 @@ namespace Adept_AIO.Champions.Irelia.Update.OrbwalkingEvents
 
         public static void OnUpdate()
         {
-            if (SpellConfig.Q.Ready && MenuConfig.Harass["Q"].Enabled && MenuConfig.Harass["Q"].Value <= ObjectManager.GetLocalPlayer().ManaPercent())
+            if (SpellConfig.Q.Ready && MenuConfig.Harass["Q"].Enabled && MenuConfig.Harass["Q"].Value <= GlobalExtension.Player.ManaPercent())
             {
                 var target = GlobalExtension.TargetSelector.GetTarget(SpellConfig.Q.Range);
 
@@ -45,12 +45,12 @@ namespace Adept_AIO.Champions.Irelia.Update.OrbwalkingEvents
 
                 if (MenuConfig.Harass["Safe"].Enabled)
                 {
-                    if (target.Distance(ObjectManager.GetLocalPlayer()) < ObjectManager.GetLocalPlayer().AttackRange)
+                    if (target.Distance(GlobalExtension.Player) < GlobalExtension.Player.AttackRange)
                     {
                         return;
                     }
 
-                    var minion = GameObjects.EnemyMinions.Where(x => x.Health < ObjectManager.GetLocalPlayer().GetSpellDamage(x, SpellSlot.Q)).OrderBy(x => x.Distance(target)).LastOrDefault();
+                    var minion = GameObjects.EnemyMinions.Where(x => x.Health < GlobalExtension.Player.GetSpellDamage(x, SpellSlot.Q)).OrderBy(x => x.Distance(target)).LastOrDefault();
                     if (minion == null)
                     {
                         return;
@@ -64,7 +64,7 @@ namespace Adept_AIO.Champions.Irelia.Update.OrbwalkingEvents
                 }
             }
 
-            if (SpellConfig.E.Ready && MenuConfig.Harass["E"].Enabled && MenuConfig.Harass["E"].Value <= ObjectManager.GetLocalPlayer().ManaPercent())
+            if (SpellConfig.E.Ready && MenuConfig.Harass["E"].Enabled && MenuConfig.Harass["E"].Value <= GlobalExtension.Player.ManaPercent())
             {
                 var target = GlobalExtension.TargetSelector.GetTarget(SpellConfig.E.Range);
 

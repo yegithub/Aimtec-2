@@ -38,7 +38,8 @@
     <Reference Include="Aimtec">
       <HintPath>C:\Users\Nechrito\AppData\Local\AimtecLoader\Data\System\Aimtec.dll</HintPath>
     </Reference>
-    <Reference Include="Aimtec.SDK">
+    <Reference Include="Aimtec.SDK, Version=1.0.0.16, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Users\Nechrito\AppData\Local\AimtecLoader\Data\System\Aimtec.SDK.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -88,22 +89,33 @@
     <Compile Include="Champions\Kayn\Update\OrbwalkingEvents\Harass.cs" />
     <Compile Include="Champions\Kayn\Update\OrbwalkingEvents\JungleClear.cs" />
     <Compile Include="Champions\Kayn\Update\OrbwalkingEvents\LaneClear.cs" />
-    <Compile Include="Champions\LeeSin\Core\Dmg.cs" />
-    <Compile Include="Champions\LeeSin\Core\Extension.cs" />
-    <Compile Include="Champions\LeeSin\Core\MenuConfig.cs" />
-    <Compile Include="Champions\LeeSin\Core\SpellConfig.cs" />
-    <Compile Include="Champions\LeeSin\Core\WardManager.cs" />
+    <Compile Include="Champions\LeeSin\Core\Damage\Dmg.cs" />
+    <Compile Include="Champions\LeeSin\Core\Damage\IDmg.cs" />
+    <Compile Include="Champions\LeeSin\Core\Spells\ISpellConfig.cs" />
+    <Compile Include="Champions\LeeSin\Core\Spells\SpellConfig.cs" />
+    <Compile Include="Champions\LeeSin\Update\Miscellaneous\ISafetyMeasure.cs" />
+    <Compile Include="Champions\LeeSin\Update\Ward Manager\IWardManager.cs" />
+    <Compile Include="Champions\LeeSin\Update\Ward Manager\IWardTracker.cs" />
+    <Compile Include="Champions\LeeSin\Update\Ward Manager\WardManager.cs" />
     <Compile Include="Champions\LeeSin\Drawings\DrawManager.cs" />
     <Compile Include="Champions\LeeSin\LeeSin.cs" />
     <Compile Include="Champions\LeeSin\Update\Miscellaneous\Killsteal.cs" />
     <Compile Include="Champions\LeeSin\Update\Miscellaneous\Manager.cs" />
-    <Compile Include="Champions\LeeSin\Update\Miscellaneous\SafetyMeasure.cs" />
-    <Compile Include="Champions\LeeSin\Update\OrbwalkingEvents\Combo.cs" />
-    <Compile Include="Champions\LeeSin\Update\OrbwalkingEvents\Harass.cs" />
-    <Compile Include="Champions\LeeSin\Update\OrbwalkingEvents\Insec.cs" />
-    <Compile Include="Champions\LeeSin\Update\OrbwalkingEvents\JungleClear.cs" />
-    <Compile Include="Champions\LeeSin\Update\OrbwalkingEvents\LaneClear.cs" />
-    <Compile Include="Champions\LeeSin\Update\OrbwalkingEvents\WardJump.cs" />
+    <Compile Include="Champions\LeeSin\Update\OrbwalkingEvents\Combo\Combo.cs" />
+    <Compile Include="Champions\LeeSin\Update\OrbwalkingEvents\Harass\Harass.cs" />
+    <Compile Include="Champions\LeeSin\Update\OrbwalkingEvents\Combo\ICombo.cs" />
+    <Compile Include="Champions\LeeSin\Update\OrbwalkingEvents\Harass\IHarass.cs" />
+    <Compile Include="Champions\LeeSin\Update\OrbwalkingEvents\Insec\IInsec.cs" />
+    <Compile Include="Champions\LeeSin\Update\OrbwalkingEvents\Insec\Insec.cs" />
+    <Compile Include="Champions\LeeSin\Update\OrbwalkingEvents\JungleClear\IJungleClear.cs" />
+    <Compile Include="Champions\LeeSin\Update\OrbwalkingEvents\JungleClear\JungleClear.cs" />
+    <Compile Include="Champions\LeeSin\Update\OrbwalkingEvents\LaneClear\ILaneClear.cs" />
+    <Compile Include="Champions\LeeSin\Update\OrbwalkingEvents\LaneClear\LaneClear.cs" />
+    <Compile Include="Champions\LeeSin\Update\OrbwalkingEvents\LastHit\ILasthit.cs" />
+    <Compile Include="Champions\LeeSin\Update\OrbwalkingEvents\LastHit\Lasthit.cs" />
+    <Compile Include="Champions\LeeSin\Update\OrbwalkingEvents\WardJump\IWardJump.cs" />
+    <Compile Include="Champions\LeeSin\Update\OrbwalkingEvents\WardJump\WardJump.cs" />
+    <Compile Include="Champions\LeeSin\Update\Ward Manager\WardTracker.cs" />
     <Compile Include="Champions\Rengar\Core\Dmg.cs" />
     <Compile Include="Champions\Rengar\Core\Extensions.cs" />
     <Compile Include="Champions\Rengar\Core\MenuConfig.cs" />
@@ -159,6 +171,5 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

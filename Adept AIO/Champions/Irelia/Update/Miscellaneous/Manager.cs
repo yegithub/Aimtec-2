@@ -39,7 +39,7 @@ namespace Adept_AIO.Champions.Irelia.Update.Miscellaneous
 
         public static void OnUpdate()
         {
-            if (ObjectManager.GetLocalPlayer().IsDead)
+            if (GlobalExtension.Player.IsDead)
             {
                 return;
             }

@@ -14,7 +14,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
         public static void OnKeyPressed()
         {
             if (MenuConfig.Miscellaneous["Walljump"].Enabled &&
-                ObjectManager.GetLocalPlayer().CountEnemyHeroesInRange(1800) == 0)
+                GlobalExtension.Player.CountEnemyHeroesInRange(1800) == 0)
             {
                 if (Extensions.CurrentQCount != 3)
                 {
@@ -22,15 +22,15 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
                 }
 
                 const int dashRange = 350;
-                var end = ObjectManager.GetLocalPlayer().Position.Extend(Game.CursorPos, dashRange);
-                var wall = WallExtension.GeneratePoint(ObjectManager.GetLocalPlayer().Position, end).OrderBy(x => x.Distance(ObjectManager.GetLocalPlayer().Position)).FirstOrDefault();
+                var end = GlobalExtension.Player.Position.Extend(Game.CursorPos, dashRange);
+                var wall = WallExtension.GeneratePoint(GlobalExtension.Player.Position, end).OrderBy(x => x.Distance(GlobalExtension.Player.Position)).FirstOrDefault();
 
                 if (wall == Vector3.Zero)
                 {
                     return;
                 }
 
-                var distance = wall.Distance(ObjectManager.GetLocalPlayer().Position);
+                var distance = wall.Distance(GlobalExtension.Player.Position);
 
                 if (distance <= 5)
                 {
@@ -40,16 +40,16 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
                 if (SpellConfig.E.Ready && distance <= SpellConfig.E.Range + 200 && distance > 100)
                 {
                     SpellConfig.E.Cast(wall);
-                    DelayAction.Queue(190, () => ObjectManager.GetLocalPlayer().SpellBook.CastSpell(SpellSlot.Q, wall));
+                    DelayAction.Queue(190, () => GlobalExtension.Player.SpellBook.CastSpell(SpellSlot.Q, wall));
                 }
 
                 if (distance > 125)
                 {
-                    ObjectManager.GetLocalPlayer().IssueOrder(OrderType.MoveTo, wall);
+                    GlobalExtension.Player.IssueOrder(OrderType.MoveTo, wall);
                     return;
                 }
 
-                ObjectManager.GetLocalPlayer().SpellBook.CastSpell(SpellSlot.Q, wall);
+                GlobalExtension.Player.SpellBook.CastSpell(SpellSlot.Q, wall);
             }
             else
             {

@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using Adept_AIO.SDK.Extensions;
 using Adept_AIO.SDK.Usables;
-using Aimtec;
 using Aimtec.SDK.Events;
 
 namespace Adept_AIO
@@ -25,7 +24,7 @@ namespace Adept_AIO
 
         private static void GameEvents_GameStart()
         {
-            if (Valid.All(x => ObjectManager.GetLocalPlayer().ChampionName != x))
+            if (Valid.All(x => GlobalExtension.Player.ChampionName != x))
             {
                 return;
             }
@@ -34,7 +33,7 @@ namespace Adept_AIO
             GameObjects.Init();
             GlobalExtension.Init();
 
-            switch (ObjectManager.GetLocalPlayer().ChampionName)
+            switch (GlobalExtension.Player.ChampionName)
             {
                 case "Irelia":
                     Irelia.Init();
@@ -46,7 +45,8 @@ namespace Adept_AIO
                     Kayn.Init();
                     break;
                 case "LeeSin":
-                    LeeSin.Init();
+                    var lee = new LeeSin();
+                    lee.Init();
                     break;
                 case "Rengar":
                     Rengar.Init();
