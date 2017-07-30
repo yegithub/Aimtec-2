@@ -27,7 +27,7 @@ namespace Adept_AIO.Champions.LeeSin
             spellConfig.Load();
 
             var wardtracker = new WardTracker(spellConfig);
-            var wardmanager = new WardManager(wardtracker, spellConfig);
+            var wardmanager = new WardManager(wardtracker);
             var wardjump = new WardJump(wardtracker, wardmanager, spellConfig);
 
             var combo = new Combo(wardmanager, spellConfig);
@@ -57,18 +57,22 @@ namespace Adept_AIO.Champions.LeeSin
 
             var insecMenu = new Menu("Insec", "Insec");
             var insecObject = new MenuBool("Object", "Use Q On Minions").SetToolTip("Uses Q to gapclose to every minion");
+            var insecQLast = new MenuBool("Last", "Use Q After Insec").SetToolTip("Only possible if no minions near target");
             var insecPosition = new MenuList("Position", "Insec Position", new[] {"Ally Turret", "Ally Hero"}, 0);
             var insecKick = new MenuList("Kick", "Kick Type: ", new[] {"Flash R", "R Flash"}, 1);
 
-            insecObject.OnValueChanged += (sender, args) => insec.ObjectEnabled = args.GetNewValue<MenuBool>().Value;
+            insecObject.OnValueChanged += (sender, args) => insec.ObjectEnabled = args.GetNewValue<MenuBool>().Enabled;
+            insecQLast.OnValueChanged += (sender, args) => insec.QLast = args.GetNewValue<MenuBool>().Enabled;
             insecPosition.OnValueChanged += (sender, args) => insec.InsecPositionValue = args.GetNewValue<MenuList>().Value;
             insecKick.OnValueChanged += (sender, args) => insec.InsecKickValue = args.GetNewValue<MenuList>().Value;
 
             insec.ObjectEnabled = insecObject.Enabled;
+            insec.QLast = insecQLast.Enabled;
             insec.InsecPositionValue = insecPosition.Value;
             insec.InsecKickValue = insecKick.Value;
 
             insecMenu.Add(insecObject);
+            insecMenu.Add(insecQLast);
             insecMenu.Add(insecPosition);
             insecMenu.Add(insecKick);
             mainmenu.Add(insecMenu);

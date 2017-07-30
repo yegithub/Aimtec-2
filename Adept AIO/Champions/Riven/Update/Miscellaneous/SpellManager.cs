@@ -55,7 +55,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
         public static void OnUpdate()
         {
             /*
-            if (Environment.TickCount - Extensions.LastR2Time >= 14000)
+            if (Environment.TickCount - Extensions.LastR2Time >= 14000 && Extensions.LastR2Time > 0)
             {
                 var target = GlobalExtension.TargetSelector.GetTarget(SpellConfig.R2.Range);
                 if (target != null)
@@ -64,7 +64,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                 }
             }
             */
-            
+
             if (Unit == null)
             {
                 return;

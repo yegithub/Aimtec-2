@@ -15,6 +15,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Insec
     {
         public bool KickFlashEnabled { get; set; }
         public bool Enabled { get; set; }
+        public bool QLast { get; set; }
         public bool ObjectEnabled { get; set; }
         public int InsecPositionValue { get; set; }
         public int InsecKickValue { get; set; }
@@ -34,11 +35,12 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Insec
         private float LastQTime;
         private Obj_AI_Hero target => GlobalExtension.TargetSelector.GetSelectedTarget();
 
-        private Vector3 InsecPosition => target.ServerPosition + (target.ServerPosition - GetTargetEndPosition()).Normalized() * DistanceBehindTarget();
+        private Vector3 InsecPosition => target.ServerPosition + (target.ServerPosition - GetTargetEndPosition()).Normalized() *
+                                         DistanceBehindTarget();
 
         private float DistanceBehindTarget()
         {
-            return Math.Min((GlobalExtension.Player.BoundingRadius + target.BoundingRadius + 50) * 1.35f, SpellConfig.R.Range);
+            return Math.Min((GlobalExtension.Player.BoundingRadius + target.BoundingRadius + 50) * 1.275f, SpellConfig.R.Range);
         }
 
         public void Kick()
@@ -100,6 +102,23 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Insec
             SummonerSpells.Flash.Cast(InsecPosition);
         }
 
+        private int GetGapcloseDistance()
+        {
+            var count = 0;
+
+            if (_wardManager.IsWardReady() && SpellConfig.W.Ready)
+            {
+                count += 600;
+            }
+
+            if(SummonerSpells.Flash != null && SummonerSpells.Flash.Ready)
+            {
+                count += 425;
+            }
+
+            return count;
+        }
+
         public void OnKeyPressed()
         {
             if (target == null || !Enabled)
@@ -146,39 +165,43 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Insec
 
             if (SpellConfig.W.Ready && SpellConfig.IsFirst(SpellConfig.W))
             {
-                if (SpellConfig.Q.Ready && !SpellConfig.IsQ2() && target.Distance(ObjectManager.GetLocalPlayer()) <= 600)
-                {
-                    return;
-                }
-
-                if (InsecPosition.Distance(GlobalExtension.Player) < 500)
+                if (InsecPosition.Distance(GlobalExtension.Player) <= 600)
                 {
                     WardFlash = false;
                     _wardManager.WardJump(InsecPosition, false);
                 }
-                else if (SummonerSpells.Flash != null && SummonerSpells.Flash.Ready && InsecPosition.Distance(GlobalExtension.Player) < 500 + 425 && Environment.TickCount - LastQTime > 650)
+                else if (GetGapcloseDistance() <= 500 + 425)
                 {
+                    if (Environment.TickCount - LastQTime > 650)
+                    {
+                        return;
+                    }
+
                     WardFlash = true;
                     _wardManager.WardJump(InsecPosition, true);
                 }
             }
-            else if (!SpellConfig.R.Ready)
-            {
-                return;
-            }
-            else if (InsecKickValue == 0 && SummonerSpells.Flash != null && SummonerSpells.Flash.Ready && InsecPosition.Distance(GlobalExtension.Player) <= 425 && !(Environment.TickCount - _wardTracker.LastWardCreated <= 1500 && !WardFlash))
-            {
-                SummonerSpells.Flash.Cast(InsecPosition);
-            }
-            else if (!target.IsValidTarget(SpellConfig.R.Range) || Environment.TickCount - _wardTracker.LastWardCreated > 1000 || GlobalExtension.Player.Distance(InsecPosition) >= 235)
-            {
-                return;
-            }
-            else if (InsecPosition.Distance(GlobalExtension.Player) > 350 && (SummonerSpells.Flash == null || !SummonerSpells.Flash.Ready))
+
+            if (!SpellConfig.R.Ready)
             {
                 return;
             }
 
+            if (InsecKickValue == 0 &&
+                SummonerSpells.Flash != null &&
+                SummonerSpells.Flash.Ready && 
+                InsecPosition.Distance(GlobalExtension.Player) <= 425 && 
+                !(Environment.TickCount - _wardTracker.LastWardCreated <= 1500 && !WardFlash))
+            {
+                SummonerSpells.Flash.Cast(InsecPosition);
+            }
+            else if (!target.IsValidTarget(SpellConfig.R.Range) ||
+                Environment.TickCount - _wardTracker.LastWardCreated > 1000 || Environment.TickCount - _wardTracker.LastWardCreated < 500 ||
+                GlobalExtension.Player.Distance(InsecPosition) >= 425)
+            {
+                return;
+            }
+          
             SpellConfig.R.CastOnUnit(target);
         }
 

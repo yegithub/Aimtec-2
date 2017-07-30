@@ -3,6 +3,8 @@ using Adept_AIO.Champions.LeeSin.Core.Spells;
 using Adept_AIO.Champions.LeeSin.Update.Ward_Manager;
 using Adept_AIO.SDK.Extensions;
 using Aimtec;
+using Aimtec.SDK.Damage;
+using Aimtec.SDK.Damage.JSON;
 using Aimtec.SDK.Extensions;
 
 namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Combo
@@ -57,6 +59,15 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Combo
 
             var distance = target.Distance(GlobalExtension.Player);
 
+            if (SpellConfig.R.Ready && SpellConfig.Q.Ready && Q1Enabled && distance <= 550 && target.Health <= GlobalExtension.Player.GetSpellDamage(target, SpellSlot.R) + 
+                                                                                                               GlobalExtension.Player.GetSpellDamage(target, SpellSlot.Q) + 
+                                                                                                               GlobalExtension.Player.GetSpellDamage(target, SpellSlot.Q, DamageStage.SecondCast))
+            {
+                SpellConfig.R.CastOnUnit(target);
+                SpellConfig.Q.Cast(target);
+                LastQTime = Environment.TickCount;
+            }
+
             if (SpellConfig.Q.Ready && Q1Enabled)
             {
                 if (distance > 1300)
@@ -71,13 +82,13 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Combo
                         return;
                     }
                  
-                    LastQTime = Environment.TickCount;
                     SpellConfig.Q.Cast();
+                    LastQTime = Environment.TickCount;
                 }
                 else
                 {
-                    LastQTime = Environment.TickCount;
                     SpellConfig.Q.Cast(target);
+                    LastQTime = Environment.TickCount;
                 }
             }
             else if (SpellConfig.W.Ready && SpellConfig.IsFirst(SpellConfig.W) && WEnabled && WardEnabled && distance > (SpellConfig.Q.Ready ? 1000 : 600))

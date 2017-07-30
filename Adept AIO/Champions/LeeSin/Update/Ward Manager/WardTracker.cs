@@ -30,19 +30,26 @@ namespace Adept_AIO.Champions.LeeSin.Update.Ward_Manager
         {
             var ward = sender as Obj_AI_Minion;
 
-            if (ward == null || WardPosition.Distance(ward.Position) > 600 ||
-                Environment.TickCount - LastWardCreated > 1000 ||
+            if (ward == null || WardPosition.Distance(ward.Position) > 800 ||
+                Environment.TickCount - LastWardCreated > 1500 ||
                 !SpellConfig.IsFirst(SpellConfig.W))
             {
                 return;
             }
 
-            Console.WriteLine("CREATED ");
-            LastWardCreated = Environment.TickCount;
-            WardName = ward.Name;
-            WardPosition = ward.Position;
-
-            GlobalExtension.Player.SpellBook.CastSpell(SpellSlot.W, ward.Position);
+            if (ward.Team != GameObjectTeam.Neutral && ward.Name.ToLower().Contains("ward"))
+            {
+                Console.WriteLine("Located Ally Ward.");
+                LastWardCreated = Environment.TickCount;
+                WardName = ward.Name;
+                WardPosition = ward.Position;
+                GlobalExtension.Player.SpellBook.CastSpell(SpellSlot.W, sender.Position);
+            }
+            else
+            {
+                Console.WriteLine(ward.Name.ToLower());
+                Console.WriteLine("Could Not Locate Ally Ward.");
+            }
         }
 
         public float LastWardCreated { get; set; }
