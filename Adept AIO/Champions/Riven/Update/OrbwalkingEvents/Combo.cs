@@ -14,7 +14,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
     {
         private static bool CanCastR1(Obj_AI_Base target)
         {
-            return MenuConfig.Combo["R"].Value != 0 && SpellConfig.R.Ready && !(MenuConfig.Combo["Check"].Enabled && target.HealthPercent() > MenuConfig.Combo["Check"].Value) &&
+            return MenuConfig.Combo["R"].Value != 0 && SpellConfig.R.Ready && !(MenuConfig.Combo["Check"].Enabled && target.HealthPercent() < MenuConfig.Combo["Check"].Value) &&
                    Extensions.UltimateMode == UltimateMode.First &&
                    !(MenuConfig.Combo["R"].Value == 2 && Dmg.Damage(target) <
                      target.Health);
