@@ -10,9 +10,10 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
 {
     public class Harass
     {
-        public static void OnPostAttack(Obj_AI_Base target)
+        public static void OnPostAttack()
         {
-            if (!MenuConfig.Harass[((Obj_AI_Hero)target).ChampionName].Enabled)
+            var target = GlobalExtension.TargetSelector.GetTarget(1000);
+            if (target == null || !MenuConfig.Harass[target.ChampionName].Enabled)
             {
                 return;
             }
@@ -20,10 +21,6 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
             switch (Extensions.Current)
             {
                 case HarassPattern.SemiCombo:
-                    if (SpellConfig.W.Ready && SpellManager.InsideKiBurst(target))
-                    {
-                        SpellManager.CastW(target);
-                    }
                     if (SpellConfig.Q.Ready && Extensions.CurrentQCount >= 2)
                     {
                         SpellManager.CastQ(target);
@@ -85,6 +82,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
                     if (!SpellConfig.Q.Ready && SpellConfig.E.Ready && Extensions.CurrentQCount == 1 && !GlobalExtension.Orbwalker.CanAttack())
                     {
                         SpellConfig.E.Cast(antiPosition);
+                        SpellManager.CastW(target);
                     }
                     #endregion
                     break;

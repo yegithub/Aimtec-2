@@ -14,18 +14,18 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
     {
         public static float lastReset;
         public static bool IAmSoTired;
-
+      
         public static void Reset()
         {
             if (GlobalExtension.Orbwalker.Mode == OrbwalkingMode.None)
             {
+                GlobalExtension.Orbwalker.AttackingEnabled = true;
                 return;
             }
 
             GlobalExtension.Orbwalker.ResetAutoAttackTimer();
             GlobalExtension.Orbwalker.AttackingEnabled = false;
-            
-            GlobalExtension.Player.IssueOrder(OrderType.MoveTo, Game.CursorPos);
+            GlobalExtension.Orbwalker.Move(Game.CursorPos);
 
             lastReset = Environment.TickCount;
             IAmSoTired = true;
@@ -33,13 +33,13 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 
         public static int GetDelay()
         {
-            var temp = Game.Ping / 2 + (Extensions.CurrentQCount == 1 ? 320 : 300);
+            var temp = Game.Ping / 2 + 25 + (Extensions.CurrentQCount == 1 ? 320 : 300);
             var delay = (int)(temp - GlobalExtension.Player.AttackSpeedMod * 17 - GlobalExtension.Player.GetSpell(SpellSlot.Q).Level);
             var target = GameObjects.Enemy.FirstOrDefault(x => x.Distance(GlobalExtension.Player) <= GlobalExtension.Player.AttackRange);
 
             if (target != null && target.IsMoving)
             {
-                delay += 25; 
+                delay += 35; 
             }
 
             return delay;

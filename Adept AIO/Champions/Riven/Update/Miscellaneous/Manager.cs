@@ -16,15 +16,14 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
             {
                 return;
             }
-
+        
             if (Animation.IAmSoTired)
             {
                 if (Environment.TickCount - Animation.lastReset< Animation.GetDelay())
                 {
                     return;
                 }
-
-                Console.WriteLine("Attacking Enabled");
+               
                 GlobalExtension.Orbwalker.AttackingEnabled = true;
                 Animation.IAmSoTired = false;
             }
@@ -83,7 +82,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                         Combo.OnPostAttack(target);
                         break;
                     case OrbwalkingMode.Mixed:
-                        Harass.OnPostAttack(target);
+                        Harass.OnPostAttack();
                         break;
                     case OrbwalkingMode.Laneclear:
                         switch (args.Target.Type)

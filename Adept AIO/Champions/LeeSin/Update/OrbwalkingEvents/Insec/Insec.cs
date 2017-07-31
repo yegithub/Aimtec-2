@@ -207,11 +207,13 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Insec
 
         private Vector3 GetTargetEndPosition()
         {
+            var ally = GameObjects.AllyHeroes.FirstOrDefault(x => x.Distance(GlobalExtension.Player) <= 2000);
+            var turret = GameObjects.AllyTurrets.Where(x => x.IsValid).OrderBy(x => x.Distance(GlobalExtension.Player)).FirstOrDefault();
+
             switch (InsecPositionValue)
             {
                 case 0:
-                    var ally = GameObjects.AllyHeroes.FirstOrDefault();
-                    var turret = GameObjects.AllyTurrets.Where(x => x.IsValid).OrderBy(x => x.Distance(GlobalExtension.Player)).FirstOrDefault();
+                  
                     if (turret != null)
                     {
                         return turret.ServerPosition;
@@ -222,10 +224,12 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Insec
                     }
                     break;
                 case 1:
-                    var ally2 = GameObjects.AllyHeroes.FirstOrDefault();
-                    if (ally2 != null)
+                    if (ally != null)
                     {
-                        return ally2.Position;
+                        return ally.Position;
+                    }else if (turret != null)
+                    {
+                        return turret.Position;
                     }
                     break;
             }

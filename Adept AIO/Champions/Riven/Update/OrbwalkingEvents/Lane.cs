@@ -15,7 +15,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
             var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(GlobalExtension.Player) < Extensions.EngageRange() &&
                                                                       x.Health > GlobalExtension.Player.GetAutoAttackDamage(x));
 
-            if (minion == null || !MenuConfig.Lane["Check"].Enabled && GlobalExtension.Player.CountEnemyHeroesInRange(2000) >= 1)
+            if (minion == null || MenuConfig.Lane["Check"].Enabled && GlobalExtension.Player.CountEnemyHeroesInRange(2000) >= 1)
             {
                 return;
             }

@@ -35,7 +35,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.JungleClear
             if (mob == null || mob.Health < GlobalExtension.Player.GetAutoAttackDamage((Obj_AI_Base)mob))
             {
                 return;
-            }
+            }   
            
             if (SpellConfig.Q.Ready && SpellConfig.IsQ2() && SpellConfig.QAboutToEnd)
             {
@@ -102,7 +102,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.JungleClear
                 GlobalExtension.Player.SpellBook.CastSpell(SpellSlot.Q);
             }
 
-            if (!SpellConfig.IsQ2() && mob.Distance(GlobalExtension.Player) >= GlobalExtension.Player.AttackRange + mob.BoundingRadius)
+            if (!SpellConfig.IsQ2())
             {
                 GlobalExtension.Player.SpellBook.CastSpell(SpellSlot.Q, mob.ServerPosition);
             }

@@ -24,8 +24,16 @@ namespace Adept_AIO.Champions.Riven.Drawings
 
             if (MenuConfig.Drawings["Engage"].Enabled)
             {
-                Render.Circle(GlobalExtension.Player.Position, Extensions.EngageRange(),
-                    (uint) MenuConfig.Drawings["Segments"].Value, Extensions.AllIn ? Color.Yellow : Color.White);
+                if (Extensions.AllIn)
+                {
+                    Render.Circle(GlobalExtension.Player.Position, Extensions.FlashRange(),
+                        (uint)MenuConfig.Drawings["Segments"].Value, Color.Yellow);
+                }
+                else
+                {
+                    Render.Circle(GlobalExtension.Player.Position, Extensions.EngageRange(),
+                        (uint)MenuConfig.Drawings["Segments"].Value, Color.White);
+                }
             }
 
             if (MenuConfig.Drawings["R2"].Enabled && SpellConfig.R2.Ready && Extensions.UltimateMode == UltimateMode.Second)

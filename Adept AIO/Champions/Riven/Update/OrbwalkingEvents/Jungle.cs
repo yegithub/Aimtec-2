@@ -12,9 +12,8 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
     {
         public static void OnPostAttack()
         {
-            var mob = GameObjects.Jungle.FirstOrDefault(x => x.Distance(GlobalExtension.Player) < Extensions.EngageRange() &&
-                                                             x.MaxHealth > 5 &&
-                                                             x.Health > GlobalExtension.Player.GetAutoAttackDamage(x));
+            var mob = GameObjects.Jungle.FirstOrDefault(x => x.Distance(GlobalExtension.Player) < 500 &&
+                                                             x.MaxHealth > 5);
             if (mob == null)
             {
                 return;
@@ -29,13 +28,9 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
             {
                 SpellManager.CastQ(mob);
             }
-            else
-            {
-                if (!MenuConfig.Jungle["W"].Enabled || !SpellConfig.W.Ready || Extensions.CurrentQCount > 1)
-                {
-                    return;
-                }
 
+            if (MenuConfig.Jungle["W"].Enabled && SpellConfig.W.Ready && Extensions.CurrentQCount <= 1 && !SpellConfig.Q.Ready)
+            {
                 SpellManager.CastW(mob);
             }
 

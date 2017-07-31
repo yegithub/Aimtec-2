@@ -14,12 +14,19 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
         {
             var target = GameObjects.EnemyHeroes.FirstOrDefault(x => x.HealthPercent() <= 40 && x.Distance(GlobalExtension.Player) <= SpellConfig.R2.Range);
 
-            if (target == null || !target.IsValidTarget())
+            if (target == null)
             {
                 return;
             }
 
-            if (SpellConfig.W.Ready
+            if (SpellConfig.R2.Ready
+                && Extensions.UltimateMode == UltimateMode.Second
+                && MenuConfig.Killsteal["R2"].Enabled
+                && target.Health <= GlobalExtension.Player.GetSpellDamage(target, SpellSlot.R))
+            {
+                SpellConfig.R2.Cast(target);
+            }
+            else if (SpellConfig.W.Ready
                 && MenuConfig.Killsteal["W"].Enabled
                 && target.Health <= GlobalExtension.Player.GetSpellDamage(target, SpellSlot.W)
                 && target.Distance(GlobalExtension.Player) <= SpellConfig.W.Range)
@@ -32,14 +39,6 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                 && target.Distance(GlobalExtension.Player) <= SpellConfig.Q.Range)
             {
                 SpellManager.CastQ(target);
-            }
-            else if (SpellConfig.R2.Ready
-                     && Extensions.UltimateMode == UltimateMode.Second
-                     && MenuConfig.Killsteal["R2"].Enabled
-                     && target.Health <= GlobalExtension.Player.GetSpellDamage(target, SpellSlot.R)
-                     && target.Distance(GlobalExtension.Player) <= SpellConfig.R2.Range)
-            {
-                SpellManager.CastR2(target);
             }
             else if (MenuConfig.Killsteal["Items"].Enabled && GlobalExtension.Player.HealthPercent() <= 5)
             {

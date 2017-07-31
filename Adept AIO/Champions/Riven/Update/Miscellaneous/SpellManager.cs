@@ -22,7 +22,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
             {
                 return;
             }
-
+        
             if (args.SpellData.DisplayName.Contains("BasicAttack"))
             {
                 LastAATick = Environment.TickCount;
@@ -41,6 +41,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                 case "RivenMartyr":
                     CanUseW = false;
                     Extensions.LastWTime = Environment.TickCount;
+                    GlobalExtension.Orbwalker.ResetAutoAttackTimer();
                     break;
                 case "RivenFengShuiEngine":
                     Extensions.UltimateMode = UltimateMode.Second;
@@ -59,7 +60,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                 return;
             }
 
-            if (CanUseQ && Extensions.DidJustAuto && Environment.TickCount - LastAATick > GlobalExtension.Orbwalker.WindUpTime + Game.Ping / 2f)
+            if (CanUseQ && Extensions.DidJustAuto)
             {
                 GlobalExtension.Player.SpellBook.CastSpell(SpellSlot.Q, Unit);
                 Extensions.DidJustAuto = false;
@@ -69,8 +70,9 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
             {
                 return;
             }
-
+           
             SpellConfig.W.Cast();
+            GlobalExtension.Orbwalker.ResetAutoAttackTimer();
             CanUseW = false;
         }
 
@@ -83,7 +85,6 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 
             Unit = target;
             CanUseQ = true;
-            DelayAction.Queue(150, () => CanUseQ = false);
         }
 
         public static void CastW(Obj_AI_Base target)
@@ -95,13 +96,12 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 
             CanUseW = SpellConfig.W.Ready && InsideKiBurst(target);
             Unit = target;  
-            DelayAction.Queue(300, () => CanUseW = false);
         }
 
         public static void CastR2(Obj_AI_Base target)
         {
-            if (target.HasBuff(Extensions.InvulnerableList.Any().ToString()) && target.ValidActiveBuffs()
-                .Where(buff => buff.Name.Contains(Extensions.InvulnerableList.Any().ToString()))
+            if (target.ValidActiveBuffs()
+                .Where(buff => Extensions.InvulnerableList.Contains(buff.Name))
                 .Any(buff => buff.Remaining > Time(target)))
             {
                 return;

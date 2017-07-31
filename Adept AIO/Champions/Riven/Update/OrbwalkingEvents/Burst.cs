@@ -56,13 +56,13 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
 
             if (SpellConfig.R.Ready &&
                 Extensions.UltimateMode == UltimateMode.First &&
-                SpellConfig.E.Ready && distance < Extensions.FlashRange(target))
+                SpellConfig.E.Ready && distance < Extensions.FlashRange())
             {
                 SpellConfig.E.Cast(target.ServerPosition);
                 SpellConfig.R.Cast();
             }
 
-            if (Extensions.AllIn && distance < Extensions.FlashRange(target) && SpellConfig.W.Ready && SpellConfig.R.Ready)
+            if (Extensions.AllIn && distance < Extensions.FlashRange() && SpellConfig.W.Ready && SpellConfig.R.Ready)
             {
                 GlobalExtension.Player.SpellBook.CastSpell(SpellSlot.W);
                 SummonerSpells.Flash?.Cast(target.ServerPosition.Extend(GlobalExtension.Player.ServerPosition, target.BoundingRadius));

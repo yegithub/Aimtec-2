@@ -5,11 +5,11 @@ namespace Adept_AIO.Champions.Riven.Core
 {
     internal class Extensions
     {
-        public static int FlashRange(Obj_AI_Base target)
+        public static float FlashRange()
         {
             if (AllIn)
             {
-                return (int) (425 + target.BoundingRadius + SpellConfig.W.Range + 65);
+                return (425 + SpellConfig.W.Range + 120);
             }
             return 0;
         }
