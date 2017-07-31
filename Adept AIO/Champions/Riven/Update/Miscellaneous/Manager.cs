@@ -17,7 +17,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                 return;
             }
 
-            if (Environment.TickCount- Animation.lastReset >= Game.Ping + 25 && Animation.IAmSoTired)
+            if ((Environment.TickCount- Animation.lastReset >= Game.Ping + 25 && Animation.IAmSoTired))
             {
                 Console.WriteLine("Attacking Enabled");
                 GlobalExtension.Orbwalker.AttackingEnabled = true;

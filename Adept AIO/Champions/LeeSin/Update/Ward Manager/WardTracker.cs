@@ -32,11 +32,11 @@ namespace Adept_AIO.Champions.LeeSin.Update.Ward_Manager
 
             if (ward == null || WardPosition.Distance(ward.Position) > 800 ||
                 Environment.TickCount - LastWardCreated > 1500 ||
-                !SpellConfig.IsFirst(SpellConfig.W))
+                !SpellConfig.IsFirst(SpellConfig.W) || !IsAtWall)
             {
                 return;
             }
-
+     
             if (ward.Team != GameObjectTeam.Neutral && ward.Name.ToLower().Contains("ward"))
             {
                 Console.WriteLine("Located Ally Ward.");
@@ -51,6 +51,8 @@ namespace Adept_AIO.Champions.LeeSin.Update.Ward_Manager
                 Console.WriteLine("Could Not Locate Ally Ward.");
             }
         }
+
+        public bool IsAtWall { get; set; }
 
         public float LastWardCreated { get; set; }
 

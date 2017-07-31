@@ -46,6 +46,16 @@ namespace Adept_AIO.Champions.LeeSin.Update.Ward_Manager
             LastTimeCasted = Environment.TickCount;
             _wardTracker.LastWardCreated = Environment.TickCount;
             _wardTracker.WardPosition = position;
+
+            if (!NavMesh.WorldToCell(position).Flags.HasFlag(NavCellFlags.Building | NavCellFlags.Wall))
+            {
+                _wardTracker.IsAtWall = false;
+                GlobalExtension.Player.SpellBook.CastSpell(SpellSlot.W, position);
+            }
+            else
+            {
+                _wardTracker.IsAtWall = true;
+            }
         }
     }
 }
