@@ -68,6 +68,7 @@ namespace Adept_AIO.Champions.Riven.Core
 
             Harass = new Menu("Harass", "Harass")
             {
+                new MenuList("Mode", "Mode: ", new []{"Automatic", "Semi Combo", "Q3 To Safety", "Q3 To Target"}, 0),
                 new MenuList("Dodge", "Dodge: ", new []{"Turret", "Cursor", "Away From Target"}, 0),
             };
             foreach (var hero in GameObjects.EnemyHeroes)

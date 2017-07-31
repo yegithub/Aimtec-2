@@ -63,7 +63,10 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
                 return;
             }
 
-            GlobalExtension.Orbwalker.Attack(target);
+            if (SpellConfig.Q.Ready || SpellConfig.W.Ready)
+            {
+                GlobalExtension.Orbwalker.Attack(target);
+            }
 
             if (SpellConfig.E.Ready)
             {

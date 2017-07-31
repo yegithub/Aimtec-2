@@ -142,18 +142,28 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
         // Prob going to need a rework
         private static HarassPattern Generate(Obj_AI_Hero target)
         {
-            if (target.IsUnderEnemyTurret() || Dangerous.Contains(target.ChampionName))
+            switch (MenuConfig.Harass["Mode"].Value)
             {
-                return HarassPattern.AvoidTarget;
-            }
-         
-            if (Melee.Contains(target.ChampionName))
-            {
-                return HarassPattern.BackToTarget;
-            }
+                case 0:
+                    if (target.IsUnderEnemyTurret() || Dangerous.Contains(target.ChampionName))
+                    {
+                        return HarassPattern.AvoidTarget;
+                    }
 
-            return SemiCombo.Contains(target.ChampionName) ? 
-                   HarassPattern.SemiCombo : HarassPattern.AvoidTarget;
+                    if (Melee.Contains(target.ChampionName))
+                    {
+                        return HarassPattern.BackToTarget;
+                    }
+                    return SemiCombo.Contains(target.ChampionName) ? HarassPattern.SemiCombo : HarassPattern.AvoidTarget;
+
+                case 1: 
+                    return HarassPattern.SemiCombo;
+                case 2:
+                    return HarassPattern.AvoidTarget;
+                case 3:
+                    return HarassPattern.BackToTarget;
+            }
+           return HarassPattern.SemiCombo;
         }
 
         // Goes for CC heavy & (or) ranged enemies
