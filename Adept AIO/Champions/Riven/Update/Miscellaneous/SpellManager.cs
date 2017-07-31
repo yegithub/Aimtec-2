@@ -70,7 +70,8 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
             {
                 return;
             }
-           
+
+            Items.CastTiamat();
             SpellConfig.W.Cast();
             GlobalExtension.Orbwalker.ResetAutoAttackTimer();
             CanUseW = false;

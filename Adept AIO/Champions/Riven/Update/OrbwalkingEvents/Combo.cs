@@ -33,13 +33,12 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
                 SpellConfig.R.Cast();
             }
 
-            if (SpellManager.InsideKiBurst(target) && SpellConfig.W.Ready && !CanCastR1(target))
-            {
-                SpellManager.CastW(target);
-            }
-
             if (SpellConfig.Q.Ready)
             {
+                if (SpellManager.InsideKiBurst(target) && SpellConfig.W.Ready && !CanCastR1(target))
+                {
+                    SpellConfig.W.Cast();
+                }
                 SpellManager.CastQ(target);
             }
         }
@@ -51,25 +50,32 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
             {
                 SpellManager.CastR2(target);
             }
-            else
-            {
-                ExecuteCombo();
-                Flash();
-            }
+
+            ExecuteCombo();
+            Flash();
         }
 
-        private static float test;
         private static void ExecuteCombo()
         {
-            var target = GlobalExtension.TargetSelector.GetTarget(Extensions.EngageRange());
+            var target = GlobalExtension.TargetSelector.GetTarget(Extensions.EngageRange() + 50);
             if (target == null)
             {
                 return;
             }
 
+            GlobalExtension.Orbwalker.Attack(target);
+
             if (SpellConfig.E.Ready)
             {
                 GlobalExtension.Player.SpellBook.CastSpell(SpellSlot.E, target.ServerPosition);
+            }
+            else if (SpellManager.InsideKiBurst(target) && SpellConfig.W.Ready && !CanCastR1(target))
+            {
+                if (SpellConfig.Q.Ready && Extensions.CurrentQCount == 1)
+                {
+                    return;
+                }
+                SpellManager.CastW(target);
             }
         }
 

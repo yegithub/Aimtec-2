@@ -12,7 +12,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
     {
         public static void OnUpdate()
         {
-            var target = GameObjects.EnemyHeroes.FirstOrDefault(x => x.HealthPercent() <= 40 && x.Distance(GlobalExtension.Player) <= SpellConfig.R2.Range);
+            var target = GameObjects.EnemyHeroes.FirstOrDefault(x => x.HealthPercent() <= 40 && x.Distance(GlobalExtension.Player) <= SpellConfig.R2.Range && x.IsValid && !x.IsDead);
 
             if (target == null)
             {
