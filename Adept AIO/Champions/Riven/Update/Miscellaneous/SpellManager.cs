@@ -14,6 +14,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
         private static bool CanUseQ;
         private static bool CanUseW;
         private static Obj_AI_Base Unit;
+        private static float LastAATick;
 
         public static void OnProcessSpellCast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
         {
@@ -21,20 +22,31 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
             {
                 return;
             }
-    
+
+            if (args.SpellData.DisplayName.Contains("BasicAttack"))
+            {
+                LastAATick = Environment.TickCount;
+                Extensions.DidJustAuto = true;
+            }
+
             switch (args.SpellData.Name)
             {
                 case "RivenTriCleave":
                     CanUseQ = false;
+
                     Extensions.LastQTime = Environment.TickCount;
+                    if (Extensions.CurrentQCount > 3) { Extensions.CurrentQCount = 1; }
                     Extensions.CurrentQCount++;
                     if (Extensions.CurrentQCount > 3) { Extensions.CurrentQCount = 1; }
-                
-                    var delay = Game.Ping + Extensions.CurrentQCount < 3 ? 320 : 355;
-                    if (Unit != null && Unit.IsMoving)
+
+                    var delay = Game.Ping / 2 + (Extensions.CurrentQCount == 1 ? 290 : 270);
+
+                    if (Unit != null && Unit.IsHero)
                     {
-                        delay += 25;
+                        Console.WriteLine("Is Hero");
+                        delay -= 20;
                     }
+
                     DelayAction.Queue(Animation.GetDelay(delay), Animation.Reset);
                     break;
                 case "RivenMartyr":
@@ -53,41 +65,30 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 
         public static void OnUpdate()
         {
-            
-            //if (Environment.TickCount - Extensions.LastR2Time >= 14000 && Extensions.LastR2Time > 0)
-            //{
-            //    var target = GlobalExtension.TargetSelector.GetTarget(SpellConfig.R2.Range);
-            //    if (target != null)
-            //    {
-            //        SpellConfig.R2.Cast(target);
-            //    }
-            //}
-
             if (Unit == null)
             {
                 return;
             }
 
-            if (CanUseQ)
+            if (CanUseQ && Extensions.DidJustAuto && Environment.TickCount - LastAATick > GlobalExtension.Orbwalker.WindUpTime + Game.Ping / 2f)
             {
-                if (Extensions.DidJustAuto)
+                if (Extensions.CurrentQCount == 3)
                 {
-                    if (Extensions.CurrentQCount == 3)
-                    {
-                        Items.CastTiamat();
-                    }
-
-                    GlobalExtension.Player.SpellBook.CastSpell(SpellSlot.Q, Unit);
-                    Extensions.DidJustAuto = false;
+                    Items.CastTiamat();
                 }
+
+                GlobalExtension.Player.SpellBook.CastSpell(SpellSlot.Q, Unit);
+                Extensions.DidJustAuto = false;
             }
 
-            if (CanUseW)
+            if (!CanUseW)
             {
-                Items.CastTiamat();
-                SpellConfig.W.Cast();
-                CanUseW = false;
+                return;
             }
+
+            Items.CastTiamat();
+            SpellConfig.W.Cast();
+            CanUseW = false;
         }
 
         public static void CastQ(Obj_AI_Base target)
