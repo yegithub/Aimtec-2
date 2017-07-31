@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 using Adept_AIO.Champions.Riven.Core;
 using Adept_AIO.SDK.Extensions;
@@ -30,10 +31,17 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
             IAmSoTired = true;
         }
 
-        public static int GetDelay(int temp)
+        public static int GetDelay()
         {
+            var temp = Game.Ping / 2 + (Extensions.CurrentQCount == 1 ? 320 : 300);
             var delay = (int)(temp - GlobalExtension.Player.AttackSpeedMod * 17 - GlobalExtension.Player.GetSpell(SpellSlot.Q).Level);
-            Console.WriteLine(delay + " " + Extensions.CurrentQCount);
+            var target = GameObjects.Enemy.FirstOrDefault(x => x.Distance(GlobalExtension.Player) <= GlobalExtension.Player.AttackRange);
+
+            if (target != null && target.IsMoving)
+            {
+                delay += 25; 
+            }
+
             return delay;
         }
     }

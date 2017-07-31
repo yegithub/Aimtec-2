@@ -32,22 +32,11 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
             switch (args.SpellData.Name)
             {
                 case "RivenTriCleave":
-                    CanUseQ = false;
-
-                    Extensions.LastQTime = Environment.TickCount;
-                    if (Extensions.CurrentQCount > 3) { Extensions.CurrentQCount = 1; }
                     Extensions.CurrentQCount++;
                     if (Extensions.CurrentQCount > 3) { Extensions.CurrentQCount = 1; }
-
-                    var delay = Game.Ping / 2 + (Extensions.CurrentQCount == 1 ? 290 : 270);
-
-                    if (Unit != null && Unit.IsHero)
-                    {
-                        Console.WriteLine("Is Hero");
-                        delay -= 20;
-                    }
-
-                    DelayAction.Queue(Animation.GetDelay(delay), Animation.Reset);
+                    CanUseQ = false;
+                    Extensions.LastQTime = Environment.TickCount;
+                    Animation.Reset();
                     break;
                 case "RivenMartyr":
                     CanUseW = false;
@@ -72,11 +61,6 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 
             if (CanUseQ && Extensions.DidJustAuto && Environment.TickCount - LastAATick > GlobalExtension.Orbwalker.WindUpTime + Game.Ping / 2f)
             {
-                if (Extensions.CurrentQCount == 3)
-                {
-                    Items.CastTiamat();
-                }
-
                 GlobalExtension.Player.SpellBook.CastSpell(SpellSlot.Q, Unit);
                 Extensions.DidJustAuto = false;
             }
@@ -86,7 +70,6 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                 return;
             }
 
-            Items.CastTiamat();
             SpellConfig.W.Cast();
             CanUseW = false;
         }
@@ -123,7 +106,12 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
             {
                 return;
             }
-            Items.CastTiamat();
+
+            if (target.Distance(GlobalExtension.Player) <= 350)
+            {
+                Items.CastTiamat();
+            }
+
             SpellConfig.R2.Cast(target);
         }
 
