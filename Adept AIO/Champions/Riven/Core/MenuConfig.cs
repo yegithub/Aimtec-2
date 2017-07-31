@@ -53,6 +53,7 @@ namespace Adept_AIO.Champions.Riven.Core
               //  new MenuBool("Walljump", "WallJump"),
               //  new MenuBool("Exhaust", "Exhaust"),
                 new MenuBool("Flash", "Flash").SetToolTip("Will flash when an target is safely killable."),
+                new MenuSliderBool("Check", "Don't Use R1 If X (% HP) <=", true, 20, 0, 100),
                 new MenuList("R",  "R1 Mode: ",  new []{"Never", "Always", "Killable"}, 2),
                 new MenuList("R2", "R2 Mode: ",  new []{"Never", "Always"}, 1)
             };
