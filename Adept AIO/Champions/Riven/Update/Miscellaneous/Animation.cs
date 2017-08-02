@@ -1,12 +1,9 @@
-﻿using System;
-using System.Linq;
-using System.Threading;
+﻿using System.Linq;
 using Adept_AIO.Champions.Riven.Core;
 using Adept_AIO.SDK.Extensions;
 using Aimtec;
 using Aimtec.SDK.Extensions;
 using Aimtec.SDK.Orbwalking;
-using Aimtec.SDK.Util;
 
 namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 {
@@ -27,7 +24,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
             GlobalExtension.Orbwalker.AttackingEnabled = false;
             GlobalExtension.Orbwalker.Move(Game.CursorPos);
 
-            lastReset = Environment.TickCount;
+            lastReset = Game.TickCount;
             IAmSoTired = true;
         }
 
@@ -39,7 +36,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 
             if (target != null && target.IsMoving)
             {
-                delay += 35; 
+                delay += 50; 
             }
 
             return delay;

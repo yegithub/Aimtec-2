@@ -7,7 +7,6 @@ namespace Adept_AIO.Champions.Jax.Core
     {
         public static Spell Q, W, E, R;
 
-        public static float CounterStrikeTime = 0;
         public static bool SecondE = false;
 
         /// <summary>

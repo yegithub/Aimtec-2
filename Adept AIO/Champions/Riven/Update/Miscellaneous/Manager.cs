@@ -19,7 +19,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
         
             if (Animation.IAmSoTired)
             {
-                if (Environment.TickCount - Animation.lastReset< Animation.GetDelay())
+                if (Game.TickCount - Animation.lastReset< Animation.GetDelay())
                 {
                     return;
                 }
@@ -44,13 +44,13 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                     Extensions.AllIn = false;
                     break;
             }
-
+       
             if (SpellConfig.Q.Ready &&
                 Extensions.CurrentQCount >= 2 &&
                 MenuConfig.Miscellaneous["Active"].Enabled &&
                !GlobalExtension.Player.HasBuff("Recall") &&
-                Environment.TickCount - Extensions.LastQTime >= 3580 + Game.Ping / 2 &&
-                Environment.TickCount - Extensions.LastQTime <= 3700 + Game.Ping / 2) // Tries to prevents bugs.
+                Game.TickCount - Extensions.LastQCastAttempt >= 3580 + Game.Ping / 2 &&
+                Game.TickCount - Extensions.LastQCastAttempt <= 3700 + Game.Ping / 2) // Tries to prevents bugs.
             {
                 SpellConfig.Q.Cast(Game.CursorPos);
             }
@@ -63,7 +63,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
         /// <param name="args"></param>
         public static void PostAttack(object sender, PostAttackEventArgs args)
         {
-            if (Environment.TickCount - Extensions.LastQTime < 500)
+            if (Game.TickCount - Extensions.LastQCastAttempt < 500)
             {
                 return;
             }

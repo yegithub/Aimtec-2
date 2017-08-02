@@ -14,16 +14,16 @@ namespace Adept_AIO.Champions.Yasuo.Update.Miscellaneous
                 args == null ||
                 sender == null || 
                 args.Target == null ||
-                 sender.IsMe ||            // Yes. Something prints null. so i check everything. Leave. Me. Alone.
-                 sender.IsAlly || 
-                !args.Sender.IsHero ||
-                args.Target.IsMe && sender.Distance(GlobalExtension.Player) < 150 || 
-                GlobalExtension.Player.HasBuff("YasuoPassive") && args.SpellData.ConsideredAsAutoAttack)
+                sender.IsMe ||            // Yes. Something prints null. so i check everything. Leave. Me. Alone.
+                sender.IsAlly || 
+               !args.Sender.IsHero ||
+                args.SpellData.MissileUnblockable ||
+                args.SpellData.ConsideredAsAutoAttack)
             {
                 return;
             }
 
-            if (args.End.Distance(GlobalExtension.Player.ServerPosition) <= 250)
+            if (args.End.Distance(GlobalExtension.Player.ServerPosition) <= 300)
             {
                 SpellConfig.W.Cast(sender.ServerPosition);
             }

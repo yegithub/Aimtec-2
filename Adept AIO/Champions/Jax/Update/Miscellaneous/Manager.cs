@@ -1,7 +1,7 @@
-﻿using System;
-using Adept_AIO.Champions.Jax.Core;
+﻿using Adept_AIO.Champions.Jax.Core;
 using Adept_AIO.Champions.Jax.Update.OrbwalkingEvents;
 using Adept_AIO.SDK.Extensions;
+using Aimtec;
 using Aimtec.SDK.Orbwalking;
 
 namespace Adept_AIO.Champions.Jax.Update.Miscellaneous
@@ -31,9 +31,9 @@ namespace Adept_AIO.Champions.Jax.Update.Miscellaneous
                 return;
             }
 
-            if (Environment.TickCount - SpellConfig.CounterStrikeTime > 2100)
+            if (Game.TickCount - SpellConfig.E.LastCastAttemptT > 2000 + Game.Ping / 2)
             {
-                SpellConfig.CounterStrikeTime = 0;
+                SpellConfig.E.LastCastAttemptT = 0;
             }
           
             switch (GlobalExtension.Orbwalker.Mode)

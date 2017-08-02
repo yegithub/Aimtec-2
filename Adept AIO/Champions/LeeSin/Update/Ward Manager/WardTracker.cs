@@ -17,7 +17,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.Ward_Manager
             SpellConfig = spellConfig;
         }
 
-        public bool IsWardReady => WardNames.Any(Items.CanUseItem) && Environment.TickCount - LastWardCreated > 1500 || LastWardCreated <= 0;
+        public bool IsWardReady => WardNames.Any(Items.CanUseItem) && Game.TickCount - LastWardCreated > 800 || LastWardCreated <= 0;
 
         public string[] WardNames { get; } =
         {
@@ -31,7 +31,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.Ward_Manager
             var ward = sender as Obj_AI_Minion;
 
             if (ward == null || WardPosition.Distance(ward.Position) > 800 ||
-                Environment.TickCount - LastWardCreated > 1500 ||
+                Game.TickCount - LastWardCreated > 800 ||
                 !SpellConfig.IsFirst(SpellConfig.W) || !IsAtWall)
             {
                 return;
@@ -40,7 +40,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.Ward_Manager
             if (ward.Team != GameObjectTeam.Neutral && ward.Name.ToLower().Contains("ward"))
             {
                 Console.WriteLine("Located Ally Ward.");
-                LastWardCreated = Environment.TickCount;
+                LastWardCreated = Game.TickCount;
                 WardName = ward.Name;
                 WardPosition = ward.Position;
                 GlobalExtension.Player.SpellBook.CastSpell(SpellSlot.W, sender.Position);
@@ -48,7 +48,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.Ward_Manager
             else
             {
                 Console.WriteLine(ward.Name.ToLower());
-                Console.WriteLine("Could Not Locate Ally Ward.");
+                Console.WriteLine("Could Not Locate Ally Ward. Object: " + ward.Name);
             }
         }
 

@@ -1,5 +1,4 @@
-﻿using System;
-using Adept_AIO.Champions.Jax.Core;
+﻿using Adept_AIO.Champions.Jax.Core;
 using Aimtec;
 using Aimtec.SDK.Util;
 
@@ -17,7 +16,6 @@ namespace Adept_AIO.Champions.Jax.Update.Miscellaneous
             switch (args.Animation)
             {
                 case "Spell3":
-                    SpellConfig.CounterStrikeTime = Environment.TickCount;
                     SpellConfig.SecondE = false;
                     break;
                 case "Spell3b":

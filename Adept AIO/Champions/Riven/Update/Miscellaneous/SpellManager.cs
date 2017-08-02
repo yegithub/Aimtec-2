@@ -1,11 +1,9 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Adept_AIO.Champions.Riven.Core;
 using Adept_AIO.SDK.Extensions;
 using Adept_AIO.SDK.Usables;
 using Aimtec;
 using Aimtec.SDK.Extensions;
-using Aimtec.SDK.Util;
 
 namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 {
@@ -14,7 +12,6 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
         private static bool CanUseQ;
         private static bool CanUseW;
         private static Obj_AI_Base Unit;
-        private static float LastAATick;
 
         public static void OnProcessSpellCast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
         {
@@ -25,27 +22,24 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
         
             if (args.SpellData.DisplayName.Contains("BasicAttack"))
             {
-                LastAATick = Environment.TickCount;
                 Extensions.DidJustAuto = true;
             }
 
             switch (args.SpellData.Name)
             {
                 case "RivenTriCleave":
+                    Extensions.LastQCastAttempt = Game.TickCount;
                     Extensions.CurrentQCount++;
                     if (Extensions.CurrentQCount > 3) { Extensions.CurrentQCount = 1; }
                     CanUseQ = false;
-                    Extensions.LastQTime = Environment.TickCount;
                     Animation.Reset();
                     break;
                 case "RivenMartyr":
                     CanUseW = false;
-                    Extensions.LastWTime = Environment.TickCount;
                     GlobalExtension.Orbwalker.ResetAutoAttackTimer();
                     break;
                 case "RivenFengShuiEngine":
                     Extensions.UltimateMode = UltimateMode.Second;
-                    Extensions.LastR2Time = Environment.TickCount;
                     break;
                 case "RivenIzunaBlade":
                     Extensions.UltimateMode = UltimateMode.First;

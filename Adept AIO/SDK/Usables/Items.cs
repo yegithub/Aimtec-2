@@ -24,7 +24,7 @@ namespace Adept_AIO.SDK.Usables
             if (slot != null)
             {
                 GlobalExtension.Player.SpellBook.CastSpell((SpellSlot) slot);
-                TiamatCastTime = Environment.TickCount;
+                TiamatCastTime = Game.TickCount;
             }
         }
 

@@ -91,9 +91,13 @@
     <Compile Include="Champions\Kayn\Update\OrbwalkingEvents\LaneClear.cs" />
     <Compile Include="Champions\LeeSin\Core\Damage\Dmg.cs" />
     <Compile Include="Champions\LeeSin\Core\Damage\IDmg.cs" />
+    <Compile Include="Champions\LeeSin\Core\Insec Manager\IInsec Manager.cs" />
+    <Compile Include="Champions\LeeSin\Core\Insec Manager\Insec Manager.cs" />
     <Compile Include="Champions\LeeSin\Core\Spells\ISpellConfig.cs" />
     <Compile Include="Champions\LeeSin\Core\Spells\SpellConfig.cs" />
     <Compile Include="Champions\LeeSin\Update\Miscellaneous\ISafetyMeasure.cs" />
+    <Compile Include="Champions\LeeSin\Update\OrbwalkingEvents\KickFlash\IKickFlash.cs" />
+    <Compile Include="Champions\LeeSin\Update\OrbwalkingEvents\KickFlash\KickFlash.cs" />
     <Compile Include="Champions\LeeSin\Update\Ward Manager\IWardManager.cs" />
     <Compile Include="Champions\LeeSin\Update\Ward Manager\IWardTracker.cs" />
     <Compile Include="Champions\LeeSin\Update\Ward Manager\WardManager.cs" />

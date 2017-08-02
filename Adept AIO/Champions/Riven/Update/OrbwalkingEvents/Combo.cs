@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Adept_AIO.Champions.Riven.Core;
 using Adept_AIO.Champions.Riven.Update.Miscellaneous;
 using Adept_AIO.SDK.Extensions;
@@ -63,7 +62,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
                 return;
             }
 
-            if (SpellConfig.Q.Ready || SpellConfig.W.Ready)
+            if (SpellConfig.Q.Ready || SpellConfig.W.Ready && target.Distance(GlobalExtension.Player) <= GlobalExtension.Player.AttackRange + 65)
             {
                 GlobalExtension.Orbwalker.Attack(target);
             }

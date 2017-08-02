@@ -1,8 +1,8 @@
-﻿using System;
-using Adept_AIO.Champions.Jax.Core;
+﻿using Adept_AIO.Champions.Jax.Core;
 using Adept_AIO.Champions.Jax.Update.Miscellaneous;
 using Adept_AIO.SDK.Extensions;
 using Adept_AIO.SDK.Usables;
+using Aimtec;
 
 namespace Adept_AIO.Champions.Jax.Update.OrbwalkingEvents
 {
@@ -32,7 +32,7 @@ namespace Adept_AIO.Champions.Jax.Update.OrbwalkingEvents
             {
                 SpellManager.CastE(target);
             }
-            else if (SpellConfig.Q.Ready && MenuConfig.Harass["Q"].Enabled && Environment.TickCount - SpellConfig.CounterStrikeTime >= 1800 || SpellConfig.CounterStrikeTime <= 0)
+            else if (SpellConfig.Q.Ready && MenuConfig.Harass["Q"].Enabled && Game.TickCount - SpellConfig.E.LastCastAttemptT >= 1800 || SpellConfig.E.LastCastAttemptT <= 0)
             {
                 SpellConfig.Q.CastOnUnit(target);
             }

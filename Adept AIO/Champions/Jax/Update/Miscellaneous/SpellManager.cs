@@ -1,5 +1,4 @@
-﻿using System;
-using Adept_AIO.Champions.Jax.Core;
+﻿using Adept_AIO.Champions.Jax.Core;
 using Adept_AIO.SDK.Extensions;
 using Aimtec;
 using Aimtec.SDK.Extensions;
@@ -33,7 +32,7 @@ namespace Adept_AIO.Champions.Jax.Update.Miscellaneous
                 return;
             }
 
-            if (Environment.TickCount - SpellConfig.CounterStrikeTime > 1700 || Unit.Distance(GlobalExtension.Player) <= SpellConfig.E.Range + Unit.BoundingRadius)
+            if (Game.TickCount - SpellConfig.E.LastCastAttemptT > 1700 || Unit.Distance(GlobalExtension.Player) <= SpellConfig.E.Range + Unit.BoundingRadius)
             {
                 SpellConfig.E.Cast(Unit);
             }

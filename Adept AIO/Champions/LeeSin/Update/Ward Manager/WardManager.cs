@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Adept_AIO.SDK.Extensions;
 using Adept_AIO.SDK.Usables;
 using Aimtec;
@@ -15,7 +14,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.Ward_Manager
 
         public bool IsWardReady()
         {
-            return _wardTracker.WardNames.Any(Items.CanUseItem) && Environment.TickCount - _wardTracker.LastWardCreated > 1500 || _wardTracker.LastWardCreated == 0;
+            return _wardTracker.WardNames.Any(Items.CanUseItem) && Game.TickCount - _wardTracker.LastWardCreated > 1500 || _wardTracker.LastWardCreated == 0;
         }
 
         public WardManager(IWardTracker wardTracker)
@@ -25,7 +24,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.Ward_Manager
 
         public void WardJump(Vector3 position, bool maxRange)
         {
-            if (Environment.TickCount - _wardTracker.LastWardCreated < 1500 && _wardTracker.LastWardCreated > 0)
+            if (Game.TickCount - _wardTracker.LastWardCreated < 1500 && _wardTracker.LastWardCreated > 0)
             {
                 return;
             }
@@ -43,8 +42,8 @@ namespace Adept_AIO.Champions.LeeSin.Update.Ward_Manager
             }
 
             Items.CastItem(ward, position);
-            LastTimeCasted = Environment.TickCount;
-            _wardTracker.LastWardCreated = Environment.TickCount;
+            LastTimeCasted = Game.TickCount;
+            _wardTracker.LastWardCreated = Game.TickCount;
             _wardTracker.WardPosition = position;
 
             if (!NavMesh.WorldToCell(position).Flags.HasFlag(NavCellFlags.Building | NavCellFlags.Wall))

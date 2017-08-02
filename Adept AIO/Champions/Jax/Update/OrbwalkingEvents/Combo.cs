@@ -1,9 +1,9 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Adept_AIO.Champions.Jax.Core;
 using Adept_AIO.Champions.Jax.Update.Miscellaneous;
 using Adept_AIO.SDK.Extensions;
 using Adept_AIO.SDK.Usables;
+using Aimtec;
 using Aimtec.SDK.Extensions;
 using GameObjects = Aimtec.SDK.Util.Cache.GameObjects;
 
@@ -48,12 +48,9 @@ namespace Adept_AIO.Champions.Jax.Update.OrbwalkingEvents
                 SpellManager.CastE(target);
             }
 
-            if (MenuConfig.Combo["Jump"].Enabled && !(SpellConfig.E.Ready || Dmg.Damage(target) > target.Health * 0.75f))
-            {
-                return;
-            }
-
-            if (MenuConfig.Combo["Delay"].Enabled && (Environment.TickCount - SpellConfig.CounterStrikeTime < 800 || SpellConfig.E.Ready && SpellConfig.CounterStrikeTime == 0f))
+        
+            if (MenuConfig.Combo["Jump"].Enabled && !(SpellConfig.E.Ready || Dmg.Damage(target) > target.Health * 0.75f) ||
+                MenuConfig.Combo["Delay"].Enabled && (Game.TickCount - SpellConfig.E.LastCastAttemptT < 800 || SpellConfig.E.Ready && SpellConfig.E.LastCastAttemptT == 0))
             {
                 return; 
             }

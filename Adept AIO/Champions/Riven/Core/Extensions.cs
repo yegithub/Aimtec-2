@@ -1,5 +1,4 @@
 ﻿using Adept_AIO.SDK.Extensions;
-using Aimtec;
 
 namespace Adept_AIO.Champions.Riven.Core
 {
@@ -41,8 +40,8 @@ namespace Adept_AIO.Champions.Riven.Core
         public static bool DidJustAuto;
         public static bool AllIn;
         public static int CurrentQCount = 1;
-        public static float LastQTime, LastWTime, LastR2Time = 0;
-     
+        public static int LastQCastAttempt;
+
         public static string[] InvulnerableList = { "FioraW", "kindrednodeathbuff", "Undying Rage", "JudicatorIntervention" };
    
         public static HarassPattern Current;

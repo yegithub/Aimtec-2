@@ -11,8 +11,6 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Combo
 {
     internal class Combo : ICombo
     {
-        private float LastQTime;
-
         public bool TurretCheckEnabled { get; set; }
         public bool Q1Enabled { get; set; }
         public bool Q2Enabled { get; set; }
@@ -56,7 +54,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Combo
             {
                 return;
             }
-
+            Console.WriteLine(WardEnabled);
             var distance = target.Distance(GlobalExtension.Player);
 
             if (SpellConfig.R.Ready && SpellConfig.Q.Ready && Q1Enabled && distance <= 550 && target.Health <= GlobalExtension.Player.GetSpellDamage(target, SpellSlot.R) + 
@@ -64,8 +62,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Combo
                                                                                                                GlobalExtension.Player.GetSpellDamage(target, SpellSlot.Q, DamageStage.SecondCast))
             {
                 SpellConfig.R.CastOnUnit(target);
-                SpellConfig.Q.Cast(target);
-                LastQTime = Environment.TickCount;
+                SpellConfig.Q.Cast(target); 
             }
 
             if (SpellConfig.Q.Ready && Q1Enabled)
@@ -83,17 +80,16 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Combo
                     }
                  
                     SpellConfig.Q.Cast();
-                    LastQTime = Environment.TickCount;
                 }
                 else
                 {
+                    SpellConfig.QSmite(target);
                     SpellConfig.Q.Cast(target);
-                    LastQTime = Environment.TickCount;
                 }
             }
-            else if (SpellConfig.W.Ready && SpellConfig.IsFirst(SpellConfig.W) && WEnabled && WardEnabled && distance > (SpellConfig.Q.Ready ? 1000 : 600))
+            else if (SpellConfig.W.Ready && SpellConfig.IsFirst(SpellConfig.W) && _wardManager.IsWardReady() && WEnabled && WardEnabled && distance > (SpellConfig.Q.Ready ? 1000 : 600))
             {
-                if (Environment.TickCount - LastQTime <= 1000 && LastQTime > 0)
+                if (Game.TickCount - SpellConfig.Q.LastCastAttemptT <= 1000 && SpellConfig.Q.LastCastAttemptT > 0)
                 {
                     return;
                 }

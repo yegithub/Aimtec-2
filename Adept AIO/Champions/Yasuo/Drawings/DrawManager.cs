@@ -28,9 +28,12 @@ namespace Adept_AIO.Champions.Yasuo.Drawings
                 Render.Text(new Vector2(temp.X - 55, temp.Y + 40), Color.White, "Q Mode: " + Extension.CurrentMode + "- Range: " + SpellConfig.Q.Range);
             }
 
-            if (Extension.ExtendedMinion != Vector3.Zero)
+            if (SpellConfig.E.Ready)
             {
-                Render.Circle(Extension.ExtendedMinion, 50, 300, Color.AliceBlue);
+                if (Extension.ExtendedMinion != Vector3.Zero)
+                {
+                    Render.Circle(Extension.ExtendedMinion, 50, 300, Color.AliceBlue);
+                }
             }
          
             if (SpellConfig.R.Ready)
@@ -39,14 +42,6 @@ namespace Adept_AIO.Champions.Yasuo.Drawings
                 {
                     Render.Circle(GlobalExtension.Player.Position, SpellConfig.R.Range, (uint)MenuConfig.Drawings["Segments"].Value, Color.Cyan);
                 }
-
-                //if (MenuConfig.Drawings["Timer"].Enabled && Extension.Airbourne > 0)
-                //{
-                //    Vector2 screen;
-                //    Render.WorldToScreen(GlobalExtension.Player.Position, out screen);
-                //    var time = Extension.GetAirbourneTime(GameObjects.EnemyHeroes.FirstOrDefault(x => x.HasBuffOfType(BuffType.Knockup) || x.HasBuffOfType(BuffType.Knockback)));
-                //    Render.Text(new Vector2(screen.X - 55, screen.Y + 40), Color.White, "Airbourne: " + (int)(Environment.TickCount - Extension.Airbourne) + " / " + time);
-                //}
             }
         }
     }

@@ -16,7 +16,7 @@ namespace Adept_AIO.Champions.Jax.Update.OrbwalkingEvents
                 return;
             }
 
-            if (SpellConfig.W.Ready)
+            if (SpellConfig.W.Ready && MenuConfig.Clear["W"].Enabled)
             {
                 SpellConfig.W.Cast();
                 Items.CastTiamat();

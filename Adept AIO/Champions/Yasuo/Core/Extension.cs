@@ -47,17 +47,13 @@ namespace Adept_AIO.Champions.Yasuo.Core
 
         public static Vector3 WalkBehindMinion(Obj_AI_Minion minion, Obj_AI_Base target)
         {
-            if (target == null || minion == null)
+            if (target == null || minion == null || minion.IsDead)
             {
                 return Vector3.Zero;
             }
 
-            var opposite = minion.ServerPosition.Extend(minion.ServerPosition + (minion.ServerPosition - target.ServerPosition).Normalized(), 85);
-            if (opposite.Distance(ObjectManager.GetLocalPlayer()) <= 80 && ObjectManager.GetLocalPlayer().IsFacing(opposite))
-            {
-                return opposite;
-            }
-            return Vector3.Zero;
+            var opposite = minion.ServerPosition.Extend(minion.ServerPosition + (minion.ServerPosition - target.ServerPosition).Normalized(), 100);
+            return opposite.Distance(ObjectManager.GetLocalPlayer()) <= 400 && opposite.Distance(ObjectManager.GetLocalPlayer()) >= minion.BoundingRadius + 30 ? opposite : Vector3.Zero;
         }
 
         public static float DashDistance(Obj_AI_Minion minion, Obj_AI_Base target, int overrideValue = 475)

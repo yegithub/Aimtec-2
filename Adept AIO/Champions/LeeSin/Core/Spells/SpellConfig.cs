@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Adept_AIO.SDK.Extensions;
 using Adept_AIO.SDK.Usables;
 using Aimtec;
@@ -9,23 +11,11 @@ using Spell = Aimtec.SDK.Spell;
 
 namespace Adept_AIO.Champions.LeeSin.Core.Spells
 {
-    internal class SpellConfig : ISpellConfig
+    internal class SpellConfig : ISpellConfig 
     {
-        public bool QAboutToEnd => Environment.TickCount - LastQ >= 1900 + Game.Ping / 2f && LastQ > 0;
+        public float LastQ1CastAttempt { get; set; }
 
-        public Spell W { get; private set; }
-        public Spell Q { get; private set; }
-        public Spell E { get; private set; }
-        public Spell R { get; private set; }
-
-        public OrbwalkerMode InsecMode { get; set; }
-        public OrbwalkerMode WardjumpMode { get; set; }
-        public OrbwalkerMode KickFlashMode { get; set; }
-
-        public float LastQ { get; set; }
-        public float LastW { get; set; }
-        public float LastR { get; set; }
-        public float LastFlash { get; set; }
+        public bool QAboutToEnd => Game.TickCount - LastQ1CastAttempt >= 1900 + Game.Ping / 2f;
 
         public bool IsQ2()
         {
@@ -45,14 +35,43 @@ namespace Adept_AIO.Champions.LeeSin.Core.Spells
             return target.HasBuff("BlindMonkSonicWave");
         }
 
+        /// <summary>
+        /// [BETA]
+        /// </summary>
+        /// <param name="target"></param>
+        public void QSmite(Obj_AI_Base target)
+        {
+          
+            var list = Q.GetPrediction(target).CollisionObjects;
+            var first = list.FirstOrDefault();
+
+            if (SummonerSpells.Smite == null || !SummonerSpells.Smite.Ready || SummonerSpells.Ammo("Smite") < 2 ||
+                list.Count < 1 || list[0] == target || first == null ||
+                first.Health > SummonerSpells.SmiteMonsters() ||
+                first.ServerPosition.Distance(GlobalExtension.Player) > SummonerSpells.Smite.Range)
+            {
+                return;
+            }
+
+            SummonerSpells.Smite.CastOnUnit(first);
+            GlobalExtension.Player.SpellBook.CastSpell(SpellSlot.Q, target.ServerPosition);
+        }
+
+        public Spell W { get; private set; }
+        public Spell Q { get; private set; }
+        public Spell E { get; private set; }
+        public Spell R { get; private set; }
+
+        public OrbwalkerMode InsecMode { get; set; }
+        public OrbwalkerMode WardjumpMode { get; set; }
+        public OrbwalkerMode KickFlashMode { get; set; }
+
         private const string PassiveName = "blindmonkpassive_cosmetic";
 
         public int PassiveStack()
         {
            return GlobalExtension.Player.HasBuff(PassiveName) ? GlobalExtension.Player.GetBuffCount(PassiveName) : 0;
         }
-
-        public Vector3 InsecPosition { get; set; }
 
         public void Load()
         {
@@ -73,22 +92,9 @@ namespace Adept_AIO.Champions.LeeSin.Core.Spells
                 return;
             }
 
-            switch (args.SpellSlot)
+            if (args.SpellSlot == SpellSlot.Q && args.SpellData.Name.ToLower().Contains("one"))
             {
-                case SpellSlot.Q:
-                    LastQ = IsQ2() ? 0 : Environment.TickCount;
-                    break;
-                case SpellSlot.W:
-                    LastW = Environment.TickCount;
-                    break;
-                case SpellSlot.R:
-                    LastR = Environment.TickCount;
-                    break;
-            }
-
-            if (SummonerSpells.Flash != null && args.SpellSlot == SummonerSpells.Flash.Slot)
-            {
-                LastFlash = Environment.TickCount;
+                LastQ1CastAttempt = Game.TickCount;
             }
         }
     }
