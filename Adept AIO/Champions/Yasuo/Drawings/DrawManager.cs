@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Linq;
 using Adept_AIO.Champions.Yasuo.Core;
 using Adept_AIO.SDK.Extensions;
 using Aimtec;
@@ -8,14 +9,30 @@ namespace Adept_AIO.Champions.Yasuo.Drawings
 {
     internal class DrawManager
     {
-        public static void RenderManager()
+        public static void DrawDamage()
         {
-            if (GlobalExtension.Player.IsDead)
+            if (Global.Player.IsDead || !MenuConfig.Drawings["Dmg"].Enabled)
             {
                 return;
             }
 
-            if (MenuConfig.Drawings["Range"].Enabled && MenuConfig.Combo["Dash"].Value == 0 && GlobalExtension.Orbwalker.Mode != OrbwalkingMode.None)
+            foreach (var target in GameObjects.EnemyHeroes.Where(x => !x.IsDead && x.IsFloatingHealthBarActive && x.IsVisible))
+            {
+                var damage = Dmg.Damage(target);
+
+                Global.DamageIndicator.Unit = target;
+                Global.DamageIndicator.DrawDmg((float)damage, Color.FromArgb(153, 12, 177, 28));
+            }
+        }
+
+        public static void RenderManager()
+        {
+            if (Global.Player.IsDead)
+            {
+                return;
+            }
+
+            if (MenuConfig.Drawings["Range"].Enabled && MenuConfig.Combo["Dash"].Value == 0 && Global.Orbwalker.Mode != OrbwalkingMode.None)
             {
                 Render.Circle(Game.CursorPos, MenuConfig.Combo["Range"].Value,
                     (uint)MenuConfig.Drawings["Segments"].Value, Color.White);
@@ -24,7 +41,7 @@ namespace Adept_AIO.Champions.Yasuo.Drawings
             if (MenuConfig.Drawings["Debug"].Enabled)
             {
                 Vector2 temp;
-                Render.WorldToScreen(GlobalExtension.Player.Position, out temp);
+                Render.WorldToScreen(Global.Player.Position, out temp);
                 Render.Text(new Vector2(temp.X - 55, temp.Y + 40), Color.White, "Q Mode: " + Extension.CurrentMode + "- Range: " + SpellConfig.Q.Range);
             }
 
@@ -40,7 +57,7 @@ namespace Adept_AIO.Champions.Yasuo.Drawings
             {
                 if (MenuConfig.Drawings["R"].Enabled)
                 {
-                    Render.Circle(GlobalExtension.Player.Position, SpellConfig.R.Range, (uint)MenuConfig.Drawings["Segments"].Value, Color.Cyan);
+                    Render.Circle(Global.Player.Position, SpellConfig.R.Range, (uint)MenuConfig.Drawings["Segments"].Value, Color.Cyan);
                 }
             }
         }

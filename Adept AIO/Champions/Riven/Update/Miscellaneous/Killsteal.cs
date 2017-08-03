@@ -12,7 +12,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
     {
         public static void OnUpdate()
         {
-            var target = GameObjects.EnemyHeroes.FirstOrDefault(x => x.HealthPercent() <= 40 && x.Distance(GlobalExtension.Player) <= SpellConfig.R2.Range && x.IsValid && !x.IsDead);
+            var target = GameObjects.EnemyHeroes.FirstOrDefault(x => x.HealthPercent() <= 40 && x.Distance(Global.Player) <= SpellConfig.R2.Range && x.IsValid && !x.IsDead);
 
             if (target == null)
             {
@@ -22,25 +22,25 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
             if (SpellConfig.R2.Ready
                 && Extensions.UltimateMode == UltimateMode.Second
                 && MenuConfig.Killsteal["R2"].Enabled
-                && target.Health <= GlobalExtension.Player.GetSpellDamage(target, SpellSlot.R))
+                && target.Health <= Global.Player.GetSpellDamage(target, SpellSlot.R))
             {
                 SpellConfig.R2.Cast(target);
             }
             else if (SpellConfig.W.Ready
                 && MenuConfig.Killsteal["W"].Enabled
-                && target.Health <= GlobalExtension.Player.GetSpellDamage(target, SpellSlot.W)
-                && target.Distance(GlobalExtension.Player) <= SpellConfig.W.Range)
+                && target.Health <= Global.Player.GetSpellDamage(target, SpellSlot.W)
+                && target.Distance(Global.Player) <= SpellConfig.W.Range)
             {
                 SpellManager.CastW(target);
             }
             else if (SpellConfig.Q.Ready
                 && MenuConfig.Killsteal["Q"].Enabled
-                && target.Health <= GlobalExtension.Player.GetSpellDamage(target, SpellSlot.Q)
-                && target.Distance(GlobalExtension.Player) <= SpellConfig.Q.Range)
+                && target.Health <= Global.Player.GetSpellDamage(target, SpellSlot.Q)
+                && target.Distance(Global.Player) <= SpellConfig.Q.Range)
             {
                 SpellManager.CastQ(target);
             }
-            else if (MenuConfig.Killsteal["Items"].Enabled && GlobalExtension.Player.HealthPercent() <= 5)
+            else if (MenuConfig.Killsteal["Items"].Enabled && Global.Player.HealthPercent() <= 5)
             {
                 Items.CastTiamat();
             }

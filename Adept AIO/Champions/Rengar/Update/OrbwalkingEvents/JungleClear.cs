@@ -17,7 +17,7 @@ namespace Adept_AIO.Champions.Rengar.Update.OrbwalkingEvents
                 return;
             }
 
-            if (SpellConfig.Q.Ready && mob.Health > GlobalExtension.Player.GetAutoAttackDamage(mob))
+            if (SpellConfig.Q.Ready && mob.Health > Global.Player.GetAutoAttackDamage(mob))
             {
                 if (Extensions.Ferocity() == 4 && !MenuConfig.JungleClear["Q"].Enabled)
                 {
@@ -36,7 +36,7 @@ namespace Adept_AIO.Champions.Rengar.Update.OrbwalkingEvents
                 return;
             }
 
-            var distance = mob.Distance(GlobalExtension.Player);
+            var distance = mob.Distance(Global.Player);
 
             if (SpellConfig.W.Ready && distance < SpellConfig.W.Range)
             {

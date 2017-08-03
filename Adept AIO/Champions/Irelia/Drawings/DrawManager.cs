@@ -10,18 +10,18 @@ namespace Adept_AIO.Champions.Irelia.Drawings
     {
         public static void RenderManager()
         {
-            if (GlobalExtension.Player.IsDead)
+            if (Global.Player.IsDead)
             {
                 return;
             }
 
-            if (MenuConfig.Drawings["Engage"].Enabled && GlobalExtension.Orbwalker.Mode != OrbwalkingMode.None)
+            if (MenuConfig.Drawings["Engage"].Enabled && Global.Orbwalker.Mode != OrbwalkingMode.None)
             {
                 // Could turn into ? : statement as well.
                 switch (MenuConfig.Combo["Mode"].Value)
                 {
                     case 1:
-                        Render.Circle(GlobalExtension.Player.Position, MenuConfig.Combo["Range"].Value, (uint)MenuConfig.Drawings["Segments"].Value, Color.White);
+                        Render.Circle(Global.Player.Position, MenuConfig.Combo["Range"].Value, (uint)MenuConfig.Drawings["Segments"].Value, Color.White);
                         break;
                     case 0:
                         Render.Circle(Game.CursorPos, MenuConfig.Combo["Range"].Value, (uint)MenuConfig.Drawings["Segments"].Value, Color.White);
@@ -31,12 +31,12 @@ namespace Adept_AIO.Champions.Irelia.Drawings
 
             if (MenuConfig.Drawings["Q"].Enabled && SpellConfig.Q.Ready)
             {
-                Render.Circle(GlobalExtension.Player.Position, SpellConfig.Q.Range, (uint)MenuConfig.Drawings["Segments"].Value, Color.Aqua);
+                Render.Circle(Global.Player.Position, SpellConfig.Q.Range, (uint)MenuConfig.Drawings["Segments"].Value, Color.Aqua);
             }
 
             if (MenuConfig.Drawings["R"].Enabled && SpellConfig.R.Ready)
             {
-                Render.Circle(GlobalExtension.Player.Position, SpellConfig.R.Range, (uint)MenuConfig.Drawings["Segments"].Value, Color.IndianRed);
+                Render.Circle(Global.Player.Position, SpellConfig.R.Range, (uint)MenuConfig.Drawings["Segments"].Value, Color.IndianRed);
             }
         }
     }

@@ -13,21 +13,26 @@ namespace Adept_AIO.Champions.Yasuo.Core
                 return 0;
             }
 
-            var dmg = GlobalExtension.Player.GetAutoAttackDamage(target);
+            var dmg = 0d;
+
+            if (Global.Orbwalker.CanAttack())
+            {
+                dmg += Global.Player.GetAutoAttackDamage(target);
+            }
 
             if (SpellConfig.Q.Ready)
             {
-                dmg += GlobalExtension.Player.GetSpellDamage(target, SpellSlot.Q) + dmg;
+                dmg += Global.Player.GetSpellDamage(target, SpellSlot.Q) + dmg;
             }
 
             if (SpellConfig.E.Ready)
             {
-                dmg += GlobalExtension.Player.GetSpellDamage(target, SpellSlot.E);
+                dmg += Global.Player.GetSpellDamage(target, SpellSlot.E);
             }
 
             if (SpellConfig.R.Ready)
             {
-                dmg += GlobalExtension.Player.GetSpellDamage(target, SpellSlot.R) + dmg;
+                dmg += Global.Player.GetSpellDamage(target, SpellSlot.R) + dmg;
             }
             return dmg;
         }

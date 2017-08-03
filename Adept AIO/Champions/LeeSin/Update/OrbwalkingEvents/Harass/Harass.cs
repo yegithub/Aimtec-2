@@ -35,13 +35,13 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Harass
             }
             else if (SpellConfig.W.Ready && Mode == 1)
             {
-                SpellConfig.W.CastOnUnit(GlobalExtension.Player);
+                SpellConfig.W.CastOnUnit(Global.Player);
             }
         }
 
         public void OnUpdate()
         {
-            var target = GlobalExtension.TargetSelector.GetTarget(SpellConfig.Q.Range);
+            var target = Global.TargetSelector.GetTarget(SpellConfig.Q.Range);
             if (target == null)
             {
                 return;
@@ -65,7 +65,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Harass
 
             if (SpellConfig.W.Ready && SpellConfig.IsFirst(SpellConfig.W) && !SpellConfig.E.Ready && !SpellConfig.Q.Ready && Mode == 0)
             {
-                var pos = GlobalExtension.Player.ServerPosition + (GlobalExtension.Player.ServerPosition + target.ServerPosition) * 300;
+                var pos = Global.Player.ServerPosition + (Global.Player.ServerPosition + target.ServerPosition) * 300;
                 _wardManager.WardJump(pos, true);
             }
         }

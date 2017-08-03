@@ -11,7 +11,7 @@ namespace Adept_AIO.Champions.Jax.Update.OrbwalkingEvents
     {
         public static void OnPostAttack()
         {
-            if (MenuConfig.Clear["Check"].Enabled && GlobalExtension.Player.CountEnemyHeroesInRange(1500) > 0)
+            if (MenuConfig.Clear["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(1500) > 0)
             {
                 return;
             }
@@ -20,10 +20,10 @@ namespace Adept_AIO.Champions.Jax.Update.OrbwalkingEvents
             {
                 SpellConfig.W.Cast();
                 Items.CastTiamat();
-                GlobalExtension.Orbwalker.ResetAutoAttackTimer();
+                Global.Orbwalker.ResetAutoAttackTimer();
             }
 
-            if (SpellConfig.E.Ready && MenuConfig.Clear["E"].Enabled && GlobalExtension.Player.ManaPercent() >= 75 || GlobalExtension.Player.HealthPercent() <= 35)
+            if (SpellConfig.E.Ready && MenuConfig.Clear["E"].Enabled && Global.Player.ManaPercent() >= 75 || Global.Player.HealthPercent() <= 35)
             {
                 SpellConfig.E.Cast();
             }
@@ -31,7 +31,7 @@ namespace Adept_AIO.Champions.Jax.Update.OrbwalkingEvents
 
         public static void OnUpdate()
         {
-            if (MenuConfig.Clear["Check"].Enabled && GlobalExtension.Player.CountEnemyHeroesInRange(1500) > 0 || !MenuConfig.Clear["Q"].Enabled || !SpellConfig.Q.Ready)
+            if (MenuConfig.Clear["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(1500) > 0 || !MenuConfig.Clear["Q"].Enabled || !SpellConfig.Q.Ready)
             {
                 return;
             }
@@ -43,7 +43,7 @@ namespace Adept_AIO.Champions.Jax.Update.OrbwalkingEvents
                 return;
             }
 
-            if (mob.Distance(GlobalExtension.Player) > GlobalExtension.Player.AttackRange)
+            if (mob.Distance(Global.Player) > Global.Player.AttackRange)
             {
                 SpellConfig.Q.CastOnUnit(mob);
             }

@@ -12,8 +12,8 @@ namespace Adept_AIO.SDK.Usables
         //Todo: Improve this bullshit.
         public static void Init()
         {
-            var spellbookName1 = GlobalExtension.Player.SpellBook.GetSpell(SpellSlot.Summoner1).Name.ToLower();
-            var spellbookName2 = GlobalExtension.Player.SpellBook.GetSpell(SpellSlot.Summoner2).Name.ToLower();
+            var spellbookName1 = Global.Player.SpellBook.GetSpell(SpellSlot.Summoner1).Name.ToLower();
+            var spellbookName2 = Global.Player.SpellBook.GetSpell(SpellSlot.Summoner2).Name.ToLower();
 
             switch (spellbookName1)
             {
@@ -48,14 +48,14 @@ namespace Adept_AIO.SDK.Usables
             }
         }
 
-        public static int IgniteDamage(Obj_AI_Hero target)
+        public static int IgniteDamage(Obj_AI_Base target)
         {
-            return (int)(50 + 20 * GlobalExtension.Player.Level - target.HPRegenRate / 5 * 3);
+            return (int)(50 + 20 * Global.Player.Level - target.HPRegenRate / 5 * 3);
         }
 
         public static int SmiteMonsters()
         {
-            var level = GlobalExtension.Player.Level;
+            var level = Global.Player.Level;
 
             var index = level / 5;
 
@@ -68,12 +68,12 @@ namespace Adept_AIO.SDK.Usables
         {
             int[] Dmg = { 28, 36, 44, 52, 60, 68, 76, 84, 92, 100, 108, 116, 124, 132, 140, 148, 156, 166 };
 
-            return Dmg[GlobalExtension.Player.Level - 1];
+            return Dmg[Global.Player.Level - 1];
         }
 
         public static int Ammo(string summonerName)
         {
-            var spell = GlobalExtension.Player.SpellBook.Spells.FirstOrDefault(x => x.Name.Contains(summonerName));
+            var spell = Global.Player.SpellBook.Spells.FirstOrDefault(x => x.Name.Contains(summonerName));
             return spell?.Ammo ?? 0;
         }
     }

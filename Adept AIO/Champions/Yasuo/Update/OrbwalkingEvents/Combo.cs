@@ -12,7 +12,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
     {
         public static void OnPostAttack()
         {
-            var target = GlobalExtension.TargetSelector.GetTarget(SpellConfig.R.Range);
+            var target = Global.TargetSelector.GetTarget(SpellConfig.R.Range);
             if (target == null)
             {
                 return;
@@ -26,7 +26,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
             {
                 if (Extension.CurrentMode == Mode.Normal)
                 {
-                    GlobalExtension.Player.SpellBook.CastSpell(SpellSlot.Q, target.ServerPosition);
+                    Global.Player.SpellBook.CastSpell(SpellSlot.Q, target.ServerPosition);
                 }
                 else
                 {
@@ -42,9 +42,9 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
             var minion = Extension.GetDashableMinion(target);
             var walkDashMinion = Extension.WalkBehindMinion(minion, target);
 
-            if (walkDashMinion != Vector3.Zero && MenuConfig.Combo["Walk"].Enabled && GlobalExtension.Orbwalker.CanMove())
+            if (walkDashMinion != Vector3.Zero && MenuConfig.Combo["Walk"].Enabled && Global.Orbwalker.CanMove())
             {
-                GlobalExtension.Orbwalker.Move(walkDashMinion);
+                Global.Orbwalker.Move(walkDashMinion);
             }
             else if (minion != null)
             {
@@ -54,7 +54,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                 }
                 SpellConfig.E.CastOnUnit(minion);
             }
-            else if (!target.HasBuff("YasuoDashWrapper") && target.Distance(GlobalExtension.Player) <= SpellConfig.E.Range && target.Distance(GlobalExtension.Player) > SpellConfig.E.Range - target.BoundingRadius)
+            else if (!target.HasBuff("YasuoDashWrapper") && target.Distance(Global.Player) <= SpellConfig.E.Range && target.Distance(Global.Player) > SpellConfig.E.Range - target.BoundingRadius)
             {
                 SpellConfig.E.CastOnUnit(target);
             }
@@ -62,20 +62,20 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
 
         public static void OnUpdate()
         {
-            var target = GlobalExtension.TargetSelector.GetTarget(2500);
+            var target = Global.TargetSelector.GetTarget(2500);
             if (target == null)
             {
                 return;
             }
 
-            var distance = target.Distance(GlobalExtension.Player);
+            var distance = target.Distance(Global.Player);
             var minion = Extension.GetDashableMinion(target);
             var walkDashMinion = Extension.WalkBehindMinion(minion, target);
             Extension.ExtendedMinion = walkDashMinion;
 
             var dashDistance = Extension.DashDistance(minion, target);
 
-            var airbourneTargets = GameObjects.EnemyHeroes.Where(x => Extension.KnockedUp(x) && x.Distance(GlobalExtension.Player) <= SpellConfig.R.Range);
+            var airbourneTargets = GameObjects.EnemyHeroes.Where(x => Extension.KnockedUp(x) && x.Distance(Global.Player) <= SpellConfig.R.Range);
             var amount = airbourneTargets as Obj_AI_Hero[] ?? airbourneTargets.ToArray();
 
             if (SpellConfig.R.Ready && Extension.KnockedUp(target) && (amount.Length >= MenuConfig.Combo["Count"].Value || distance > 650 || distance > 350 && minion == null))
@@ -120,7 +120,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                         }
                         else if (distance > 1200)
                         {
-                            var stackableMinion = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsEnemy && x.Distance(GlobalExtension.Player) <= SpellConfig.Q.Range);
+                            var stackableMinion = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsEnemy && x.Distance(Global.Player) <= SpellConfig.Q.Range);
                             if (stackableMinion == null)
                             {
                                 return;
@@ -136,9 +136,9 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
             {
                 return;
             }
-            if (walkDashMinion != Vector3.Zero && MenuConfig.Combo["Walk"].Enabled && GlobalExtension.Orbwalker.CanMove())
+            if (walkDashMinion != Vector3.Zero && MenuConfig.Combo["Walk"].Enabled && Global.Orbwalker.CanMove())
             {
-                GlobalExtension.Orbwalker.Move(walkDashMinion);
+                Global.Orbwalker.Move(walkDashMinion);
             }
             else if (minion != null && distance > 475)
             {

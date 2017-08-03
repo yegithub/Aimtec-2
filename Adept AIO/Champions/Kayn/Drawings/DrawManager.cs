@@ -9,19 +9,19 @@ namespace Adept_AIO.Champions.Kayn.Drawings
     {
         public static void RenderManager()
         {
-            if (GlobalExtension.Player.IsDead)
+            if (Global.Player.IsDead)
             {
                 return;
             }
 
             if (MenuConfig.Drawings["W"].Enabled && SpellConfig.W.Ready)
             {
-                Render.Circle(GlobalExtension.Player.Position, SpellConfig.W.Range, (uint)MenuConfig.Drawings["Segments"].Value, Color.IndianRed);
+                Render.Circle(Global.Player.Position, SpellConfig.W.Range, (uint)MenuConfig.Drawings["Segments"].Value, Color.IndianRed);
             }
 
             if (MenuConfig.Drawings["R"].Enabled && SpellConfig.R.Ready)
             {
-                Render.Circle(GlobalExtension.Player.Position, SpellConfig.R.Range, (uint)MenuConfig.Drawings["Segments"].Value, Color.IndianRed);
+                Render.Circle(Global.Player.Position, SpellConfig.R.Range, (uint)MenuConfig.Drawings["Segments"].Value, Color.IndianRed);
             }
         }
     }

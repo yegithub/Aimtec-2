@@ -8,7 +8,7 @@ namespace Adept_AIO.Champions.Rengar.Update.OrbwalkingEvents
     {
         public static void OnPostAttack()
         {
-            var target = GlobalExtension.TargetSelector.GetTarget(SpellConfig.Q.Range);
+            var target = Global.TargetSelector.GetTarget(SpellConfig.Q.Range);
             if (target == null || !target.IsValid) 
             {
                 return;
@@ -27,16 +27,16 @@ namespace Adept_AIO.Champions.Rengar.Update.OrbwalkingEvents
 
         public static void OnUpdate()
         {
-            var target = GlobalExtension.TargetSelector.GetTarget(2000);
+            var target = Global.TargetSelector.GetTarget(2000);
 
             if (target == null || !target.IsValid)
             {
                 return;
             }
 
-            var assassin = GlobalExtension.TargetSelector.GetSelectedTarget();
+            var assassin = Global.TargetSelector.GetSelectedTarget();
             
-            if (GlobalExtension.Player.HasBuff("RengarR"))
+            if (Global.Player.HasBuff("RengarR"))
             {
                 if (MenuConfig.AssassinManager[target.ChampionName].Enabled || assassin != null && assassin.IsValid)
                 {
@@ -44,8 +44,8 @@ namespace Adept_AIO.Champions.Rengar.Update.OrbwalkingEvents
                 }
             }
             
-            var distance = target.Distance(GlobalExtension.Player);
-            if (distance > GlobalExtension.Player.AttackRange && distance < SpellConfig.Q.Range)
+            var distance = target.Distance(Global.Player);
+            if (distance > Global.Player.AttackRange && distance < SpellConfig.Q.Range)
             {
                 if (Extensions.Ferocity() == 4 && !MenuConfig.Combo["Q"].Enabled)
                 {

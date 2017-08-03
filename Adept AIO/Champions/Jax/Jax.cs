@@ -16,10 +16,11 @@ namespace Adept_AIO.Champions.Jax
             Game.OnUpdate += Manager.OnUpdate;
             Game.OnUpdate += SpellManager.OnUpdate;
             Game.OnUpdate += Killsteal.OnUpdate;
-            GlobalExtension.Orbwalker.PostAttack += Manager.PostAttack;
+            Global.Orbwalker.PostAttack += Manager.PostAttack;
             Obj_AI_Base.OnPlayAnimation += Animation.OnPlayAnimation;
             Obj_AI_Base.OnProcessSpellCast += SpellManager.OnProcessSpellCast;
             Render.OnRender += DrawManager.RenderManager;
+            Render.OnPresent += DrawManager.DrawDamage;
         }
     }
 }

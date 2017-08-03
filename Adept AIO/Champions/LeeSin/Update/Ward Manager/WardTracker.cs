@@ -43,7 +43,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.Ward_Manager
                 LastWardCreated = Game.TickCount;
                 WardName = ward.Name;
                 WardPosition = ward.Position;
-                GlobalExtension.Player.SpellBook.CastSpell(SpellSlot.W, sender.Position);
+                Global.Player.SpellBook.CastSpell(SpellSlot.W, sender.Position);
             }
             else
             {

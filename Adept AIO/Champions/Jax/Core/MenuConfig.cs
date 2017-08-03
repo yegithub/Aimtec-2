@@ -20,7 +20,7 @@ namespace Adept_AIO.Champions.Jax.Core
             MainMenu = new Menu(string.Empty, "Adept AIO", true);
             MainMenu.Attach();
 
-            GlobalExtension.Orbwalker.Attach(MainMenu);
+            Global.Orbwalker.Attach(MainMenu);
 
             Combo = new Menu("Combo", "Combo")
             {
@@ -55,7 +55,8 @@ namespace Adept_AIO.Champions.Jax.Core
             {
                 new MenuSlider("Segments", "Segments", 200, 100, 300).SetToolTip("Smoothness of the circles. Less equals more FPS."),
                 new MenuBool("Q", "Draw Q Range"),
-                new MenuBool("E", "Draw E-Q Time")
+                new MenuBool("E", "Draw E-Q Time"),
+                new MenuBool("Dmg", "Draw Damage"),
             };
 
             foreach (var menu in new List<Menu>

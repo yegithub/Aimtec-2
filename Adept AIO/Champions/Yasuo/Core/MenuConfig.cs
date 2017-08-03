@@ -29,10 +29,10 @@ namespace Adept_AIO.Champions.Yasuo.Core
             Extension.FleeMode     = new OrbwalkerMode("Flee", KeyCode.A, null, Flee.OnKeyPressed);
             Extension.BeybladeMode = new OrbwalkerMode("Beyblade", KeyCode.T, null, Beyblade.OnKeyPressed);
 
-            GlobalExtension.Orbwalker.AddMode(Extension.FleeMode);
-            GlobalExtension.Orbwalker.AddMode(Extension.BeybladeMode);
+            Global.Orbwalker.AddMode(Extension.FleeMode);
+            Global.Orbwalker.AddMode(Extension.BeybladeMode);
          
-            GlobalExtension.Orbwalker.Attach(MainMenu);
+            Global.Orbwalker.Attach(MainMenu);
 
             Whitelist= new Menu("Whitelist", "Whitelist");
             foreach (var hero in GameObjects.EnemyHeroes)
@@ -87,6 +87,7 @@ namespace Adept_AIO.Champions.Yasuo.Core
             Drawings = new Menu("Drawings", "Drawings")
             {
                 new MenuSlider("Segments", "Segments", 200, 100, 300).SetToolTip("Smoothness of the circles. Less equals more FPS."),
+                new MenuBool("Dmg", "Damage"),
                 new MenuBool("R", "Draw R Range"),
                 new MenuBool("Range", "Draw Minion Search Range"),
                 new MenuBool("Debug", "Debug")

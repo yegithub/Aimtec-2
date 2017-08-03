@@ -1,5 +1,4 @@
-﻿using System;
-using Adept_AIO.Champions.Riven.Core;
+﻿using Adept_AIO.Champions.Riven.Core;
 using Adept_AIO.Champions.Riven.Update.OrbwalkingEvents;
 using Adept_AIO.SDK.Extensions;
 using Aimtec;
@@ -12,7 +11,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
     {
         public static void OnUpdate()
         {
-            if (GlobalExtension.Player.IsDead)
+            if (Global.Player.IsDead)
             {
                 return;
             }
@@ -24,11 +23,11 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                     return;
                 }
                
-                GlobalExtension.Orbwalker.AttackingEnabled = true;
+                Global.Orbwalker.AttackingEnabled = true;
                 Animation.IAmSoTired = false;
             }
 
-            switch (GlobalExtension.Orbwalker.Mode)
+            switch (Global.Orbwalker.Mode)
             {
                 case OrbwalkingMode.Combo:
                    Combo.OnUpdate();
@@ -46,21 +45,16 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
             }
        
             if (SpellConfig.Q.Ready &&
-                Extensions.CurrentQCount >= 2 &&
+                Extensions.CurrentQCount != 1 &&
                 MenuConfig.Miscellaneous["Active"].Enabled &&
-               !GlobalExtension.Player.HasBuff("Recall") &&
+               !Global.Player.HasBuff("Recall") &&
                 Game.TickCount - Extensions.LastQCastAttempt >= 3580 + Game.Ping / 2 &&
-                Game.TickCount - Extensions.LastQCastAttempt <= 3700 + Game.Ping / 2) // Tries to prevents bugs.
+                Game.TickCount - Extensions.LastQCastAttempt <= 3700 + Game.Ping / 2) 
             {
                 SpellConfig.Q.Cast(Game.CursorPos);
             }
         }
 
-        /// <summary>
-        /// Handles whatever needs done when an autoattack has been processed
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="args"></param>
         public static void PostAttack(object sender, PostAttackEventArgs args)
         {
             if (Game.TickCount - Extensions.LastQCastAttempt < 500)
@@ -76,7 +70,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
             }
             else
             {
-                switch (GlobalExtension.Orbwalker.Mode)
+                switch (Global.Orbwalker.Mode)
                 {
                     case OrbwalkingMode.Combo:
                         Combo.OnPostAttack(target);
@@ -85,25 +79,14 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                         Harass.OnPostAttack();
                         break;
                     case OrbwalkingMode.Laneclear:
-                        switch (args.Target.Type)
+                        if (args.Target.IsMinion)
                         {
-                            case GameObjectType.obj_AI_Minion:
-                                Lane.OnPostAttack();
-                                Jungle.OnPostAttack();
-                                break;
-                            case GameObjectType.obj_AI_Turret:
-                            case GameObjectType.obj_HQ:
-                            case GameObjectType.obj_BarracksDampener:
-                            case GameObjectType.BasicLevelProp:
-                            {
-                                if (!SpellConfig.Q.Ready)
-                                {
-                                    return;
-                                }
-                             
-                                SpellConfig.Q.Cast(GlobalExtension.Player.ServerPosition.Extend(Game.CursorPos, 400));
-                            }
-                                break;
+                            Lane.OnPostAttack();
+                            Jungle.OnPostAttack(args.Target as Obj_AI_Minion);
+                        }
+                        else if (args.Target.IsBuilding() && SpellConfig.Q.Ready)
+                        {
+                            SpellConfig.Q.Cast(Global.Player.ServerPosition.Extend(Game.CursorPos, 400));
                         }
                         break;
                 }

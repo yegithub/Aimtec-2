@@ -12,14 +12,14 @@ namespace Adept_AIO.Champions.Yasuo.Update.Miscellaneous
     {
         public static void OnUpdate()
         {
-            var target = GameObjects.EnemyHeroes.FirstOrDefault(x => x.Distance(GlobalExtension.Player) < SpellConfig.R.Range && x.HealthPercent() <= 40);
+            var target = GameObjects.EnemyHeroes.FirstOrDefault(x => x.Distance(Global.Player) < SpellConfig.R.Range && x.HealthPercent() <= 40);
 
             if (target == null || !target.IsValidTarget())
             {
                 return;
             }
 
-            if (SpellConfig.Q.Ready && target.Health < GlobalExtension.Player.GetSpellDamage(target, SpellSlot.Q) &&
+            if (SpellConfig.Q.Ready && target.Health < Global.Player.GetSpellDamage(target, SpellSlot.Q) &&
                 target.IsValidTarget(SpellConfig.Q.Range) &&
                 MenuConfig.Killsteal["Q"].Enabled)
             {
@@ -30,7 +30,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.Miscellaneous
 
                 SpellConfig.Q.Cast(target);
             }
-            else if (SpellConfig.E.Ready && target.Health < GlobalExtension.Player.GetSpellDamage(target, SpellSlot.E) &&
+            else if (SpellConfig.E.Ready && target.Health < Global.Player.GetSpellDamage(target, SpellSlot.E) &&
                      target.IsValidTarget(SpellConfig.E.Range) &&
                      !target.HasBuff("YasuoDashWrapper") &&
                      MenuConfig.Killsteal["E"].Enabled)

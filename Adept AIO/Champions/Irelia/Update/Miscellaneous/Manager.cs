@@ -10,7 +10,7 @@ namespace Adept_AIO.Champions.Irelia.Update.Miscellaneous
     {
         public static void OnPreAttack(object sender, PreAttackEventArgs preAttackEventArgs)
         {
-            switch (GlobalExtension.Orbwalker.Mode)
+            switch (Global.Orbwalker.Mode)
             {
                     case OrbwalkingMode.Laneclear:
                     Clear.OnPreAttack(preAttackEventArgs.Target, preAttackEventArgs);
@@ -23,7 +23,7 @@ namespace Adept_AIO.Champions.Irelia.Update.Miscellaneous
 
         public static void PostAttack(object sender, PostAttackEventArgs args)
         {
-            switch (GlobalExtension.Orbwalker.Mode)
+            switch (Global.Orbwalker.Mode)
             {
                 case OrbwalkingMode.Combo:
                     Combo.OnPostAttack(args.Target);
@@ -39,12 +39,12 @@ namespace Adept_AIO.Champions.Irelia.Update.Miscellaneous
 
         public static void OnUpdate()
         {
-            if (GlobalExtension.Player.IsDead)
+            if (Global.Player.IsDead)
             {
                 return;
             }
 
-            switch (GlobalExtension.Orbwalker.Mode)
+            switch (Global.Orbwalker.Mode)
             {
                     case OrbwalkingMode.Combo:
                     Combo.OnUpdate();

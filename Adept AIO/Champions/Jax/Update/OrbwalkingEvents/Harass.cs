@@ -17,12 +17,12 @@ namespace Adept_AIO.Champions.Jax.Update.OrbwalkingEvents
 
             SpellConfig.W.Cast();
             Items.CastTiamat();
-            GlobalExtension.Orbwalker.ResetAutoAttackTimer();
+            Global.Orbwalker.ResetAutoAttackTimer();
         }
 
         public static void OnUpdate()
         {
-            var target = GlobalExtension.TargetSelector.GetTarget(SpellConfig.Q.Range);
+            var target = Global.TargetSelector.GetTarget(SpellConfig.Q.Range);
             if (target == null)
             {
                 return;

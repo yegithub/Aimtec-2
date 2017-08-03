@@ -31,8 +31,8 @@ namespace Adept_AIO.Champions.Kayn.Update.OrbwalkingEvents
         {
             if (SpellConfig.E.Ready && MenuConfig.Combo["E"].Enabled)
             {
-                var end = GlobalExtension.Player.Position.Extend(Game.CursorPos, 100);
-                var point = WallExtension.GeneratePoint(GlobalExtension.Player.Position, end).FirstOrDefault();
+                var end = Global.Player.Position.Extend(Game.CursorPos, 100);
+                var point = WallExtension.GeneratePoint(Global.Player.Position, end).FirstOrDefault();
 
                 if (point != Vector3.Zero)
                 {
@@ -40,7 +40,7 @@ namespace Adept_AIO.Champions.Kayn.Update.OrbwalkingEvents
                 }
             }
 
-            var target = GlobalExtension.TargetSelector.GetTarget(SpellConfig.R.Range);
+            var target = Global.TargetSelector.GetTarget(SpellConfig.R.Range);
             if (target == null)
             {
                 return;
@@ -54,19 +54,19 @@ namespace Adept_AIO.Champions.Kayn.Update.OrbwalkingEvents
             {
                 if (target.IsValidTarget(SpellConfig.W.Range))
                 {
-                    GlobalExtension.Player.SpellBook.CastSpell(SpellSlot.Q, target.ServerPosition);
+                    Global.Player.SpellBook.CastSpell(SpellSlot.Q, target.ServerPosition);
                     DelayAction.Queue(1050, Items.CastTiamat);
                 }
                 else if (SpellConfig.R.Ready && MenuConfig.Combo["Beyblade"].Enabled && SummonerSpells.Flash != null &&
-                    SummonerSpells.Flash.Ready && target.Distance(GlobalExtension.Player) > SpellConfig.Q.Range && Dmg.Damage(target) * 1.5f >= target.Health)
+                    SummonerSpells.Flash.Ready && target.Distance(Global.Player) > SpellConfig.Q.Range && Dmg.Damage(target) * 1.5f >= target.Health)
                 {
                     SummonerSpells.Flash.Cast(target.ServerPosition);
-                    GlobalExtension.Player.SpellBook.CastSpell(SpellSlot.Q, target.ServerPosition);
+                    Global.Player.SpellBook.CastSpell(SpellSlot.Q, target.ServerPosition);
                 }
             }
 
             if (SpellConfig.R.Ready && MenuConfig.Combo["R"].Enabled && (MenuConfig.Combo["R"].Value >=
-                GlobalExtension.Player.HealthPercent() ||
+                Global.Player.HealthPercent() ||
                 MenuConfig.Combo["R"].Value >= target.HealthPercent() ||
                 Dmg.Damage(target) * 1.5 > target.Health))
             {

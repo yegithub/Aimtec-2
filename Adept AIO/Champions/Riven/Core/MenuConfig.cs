@@ -35,9 +35,9 @@ namespace Adept_AIO.Champions.Riven.Core
             BurstMode = new OrbwalkerMode("Burst", KeyCode.T, null, Burst.OnUpdate);
             FleeMode = new OrbwalkerMode("Flee", KeyCode.A, null, Flee.OnKeyPressed);
 
-            GlobalExtension.Orbwalker.AddMode(BurstMode);
-            GlobalExtension.Orbwalker.AddMode(FleeMode);
-            GlobalExtension.Orbwalker.Attach(MainMenu);
+            Global.Orbwalker.AddMode(BurstMode);
+            Global.Orbwalker.AddMode(FleeMode);
+            Global.Orbwalker.Attach(MainMenu);
 
             Animation = new Menu("Animation", "Animation")
             {
@@ -113,7 +113,7 @@ namespace Adept_AIO.Champions.Riven.Core
             Drawings = new Menu("Drawings", "Drawings")
             {
                 new MenuSlider("Segments", "Segments", 200, 100, 300).SetToolTip("Smoothness of the circles. Less equals more FPS."),
-             //   new MenuBool("Damage", "Damage"),
+                new MenuBool("Dmg", "Damage"),
                 new MenuBool("Engage", "Engage Range"),
                 new MenuBool("R2", "R2 Range", false),
                 new MenuBool("Harass", "Harass Pattern")
@@ -131,8 +131,7 @@ namespace Adept_AIO.Champions.Riven.Core
                 Drawings,
                 Miscellaneous,
                 MenuShortcut.Credits
-            })
-                MainMenu.Add(menu);
+            }) MainMenu.Add(menu);
         }
     }
 }

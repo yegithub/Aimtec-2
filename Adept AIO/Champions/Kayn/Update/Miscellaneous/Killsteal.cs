@@ -12,26 +12,26 @@ namespace Adept_AIO.Champions.Kayn.Update.Miscellaneous
     {
         public static void OnUpdate()
         {
-            var target = GameObjects.EnemyHeroes.FirstOrDefault(x => x.Distance(GlobalExtension.Player) < SpellConfig.R.Range && x.HealthPercent() <= 40);
+            var target = GameObjects.EnemyHeroes.FirstOrDefault(x => x.Distance(Global.Player) < SpellConfig.R.Range && x.HealthPercent() <= 40);
 
             if (target == null || !target.IsValidTarget())
             {
                 return;
             }
 
-            if (SpellConfig.Q.Ready && target.Health < GlobalExtension.Player.GetSpellDamage(target, SpellSlot.Q) &&
+            if (SpellConfig.Q.Ready && target.Health < Global.Player.GetSpellDamage(target, SpellSlot.Q) &&
                 target.IsValidTarget(SpellConfig.Q.Range) &&
                 MenuConfig.Killsteal["Q"].Enabled)
             {
                 SpellConfig.Q.Cast(target);
             }
-            else if (SpellConfig.W.Ready && target.Health < GlobalExtension.Player.GetSpellDamage(target, SpellSlot.W) &&
+            else if (SpellConfig.W.Ready && target.Health < Global.Player.GetSpellDamage(target, SpellSlot.W) &&
                      target.IsValidTarget(SpellConfig.W.Range) &&
                      MenuConfig.Killsteal["W"].Enabled)
             {
                 SpellConfig.W.Cast(target);
             }
-            else if (SpellConfig.R.Ready && target.Health < GlobalExtension.Player.GetSpellDamage(target, SpellSlot.R) + GlobalExtension.Player.GetAutoAttackDamage(target) &&
+            else if (SpellConfig.R.Ready && target.Health < Global.Player.GetSpellDamage(target, SpellSlot.R) + Global.Player.GetAutoAttackDamage(target) &&
                      target.IsValidTarget(SpellConfig.R.Range) &&
                      MenuConfig.Killsteal["R"].Enabled)
             {

@@ -10,7 +10,7 @@ namespace Adept_AIO.Champions.Rengar.Core
 
         public static bool HardCC()
         {
-            var me = GlobalExtension.Player;
+            var me = Global.Player;
             return (me.HasBuffOfType(BuffType.Blind) ||
                     me.HasBuffOfType(BuffType.Charm) ||
                     me.HasBuffOfType(BuffType.Fear)  ||
@@ -23,12 +23,12 @@ namespace Adept_AIO.Champions.Rengar.Core
 
         public static int Ferocity()
         {
-            return (int) GlobalExtension.Player.Mana;
+            return (int) Global.Player.Mana;
         }
 
         public static float ShieldPercent()
         {
-            var player = GlobalExtension.Player;
+            var player = Global.Player;
             return 100 * (player.AllShield / player.MaxHealth);
         }
     }

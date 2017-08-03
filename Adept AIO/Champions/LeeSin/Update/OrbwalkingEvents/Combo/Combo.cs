@@ -36,7 +36,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Combo
 
             if (SpellConfig.W.Ready && WEnabled)
             {
-                SpellConfig.W.Cast(GlobalExtension.Player);
+                SpellConfig.W.Cast(Global.Player);
             }
             else if (SpellConfig.E.Ready && EEnabled)
             {
@@ -49,17 +49,17 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Combo
 
         public void OnUpdate()
         {
-            var target = GlobalExtension.TargetSelector.GetTarget(1600);
+            var target = Global.TargetSelector.GetTarget(1600);
             if (target == null)
             {
                 return;
             }
             Console.WriteLine(WardEnabled);
-            var distance = target.Distance(GlobalExtension.Player);
+            var distance = target.Distance(Global.Player);
 
-            if (SpellConfig.R.Ready && SpellConfig.Q.Ready && Q1Enabled && distance <= 550 && target.Health <= GlobalExtension.Player.GetSpellDamage(target, SpellSlot.R) + 
-                                                                                                               GlobalExtension.Player.GetSpellDamage(target, SpellSlot.Q) + 
-                                                                                                               GlobalExtension.Player.GetSpellDamage(target, SpellSlot.Q, DamageStage.SecondCast))
+            if (SpellConfig.R.Ready && SpellConfig.Q.Ready && Q1Enabled && distance <= 550 && target.Health <= Global.Player.GetSpellDamage(target, SpellSlot.R) + 
+                                                                                                               Global.Player.GetSpellDamage(target, SpellSlot.Q) + 
+                                                                                                               Global.Player.GetSpellDamage(target, SpellSlot.Q, DamageStage.SecondCast))
             {
                 SpellConfig.R.CastOnUnit(target);
                 SpellConfig.Q.Cast(target); 

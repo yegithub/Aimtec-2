@@ -1,6 +1,9 @@
-﻿using Adept_AIO.SDK.Extensions;
+﻿using System.Linq;
+using Adept_AIO.SDK.Extensions;
+using Adept_AIO.SDK.Usables;
 using Aimtec;
 using Aimtec.SDK.Damage;
+using Aimtec.SDK.Extensions;
 
 namespace Adept_AIO.Champions.Riven.Core
 {
@@ -13,22 +16,32 @@ namespace Adept_AIO.Champions.Riven.Core
                 return 0;
             }
 
-            var dmg = GlobalExtension.Player.GetAutoAttackDamage(target);
+            var dmg = 0d;
+
+            if (SummonerSpells.Ignite != null && SummonerSpells.Ignite.Ready)
+            {
+                dmg += SummonerSpells.IgniteDamage(target);
+            }
+
+            if (Global.Orbwalker.CanAttack())
+            {
+                dmg += Global.Player.GetAutoAttackDamage(target);
+            }
 
             if (SpellConfig.W.Ready)
             {
-                dmg += GlobalExtension.Player.GetSpellDamage(target, SpellSlot.W);
+                dmg += Global.Player.GetSpellDamage(target, SpellSlot.W);
             }
 
             if (SpellConfig.Q.Ready)
             {
                 var count = 4 - Extensions.CurrentQCount;
-                dmg += (GlobalExtension.Player.GetSpellDamage(target, SpellSlot.Q) + dmg) * count;
+                dmg += (Global.Player.GetSpellDamage(target, SpellSlot.Q) + dmg) * count;
             }
 
             if (SpellConfig.R.Ready)
             {
-                dmg += GlobalExtension.Player.GetSpellDamage(target, SpellSlot.R);
+                dmg += Global.Player.GetSpellDamage(target, SpellSlot.R);
             }
             return dmg;
         }

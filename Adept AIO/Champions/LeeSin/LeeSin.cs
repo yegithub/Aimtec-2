@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Adept_AIO.Champions.LeeSin.Core.Insec_Manager;
 using Adept_AIO.Champions.LeeSin.Core.Spells;
 using Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.KickFlash;
@@ -59,10 +58,10 @@ namespace Adept_AIO.Champions.LeeSin
             wardjumpMode.MenuItem.OnValueChanged += (sender, args) => wardjump.Enabled = args.GetNewValue<MenuKeyBind>().Value;
             kickFlashMode.MenuItem.OnValueChanged += (sender, args) => kickFlash.Enabled = args.GetNewValue<MenuKeyBind>().Value;
 
-            GlobalExtension.Orbwalker.AddMode(insecMode);
-            GlobalExtension.Orbwalker.AddMode(wardjumpMode);
-            GlobalExtension.Orbwalker.AddMode(kickFlashMode);
-            GlobalExtension.Orbwalker.Attach(mainmenu);
+            Global.Orbwalker.AddMode(insecMode);
+            Global.Orbwalker.AddMode(wardjumpMode);
+            Global.Orbwalker.AddMode(kickFlashMode);
+            Global.Orbwalker.Attach(mainmenu);
 
             var insecMenu = new Menu("Insec", "Insec");
             var insecObject = new MenuBool("Object", "Use Q On Minions").SetToolTip("Uses Q to gapclose to every minion");
@@ -261,7 +260,7 @@ namespace Adept_AIO.Champions.LeeSin
             Game.OnUpdate += manager.OnUpdate;
             Game.OnUpdate += killsteal.OnUpdate;
 
-            GlobalExtension.Orbwalker.PostAttack += manager.PostAttack;
+            Global.Orbwalker.PostAttack += manager.PostAttack;
 
             Render.OnRender += drawManager.RenderManager;
 

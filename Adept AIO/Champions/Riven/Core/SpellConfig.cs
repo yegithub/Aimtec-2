@@ -7,14 +7,11 @@ namespace Adept_AIO.Champions.Riven.Core
     internal class SpellConfig
     {
         public static Spell Q, W, E, R, R2;
-      
-        /// <summary>
-        /// Instances the spells
-        /// </summary>
+     
         public static void Load()
         {
-            Q = new Spell(SpellSlot.Q, 275); // Radius: [112.5 | 150 | 162.5 | 200] --> Q1/Q2 | Q3 | R(Q1/Q2) | R(Q3) ~(I THINK!)~
-           
+            Q = new Spell(SpellSlot.Q, 275);
+
             W = new Spell(SpellSlot.W, 125);
 
             E = new Spell(SpellSlot.E, 325);

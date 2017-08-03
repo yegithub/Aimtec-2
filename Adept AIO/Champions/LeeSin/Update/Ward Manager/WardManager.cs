@@ -38,7 +38,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.Ward_Manager
 
             if (maxRange)
             {
-                position = GlobalExtension.Player.ServerPosition.Extend(position, 600); 
+                position = Global.Player.ServerPosition.Extend(position, 600); 
             }
 
             Items.CastItem(ward, position);
@@ -49,7 +49,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.Ward_Manager
             if (!NavMesh.WorldToCell(position).Flags.HasFlag(NavCellFlags.Building | NavCellFlags.Wall))
             {
                 _wardTracker.IsAtWall = false;
-                GlobalExtension.Player.SpellBook.CastSpell(SpellSlot.W, position);
+                Global.Player.SpellBook.CastSpell(SpellSlot.W, position);
             }
             else
             {

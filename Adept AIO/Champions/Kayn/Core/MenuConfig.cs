@@ -22,7 +22,7 @@ namespace Adept_AIO.Champions.Kayn.Core
             MainMenu = new Menu(string.Empty, "Adept AIO", true);
             MainMenu.Attach();
 
-            GlobalExtension.Orbwalker.Attach(MainMenu);
+            Global.Orbwalker.Attach(MainMenu);
 
             Whitelist = new Menu("Whitelist", "Whitelist");
             foreach (var hero in GameObjects.EnemyHeroes)

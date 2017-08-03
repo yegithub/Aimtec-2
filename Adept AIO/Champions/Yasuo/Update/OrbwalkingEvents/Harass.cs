@@ -13,13 +13,13 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
 
         public static void OnUpdate()
         {
-            if (GlobalExtension.Orbwalker.IsWindingUp)
+            if (Global.Orbwalker.IsWindingUp)
             {
                 return;
             }
 
-            var target = GlobalExtension.TargetSelector.GetTarget(1100);
-            if (target == null || GlobalExtension.Orbwalker.IsWindingUp)
+            var target = Global.TargetSelector.GetTarget(1100);
+            if (target == null || Global.Orbwalker.IsWindingUp)
             {
                 return;
             }
@@ -36,7 +36,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
 
             if (SpellConfig.E.Ready && MenuConfig.Harass["E"].Enabled && !target.IsUnderEnemyTurret())
             {
-                var distance = target.Distance(GlobalExtension.Player);
+                var distance = target.Distance(Global.Player);
                 var minion = Extension.GetDashableMinion(target);
 
                 if (!target.HasBuff("YasuoDashWrapper") && target.IsValidTarget(SpellConfig.E.Range))
@@ -45,7 +45,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                 }
                 else if (distance > SpellConfig.E.Range)
                 {
-                    if (minion != null || distance < GlobalExtension.Player.AttackRange)
+                    if (minion != null || distance < Global.Player.AttackRange)
                     {
                         SpellConfig.E.CastOnUnit(minion);
                     }

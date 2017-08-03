@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Adept_AIO.SDK.Extensions;
 using Adept_AIO.SDK.Usables;
 using Aimtec;
@@ -24,7 +22,7 @@ namespace Adept_AIO.Champions.LeeSin.Core.Spells
 
         public bool IsFirst(Spell spell)
         {
-            return GlobalExtension.Player
+            return Global.Player
                 .SpellBook.GetSpell(spell.Slot)
                 .SpellData.Name.ToLower()
                 .Contains("one");
@@ -48,13 +46,13 @@ namespace Adept_AIO.Champions.LeeSin.Core.Spells
             if (SummonerSpells.Smite == null || !SummonerSpells.Smite.Ready || SummonerSpells.Ammo("Smite") < 2 ||
                 list.Count < 1 || list[0] == target || first == null ||
                 first.Health > SummonerSpells.SmiteMonsters() ||
-                first.ServerPosition.Distance(GlobalExtension.Player) > SummonerSpells.Smite.Range)
+                first.ServerPosition.Distance(Global.Player) > SummonerSpells.Smite.Range)
             {
                 return;
             }
 
             SummonerSpells.Smite.CastOnUnit(first);
-            GlobalExtension.Player.SpellBook.CastSpell(SpellSlot.Q, target.ServerPosition);
+            Global.Player.SpellBook.CastSpell(SpellSlot.Q, target.ServerPosition);
         }
 
         public Spell W { get; private set; }
@@ -70,7 +68,7 @@ namespace Adept_AIO.Champions.LeeSin.Core.Spells
 
         public int PassiveStack()
         {
-           return GlobalExtension.Player.HasBuff(PassiveName) ? GlobalExtension.Player.GetBuffCount(PassiveName) : 0;
+           return Global.Player.HasBuff(PassiveName) ? Global.Player.GetBuffCount(PassiveName) : 0;
         }
 
         public void Load()

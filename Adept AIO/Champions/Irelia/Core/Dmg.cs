@@ -13,21 +13,21 @@ namespace Adept_AIO.Champions.Irelia.Core
                 return 0;
             }
 
-            var dmg = GlobalExtension.Player.GetAutoAttackDamage(target);
+            var dmg = Global.Player.GetAutoAttackDamage(target);
 
             if (SpellConfig.W.Ready)
             {
-                dmg += GlobalExtension.Player.GetSpellDamage(target, SpellSlot.W) + dmg;
+                dmg += Global.Player.GetSpellDamage(target, SpellSlot.W) + dmg;
             }
 
             if (SpellConfig.Q.Ready)
             {
-                dmg += GlobalExtension.Player.GetSpellDamage(target, SpellSlot.Q) + dmg;
+                dmg += Global.Player.GetSpellDamage(target, SpellSlot.Q) + dmg;
             }
 
             if (SpellConfig.R.Ready)
             {
-                dmg += GlobalExtension.Player.GetSpellDamage(target, SpellSlot.R) * SpellConfig.RCount;
+                dmg += Global.Player.GetSpellDamage(target, SpellSlot.R) * SpellConfig.RCount;
             }
             return dmg;
         }

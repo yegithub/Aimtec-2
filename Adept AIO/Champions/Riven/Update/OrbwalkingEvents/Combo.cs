@@ -22,7 +22,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
         public static void OnPostAttack(Obj_AI_Base target)
         {
             if (AutoBeforeR2(target) && (SpeedItUp(target) || Extensions.CurrentQCount == 1 && !SpellConfig.Q.Ready) &&
-                target.Health < GlobalExtension.Player.GetAutoAttackDamage(target) + GlobalExtension.Player.GetSpellDamage(target, SpellSlot.R))
+                target.Health < Global.Player.GetAutoAttackDamage(target) + Global.Player.GetSpellDamage(target, SpellSlot.R))
             {
                 SpellManager.CastR2(target);
             }
@@ -44,8 +44,8 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
 
         public static void OnUpdate()
         {
-            var target = GlobalExtension.TargetSelector.GetTarget(SpellConfig.R2.Range);
-            if (target != null && Extensions.UltimateMode == UltimateMode.Second && !AutoBeforeR2(target) && target.HealthPercent() <= 50)
+            var target = Global.TargetSelector.GetTarget(SpellConfig.R2.Range);
+            if (target != null && Extensions.UltimateMode == UltimateMode.Second && target.Distance(Global.Player) >= SpellConfig.R2.Range - 100 && target.HealthPercent() <= 40)
             {
                 SpellManager.CastR2(target);
             }
@@ -56,20 +56,20 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
 
         private static void ExecuteCombo()
         {
-            var target = GlobalExtension.TargetSelector.GetTarget(Extensions.EngageRange() + 50);
+            var target = Global.TargetSelector.GetTarget(Extensions.EngageRange() + 50);
             if (target == null)
             {
                 return;
             }
 
-            if (SpellConfig.Q.Ready || SpellConfig.W.Ready && target.Distance(GlobalExtension.Player) <= GlobalExtension.Player.AttackRange + 65)
+            if (SpellConfig.Q.Ready || SpellConfig.W.Ready && target.Distance(Global.Player) <= Global.Player.AttackRange + 65 && Global.Orbwalker.CanAttack())
             {
-                GlobalExtension.Orbwalker.Attack(target);
+                Global.Orbwalker.Attack(target);
             }
 
             if (SpellConfig.E.Ready)
             {
-                GlobalExtension.Player.SpellBook.CastSpell(SpellSlot.E, target.ServerPosition);
+                Global.Player.SpellBook.CastSpell(SpellSlot.E, target.ServerPosition);
             }
             else if (SpellManager.InsideKiBurst(target) && SpellConfig.W.Ready && !CanCastR1(target))
             {
@@ -83,7 +83,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
 
         private static void Flash()
         {
-            var target = GlobalExtension.TargetSelector.GetTarget(1200);
+            var target = Global.TargetSelector.GetTarget(1200);
             if (target == null || target.IsUnderEnemyTurret())
             {
                 return;
@@ -92,8 +92,8 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
             Extensions.AllIn = MenuConfig.Combo["Flash"].Enabled &&
                                SummonerSpells.Flash.Ready &&
                                SpeedItUp(target) &&
-                               target.Distance(GlobalExtension.Player) > 500 &&
-                               target.Distance(GlobalExtension.Player) < 720;
+                               target.Distance(Global.Player) > 500 &&
+                               target.Distance(Global.Player) < 720;
 
             if (!Extensions.AllIn)
             {
@@ -110,7 +110,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
 
         private static bool AutoBeforeR2(GameObject target)
         {
-            return target.Distance(GlobalExtension.Player) < GlobalExtension.Player.AttackRange
+            return target.Distance(Global.Player) < Global.Player.AttackRange
                    && SpellConfig.R2.Ready
                    && Extensions.UltimateMode == UltimateMode.Second
                    && MenuConfig.Combo["R2"].Value == 1;
@@ -118,9 +118,9 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
 
         private static bool SpeedItUp(Obj_AI_Base target)
         {
-            return target.Health < Dmg.Damage(target) * .35 && GlobalExtension.Player.HealthPercent() >= 65 ||
-                   target.Health < GlobalExtension.Player.GetAutoAttackDamage(target) && GameObjects.AllyHeroes.FirstOrDefault(x => x.Distance(target) < 300) == null ||
-                   target.Health < Dmg.Damage(target) * .75f && target.HealthPercent() <= 40;
+            return target.Health < Dmg.Damage(target) * .3 && Global.Player.HealthPercent() >= 65 ||
+                   target.Health < Global.Player.GetAutoAttackDamage(target) && GameObjects.AllyHeroes.FirstOrDefault(x => x.Distance(target) < 300) == null ||
+                   target.Health < Dmg.Damage(target) * .75f && target.HealthPercent() <= 25;
         }
     }
 }

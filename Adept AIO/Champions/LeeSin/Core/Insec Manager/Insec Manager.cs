@@ -21,7 +21,7 @@ namespace Adept_AIO.Champions.LeeSin.Core.Insec_Manager
 
         public float DistanceBehindTarget(Obj_AI_Base target)
         {
-            return Math.Min((GlobalExtension.Player.BoundingRadius + target.BoundingRadius + 50) * 1.25f, SpellConfig.R.Range);
+            return Math.Min((Global.Player.BoundingRadius + target.BoundingRadius + 50) * 1.25f, SpellConfig.R.Range);
         }
 
         public Vector3 InsecPosition(Obj_AI_Base target)
@@ -32,8 +32,8 @@ namespace Adept_AIO.Champions.LeeSin.Core.Insec_Manager
 
         public Vector3 GetTargetEndPosition()
         {
-            var ally = GameObjects.AllyHeroes.FirstOrDefault(x => x.Distance(GlobalExtension.Player) <= 2000);
-            var turret = GameObjects.AllyTurrets.OrderBy(x => x.Distance(GlobalExtension.Player)).FirstOrDefault();
+            var ally = GameObjects.AllyHeroes.FirstOrDefault(x => x.Distance(Global.Player) <= 2000);
+            var turret = GameObjects.AllyTurrets.OrderBy(x => x.Distance(Global.Player)).FirstOrDefault();
 
             switch (InsecPositionValue)
             {

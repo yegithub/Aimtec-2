@@ -10,16 +10,9 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
 {
     internal class Jungle
     {
-        public static void OnPostAttack()
+        public static void OnPostAttack(Obj_AI_Minion mob)
         {
-            var mob = GameObjects.Jungle.FirstOrDefault(x => x.Distance(GlobalExtension.Player) < 500 &&
-                                                             x.MaxHealth > 5);
-            if (mob == null)
-            {
-                return;
-            }
-
-            if (MenuConfig.Jungle["Check"].Enabled && GlobalExtension.Player.CountEnemyHeroesInRange(1500) >= 1)
+            if (mob == null || mob.MaxHealth <= 5 || MenuConfig.Jungle["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(1500) >= 1)
             {
                 return;
             }
@@ -40,12 +33,11 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
             }
         }
 
-
         public static void OnUpdate()
         {
             if (SpellConfig.Q.Ready)
             {
-                var legendary = GameObjects.JungleLegendary.FirstOrDefault(x => x.Health < GlobalExtension.Player.GetSpellDamage(x, SpellSlot.Q));
+                var legendary = GameObjects.JungleLegendary.FirstOrDefault(x => x.Health < Global.Player.GetSpellDamage(x, SpellSlot.Q));
                 if (legendary == null)
                 {
                     return;

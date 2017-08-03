@@ -8,7 +8,7 @@ namespace Adept_AIO.Champions.Rengar.Update.Miscellaneous
     {
         public static void PostAttack(object sender, PostAttackEventArgs args)
         {
-            switch (GlobalExtension.Orbwalker.Mode)
+            switch (Global.Orbwalker.Mode)
             {
                 case OrbwalkingMode.Combo:
                     Combo.OnPostAttack();
@@ -22,12 +22,12 @@ namespace Adept_AIO.Champions.Rengar.Update.Miscellaneous
 
         public static void OnUpdate()
         {
-            if (GlobalExtension.Player.IsDead)
+            if (Global.Player.IsDead)
             {
                 return;
             }
 
-            switch (GlobalExtension.Orbwalker.Mode)
+            switch (Global.Orbwalker.Mode)
             {
                 case OrbwalkingMode.Combo:
                     Combo.OnUpdate();

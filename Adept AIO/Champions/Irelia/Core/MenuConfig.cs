@@ -20,7 +20,7 @@ namespace Adept_AIO.Champions.Irelia.Core
             MainMenu = new Menu(string.Empty, "Adept AIO", true);
             MainMenu.Attach();
 
-            GlobalExtension.Orbwalker.Attach(MainMenu);
+            Global.Orbwalker.Attach(MainMenu);
 
             Combo = new Menu("Combo", "Combo")
             {

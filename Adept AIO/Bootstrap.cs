@@ -24,16 +24,16 @@ namespace Adept_AIO
 
         private static void GameEvents_GameStart()
         {
-            if (Valid.All(x => GlobalExtension.Player.ChampionName != x))
+            if (Valid.All(x => Global.Player.ChampionName != x))
             {
                 return;
             }
 
             SummonerSpells.Init();
             GameObjects.Init();
-            GlobalExtension.Init();
+            Global.Init();
 
-            switch (GlobalExtension.Player.ChampionName)
+            switch (Global.Player.ChampionName)
             {
                 case "Irelia":
                     Irelia.Init();

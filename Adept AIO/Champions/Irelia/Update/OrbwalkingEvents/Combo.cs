@@ -15,7 +15,7 @@ namespace Adept_AIO.Champions.Irelia.Update.OrbwalkingEvents
         {
             if (SpellConfig.E.Ready)
             {
-                if (((Obj_AI_Base)target).HealthPercent() <= GlobalExtension.Player.HealthPercent() || Dmg.Damage((Obj_AI_Base)target) * 2 > target.Health)
+                if (((Obj_AI_Base)target).HealthPercent() <= Global.Player.HealthPercent() || Dmg.Damage((Obj_AI_Base)target) * 2 > target.Health)
                 {
                     preAttackEventArgs.Cancel = true;
                     SpellConfig.E.CastOnUnit(target);
@@ -31,12 +31,12 @@ namespace Adept_AIO.Champions.Irelia.Update.OrbwalkingEvents
             }
 
             SpellConfig.W.Cast();
-            GlobalExtension.Orbwalker.ResetAutoAttackTimer();
+            Global.Orbwalker.ResetAutoAttackTimer();
         }
 
         public static void OnUpdate()
         {
-            if (GlobalExtension.Orbwalker.IsWindingUp)
+            if (Global.Orbwalker.IsWindingUp)
             {
                 return;
             }
@@ -47,13 +47,13 @@ namespace Adept_AIO.Champions.Irelia.Update.OrbwalkingEvents
 
             if (SpellConfig.Q.Ready)
             {
-                var killable = GlobalExtension.TargetSelector.GetTarget(SpellConfig.Q.Range);
+                var killable = Global.TargetSelector.GetTarget(SpellConfig.Q.Range);
                 if (killable != null && ganked || Dmg.Damage(killable)*1.2 > killable?.Health)
                 {
                     SpellConfig.Q.CastOnUnit(killable);
                 }
 
-                var longRangeTarget = GlobalExtension.TargetSelector.GetTarget(SpellConfig.Q.Range * 3);
+                var longRangeTarget = Global.TargetSelector.GetTarget(SpellConfig.Q.Range * 3);
 
                 if (longRangeTarget == null || 
                     longRangeTarget.IsUnderEnemyTurret() && MenuConfig.Combo["Turret"].Enabled && longRangeTarget.Health > Dmg.Damage(longRangeTarget))
@@ -61,8 +61,8 @@ namespace Adept_AIO.Champions.Irelia.Update.OrbwalkingEvents
                     return;
                 }
 
-                var minion = GameObjects.EnemyMinions.Where(x => x.Distance(GlobalExtension.Player) < SpellConfig.Q.Range &&
-                                                                 x.Distance(longRangeTarget) < GlobalExtension.Player.Distance(longRangeTarget) &&
+                var minion = GameObjects.EnemyMinions.Where(x => x.Distance(Global.Player) < SpellConfig.Q.Range &&
+                                                                 x.Distance(longRangeTarget) < Global.Player.Distance(longRangeTarget) &&
                                                                  x.Distance(longRangeTarget) < SpellConfig.Q.Range * 3)
                                                                  .OrderBy(x => x.Distance(longRangeTarget))
                                                                  .FirstOrDefault();
@@ -72,33 +72,33 @@ namespace Adept_AIO.Champions.Irelia.Update.OrbwalkingEvents
                     return;
                 }
 
-                if (minion.Health < GlobalExtension.Player.GetSpellDamage(minion, SpellSlot.Q))
+                if (minion.Health < Global.Player.GetSpellDamage(minion, SpellSlot.Q))
                 {
                     SpellConfig.Q.CastOnUnit(minion);
                 }
                 else if (SpellConfig.R.Ready && minion.Health >
-                    GlobalExtension.Player.GetSpellDamage(minion, SpellSlot.Q) &&
-                    minion.Health < GlobalExtension.Player.GetSpellDamage(minion, SpellSlot.R) +
-                    GlobalExtension.Player.GetSpellDamage(minion, SpellSlot.Q) &&
+                    Global.Player.GetSpellDamage(minion, SpellSlot.Q) &&
+                    minion.Health < Global.Player.GetSpellDamage(minion, SpellSlot.R) +
+                    Global.Player.GetSpellDamage(minion, SpellSlot.Q) &&
                     (killable?.Health < Dmg.Damage(killable) || killable.HealthPercent() <= 40))
                 {
                     SpellConfig.R.Cast(minion);
                 }
             }
 
-            var target = GlobalExtension.TargetSelector.GetTarget(SpellConfig.R.Range);
+            var target = Global.TargetSelector.GetTarget(SpellConfig.R.Range);
             if (target == null)
             {
                 return;
             }
 
 
-            if (MenuConfig.Combo["Killable"].Enabled && target.Distance(GlobalExtension.Player) < SpellConfig.Q.Range && target.Health < Dmg.Damage(target) && SpellConfig.Q.Ready)
+            if (MenuConfig.Combo["Killable"].Enabled && target.Distance(Global.Player) < SpellConfig.Q.Range && target.Health < Dmg.Damage(target) && SpellConfig.Q.Ready)
             {
                 SpellConfig.Q.CastOnUnit(target);
             }
 
-            if (SpellConfig.E.Ready && target.Distance(GlobalExtension.Player) <= SpellConfig.E.Range)
+            if (SpellConfig.E.Ready && target.Distance(Global.Player) <= SpellConfig.E.Range)
             {
                 if (ganked)
                 {
@@ -109,7 +109,7 @@ namespace Adept_AIO.Champions.Irelia.Update.OrbwalkingEvents
                     SpellConfig.E.CastOnUnit(target);
                 }
 
-                if (target.HealthPercent() <= GlobalExtension.Player.HealthPercent() || Dmg.Damage(target) * 2 > target.Health)
+                if (target.HealthPercent() <= Global.Player.HealthPercent() || Dmg.Damage(target) * 2 > target.Health)
                 {
                     SpellConfig.E.CastOnUnit(target);
                 }

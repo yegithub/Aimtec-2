@@ -16,7 +16,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.Miscellaneous
                 Beyblade.OnPostAttack();
             }
 
-            switch (GlobalExtension.Orbwalker.Mode)
+            switch (Global.Orbwalker.Mode)
             {
                 case OrbwalkingMode.Combo:
                     Combo.OnPostAttack();
@@ -33,12 +33,12 @@ namespace Adept_AIO.Champions.Yasuo.Update.Miscellaneous
 
         public static void OnUpdate()
         {
-            if (GlobalExtension.Player.IsDead)
+            if (Global.Player.IsDead)
             {
                 return;
             }
 
-            switch (GlobalExtension.Orbwalker.Mode)
+            switch (Global.Orbwalker.Mode)
             {
                 case OrbwalkingMode.Combo:
                     Combo.OnUpdate();

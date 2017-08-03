@@ -15,7 +15,7 @@ namespace Adept_AIO.Champions.Kayn
 
             Game.OnUpdate += Killsteal.OnUpdate;
             Game.OnUpdate += Manager.OnUpdate;
-            GlobalExtension.Orbwalker.PostAttack += Manager.PostAttack;
+            Global.Orbwalker.PostAttack += Manager.PostAttack;
 
             Render.OnRender += DrawManager.RenderManager;
         }

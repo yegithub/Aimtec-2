@@ -35,14 +35,14 @@ namespace Adept_AIO.Champions.Yasuo.Core
         public static Obj_AI_Minion GetDashableMinion(Obj_AI_Base target)
         {
             return GameObjects.EnemyMinions.Where(x => !x.HasBuff("YasuoDashWrapper") &&
-                                                   x.Distance(GlobalExtension.Player) <= SpellConfig.E.Range)
+                                                   x.Distance(Global.Player) <= SpellConfig.E.Range)
                                                  .LastOrDefault(x => DashDistance(x, target) > 0 && 
-                                                  x.Distance(target) < GlobalExtension.Player.Distance(target));
+                                                  x.Distance(target) < Global.Player.Distance(target));
         }
 
         public static Obj_AI_Minion GetDashableMinion()
         {
-            return GameObjects.EnemyMinions.LastOrDefault(x => !x.HasBuff("YasuoDashWrapper") && x.Distance(GlobalExtension.Player) <= SpellConfig.E.Range);
+            return GameObjects.EnemyMinions.LastOrDefault(x => !x.HasBuff("YasuoDashWrapper") && x.Distance(Global.Player) <= SpellConfig.E.Range);
         }
 
         public static Vector3 WalkBehindMinion(Obj_AI_Minion minion, Obj_AI_Base target)
@@ -62,7 +62,7 @@ namespace Adept_AIO.Champions.Yasuo.Core
             {
                 return 0;
             }
-            return GlobalExtension.Player.ServerPosition.Extend(minion.ServerPosition, overrideValue).Distance(target.ServerPosition);
+            return Global.Player.ServerPosition.Extend(minion.ServerPosition, overrideValue).Distance(target.ServerPosition);
         }
     }
 }

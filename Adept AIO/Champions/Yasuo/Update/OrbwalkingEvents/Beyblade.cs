@@ -11,7 +11,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
     {
         public static void OnPostAttack()
         {
-            var target = GlobalExtension.TargetSelector.GetSelectedTarget();
+            var target = Global.TargetSelector.GetSelectedTarget();
             if (target == null)
             {
                 return;
@@ -29,20 +29,20 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
 
         public static void OnKeyPressed()
         {
-            var target = GlobalExtension.TargetSelector.GetSelectedTarget();
+            var target = Global.TargetSelector.GetSelectedTarget();
             if (target == null)
             {
                 return;
             }
 
 
-            var distance = target.Distance(GlobalExtension.Player);
+            var distance = target.Distance(Global.Player);
             var minion = Extension.GetDashableMinion(target);
             var dashDistance = Extension.DashDistance(minion, target);
 
-            if (GlobalExtension.Orbwalker.CanAttack() && distance <= GlobalExtension.Player.AttackRange + 65)
+            if (Global.Orbwalker.CanAttack() && distance <= Global.Player.AttackRange + 65)
             {
-                GlobalExtension.Orbwalker.Attack(target);
+                Global.Orbwalker.Attack(target);
             }
 
             if (SpellConfig.R.Ready && distance > 300 && Extension.KnockedUp(target))

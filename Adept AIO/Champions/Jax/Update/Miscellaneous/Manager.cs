@@ -10,7 +10,7 @@ namespace Adept_AIO.Champions.Jax.Update.Miscellaneous
     {
         public static void PostAttack(object sender, PostAttackEventArgs args)
         {
-            switch (GlobalExtension.Orbwalker.Mode)
+            switch (Global.Orbwalker.Mode)
             {
                     case OrbwalkingMode.Combo:
                     Combo.OnPostAttack();
@@ -26,7 +26,7 @@ namespace Adept_AIO.Champions.Jax.Update.Miscellaneous
 
         public static void OnUpdate()
         {
-            if (GlobalExtension.Player.IsDead)
+            if (Global.Player.IsDead)
             {
                 return;
             }
@@ -36,7 +36,7 @@ namespace Adept_AIO.Champions.Jax.Update.Miscellaneous
                 SpellConfig.E.LastCastAttemptT = 0;
             }
           
-            switch (GlobalExtension.Orbwalker.Mode)
+            switch (Global.Orbwalker.Mode)
             {
                     case OrbwalkingMode.Combo:
                     Combo.OnUpdate();

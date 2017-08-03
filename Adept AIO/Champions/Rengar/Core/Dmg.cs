@@ -13,21 +13,21 @@ namespace Adept_AIO.Champions.Rengar.Core
                 return 0;
             }
 
-            var dmg = GlobalExtension.Player.GetAutoAttackDamage(target);
+            var dmg = Global.Player.GetAutoAttackDamage(target);
 
             if (SpellConfig.W.Ready)
             {
-                dmg += GlobalExtension.Player.GetSpellDamage(target, SpellSlot.W);
+                dmg += Global.Player.GetSpellDamage(target, SpellSlot.W);
             }
 
             if (SpellConfig.Q.Ready)
             {
-                dmg += GlobalExtension.Player.GetSpellDamage(target, SpellSlot.Q) + dmg;
+                dmg += Global.Player.GetSpellDamage(target, SpellSlot.Q) + dmg;
             }
 
             if (SpellConfig.E.Ready)
             {
-                dmg += GlobalExtension.Player.GetSpellDamage(target, SpellSlot.E);
+                dmg += Global.Player.GetSpellDamage(target, SpellSlot.E);
             }
             return dmg;
         }

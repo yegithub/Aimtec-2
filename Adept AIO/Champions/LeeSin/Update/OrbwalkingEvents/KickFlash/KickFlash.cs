@@ -45,6 +45,6 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.KickFlash
 
         public bool Enabled { get; set; }
 
-        private Obj_AI_Hero target => GlobalExtension.TargetSelector.GetSelectedTarget();
+        private Obj_AI_Hero target => Global.TargetSelector.GetSelectedTarget();
     }
 }

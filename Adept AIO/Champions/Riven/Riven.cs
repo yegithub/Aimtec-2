@@ -20,8 +20,9 @@ namespace Adept_AIO.Champions.Riven
             Obj_AI_Base.OnProcessSpellCast += SpellManager.OnProcessSpellCast;
             Obj_AI_Base.OnProcessSpellCast += SafetyMeasure.OnProcessSpellCast;
 
-            GlobalExtension.Orbwalker.PostAttack += Manager.PostAttack;
-            Render.OnRender += DrawManager.RenderManager;
+            Global.Orbwalker.PostAttack += Manager.PostAttack;
+            Render.OnRender += DrawManager.RenderBasics;
+            Render.OnPresent += DrawManager.DrawDamage;   
         }
     }
 }

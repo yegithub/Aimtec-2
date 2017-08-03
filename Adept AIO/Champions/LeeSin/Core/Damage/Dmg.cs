@@ -21,21 +21,21 @@ namespace Adept_AIO.Champions.LeeSin.Core.Damage
                 return 0;
             }
 
-            var dmg = GlobalExtension.Player.GetAutoAttackDamage(target);
+            var dmg = Global.Player.GetAutoAttackDamage(target);
 
             if (SpellConfig.E.Ready)
             {
-                dmg += GlobalExtension.Player.GetSpellDamage(target, SpellSlot.E) + dmg;
+                dmg += Global.Player.GetSpellDamage(target, SpellSlot.E) + dmg;
             }
 
             if (SpellConfig.Q.Ready)
             {
-                dmg += GlobalExtension.Player.GetSpellDamage(target, SpellSlot.Q) + dmg;
+                dmg += Global.Player.GetSpellDamage(target, SpellSlot.Q) + dmg;
             }
 
             if (SpellConfig.R.Ready)
             {
-                dmg += GlobalExtension.Player.GetSpellDamage(target, SpellSlot.R);
+                dmg += Global.Player.GetSpellDamage(target, SpellSlot.R);
             }
             return dmg;
         }

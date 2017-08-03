@@ -25,7 +25,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.LastHit
                 return;
             }
 
-            var minions = GameObjects.EnemyMinions.OrderBy(x => -x.Health).LastOrDefault(x => x.IsValidTarget(SpellConfig.Q.Range) && x.Health < GlobalExtension.Player.GetSpellDamage(x, SpellSlot.Q));
+            var minions = GameObjects.EnemyMinions.OrderBy(x => -x.Health).LastOrDefault(x => x.IsValidTarget(SpellConfig.Q.Range) && x.Health < Global.Player.GetSpellDamage(x, SpellSlot.Q));
             if (minions == null || !SpellConfig.Q.Ready || SpellConfig.IsQ2())
             {
                 return;

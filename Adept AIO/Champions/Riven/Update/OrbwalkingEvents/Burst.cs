@@ -15,13 +15,10 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
             if (SpellConfig.R.Ready && Extensions.UltimateMode == UltimateMode.Second)
             {
                 SpellConfig.R2.Cast(target);
-                DelayAction.Queue(1, () =>
-                {
-                    SpellManager.CastQ(target); 
-                    SpellManager.CastW(target); // Extra check
-                });
+                SpellManager.CastQ(target);
             }
-            else if (SpellConfig.Q.Ready)
+
+            if (SpellConfig.Q.Ready)
             {
                 SpellManager.CastQ(target);
             }
@@ -31,20 +28,19 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
             }
         }
 
-
         public static void OnUpdate()
         {
-            var target = GlobalExtension.TargetSelector.GetSelectedTarget();
+            var target = Global.TargetSelector.GetSelectedTarget();
             if (target == null || !MenuConfig.BurstMenu[target.ChampionName].Enabled)
             {
                 return;
             }
 
-            var distance = target.Distance(GlobalExtension.Player);
+            var distance = target.Distance(Global.Player);
 
-            if (GlobalExtension.Orbwalker.CanAttack() && distance <= GlobalExtension.Player.AttackRange + 65)
+            if (Global.Orbwalker.CanAttack() && distance <= Global.Player.AttackRange + 65)
             {
-                GlobalExtension.Orbwalker.Attack(target);
+                Global.Orbwalker.Attack(target);
             }
             
             Extensions.AllIn = SummonerSpells.Flash != null && SummonerSpells.Flash.Ready;
@@ -64,8 +60,8 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
 
             if (Extensions.AllIn && distance < Extensions.FlashRange() && SpellConfig.W.Ready && SpellConfig.R.Ready)
             {
-                GlobalExtension.Player.SpellBook.CastSpell(SpellSlot.W);
-                SummonerSpells.Flash?.Cast(target.ServerPosition.Extend(GlobalExtension.Player.ServerPosition, target.BoundingRadius));
+                Global.Player.SpellBook.CastSpell(SpellSlot.W);
+                SummonerSpells.Flash?.Cast(target.ServerPosition.Extend(Global.Player.ServerPosition, target.BoundingRadius));
             }   
             else if (SpellConfig.E.Ready)
             {

@@ -23,29 +23,29 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.LaneClear
 
         public void OnPostAttack()
         {
-            var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(GlobalExtension.Player) < GlobalExtension.Player.AttackRange + x.BoundingRadius &&
-                                                                      x.Health > GlobalExtension.Player.GetAutoAttackDamage(x));
+            var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(Global.Player) < Global.Player.AttackRange + x.BoundingRadius &&
+                                                                      x.Health > Global.Player.GetAutoAttackDamage(x));
 
-            if (minion == null || !CheckEnabled && GlobalExtension.Player.CountEnemyHeroesInRange(2000) >= 1)
+            if (minion == null || !CheckEnabled && Global.Player.CountEnemyHeroesInRange(2000) >= 1)
             {
                 return;
             }
 
-            if (SpellConfig.E.Ready && EEnabled && minion.Health < GlobalExtension.Player.GetSpellDamage(minion, SpellSlot.E))
+            if (SpellConfig.E.Ready && EEnabled && minion.Health < Global.Player.GetSpellDamage(minion, SpellSlot.E))
             {
                 SpellConfig.E.Cast(minion);
             }
             else if (SpellConfig.W.Ready && WEnabled)
             {
-                SpellConfig.W.CastOnUnit(GlobalExtension.Player);
+                SpellConfig.W.CastOnUnit(Global.Player);
             }
         }
 
         public void OnUpdate()
         {
-            var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(GlobalExtension.Player) < SpellConfig.Q.Range + x.BoundingRadius);
+            var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(Global.Player) < SpellConfig.Q.Range + x.BoundingRadius);
 
-            if (minion == null || !CheckEnabled && GlobalExtension.Player.CountEnemyHeroesInRange(2000) >= 1)
+            if (minion == null || !CheckEnabled && Global.Player.CountEnemyHeroesInRange(2000) >= 1)
             {
                 return;
             }

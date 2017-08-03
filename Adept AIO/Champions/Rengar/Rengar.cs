@@ -14,7 +14,7 @@ namespace Adept_AIO.Champions.Rengar
             SpellConfig.Load();
 
             Game.OnUpdate += Manager.OnUpdate;
-            GlobalExtension.Orbwalker.PostAttack += Manager.PostAttack;
+            Global.Orbwalker.PostAttack += Manager.PostAttack;
             Render.OnRender += DrawManager.RenderManager;
         }
     }

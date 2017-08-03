@@ -8,18 +8,18 @@ namespace Adept_AIO.Champions.Kayn.Update.OrbwalkingEvents
     {
         public static void OnUpdate()
         {
-            if (SpellConfig.W.Ready && MenuConfig.Harass["W"].Enabled && MenuConfig.Harass["W"].Value <= GlobalExtension.Player.ManaPercent())
+            if (SpellConfig.W.Ready && MenuConfig.Harass["W"].Enabled && MenuConfig.Harass["W"].Value <= Global.Player.ManaPercent())
             {
-                var target = GlobalExtension.TargetSelector.GetTarget(SpellConfig.W.Range);
+                var target = Global.TargetSelector.GetTarget(SpellConfig.W.Range);
                 if (target != null)
                 {
                     SpellConfig.W.Cast(target);
                 }
             }
 
-            if (SpellConfig.Q.Ready && MenuConfig.Harass["Q"].Enabled && MenuConfig.Harass["Q"].Value <= GlobalExtension.Player.ManaPercent())
+            if (SpellConfig.Q.Ready && MenuConfig.Harass["Q"].Enabled && MenuConfig.Harass["Q"].Value <= Global.Player.ManaPercent())
             {
-                var target = GlobalExtension.TargetSelector.GetTarget(SpellConfig.Q.Range);
+                var target = Global.TargetSelector.GetTarget(SpellConfig.Q.Range);
                 if (target != null)
                 {
                     SpellConfig.Q.Cast(target);

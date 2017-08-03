@@ -6,11 +6,8 @@ namespace Adept_AIO.Champions.Riven.Core
     {
         public static float FlashRange()
         {
-            if (AllIn)
-            {
-                return (425 + SpellConfig.W.Range + 120);
-            }
-            return 0;
+            var flashRange = 425 + SpellConfig.W.Range + 120;
+            return AllIn ? flashRange : 0;
         }
 
         public static int EngageRange()
@@ -23,8 +20,9 @@ namespace Adept_AIO.Champions.Riven.Core
             }
             else
             {
-                range += GlobalExtension.Player.AttackRange;
+                range += Global.Player.AttackRange;
             }
+
             if (SpellConfig.E.Ready)
             {
                 range += SpellConfig.E.Range;
@@ -39,6 +37,7 @@ namespace Adept_AIO.Champions.Riven.Core
 
         public static bool DidJustAuto;
         public static bool AllIn;
+
         public static int CurrentQCount = 1;
         public static int LastQCastAttempt;
 
@@ -50,9 +49,9 @@ namespace Adept_AIO.Champions.Riven.Core
 
     public enum HarassPattern
     {
-        SemiCombo = 0, // Semi Combo
-        AvoidTarget = 1, // Avoid target
-        BackToTarget = 2, // Back to target
+        SemiCombo = 0,
+        AvoidTarget = 1, 
+        BackToTarget = 2 
     }
 
     public enum UltimateMode

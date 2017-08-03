@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Adept_AIO.Champions.Riven.Core;
 using Adept_AIO.SDK.Extensions;
 using Aimtec;
@@ -11,34 +12,41 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
     {
         public static float lastReset;
         public static bool IAmSoTired;
+        public static bool IsTargetMoving;
       
         public static void Reset()
         {
-            if (GlobalExtension.Orbwalker.Mode == OrbwalkingMode.None)
+            if (Global.Orbwalker.Mode == OrbwalkingMode.None)
             {
-                GlobalExtension.Orbwalker.AttackingEnabled = true;
+                Global.Orbwalker.AttackingEnabled = true;
                 return;
             }
 
-            GlobalExtension.Orbwalker.ResetAutoAttackTimer();
-            GlobalExtension.Orbwalker.AttackingEnabled = false;
-            GlobalExtension.Orbwalker.Move(Game.CursorPos);
+            Global.Orbwalker.ResetAutoAttackTimer();
+            Global.Orbwalker.AttackingEnabled = false;
+            Global.Orbwalker.Move(Game.CursorPos);
 
             lastReset = Game.TickCount;
             IAmSoTired = true;
         }
 
-        public static int GetDelay()
+        public static float GetDelay()
         {
-            var temp = Game.Ping / 2 + 25 + (Extensions.CurrentQCount == 1 ? 320 : 300);
-            var delay = (int)(temp - GlobalExtension.Player.AttackSpeedMod * 17 - GlobalExtension.Player.GetSpell(SpellSlot.Q).Level);
-            var target = GameObjects.Enemy.FirstOrDefault(x => x.Distance(GlobalExtension.Player) <= GlobalExtension.Player.AttackRange);
+            var delay  = Game.Ping / 2f - Global.Player.AttackSpeedMod * 18;
+       
+            var enemyObject = ObjectManager.Get<Obj_AI_Base>().FirstOrDefault(x => x.Distance(Global.Player) <= Global.Player.AttackRange + 200 && !x.IsAlly && !x.IsMe);
 
-            if (target != null && target.IsMoving)
+            if (enemyObject != null && enemyObject.IsMoving)
             {
-                delay += 50; 
+                IsTargetMoving = true;
+                delay += Extensions.CurrentQCount == 1 ? 395 : 385;
             }
-
+            else
+            {
+                IsTargetMoving = false;
+                delay += Extensions.CurrentQCount == 1 ? 335 : 315;
+            }
+           
             return delay;
         }
     }

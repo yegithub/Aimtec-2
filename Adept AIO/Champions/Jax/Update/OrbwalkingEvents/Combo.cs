@@ -17,7 +17,7 @@ namespace Adept_AIO.Champions.Jax.Update.OrbwalkingEvents
             {
                 SpellConfig.W.Cast();
                 Items.CastTiamat();
-                GlobalExtension.Orbwalker.ResetAutoAttackTimer();
+                Global.Orbwalker.ResetAutoAttackTimer();
             }
             var target = GameObjects.EnemyHeroes.FirstOrDefault(x => x.IsValidAutoRange());
             if (target == null)
@@ -32,18 +32,18 @@ namespace Adept_AIO.Champions.Jax.Update.OrbwalkingEvents
 
         public static void OnUpdate()
         {
-            var target = GlobalExtension.TargetSelector.GetTarget(SpellConfig.Q.Range);
+            var target = Global.TargetSelector.GetTarget(SpellConfig.Q.Range);
             if (target == null)
             {
                 return;
             }
 
-            if (SpellConfig.R.Ready && GlobalExtension.Player.CountEnemyHeroesInRange(SpellConfig.Q.Range) >= MenuConfig.Combo["R"].Value && MenuConfig.Combo["R"].Enabled)
+            if (SpellConfig.R.Ready && Global.Player.CountEnemyHeroesInRange(SpellConfig.Q.Range) >= MenuConfig.Combo["R"].Value && MenuConfig.Combo["R"].Enabled)
             {
                 SpellConfig.R.Cast();
             }
 
-            if (SpellConfig.E.Ready && target.Distance(GlobalExtension.Player) <= MenuConfig.Combo["E"].Value && MenuConfig.Combo["E"].Enabled)
+            if (SpellConfig.E.Ready && target.Distance(Global.Player) <= MenuConfig.Combo["E"].Value && MenuConfig.Combo["E"].Enabled)
             {
                 SpellManager.CastE(target);
             }
@@ -55,11 +55,11 @@ namespace Adept_AIO.Champions.Jax.Update.OrbwalkingEvents
                 return; 
             }
 
-            if (target.Distance(GlobalExtension.Player) > SpellConfig.Q.Range)
+            if (target.Distance(Global.Player) > SpellConfig.Q.Range)
             {
                 var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsValid &&
                                                                           x.Distance(target) < 300 &&
-                                                                          x.Distance(target) < GlobalExtension.Player.Distance(target));
+                                                                          x.Distance(target) < Global.Player.Distance(target));
                 if (minion != null)
                 {
                     SpellConfig.Q.CastOnUnit(minion);

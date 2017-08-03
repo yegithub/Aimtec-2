@@ -16,9 +16,10 @@ namespace Adept_AIO.Champions.Yasuo
             Game.OnUpdate += Manager.OnUpdate;
             Obj_AI_Base.OnPlayAnimation += Manager.OnPlayAnimation;
             Obj_AI_Base.OnProcessSpellCast += SafetyMeasure.OnProcessSpellCast;
-            GlobalExtension.Orbwalker.PostAttack += Manager.PostAttack;
+            Global.Orbwalker.PostAttack += Manager.PostAttack;
 
             Render.OnRender += DrawManager.RenderManager;
+            Render.OnPresent += DrawManager.DrawDamage;
             BuffManager.OnAddBuff += Manager.BuffManagerOnOnAddBuff;
             BuffManager.OnRemoveBuff += Manager.BuffManagerOnOnRemoveBuff;
         }

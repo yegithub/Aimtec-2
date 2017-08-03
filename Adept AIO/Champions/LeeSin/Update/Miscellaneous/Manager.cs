@@ -31,7 +31,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.Miscellaneous
 
         public void PostAttack(object sender, PostAttackEventArgs args)
         {
-            switch (GlobalExtension.Orbwalker.Mode)
+            switch (Global.Orbwalker.Mode)
             {
                 case OrbwalkingMode.Combo:
                     _combo.OnPostAttack(args.Target);
@@ -48,14 +48,14 @@ namespace Adept_AIO.Champions.LeeSin.Update.Miscellaneous
 
         public void OnUpdate()
         {
-            if (GlobalExtension.Player.IsDead)
+            if (Global.Player.IsDead)
             {
                 return;
             }
 
             _insec?.OnKeyPressed();
 
-            switch (GlobalExtension.Orbwalker.Mode)
+            switch (Global.Orbwalker.Mode)
             {
                 case OrbwalkingMode.Combo:
                     _combo.OnUpdate();

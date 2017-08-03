@@ -13,21 +13,21 @@ namespace Adept_AIO.Champions.Kayn.Core
                 return 0;
             }
 
-            var dmg = GlobalExtension.Player.GetAutoAttackDamage(target);
+            var dmg = Global.Player.GetAutoAttackDamage(target);
 
             if (SpellConfig.Q.Ready)
             {
-                dmg += GlobalExtension.Player.GetSpellDamage(target, SpellSlot.Q) + dmg;
+                dmg += Global.Player.GetSpellDamage(target, SpellSlot.Q) + dmg;
             }
 
             if (SpellConfig.W.Ready)
             {
-                dmg += GlobalExtension.Player.GetSpellDamage(target, SpellSlot.W);
+                dmg += Global.Player.GetSpellDamage(target, SpellSlot.W);
             }
 
             if (SpellConfig.R.Ready)
             {
-                dmg += GlobalExtension.Player.GetSpellDamage(target, SpellSlot.R) + dmg;
+                dmg += Global.Player.GetSpellDamage(target, SpellSlot.R) + dmg;
             }
             return dmg;
         }

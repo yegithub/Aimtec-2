@@ -1,6 +1,6 @@
 using Aimtec;
 
-namespace Adept_AIO.Champions.LeeSin.Core.Damage
+namespace Adept_AIO.SDK.Extensions
 {
     internal interface IDmg
     {

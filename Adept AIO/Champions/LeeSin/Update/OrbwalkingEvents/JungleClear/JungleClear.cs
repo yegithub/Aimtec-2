@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Adept_AIO.Champions.LeeSin.Core.Spells;
 using Adept_AIO.Champions.LeeSin.Update.Ward_Manager;
 using Adept_AIO.SDK.Extensions;
@@ -31,17 +30,17 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.JungleClear
 
         public void OnPostAttack(Obj_AI_Minion mob)
         {
-            if (mob == null || mob.Health < GlobalExtension.Player.GetAutoAttackDamage(mob))
+            if (mob == null || mob.Health < Global.Player.GetAutoAttackDamage(mob))
             {
                 return;
             }
 
             if (SpellConfig.Q.Ready && SpellConfig.IsQ2() && SpellConfig.QAboutToEnd)
             {
-                GlobalExtension.Player.SpellBook.CastSpell(SpellSlot.Q);
+                Global.Player.SpellBook.CastSpell(SpellSlot.Q);
             }
 
-            if (GlobalExtension.Player.Level <= 12)
+            if (Global.Player.Level <= 12)
             {
                 if (SpellConfig.PassiveStack() > 0)
                 {
@@ -49,7 +48,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.JungleClear
                 }
                 if (SpellConfig.W.Ready && WEnabled && !SpellConfig.Q.Ready)
                 {
-                    SpellConfig.W.CastOnUnit(GlobalExtension.Player);
+                    SpellConfig.W.CastOnUnit(Global.Player);
                 }
                 else if (SpellConfig.E.Ready && EEnabled && !SpellConfig.W.Ready)
                 {
@@ -72,7 +71,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.JungleClear
                 }
                 else if (SpellConfig.W.Ready && WEnabled && !SpellConfig.IsQ2())
                 {
-                    SpellConfig.W.CastOnUnit(GlobalExtension.Player);
+                    SpellConfig.W.CastOnUnit(Global.Player);
                 }
             }
         }
@@ -84,7 +83,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.JungleClear
                 return;
             }
 
-            var mob = ObjectManager.Get<Obj_AI_Minion>().FirstOrDefault(x => x.Distance(GlobalExtension.Player) < SpellConfig.Q.Range / 2 && x.GetJungleType() != GameObjects.JungleType.Unknown && x.MaxHealth > 5);
+            var mob = ObjectManager.Get<Obj_AI_Minion>().FirstOrDefault(x => x.Distance(Global.Player) < SpellConfig.Q.Range / 2 && x.GetJungleType() != GameObjects.JungleType.Unknown && x.MaxHealth > 5);
 
             if (mob == null)
             {
@@ -96,14 +95,14 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.JungleClear
                 return;
             }
 
-            if (SpellConfig.Q.Ready && SpellConfig.IsQ2() && mob.Health < GlobalExtension.Player.GetSpellDamage(mob, SpellSlot.Q, DamageStage.SecondCast))
+            if (SpellConfig.Q.Ready && SpellConfig.IsQ2() && mob.Health < Global.Player.GetSpellDamage(mob, SpellSlot.Q, DamageStage.SecondCast))
             {
-                GlobalExtension.Player.SpellBook.CastSpell(SpellSlot.Q);
+                Global.Player.SpellBook.CastSpell(SpellSlot.Q);
             }
 
             if (!SpellConfig.IsQ2() && Game.TickCount - SpellConfig.LastQ1CastAttempt > 500)
             {
-                GlobalExtension.Player.SpellBook.CastSpell(SpellSlot.Q, mob.Position);
+                Global.Player.SpellBook.CastSpell(SpellSlot.Q, mob.Position);
             }
         }
 
@@ -119,7 +118,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.JungleClear
 
         private double StealDamage(Obj_AI_Base mob)
         {
-           return SummonerSpells.SmiteMonsters() + (SpellConfig.IsQ2() ? GlobalExtension.Player.GetSpellDamage(mob, SpellSlot.Q, DamageStage.SecondCast) : 0);
+           return SummonerSpells.SmiteMonsters() + (SpellConfig.IsQ2() ? Global.Player.GetSpellDamage(mob, SpellSlot.Q, DamageStage.SecondCast) : 0);
         }
 
         private readonly string[] SmiteAlways = { "SRU_Dragon_Air", "SRU_Dragon_Fire", "SRU_Dragon_Earth", "SRU_Dragon_Water", "SRU_Dragon_Elder", "SRU_Baron", "SRU_RiftHerald" };
@@ -128,7 +127,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.JungleClear
 
         public void StealMobs()
         {
-            var smiteAbleMob = ObjectManager.Get<Obj_AI_Minion>().FirstOrDefault(x => x.Distance(GlobalExtension.Player) < 1300);
+            var smiteAbleMob = ObjectManager.Get<Obj_AI_Minion>().FirstOrDefault(x => x.Distance(Global.Player) < 1300);
 
             if (smiteAbleMob != null && (SmiteAlways.Contains(smiteAbleMob.UnitSkinName) || SmiteOptional.Contains(smiteAbleMob.UnitSkinName)))
             {
@@ -136,13 +135,13 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.JungleClear
                 {
                     if (SmiteOptional.Contains(smiteAbleMob.UnitSkinName) && SummonerSpells.Ammo("Smite") <= 1 || 
                         smiteAbleMob.UnitSkinName.ToLower().Contains("blue") && !BlueEnabled ||
-                        smiteAbleMob.UnitSkinName.ToLower().Contains("red") && GlobalExtension.Player.HealthPercent() <= 75)
+                        smiteAbleMob.UnitSkinName.ToLower().Contains("red") && Global.Player.HealthPercent() <= 75)
                     {
                         return;
                     }
 
                     if (SmiteOptional.Contains(smiteAbleMob.UnitSkinName) &&
-                        GlobalExtension.Player.HealthPercent() >= 70)
+                        Global.Player.HealthPercent() >= 70)
                     {
                         return;
                     }
@@ -159,7 +158,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.JungleClear
                 }
             }
 
-            var mob = GameObjects.JungleLegendary.FirstOrDefault(x => x.Distance(GlobalExtension.Player) <= 1500);
+            var mob = GameObjects.JungleLegendary.FirstOrDefault(x => x.Distance(Global.Player) <= 1500);
           
             if (mob == null || !SmiteEnabled)
             {
@@ -168,7 +167,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.JungleClear
           
             if (Q2Time > 0 && Game.TickCount - Q2Time <= 1500 && SummonerSpells.Smite != null && SummonerSpells.Smite.Ready && StealDamage(mob) > mob.Health)
             {
-                if (SpellConfig.W.Ready && SpellConfig.IsFirst(SpellConfig.W) && GlobalExtension.Player.Distance(mob) <= 500)
+                if (SpellConfig.W.Ready && SpellConfig.IsFirst(SpellConfig.W) && Global.Player.Distance(mob) <= 500)
                 {
                     SummonerSpells.Smite.CastOnUnit(mob);
                     _wardManager.WardJump(Positions.FirstOrDefault(), false);

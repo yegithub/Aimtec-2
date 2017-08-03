@@ -23,7 +23,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.Miscellaneous
                 return;
             }
 
-            if (args.End.Distance(GlobalExtension.Player.ServerPosition) <= 300)
+            if (args.End.Distance(Global.Player.ServerPosition) <= 300)
             {
                 SpellConfig.W.Cast(sender.ServerPosition);
             }

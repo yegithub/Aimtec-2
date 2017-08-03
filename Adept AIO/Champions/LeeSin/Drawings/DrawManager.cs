@@ -28,17 +28,17 @@ namespace Adept_AIO.Champions.LeeSin.Drawings
            
         public void RenderManager()
         {
-            if (GlobalExtension.Player.IsDead)
+            if (Global.Player.IsDead)
             {
                 return;
             }
 
             if (QEnabled && SpellConfig.Q.Ready)
             {
-                Render.Circle(GlobalExtension.Player.Position, SpellConfig.Q.Range, (uint)SegmentsValue, Color.IndianRed);
+                Render.Circle(Global.Player.Position, SpellConfig.Q.Range, (uint)SegmentsValue, Color.IndianRed);
             }
 
-            var selected = GlobalExtension.TargetSelector.GetSelectedTarget();
+            var selected = Global.TargetSelector.GetSelectedTarget();
 
             if (PositionEnabled && selected != null && _insecManager.InsecPosition(selected) != Vector3.Zero)
             {

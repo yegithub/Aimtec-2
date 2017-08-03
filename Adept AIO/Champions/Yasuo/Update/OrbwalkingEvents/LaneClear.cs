@@ -13,14 +13,14 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
     
         public static void OnPostAttack()
         {
-            if (MenuConfig.LaneClear["Check"].Enabled && GlobalExtension.Player.CountEnemyHeroesInRange(2000) != 0)
+            if (MenuConfig.LaneClear["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(2000) != 0)
             {
                 return;
             }
 
             if (SpellConfig.E.Ready && MenuConfig.LaneClear["Mode"].Value == 2)
             {
-                var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(GlobalExtension.Player) <= SpellConfig.E.Range &&
+                var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(Global.Player) <= SpellConfig.E.Range &&
                                                                           x.Distance(Game.CursorPos) < MenuConfig.Combo["Range"].Value &&
                                                                           !x.HasBuff("YasuoDashWrapper"));
                 if (minion == null || minion.IsUnderEnemyTurret())
@@ -32,7 +32,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
 
             if (SpellConfig.Q.Ready)
             {
-                var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(GlobalExtension.Player) <= SpellConfig.Q.Range);
+                var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(Global.Player) <= SpellConfig.Q.Range);
                 if (minion == null)
                 {
                     return;
@@ -63,12 +63,12 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
 
                         if (MenuConfig.LaneClear["Q3"].Enabled)
                         {
-                            GlobalExtension.Player.SpellBook.CastSpell(SpellSlot.Q, SpellConfig.Q.GetPrediction(m).CastPosition);
+                            Global.Player.SpellBook.CastSpell(SpellSlot.Q, SpellConfig.Q.GetPrediction(m).CastPosition);
                         }
                         break;
                     case Mode.DashingTornado:
                     case Mode.Dashing:
-                        var dashM = GameObjects.EnemyMinions.Where(x => Extension.DashDistance(x, (Obj_AI_Base) GlobalExtension.Orbwalker.GetOrbwalkingTarget()) <= 220);
+                        var dashM = GameObjects.EnemyMinions.Where(x => Extension.DashDistance(x, (Obj_AI_Base) Global.Orbwalker.GetOrbwalkingTarget()) <= 220);
 
                         var minions = dashM as Obj_AI_Minion[] ?? dashM.ToArray();
                         if (minions.Length >= 3)
@@ -79,17 +79,17 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                 }
             }
 
-            var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(GlobalExtension.Player) <= SpellConfig.E.Range &&
+            var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(Global.Player) <= SpellConfig.E.Range &&
                                                                       x.Distance(Game.CursorPos) < MenuConfig.Combo["Range"].Value &&
                                                                      !x.HasBuff("YasuoDashWrapper"));
 
             if (minion == null || minion.IsUnderEnemyTurret() || MenuConfig.LaneClear["Check"].Enabled &&
-                GlobalExtension.Player.CountEnemyHeroesInRange(2000) != 0)
+                Global.Player.CountEnemyHeroesInRange(2000) != 0)
             {
                 return;
             }
            
-            if (SpellConfig.E.Ready || GlobalExtension.Orbwalker.IsWindingUp)
+            if (SpellConfig.E.Ready || Global.Orbwalker.IsWindingUp)
             {
                 switch (MenuConfig.LaneClear["Mode"].Value)
                 {
@@ -101,7 +101,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                         SpellConfig.E.CastOnUnit(minion);
                         break;
                     case 2:
-                        if (minion.Health < GlobalExtension.Player.GetAutoAttackDamage(minion) * 1.5f)
+                        if (minion.Health < Global.Player.GetAutoAttackDamage(minion) * 1.5f)
                         {
                             return;
                         }

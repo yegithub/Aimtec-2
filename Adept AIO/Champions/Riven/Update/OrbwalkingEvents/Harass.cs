@@ -12,7 +12,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
     {
         public static void OnPostAttack()
         {
-            var target = GlobalExtension.TargetSelector.GetTarget(1000);
+            var target = Global.TargetSelector.GetTarget(1000);
             if (target == null || !MenuConfig.Harass[target.ChampionName].Enabled)
             {
                 return;
@@ -53,7 +53,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
 
         public static void OnUpdate()
         {
-            var target = GlobalExtension.TargetSelector.GetTarget(Extensions.EngageRange() + 50);
+            var target = Global.TargetSelector.GetTarget(Extensions.EngageRange() + 50);
 
             if (target == null)
             {
@@ -65,7 +65,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
                 return;
             }
 
-            var qwRange = target.Distance(GlobalExtension.Player) < SpellConfig.Q.Range + SpellConfig.W.Range + target.BoundingRadius;
+            var qwRange = target.Distance(Global.Player) < SpellConfig.Q.Range + SpellConfig.W.Range + target.BoundingRadius;
             var antiPosition = GetDashPosition(target);
 
             Extensions.Current = Generate(target);
@@ -75,10 +75,10 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
                 case HarassPattern.SemiCombo:
                     #region SemiCombo
                  
-                    if (!SpellConfig.Q.Ready && SpellConfig.E.Ready && Extensions.CurrentQCount == 1 && !GlobalExtension.Orbwalker.CanAttack())
+                    if (!SpellConfig.Q.Ready && SpellConfig.E.Ready && Extensions.CurrentQCount == 1 && !Global.Orbwalker.CanAttack() && Global.Orbwalker.CanMove())
                     {
                         SpellConfig.E.Cast(antiPosition);
-                        SpellManager.CastW(target);
+                        SpellConfig.W.Cast();
                     }
                     #endregion
                     break;
@@ -90,7 +90,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
                         SpellManager.CastQ(target);
                     }
 
-                    if (SpellConfig.Q.Ready && SpellConfig.E.Ready && Extensions.CurrentQCount == 3 && !GlobalExtension.Orbwalker.CanAttack())
+                    if (SpellConfig.Q.Ready && SpellConfig.E.Ready && Extensions.CurrentQCount == 3 && !Global.Orbwalker.CanAttack())
                     {
                         SpellConfig.E.Cast(antiPosition);
                         SpellManager.CastW(target);
@@ -109,7 +109,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
                         SpellManager.CastQ(target);
                     }
 
-                    if (SpellConfig.Q.Ready && SpellConfig.E.Ready && Extensions.CurrentQCount == 3 && !GlobalExtension.Orbwalker.CanAttack())
+                    if (SpellConfig.Q.Ready && SpellConfig.E.Ready && Extensions.CurrentQCount == 3 && !Global.Orbwalker.CanAttack())
                     {
                         SpellConfig.E.Cast(antiPosition);
                         SpellManager.CastW(target);
@@ -129,13 +129,13 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
             switch (MenuConfig.Harass["Dodge"].Value)
             {
                 case 0:
-                    var turret = GameObjects.AllyTurrets.Where(x => x.IsValid).OrderBy(x => x.Distance(GlobalExtension.Player)).FirstOrDefault();
+                    var turret = GameObjects.AllyTurrets.Where(x => x.IsValid).OrderBy(x => x.Distance(Global.Player)).FirstOrDefault();
                     return turret != null ? turret.ServerPosition : Game.CursorPos;
                 case 1:
                     return Game.CursorPos;
 
                 case 2:
-                    return GlobalExtension.Player.ServerPosition + (GlobalExtension.Player.ServerPosition - target.ServerPosition).Normalized() * 300;
+                    return Global.Player.ServerPosition + (Global.Player.ServerPosition - target.ServerPosition).Normalized() * 300;
             }
             return Vector3.Zero;
         }

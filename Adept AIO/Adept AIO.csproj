@@ -90,7 +90,8 @@
     <Compile Include="Champions\Kayn\Update\OrbwalkingEvents\JungleClear.cs" />
     <Compile Include="Champions\Kayn\Update\OrbwalkingEvents\LaneClear.cs" />
     <Compile Include="Champions\LeeSin\Core\Damage\Dmg.cs" />
-    <Compile Include="Champions\LeeSin\Core\Damage\IDmg.cs" />
+    <Compile Include="SDK\Extensions\DamageIndicator.cs" />
+    <Compile Include="SDK\Extensions\IDmg.cs" />
     <Compile Include="Champions\LeeSin\Core\Insec Manager\IInsec Manager.cs" />
     <Compile Include="Champions\LeeSin\Core\Insec Manager\Insec Manager.cs" />
     <Compile Include="Champions\LeeSin\Core\Spells\ISpellConfig.cs" />
@@ -165,7 +166,7 @@
     <Compile Include="Champions\Yasuo\Yasuo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SDK\Extensions\GameObjects.cs" />
-    <Compile Include="SDK\Extensions\GlobalExtension.cs" />
+    <Compile Include="SDK\Extensions\Global.cs" />
     <Compile Include="SDK\Extensions\MenuShortcut.cs" />
     <Compile Include="SDK\Extensions\RenderExtension.cs" />
     <Compile Include="SDK\Extensions\WallExtension.cs" />
