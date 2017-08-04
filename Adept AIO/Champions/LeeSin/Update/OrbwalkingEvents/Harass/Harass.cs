@@ -66,7 +66,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Harass
             if (SpellConfig.W.Ready && SpellConfig.IsFirst(SpellConfig.W) && !SpellConfig.E.Ready && !SpellConfig.Q.Ready && Mode == 0)
             {
                 var pos = Global.Player.ServerPosition + (Global.Player.ServerPosition + target.ServerPosition) * 300;
-                _wardManager.WardJump(pos, true);
+                _wardManager.WardJump(pos, 600);
             }
         }
     }

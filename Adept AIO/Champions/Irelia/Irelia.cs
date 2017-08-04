@@ -19,6 +19,7 @@ namespace Adept_AIO.Champions.Irelia
             Global.Orbwalker.PostAttack += Manager.PostAttack;
             Global.Orbwalker.PreAttack  += Manager.OnPreAttack;
             Render.OnRender += DrawManager.RenderManager;
+            Render.OnPresent += DrawManager.RenderDamage;
         }
     }
 }

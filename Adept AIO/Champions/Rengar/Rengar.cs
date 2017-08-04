@@ -16,6 +16,7 @@ namespace Adept_AIO.Champions.Rengar
             Game.OnUpdate += Manager.OnUpdate;
             Global.Orbwalker.PostAttack += Manager.PostAttack;
             Render.OnRender += DrawManager.RenderManager;
+            Render.OnPresent += DrawManager.RenderDamage;
         }
     }
 }

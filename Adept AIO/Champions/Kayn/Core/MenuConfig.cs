@@ -69,6 +69,7 @@ namespace Adept_AIO.Champions.Kayn.Core
             Drawings = new Menu("Drawings", "Drawings")
             {
                 new MenuSlider("Segments", "Segments", 200, 100, 300).SetToolTip("Smoothness of the circles. Less equals more FPS."),
+                new MenuBool("Dmg", "Damage"),
                 new MenuBool("W", "[W] Range"),
                 new MenuBool("R", "[R] Range")
             };
@@ -83,8 +84,7 @@ namespace Adept_AIO.Champions.Kayn.Core
                 Killsteal,
                 Drawings,
                 MenuShortcut.Credits
-            })
-                MainMenu.Add(menu);
+            })  MainMenu.Add(menu);
         }
     }
 }

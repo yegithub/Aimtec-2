@@ -90,6 +90,7 @@
     <Compile Include="Champions\Kayn\Update\OrbwalkingEvents\JungleClear.cs" />
     <Compile Include="Champions\Kayn\Update\OrbwalkingEvents\LaneClear.cs" />
     <Compile Include="Champions\LeeSin\Core\Damage\Dmg.cs" />
+    <Compile Include="Champions\LeeSin\Drawings\IDrawManager.cs" />
     <Compile Include="SDK\Extensions\DamageIndicator.cs" />
     <Compile Include="SDK\Extensions\IDmg.cs" />
     <Compile Include="Champions\LeeSin\Core\Insec Manager\IInsec Manager.cs" />

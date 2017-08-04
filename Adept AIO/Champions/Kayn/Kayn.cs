@@ -18,6 +18,7 @@ namespace Adept_AIO.Champions.Kayn
             Global.Orbwalker.PostAttack += Manager.PostAttack;
 
             Render.OnRender += DrawManager.RenderManager;
+            Render.OnPresent += DrawManager.RenderDamage;
         }
     }
 }

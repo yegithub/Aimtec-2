@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Linq;
 using Adept_AIO.Champions.LeeSin.Core.Insec_Manager;
 using Adept_AIO.Champions.LeeSin.Core.Spells;
 using Adept_AIO.SDK.Extensions;
@@ -6,11 +7,6 @@ using Aimtec;
 
 namespace Adept_AIO.Champions.LeeSin.Drawings
 {
-    internal interface IDrawManager
-    {
-        void RenderManager();
-    }
-
     internal class DrawManager : IDrawManager
     {
         public bool QEnabled { get; set; }
@@ -19,13 +15,31 @@ namespace Adept_AIO.Champions.LeeSin.Drawings
 
         private readonly ISpellConfig SpellConfig;
         private readonly IInsec_Manager _insecManager;
+        private readonly IDmg Damage;
 
-        public DrawManager(ISpellConfig spellConfig, IInsec_Manager insecManager)
+        public DrawManager(ISpellConfig spellConfig, IInsec_Manager insecManager, IDmg damage)
         {
             SpellConfig = spellConfig;
             _insecManager = insecManager;
+            Damage = damage;
         }
-           
+
+        public void RenerDamage()
+        {
+            if (Global.Player.IsDead)
+            {
+                return;
+            }
+
+            foreach (var target in GameObjects.EnemyHeroes.Where(x => !x.IsDead && x.IsFloatingHealthBarActive && x.IsVisible))
+            {
+                var damage = Damage.Damage(target);
+
+                Global.DamageIndicator.Unit = target;
+                Global.DamageIndicator.DrawDmg((float)damage, Color.FromArgb(153, 12, 177, 28));
+            }
+        }
+
         public void RenderManager()
         {
             if (Global.Player.IsDead)

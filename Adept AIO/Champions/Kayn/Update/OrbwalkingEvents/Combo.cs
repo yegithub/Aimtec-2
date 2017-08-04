@@ -31,10 +31,10 @@ namespace Adept_AIO.Champions.Kayn.Update.OrbwalkingEvents
         {
             if (SpellConfig.E.Ready && MenuConfig.Combo["E"].Enabled)
             {
-                var end = Global.Player.Position.Extend(Game.CursorPos, 100);
-                var point = WallExtension.GeneratePoint(Global.Player.Position, end).FirstOrDefault();
+                var end = Global.Player.Position.Extend(Game.CursorPos, 200);
+                var point = NavMesh.WorldToCell(end).Flags == NavCellFlags.Wall;
 
-                if (point != Vector3.Zero)
+                if (point)
                 {
                     SpellConfig.E.Cast();
                 }

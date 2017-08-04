@@ -24,16 +24,16 @@ namespace Adept_AIO.Champions.Kayn.Update.OrbwalkingEvents
 
         public static void OnUpdate()
         {
-            if (SpellConfig.Q.Ready && MenuConfig.JungleClear["Q"].Enabled && MenuConfig.JungleClear["Q"].Value <=
+            if (!Global.Orbwalker.IsWindingUp && SpellConfig.Q.Ready && MenuConfig.JungleClear["Q"].Enabled && MenuConfig.JungleClear["Q"].Value <=
                 Global.Player.ManaPercent())
             {
-                var mob = GameObjects.Jungle.FirstOrDefault(x => x.IsValidTarget(SpellConfig.Q.Range));
+                var mob = GameObjects.Jungle.FirstOrDefault(x => x.IsValidTarget(SpellConfig.W.Range / 2));
                 if (mob == null)
                 {
                     return;
                 }
               
-                SpellConfig.Q.Cast(mob);
+                SpellConfig.Q.Cast(mob.ServerPosition);
             }
         }
     }

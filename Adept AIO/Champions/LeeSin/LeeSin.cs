@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Adept_AIO.Champions.LeeSin.Core.Damage;
 using Adept_AIO.Champions.LeeSin.Core.Insec_Manager;
 using Adept_AIO.Champions.LeeSin.Core.Spells;
 using Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.KickFlash;
@@ -45,7 +46,7 @@ namespace Adept_AIO.Champions.LeeSin
             var lane = new LaneClear(spellConfig);
             var lasthit = new Lasthit(spellConfig);
             var killsteal = new Killsteal(spellConfig);
-            var drawManager = new DrawManager(spellConfig, insecManager);
+            var drawManager = new DrawManager(spellConfig, insecManager, new Dmg(spellConfig));
 
             var mainmenu = new Menu("main", "Adept AIO", true);
             mainmenu.Attach();
@@ -255,6 +256,13 @@ namespace Adept_AIO.Champions.LeeSin
             drawPosition.OnValueChanged += (sender, args) => drawManager.PositionEnabled = args.GetNewValue<MenuBool>().Value;
             drawQ.OnValueChanged += (sender, args) => drawManager.QEnabled = args.GetNewValue<MenuBool>().Value;
 
+            var wardjumpRange = new MenuSlider("WardRange", "WardJump Range", 600, 1, 600);
+            mainmenu.Add(wardjumpRange);
+
+            wardjump.Range = mainmenu["WardRange"].Value;
+           
+            wardjumpRange.OnValueChanged += (sender, args) => wardjump.Range = args.GetNewValue<MenuSlider>().Value;
+
             var manager = new Manager(combo, harass, insec, jungle, lane, lasthit);
           
             Game.OnUpdate += manager.OnUpdate;
@@ -263,6 +271,7 @@ namespace Adept_AIO.Champions.LeeSin
             Global.Orbwalker.PostAttack += manager.PostAttack;
 
             Render.OnRender += drawManager.RenderManager;
+            Render.OnPresent += drawManager.RenerDamage;
 
             Obj_AI_Base.OnProcessSpellCast += insec.OnProcessSpellCast;
             Obj_AI_Base.OnProcessSpellCast += kickFlash.OnProcessSpellCast;

@@ -67,7 +67,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Insec
             if (target == null || args.SpellSlot != SpellSlot.R ||
                 _wardManager.IsWardReady() && SpellConfig.IsFirst(SpellConfig.W) ||
                 _flashReady && Global.Player.Distance(_insecPosition) <= 175  ||
-                Game.TickCount -_wardTracker.LastWardCreated < 500 && !WardFlash)
+                Game.TickCount - _wardTracker.LastWardCreated < 1200 && !WardFlash)
             {
                 return;
             }
@@ -92,7 +92,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Insec
                 if (_insecPosition.Distance(Global.Player) <= 600)
                 {
                     WardFlash = false;
-                    _wardManager.WardJump(_insecPosition, false);
+                    _wardManager.WardJump(_insecPosition, (int)_insecPosition.Distance(Global.Player));
                 }
                 else if (_flashReady && Game.TickCount - DoNotFlash > 1500)
                 {
@@ -110,7 +110,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Insec
                         }
                             
                         WardFlash = true;
-                        _wardManager.WardJump(_insecPosition, true);
+                        _wardManager.WardJump(_insecPosition, 600);
                     }                  
                 }
             }
@@ -126,7 +126,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Insec
                 SummonerSpells.Flash?.Cast(_insecPosition);
             }
         
-            if (!target.IsValidTarget(SpellConfig.R.Range) || Global.Player.Distance(_insecPosition) >= (SummonerSpells.IsValid(SummonerSpells.Flash) ? 425 : 175))
+            if (!target.IsValidTarget(SpellConfig.R.Range) || Global.Player.Distance(_insecPosition) >= (SummonerSpells.IsValid(SummonerSpells.Flash) ? 425 : 150))
             {
                 return;
             }

@@ -170,7 +170,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.JungleClear
                 if (SpellConfig.W.Ready && SpellConfig.IsFirst(SpellConfig.W) && Global.Player.Distance(mob) <= 500)
                 {
                     SummonerSpells.Smite.CastOnUnit(mob);
-                    _wardManager.WardJump(Positions.FirstOrDefault(), false);
+                    _wardManager.WardJump(Positions.FirstOrDefault(), (int)mob.Distance(Global.Player));
                 }
             }
 

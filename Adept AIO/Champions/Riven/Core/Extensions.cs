@@ -7,7 +7,7 @@ namespace Adept_AIO.Champions.Riven.Core
     {
         public static float FlashRange()
         {
-            var flashRange = 425 + SpellConfig.W.Range + SpellConfig.E.Range / 2;
+            var flashRange = 400 + SpellConfig.W.Range + SpellConfig.E.Range / 2;
             return AllIn ? flashRange : 0;
         }
 
@@ -28,7 +28,7 @@ namespace Adept_AIO.Champions.Riven.Core
 
                 if (SpellConfig.E.Ready)
                 {
-                    range += SpellConfig.E.Range;
+                    range += SpellConfig.E.Range - 80;
                 }
                 else if (SpellConfig.Q.Ready && !SpellConfig.E.Ready)
                 {

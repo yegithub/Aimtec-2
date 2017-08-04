@@ -65,6 +65,7 @@ namespace Adept_AIO.Champions.Rengar.Core
             Drawings = new Menu("Drawings", "Drawings")
             {
                 new MenuSlider("Segments", "Segments", 200, 100, 300).SetToolTip("Smoothness of the circles. Less equals more FPS."),
+                new MenuBool("Dmg", "Damage"),
                 new MenuBool("Q", "Draw Q Range", false),
                 new MenuBool("W", "Draw W Range", false),
                 new MenuBool("E", "Draw E Range")

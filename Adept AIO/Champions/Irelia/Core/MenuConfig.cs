@@ -61,6 +61,7 @@ namespace Adept_AIO.Champions.Irelia.Core
             Drawings = new Menu("Drawings", "Drawings")
             {
                 new MenuSlider("Segments", "Segments", 200, 100, 300).SetToolTip("Smoothness of the circles. Less equals more FPS."),
+                new MenuBool("Dmg", "Damage"),
                 new MenuBool("Engage", "Draw Q Search Range"),
                 new MenuBool("Q", "Q Range"),
                 new MenuBool("R", "R Range")

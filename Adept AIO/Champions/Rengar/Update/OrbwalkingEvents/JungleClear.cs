@@ -40,7 +40,7 @@ namespace Adept_AIO.Champions.Rengar.Update.OrbwalkingEvents
 
             if (SpellConfig.W.Ready && distance < SpellConfig.W.Range)
             {
-                if (Extensions.Ferocity() == 4 && !MenuConfig.JungleClear["W"].Enabled)
+                if (Extensions.Ferocity() == 4 && (Global.Player.HealthPercent() >= 35 || !MenuConfig.JungleClear["W"].Enabled))
                 {
                     return;
                 }

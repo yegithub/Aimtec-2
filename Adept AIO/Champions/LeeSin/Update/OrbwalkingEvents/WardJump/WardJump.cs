@@ -7,6 +7,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.WardJump
     internal class WardJump : IWardJump
     {
         public bool Enabled { get; set; }
+        public int Range { get; set; }
 
         private readonly IWardTracker _wardTracker;
 
@@ -30,7 +31,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.WardJump
 
             if (SpellConfig.W.Ready && SpellConfig.IsFirst(SpellConfig.W) && _wardTracker.IsWardReady)
             {
-                _wardManager.WardJump(Game.CursorPos, true);
+                _wardManager.WardJump(Game.CursorPos, Range);
             }
         }
     }

@@ -22,7 +22,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.Ward_Manager
             _wardTracker = wardTracker;
         }
 
-        public void WardJump(Vector3 position, bool maxRange)
+        public void WardJump(Vector3 position, int range)
         {
             if (Game.TickCount - _wardTracker.LastWardCreated < 1500 && _wardTracker.LastWardCreated > 0)
             {
@@ -36,10 +36,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.Ward_Manager
                 return;
             }
 
-            if (maxRange)
-            {
-                position = Global.Player.ServerPosition.Extend(position, 600); 
-            }
+            position = Global.Player.ServerPosition.Extend(position, range);
 
             Items.CastItem(ward, position);
             LastTimeCasted = Game.TickCount;

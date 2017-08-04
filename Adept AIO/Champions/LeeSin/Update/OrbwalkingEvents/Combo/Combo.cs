@@ -89,12 +89,12 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Combo
             }
             else if (SpellConfig.W.Ready && SpellConfig.IsFirst(SpellConfig.W) && _wardManager.IsWardReady() && WEnabled && WardEnabled && distance > (SpellConfig.Q.Ready ? 1000 : 600))
             {
-                if (Game.TickCount - SpellConfig.Q.LastCastAttemptT <= 1000 && SpellConfig.Q.LastCastAttemptT > 0)
+                if (Game.TickCount - SpellConfig.Q.LastCastAttemptT <= 3000 || target.Position.CountEnemyHeroesInRange(2000) > 1)
                 {
                     return;
                 }
 
-                _wardManager.WardJump(target.Position, true);
+                _wardManager.WardJump(target.Position, 600);
             }
 
             if (SpellConfig.E.Ready && EEnabled && SpellConfig.IsFirst(SpellConfig.E) && distance <= 350)

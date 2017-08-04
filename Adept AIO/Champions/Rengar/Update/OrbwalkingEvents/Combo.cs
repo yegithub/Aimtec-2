@@ -45,14 +45,25 @@ namespace Adept_AIO.Champions.Rengar.Update.OrbwalkingEvents
             }
             
             var distance = target.Distance(Global.Player);
-            if (distance > Global.Player.AttackRange && distance < SpellConfig.Q.Range)
+
+            if (SpellConfig.E.Ready && distance < SpellConfig.E.Range)
+            {
+                if (!MenuConfig.Combo["E"].Enabled && Extensions.Ferocity() == 4)
+                {
+                    return;
+                }
+
+                SpellConfig.CastE(target);
+            }
+
+            if (distance > Global.Player.AttackRange && distance <= SpellConfig.Q.Range)
             {
                 if (Extensions.Ferocity() == 4 && !MenuConfig.Combo["Q"].Enabled)
                 {
                     return;
                 }
 
-                SpellConfig.CastQ(target);
+                SpellConfig.Q.CastOnUnit(target);
             }
 
             if (SpellConfig.W.Ready && distance < SpellConfig.W.Range)
@@ -79,16 +90,6 @@ namespace Adept_AIO.Champions.Rengar.Update.OrbwalkingEvents
 
                     SpellConfig.CastW(target);  
                 }
-            }
-
-            if (SpellConfig.E.Ready && distance < SpellConfig.E.Range)
-            {
-                if (!MenuConfig.Combo["E"].Enabled && Extensions.Ferocity() == 4)
-                {
-                    return;
-                }
-
-                SpellConfig.CastE(target);
             }
         }
     }

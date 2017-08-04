@@ -12,22 +12,28 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
     {
         public static void OnPostAttack(Obj_AI_Base target)
         {
-            if (SpellConfig.R.Ready && Extensions.UltimateMode == UltimateMode.Second)
+           
+
+            if (SpellConfig.Q.Ready && SpellConfig.R2.Ready)
             {
                 SpellManager.CastR2(target);
+                Extensions.DidJustAuto = true;
+                Global.Orbwalker.Attack(target);
+                SpellManager.CastQ(target);
+                Global.Orbwalker.Attack(target);
+                return;
             }
-            else
+
+            if (SpellConfig.R2.Ready)
             {
-                if (SpellConfig.Q.Ready)
-                {
-                    SpellManager.CastQ(target);
-                }
-                else if (SpellConfig.W.Ready)
-                {
-                    SpellManager.CastW(target);
-                }
+                SpellManager.CastR2(target);
+                Global.Orbwalker.Attack(target);
             }
-           
+
+            if (SpellConfig.Q.Ready)
+            {
+                SpellManager.CastQ(target);
+            }
         }
 
         public static void OnUpdate()
@@ -39,12 +45,12 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
             }
 
             var distance = target.Distance(Global.Player);
-
-            if (Global.Orbwalker.CanAttack() && distance <= Global.Player.AttackRange + 65)
+         
+            if (SpellConfig.Q.Ready || SpellConfig.R2.Ready || SpellConfig.W.Ready && distance <= 400)
             {
                 Global.Orbwalker.Attack(target);
             }
-            
+
             Extensions.AllIn = SummonerSpells.IsValid(SummonerSpells.Flash);
 
             if (Extensions.AllIn)

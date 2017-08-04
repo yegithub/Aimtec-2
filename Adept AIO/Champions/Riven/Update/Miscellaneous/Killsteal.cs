@@ -21,8 +21,11 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 
             if (SpellConfig.R2.Ready
                 && Extensions.UltimateMode == UltimateMode.Second
-                && MenuConfig.Killsteal["R2"].Enabled
-                && target.Health <= Global.Player.GetSpellDamage(target, SpellSlot.R))
+                && MenuConfig.Killsteal["R2"].Enabled 
+                && (target.Health <= Global.Player.GetSpellDamage(target, SpellSlot.R) ||
+                target.Health <= Global.Player.GetSpellDamage(target, SpellSlot.R) +
+                Global.Player.GetAutoAttackDamage(target) &&
+                target.Distance(Global.Player) <= Global.Player.AttackRange))
             {
                 SpellConfig.R2.Cast(target);
             }

@@ -65,7 +65,6 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
           
             Items.CastTiamat();
 
-            Global.Orbwalker.ResetAutoAttackTimer();
             CanUseW = false;
 
             SpellConfig.W.Cast();
@@ -102,13 +101,12 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                 return;
             }
 
-            if (target.Distance(Global.Player) <= 300)
+            SpellConfig.R2.Cast(target);
+
+            if (target.Distance(Global.Player) <= Global.Player.AttackRange)
             {
                 Items.CastTiamat();
             }
-
-            SpellConfig.R2.Cast(target);
-            Global.Orbwalker.ResetAutoAttackTimer();
         }
 
         private static int Time(GameObject target)
