@@ -1,4 +1,5 @@
 ﻿using Adept_AIO.SDK.Extensions;
+using Aimtec.SDK.Orbwalking;
 
 namespace Adept_AIO.Champions.Riven.Core
 {
@@ -6,34 +7,38 @@ namespace Adept_AIO.Champions.Riven.Core
     {
         public static float FlashRange()
         {
-            var flashRange = 425 + SpellConfig.W.Range + 120;
+            var flashRange = 425 + SpellConfig.W.Range + SpellConfig.E.Range / 2;
             return AllIn ? flashRange : 0;
         }
 
-        public static int EngageRange()
+        public static int EngageRange
         {
-            var range = 0f;
-           
-            if (AllIn)
+            get
             {
-                range += 425;
-            }
-            else
-            {
-                range += Global.Player.AttackRange;
-            }
+                var range = 0f;
 
-            if (SpellConfig.E.Ready)
-            {
-                range += SpellConfig.E.Range;
+                if (AllIn)
+                {
+                    range += 425;
+                }
+                else
+                {
+                    range += Global.Player.AttackRange;
+                }
+
+                if (SpellConfig.E.Ready)
+                {
+                    range += SpellConfig.E.Range;
+                }
+                else if (SpellConfig.Q.Ready && !SpellConfig.E.Ready)
+                {
+                    range += SpellConfig.Q.Range;
+                }
+
+                return (int)range;
             }
-            else if (SpellConfig.Q.Ready && !SpellConfig.E.Ready)
-            {
-                range += SpellConfig.Q.Range;
-            }
-          
-            return (int)range;
         }
+
 
         public static bool DidJustAuto;
         public static bool AllIn;

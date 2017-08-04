@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading;
 using Adept_AIO.Champions.Riven.Core;
 using Adept_AIO.Champions.Riven.Update.Miscellaneous;
 using Adept_AIO.SDK.Extensions;
@@ -6,6 +7,7 @@ using Adept_AIO.SDK.Usables;
 using Aimtec;
 using Aimtec.SDK.Damage;
 using Aimtec.SDK.Extensions;
+using Aimtec.SDK.Util;
 
 namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
 {
@@ -27,11 +29,6 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
                 SpellManager.CastR2(target);
             }
 
-            if (CanCastR1(target))
-            {
-                SpellConfig.R.Cast();
-            }
-
             if (SpellConfig.Q.Ready)
             {
                 if (SpellManager.InsideKiBurst(target) && SpellConfig.W.Ready && !CanCastR1(target))
@@ -50,26 +47,58 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
                 SpellManager.CastR2(target);
             }
 
+            if (target != null && MenuConfig.Combo["Chase"].Value != 0 && target.Distance(Global.Player) > Global.Player.AttackRange)
+            {
+                switch (MenuConfig.Combo["Chase"].Value)
+                {
+                    case 1:
+                        if (target.Distance(Global.Player) <= Global.Player.AttackRange + SpellConfig.Q.Range && Extensions.CurrentQCount == 1)
+                        {
+                            SpellManager.CastQ(target); // Bug: Will only cast Q when inside of Q range. CBA fix now
+                                                        // Todo: Add Q casting towards a Vector3
+                        }
+                        break;
+                    case 2:
+                        if (target.Distance(Global.Player) <= Global.Player.AttackRange + SpellConfig.E.Range)
+                        {
+                            SpellConfig.E.CastOnUnit(target);
+                        }
+                        break;
+                    case 3:
+                        if (target.Distance(Global.Player) <= Global.Player.AttackRange + SpellConfig.Q.Range + SpellConfig.E.Range)
+                        {
+                            SpellConfig.E.CastOnUnit(target);
+                            SpellManager.CastQ(target);
+                        }
+                        break;
+                }
+            }
+
             ExecuteCombo();
             Flash();
         }
 
         private static void ExecuteCombo()
         {
-            var target = Global.TargetSelector.GetTarget(Extensions.EngageRange() + 50);
+            var target = Global.TargetSelector.GetTarget(Extensions.EngageRange + 50);
             if (target == null)
             {
                 return;
             }
 
-            if (SpellConfig.Q.Ready || SpellConfig.W.Ready && target.Distance(Global.Player) <= Global.Player.AttackRange + 65 && Global.Orbwalker.CanAttack())
+            if (SpellConfig.Q.Ready || SpellConfig.W.Ready && target.Distance(Global.Player) <= Global.Player.AttackRange && Global.Orbwalker.CanAttack())
             {
-                Global.Orbwalker.Attack(target);
+                Global.Orbwalker.Attack(target); 
             }
 
             if (SpellConfig.E.Ready)
             {
-                Global.Player.SpellBook.CastSpell(SpellSlot.E, target.ServerPosition);
+                SpellConfig.E.Cast(target.ServerPosition);
+
+                if (CanCastR1(target))
+                {
+                    SpellConfig.R.Cast();
+                }
             }
             else if (SpellManager.InsideKiBurst(target) && SpellConfig.W.Ready && !CanCastR1(target))
             {
@@ -110,10 +139,10 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
 
         private static bool AutoBeforeR2(GameObject target)
         {
-            return target.Distance(Global.Player) < Global.Player.AttackRange
+            return target.Distance(Global.Player) <= Global.Player.AttackRange + 40
                    && SpellConfig.R2.Ready
                    && Extensions.UltimateMode == UltimateMode.Second
-                   && MenuConfig.Combo["R2"].Value == 1;
+                   && MenuConfig.Combo["R2"].Enabled;
         }
 
         private static bool SpeedItUp(Obj_AI_Base target)

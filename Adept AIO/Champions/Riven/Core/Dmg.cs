@@ -18,7 +18,7 @@ namespace Adept_AIO.Champions.Riven.Core
 
             var dmg = 0d;
 
-            if (SummonerSpells.Ignite != null && SummonerSpells.Ignite.Ready)
+            if (SummonerSpells.IsValid(SummonerSpells.Ignite))
             {
                 dmg += SummonerSpells.IgniteDamage(target);
             }

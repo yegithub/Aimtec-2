@@ -38,7 +38,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.Miscellaneous
                 return;
             }
 
-            if (SmiteEnabled && SummonerSpells.Smite != null && SummonerSpells.Smite.Ready && target.Health < SummonerSpells.SmiteChampions())
+            if (SmiteEnabled && SummonerSpells.IsValid(SummonerSpells.Smite) && target.Health < SummonerSpells.SmiteChampions())
             {
                 SummonerSpells.Smite.CastOnUnit(target);
             }
@@ -57,7 +57,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.Miscellaneous
             {
                 SpellConfig.R.CastOnUnit(target);
             }
-            else if (IgniteEnabled && SummonerSpells.Ignite != null && SummonerSpells.Ignite.Ready && target.Health < SummonerSpells.IgniteDamage(target))
+            else if (IgniteEnabled && SummonerSpells.IsValid(SummonerSpells.Ignite) && target.Health < SummonerSpells.IgniteDamage(target))
             {
                 SummonerSpells.Ignite.Cast(target);
             }

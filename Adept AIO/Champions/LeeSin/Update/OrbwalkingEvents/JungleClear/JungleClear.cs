@@ -151,7 +151,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.JungleClear
                         SpellConfig.Q.Cast();
                     }
 
-                    if (SmiteEnabled && SummonerSpells.Smite != null && SummonerSpells.Smite.Ready)
+                    if (SmiteEnabled && SummonerSpells.IsValid(SummonerSpells.Smite))
                     {
                         SummonerSpells.Smite.CastOnUnit(smiteAbleMob);
                     }
@@ -165,7 +165,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.JungleClear
                 return;
             }
           
-            if (Q2Time > 0 && Game.TickCount - Q2Time <= 1500 && SummonerSpells.Smite != null && SummonerSpells.Smite.Ready && StealDamage(mob) > mob.Health)
+            if (Q2Time > 0 && Game.TickCount - Q2Time <= 1500 && SummonerSpells.IsValid(SummonerSpells.Smite) && StealDamage(mob) > mob.Health)
             {
                 if (SpellConfig.W.Ready && SpellConfig.IsFirst(SpellConfig.W) && Global.Player.Distance(mob) <= 500)
                 {

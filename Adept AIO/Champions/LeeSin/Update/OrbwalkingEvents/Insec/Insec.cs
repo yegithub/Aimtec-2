@@ -31,7 +31,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Insec
 
         private bool WardFlash;
 
-        private static bool _flashReady => SummonerSpells.Flash != null && SummonerSpells.Flash.Ready;
+        private static bool _flashReady => SummonerSpells.IsValid(SummonerSpells.Flash);
 
         private bool CanWardJump(Vector3 source)
         {
@@ -126,7 +126,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Insec
                 SummonerSpells.Flash?.Cast(_insecPosition);
             }
         
-            if (!target.IsValidTarget(SpellConfig.R.Range) || Global.Player.Distance(_insecPosition) >= (SummonerSpells.Flash != null && SummonerSpells.Flash.Ready ? 425 : 175))
+            if (!target.IsValidTarget(SpellConfig.R.Range) || Global.Player.Distance(_insecPosition) >= (SummonerSpells.IsValid(SummonerSpells.Flash) ? 425 : 175))
             {
                 return;
             }

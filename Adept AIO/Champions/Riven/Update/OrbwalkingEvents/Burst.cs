@@ -14,18 +14,20 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
         {
             if (SpellConfig.R.Ready && Extensions.UltimateMode == UltimateMode.Second)
             {
-                SpellConfig.R2.Cast(target);
-                SpellManager.CastQ(target);
+                SpellManager.CastR2(target);
             }
-
-            if (SpellConfig.Q.Ready)
+            else
             {
-                SpellManager.CastQ(target);
+                if (SpellConfig.Q.Ready)
+                {
+                    SpellManager.CastQ(target);
+                }
+                else if (SpellConfig.W.Ready)
+                {
+                    SpellManager.CastW(target);
+                }
             }
-            else if (SpellConfig.W.Ready)
-            {
-                SpellManager.CastW(target);
-            }
+           
         }
 
         public static void OnUpdate()
@@ -43,29 +45,51 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
                 Global.Orbwalker.Attack(target);
             }
             
-            Extensions.AllIn = SummonerSpells.Flash != null && SummonerSpells.Flash.Ready;
+            Extensions.AllIn = SummonerSpells.IsValid(SummonerSpells.Flash);
 
-            if (SpellConfig.W.Ready && SpellManager.InsideKiBurst(target))
+            if (Extensions.AllIn)
             {
-                SpellManager.CastW(target);
+                if (SpellConfig.W.Ready && SpellManager.InsideKiBurst(target))
+                {
+                    SpellManager.CastW(target);
+                }
+
+                if (SpellConfig.R.Ready &&
+                    Extensions.UltimateMode == UltimateMode.First &&
+                    SpellConfig.E.Ready && distance < Extensions.FlashRange())
+                {
+                    SpellConfig.E.Cast(target.ServerPosition);
+                    SpellConfig.R.Cast();
+                }
+
+                if (Extensions.AllIn && distance < Extensions.FlashRange() && SpellConfig.W.Ready &&
+                    SpellConfig.R.Ready)
+                {
+                    Global.Player.SpellBook.CastSpell(SpellSlot.W);
+                    SummonerSpells.Flash?.Cast(
+                        target.ServerPosition.Extend(Global.Player.ServerPosition, target.BoundingRadius));
+                }
+                else if (SpellConfig.E.Ready)
+                {
+                    SpellConfig.E.Cast(target);
+                }
             }
+            else if(target.IsValidTarget(SpellConfig.E.Range + Global.Player.AttackRange))
+            {
+                if (SpellConfig.E.Ready)
+                {
+                    SpellConfig.E.Cast(target.ServerPosition);
 
-            if (SpellConfig.R.Ready &&
-                Extensions.UltimateMode == UltimateMode.First &&
-                SpellConfig.E.Ready && distance < Extensions.FlashRange())
-            {
-                SpellConfig.E.Cast(target.ServerPosition);
-                SpellConfig.R.Cast();
-            }
+                    if (SpellConfig.R.Ready && Extensions.UltimateMode == UltimateMode.First)
+                    {
+                        SpellConfig.R.Cast();
+                    }
+                }
 
-            if (Extensions.AllIn && distance < Extensions.FlashRange() && SpellConfig.W.Ready && SpellConfig.R.Ready)
-            {
-                Global.Player.SpellBook.CastSpell(SpellSlot.W);
-                SummonerSpells.Flash?.Cast(target.ServerPosition.Extend(Global.Player.ServerPosition, target.BoundingRadius));
-            }   
-            else if (SpellConfig.E.Ready)
-            {
-                SpellConfig.E.Cast(target);
+                if (SpellConfig.W.Ready)
+                {
+                    SpellManager.CastW(target);
+                }
             }
         }
     }

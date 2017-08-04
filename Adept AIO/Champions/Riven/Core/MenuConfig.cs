@@ -19,14 +19,10 @@ namespace Adept_AIO.Champions.Riven.Core
                            Jungle,
                            Killsteal,
                            Miscellaneous,
-                           Animation,
                            Drawings;
 
         public static OrbwalkerMode BurstMode, FleeMode;
 
-        /// <summary>
-        /// Attaches the script menu as well as instances the Menu
-        /// </summary>
         public static void Attach()
         {
             MainMenu = new Menu(string.Empty, "Adept AIO", true);
@@ -39,23 +35,13 @@ namespace Adept_AIO.Champions.Riven.Core
             Global.Orbwalker.AddMode(FleeMode);
             Global.Orbwalker.Attach(MainMenu);
 
-            Animation = new Menu("Animation", "Animation")
-            {
-                new MenuBool("Ping", "Use Game Ping"),
-                new MenuSlider("AttackSpeedMod", "Multiplier", 9, 1, 25).SetToolTip("AttackSpeedMod Multiplier"),
-                new MenuSlider("Q1", "Q1 Delay", 265, 260, 360),
-                new MenuSlider("Q2", "Q2 Delay", 270, 260, 360),
-                new MenuSlider("Q3", "Q3 Delay", 305, 285, 390),
-            };
-
             Combo = new Menu("Combo", "Combo")
             {
-              //  new MenuBool("Walljump", "WallJump"),
-              //  new MenuBool("Exhaust", "Exhaust"),
+                new MenuList("Chase", "Chase Mode", new []{"Disabled", "Q", "E", "E & Q"}, 0),
                 new MenuBool("Flash", "Flash").SetToolTip("Will flash when an target is safely killable."),
                 new MenuSliderBool("Check", "Don't Use R1 If X (% HP) <=", true, 20, 0, 100),
                 new MenuList("R",  "R1 Mode: ",  new []{"Never", "Always", "Killable"}, 2),
-                new MenuList("R2", "R2 Mode: ",  new []{"Never", "Always"}, 1)
+                new MenuBool("R2", "Use R2")
             };
 
             BurstMenu = new Menu("Burst", "Burst")
@@ -105,7 +91,6 @@ namespace Adept_AIO.Champions.Riven.Core
             Miscellaneous = new Menu("Miscellaneous", "Miscellaneous")
             {
                 new MenuBool("Walljump", "Walljump During Flee"),
-               // new MenuBool("Items", "Use Items"),
                 new MenuBool("Active", "Keep Q Active"),
                 new MenuBool("Interrupt", "Dodge Certain Spells"),
             };
@@ -121,7 +106,6 @@ namespace Adept_AIO.Champions.Riven.Core
 
             foreach (var menu in new List<Menu>
             {
-              //  Animation,
                 Combo,
                 BurstMenu,
                 Harass,

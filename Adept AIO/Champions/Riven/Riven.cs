@@ -1,4 +1,5 @@
-﻿using Adept_AIO.Champions.Riven.Core;
+﻿using System;
+using Adept_AIO.Champions.Riven.Core;
 using Adept_AIO.Champions.Riven.Drawings;
 using Adept_AIO.Champions.Riven.Update.Miscellaneous;
 using Adept_AIO.SDK.Extensions;
@@ -19,6 +20,7 @@ namespace Adept_AIO.Champions.Riven
 
             Obj_AI_Base.OnProcessSpellCast += SpellManager.OnProcessSpellCast;
             Obj_AI_Base.OnProcessSpellCast += SafetyMeasure.OnProcessSpellCast;
+            Obj_AI_Base.OnPlayAnimation += Animation.OnPlayAnimation;
 
             Global.Orbwalker.PostAttack += Manager.PostAttack;
             Render.OnRender += DrawManager.RenderBasics;

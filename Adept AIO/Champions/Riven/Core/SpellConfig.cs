@@ -20,7 +20,7 @@ namespace Adept_AIO.Champions.Riven.Core
             R = new Spell(SpellSlot.R);
 
             R2 = new Spell(SpellSlot.R, 900);
-            R2.SetSkillshot(0.35f, 45, 1800, false, SkillshotType.Cone);
+            R2.SetSkillshot(0.25f, 40, 1600, false, SkillshotType.Cone);
             Extensions.UltimateMode = UltimateMode.First;
         }
     }

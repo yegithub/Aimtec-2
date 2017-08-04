@@ -49,7 +49,7 @@ namespace Adept_AIO.Champions.Riven.Drawings
                 }
                 else
                 {
-                    Render.Circle(Global.Player.Position, Extensions.EngageRange(),
+                    Render.Circle(Global.Player.Position, Extensions.EngageRange,
                         (uint)MenuConfig.Drawings["Segments"].Value, Color.White);
                 }
             }

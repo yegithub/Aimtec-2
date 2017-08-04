@@ -29,8 +29,6 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
             {
                 case "RivenTriCleave":
                     Extensions.LastQCastAttempt = Game.TickCount;
-                    Extensions.CurrentQCount++;
-                    if (Extensions.CurrentQCount > 3) { Extensions.CurrentQCount = 1; }
                     CanUseQ = false;
                     Animation.Reset();
                     break;
@@ -64,7 +62,6 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
             {
                 return;
             }
-
           
             Items.CastTiamat();
 
@@ -111,6 +108,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
             }
 
             SpellConfig.R2.Cast(target);
+            Global.Orbwalker.ResetAutoAttackTimer();
         }
 
         private static int Time(GameObject target)

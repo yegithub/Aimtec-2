@@ -53,7 +53,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
 
         public static void OnUpdate()
         {
-            var target = Global.TargetSelector.GetTarget(Extensions.EngageRange() + 50);
+            var target = Global.TargetSelector.GetTarget(Extensions.EngageRange + 50);
 
             if (target == null)
             {

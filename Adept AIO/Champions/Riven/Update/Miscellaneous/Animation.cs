@@ -12,7 +12,6 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
     {
         public static float lastReset;
         public static bool IAmSoTired;
-        public static bool IsTargetMoving;
       
         public static void Reset()
         {
@@ -32,22 +31,41 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 
         public static float GetDelay()
         {
-            var delay  = Game.Ping / 2f - Global.Player.AttackSpeedMod * 18;
-       
-            var enemyObject = ObjectManager.Get<Obj_AI_Base>().FirstOrDefault(x => x.Distance(Global.Player) <= Global.Player.AttackRange + 200 && !x.IsAlly && !x.IsMe);
+            var isQ3 = Extensions.CurrentQCount == 1;
+            var delay = Game.Ping / 2f;
+            var level = Global.Player.Level;
+            delay += (isQ3 ? 380 : 330) - 3.33f * level;
 
-            if (enemyObject != null && enemyObject.IsMoving)
+            var enemyObject = ObjectManager.Get<Obj_AI_Base>().FirstOrDefault(x => x.Distance(Global.Player) <= Global.Player.AttackRange + x.BoundingRadius && !x.IsAlly && !x.IsMe);
+
+            if (enemyObject != null && (enemyObject.UnitSkinName.Contains("Crab") || enemyObject.IsHero || enemyObject.IsBuilding()))
             {
-                IsTargetMoving = true;
-                delay += Extensions.CurrentQCount == 1 ? 395 : 385;
+                delay *= isQ3 ? 1.3f : 1.15f;
             }
-            else
-            {
-                IsTargetMoving = false;
-                delay += Extensions.CurrentQCount == 1 ? 335 : 315;
-            }
-           
+
+            Console.WriteLine((int)delay);
             return delay;
+        }
+
+        public static void OnPlayAnimation(Obj_AI_Base sender, Obj_AI_BasePlayAnimationEventArgs objAiBasePlayAnimationEventArgs)
+        {
+            if (sender == null || !sender.IsMe)
+            {
+                return;
+            }
+
+            switch (objAiBasePlayAnimationEventArgs.Animation)
+            {
+                case "Spell1a":
+                    Extensions.CurrentQCount = 2;
+                    break;
+                case "Spell1b":
+                    Extensions.CurrentQCount = 3;
+                    break;
+                case "Spell1c":
+                    Extensions.CurrentQCount = 1;
+                    break;
+            }
         }
     }
 }

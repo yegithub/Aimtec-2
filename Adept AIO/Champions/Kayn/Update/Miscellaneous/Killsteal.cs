@@ -37,7 +37,7 @@ namespace Adept_AIO.Champions.Kayn.Update.Miscellaneous
             {
                 SpellConfig.R.CastOnUnit(target);
             }
-            else if (MenuConfig.Killsteal["Ignite"].Enabled && SummonerSpells.Ignite != null && SummonerSpells.Ignite.Ready && target.Health < SummonerSpells.IgniteDamage(target))
+            else if (MenuConfig.Killsteal["Ignite"].Enabled && SummonerSpells.IsValid(SummonerSpells.Ignite) && target.Health < SummonerSpells.IgniteDamage(target))
             {
                 SummonerSpells.Ignite.Cast(target);
             }

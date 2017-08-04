@@ -9,6 +9,11 @@ namespace Adept_AIO.SDK.Usables
     {
         public static Spell Flash, Ignite, Smite, Exhaust;
 
+        public static bool IsValid(Spell summonerSpell)
+        {
+            return summonerSpell != null && summonerSpell.Ready;
+        }
+
         //Todo: Improve this bullshit.
         public static void Init()
         {
