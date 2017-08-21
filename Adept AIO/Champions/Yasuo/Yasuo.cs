@@ -1,6 +1,8 @@
-﻿using Adept_AIO.Champions.Yasuo.Core;
+﻿using System;
+using Adept_AIO.Champions.Yasuo.Core;
 using Adept_AIO.Champions.Yasuo.Drawings;
 using Adept_AIO.Champions.Yasuo.Update.Miscellaneous;
+using Adept_AIO.SDK.Delegates;
 using Adept_AIO.SDK.Extensions;
 using Aimtec;
 
@@ -18,10 +20,12 @@ namespace Adept_AIO.Champions.Yasuo
             Obj_AI_Base.OnProcessSpellCast += SafetyMeasure.OnProcessSpellCast;
             Global.Orbwalker.PostAttack += Manager.PostAttack;
 
-            Render.OnRender += DrawManager.RenderManager;
-            Render.OnPresent += DrawManager.DrawDamage;
+            Render.OnRender += DrawManager.OnRender;
+            Render.OnPresent += DrawManager.OnPresent;
             BuffManager.OnAddBuff += Manager.BuffManagerOnOnAddBuff;
             BuffManager.OnRemoveBuff += Manager.BuffManagerOnOnRemoveBuff;
+
+            Gapcloser.OnGapcloser += AntiGapcloser.OnGapcloser;
         }
     }
 }

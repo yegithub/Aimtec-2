@@ -9,7 +9,7 @@ namespace Adept_AIO.Champions.Yasuo.Drawings
 {
     internal class DrawManager
     {
-        public static void DrawDamage()
+        public static void OnPresent()
         {
             if (Global.Player.IsDead || !MenuConfig.Drawings["Dmg"].Enabled)
             {
@@ -25,7 +25,7 @@ namespace Adept_AIO.Champions.Yasuo.Drawings
             }
         }
 
-        public static void RenderManager()
+        public static void OnRender()
         {
             if (Global.Player.IsDead)
             {

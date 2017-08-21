@@ -70,8 +70,10 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
 
             var distance = target.Distance(Global.Player);
             var minion = Extension.GetDashableMinion(target);
-            var walkDashMinion = Extension.WalkBehindMinion(minion, target);
-            Extension.ExtendedMinion = walkDashMinion;
+
+            var m2 = Extension.GetDashableMinion(target, true);
+            var positionBehindMinion = Extension.WalkBehindMinion(m2, target);
+            Extension.ExtendedMinion = positionBehindMinion;
 
             var dashDistance = Extension.DashDistance(minion, target);
 
@@ -136,9 +138,13 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
             {
                 return;
             }
-            if (walkDashMinion != Vector3.Zero && MenuConfig.Combo["Walk"].Enabled && Global.Orbwalker.CanMove())
+            if (positionBehindMinion != Vector3.Zero && MenuConfig.Combo["Walk"].Enabled && Global.Orbwalker.CanMove() && !(MenuConfig.Combo["Turret"].Enabled && minion.IsUnderEnemyTurret()))
             {
-                Global.Orbwalker.Move(walkDashMinion);
+                Global.Orbwalker.Move(positionBehindMinion);
+                if (positionBehindMinion.Distance(Global.Player) <= 65)
+                {
+                    SpellConfig.E.CastOnUnit(m2);
+                }
             }
             else if (minion != null && distance > 475)
             {

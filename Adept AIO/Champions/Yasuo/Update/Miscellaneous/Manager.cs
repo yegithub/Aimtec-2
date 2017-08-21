@@ -21,9 +21,6 @@ namespace Adept_AIO.Champions.Yasuo.Update.Miscellaneous
                 case OrbwalkingMode.Combo:
                     Combo.OnPostAttack();
                     break;
-                case OrbwalkingMode.Mixed:
-                    Harass.OnPostAttack();
-                    break;
                 case OrbwalkingMode.Laneclear:
                     LaneClear.OnPostAttack();
                     JungleClear.OnPostAttack();

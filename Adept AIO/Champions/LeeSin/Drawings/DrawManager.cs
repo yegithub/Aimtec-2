@@ -3,7 +3,11 @@ using System.Linq;
 using Adept_AIO.Champions.LeeSin.Core.Insec_Manager;
 using Adept_AIO.Champions.LeeSin.Core.Spells;
 using Adept_AIO.SDK.Extensions;
+using Adept_AIO.SDK.Usables;
 using Aimtec;
+using Aimtec.SDK.Damage;
+using Aimtec.SDK.Extensions;
+
 
 namespace Adept_AIO.Champions.LeeSin.Drawings
 {
@@ -40,13 +44,13 @@ namespace Adept_AIO.Champions.LeeSin.Drawings
             }
         }
 
-        public void RenderManager()
+        public void OnRender()
         {
             if (Global.Player.IsDead)
             {
                 return;
             }
-
+            
             if (QEnabled && SpellConfig.Q.Ready)
             {
                 Render.Circle(Global.Player.Position, SpellConfig.Q.Range, (uint)SegmentsValue, Color.IndianRed);
@@ -56,6 +60,16 @@ namespace Adept_AIO.Champions.LeeSin.Drawings
 
             if (PositionEnabled && selected != null && _insecManager.InsecPosition(selected) != Vector3.Zero)
             {
+                if (_insecManager.InsecQPosition != Vector3.Zero)
+                {
+                    Render.Line(Geometry.To2D(Global.Player.ServerPosition), Geometry.To2D(_insecManager.InsecQPosition), 5, false, Color.Gray);
+                }
+
+                if (_insecManager.InsecWPosition != Vector3.Zero)
+                {
+                    Render.Line(Geometry.To2D(Global.Player.ServerPosition), Geometry.To2D(_insecManager.InsecWPosition), 5, false, Color.Yellow);
+                }
+
                 Render.Circle(_insecManager.InsecPosition(selected), 65, (uint)SegmentsValue, Color.White);
             }
         }

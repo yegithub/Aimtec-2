@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents;
+using Adept_AIO.SDK.Delegates;
 using Adept_AIO.SDK.Extensions;
 using Aimtec.SDK.Menu;
 using Aimtec.SDK.Menu.Components;
@@ -92,6 +93,8 @@ namespace Adept_AIO.Champions.Yasuo.Core
                 new MenuBool("Range", "Draw Minion Search Range"),
                 new MenuBool("Debug", "Debug")
             };
+
+            Gapcloser.Attach(MainMenu, "Anti Gapcloser");
 
             foreach (var menu in new List<Menu>
             {

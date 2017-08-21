@@ -1,10 +1,13 @@
-﻿using System.Linq;
-using Adept_AIO.SDK.Extensions;
-using Adept_AIO.SDK.Usables;
-using Aimtec.SDK.Events;
-
-namespace Adept_AIO
+﻿namespace Adept_AIO
 {
+    using System.Linq;
+
+    using SDK.Extensions;
+    using SDK.Usables;
+    using Aimtec.SDK.Events;
+
+    using Champions.Jinx;
+    using Champions.Tristana;
     using Champions.Kayn;
     using Champions.LeeSin;
     using Champions.Irelia;
@@ -20,7 +23,7 @@ namespace Adept_AIO
             GameEvents.GameStart += GameEvents_GameStart;
         }
 
-        private static readonly string[] Valid = { "Riven", "Irelia", "Jax", "Rengar", "Yasuo", "Kayn", "LeeSin" };
+        private static readonly string[] Valid = { "Riven", "Irelia", "Jax", "Rengar", "Yasuo", "Kayn", "LeeSin", "Jinx", "Tristana" };
 
         private static void GameEvents_GameStart()
         {
@@ -41,6 +44,10 @@ namespace Adept_AIO
                 case "Jax":
                     Jax.Init();
                     break;
+                case "Jinx":
+                    var jinx = new Jinx();
+                    jinx.Init();
+                    break;
                 case "Kayn":
                     Kayn.Init();
                     break;
@@ -53,6 +60,10 @@ namespace Adept_AIO
                     break;
                 case "Riven":
                     Riven.Init();
+                    break;
+                case "Tristana":
+                    var tristana = new Tristana();
+                    tristana.Init();
                     break;
                 case "Yasuo":
                     Yasuo.Init();

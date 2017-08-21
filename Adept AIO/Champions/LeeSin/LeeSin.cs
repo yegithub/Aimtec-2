@@ -1,18 +1,24 @@
-﻿using System.Collections.Generic;
-using Adept_AIO.Champions.LeeSin.Core.Damage;
-using Adept_AIO.Champions.LeeSin.Core.Insec_Manager;
-using Adept_AIO.Champions.LeeSin.Core.Spells;
-using Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.KickFlash;
-using Adept_AIO.Champions.LeeSin.Update.Ward_Manager;
-using Aimtec;
-using Aimtec.SDK.Menu;
-using Aimtec.SDK.Menu.Components;
-using Aimtec.SDK.Orbwalking;
-using Aimtec.SDK.Util;
+﻿using Adept_AIO.SDK.Delegates;
 
 namespace Adept_AIO.Champions.LeeSin
 {
+    using System.Collections.Generic;
+   
+    using Aimtec;
+    using Aimtec.SDK.Menu;
+    using Aimtec.SDK.Menu.Components;
+    using Aimtec.SDK.Orbwalking;
+    using Aimtec.SDK.Util;
+
+    using SDK.Extensions;
+
     using Drawings;
+    using Core.Damage;
+    using Core.Insec_Manager;
+    using Core.Spells;
+    using Update.OrbwalkingEvents.KickFlash;
+    using Update.Ward_Manager;
+
     using Update.Miscellaneous;
     using Update.OrbwalkingEvents.Combo;
     using Update.OrbwalkingEvents.Harass;
@@ -21,7 +27,6 @@ namespace Adept_AIO.Champions.LeeSin
     using Update.OrbwalkingEvents.LaneClear;
     using Update.OrbwalkingEvents.LastHit;
     using Update.OrbwalkingEvents.WardJump;
-    using SDK.Extensions;
 
     internal class LeeSin
     {
@@ -259,6 +264,10 @@ namespace Adept_AIO.Champions.LeeSin
             var wardjumpRange = new MenuSlider("WardRange", "WardJump Range", 600, 1, 600);
             mainmenu.Add(wardjumpRange);
 
+            Gapcloser.Attach(mainmenu, "Gapcloser");
+            var gapcloser = new AntiGapcloser(spellConfig, wardmanager);
+            Gapcloser.OnGapcloser += gapcloser.OnGapcloser;
+
             wardjump.Range = mainmenu["WardRange"].Value;
            
             wardjumpRange.OnValueChanged += (sender, args) => wardjump.Range = args.GetNewValue<MenuSlider>().Value;
@@ -270,7 +279,7 @@ namespace Adept_AIO.Champions.LeeSin
 
             Global.Orbwalker.PostAttack += manager.PostAttack;
 
-            Render.OnRender += drawManager.RenderManager;
+            Render.OnRender += drawManager.OnRender;
             Render.OnPresent += drawManager.RenerDamage;
 
             Obj_AI_Base.OnProcessSpellCast += insec.OnProcessSpellCast;

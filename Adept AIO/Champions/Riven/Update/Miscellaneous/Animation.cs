@@ -36,14 +36,13 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
             var level = Global.Player.Level;
             delay += (isQ3 ? 380 : 330) - 3.33f * level;
 
-            var enemyObject = ObjectManager.Get<Obj_AI_Base>().FirstOrDefault(x => x.Distance(Global.Player) <= Global.Player.AttackRange + x.BoundingRadius && !x.IsAlly && !x.IsMe);
+            var unit = ObjectManager.Get<Obj_AI_Base>().FirstOrDefault(x => x.Distance(Global.Player) <= Global.Player.AttackRange + x.BoundingRadius && !x.IsAlly && !x.IsMe);
 
-            if (enemyObject != null && (enemyObject.UnitSkinName.Contains("Crab") || enemyObject.IsHero || enemyObject.IsBuilding()))
+            if (unit != null && (unit.UnitSkinName.Contains("Crab") || unit.IsHero || unit.IsBuilding()))
             {
                 delay *= isQ3 ? 1.3f : 1.15f;
             }
 
-            Console.WriteLine((int)delay);
             return delay;
         }
 

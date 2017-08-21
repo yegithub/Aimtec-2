@@ -21,7 +21,7 @@ namespace Adept_AIO.Champions.Yasuo.Core
 
             E = new Spell(SpellSlot.E, 475);
 
-            R = new Spell(SpellSlot.R, 1200);
+            R = new Spell(SpellSlot.R, 1400);
         }
 
         public static void SetSkill(Mode mode)
@@ -33,8 +33,8 @@ namespace Adept_AIO.Champions.Yasuo.Core
                     Q.Range = 475;
                     break;
                 case Mode.Tornado:
-                    Q.SetSkillshot(0.25f, 90, 1800, false, SkillshotType.Line, false, HitChance.Medium);
-                    Q.Range = 1200;
+                    Q.SetSkillshot(0.25f, 150, 1900, false, SkillshotType.Line);
+                    Q.Range = 1100;
                     break;
                 case Mode.Dashing:
                 case Mode.DashingTornado:

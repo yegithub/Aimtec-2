@@ -15,8 +15,6 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                 return;
             }
 
-            
-
             var minion = GameObjects.Minions.Where(x => x.Distance(Global.Player) <= SpellConfig.E.Range && !x.HasBuff("YasuoDashWrapper"))
                 .OrderBy(x => x.Distance(Game.CursorPos)).FirstOrDefault();
             

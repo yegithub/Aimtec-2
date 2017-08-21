@@ -6,11 +6,6 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
 {
     internal class Harass
     {
-        public static void OnPostAttack()
-        {
-
-        }
-
         public static void OnUpdate()
         {
             if (Global.Orbwalker.IsWindingUp)

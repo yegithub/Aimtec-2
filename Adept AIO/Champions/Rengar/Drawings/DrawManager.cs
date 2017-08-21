@@ -25,7 +25,7 @@ namespace Adept_AIO.Champions.Rengar.Drawings
             }
         }
 
-        public static void RenderManager()
+        public static void OnRender()
         {
             if (Global.Player.IsDead)
             {

@@ -18,7 +18,7 @@ namespace Adept_AIO.Champions.Irelia
             Obj_AI_Base.OnProcessSpellCast += Manager.OnProcessSpellCast;
             Global.Orbwalker.PostAttack += Manager.PostAttack;
             Global.Orbwalker.PreAttack  += Manager.OnPreAttack;
-            Render.OnRender += DrawManager.RenderManager;
+            Render.OnRender += DrawManager.OnRender;
             Render.OnPresent += DrawManager.RenderDamage;
         }
     }

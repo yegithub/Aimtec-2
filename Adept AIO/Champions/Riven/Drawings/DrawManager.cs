@@ -1,5 +1,4 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Linq;
 using Adept_AIO.Champions.Riven.Core;
 using Adept_AIO.SDK.Extensions;
@@ -10,7 +9,7 @@ namespace Adept_AIO.Champions.Riven.Drawings
 {
     internal class DrawManager
     {
-        public static void DrawDamage()
+        public static void OnPresent()
         {
             if (Global.Player.IsDead || !MenuConfig.Drawings["Dmg"].Enabled)
             {

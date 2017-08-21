@@ -7,7 +7,7 @@ using Aimtec.SDK.Extensions;
 
 namespace Adept_AIO.Champions.LeeSin.Core.Insec_Manager
 {
-    class Insec_Manager : IInsec_Manager
+    internal class Insec_Manager : IInsec_Manager
     {
         public int InsecKickValue { get; set; }
         public int InsecPositionValue { get; set; }
@@ -23,6 +23,9 @@ namespace Adept_AIO.Champions.LeeSin.Core.Insec_Manager
         {
             return Math.Min((Global.Player.BoundingRadius + target.BoundingRadius + 50) * 1.25f, SpellConfig.R.Range);
         }
+
+        public Vector3 InsecQPosition { get; set; }
+        public Vector3 InsecWPosition { get; set; }
 
         public Vector3 InsecPosition(Obj_AI_Base target)
         {

@@ -4,7 +4,6 @@ using Adept_AIO.SDK.Extensions;
 using Adept_AIO.SDK.Usables;
 using Aimtec;
 using Aimtec.SDK.Extensions;
-using Aimtec.SDK.Util;
 
 namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
 {
@@ -12,8 +11,6 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
     {
         public static void OnPostAttack(Obj_AI_Base target)
         {
-           
-
             if (SpellConfig.Q.Ready && SpellConfig.R2.Ready)
             {
                 SpellManager.CastR2(target);
@@ -68,12 +65,10 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
                     SpellConfig.R.Cast();
                 }
 
-                if (Extensions.AllIn && distance < Extensions.FlashRange() && SpellConfig.W.Ready &&
-                    SpellConfig.R.Ready)
+                if (distance < Extensions.FlashRange() && SpellConfig.W.Ready && SpellConfig.R.Ready && SummonerSpells.IsValid(SummonerSpells.Flash))
                 {
                     Global.Player.SpellBook.CastSpell(SpellSlot.W);
-                    SummonerSpells.Flash?.Cast(
-                        target.ServerPosition.Extend(Global.Player.ServerPosition, target.BoundingRadius));
+                    SummonerSpells.Flash.Cast(target.ServerPosition.Extend(Global.Player.ServerPosition, target.BoundingRadius));
                 }
                 else if (SpellConfig.E.Ready)
                 {

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Adept_AIO.Champions.Riven.Update.OrbwalkingEvents;
+using Adept_AIO.SDK.Delegates;
 using Adept_AIO.SDK.Extensions;
 using Aimtec.SDK.Menu;
 using Aimtec.SDK.Menu.Components;
@@ -34,6 +35,8 @@ namespace Adept_AIO.Champions.Riven.Core
             Global.Orbwalker.AddMode(BurstMode);
             Global.Orbwalker.AddMode(FleeMode);
             Global.Orbwalker.Attach(MainMenu);
+
+            Gapcloser.Attach(MainMenu, "Anti Gapcloser");
 
             Combo = new Menu("Combo", "Combo")
             {

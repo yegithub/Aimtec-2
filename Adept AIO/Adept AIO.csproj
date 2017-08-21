@@ -8,9 +8,10 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>Adept_AIO</RootNamespace>
     <AssemblyName>Adept AIO</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -78,6 +79,19 @@
     <Compile Include="Champions\Jax\Update\OrbwalkingEvents\Clear.cs" />
     <Compile Include="Champions\Jax\Update\OrbwalkingEvents\Combo.cs" />
     <Compile Include="Champions\Jax\Update\OrbwalkingEvents\Harass.cs" />
+    <Compile Include="Champions\Jinx\Core\Dmg.cs" />
+    <Compile Include="Champions\Jinx\Core\MenuConfig.cs" />
+    <Compile Include="Champions\Jinx\Core\SpellConfig.cs" />
+    <Compile Include="Champions\Jinx\Drawings\DrawManager.cs" />
+    <Compile Include="Champions\Jinx\Jinx.cs" />
+    <Compile Include="Champions\Jinx\Update\Miscellaneous\AntiGapcloser.cs" />
+    <Compile Include="Champions\Jinx\Update\Miscellaneous\BaseUlt.cs" />
+    <Compile Include="Champions\Jinx\Update\Miscellaneous\Manager.cs" />
+    <Compile Include="Champions\Jinx\Update\OrbwalkingEvents\Combo.cs" />
+    <Compile Include="Champions\Jinx\Update\Miscellaneous\Misc.cs" />
+    <Compile Include="Champions\Jinx\Update\OrbwalkingEvents\Harass.cs" />
+    <Compile Include="Champions\Jinx\Update\OrbwalkingEvents\JungleClear.cs" />
+    <Compile Include="Champions\Jinx\Update\OrbwalkingEvents\LaneClear.cs" />
     <Compile Include="Champions\Kayn\Core\Dmg.cs" />
     <Compile Include="Champions\Kayn\Core\MenuConfig.cs" />
     <Compile Include="Champions\Kayn\Core\SpellConfig.cs" />
@@ -91,7 +105,24 @@
     <Compile Include="Champions\Kayn\Update\OrbwalkingEvents\LaneClear.cs" />
     <Compile Include="Champions\LeeSin\Core\Damage\Dmg.cs" />
     <Compile Include="Champions\LeeSin\Drawings\IDrawManager.cs" />
+    <Compile Include="Champions\LeeSin\Update\Miscellaneous\AntiGapcloser.cs" />
+    <Compile Include="Champions\Riven\Update\Miscellaneous\AntiGapcloser.cs" />
+    <Compile Include="Champions\Tristana\Core\Dmg.cs" />
+    <Compile Include="Champions\Tristana\Core\MenuConfig.cs" />
+    <Compile Include="Champions\Tristana\Core\SpellConfig.cs" />
+    <Compile Include="Champions\Tristana\Drawings\DrawManager.cs" />
+    <Compile Include="Champions\Tristana\Tristana.cs" />
+    <Compile Include="Champions\Tristana\Update\Miscellaneous\AntiGapcloser.cs" />
+    <Compile Include="Champions\Tristana\Update\Miscellaneous\Killsteal.cs" />
+    <Compile Include="Champions\Tristana\Update\Miscellaneous\Manager.cs" />
+    <Compile Include="Champions\Tristana\Update\OrbwalkingEvents\Combo.cs" />
+    <Compile Include="Champions\Tristana\Update\OrbwalkingEvents\Harass.cs" />
+    <Compile Include="Champions\Tristana\Update\OrbwalkingEvents\JungleClear.cs" />
+    <Compile Include="Champions\Tristana\Update\OrbwalkingEvents\LaneClear.cs" />
+    <Compile Include="Champions\Yasuo\Update\Miscellaneous\AntiGapcloser.cs" />
+    <Compile Include="SDK\Delegates\Gapcloser.cs" />
     <Compile Include="SDK\Extensions\DamageIndicator.cs" />
+    <Compile Include="SDK\Extensions\Geometry.cs" />
     <Compile Include="SDK\Extensions\IDmg.cs" />
     <Compile Include="Champions\LeeSin\Core\Insec Manager\IInsec Manager.cs" />
     <Compile Include="Champions\LeeSin\Core\Insec Manager\Insec Manager.cs" />
@@ -169,8 +200,10 @@
     <Compile Include="SDK\Extensions\GameObjects.cs" />
     <Compile Include="SDK\Extensions\Global.cs" />
     <Compile Include="SDK\Extensions\MenuShortcut.cs" />
+    <Compile Include="SDK\Extensions\Mixed.cs" />
     <Compile Include="SDK\Extensions\RenderExtension.cs" />
     <Compile Include="SDK\Extensions\WallExtension.cs" />
+    <Compile Include="SDK\Methods\BaseUlt.cs" />
     <Compile Include="SDK\Usables\Items.cs" />
     <Compile Include="SDK\Usables\SummonerSpells.cs" />
   </ItemGroup>

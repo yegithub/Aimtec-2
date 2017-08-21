@@ -83,13 +83,13 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                                                                       x.Distance(Game.CursorPos) < MenuConfig.Combo["Range"].Value &&
                                                                      !x.HasBuff("YasuoDashWrapper"));
 
-            if (minion == null || minion.IsUnderEnemyTurret() || MenuConfig.LaneClear["Check"].Enabled &&
-                Global.Player.CountEnemyHeroesInRange(2000) != 0)
+            if (minion == null || minion.IsUnderEnemyTurret() ||
+                MenuConfig.LaneClear["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(2000) != 0)
             {
                 return;
             }
            
-            if (SpellConfig.E.Ready || Global.Orbwalker.IsWindingUp)
+            if (SpellConfig.E.Ready && !Global.Orbwalker.IsWindingUp)
             {
                 switch (MenuConfig.LaneClear["Mode"].Value)
                 {

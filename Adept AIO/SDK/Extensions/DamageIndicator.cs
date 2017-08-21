@@ -1,5 +1,4 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using Aimtec;
 
 namespace Adept_AIO.SDK.Extensions
@@ -8,6 +7,8 @@ namespace Adept_AIO.SDK.Extensions
     {
         internal static int Height => 9;
         internal static int Width => 104;
+
+        public Obj_AI_Base Unit { get; set; }
 
         private Vector2 Offset
         {
@@ -22,8 +23,6 @@ namespace Adept_AIO.SDK.Extensions
             }
         }
 
-        public Obj_AI_Base Unit { get; set; }
-
         public Vector2 StartPosition()
         {
             return new Vector2(Unit.FloatingHealthBarPosition.X + Offset.X, Unit.FloatingHealthBarPosition.Y + Offset.Y);
@@ -37,10 +36,8 @@ namespace Adept_AIO.SDK.Extensions
 
         private float GetHpProc(float dmg)
         {
-            var health = Unit.Health - dmg > 0 ? Unit.Health - dmg 
-                                               : 0;
-
-            return health / Unit.MaxHealth;
+            return Unit.Health - dmg > 0 ? Unit.Health - dmg : 0 
+                 / Unit.MaxHealth;
         }
 
         public void DrawDmg(float dmg, Color color)

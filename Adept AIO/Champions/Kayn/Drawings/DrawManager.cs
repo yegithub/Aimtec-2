@@ -24,7 +24,7 @@ namespace Adept_AIO.Champions.Kayn.Drawings
             }
         }
 
-        public static void RenderManager()
+        public static void OnRender()
         {
             if (Global.Player.IsDead)
             {

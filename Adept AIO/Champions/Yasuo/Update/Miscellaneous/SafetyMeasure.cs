@@ -9,6 +9,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.Miscellaneous
     {
         public static void OnProcessSpellCast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
         {
+            return;
             if (!MenuConfig.Combo["Dodge"].Enabled ||
                !SpellConfig.W.Ready ||
                 args == null ||

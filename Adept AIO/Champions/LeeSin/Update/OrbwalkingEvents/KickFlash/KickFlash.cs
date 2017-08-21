@@ -7,7 +7,7 @@ using Aimtec.SDK.Extensions;
 
 namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.KickFlash
 {
-    class KickFlash : IKickFlash
+    internal class KickFlash : IKickFlash
     {
         private readonly ISpellConfig SpellConfig;
         private readonly IInsec_Manager _insecManager;

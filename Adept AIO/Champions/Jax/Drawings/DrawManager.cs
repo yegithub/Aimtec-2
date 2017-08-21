@@ -1,5 +1,4 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Linq;
 using Adept_AIO.Champions.Jax.Core;
 using Adept_AIO.SDK.Extensions;
@@ -9,7 +8,7 @@ namespace Adept_AIO.Champions.Jax.Drawings
 {
     internal class DrawManager
     {
-        public static void DrawDamage()
+        public static void OnPresent()
         {
             if (Global.Player.IsDead || !MenuConfig.Drawings["Dmg"].Enabled)
             {
@@ -25,7 +24,7 @@ namespace Adept_AIO.Champions.Jax.Drawings
             }
         }
 
-        public static void RenderManager()
+        public static void OnRender()
         {
             if (Global.Player.IsDead)
             {

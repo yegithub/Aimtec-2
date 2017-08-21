@@ -1,9 +1,7 @@
-﻿using System.Linq;
-using Adept_AIO.SDK.Extensions;
+﻿using Adept_AIO.SDK.Extensions;
 using Adept_AIO.SDK.Usables;
 using Aimtec;
 using Aimtec.SDK.Damage;
-using Aimtec.SDK.Extensions;
 
 namespace Adept_AIO.Champions.Riven.Core
 {

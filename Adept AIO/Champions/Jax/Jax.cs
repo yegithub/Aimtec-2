@@ -19,8 +19,8 @@ namespace Adept_AIO.Champions.Jax
             Global.Orbwalker.PostAttack += Manager.PostAttack;
             Obj_AI_Base.OnPlayAnimation += Animation.OnPlayAnimation;
             Obj_AI_Base.OnProcessSpellCast += SpellManager.OnProcessSpellCast;
-            Render.OnRender += DrawManager.RenderManager;
-            Render.OnPresent += DrawManager.DrawDamage;
+            Render.OnRender += DrawManager.OnRender;
+            Render.OnPresent += DrawManager.OnPresent;
         }
     }
 }

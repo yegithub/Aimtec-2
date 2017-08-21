@@ -2,6 +2,6 @@
 {
     internal interface IDrawManager
     {
-        void RenderManager();
+        void OnRender();
     }
 }

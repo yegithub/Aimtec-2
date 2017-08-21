@@ -1,7 +1,7 @@
-﻿using System;
-using Adept_AIO.Champions.Riven.Core;
+﻿using Adept_AIO.Champions.Riven.Core;
 using Adept_AIO.Champions.Riven.Drawings;
 using Adept_AIO.Champions.Riven.Update.Miscellaneous;
+using Adept_AIO.SDK.Delegates;
 using Adept_AIO.SDK.Extensions;
 using Aimtec;
 
@@ -17,6 +17,7 @@ namespace Adept_AIO.Champions.Riven
             Game.OnUpdate += Manager.OnUpdate;
             Game.OnUpdate += SpellManager.OnUpdate;
             Game.OnUpdate += Killsteal.OnUpdate;
+            Gapcloser.OnGapcloser += AntiGapcloser.OnGapcloser;
 
             Obj_AI_Base.OnProcessSpellCast += SpellManager.OnProcessSpellCast;
             Obj_AI_Base.OnProcessSpellCast += SafetyMeasure.OnProcessSpellCast;
@@ -24,7 +25,8 @@ namespace Adept_AIO.Champions.Riven
 
             Global.Orbwalker.PostAttack += Manager.PostAttack;
             Render.OnRender += DrawManager.RenderBasics;
-            Render.OnPresent += DrawManager.DrawDamage;   
+            Render.OnPresent += DrawManager.OnPresent;   
+
         }
     }
 }
