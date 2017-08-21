@@ -4,7 +4,9 @@ using Adept_AIO.Champions.Jinx.Drawings;
 using Adept_AIO.Champions.Jinx.Update.Miscellaneous;
 using Adept_AIO.Champions.Jinx.Update.OrbwalkingEvents;
 using Adept_AIO.SDK.Delegates;
+using Adept_AIO.SDK.Extensions;
 using Aimtec;
+using Aimtec.SDK.Extensions;
 
 namespace Adept_AIO.Champions.Jinx
 {
@@ -42,10 +44,6 @@ namespace Adept_AIO.Champions.Jinx
             Render.OnRender += baseUlt.OnRender;
 
             Gapcloser.OnGapcloser += gapcloser.OnGapcloser;
-
-            
         }
-
-      
     }
 }

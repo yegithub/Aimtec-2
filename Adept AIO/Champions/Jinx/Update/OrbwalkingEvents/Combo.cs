@@ -38,15 +38,7 @@ namespace Adept_AIO.Champions.Jinx.Update.OrbwalkingEvents
 
             if (SpellConfig.W.Ready && MenuConfig.Combo["W"].Enabled && dist <= MenuConfig.Combo["W"].Value)
             {
-                if (SpellConfig.W.GetPrediction(target).HitChance == HitChance.Medium)
-                {
-                    SpellConfig.W.Cast(target.ServerPosition);
-                }
-                else
-                {
-                    SpellConfig.W.Cast(target);
-                }
-              
+                SpellConfig.W.Cast(target);
             }
         }
     }

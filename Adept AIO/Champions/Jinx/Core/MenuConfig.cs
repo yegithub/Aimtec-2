@@ -35,7 +35,7 @@ namespace Adept_AIO.Champions.Jinx.Core
             Combo = new Menu("Combo", "Combo")
             {
                 new MenuBool("Q", "Automatic Q"),
-                new MenuSliderBool("W", "Use W If Distance <", true, 800, 0, 1500),
+                new MenuSliderBool("W", "Use W If Distance <", true, 1350, 0, 1500),
                 new MenuBool("Count", "Use E As AoE & Close Targets"),
                 new MenuBool("Teleport", "Use E On Teleport"),
                 new MenuBool("Immovable", "Use E At Immovable Targets"),
@@ -45,7 +45,7 @@ namespace Adept_AIO.Champions.Jinx.Core
             Harass = new Menu("Harass", "Harass")
             {
                 new MenuBool("Q", "Automatic Q"),
-                new MenuSliderBool("W", "Use W If Distance <", true, 800, 0, 1500)
+                new MenuSliderBool("W", "Use W If Distance <", true, 1300, 0, 1500)
             };
 
             LaneClear = new Menu("LaneClear", "LaneClear")
