@@ -121,6 +121,9 @@
     <Compile Include="Champions\Tristana\Update\OrbwalkingEvents\LaneClear.cs" />
     <Compile Include="Champions\Yasuo\Update\Miscellaneous\AntiGapcloser.cs" />
     <Compile Include="SDK\Delegates\Gapcloser.cs" />
+    <Compile Include="SDK\Delegates\Teleport.cs" />
+    <Compile Include="SDK\Delegates\TeleportStatus.cs" />
+    <Compile Include="SDK\Delegates\TeleportType.cs" />
     <Compile Include="SDK\Extensions\DamageIndicator.cs" />
     <Compile Include="SDK\Extensions\Geometry.cs" />
     <Compile Include="SDK\Extensions\IDmg.cs" />

@@ -35,7 +35,7 @@ namespace Adept_AIO.Champions.Jinx
             Game.OnUpdate += misc.OnUpdate;
             Game.OnUpdate += baseUlt.OnUpdate;
 
-            Obj_AI_Base.OnTeleport += baseUlt.OnTeleport;
+            Teleport.OnTeleport += baseUlt.OnTeleport;
 
             Render.OnPresent += drawManager.OnPresent;
             Render.OnRender  += drawManager.OnRender;
@@ -45,5 +45,7 @@ namespace Adept_AIO.Champions.Jinx
 
             
         }
+
+      
     }
 }

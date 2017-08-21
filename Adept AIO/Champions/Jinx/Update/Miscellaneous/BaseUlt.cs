@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Linq;
 using Adept_AIO.Champions.Jinx.Core;
+using Adept_AIO.SDK.Delegates;
 using Adept_AIO.SDK.Extensions;
 using Aimtec;
 using Aimtec.SDK.Damage;
@@ -23,63 +24,39 @@ namespace Adept_AIO.Champions.Jinx.Update.Miscellaneous
 
         private int TimeUntilCasting;
         private int recallTick;
+        private float recallTime;
         private Obj_AI_Hero Target;
-        private string recallName;
-
+        
         private float TravelTime(Vector3 pos)
         {
             return Global.Player.Distance(pos) / SpellConfig.R.Speed * 1000 + 550;
         }
 
-        private static bool IsRecalling(Obj_AI_BaseTeleportEventArgs args)
+        private void SetRecall(float recallTime, int tickCount, Obj_AI_Hero target)
         {
-            return args.Sender != Global.Player && args.Name.ToLower().Contains("recall");
-        }
-
-        private int GetRecallDuration()
-        {
-            switch (recallName)
-            {
-                case "recall":
-                    return 8000;
-                case "RecallImproved":
-                    return 7000;
-                case "OdinRecall":
-                    return 4500;
-                case "OdinRecallImproved":
-                case "SuperRecall":
-                case "SuperRecallImproved":
-                    return 4000;
-            }
-            return 8000;
-        }
-
-        private void SetRecall(string recallName, int tickCount, Obj_AI_Hero target)
-        {
-            this.recallName = recallName;
+            this.recallTime = recallTime;
             recallTick = tickCount;
             Target = target;
         }
-
-        public void OnTeleport(Obj_AI_Base sender, Obj_AI_BaseTeleportEventArgs args)
+        public void OnTeleport(Obj_AI_Base sender, Teleport.TeleportEventArgs args)
         {
-            if (sender == Global.Player || !MenuConfig.Killsteal["BaseUlt"].Enabled || !IsRecalling(args))
+            if (sender.IsMe || sender.IsAlly || !MenuConfig.Killsteal["BaseUlt"].Enabled || args.Type != TeleportType.Recall || args.Status != TeleportStatus.Start)
             {
                 return;
             }
-
-            SetRecall(args.Name, Game.TickCount, (Obj_AI_Hero) args.Sender);
-            Console.WriteLine(args.Sender.UnitSkinName + " Is Recalling");
+            
+            SetRecall(args.Duration, Game.TickCount, (Obj_AI_Hero) sender);
+            Console.WriteLine(sender.UnitSkinName + " Is Recalling");
         }
-
+     
         public void OnUpdate()
         {
-            if (!MenuConfig.Killsteal["BaseUlt"].Enabled || Target == null)
+            if (!MenuConfig.Killsteal["BaseUlt"].Enabled || Target == null || !SpellConfig.R.Ready)
             {
                 return;
             }
 
-            var time = -(Game.TickCount - (recallTick + GetRecallDuration()));
+            var time = -(Game.TickCount - (recallTick + recallTime));
             var pos = Mixed.GetFountainPos(Target);
             var poly = new Geometry.Rectangle(Geometry.To2D(Global.Player.ServerPosition), Geometry.To2D(pos), SpellConfig.R.Width);
 
@@ -91,12 +68,13 @@ namespace Adept_AIO.Champions.Jinx.Update.Miscellaneous
                 {
                     return;
                 }
+
                 SpellConfig.R.Cast(pos);
-                SetRecall("", 0, null);
+                SetRecall(0, 0, null);
             }
             else
             {
-                SetRecall("", 0, null);
+                SetRecall(0, 0, null);
             }
         }
 
@@ -106,7 +84,7 @@ namespace Adept_AIO.Champions.Jinx.Update.Miscellaneous
             {
                 Vector2 xd;
                 Render.WorldToScreen(Global.Player.ServerPosition, out xd);
-                Render.Text(xd, Color.White, "Ulting " + Target.ChampionName + " In " + TimeUntilCasting / 1000);
+                Render.Text(new Vector2(xd.X - 35, xd.Y + 30), Color.White, "Ulting " + Target.ChampionName + " In " + TimeUntilCasting / 1000 + "." + TimeUntilCasting / 100);
             }
         }
     }
