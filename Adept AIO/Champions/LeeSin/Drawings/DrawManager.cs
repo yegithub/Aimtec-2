@@ -3,10 +3,7 @@ using System.Linq;
 using Adept_AIO.Champions.LeeSin.Core.Insec_Manager;
 using Adept_AIO.Champions.LeeSin.Core.Spells;
 using Adept_AIO.SDK.Extensions;
-using Adept_AIO.SDK.Usables;
 using Aimtec;
-using Aimtec.SDK.Damage;
-using Aimtec.SDK.Extensions;
 
 
 namespace Adept_AIO.Champions.LeeSin.Drawings

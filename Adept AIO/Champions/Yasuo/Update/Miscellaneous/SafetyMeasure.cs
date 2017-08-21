@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Adept_AIO.Champions.Yasuo.Core;
 using Adept_AIO.SDK.Extensions;
 using Adept_AIO.SDK.Methods;

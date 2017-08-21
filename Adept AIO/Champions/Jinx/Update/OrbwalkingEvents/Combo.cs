@@ -1,7 +1,6 @@
 ﻿using Adept_AIO.Champions.Jinx.Core;
 using Adept_AIO.SDK.Extensions;
 using Aimtec.SDK.Extensions;
-using Aimtec.SDK.Prediction.Skillshots;
 
 namespace Adept_AIO.Champions.Jinx.Update.OrbwalkingEvents
 {

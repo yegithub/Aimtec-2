@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Adept_AIO.SDK.Extensions;
 using Aimtec;
 using Aimtec.SDK.Extensions;
 using Aimtec.SDK.Menu;

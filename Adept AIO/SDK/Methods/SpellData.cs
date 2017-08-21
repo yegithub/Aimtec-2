@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Aimtec;
+﻿using Aimtec;
 using Aimtec.SDK.Prediction.Collision;
 using Aimtec.SDK.Prediction.Skillshots;
 
@@ -52,8 +47,6 @@ namespace Adept_AIO.SDK.Methods
         public bool TakeClosestPath = false;
         public string ToggleParticleName = "";
         public SkillshotType Type;
-        private int _radius;
-        private int _range;
 
         public SpellData()
         {
@@ -77,7 +70,7 @@ namespace Adept_AIO.SDK.Methods
             Type = type;
             Delay = delay;
             Range = range;
-            _radius = radius;
+            RawRadius = radius;
             MissileSpeed = missileSpeed;
             AddHitbox = addHitbox;
             FixedRange = fixedRange;
@@ -86,22 +79,22 @@ namespace Adept_AIO.SDK.Methods
 
         public string MenuItemName => SpellName;
 
-        public int RawRadius => _radius;
+        public int RawRadius { get; private set; }
 
-        public int RawRange => _range;
+        public int RawRange { get; private set; }
 
         public int Radius
         {
             get => !AddHitbox
-                ? _radius
-                : _radius + (int) ObjectManager.GetLocalPlayer().BoundingRadius;
-            set => _radius = value;
+                ? RawRadius
+                : RawRadius + (int) ObjectManager.GetLocalPlayer().BoundingRadius;
+            set => RawRadius = value;
         }
 
         public int Range
         {
-            get => _range + (Type == SkillshotType.Line ? 20 : 0);
-            set => _range = value;
+            get => RawRange + (Type == SkillshotType.Line ? 20 : 0);
+            set => RawRange = value;
         }
     }
 }

@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Adept_AIO.Champions.Tristana.Core;
+﻿using Adept_AIO.Champions.Tristana.Core;
 using Adept_AIO.SDK.Delegates;
 using Adept_AIO.SDK.Extensions;
+using Adept_AIO.SDK.Methods;
 using Aimtec;
 using Aimtec.SDK.Extensions;
 
@@ -27,13 +23,19 @@ namespace Adept_AIO.Champions.Tristana.Update.Miscellaneous
                 return;
             }
 
-            if (SpellConfig.R.Ready)
+            var missile = SpellDatabase.GetByName(args.SpellName);
+            if (missile == null || !missile.IsDangerous)
             {
-                SpellConfig.R.CastOnUnit(sender);
+                return;
             }
-            else if (SpellConfig.W.Ready)
+
+            if (SpellConfig.W.Ready)
             {
                 SpellConfig.W.Cast(Mixed.GetFountainPos(Global.Player));
+            }
+            else if (SpellConfig.R.Ready)
+            {
+                SpellConfig.R.CastOnUnit(sender);
             }
         }
     }

@@ -1,12 +1,10 @@
-﻿using System;
-using Adept_AIO.Champions.Tristana.Core;
+﻿using Adept_AIO.Champions.Tristana.Core;
 using Adept_AIO.Champions.Tristana.Drawings;
 using Adept_AIO.Champions.Tristana.Update.Miscellaneous;
 using Adept_AIO.Champions.Tristana.Update.OrbwalkingEvents;
 using Adept_AIO.SDK.Delegates;
 using Adept_AIO.SDK.Extensions;
 using Aimtec;
-using Aimtec.SDK.Orbwalking;
 
 namespace Adept_AIO.Champions.Tristana
 {

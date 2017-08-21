@@ -16,7 +16,7 @@ namespace Adept_AIO.Champions.Tristana.Core
             {
                 var target = Global.Orbwalker.GetOrbwalkingTarget();
 
-                return (int)(target == null ? Global.Player.AttackRange : Global.Player.GetFullAttackRange(target));
+                return (int)(target == null ? Global.Player.AttackRange : Global.Player.GetFullAttackRange(target) + 65);
             }
         }
 
