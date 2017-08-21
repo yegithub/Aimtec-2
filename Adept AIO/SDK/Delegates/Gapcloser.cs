@@ -9,10 +9,6 @@ using Aimtec.SDK.Menu.Components;
 
 namespace Adept_AIO.SDK.Delegates
 {
-    #region
-
-    #endregion
-
     public delegate void OnGapcloserEvent(Obj_AI_Hero sender, GapcloserArgs args);
 
     public enum SpellType
@@ -278,8 +274,6 @@ namespace Adept_AIO.SDK.Delegates
 
         private static void Initialize()
         {
-            #region Aatrox
-
             Spells.Add(new SpellData
             {
                 ChampionName = "Aatrox",
@@ -287,10 +281,6 @@ namespace Adept_AIO.SDK.Delegates
                 SpellName = "aatroxq",
                 SpellType = SpellType.SkillShot
             });
-
-            #endregion
-
-            #region Ahri
 
             Spells.Add(new SpellData
             {
@@ -300,10 +290,6 @@ namespace Adept_AIO.SDK.Delegates
                 SpellType = SpellType.SkillShot
             });
 
-            #endregion
-
-            #region Akali
-
             Spells.Add(new SpellData
             {
                 ChampionName = "Akali",
@@ -311,10 +297,6 @@ namespace Adept_AIO.SDK.Delegates
                 SpellName = "akalishadowdance",
                 SpellType = SpellType.Targeted
             });
-
-            #endregion
-
-            #region Alistar
 
             Spells.Add(new SpellData
             {
@@ -324,10 +306,6 @@ namespace Adept_AIO.SDK.Delegates
                 SpellType = SpellType.Targeted
             });
 
-            #endregion
-
-            #region Azir
-
             Spells.Add(new SpellData
             {
                 ChampionName = "Azir",
@@ -336,10 +314,6 @@ namespace Adept_AIO.SDK.Delegates
                 SpellType = SpellType.SkillShot
             });
 
-            #endregion
-
-            #region Caitlyn
-
             Spells.Add(new SpellData
             {
                 ChampionName = "Caitlyn",
@@ -347,10 +321,6 @@ namespace Adept_AIO.SDK.Delegates
                 SpellName = "caitlynentrapment",
                 SpellType = SpellType.SkillShot
             });
-
-            #endregion
-
-            #region Camille
 
             Spells.Add(new SpellData
             {
@@ -368,10 +338,6 @@ namespace Adept_AIO.SDK.Delegates
                 SpellType = SpellType.SkillShot
             });
 
-            #endregion
-
-            #region Corki
-
             Spells.Add(new SpellData
             {
                 ChampionName = "Corki",
@@ -379,10 +345,6 @@ namespace Adept_AIO.SDK.Delegates
                 SpellName = "carpetbomb",
                 SpellType = SpellType.SkillShot
             });
-
-            #endregion
-
-            #region Diana
 
             Spells.Add(new SpellData
             {
@@ -392,10 +354,6 @@ namespace Adept_AIO.SDK.Delegates
                 SpellType = SpellType.Targeted
             });
 
-            #endregion
-
-            #region Ekko
-
             Spells.Add(new SpellData
             {
                 ChampionName = "Ekko",
@@ -403,10 +361,6 @@ namespace Adept_AIO.SDK.Delegates
                 SpellName = "ekkoeattack",
                 SpellType = SpellType.Targeted
             });
-
-            #endregion
-
-            #region Elise
 
             Spells.Add(new SpellData
             {
@@ -424,10 +378,6 @@ namespace Adept_AIO.SDK.Delegates
                 SpellType = SpellType.Targeted
             });
 
-            #endregion
-
-            #region Ezreal
-
             Spells.Add(new SpellData
             {
                 ChampionName = "Ezreal",
@@ -435,10 +385,6 @@ namespace Adept_AIO.SDK.Delegates
                 SpellName = "ezrealarcaneshift",
                 SpellType = SpellType.SkillShot
             });
-
-            #endregion
-
-            #region Fiora
 
             Spells.Add(new SpellData
             {
@@ -448,10 +394,6 @@ namespace Adept_AIO.SDK.Delegates
                 SpellType = SpellType.SkillShot
             });
 
-            #endregion
-
-            #region Fizz
-
             Spells.Add(new SpellData
             {
                 ChampionName = "Fizz",
@@ -460,10 +402,6 @@ namespace Adept_AIO.SDK.Delegates
                 SpellType = SpellType.Targeted
             });
 
-            #endregion
-
-            #region Galio
-
             Spells.Add(new SpellData
             {
                 ChampionName = "Galio",
@@ -471,10 +409,6 @@ namespace Adept_AIO.SDK.Delegates
                 SpellName = "galioe",
                 SpellType = SpellType.SkillShot
             });
-
-            #endregion
-
-            #region Gnar
 
             Spells.Add(new SpellData
             {
@@ -492,10 +426,6 @@ namespace Adept_AIO.SDK.Delegates
                 SpellType = SpellType.SkillShot
             });
 
-            #endregion
-
-            #region Gragas
-
             Spells.Add(new SpellData
             {
                 ChampionName = "Gragas",
@@ -503,10 +433,6 @@ namespace Adept_AIO.SDK.Delegates
                 SpellName = "gragase",
                 SpellType = SpellType.SkillShot
             });
-
-            #endregion
-
-            #region Graves
 
             Spells.Add(new SpellData
             {
@@ -516,10 +442,6 @@ namespace Adept_AIO.SDK.Delegates
                 SpellType = SpellType.SkillShot
             });
 
-            #endregion
-
-            #region Hecarim
-
             Spells.Add(new SpellData
             {
                 ChampionName = "Hecarim",
@@ -527,10 +449,6 @@ namespace Adept_AIO.SDK.Delegates
                 SpellName = "hecarimult",
                 SpellType = SpellType.SkillShot
             });
-
-            #endregion
-
-            #region Illaoi
 
             Spells.Add(new SpellData
             {
@@ -540,10 +458,6 @@ namespace Adept_AIO.SDK.Delegates
                 SpellType = SpellType.Targeted
             });
 
-            #endregion
-
-            #region Irelia
-
             Spells.Add(new SpellData
             {
                 ChampionName = "Irelia",
@@ -551,10 +465,6 @@ namespace Adept_AIO.SDK.Delegates
                 SpellName = "ireliagatotsu",
                 SpellType = SpellType.Targeted
             });
-
-            #endregion
-
-            #region JarvanIV
 
             Spells.Add(new SpellData
             {
@@ -564,10 +474,6 @@ namespace Adept_AIO.SDK.Delegates
                 SpellType = SpellType.SkillShot
             });
 
-            #endregion
-
-            #region Jax
-
             Spells.Add(new SpellData
             {
                 ChampionName = "Jax",
@@ -575,10 +481,6 @@ namespace Adept_AIO.SDK.Delegates
                 SpellName = "jaxleapstrike",
                 SpellType = SpellType.Targeted
             });
-
-            #endregion
-
-            #region Jayce
 
             Spells.Add(new SpellData
             {
@@ -588,10 +490,6 @@ namespace Adept_AIO.SDK.Delegates
                 SpellType = SpellType.Targeted
             });
 
-            #endregion
-
-            #region Kassadin
-
             Spells.Add(new SpellData
             {
                 ChampionName = "Kassadin",
@@ -599,10 +497,6 @@ namespace Adept_AIO.SDK.Delegates
                 SpellName = "riftwalk",
                 SpellType = SpellType.SkillShot
             });
-
-            #endregion
-
-            #region Katarina
 
             Spells.Add(new SpellData
             {
@@ -612,10 +506,6 @@ namespace Adept_AIO.SDK.Delegates
                 SpellType = SpellType.Targeted
             });
 
-            #endregion
-
-            #region Kayn
-
             Spells.Add(new SpellData
             {
                 ChampionName = "Kayn",
@@ -623,10 +513,6 @@ namespace Adept_AIO.SDK.Delegates
                 SpellName = "kaynq",
                 SpellType = SpellType.SkillShot
             });
-
-            #endregion
-
-            #region Khazix
 
             Spells.Add(new SpellData
             {
@@ -644,10 +530,6 @@ namespace Adept_AIO.SDK.Delegates
                 SpellType = SpellType.SkillShot
             });
 
-            #endregion
-
-            #region Kindred
-
             Spells.Add(new SpellData
             {
                 ChampionName = "Kindred",
@@ -655,10 +537,6 @@ namespace Adept_AIO.SDK.Delegates
                 SpellName = "kindredq",
                 SpellType = SpellType.SkillShot
             });
-
-            #endregion
-
-            #region Leblanc
 
             Spells.Add(new SpellData
             {
@@ -676,10 +554,6 @@ namespace Adept_AIO.SDK.Delegates
                 SpellType = SpellType.SkillShot
             });
 
-            #endregion
-
-            #region LeeSin
-
             Spells.Add(new SpellData
             {
                 ChampionName = "LeeSin",
@@ -688,9 +562,13 @@ namespace Adept_AIO.SDK.Delegates
                 SpellType = SpellType.Targeted
             });
 
-            #endregion
-
-            #region Leona
+            Spells.Add(new SpellData()
+            {
+                ChampionName = "Blitzcrank",
+                Slot = SpellSlot.Q,
+                SpellName = "",
+                SpellType = SpellType.SkillShot
+            });
 
             Spells.Add(new SpellData
             {
@@ -700,10 +578,6 @@ namespace Adept_AIO.SDK.Delegates
                 SpellType = SpellType.SkillShot
             });
 
-            #endregion
-
-            #region Lucian
-
             Spells.Add(new SpellData
             {
                 ChampionName = "Lucian",
@@ -711,10 +585,6 @@ namespace Adept_AIO.SDK.Delegates
                 SpellName = "luciane",
                 SpellType = SpellType.SkillShot
             });
-
-            #endregion
-
-            #region Malphite
 
             Spells.Add(new SpellData
             {
@@ -724,10 +594,6 @@ namespace Adept_AIO.SDK.Delegates
                 SpellType = SpellType.SkillShot
             });
 
-            #endregion
-
-            #region MasterYi
-
             Spells.Add(new SpellData
             {
                 ChampionName = "MasterYi",
@@ -735,10 +601,6 @@ namespace Adept_AIO.SDK.Delegates
                 SpellName = "alphastrike",
                 SpellType = SpellType.Targeted
             });
-
-            #endregion
-
-            #region MonkeyKing
 
             Spells.Add(new SpellData
             {
@@ -748,10 +610,6 @@ namespace Adept_AIO.SDK.Delegates
                 SpellType = SpellType.Targeted
             });
 
-            #endregion
-
-            #region Nautilus
-
             Spells.Add(new SpellData
             {
                 ChampionName = "Nautilus",
@@ -759,10 +617,6 @@ namespace Adept_AIO.SDK.Delegates
                 SpellName = "nautilusq",
                 SpellType = SpellType.SkillShot
             });
-
-            #endregion
-
-            #region Nidalee
 
             Spells.Add(new SpellData
             {
@@ -772,10 +626,6 @@ namespace Adept_AIO.SDK.Delegates
                 SpellType = SpellType.SkillShot
             });
 
-            #endregion
-
-            #region Pantheon
-
             Spells.Add(new SpellData
             {
                 ChampionName = "Pantheon",
@@ -783,10 +633,6 @@ namespace Adept_AIO.SDK.Delegates
                 SpellName = "pantheon_leapbash",
                 SpellType = SpellType.Targeted
             });
-
-            #endregion
-
-            #region Poppy
 
             Spells.Add(new SpellData
             {
@@ -796,10 +642,6 @@ namespace Adept_AIO.SDK.Delegates
                 SpellType = SpellType.Targeted
             });
 
-            #endregion
-
-            #region Quinn
-
             Spells.Add(new SpellData
             {
                 ChampionName = "Quinn",
@@ -807,10 +649,6 @@ namespace Adept_AIO.SDK.Delegates
                 SpellName = "quinne",
                 SpellType = SpellType.Targeted
             });
-
-            #endregion
-
-            #region Rakan
 
             Spells.Add(new SpellData
             {
@@ -820,10 +658,6 @@ namespace Adept_AIO.SDK.Delegates
                 SpellType = SpellType.SkillShot
             });
 
-            #endregion
-
-            #region RekSai
-
             Spells.Add(new SpellData
             {
                 ChampionName = "RekSai",
@@ -831,10 +665,6 @@ namespace Adept_AIO.SDK.Delegates
                 SpellName = "reksaieburrowed",
                 SpellType = SpellType.SkillShot
             });
-
-            #endregion
-
-            #region Renekton
 
             Spells.Add(new SpellData
             {
@@ -860,10 +690,6 @@ namespace Adept_AIO.SDK.Delegates
                 SpellType = SpellType.SkillShot
             });
 
-            #endregion
-
-            #region Rengar
-
             Spells.Add(new SpellData
             {
                 ChampionName = "Rengar",
@@ -879,10 +705,6 @@ namespace Adept_AIO.SDK.Delegates
                 SpellName = "rengarpassivebuffdashaadummy",
                 SpellType = SpellType.SkillShot
             });
-
-            #endregion
-
-            #region Riven
 
             Spells.Add(new SpellData
             {
@@ -900,10 +722,6 @@ namespace Adept_AIO.SDK.Delegates
                 SpellType = SpellType.SkillShot
             });
 
-            #endregion
-
-            #region Sejuani
-
             Spells.Add(new SpellData
             {
                 ChampionName = "Sejuani",
@@ -911,10 +729,6 @@ namespace Adept_AIO.SDK.Delegates
                 SpellName = "sejuaniarcticassault",
                 SpellType = SpellType.SkillShot
             });
-
-            #endregion
-
-            #region Shen
 
             Spells.Add(new SpellData
             {
@@ -924,10 +738,6 @@ namespace Adept_AIO.SDK.Delegates
                 SpellType = SpellType.SkillShot
             });
 
-            #endregion
-
-            #region Shyvana
-
             Spells.Add(new SpellData
             {
                 ChampionName = "Shyvana",
@@ -935,10 +745,6 @@ namespace Adept_AIO.SDK.Delegates
                 SpellName = "shyvanatransformcast",
                 SpellType = SpellType.SkillShot
             });
-
-            #endregion
-
-            #region Talon
 
             Spells.Add(new SpellData
             {
@@ -956,10 +762,6 @@ namespace Adept_AIO.SDK.Delegates
                 SpellType = SpellType.SkillShot
             });
 
-            #endregion
-
-            #region Tristana
-
             Spells.Add(new SpellData
             {
                 ChampionName = "Tristana",
@@ -967,10 +769,6 @@ namespace Adept_AIO.SDK.Delegates
                 SpellName = "rocketjump",
                 SpellType = SpellType.SkillShot
             });
-
-            #endregion
-
-            #region Tryndamere
 
             Spells.Add(new SpellData
             {
@@ -980,10 +778,6 @@ namespace Adept_AIO.SDK.Delegates
                 SpellType = SpellType.SkillShot
             });
 
-            #endregion
-
-            #region Vi
-
             Spells.Add(new SpellData
             {
                 ChampionName = "Vi",
@@ -991,10 +785,6 @@ namespace Adept_AIO.SDK.Delegates
                 SpellName = "viq",
                 SpellType = SpellType.SkillShot
             });
-
-            #endregion
-
-            #region Vayne
 
             Spells.Add(new SpellData
             {
@@ -1004,10 +794,6 @@ namespace Adept_AIO.SDK.Delegates
                 SpellType = SpellType.SkillShot
             });
 
-            #endregion
-
-            #region Warwick
-
             Spells.Add(new SpellData
             {
                 ChampionName = "Warwick",
@@ -1015,10 +801,6 @@ namespace Adept_AIO.SDK.Delegates
                 SpellName = "warwickr",
                 SpellType = SpellType.SkillShot
             });
-
-            #endregion
-
-            #region XinZhao
 
             Spells.Add(new SpellData
             {
@@ -1028,10 +810,6 @@ namespace Adept_AIO.SDK.Delegates
                 SpellType = SpellType.Targeted
             });
 
-            #endregion
-
-            #region Yasuo
-
             Spells.Add(new SpellData
             {
                 ChampionName = "Yasuo",
@@ -1039,10 +817,6 @@ namespace Adept_AIO.SDK.Delegates
                 SpellName = "yasuodashwrapper",
                 SpellType = SpellType.Targeted
             });
-
-            #endregion
-
-            #region Zac
 
             Spells.Add(new SpellData
             {
@@ -1052,10 +826,6 @@ namespace Adept_AIO.SDK.Delegates
                 SpellType = SpellType.SkillShot
             });
 
-            #endregion
-
-            #region Zed
-
             Spells.Add(new SpellData
             {
                 ChampionName = "Zed",
@@ -1064,10 +834,6 @@ namespace Adept_AIO.SDK.Delegates
                 SpellType = SpellType.Targeted
             });
 
-            #endregion
-
-            #region Ziggs
-
             Spells.Add(new SpellData
             {
                 ChampionName = "Ziggs",
@@ -1075,8 +841,6 @@ namespace Adept_AIO.SDK.Delegates
                 SpellName = "ziggswtoggle",
                 SpellType = SpellType.SkillShot
             });
-
-            #endregion
         }
     }
 }

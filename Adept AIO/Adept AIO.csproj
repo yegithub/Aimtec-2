@@ -207,6 +207,8 @@
     <Compile Include="SDK\Extensions\RenderExtension.cs" />
     <Compile Include="SDK\Extensions\WallExtension.cs" />
     <Compile Include="SDK\Methods\BaseUlt.cs" />
+    <Compile Include="SDK\Methods\SpellData.cs" />
+    <Compile Include="SDK\Methods\SpellDatase.cs" />
     <Compile Include="SDK\Usables\Items.cs" />
     <Compile Include="SDK\Usables\SummonerSpells.cs" />
   </ItemGroup>

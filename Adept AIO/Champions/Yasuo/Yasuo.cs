@@ -26,6 +26,7 @@ namespace Adept_AIO.Champions.Yasuo
             BuffManager.OnRemoveBuff += Manager.BuffManagerOnOnRemoveBuff;
 
             Gapcloser.OnGapcloser += AntiGapcloser.OnGapcloser;
+         
         }
     }
 }

@@ -1,5 +1,8 @@
-﻿using Adept_AIO.Champions.Yasuo.Core;
+﻿using System;
+using System.Linq;
+using Adept_AIO.Champions.Yasuo.Core;
 using Adept_AIO.SDK.Extensions;
+using Adept_AIO.SDK.Methods;
 using Aimtec;
 using Aimtec.SDK.Extensions;
 
@@ -9,22 +12,26 @@ namespace Adept_AIO.Champions.Yasuo.Update.Miscellaneous
     {
         public static void OnProcessSpellCast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
         {
-            return;
-            if (!MenuConfig.Combo["Dodge"].Enabled ||
-               !SpellConfig.W.Ready ||
-                args == null ||
-                sender == null || 
-                args.Target == null ||
-                sender.IsMe ||            // Yes. Something prints null. so i check everything. Leave. Me. Alone.
-                sender.IsAlly || 
-               !args.Sender.IsHero ||
-                args.SpellData.MissileUnblockable ||
-                args.SpellData.ConsideredAsAutoAttack)
+            if (!MenuConfig.Combo["Dodge"].Enabled || sender == null || !sender.IsHero || !sender.IsEnemy)           
             {
                 return;
             }
 
-            if (args.End.Distance(Global.Player.ServerPosition) <= 300)
+            var missile = SpellDatabase.GetByName(args.SpellData.Name);
+
+            if (missile == null)
+            {
+               
+                return;
+            }
+
+            var minion = GameObjects.Minions.Where(x => x.Distance(Global.Player) <= SpellConfig.E.Range && !x.HasBuff("YasuoDashWrapper")).OrderBy(x => x.Distance(Game.CursorPos)).FirstOrDefault();
+
+            if (args.End.Distance(Global.Player.ServerPosition) <= 200 && SpellConfig.E.Ready && minion != null)
+            {
+                SpellConfig.E.CastOnUnit(minion);
+            }
+            else if (args.End.Distance(Global.Player.ServerPosition) <= 300 && SpellConfig.W.Ready)
             {
                 SpellConfig.W.Cast(sender.ServerPosition);
             }
