@@ -6,7 +6,7 @@ using Aimtec.SDK.Menu.Components;
 
 namespace Adept_AIO.Champions.Tristana.Core
 {
-    class MenuConfig
+    internal class MenuConfig
     {
         public Menu Combo,
                     Harass,

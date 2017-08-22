@@ -8,7 +8,7 @@ using Aimtec;
 
 namespace Adept_AIO.Champions.Tristana
 {
-    class Tristana
+    internal class Tristana
     {
         public void Init()
         {

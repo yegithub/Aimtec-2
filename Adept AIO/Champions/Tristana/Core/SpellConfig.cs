@@ -6,7 +6,7 @@ using Spell = Aimtec.SDK.Spell;
 
 namespace Adept_AIO.Champions.Tristana.Core
 {
-    class SpellConfig
+    internal class SpellConfig
     {
         public Spell Q, W, E, R;
 

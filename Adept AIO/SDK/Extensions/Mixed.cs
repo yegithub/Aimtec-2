@@ -2,7 +2,7 @@
 
 namespace Adept_AIO.SDK.Extensions
 {
-    class Mixed
+    internal class Mixed
     {
         public static Vector3 GetFountainPos(GameObject target)
         {

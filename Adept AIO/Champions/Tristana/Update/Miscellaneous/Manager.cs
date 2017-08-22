@@ -4,7 +4,7 @@ using Aimtec.SDK.Orbwalking;
 
 namespace Adept_AIO.Champions.Tristana.Update.Miscellaneous
 {
-    class Manager
+    internal class Manager
     {
         private readonly Combo Combo;
         private readonly Harass Harass;

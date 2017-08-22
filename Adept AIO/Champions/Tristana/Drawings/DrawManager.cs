@@ -6,7 +6,7 @@ using Aimtec;
 
 namespace Adept_AIO.Champions.Tristana.Drawings
 {
-    class DrawManager
+    internal class DrawManager
     {
         private readonly SpellConfig SpellConfig;
         private readonly MenuConfig MenuConfig;

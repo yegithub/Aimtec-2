@@ -7,7 +7,7 @@ using Aimtec.SDK.Extensions;
 
 namespace Adept_AIO.Champions.Tristana.Update.Miscellaneous
 {
-    class AntiGapcloser
+    internal class AntiGapcloser
     {
         private readonly SpellConfig SpellConfig;
 

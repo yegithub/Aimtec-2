@@ -7,7 +7,7 @@ using Aimtec.SDK.Extensions;
 
 namespace Adept_AIO.Champions.Jinx.Update.OrbwalkingEvents
 {
-    class LaneClear
+    internal class LaneClear
     {
         private readonly MenuConfig MenuConfig;
         private readonly SpellConfig SpellConfig;

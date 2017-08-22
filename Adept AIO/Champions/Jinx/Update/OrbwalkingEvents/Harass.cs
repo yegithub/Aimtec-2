@@ -4,7 +4,7 @@ using Aimtec.SDK.Extensions;
 
 namespace Adept_AIO.Champions.Jinx.Update.OrbwalkingEvents
 {
-    class Harass
+    internal class Harass
     {
         private readonly SpellConfig SpellConfig;
         private readonly MenuConfig MenuConfig;

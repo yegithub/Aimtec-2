@@ -6,7 +6,7 @@ using Aimtec.SDK.Extensions;
 
 namespace Adept_AIO.Champions.Jinx.Update.Miscellaneous
 {
-    class AntiGapcloser
+    internal class AntiGapcloser
     {
         private readonly SpellConfig SpellConfig;
       

@@ -11,7 +11,7 @@ using Aimtec.SDK.Extensions;
 
 namespace Adept_AIO.Champions.Jinx.Update.Miscellaneous
 {
-    class BaseUlt
+    internal class BaseUlt
     {
         private readonly SpellConfig SpellConfig;
         private readonly MenuConfig MenuConfig;

@@ -5,7 +5,7 @@ using Aimtec.SDK.Damage.JSON;
 
 namespace Adept_AIO.Champions.Tristana.Core
 {
-    class Dmg
+    internal class Dmg
     {
         private readonly SpellConfig SpellConfig;
 

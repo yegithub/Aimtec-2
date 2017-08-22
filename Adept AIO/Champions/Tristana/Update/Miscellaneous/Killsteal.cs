@@ -7,7 +7,7 @@ using Aimtec.SDK.Extensions;
 
 namespace Adept_AIO.Champions.Tristana.Update.Miscellaneous
 {
-    class Killsteal
+    internal class Killsteal
     {
         private readonly SpellConfig SpellConfig;
         private readonly MenuConfig MenuConfig;

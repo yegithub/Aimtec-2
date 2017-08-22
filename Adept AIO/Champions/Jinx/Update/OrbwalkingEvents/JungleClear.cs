@@ -5,7 +5,7 @@ using Aimtec.SDK.Extensions;
 
 namespace Adept_AIO.Champions.Jinx.Update.OrbwalkingEvents
 {
-    class JungleClear
+    internal class JungleClear
     {
         private readonly MenuConfig MenuConfig;
         private readonly SpellConfig SpellConfig;

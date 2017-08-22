@@ -205,6 +205,7 @@
     <Compile Include="SDK\Extensions\MenuShortcut.cs" />
     <Compile Include="SDK\Extensions\Mixed.cs" />
     <Compile Include="SDK\Extensions\RenderExtension.cs" />
+    <Compile Include="SDK\Extensions\TargetState.cs" />
     <Compile Include="SDK\Extensions\WallExtension.cs" />
     <Compile Include="SDK\Methods\BaseUlt.cs" />
     <Compile Include="SDK\Methods\SpellData.cs" />

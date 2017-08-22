@@ -3,7 +3,7 @@ using Adept_AIO.SDK.Extensions;
 
 namespace Adept_AIO.Champions.Tristana.Update.OrbwalkingEvents
 {
-    class Harass
+    internal class Harass
     {
         private readonly SpellConfig SpellConfig;
         private readonly MenuConfig MenuConfig;

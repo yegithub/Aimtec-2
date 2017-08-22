@@ -4,7 +4,7 @@ using Aimtec.SDK.Extensions;
 
 namespace Adept_AIO.Champions.Tristana.Update.OrbwalkingEvents
 {
-    class Combo
+    internal class Combo
     {
         private readonly SpellConfig SpellConfig;
         private readonly MenuConfig MenuConfig;

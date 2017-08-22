@@ -8,7 +8,7 @@ using Aimtec.SDK.Extensions;
 
 namespace Adept_AIO.Champions.Yasuo.Update.Miscellaneous
 {
-    class AntiGapcloser
+    internal class AntiGapcloser
     {
         public static void OnGapcloser(Obj_AI_Hero sender, GapcloserArgs args)
         {

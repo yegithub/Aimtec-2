@@ -9,6 +9,7 @@ namespace Adept_AIO.SDK.Usables
     {
         private static readonly string[] Tiamats = {"ItemTiamatCleave", "ItemTitanicHydraCleave", "ItemTiamatCleave"};
         public static float TiamatCastTime;
+
         public static void CastTiamat()
         {
             SpellSlot? slot = null;
@@ -20,12 +21,14 @@ namespace Adept_AIO.SDK.Usables
                     slot = GetItemSlot(tiamat);
                 }
             }
-            
-            if (slot != null)
+
+            if (slot == null)
             {
-                Global.Player.SpellBook.CastSpell((SpellSlot) slot);
-                TiamatCastTime = Game.TickCount;
+                return;
             }
+
+            Global.Player.SpellBook.CastSpell((SpellSlot) slot);
+            TiamatCastTime = Game.TickCount;
         }
 
         public static void CastItem(string itemName, Vector3 position = new Vector3())

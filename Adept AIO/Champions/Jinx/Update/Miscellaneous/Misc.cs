@@ -7,7 +7,7 @@ using Aimtec.SDK.Extensions;
 
 namespace Adept_AIO.Champions.Jinx.Update.Miscellaneous
 {
-    class Misc
+    internal class Misc
     {
         private readonly SpellConfig SpellConfig;
         private readonly MenuConfig MenuConfig;
@@ -51,7 +51,7 @@ namespace Adept_AIO.Champions.Jinx.Update.Miscellaneous
                 var count = GameObjects.EnemyHeroes.Count(x => x.Distance(target) < 500);
 
                 if (MenuConfig.Combo["Count"].Enabled && count >= 2 || 
-                    MenuConfig.Combo["Immovable"].Enabled && target.ActionState == ActionState.Immovable)
+                    MenuConfig.Combo["Immovable"].Enabled && TargetState.IsHardCC(target))
                 {
                     SpellConfig.E.Cast(target);
                 }

@@ -8,7 +8,7 @@ using Aimtec.SDK.Extensions;
 
 namespace Adept_AIO.Champions.Tristana.Update.OrbwalkingEvents
 {
-    class JungleClear
+    internal class JungleClear
     {
         private readonly SpellConfig SpellConfig;
         private readonly MenuConfig MenuConfig;

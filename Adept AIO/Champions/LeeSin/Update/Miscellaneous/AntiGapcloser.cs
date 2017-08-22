@@ -8,7 +8,7 @@ using Aimtec.SDK.Extensions;
 
 namespace Adept_AIO.Champions.LeeSin.Update.Miscellaneous
 {
-    class AntiGapcloser
+    internal class AntiGapcloser
     {
         private readonly ISpellConfig SpellConfig;
         private readonly IWardManager WardManager;

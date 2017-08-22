@@ -7,7 +7,7 @@ using Aimtec.SDK.Extensions;
 
 namespace Adept_AIO.Champions.Tristana.Update.OrbwalkingEvents
 {
-    class LaneClear
+    internal class LaneClear
     {
         private readonly SpellConfig SpellConfig;
         private readonly MenuConfig MenuConfig;
