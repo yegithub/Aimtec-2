@@ -30,7 +30,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.Ward_Manager
             }
 
             var ward = _wardTracker.WardNames.FirstOrDefault(Items.CanUseItem);
-
+            
             if (ward == null)
             {
                 return;

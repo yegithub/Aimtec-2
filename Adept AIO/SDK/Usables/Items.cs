@@ -34,6 +34,7 @@ namespace Adept_AIO.SDK.Usables
         public static void CastItem(string itemName, Vector3 position = new Vector3())
         {
             var slot = GetItemSlot(itemName);
+
             if (!CanUseItem(itemName))
             {
                 return;
@@ -62,13 +63,9 @@ namespace Adept_AIO.SDK.Usables
 
         private static SpellSlot GetItemSlot(string itemName)
         {
-            var slot = Global.Player.Inventory.Slots.FirstOrDefault(x => string.Equals(itemName, x.SpellName, StringComparison.CurrentCultureIgnoreCase));
+            var slot = Global.Player.Inventory.Slots.FirstOrDefault(x => x.ItemName == itemName);
            
-            if (slot != null && slot.SpellSlot != SpellSlot.Unknown)
-            {
-                return slot.SpellSlot;
-            }
-            return SpellSlot.Unknown;
+            return slot?.SpellSlot ?? SpellSlot.Unknown;
         }
     }
 }
