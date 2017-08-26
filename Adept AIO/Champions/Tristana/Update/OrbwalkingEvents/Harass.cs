@@ -5,36 +5,36 @@ namespace Adept_AIO.Champions.Tristana.Update.OrbwalkingEvents
 {
     internal class Harass
     {
-        private readonly SpellConfig SpellConfig;
-        private readonly MenuConfig MenuConfig;
+        private readonly SpellConfig _spellConfig;
+        private readonly MenuConfig _menuConfig;
 
         public Harass(SpellConfig spellConfig, MenuConfig menuConfig)
         {
-            SpellConfig = spellConfig;
-            MenuConfig = menuConfig;
+            _spellConfig = spellConfig;
+            _menuConfig = menuConfig;
         }
 
         public void OnUpdate()
         {
-            var target = Global.TargetSelector.GetTarget(SpellConfig.FullRange);
+            var target = Global.TargetSelector.GetTarget(_spellConfig.FullRange);
 
             if (target == null || Global.Orbwalker.IsWindingUp)
             {
                 return;
             }
 
-            if (SpellConfig.Q.Ready && MenuConfig.Harass["Q"].Enabled)
+            if (_spellConfig.Q.Ready && _menuConfig.Harass["Q"].Enabled)
             {
-                SpellConfig.Q.Cast();
+                _spellConfig.Q.Cast();
             }
 
-            if (SpellConfig.E.Ready && MenuConfig.Harass["E"].Enabled)
+            if (_spellConfig.E.Ready && _menuConfig.Harass["E"].Enabled)
             {
-                if (!MenuConfig.Harass[target.ChampionName].Enabled)
+                if (!_menuConfig.Harass[target.ChampionName].Enabled)
                 {
                     return;
                 }
-                SpellConfig.E.CastOnUnit(target);
+                _spellConfig.E.CastOnUnit(target);
             }
         }
     }

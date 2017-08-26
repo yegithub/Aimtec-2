@@ -14,11 +14,11 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.LaneClear
         public bool EEnabled { get; set; }
         public bool CheckEnabled { get; set; }
 
-        private readonly ISpellConfig SpellConfig;
+        private readonly ISpellConfig _spellConfig;
 
         public LaneClear(ISpellConfig spellConfig)
         {
-            SpellConfig = spellConfig;
+            _spellConfig = spellConfig;
         }
 
         public void OnPostAttack()
@@ -31,28 +31,28 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.LaneClear
                 return;
             }
 
-            if (SpellConfig.E.Ready && EEnabled && minion.Health < Global.Player.GetSpellDamage(minion, SpellSlot.E))
+            if (_spellConfig.E.Ready && EEnabled && minion.Health < Global.Player.GetSpellDamage(minion, SpellSlot.E))
             {
-                SpellConfig.E.Cast(minion);
+                _spellConfig.E.Cast(minion);
             }
-            else if (SpellConfig.W.Ready && WEnabled)
+            else if (_spellConfig.W.Ready && WEnabled)
             {
-                SpellConfig.W.CastOnUnit(Global.Player);
+                _spellConfig.W.CastOnUnit(Global.Player);
             }
         }
 
         public void OnUpdate()
         {
-            var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(Global.Player) < SpellConfig.Q.Range + x.BoundingRadius);
+            var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(Global.Player) < _spellConfig.Q.Range + x.BoundingRadius);
 
             if (minion == null || !CheckEnabled && Global.Player.CountEnemyHeroesInRange(2000) >= 1)
             {
                 return;
             }
 
-            if (SpellConfig.Q.Ready && Q1Enabled)
+            if (_spellConfig.Q.Ready && Q1Enabled)
             {
-                SpellConfig.Q.Cast(minion);
+                _spellConfig.Q.Cast(minion);
             }
         }
     }

@@ -11,11 +11,11 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.LastHit
     {
         public bool Enabled { get; set; }
 
-        private readonly ISpellConfig SpellConfig;
+        private readonly ISpellConfig _spellConfig;
 
         public Lasthit(ISpellConfig spellConfig)
         {
-            SpellConfig = spellConfig;
+            _spellConfig = spellConfig;
         }
 
         public void OnUpdate()
@@ -25,12 +25,12 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.LastHit
                 return;
             }
 
-            var minions = GameObjects.EnemyMinions.OrderBy(x => -x.Health).LastOrDefault(x => x.IsValidTarget(SpellConfig.Q.Range) && x.Health < Global.Player.GetSpellDamage(x, SpellSlot.Q));
-            if (minions == null || !SpellConfig.Q.Ready || SpellConfig.IsQ2())
+            var minions = GameObjects.EnemyMinions.OrderBy(x => -x.Health).LastOrDefault(x => x.IsValidTarget(_spellConfig.Q.Range) && x.MaxHealth > 6 && x.Health < Global.Player.GetSpellDamage(x, SpellSlot.Q));
+            if (minions == null || !_spellConfig.Q.Ready || _spellConfig.IsQ2())
             {
                 return;
             }           
-            SpellConfig.Q.Cast(minions);
+            _spellConfig.Q.Cast(minions);
         }
     }
 }

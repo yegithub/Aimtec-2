@@ -17,12 +17,12 @@ namespace Adept_AIO.Champions.Tristana.Core
 
         public MenuConfig()
         {
-            var MainMenu = new Menu(string.Empty, "Adept AIO", true);
-            MainMenu.Attach();
+            var mainMenu = new Menu(string.Empty, "Adept AIO", true);
+            mainMenu.Attach();
 
-            Global.Orbwalker.Attach(MainMenu);
+            Global.Orbwalker.Attach(mainMenu);
 
-            Gapcloser.Attach(MainMenu, "Anti Gapcloser");
+            Gapcloser.Attach(mainMenu, "Anti Gapcloser");
 
             Combo = new Menu("Combo", "Combo")
             {
@@ -87,7 +87,7 @@ namespace Adept_AIO.Champions.Tristana.Core
                 Killsteal,
                 Drawings,
                 MenuShortcut.Credits
-            }) MainMenu.Add(menu);
+            }) mainMenu.Add(menu);
         }
     }
 }

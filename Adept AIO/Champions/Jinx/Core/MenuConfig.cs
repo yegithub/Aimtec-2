@@ -19,12 +19,12 @@ namespace Adept_AIO.Champions.Jinx.Core
 
         public void Attach()
         {
-            var MainMenu = new Menu(string.Empty, "Adept AIO", true);
-            MainMenu.Attach();
+            var mainMenu = new Menu(string.Empty, "Adept AIO", true);
+            mainMenu.Attach();
 
-            Global.Orbwalker.Attach(MainMenu);
+            Global.Orbwalker.Attach(mainMenu);
 
-            Gapcloser.Attach(MainMenu, "Anti Gapcloser");
+            Gapcloser.Attach(mainMenu, "Anti Gapcloser");
 
             Whitelist = new Menu("Whitelist", "Whitelist");
             foreach (var hero in GameObjects.EnemyHeroes)
@@ -86,7 +86,7 @@ namespace Adept_AIO.Champions.Jinx.Core
                 Killsteal,
                 Drawings,
                 MenuShortcut.Credits
-            })  MainMenu.Add(menu);
+            })  mainMenu.Add(menu);
         }
     }
 }

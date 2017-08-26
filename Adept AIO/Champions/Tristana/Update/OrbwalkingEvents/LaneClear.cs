@@ -9,18 +9,18 @@ namespace Adept_AIO.Champions.Tristana.Update.OrbwalkingEvents
 {
     internal class LaneClear
     {
-        private readonly SpellConfig SpellConfig;
-        private readonly MenuConfig MenuConfig;
+        private readonly SpellConfig _spellConfig;
+        private readonly MenuConfig _menuConfig;
 
         public LaneClear(SpellConfig spellConfig, MenuConfig menuConfig)
         {
-            SpellConfig = spellConfig;
-            MenuConfig = menuConfig;
+            _spellConfig = spellConfig;
+            _menuConfig = menuConfig;
         }
 
         public void OnPostAttack()
         {
-            if (!SpellConfig.Q.Ready || MenuConfig.LaneClear["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(2000) > 0)
+            if (!_spellConfig.Q.Ready || _menuConfig.LaneClear["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(2000) > 0)
             {
                 return;
             }
@@ -32,12 +32,12 @@ namespace Adept_AIO.Champions.Tristana.Update.OrbwalkingEvents
                 return;
             }
 
-            SpellConfig.Q.Cast();
+            _spellConfig.Q.Cast();
         }
 
         public void OnUpdate()
         {
-            if (MenuConfig.LaneClear["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(2000) > 0)
+            if (_menuConfig.LaneClear["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(2000) > 0)
             {
                 return;
             }
@@ -47,13 +47,13 @@ namespace Adept_AIO.Champions.Tristana.Update.OrbwalkingEvents
                 return;
             }
 
-            if (SpellConfig.E.Ready)
+            if (_spellConfig.E.Ready)
             {
-                var turret = GameObjects.EnemyTurrets.FirstOrDefault(x => x.IsValid && x.Distance(Global.Player) <= SpellConfig.FullRange);
+                var turret = GameObjects.EnemyTurrets.FirstOrDefault(x => x.IsValid && x.Distance(Global.Player) <= _spellConfig.FullRange);
 
-                if (MenuConfig.LaneClear["Turret"].Enabled && turret != null && turret.HealthPercent() >= 35)
+                if (_menuConfig.LaneClear["Turret"].Enabled && turret != null && turret.HealthPercent() >= 35)
                 {
-                    SpellConfig.E.CastOnUnit(turret);
+                    _spellConfig.E.CastOnUnit(turret);
                 }
                 else
                 {
@@ -61,15 +61,15 @@ namespace Adept_AIO.Champions.Tristana.Update.OrbwalkingEvents
                     var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Health < Global.Player.GetSpellDamage(x, SpellSlot.E) + Global.Player.GetAutoAttackDamage(x) * 5 && x.IsValid);
                     var cannon = GameObjects.EnemyMinions.FirstOrDefault(x => x.UnitSkinName.ToLower().Contains("cannon") && x.IsValid);
 
-                    if (minions >= MenuConfig.LaneClear["E"].Value)
+                    if (minions >= _menuConfig.LaneClear["E"].Value)
                     {
                         if (cannon != null)
                         {
-                            SpellConfig.E.CastOnUnit(cannon);
+                            _spellConfig.E.CastOnUnit(cannon);
                         }
                         else if (minion != null)
                         {
-                            SpellConfig.E.CastOnUnit(minion);
+                            _spellConfig.E.CastOnUnit(minion);
                         }
                     }
                 }

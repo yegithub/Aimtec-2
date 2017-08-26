@@ -6,11 +6,11 @@ namespace Adept_AIO.Champions.Jinx.Core
 {
     internal class Dmg
     {
-        private readonly SpellConfig SpellConfig;
+        private readonly SpellConfig _spellConfig;
 
         public Dmg(SpellConfig spellConfig)
         {
-            SpellConfig = spellConfig;
+            _spellConfig = spellConfig;
         }
 
         public double Damage(Obj_AI_Base target)
@@ -27,17 +27,17 @@ namespace Adept_AIO.Champions.Jinx.Core
                 dmg += Global.Player.GetAutoAttackDamage(target);
             }
 
-            if (SpellConfig.W.Ready)
+            if (_spellConfig.W.Ready)
             {
                 dmg += Global.Player.GetSpellDamage(target, SpellSlot.W);
             }
 
-            if (SpellConfig.E.Ready)
+            if (_spellConfig.E.Ready)
             {
                 dmg += Global.Player.GetSpellDamage(target, SpellSlot.E);
             }
 
-            if (SpellConfig.R.Ready)
+            if (_spellConfig.R.Ready)
             {
                 dmg += Global.Player.GetSpellDamage(target, SpellSlot.R);
             }

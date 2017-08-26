@@ -25,7 +25,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
                 var end = Global.Player.Position.Extend(Game.CursorPos, dashRange);
                 var wall = WallExtension.GeneratePoint(Global.Player.Position, end).OrderBy(x => x.Distance(Global.Player.Position)).FirstOrDefault();
 
-                if (wall == Vector3.Zero)
+                if (wall.IsZero)
                 {
                     return;
                 }

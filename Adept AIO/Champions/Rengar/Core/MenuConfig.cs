@@ -8,7 +8,7 @@ namespace Adept_AIO.Champions.Rengar.Core
 {
     internal class MenuConfig
     {
-        private static Menu MainMenu;
+        private static Menu _mainMenu;
 
         public static Menu Combo,
                            AssassinManager,
@@ -19,10 +19,10 @@ namespace Adept_AIO.Champions.Rengar.Core
 
         public static void Attach()
         {
-            MainMenu = new Menu(string.Empty, "Adept AIO", true);
-            MainMenu.Attach();
+            _mainMenu = new Menu(string.Empty, "Adept AIO", true);
+            _mainMenu.Attach();
 
-            Global.Orbwalker.Attach(MainMenu);
+            Global.Orbwalker.Attach(_mainMenu);
 
             AssassinManager = new Menu("AssassinManager", "Assassin Manager");
             foreach (var hero in GameObjects.EnemyHeroes)
@@ -81,7 +81,7 @@ namespace Adept_AIO.Champions.Rengar.Core
                 Drawings,
                 MenuShortcut.Credits
             })
-            MainMenu.Add(menu);
+            _mainMenu.Add(menu);
         }
     }
 }

@@ -10,38 +10,38 @@ namespace Adept_AIO.Champions.Tristana.Update.OrbwalkingEvents
 {
     internal class JungleClear
     {
-        private readonly SpellConfig SpellConfig;
-        private readonly MenuConfig MenuConfig;
+        private readonly SpellConfig _spellConfig;
+        private readonly MenuConfig _menuConfig;
 
         public JungleClear(MenuConfig menuConfig, SpellConfig spellConfig)
         {
-            MenuConfig = menuConfig;
-            SpellConfig = spellConfig;
+            _menuConfig = menuConfig;
+            _spellConfig = spellConfig;
         }
 
         public void OnPostAttack(AttackableUnit target)
         {
-            if (!SpellConfig.Q.Ready || !MenuConfig.JungleClear["Q"].Enabled || target == null || MenuConfig.JungleClear["Avoid"].Enabled && Global.Player.Level == 1)
+            if (!_spellConfig.Q.Ready || !_menuConfig.JungleClear["Q"].Enabled || target == null || _menuConfig.JungleClear["Avoid"].Enabled && Global.Player.Level == 1)
             {
                 return;
             }
 
-            SpellConfig.Q.Cast();
+            _spellConfig.Q.Cast();
         }
 
         public void OnUpdate()
         {
             // todo: See if this works as intended. 
-            var mob = GameObjects.Jungle.Where(x => x.IsValidTarget(SpellConfig.FullRange)).OrderBy(x => x.GetJungleType()).FirstOrDefault();
+            var mob = GameObjects.Jungle.Where(x => x.IsValidTarget(_spellConfig.FullRange)).OrderBy(x => x.GetJungleType()).FirstOrDefault();
 
-            if (mob == null || Global.Orbwalker.IsWindingUp || MenuConfig.JungleClear["Avoid"].Enabled && Global.Player.Level == 1)
+            if (mob == null || Global.Orbwalker.IsWindingUp || _menuConfig.JungleClear["Avoid"].Enabled && Global.Player.Level == 1)
             {
                 return;
             }
 
-            if (SpellConfig.E.Ready && MenuConfig.JungleClear["E"].Enabled)
+            if (_spellConfig.E.Ready && _menuConfig.JungleClear["E"].Enabled)
             {
-                SpellConfig.E.CastOnUnit(mob);
+                _spellConfig.E.CastOnUnit(mob);
             }
         }
     }

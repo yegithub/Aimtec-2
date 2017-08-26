@@ -8,7 +8,7 @@ namespace Adept_AIO.Champions.Rengar.Core
     {
         public static Obj_AI_Hero AssassinTarget = null;
 
-        public static bool HardCC()
+        public static bool HardCc()
         {
             var me = Global.Player;
             return (me.HasBuffOfType(BuffType.Blind) ||

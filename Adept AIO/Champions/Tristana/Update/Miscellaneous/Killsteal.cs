@@ -9,39 +9,39 @@ namespace Adept_AIO.Champions.Tristana.Update.Miscellaneous
 {
     internal class Killsteal
     {
-        private readonly SpellConfig SpellConfig;
-        private readonly MenuConfig MenuConfig;
+        private readonly SpellConfig _spellConfig;
+        private readonly MenuConfig _menuConfig;
 
         public Killsteal(MenuConfig menuConfig, SpellConfig spellConfig)
         {
-            MenuConfig = menuConfig;
-            SpellConfig = spellConfig;
+            _menuConfig = menuConfig;
+            _spellConfig = spellConfig;
         }
 
         public void OnUpdate()
         {
-            var target = GameObjects.EnemyHeroes.FirstOrDefault(x => x.Distance(Global.Player) < SpellConfig.FullRange);
+            var target = GameObjects.EnemyHeroes.FirstOrDefault(x => x.Distance(Global.Player) < _spellConfig.FullRange);
             if (target == null || !target.IsValid)
             {
                 return;
             }
 
-            if (SpellConfig.E.Ready && target.Health < Global.Player.GetSpellDamage(target, SpellSlot.E) && MenuConfig.Killsteal["E"].Enabled)
+            if (_spellConfig.E.Ready && target.Health < Global.Player.GetSpellDamage(target, SpellSlot.E) && _menuConfig.Killsteal["E"].Enabled)
             {
-                SpellConfig.E.CastOnUnit(target);
+                _spellConfig.E.CastOnUnit(target);
             }
-            else if (SpellConfig.R.Ready && MenuConfig.Killsteal["R"].Enabled)
+            else if (_spellConfig.R.Ready && _menuConfig.Killsteal["R"].Enabled)
             {
                 if (target.Health < Global.Player.GetAutoAttackDamage(target) + 
                     (Global.Player.GetSpellDamage(target, SpellSlot.R) + (target.HasBuff("TristanaECharge") ? Global.Player.GetSpellDamage(target, SpellSlot.E) : 0)))
                 {
-                    SpellConfig.R.CastOnUnit(target);
+                    _spellConfig.R.CastOnUnit(target);
                     Global.Orbwalker.Attack(target);
                 }
             }
-            else if(SpellConfig.W.Ready && target.Health < Global.Player.GetSpellDamage(target, SpellSlot.W) && MenuConfig.Killsteal["W"].Enabled)
+            else if(_spellConfig.W.Ready && target.Health < Global.Player.GetSpellDamage(target, SpellSlot.W) && _menuConfig.Killsteal["W"].Enabled)
             {
-                SpellConfig.W.Cast(target);
+                _spellConfig.W.Cast(target);
             }
         }
     }

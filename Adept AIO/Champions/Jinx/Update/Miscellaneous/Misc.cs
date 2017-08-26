@@ -9,51 +9,51 @@ namespace Adept_AIO.Champions.Jinx.Update.Miscellaneous
 {
     internal class Misc
     {
-        private readonly SpellConfig SpellConfig;
-        private readonly MenuConfig MenuConfig;
+        private readonly SpellConfig _spellConfig;
+        private readonly MenuConfig _menuConfig;
 
         public Misc(SpellConfig spellConfig, MenuConfig menuConfig)
         {
-            SpellConfig = spellConfig;
-            MenuConfig = menuConfig;
+            _spellConfig = spellConfig;
+            _menuConfig = menuConfig;
         }
 
         public void OnUpdate()
         {
-            if (SpellConfig.E.Ready)
+            if (_spellConfig.E.Ready)
             {
-                if (MenuConfig.Combo["Teleport"].Enabled)
+                if (_menuConfig.Combo["Teleport"].Enabled)
                 {
                     var enemyTeleport = ObjectManager.Get<Obj_AI_Minion>().FirstOrDefault(x => x.IsEnemy && 
-                                                                                               x.Distance(Global.Player) <= SpellConfig.E.Range &&
+                                                                                               x.Distance(Global.Player) <= _spellConfig.E.Range &&
                                                                                                x.Buffs.Any(y => y.IsActive && y.Name.ToLower().Contains("teleport")));
                     if (enemyTeleport != null)
                     {
-                        SpellConfig.E.Cast(enemyTeleport.ServerPosition);
+                        _spellConfig.E.Cast(enemyTeleport.ServerPosition);
                     }
                 }
             }
 
-            var target = Global.TargetSelector.GetTarget(MenuConfig.Killsteal["Range"].Value);
+            var target = Global.TargetSelector.GetTarget(_menuConfig.Killsteal["Range"].Value);
 
             if (target == null || Global.Orbwalker.IsWindingUp)
             {
                 return;
             }
 
-            if (SpellConfig.R.Ready && MenuConfig.Killsteal["Range"].Enabled && MenuConfig.Whitelist[target.ChampionName].Enabled && (target.Health < Global.Player.GetSpellDamage(target, SpellSlot.R) && target.Distance(Global.Player) > Global.Player.AttackRange || MenuConfig.Combo["Semi"].Enabled))
+            if (_spellConfig.R.Ready && _menuConfig.Killsteal["Range"].Enabled && _menuConfig.Whitelist[target.ChampionName].Enabled && (target.Health < Global.Player.GetSpellDamage(target, SpellSlot.R) && target.Distance(Global.Player) > Global.Player.AttackRange || _menuConfig.Combo["Semi"].Enabled))
             {
-                SpellConfig.R.Cast(target);
+                _spellConfig.R.Cast(target);
             }
 
-            if (SpellConfig.E.Ready)
+            if (_spellConfig.E.Ready)
             {
                 var count = GameObjects.EnemyHeroes.Count(x => x.Distance(target) < 500);
 
-                if (MenuConfig.Combo["Count"].Enabled && count >= 2 || 
-                    MenuConfig.Combo["Immovable"].Enabled && TargetState.IsHardCC(target))
+                if (_menuConfig.Combo["Count"].Enabled && count >= 2 || 
+                    _menuConfig.Combo["Immovable"].Enabled && TargetState.IsHardCc(target))
                 {
-                    SpellConfig.E.Cast(target);
+                    _spellConfig.E.Cast(target);
                 }
             }
         }

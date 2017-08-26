@@ -7,11 +7,11 @@ namespace Adept_AIO.Champions.LeeSin.Core.Damage
 {
     internal class Dmg : IDmg
     {
-        private readonly ISpellConfig SpellConfig;
+        private readonly ISpellConfig _spellConfig;
 
         public Dmg(ISpellConfig spellConfig)
         {
-            SpellConfig = spellConfig;
+            _spellConfig = spellConfig;
         }
 
         public double Damage(Obj_AI_Base target)
@@ -23,17 +23,17 @@ namespace Adept_AIO.Champions.LeeSin.Core.Damage
 
             var dmg = Global.Player.GetAutoAttackDamage(target);
 
-            if (SpellConfig.E.Ready)
+            if (_spellConfig.E.Ready)
             {
                 dmg += Global.Player.GetSpellDamage(target, SpellSlot.E) + dmg;
             }
 
-            if (SpellConfig.Q.Ready)
+            if (_spellConfig.Q.Ready)
             {
                 dmg += Global.Player.GetSpellDamage(target, SpellSlot.Q) + dmg;
             }
 
-            if (SpellConfig.R.Ready)
+            if (_spellConfig.R.Ready)
             {
                 dmg += Global.Player.GetSpellDamage(target, SpellSlot.R);
             }

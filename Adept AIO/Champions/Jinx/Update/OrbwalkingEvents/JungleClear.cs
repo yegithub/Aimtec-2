@@ -7,13 +7,13 @@ namespace Adept_AIO.Champions.Jinx.Update.OrbwalkingEvents
 {
     internal class JungleClear
     {
-        private readonly MenuConfig MenuConfig;
-        private readonly SpellConfig SpellConfig;
+        private readonly MenuConfig _menuConfig;
+        private readonly SpellConfig _spellConfig;
 
         public JungleClear(MenuConfig menuConfig, SpellConfig spellConfig)
         {
-            MenuConfig = menuConfig;
-            SpellConfig = spellConfig;
+            _menuConfig = menuConfig;
+            _spellConfig = spellConfig;
         }
 
         public void OnUpdate()
@@ -23,7 +23,7 @@ namespace Adept_AIO.Champions.Jinx.Update.OrbwalkingEvents
                 return;
             }
 
-            var minion = GameObjects.JungleLarge.FirstOrDefault(x => x.IsValidTarget(SpellConfig.W.Range));
+            var minion = GameObjects.JungleLarge.FirstOrDefault(x => x.IsValidTarget(_spellConfig.W.Range));
             if (minion == null)
             {
                 return;
@@ -31,18 +31,18 @@ namespace Adept_AIO.Champions.Jinx.Update.OrbwalkingEvents
 
             var dist = Global.Player.Distance(minion);
 
-            if (SpellConfig.W.Ready && MenuConfig.JungleClear["W"].Enabled && MenuConfig.JungleClear["W"].Value < Global.Player.ManaPercent() &&
+            if (_spellConfig.W.Ready && _menuConfig.JungleClear["W"].Enabled && _menuConfig.JungleClear["W"].Value < Global.Player.ManaPercent() &&
                 dist <= 650 && Global.Player.CountEnemyHeroesInRange(2000) == 0)
             {
-                SpellConfig.W.Cast(minion);
+                _spellConfig.W.Cast(minion);
             }
 
-            if (SpellConfig.Q.Ready && MenuConfig.JungleClear["Q"].Enabled)
+            if (_spellConfig.Q.Ready && _menuConfig.JungleClear["Q"].Enabled)
             {
-                if (!SpellConfig.IsQ2 && dist > SpellConfig.DefaultAuotAttackRange ||
-                     SpellConfig.IsQ2 && dist <= SpellConfig.DefaultAuotAttackRange)
+                if (!_spellConfig.IsQ2 && dist > _spellConfig.DefaultAuotAttackRange ||
+                     _spellConfig.IsQ2 && dist <= _spellConfig.DefaultAuotAttackRange)
                 {
-                    SpellConfig.Q.Cast();
+                    _spellConfig.Q.Cast();
                 }
             }
         }

@@ -33,10 +33,6 @@ namespace Adept_AIO.Champions.LeeSin.Core.Spells
             return target.HasBuff("BlindMonkSonicWave");
         }
 
-        /// <summary>
-        /// [BETA]
-        /// </summary>
-        /// <param name="target"></param>
         public void QSmite(Obj_AI_Base target)
         {
           
@@ -44,7 +40,7 @@ namespace Adept_AIO.Champions.LeeSin.Core.Spells
             var first = list.FirstOrDefault();
 
             if (SummonerSpells.Smite == null || !SummonerSpells.Smite.Ready || SummonerSpells.Ammo("Smite") < 2 ||
-                list.Count < 1 || list[0] == target || first == null ||
+                list.Count < 1 || first == null || first.NetworkId == target.NetworkId ||
                 first.Health > SummonerSpells.SmiteMonsters() ||
                 first.ServerPosition.Distance(Global.Player) > SummonerSpells.Smite.Range)
             {
@@ -59,6 +55,7 @@ namespace Adept_AIO.Champions.LeeSin.Core.Spells
         public Spell Q { get; private set; }
         public Spell E { get; private set; }
         public Spell R { get; private set; }
+        public Spell R2 { get; private set; }
 
         public OrbwalkerMode InsecMode { get; set; }
         public OrbwalkerMode WardjumpMode { get; set; }
@@ -81,6 +78,8 @@ namespace Adept_AIO.Champions.LeeSin.Core.Spells
             E = new Spell(SpellSlot.E, 350);
 
             R = new Spell(SpellSlot.R, 375);
+            R2 = new Spell(SpellSlot.R, 900);
+            R2.SetSkillshot(0.25f, 80, 1700, false, SkillshotType.Line);
         }
 
         public void OnProcessSpellCast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)

@@ -434,7 +434,7 @@ namespace Adept_AIO.SDK.Extensions
             /// <summary>
             ///     The quality
             /// </summary>
-            private readonly int quality;
+            private readonly int _quality;
 
             #endregion
 
@@ -454,7 +454,7 @@ namespace Adept_AIO.SDK.Extensions
                 Direction = (direction - center).Normalized();
                 Angle = angle;
                 Radius = radius;
-                this.quality = quality;
+                this._quality = quality;
                 UpdatePolygon();
             }
 
@@ -489,12 +489,12 @@ namespace Adept_AIO.SDK.Extensions
             public void UpdatePolygon(int offset = 0)
             {
                 Points.Clear();
-                var outRadius = (Radius + offset) / (float)Math.Cos(2 * Math.PI / quality);
+                var outRadius = (Radius + offset) / (float)Math.Cos(2 * Math.PI / _quality);
                 Points.Add(Center);
                 var side1 = Direction.Rotated(-Angle * 0.5f);
-                for (var i = 0; i <= quality; i++)
+                for (var i = 0; i <= _quality; i++)
                 {
-                    var cDirection = side1.Rotated(i * Angle / quality).Normalized();
+                    var cDirection = side1.Rotated(i * Angle / _quality).Normalized();
                     Points.Add(
                         new Vector2(Center.X + outRadius * cDirection.X, Center.Y + outRadius * cDirection.Y));
                 }

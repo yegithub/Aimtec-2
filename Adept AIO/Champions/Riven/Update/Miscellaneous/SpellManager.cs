@@ -9,9 +9,9 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 {
     internal class SpellManager
     {
-        private static bool CanUseQ;
-        private static bool CanUseW;
-        private static Obj_AI_Base Unit;
+        private static bool _canUseQ;
+        private static bool _canUseW;
+        private static Obj_AI_Base _unit;
 
         public static void OnProcessSpellCast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
         {
@@ -29,11 +29,11 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
             {
                 case "RivenTriCleave":
                     Extensions.LastQCastAttempt = Game.TickCount;
-                    CanUseQ = false;
+                    _canUseQ = false;
                     Animation.Reset();
                     break;
                 case "RivenMartyr":
-                    CanUseW = false;
+                    _canUseW = false;
                     Global.Orbwalker.ResetAutoAttackTimer();
                     break;
                 case "RivenFengShuiEngine":
@@ -47,25 +47,25 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 
         public static void OnUpdate()
         {
-            if (Unit == null)
+            if (_unit == null)
             {
                 return;
             }
 
-            if (CanUseQ && Extensions.DidJustAuto)
+            if (_canUseQ && Extensions.DidJustAuto)
             {
-                Global.Player.SpellBook.CastSpell(SpellSlot.Q, Unit);
+                Global.Player.SpellBook.CastSpell(SpellSlot.Q, _unit);
                 Extensions.DidJustAuto = false;
             }
 
-            if (!CanUseW)
+            if (!_canUseW)
             {
                 return;
             }
           
             Items.CastTiamat();
 
-            CanUseW = false;
+            _canUseW = false;
 
             SpellConfig.W.Cast();
         }
@@ -77,8 +77,8 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                 return;
             }
 
-            Unit = target;
-            CanUseQ = true;
+            _unit = target;
+            _canUseQ = true;
         }
 
         public static void CastW(Obj_AI_Base target)
@@ -88,8 +88,8 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                 return;
             }
 
-            CanUseW = SpellConfig.W.Ready && InsideKiBurst(target);
-            Unit = target;  
+            _canUseW = SpellConfig.W.Ready && InsideKiBurst(target);
+            _unit = target;  
         }
 
         public static void CastR2(Obj_AI_Base target)

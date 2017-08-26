@@ -13,13 +13,13 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.WardJump
 
         private readonly IWardManager _wardManager;
 
-        private readonly ISpellConfig SpellConfig;
+        private readonly ISpellConfig _spellConfig;
 
         public WardJump(IWardTracker wardTracker, IWardManager wardManager, ISpellConfig spellConfig)
         {
             _wardTracker = wardTracker;
             _wardManager = wardManager;
-            SpellConfig = spellConfig;
+            _spellConfig = spellConfig;
         }
 
         public void OnKeyPressed()
@@ -29,7 +29,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.WardJump
                 return;
             }
 
-            if (SpellConfig.W.Ready && SpellConfig.IsFirst(SpellConfig.W) && _wardTracker.IsWardReady)
+            if (_spellConfig.W.Ready && _spellConfig.IsFirst(_spellConfig.W) && _wardTracker.IsWardReady)
             {
                 _wardManager.WardJump(Game.CursorPos, Range);
             }

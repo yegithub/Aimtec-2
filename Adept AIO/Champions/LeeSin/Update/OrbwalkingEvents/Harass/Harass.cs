@@ -15,12 +15,12 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Harass
         public bool E2Enabled { get; set; }
 
         private readonly IWardManager _wardManager;
-        private readonly ISpellConfig SpellConfig;
+        private readonly ISpellConfig _spellConfig;
 
         public Harass(IWardManager wardManager, ISpellConfig spellConfig)
         {
             _wardManager = wardManager;
-            SpellConfig = spellConfig;
+            _spellConfig = spellConfig;
         }
 
         public void OnPostAttack(AttackableUnit target)
@@ -29,41 +29,41 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Harass
             {
                 return;
             }
-            if (SpellConfig.E.Ready && E2Enabled && !SpellConfig.IsFirst(SpellConfig.E))
+            if (_spellConfig.E.Ready && E2Enabled && !_spellConfig.IsFirst(_spellConfig.E))
             {
-                SpellConfig.E.Cast();
+                _spellConfig.E.Cast();
             }
-            else if (SpellConfig.W.Ready && Mode == 1)
+            else if (_spellConfig.W.Ready && Mode == 1)
             {
-                SpellConfig.W.CastOnUnit(Global.Player);
+                _spellConfig.W.CastOnUnit(Global.Player);
             }
         }
 
         public void OnUpdate()
         {
-            var target = Global.TargetSelector.GetTarget(SpellConfig.Q.Range);
+            var target = Global.TargetSelector.GetTarget(_spellConfig.Q.Range);
             if (target == null)
             {
                 return;
             }
 
-            if (SpellConfig.Q.Ready && Q1Enabled)
+            if (_spellConfig.Q.Ready && Q1Enabled)
             {
-                if (SpellConfig.IsQ2() && Q2Enabled || !SpellConfig.IsQ2())
+                if (_spellConfig.IsQ2() && Q2Enabled || !_spellConfig.IsQ2())
                 {
-                    SpellConfig.Q.Cast(target);
+                    _spellConfig.Q.Cast(target);
                 }
             }
 
-            if (SpellConfig.E.Ready)
+            if (_spellConfig.E.Ready)
             {
-                if (SpellConfig.IsFirst(SpellConfig.E) && EEnabled && target.IsValidTarget(SpellConfig.E.Range))
+                if (_spellConfig.IsFirst(_spellConfig.E) && EEnabled && target.IsValidTarget(_spellConfig.E.Range))
                 {
-                    SpellConfig.E.Cast(target);
+                    _spellConfig.E.Cast(target);
                 }
             }
 
-            if (SpellConfig.W.Ready && SpellConfig.IsFirst(SpellConfig.W) && !SpellConfig.E.Ready && !SpellConfig.Q.Ready && Mode == 0)
+            if (_spellConfig.W.Ready && _spellConfig.IsFirst(_spellConfig.W) && !_spellConfig.E.Ready && !_spellConfig.Q.Ready && Mode == 0)
             {
                 var pos = Global.Player.ServerPosition + (Global.Player.ServerPosition + target.ServerPosition) * 300;
                 _wardManager.WardJump(pos, 600);

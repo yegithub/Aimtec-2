@@ -10,11 +10,11 @@ namespace Adept_AIO.Champions.LeeSin.Update.Ward_Manager
 {
     public class WardTracker : IWardTracker
     {
-        private readonly ISpellConfig SpellConfig;
+        private readonly ISpellConfig _spellConfig;
 
         public WardTracker(ISpellConfig spellConfig)
         {
-            SpellConfig = spellConfig;
+            _spellConfig = spellConfig;
         }
 
         public bool IsWardReady => WardNames.Any(Items.CanUseItem) && Game.TickCount - LastWardCreated > 800 || LastWardCreated <= 0;
@@ -32,7 +32,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.Ward_Manager
 
             if (ward == null || WardPosition.Distance(ward.Position) > 800 ||
                 Game.TickCount - LastWardCreated > 800 ||
-                !SpellConfig.IsFirst(SpellConfig.W) || !IsAtWall)
+                !_spellConfig.IsFirst(_spellConfig.W) || !IsAtWall)
             {
                 return;
             }

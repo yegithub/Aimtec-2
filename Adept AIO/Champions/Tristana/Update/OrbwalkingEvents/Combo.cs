@@ -6,49 +6,49 @@ namespace Adept_AIO.Champions.Tristana.Update.OrbwalkingEvents
 {
     internal class Combo
     {
-        private readonly SpellConfig SpellConfig;
-        private readonly MenuConfig MenuConfig;
-        private readonly Dmg Dmg;
+        private readonly SpellConfig _spellConfig;
+        private readonly MenuConfig _menuConfig;
+        private readonly Dmg _dmg;
 
         public Combo(SpellConfig spellConfig, MenuConfig menuConfig, Dmg dmg)
         {
-            SpellConfig = spellConfig;
-            MenuConfig = menuConfig;
-            Dmg = dmg;
+            _spellConfig = spellConfig;
+            _menuConfig = menuConfig;
+            _dmg = dmg;
         }
 
         public void OnUpdate()
         {
-            var target = Global.TargetSelector.GetTarget(SpellConfig.FullRange);
+            var target = Global.TargetSelector.GetTarget(_spellConfig.FullRange);
 
             if (target == null || Global.Orbwalker.IsWindingUp)
             {
                 return;
             }
 
-            if (SpellConfig.Q.Ready && MenuConfig.Combo["Q"].Enabled)
+            if (_spellConfig.Q.Ready && _menuConfig.Combo["Q"].Enabled)
             {
-                SpellConfig.Q.Cast();
+                _spellConfig.Q.Cast();
             }
 
-            if (SpellConfig.W.Ready 
-             && MenuConfig.Combo["W"].Enabled
-             && target.Health < Dmg.Damage(target) 
+            if (_spellConfig.W.Ready 
+             && _menuConfig.Combo["W"].Enabled
+             && target.Health < _dmg.Damage(target) 
              && target.Distance(Global.Player) > Global.Player.AttackRange + 100
              && Global.Player.CountEnemyHeroesInRange(2000) <= 2 
              && target.ServerPosition.CountAllyHeroesInRange(900) == 0)
             {
-                SpellConfig.W.Cast(target);
+                _spellConfig.W.Cast(target);
             }
 
-            if (SpellConfig.E.Ready && MenuConfig.Combo["E"].Enabled)
+            if (_spellConfig.E.Ready && _menuConfig.Combo["E"].Enabled)
             {
-                if (!MenuConfig.Combo[target.ChampionName].Enabled)
+                if (!_menuConfig.Combo[target.ChampionName].Enabled)
                 {
                     return;
                 }
 
-                SpellConfig.E.CastOnUnit(target);
+                _spellConfig.E.CastOnUnit(target);
             }
         }
     }

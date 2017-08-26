@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Adept_AIO.Champions.LeeSin.Core.Insec_Manager;
 using Adept_AIO.Champions.LeeSin.Core.Spells;
 using Adept_AIO.Champions.LeeSin.Update.Ward_Manager;
@@ -13,49 +14,60 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Insec
     internal class Insec : IInsec
     {
         public bool Enabled { get; set; }
+        public bool Bk { get; set; }
         public bool QLast { get; set; }
         public bool ObjectEnabled { get; set; }
 
         private readonly IWardTracker _wardTracker;
         private readonly IWardManager _wardManager;
-        private readonly ISpellConfig SpellConfig;
-        private readonly IInsec_Manager _insecManager;
-     
-        public Insec(IWardTracker wardTracker, IWardManager wardManager, ISpellConfig spellConfig, IInsec_Manager insecManager)
+        private readonly ISpellConfig _spellConfig;
+        private readonly IInsecManager _insecManager;
+
+        public Insec(IWardTracker wardTracker, IWardManager wardManager, ISpellConfig spellConfig,
+            IInsecManager insecManager)
         {
             _wardTracker = wardTracker;
             _wardManager = wardManager;
-            SpellConfig = spellConfig;
+            _spellConfig = spellConfig;
             _insecManager = insecManager;
         }
 
-        private bool WardFlash;
+        private bool _wardFlash;
 
-        private static bool _flashReady => SummonerSpells.IsValid(SummonerSpells.Flash);
+        private static bool FlashReady => SummonerSpells.IsValid(SummonerSpells.Flash);
 
         private bool CanWardJump(Vector3 source)
         {
             var temp = 0;
-            if (_wardManager.IsWardReady() && SpellConfig.W.Ready && SpellConfig.IsFirst(SpellConfig.W))
+            if (_wardManager.IsWardReady() && _spellConfig.W.Ready && _spellConfig.IsFirst(_spellConfig.W))
             {
                 temp += 600;
             }
 
-            if (_flashReady)
+            if (FlashReady)
             {
                 temp += 425;
             }
-            return _insecPosition.Distance(source) <= temp;
+            return GetInsecPosition().Distance(source) <= temp;
         }
 
-        private Vector3 _insecPosition => _insecManager.InsecPosition(target);
+        private Vector3 GetInsecPosition()
+        {
+            if (Bk && !_insecManager.BKPosition(Target).IsZero)
+            {
+                return _insecManager.BKPosition(Target);
+            }
+            return _insecManager.InsecPosition(Target);
+        }
 
-        private static Obj_AI_Hero target => Global.TargetSelector.GetSelectedTarget();
+        private static Obj_AI_Hero Target => Global.TargetSelector.GetSelectedTarget();
 
-        private Obj_AI_Base AnyEnemy => ObjectManager.Get<Obj_AI_Base>().Where(x => CanWardJump(x.ServerPosition) && x.IsEnemy && !x.IsDead && x.Health > Global.Player.GetSpellDamage(x, SpellSlot.Q) && x.MaxHealth > 5 && 
-                                                                                     Global.Player.Distance(x) <= SpellConfig.Q.Range)
-                                                                                    .OrderBy(x => x.Distance(_insecPosition))
-                                                                                    .FirstOrDefault(x => x.Distance(_insecPosition) < Global.Player.Distance(_insecPosition));
+        private Obj_AI_Base EnemyObject => ObjectManager.Get<Obj_AI_Base>().Where(x =>
+                CanWardJump(x.ServerPosition) && x.IsEnemy && !x.IsDead &&
+                x.Health > Global.Player.GetSpellDamage(x, SpellSlot.Q) && x.MaxHealth > 7 &&
+                Global.Player.Distance(x) <= _spellConfig.Q.Range)
+            .OrderBy(x => x.Distance(GetInsecPosition()))
+            .FirstOrDefault(x => x.Distance(GetInsecPosition()) < Global.Player.Distance(GetInsecPosition()));
 
         public void OnProcessSpellCast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
         {
@@ -64,112 +76,122 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Insec
                 return;
             }
 
-            if (target == null || args.SpellSlot != SpellSlot.R ||
-                _wardManager.IsWardReady() && SpellConfig.IsFirst(SpellConfig.W) ||
-                _flashReady && Global.Player.Distance(_insecPosition) <= 175  ||
-                Game.TickCount - _wardTracker.LastWardCreated < 1200 && !WardFlash)
+            if (Target == null
+                || args.SpellSlot != SpellSlot.R
+                || _wardManager.IsWardReady() && _spellConfig.IsFirst(_spellConfig.W)
+                || FlashReady && Global.Player.Distance(GetInsecPosition()) <= 175
+                || Game.TickCount - _wardTracker.LastWardCreated < 1200 && !_wardFlash)
             {
                 return;
             }
-          
-            SummonerSpells.Flash.Cast(_insecPosition);
+
+            SummonerSpells.Flash.Cast(GetInsecPosition());
         }
-            
+
         public void OnKeyPressed()
         {
-            if (target == null || !Enabled)
+            if (Target == null || !Enabled)
             {
                 return;
             }
-           
-            if (SpellConfig.Q.Ready && !CanWardJump(Global.Player.ServerPosition))
+
+            if (_spellConfig.Q.Ready && !CanWardJump(Global.Player.ServerPosition))
             {
                 Q();
             }
 
-            if (SpellConfig.W.Ready && SpellConfig.IsFirst(SpellConfig.W) && _wardManager.IsWardReady() && !SpellConfig.IsQ2())
+            if (_spellConfig.W.Ready && _spellConfig.IsFirst(_spellConfig.W) && _wardManager.IsWardReady())
             {
-                if (_insecPosition.Distance(Global.Player) <= 600)
+                if (Game.TickCount - _spellConfig.Q.LastCastAttemptT <= 600 && !_spellConfig.Q.Ready)
                 {
-                    WardFlash = false;
-
-                    var dist = (int) _insecPosition.Distance(Global.Player);
-
-                    _insecManager.InsecWPosition = Global.Player.ServerPosition.Extend(_insecPosition, dist);
-                   
-                    _wardManager.WardJump(_insecPosition, dist);
+                    return; // Avoids Q2 -> Wardjump cancelling Q2 mid air
                 }
-                else if (_flashReady && Game.TickCount - DoNotFlash > 1500 && !SpellConfig.HasQ2(target))
+
+                if (GetInsecPosition().Distance(Global.Player) <= 600)
                 {
-                    if (Game.TickCount - SpellConfig.LastQ1CastAttempt >= 1000 && _insecPosition.Distance(Global.Player) <= SpellConfig.Q.Range + 400)
+                    var dist = (int) GetInsecPosition().Distance(Global.Player);
+
+                    _insecManager.InsecWPosition = Global.Player.ServerPosition.Extend(GetInsecPosition(), dist);
+                    _wardManager.WardJump(GetInsecPosition(), dist);
+                    _wardFlash = false;
+                }
+                else if (FlashReady && Game.TickCount - _lastQ1TickCount > 1500 && !_spellConfig.HasQ2(Target))
+                {
+                    if (Game.TickCount - _spellConfig.LastQ1CastAttempt >= 1000 &&
+                        GetInsecPosition().Distance(Global.Player) <= _spellConfig.Q.Range + 400)
                     {
-                        if (AnyEnemy != null && SpellConfig.HasQ2(AnyEnemy) && _insecPosition.Distance(AnyEnemy.ServerPosition) <= 600 || 
-                                                 SpellConfig.HasQ2(target)    && _insecPosition.Distance(target.ServerPosition)    <= 600)
+                        if (EnemyObject != null && _spellConfig.HasQ2(EnemyObject) &&
+                            GetInsecPosition().Distance(EnemyObject.ServerPosition) <= 600 ||
+                            _spellConfig.HasQ2(Target) && GetInsecPosition().Distance(Target.ServerPosition) <= 600)
                         {
                             return;
                         }
-                            
-                        _insecManager.InsecWPosition = Global.Player.ServerPosition.Extend(_insecPosition, 600);
-                        WardFlash = true;
-                        _wardManager.WardJump(_insecPosition, 600);
-                    }                  
+
+
+                        _insecManager.InsecWPosition = Global.Player.ServerPosition.Extend(GetInsecPosition(), 600);
+
+                        _wardManager.WardJump(GetInsecPosition(), 600);
+                        _wardFlash = true;
+                    }
                 }
             }
 
-            if (!SpellConfig.R.Ready)
+            if (!_spellConfig.R.Ready)
             {
                 return;
             }
-           
-            if (_insecManager.InsecKickValue == 0 && _flashReady && _insecPosition.Distance(Global.Player) <= 425 && 
-                !(Game.TickCount - _wardTracker.LastWardCreated <= 500 && !WardFlash))
+
+            if (_insecManager.InsecKickValue == 0 && FlashReady && GetInsecPosition().Distance(Global.Player) <= 425 &&
+                !(Game.TickCount - _wardTracker.LastWardCreated <= 500 && !_wardFlash))
             {
-                SummonerSpells.Flash?.Cast(_insecPosition);
+                SummonerSpells.Flash?.Cast(GetInsecPosition());
             }
-        
-            if (!target.IsValidTarget(SpellConfig.R.Range) || Global.Player.Distance(_insecPosition) >= (SummonerSpells.IsValid(SummonerSpells.Flash) ? 425 : 150))
+
+            if (!Target.IsValidTarget(_spellConfig.R.Range) || Global.Player.Distance(GetInsecPosition()) >=
+                (SummonerSpells.IsValid(SummonerSpells.Flash) ? 425 : 150))
             {
                 return;
             }
-          
-            SpellConfig.R.CastOnUnit(target);
+
+            _spellConfig.R.CastOnUnit(Target);
         }
 
-        private int DoNotFlash;
+        private int _lastQ1TickCount;
 
         private void Q()
         {
-            if (SpellConfig.IsQ2() && Game.TickCount - SpellConfig.LastQ1CastAttempt >= 500)
+            if (_spellConfig.IsQ2() && Game.TickCount - _spellConfig.LastQ1CastAttempt >= 500)
             {
-                SpellConfig.Q.Cast();
+                _spellConfig.Q.Cast();
             }
-            else if(!SpellConfig.IsQ2())
+            else if (!_spellConfig.IsQ2())
             {
-                if (target.IsValidTarget(SpellConfig.Q.Range))
+                if (Target.IsValidTarget(_spellConfig.Q.Range))
                 {
-                    if (SpellConfig.W.Ready && SpellConfig.IsFirst(SpellConfig.W) && _wardManager.IsWardReady() && QLast)
+                    if (_spellConfig.W.Ready && _spellConfig.IsFirst(_spellConfig.W) && _wardManager.IsWardReady() &&
+                        QLast)
                     {
                         return;
                     }
 
-                    _insecManager.InsecQPosition = target.ServerPosition;
-                    SpellConfig.QSmite(target);
-                    SpellConfig.Q.Cast(target);
-                    DoNotFlash = Game.TickCount;
+                    _insecManager.InsecQPosition = Target.ServerPosition;
+                    _spellConfig.QSmite(Target);
+                    _spellConfig.Q.Cast(Target.ServerPosition);
+                    _lastQ1TickCount = Game.TickCount;
                 }
 
-                if (!ObjectEnabled || !SpellConfig.R.Ready || AnyEnemy == null)
+                if (!ObjectEnabled || !_spellConfig.R.Ready || EnemyObject == null)
                 {
                     return;
                 }
 
-                if (AnyEnemy.Distance(_insecPosition) <= 600)
+                if (EnemyObject.Distance(GetInsecPosition()) <= 600)
                 {
-                    DoNotFlash = Game.TickCount;
+                    _lastQ1TickCount = Game.TickCount;
                 }
 
-                _insecManager.InsecQPosition = AnyEnemy.ServerPosition;
-                SpellConfig.Q.Cast(AnyEnemy.ServerPosition);
+                _insecManager.InsecQPosition = EnemyObject.ServerPosition;
+                _spellConfig.Q.Cast(EnemyObject.ServerPosition);
             }
         }
     }

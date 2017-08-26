@@ -12,7 +12,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
     {
         public static void OnPostAttack(Obj_AI_Minion mob)
         {
-            if (mob == null || mob.MaxHealth <= 5 || MenuConfig.Jungle["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(1500) >= 1)
+            if (mob == null || mob.MaxHealth <= 7 || MenuConfig.Jungle["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(1500) >= 1)
             {
                 return;
             }

@@ -47,7 +47,7 @@ namespace Adept_AIO.Champions.Yasuo.Drawings
 
             if (SpellConfig.E.Ready)
             {
-                if (Extension.ExtendedMinion != Vector3.Zero)
+                if (!Extension.ExtendedMinion.IsZero)
                 {
                     Render.Circle(Extension.ExtendedMinion, 50, 300, Color.AliceBlue);
                 }

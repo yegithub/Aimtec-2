@@ -19,12 +19,12 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Combo
         public bool EEnabled { get; set; }
 
         private readonly IWardManager _wardManager;
-        private readonly ISpellConfig SpellConfig;
+        private readonly ISpellConfig _spellConfig;
       
         public Combo(IWardManager wardManager, ISpellConfig spellConfig)
         {
             _wardManager = wardManager;
-            SpellConfig = spellConfig;
+            _spellConfig = spellConfig;
         }
 
         public void OnPostAttack(AttackableUnit target)
@@ -34,15 +34,15 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Combo
                 return;
             }
 
-            if (SpellConfig.W.Ready && WEnabled)
+            if (_spellConfig.W.Ready && WEnabled)
             {
-                SpellConfig.W.Cast(Global.Player);
+                _spellConfig.W.Cast(Global.Player);
             }
-            else if (SpellConfig.E.Ready && EEnabled)
+            else if (_spellConfig.E.Ready && EEnabled)
             {
-                if (!SpellConfig.IsFirst(SpellConfig.E))
+                if (!_spellConfig.IsFirst(_spellConfig.E))
                 {
-                    SpellConfig.E.Cast();
+                    _spellConfig.E.Cast();
                 }
             }
         }
@@ -57,39 +57,39 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Combo
             Console.WriteLine(WardEnabled);
             var distance = target.Distance(Global.Player);
 
-            if (SpellConfig.R.Ready && SpellConfig.Q.Ready && Q1Enabled && distance <= 550 && target.Health <= Global.Player.GetSpellDamage(target, SpellSlot.R) + 
+            if (_spellConfig.R.Ready && _spellConfig.Q.Ready && Q1Enabled && distance <= 550 && target.Health <= Global.Player.GetSpellDamage(target, SpellSlot.R) + 
                                                                                                                Global.Player.GetSpellDamage(target, SpellSlot.Q) + 
                                                                                                                Global.Player.GetSpellDamage(target, SpellSlot.Q, DamageStage.SecondCast))
             {
-                SpellConfig.R.CastOnUnit(target);
-                SpellConfig.Q.Cast(target); 
+                _spellConfig.R.CastOnUnit(target);
+                _spellConfig.Q.Cast(target); 
             }
 
-            if (SpellConfig.Q.Ready && Q1Enabled)
+            if (_spellConfig.Q.Ready && Q1Enabled)
             {
                 if (distance > 1300)
                 {
                     return;
                 }
 
-                if (SpellConfig.IsQ2())
+                if (_spellConfig.IsQ2())
                 {
                     if (TurretCheckEnabled && target.IsUnderEnemyTurret() || !Q2Enabled)
                     {
                         return;
                     }
                  
-                    SpellConfig.Q.Cast();
+                    _spellConfig.Q.Cast();
                 }
                 else
                 {
-                    SpellConfig.QSmite(target);
-                    SpellConfig.Q.Cast(target);
+                    _spellConfig.QSmite(target);
+                    _spellConfig.Q.Cast(target);
                 }
             }
-            else if (SpellConfig.W.Ready && SpellConfig.IsFirst(SpellConfig.W) && _wardManager.IsWardReady() && WEnabled && WardEnabled && distance > (SpellConfig.Q.Ready ? 1000 : 600))
+            else if (_spellConfig.W.Ready && _spellConfig.IsFirst(_spellConfig.W) && _wardManager.IsWardReady() && WEnabled && WardEnabled && distance > (_spellConfig.Q.Ready ? 1000 : 600))
             {
-                if (Game.TickCount - SpellConfig.Q.LastCastAttemptT <= 3000 || target.Position.CountEnemyHeroesInRange(2000) > 1)
+                if (Game.TickCount - _spellConfig.Q.LastCastAttemptT <= 3000 || target.Position.CountEnemyHeroesInRange(2000) > 1)
                 {
                     return;
                 }
@@ -97,9 +97,9 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Combo
                 _wardManager.WardJump(target.Position, 600);
             }
 
-            if (SpellConfig.E.Ready && EEnabled && SpellConfig.IsFirst(SpellConfig.E) && distance <= 350)
+            if (_spellConfig.E.Ready && EEnabled && _spellConfig.IsFirst(_spellConfig.E) && distance <= 350)
             {
-               SpellConfig.E.Cast(target);
+               _spellConfig.E.Cast(target);
             }
         }
     }

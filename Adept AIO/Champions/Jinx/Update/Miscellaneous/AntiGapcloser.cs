@@ -8,21 +8,21 @@ namespace Adept_AIO.Champions.Jinx.Update.Miscellaneous
 {
     internal class AntiGapcloser
     {
-        private readonly SpellConfig SpellConfig;
+        private readonly SpellConfig _spellConfig;
       
         public AntiGapcloser(SpellConfig spellConfig)
         {
-            SpellConfig = spellConfig;
+            _spellConfig = spellConfig;
         }
 
         public void OnGapcloser(Obj_AI_Hero sender, GapcloserArgs args)
         {
-            if (sender.IsMe || !sender.IsEnemy || !SpellConfig.E.Ready || args.EndPosition.Distance(Global.Player) > SpellConfig.E.Range)
+            if (sender.IsMe || !sender.IsEnemy || !_spellConfig.E.Ready || args.EndPosition.Distance(Global.Player) > _spellConfig.E.Range)
             {
                 return;
             }
 
-            SpellConfig.E.Cast(args.EndPosition);
+            _spellConfig.E.Cast(args.EndPosition);
         }
     }
 }

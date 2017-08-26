@@ -26,5 +26,6 @@ namespace Adept_AIO.Champions.LeeSin.Core.Spells
         Spell W { get; }
         Spell E { get; }
         Spell R { get; }
+        Spell R2 { get; }
     }
 }

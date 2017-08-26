@@ -11,7 +11,7 @@ namespace Adept_AIO.Champions.Riven.Core
 {
     internal class MenuConfig
     {
-        private static Menu MainMenu;
+        private static Menu _mainMenu;
 
         public static Menu Combo,
                            BurstMenu,
@@ -26,17 +26,17 @@ namespace Adept_AIO.Champions.Riven.Core
 
         public static void Attach()
         {
-            MainMenu = new Menu(string.Empty, "Adept AIO", true);
-            MainMenu.Attach();
+            _mainMenu = new Menu(string.Empty, "Adept AIO", true);
+            _mainMenu.Attach();
 
             BurstMode = new OrbwalkerMode("Burst", KeyCode.T, null, Burst.OnUpdate);
             FleeMode = new OrbwalkerMode("Flee", KeyCode.A, null, Flee.OnKeyPressed);
 
             Global.Orbwalker.AddMode(BurstMode);
             Global.Orbwalker.AddMode(FleeMode);
-            Global.Orbwalker.Attach(MainMenu);
+            Global.Orbwalker.Attach(_mainMenu);
 
-            Gapcloser.Attach(MainMenu, "Anti Gapcloser");
+            Gapcloser.Attach(_mainMenu, "Anti Gapcloser");
 
             Combo = new Menu("Combo", "Combo")
             {
@@ -118,7 +118,7 @@ namespace Adept_AIO.Champions.Riven.Core
                 Drawings,
                 Miscellaneous,
                 MenuShortcut.Credits
-            }) MainMenu.Add(menu);
+            }) _mainMenu.Add(menu);
         }
     }
 }

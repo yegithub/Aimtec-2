@@ -16,15 +16,15 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                 return;
             }
         
-            if (Animation.IAmSoTired)
+            if (Animation.AmSoTired)
             {
-                if (Game.TickCount - Animation.lastReset< Animation.GetDelay())
+                if (Game.TickCount - Animation.LastReset< Animation.GetDelay())
                 {
                     return;
                 }
                
                 Global.Orbwalker.AttackingEnabled = true;
-                Animation.IAmSoTired = false;
+                Animation.AmSoTired = false;
             }
 
             switch (Global.Orbwalker.Mode)

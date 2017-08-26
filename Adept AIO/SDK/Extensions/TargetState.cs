@@ -6,11 +6,11 @@ namespace Adept_AIO.SDK.Extensions
 {
     internal class TargetState
     {
-        private static readonly BuffType[] HardCC = { BuffType.Invulnerability, BuffType.Charm, BuffType.Blind, BuffType.Fear, BuffType.Knockup, BuffType.Polymorph };
+        private static readonly BuffType[] HardCc = { BuffType.Invulnerability, BuffType.Charm, BuffType.Blind, BuffType.Fear, BuffType.Knockup, BuffType.Polymorph };
 
-        public static bool IsHardCC(Obj_AI_Hero target)
+        public static bool IsHardCc(Obj_AI_Hero target)
         {
-            return HardCC.Select(target.HasBuffOfType).FirstOrDefault();
+            return HardCc.Select(target.HasBuffOfType).FirstOrDefault();
         }
     }
 }

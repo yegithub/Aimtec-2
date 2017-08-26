@@ -54,14 +54,14 @@ namespace Adept_AIO.SDK.Delegates
             Initialize();
         }
 
-        public static void Attach(Menu mainMenu, string MenuName)
+        public static void Attach(Menu mainMenu, string menuName)
         {
             if (ObjectManager.Get<Obj_AI_Hero>().All(x => !x.IsEnemy))
             {
                 return;
             }
 
-            Menu = new Menu("", MenuName)
+            Menu = new Menu("", menuName)
             {
                 new MenuBool("Enabled", "Enabled"),
             };

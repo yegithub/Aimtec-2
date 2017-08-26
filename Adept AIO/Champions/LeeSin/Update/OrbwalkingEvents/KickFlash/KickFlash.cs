@@ -9,28 +9,28 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.KickFlash
 {
     internal class KickFlash : IKickFlash
     {
-        private readonly ISpellConfig SpellConfig;
-        private readonly IInsec_Manager _insecManager;
+        private readonly ISpellConfig _spellConfig;
+        private readonly IInsecManager _insecManager;
 
-        public KickFlash(ISpellConfig spellConfig, IInsec_Manager insecManager)
+        public KickFlash(ISpellConfig spellConfig, IInsecManager insecManager)
         {
-            SpellConfig = spellConfig;
+            _spellConfig = spellConfig;
             _insecManager = insecManager;
         }
 
         public void OnKeyPressed()
         {
             if (!Enabled || 
-                target == null || 
-                !SpellConfig.R.Ready || 
-                !target.IsValidTarget(SpellConfig.R.Range) || 
+                Target == null || 
+                !_spellConfig.R.Ready || 
+                !Target.IsValidTarget(_spellConfig.R.Range) || 
                 SummonerSpells.Flash == null || 
                 !SummonerSpells.Flash.Ready)
             {
                 return;
             }
 
-            SpellConfig.R.CastOnUnit(target);
+            _spellConfig.R.CastOnUnit(Target);
         }
 
         public void OnProcessSpellCast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
@@ -40,11 +40,11 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.KickFlash
                 return;
             }
 
-            SummonerSpells.Flash.Cast(_insecManager.InsecPosition(target));
+            SummonerSpells.Flash.Cast(_insecManager.InsecPosition(Target));
         }
 
         public bool Enabled { get; set; }
 
-        private Obj_AI_Hero target => Global.TargetSelector.GetSelectedTarget();
+        private Obj_AI_Hero Target => Global.TargetSelector.GetSelectedTarget();
     }
 }

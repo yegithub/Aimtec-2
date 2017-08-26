@@ -35,7 +35,7 @@ namespace Adept_AIO.Champions.LeeSin
             var spellConfig = new SpellConfig();
             spellConfig.Load();
 
-            var insecManager = new Insec_Manager(spellConfig);
+            var insecManager = new InsecManager(spellConfig);
 
             var wardtracker = new WardTracker(spellConfig);
             var wardmanager = new WardManager(wardtracker);
@@ -69,28 +69,31 @@ namespace Adept_AIO.Champions.LeeSin
             Global.Orbwalker.AddMode(kickFlashMode);
             Global.Orbwalker.Attach(mainmenu);
 
-            var insecMenu = new Menu("Insec", "Insec");
-            var insecObject = new MenuBool("Object", "Use Q On Minions").SetToolTip("Uses Q to gapclose to every minion");
-            var insecQLast = new MenuBool("Last", "Use Q After Insec").SetToolTip("Only possible if no minions near target");
+            var insecMenu     = new Menu("Insec", "Insec");
+            var insecBk       = new MenuKeyBind("BK", "Bubba Kush Toggle", KeyCode.L, KeybindType.Toggle);
+            var insecObject   = new MenuBool("Object", "Use Q On Minions").SetToolTip("Uses Q to gapclose to every minion");
+            var insecQLast    = new MenuBool("Last", "Use Q After Insec").SetToolTip("Only possible if no minions near target");
             var insecPosition = new MenuList("Position", "Insec Position", new[] {"Ally Turret", "Ally Hero"}, 0);
-            var insecKick = new MenuList("Kick", "Kick Type: ", new[] {"Flash R", "R Flash"}, 1);
+            var insecKick     = new MenuList("Kick", "Kick Type: ", new[] {"Flash R", "R Flash"}, 1);
 
-            insecObject.OnValueChanged += (sender, args) => insec.ObjectEnabled = args.GetNewValue<MenuBool>().Value;
-            insecQLast.OnValueChanged += (sender, args) => insec.QLast = args.GetNewValue<MenuBool>().Value;
-            insecPosition.OnValueChanged += (sender, args) => insecManager.InsecPositionValue = args.GetNewValue<MenuList>().Value;
-            insecKick.OnValueChanged += (sender, args) => insecManager.InsecKickValue = args.GetNewValue<MenuList>().Value;
-
-            insec.ObjectEnabled = insecObject.Enabled;
-            insec.QLast = insecQLast.Enabled;
-
-            insecManager.InsecPositionValue = insecPosition.Value; 
-            insecManager.InsecKickValue = insecKick.Value;
-
+            insecMenu.Add(insecBk);
             insecMenu.Add(insecObject);
             insecMenu.Add(insecQLast);
             insecMenu.Add(insecPosition);
             insecMenu.Add(insecKick);
             mainmenu.Add(insecMenu);
+
+            insec.Bk = insecMenu["BK"].Enabled;
+            insec.ObjectEnabled = insecMenu["Object"].Enabled;
+            insec.QLast = insecMenu["Last"].Enabled;
+            insecManager.InsecPositionValue = insecMenu["Position"].Value;
+            insecManager.InsecKickValue = insecMenu["Kick"].Value;
+
+            insecBk.OnValueChanged += (sender, args) => insec.Bk = args.GetNewValue<MenuKeyBind>().Value;
+            insecObject.OnValueChanged += (sender, args) => insec.ObjectEnabled = args.GetNewValue<MenuBool>().Value;
+            insecQLast.OnValueChanged += (sender, args) => insec.QLast = args.GetNewValue<MenuBool>().Value;
+            insecPosition.OnValueChanged += (sender, args) => insecManager.InsecPositionValue = args.GetNewValue<MenuList>().Value;
+            insecKick.OnValueChanged += (sender, args) => insecManager.InsecKickValue = args.GetNewValue<MenuList>().Value;
 
             var comboMenu = new Menu("Combo", "Combo");
             var comboTurret = new MenuBool("Turret", "Don't Q2 Into Turret");
@@ -256,17 +259,17 @@ namespace Adept_AIO.Champions.LeeSin
             drawManager.QEnabled = drawMenu["Q"].Enabled;
             drawManager.SegmentsValue = drawMenu["Segments"].Value;
             drawManager.PositionEnabled = drawMenu["Position"].Enabled;
-
+           
             drawSegments.OnValueChanged += (sender, args) => drawManager.SegmentsValue = args.GetNewValue<MenuSlider>().Value;
             drawPosition.OnValueChanged += (sender, args) => drawManager.PositionEnabled = args.GetNewValue<MenuBool>().Value;
             drawQ.OnValueChanged += (sender, args) => drawManager.QEnabled = args.GetNewValue<MenuBool>().Value;
-
-            var wardjumpRange = new MenuSlider("WardRange", "WardJump Range", 600, 1, 600);
-            mainmenu.Add(wardjumpRange);
-
+           
             Gapcloser.Attach(mainmenu, "Gapcloser");
             var gapcloser = new AntiGapcloser(spellConfig, wardmanager);
             Gapcloser.OnGapcloser += gapcloser.OnGapcloser;
+
+            var wardjumpRange = new MenuSlider("WardRange", "WardJump Range", 600, 1, 600);
+            mainmenu.Add(wardjumpRange);
 
             wardjump.Range = mainmenu["WardRange"].Value;
            

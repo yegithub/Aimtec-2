@@ -12,7 +12,7 @@ namespace Adept_AIO.Champions.Yasuo.Core
 {
     internal class MenuConfig
     {
-        private static Menu MainMenu;
+        private static Menu _mainMenu;
 
         public static Menu Combo,
                            Whitelist,
@@ -24,8 +24,8 @@ namespace Adept_AIO.Champions.Yasuo.Core
 
         public static void Attach()
         {
-            MainMenu = new Menu(string.Empty, "Adept AIO", true);
-            MainMenu.Attach();
+            _mainMenu = new Menu(string.Empty, "Adept AIO", true);
+            _mainMenu.Attach();
 
             Extension.FleeMode     = new OrbwalkerMode("Flee", KeyCode.A, null, Flee.OnKeyPressed);
             Extension.BeybladeMode = new OrbwalkerMode("Beyblade", KeyCode.T, null, Beyblade.OnKeyPressed);
@@ -33,7 +33,7 @@ namespace Adept_AIO.Champions.Yasuo.Core
             Global.Orbwalker.AddMode(Extension.FleeMode);
             Global.Orbwalker.AddMode(Extension.BeybladeMode);
          
-            Global.Orbwalker.Attach(MainMenu);
+            Global.Orbwalker.Attach(_mainMenu);
 
             Whitelist= new Menu("Whitelist", "Whitelist");
             foreach (var hero in GameObjects.EnemyHeroes)
@@ -94,7 +94,7 @@ namespace Adept_AIO.Champions.Yasuo.Core
                 new MenuBool("Debug", "Debug")
             };
 
-            Gapcloser.Attach(MainMenu, "Anti Gapcloser");
+            Gapcloser.Attach(_mainMenu, "Anti Gapcloser");
 
             foreach (var menu in new List<Menu>
             {
@@ -107,7 +107,7 @@ namespace Adept_AIO.Champions.Yasuo.Core
                 Drawings,
                 MenuShortcut.Credits
             })
-            MainMenu.Add(menu);
+            _mainMenu.Add(menu);
         }
     }
 }

@@ -74,7 +74,7 @@ namespace Adept_AIO.Champions.Rengar.Update.OrbwalkingEvents
                 }
                 else if (Extensions.Ferocity() == 4)
                 {
-                    if (MenuConfig.Combo["Mode"].Value == 1 && !Extensions.HardCC())
+                    if (MenuConfig.Combo["Mode"].Value == 1 && !Extensions.HardCc())
                     {
                         return;
                     }

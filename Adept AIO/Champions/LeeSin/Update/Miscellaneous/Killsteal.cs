@@ -22,16 +22,16 @@ namespace Adept_AIO.Champions.LeeSin.Update.Miscellaneous
         public bool EEnabled { get; set; }
         public bool REnabled { get; set; }
 
-        private readonly ISpellConfig SpellConfig;
+        private readonly ISpellConfig _spellConfig;
 
         public Killsteal(ISpellConfig spellConfig)
         {
-            SpellConfig = spellConfig;
+            _spellConfig = spellConfig;
         }
 
         public void OnUpdate()
         {
-            var target = GameObjects.EnemyHeroes.FirstOrDefault(x => x.Distance(Global.Player) < SpellConfig.R.Range && x.HealthPercent() <= 40);
+            var target = GameObjects.EnemyHeroes.FirstOrDefault(x => x.Distance(Global.Player) < _spellConfig.R.Range && x.HealthPercent() <= 40);
 
             if (target == null || !target.IsValidTarget())
             {
@@ -42,20 +42,20 @@ namespace Adept_AIO.Champions.LeeSin.Update.Miscellaneous
             {
                 SummonerSpells.Smite.CastOnUnit(target);
             }
-            if (SpellConfig.Q.Ready && (SpellConfig.IsQ2() ? target.Health < Global.Player.GetSpellDamage(target, SpellSlot.Q, DamageStage.SecondCast) : target.Health < Global.Player.GetSpellDamage(target, SpellSlot.Q)) &&
-                target.IsValidTarget(SpellConfig.Q.Range) && QEnabled)
+            if (_spellConfig.Q.Ready && (_spellConfig.IsQ2() ? target.Health < Global.Player.GetSpellDamage(target, SpellSlot.Q, DamageStage.SecondCast) : target.Health < Global.Player.GetSpellDamage(target, SpellSlot.Q)) &&
+                target.IsValidTarget(_spellConfig.Q.Range) && QEnabled)
             {
-                SpellConfig.Q.Cast(target);
+                _spellConfig.Q.Cast(target);
             }
-            else if (SpellConfig.E.Ready && target.Health < Global.Player.GetSpellDamage(target, SpellSlot.E) &&
-                     target.IsValidTarget(SpellConfig.E.Range) && EEnabled)
+            else if (_spellConfig.E.Ready && target.Health < Global.Player.GetSpellDamage(target, SpellSlot.E) &&
+                     target.IsValidTarget(_spellConfig.E.Range) && EEnabled)
             {
-                SpellConfig.E.Cast();
+                _spellConfig.E.Cast();
             }
-            else if (SpellConfig.R.Ready && target.Health < Global.Player.GetSpellDamage(target, SpellSlot.R) &&
-                     target.IsValidTarget(SpellConfig.R.Range) && REnabled)
+            else if (_spellConfig.R.Ready && target.Health < Global.Player.GetSpellDamage(target, SpellSlot.R) &&
+                     target.IsValidTarget(_spellConfig.R.Range) && REnabled)
             {
-                SpellConfig.R.CastOnUnit(target);
+                _spellConfig.R.CastOnUnit(target);
             }
             else if (IgniteEnabled && SummonerSpells.IsValid(SummonerSpells.Ignite) && target.Health < SummonerSpells.IgniteDamage(target))
             {

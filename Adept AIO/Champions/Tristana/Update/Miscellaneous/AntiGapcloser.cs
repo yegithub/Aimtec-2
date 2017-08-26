@@ -9,16 +9,16 @@ namespace Adept_AIO.Champions.Tristana.Update.Miscellaneous
 {
     internal class AntiGapcloser
     {
-        private readonly SpellConfig SpellConfig;
+        private readonly SpellConfig _spellConfig;
 
         public AntiGapcloser(SpellConfig spellConfig)
         {
-            SpellConfig = spellConfig;
+            _spellConfig = spellConfig;
         }
 
         public void OnGapcloser(Obj_AI_Hero sender, GapcloserArgs args)
         {
-            if (sender.IsMe || sender.IsAlly || args.EndPosition.Distance(Global.Player) > SpellConfig.FullRange)
+            if (sender.IsMe || sender.IsAlly || args.EndPosition.Distance(Global.Player) > _spellConfig.FullRange)
             {
                 return;
             }
@@ -29,13 +29,13 @@ namespace Adept_AIO.Champions.Tristana.Update.Miscellaneous
                 return;
             }
 
-            if (SpellConfig.W.Ready)
+            if (_spellConfig.W.Ready)
             {
-                SpellConfig.W.Cast(Mixed.GetFountainPos(Global.Player));
+                _spellConfig.W.Cast(Mixed.GetFountainPos(Global.Player));
             }
-            else if (SpellConfig.R.Ready)
+            else if (_spellConfig.R.Ready)
             {
-                SpellConfig.R.CastOnUnit(sender);
+                _spellConfig.R.CastOnUnit(sender);
             }
         }
     }

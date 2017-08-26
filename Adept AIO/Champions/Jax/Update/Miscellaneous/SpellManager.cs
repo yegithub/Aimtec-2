@@ -7,8 +7,8 @@ namespace Adept_AIO.Champions.Jax.Update.Miscellaneous
 {
     internal class SpellManager
     {
-        private static bool CanUseE;
-        private static Obj_AI_Base Unit;
+        private static bool _canUseE;
+        private static Obj_AI_Base _unit;
 
         public static void OnProcessSpellCast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
         {
@@ -20,28 +20,28 @@ namespace Adept_AIO.Champions.Jax.Update.Miscellaneous
             switch (args.SpellData.Name)
             {
                 case "JaxCounterStrike":
-                    CanUseE = false;
+                    _canUseE = false;
                     break;
             }
         }
 
         public static void OnUpdate()
         {
-            if (Unit == null || !CanUseE || !Unit.IsValid || SpellConfig.SecondE)
+            if (_unit == null || !_canUseE || !_unit.IsValid || SpellConfig.SecondE)
             {
                 return;
             }
 
-            if (Game.TickCount - SpellConfig.E.LastCastAttemptT > 1700 || Unit.Distance(Global.Player) <= SpellConfig.E.Range + Unit.BoundingRadius)
+            if (Game.TickCount - SpellConfig.E.LastCastAttemptT > 1700 || _unit.Distance(Global.Player) <= SpellConfig.E.Range + _unit.BoundingRadius)
             {
-                SpellConfig.E.Cast(Unit);
+                SpellConfig.E.Cast(_unit);
             }
         }
 
         public static void CastE(Obj_AI_Base target)
         {
-            CanUseE = true;
-            Unit = target;
+            _canUseE = true;
+            _unit = target;
         }
     }
 }

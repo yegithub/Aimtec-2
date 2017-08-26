@@ -9,8 +9,8 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 {
     internal class Animation
     {
-        public static float lastReset;
-        public static bool IAmSoTired;
+        public static float LastReset;
+        public static bool AmSoTired;
       
         public static void Reset()
         {
@@ -24,8 +24,8 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
             Global.Orbwalker.AttackingEnabled = false;
             Global.Orbwalker.Move(Game.CursorPos);
 
-            lastReset = Game.TickCount;
-            IAmSoTired = true;
+            LastReset = Game.TickCount;
+            AmSoTired = true;
         }
 
         public static float GetDelay()

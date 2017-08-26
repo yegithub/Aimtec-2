@@ -9,13 +9,13 @@ namespace Adept_AIO.Champions.Jinx.Update.OrbwalkingEvents
 {
     internal class LaneClear
     {
-        private readonly MenuConfig MenuConfig;
-        private readonly SpellConfig SpellConfig;
+        private readonly MenuConfig _menuConfig;
+        private readonly SpellConfig _spellConfig;
 
         public LaneClear(MenuConfig menuConfig, SpellConfig spellConfig)
         {
-            MenuConfig = menuConfig;
-            SpellConfig = spellConfig;
+            _menuConfig = menuConfig;
+            _spellConfig = spellConfig;
         }
 
         public void OnUpdate()
@@ -25,7 +25,7 @@ namespace Adept_AIO.Champions.Jinx.Update.OrbwalkingEvents
                 return;
             }
 
-            var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsValidTarget(SpellConfig.W.Range));
+            var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsValidTarget(_spellConfig.W.Range));
             if (minion == null)
             {
                 return;
@@ -33,20 +33,20 @@ namespace Adept_AIO.Champions.Jinx.Update.OrbwalkingEvents
 
             var dist = Global.Player.Distance(minion);
 
-            if (SpellConfig.W.Ready && MenuConfig.LaneClear["W"].Enabled && Global.Player.CountEnemyHeroesInRange(2000) == 0)
+            if (_spellConfig.W.Ready && _menuConfig.LaneClear["W"].Enabled && Global.Player.CountEnemyHeroesInRange(2000) == 0)
             {
                 if (dist > 800 && minion.Health < Global.Player.GetSpellDamage(minion, SpellSlot.W) && minion.UnitSkinName.ToLower().Contains("cannon"))
                 {
-                    SpellConfig.W.Cast(minion);
+                    _spellConfig.W.Cast(minion);
                 }
             }
 
-            if (SpellConfig.Q.Ready && MenuConfig.LaneClear["Q"].Enabled)
+            if (_spellConfig.Q.Ready && _menuConfig.LaneClear["Q"].Enabled)
             {
-                if (!SpellConfig.IsQ2 && dist > SpellConfig.DefaultAuotAttackRange && dist <= SpellConfig.Q2Range && GameObjects.EnemyMinions.Count(x => x.IsValidTarget(SpellConfig.Q2Range) && x.Health < Global.Player.GetAutoAttackDamage(x) * 2) >= 3 ||
-                     SpellConfig.IsQ2 && dist <= SpellConfig.DefaultAuotAttackRange)
+                if (!_spellConfig.IsQ2 && dist > _spellConfig.DefaultAuotAttackRange && dist <= _spellConfig.Q2Range && GameObjects.EnemyMinions.Count(x => x.IsValidTarget(_spellConfig.Q2Range) && x.Health < Global.Player.GetAutoAttackDamage(x) * 2) >= 3 ||
+                     _spellConfig.IsQ2 && dist <= _spellConfig.DefaultAuotAttackRange)
                 {
-                    SpellConfig.Q.Cast();
+                    _spellConfig.Q.Cast();
                 }
             }
         }

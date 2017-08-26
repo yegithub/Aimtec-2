@@ -38,12 +38,14 @@ namespace Adept_AIO.Champions.Yasuo.Core
             {
                 return GameObjects.EnemyMinions.Where(x => !x.HasBuff("YasuoDashWrapper") &&
                                                            x.IsValid &&
+                                                           x.MaxHealth > 7 &&
                                                            x.Distance(Global.Player) <= SpellConfig.E.Range)
                     .FirstOrDefault(x => DashDistance(x, target) > 0 &&
                                         x.Distance(target) < Global.Player.Distance(target));
             }
             return GameObjects.EnemyMinions.Where(x => !x.HasBuff("YasuoDashWrapper") &&
                                                        x.IsValid &&
+                                                       x.MaxHealth > 7 &&
                                                        x.Distance(Global.Player) <= SpellConfig.E.Range)
                 .LastOrDefault(x => DashDistance(x, target) > 0 &&
                                     x.Distance(target) < Global.Player.Distance(target));

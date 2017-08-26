@@ -4970,9 +4970,9 @@ namespace Adept_AIO.SDK.Methods
             return Spells.FirstOrDefault(spellData => spellData.MissileSpellName != null && spellData.MissileSpellName.ToLower() == missileSpellName || spellData.ExtraMissileNames.Contains(missileSpellName));
         }
 
-        public static SpellData GetBySpeed(string ChampionName, int speed, int id = -1)
+        public static SpellData GetBySpeed(string championName, int speed, int id = -1)
         {
-            return Spells.FirstOrDefault(spellData => spellData.ChampionName == ChampionName && spellData.MissileSpeed == speed && (spellData.Id == -1 || id == spellData.Id));
+            return Spells.FirstOrDefault(spellData => spellData.ChampionName == championName && spellData.MissileSpeed == speed && (spellData.Id == -1 || id == spellData.Id));
         }
     }
 }

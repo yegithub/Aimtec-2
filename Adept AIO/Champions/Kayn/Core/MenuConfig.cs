@@ -7,7 +7,7 @@ namespace Adept_AIO.Champions.Kayn.Core
 {
     internal class MenuConfig
     {
-        private static Menu MainMenu;
+        private static Menu _mainMenu;
 
         public static Menu Combo,
                            Whitelist,
@@ -19,10 +19,10 @@ namespace Adept_AIO.Champions.Kayn.Core
 
         public static void Attach()
         {
-            MainMenu = new Menu(string.Empty, "Adept AIO", true);
-            MainMenu.Attach();
+            _mainMenu = new Menu(string.Empty, "Adept AIO", true);
+            _mainMenu.Attach();
 
-            Global.Orbwalker.Attach(MainMenu);
+            Global.Orbwalker.Attach(_mainMenu);
 
             Whitelist = new Menu("Whitelist", "Whitelist");
             foreach (var hero in GameObjects.EnemyHeroes)
@@ -84,7 +84,7 @@ namespace Adept_AIO.Champions.Kayn.Core
                 Killsteal,
                 Drawings,
                 MenuShortcut.Credits
-            })  MainMenu.Add(menu);
+            })  _mainMenu.Add(menu);
         }
     }
 }

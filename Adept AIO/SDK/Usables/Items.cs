@@ -40,7 +40,7 @@ namespace Adept_AIO.SDK.Usables
                 return;
             }
           
-            if (position == Vector3.Zero)
+            if (position.IsZero)
             {
                 Global.Player.SpellBook.CastSpell(slot);
             }
