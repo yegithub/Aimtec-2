@@ -99,13 +99,8 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Insec
                    
                     _wardManager.WardJump(_insecPosition, dist);
                 }
-                else if (_flashReady && Game.TickCount - DoNotFlash > 1500)
+                else if (_flashReady && Game.TickCount - DoNotFlash > 1500 && !SpellConfig.HasQ2(target))
                 {
-                    if (SpellConfig.HasQ2(target))
-                    {
-                        return;
-                    }
-
                     if (Game.TickCount - SpellConfig.LastQ1CastAttempt >= 1000 && _insecPosition.Distance(Global.Player) <= SpellConfig.Q.Range + 400)
                     {
                         if (AnyEnemy != null && SpellConfig.HasQ2(AnyEnemy) && _insecPosition.Distance(AnyEnemy.ServerPosition) <= 600 || 
