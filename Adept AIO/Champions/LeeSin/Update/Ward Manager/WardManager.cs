@@ -8,13 +8,13 @@ namespace Adept_AIO.Champions.LeeSin.Update.Ward_Manager
 {
     internal class WardManager : IWardManager
     {
-        private readonly IWardTracker _wardTracker;
+        private readonly IWardTracker _wardTracker; 
 
         public float LastTimeCasted { get; private set; }
 
         public bool IsWardReady()
         {
-            return _wardTracker.WardNames.Any(Items.CanUseItem) && Game.TickCount - _wardTracker.LastWardCreated > 1500 || _wardTracker.LastWardCreated == 0;
+            return _wardTracker.WardNames.Any(Items.CanUseItem) && Game.TickCount - _wardTracker.LastWardCreated > 1500;
         }
 
         public WardManager(IWardTracker wardTracker)
@@ -24,7 +24,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.Ward_Manager
 
         public void WardJump(Vector3 position, int range)
         {
-            if (Game.TickCount - _wardTracker.LastWardCreated < 1500 && _wardTracker.LastWardCreated > 0)
+            if (Game.TickCount - _wardTracker.LastWardCreated < 1500)
             {
                 return;
             }
@@ -38,12 +38,12 @@ namespace Adept_AIO.Champions.LeeSin.Update.Ward_Manager
 
             position = Global.Player.ServerPosition.Extend(position, range);
 
-            Items.CastItem(ward, position);
-            LastTimeCasted = Game.TickCount;
+             LastTimeCasted = Game.TickCount;
             _wardTracker.LastWardCreated = Game.TickCount;
             _wardTracker.WardPosition = position;
+            Items.CastItem(ward, position);
 
-            if (!NavMesh.WorldToCell(position).Flags.HasFlag(NavCellFlags.Building | NavCellFlags.Wall))
+            if (!NavMesh.WorldToCell(position).Flags.HasFlag(NavCellFlags.Wall))
             {
                 _wardTracker.IsAtWall = false;
                 Global.Player.SpellBook.CastSpell(SpellSlot.W, position);

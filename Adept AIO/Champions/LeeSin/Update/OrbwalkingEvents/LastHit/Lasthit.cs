@@ -20,12 +20,13 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.LastHit
 
         public void OnUpdate()
         {
-            if (!Enabled)
+            if (!Enabled || Global.Orbwalker.IsWindingUp)
             {
                 return;
             }
 
-            var minions = GameObjects.EnemyMinions.OrderBy(x => -x.Health).LastOrDefault(x => x.IsValidTarget(_spellConfig.Q.Range) && x.MaxHealth > 6 && x.Health < Global.Player.GetSpellDamage(x, SpellSlot.Q));
+            var minions = GameObjects.EnemyMinions.LastOrDefault(x => x.IsValidTarget(_spellConfig.Q.Range) && x.Distance(Global.Player) > 300 &&
+                                                                                              x.MaxHealth > 6 && x.Health < Global.Player.GetSpellDamage(x, SpellSlot.Q));
             if (minions == null || !_spellConfig.Q.Ready || _spellConfig.IsQ2())
             {
                 return;
