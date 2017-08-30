@@ -2,6 +2,7 @@
 using System.Linq;
 using Adept_AIO.Champions.LeeSin.Core.Spells;
 using Adept_AIO.SDK.Extensions;
+using Adept_AIO.SDK.Methods;
 using Adept_AIO.SDK.Usables;
 using Aimtec;
 using Aimtec.SDK.Extensions;
@@ -39,7 +40,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.Ward_Manager
      
             if (ward.Team != GameObjectTeam.Neutral && ward.Name.ToLower().Contains("ward"))
             {
-                Console.WriteLine("Located Ally Ward.");
+                DebugConsole.Print("Located Ally Ward.", ConsoleColor.Green);
                 LastWardCreated = Game.TickCount;
                 WardName = ward.Name;
                 WardPosition = ward.Position;
@@ -47,8 +48,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.Ward_Manager
             }
             else
             {
-                Console.WriteLine(ward.Name.ToLower());
-                Console.WriteLine("Could Not Locate Ally Ward. Object: " + ward.Name);
+                DebugConsole.Print("Could Not Locate Ally Ward. Object: " + ward.Name, ConsoleColor.Yellow);
             }
         }
 

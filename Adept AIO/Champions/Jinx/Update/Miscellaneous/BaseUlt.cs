@@ -4,6 +4,7 @@ using System.Linq;
 using Adept_AIO.Champions.Jinx.Core;
 using Adept_AIO.SDK.Delegates;
 using Adept_AIO.SDK.Extensions;
+using Adept_AIO.SDK.Methods;
 using Aimtec;
 using Aimtec.SDK.Damage;
 using Aimtec.SDK.Extensions;
@@ -46,7 +47,7 @@ namespace Adept_AIO.Champions.Jinx.Update.Miscellaneous
             }
 
             SetRecall(args.Duration, Game.TickCount, (Obj_AI_Hero) sender);
-            Console.WriteLine(sender.UnitSkinName + " Is Recalling");
+            DebugConsole.Print(sender.UnitSkinName + " Is Recalling", ConsoleColor.Red);
         }
      
         public void OnUpdate()

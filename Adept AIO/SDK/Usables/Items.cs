@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Adept_AIO.SDK.Extensions;
+using Adept_AIO.SDK.Methods;
 using Aimtec;
 
 namespace Adept_AIO.SDK.Usables
@@ -40,10 +41,8 @@ namespace Adept_AIO.SDK.Usables
                 return;
             }
 
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("DEBUG: [Success] CASTING WARD.");
-            Console.ResetColor();
-
+            DebugConsole.Print("DEBUG: [Success] CASTING WARD.", ConsoleColor.Green);
+         
             if (position.IsZero)
             {
                 Global.Player.SpellBook.CastSpell(slot);

@@ -1,6 +1,7 @@
 ﻿using System;
 using Adept_AIO.Champions.LeeSin.Core.Spells;
 using Adept_AIO.Champions.LeeSin.Update.Ward_Manager;
+using Adept_AIO.SDK.Methods;
 using Aimtec;
 
 namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.WardJump
@@ -32,7 +33,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.WardJump
 
             if (_spellConfig.W.Ready && _spellConfig.IsFirst(_spellConfig.W) && _wardTracker.IsWardReady)
             {
-                Console.WriteLine("DEBUG: Calling WardJump(...) Method!!");
+                DebugConsole.Print("DEBUG: Calling WardJump(...) Method");
                 _wardManager.WardJump(Game.CursorPos, Range);
             }
         }
