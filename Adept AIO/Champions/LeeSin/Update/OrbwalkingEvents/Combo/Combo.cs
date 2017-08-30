@@ -54,7 +54,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Combo
             {
                 return;
             }
-            Console.WriteLine(WardEnabled);
+        
             var distance = target.Distance(Global.Player);
 
             if (_spellConfig.R.Ready && _spellConfig.Q.Ready && Q1Enabled && distance <= 550 && target.Health <= Global.Player.GetSpellDamage(target, SpellSlot.R) + 

@@ -39,7 +39,11 @@ namespace Adept_AIO.SDK.Usables
             {
                 return;
             }
-          
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("DEBUG: [Success] CASTING WARD.");
+            Console.ResetColor();
+
             if (position.IsZero)
             {
                 Global.Player.SpellBook.CastSpell(slot);

@@ -17,7 +17,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.Ward_Manager
             _spellConfig = spellConfig;
         }
 
-        public bool IsWardReady => WardNames.Any(Items.CanUseItem) && Game.TickCount - LastWardCreated > 800 || LastWardCreated <= 0;
+        public bool IsWardReady => WardNames.Any(Items.CanUseItem) && Game.TickCount - LastWardCreated > 800;
 
         public string[] WardNames { get; } =
         {
