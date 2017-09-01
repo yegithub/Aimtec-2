@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Adept_AIO.Champions.Yasuo.Core;
 using Adept_AIO.SDK.Extensions;
+using Adept_AIO.SDK.Methods;
 using Adept_AIO.SDK.Usables;
 using Aimtec;
 using Aimtec.SDK.Extensions;
@@ -65,6 +66,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
             var target = Global.TargetSelector.GetTarget(2500);
             if (target == null)
             {
+                Extension.ExtendedTarget = Vector3.Zero;
                 return;
             }
 
@@ -73,16 +75,26 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
 
             var m2 = Extension.GetDashableMinion(target, true);
             var positionBehindMinion = Extension.WalkBehindMinion(m2, target);
+
             Extension.ExtendedMinion = positionBehindMinion;
+            Extension.ExtendedTarget = target.ServerPosition;
 
             var dashDistance = Extension.DashDistance(minion, target);
 
             var airbourneTargets = GameObjects.EnemyHeroes.Where(x => Extension.KnockedUp(x) && x.Distance(Global.Player) <= SpellConfig.R.Range);
-            var amount = airbourneTargets as Obj_AI_Hero[] ?? airbourneTargets.ToArray();
+            var targetCount = (airbourneTargets as Obj_AI_Hero[] ?? airbourneTargets.ToArray()).Length;
 
-            if (SpellConfig.R.Ready && Extension.KnockedUp(target) && (amount.Length >= MenuConfig.Combo["Count"].Value || distance > 650 || distance > 350 && minion == null))
+            if (SpellConfig.R.Ready && Extension.KnockedUp(target))
             {
-                DelayAction.Queue(MenuConfig.Combo["Delay"].Enabled ? 375 + Game.Ping / 2 : 100 + Game.Ping / 2, () => SpellConfig.R.Cast());
+                if (targetCount >= MenuConfig.Combo["Count"].Value || distance > 350 && minion == null)
+                {
+                    DelayAction.Queue(MenuConfig.Combo["Delay"].Enabled ? 375 + Game.Ping / 2 : 250, () => SpellConfig.R.Cast());
+                }
+                else if (Game.TickCount - KnockUpHelper.TimeLeftOnKnockup >= 1000 &&
+                         Game.TickCount - KnockUpHelper.TimeLeftOnKnockup <= 3000)
+                {
+                    SpellConfig.R.Cast();
+                }
             }
 
             if (SpellConfig.Q.Ready)
@@ -138,7 +150,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
             {
                 return;
             }
-            if (!positionBehindMinion.IsZero && MenuConfig.Combo["Walk"].Enabled && Global.Orbwalker.CanMove() && !(MenuConfig.Combo["Turret"].Enabled && minion.IsUnderEnemyTurret()))
+            if (!positionBehindMinion.IsZero && MenuConfig.Combo["Walk"].Enabled && Global.Orbwalker.CanMove() && !(MenuConfig.Combo["Turret"].Enabled && minion.IsUnderEnemyTurret() && target.IsUnderEnemyTurret()))
             {
                 Global.Orbwalker.Move(positionBehindMinion);
                 if (positionBehindMinion.Distance(Global.Player) <= 65)

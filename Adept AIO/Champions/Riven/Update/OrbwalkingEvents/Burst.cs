@@ -4,6 +4,7 @@ using Adept_AIO.SDK.Extensions;
 using Adept_AIO.SDK.Usables;
 using Aimtec;
 using Aimtec.SDK.Extensions;
+using Aimtec.SDK.Util;
 
 namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
 {
@@ -11,20 +12,24 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
     {
         public static void OnPostAttack(Obj_AI_Base target)
         {
-            if (SpellConfig.Q.Ready && SpellConfig.R2.Ready)
+            if (Extensions.DidR2)
             {
-                SpellManager.CastR2(target);
-                Extensions.DidJustAuto = true;
-                Global.Orbwalker.Attack(target);
                 SpellManager.CastQ(target);
+                Global.Orbwalker.ResetAutoAttackTimer();
                 Global.Orbwalker.Attack(target);
+            }
+
+            if (SpellConfig.R2.Ready)
+            {
+                SpellManager.CastQ(target);
+                SpellManager.CastR2(target);
+               
                 return;
             }
 
             if (SpellConfig.R2.Ready)
             {
                 SpellManager.CastR2(target);
-                Global.Orbwalker.Attack(target);
             }
 
             if (SpellConfig.Q.Ready)

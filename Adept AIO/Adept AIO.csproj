@@ -103,6 +103,7 @@
     <Compile Include="Champions\Kayn\Update\OrbwalkingEvents\JungleClear.cs" />
     <Compile Include="Champions\Kayn\Update\OrbwalkingEvents\LaneClear.cs" />
     <Compile Include="Champions\LeeSin\Core\Damage\Dmg.cs" />
+    <Compile Include="Champions\LeeSin\Core\Temp.cs" />
     <Compile Include="Champions\LeeSin\Drawings\IDrawManager.cs" />
     <Compile Include="Champions\LeeSin\Update\Miscellaneous\AntiGapcloser.cs" />
     <Compile Include="Champions\Riven\Update\Miscellaneous\AntiGapcloser.cs" />

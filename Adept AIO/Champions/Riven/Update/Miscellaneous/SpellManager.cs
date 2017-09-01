@@ -4,6 +4,7 @@ using Adept_AIO.SDK.Extensions;
 using Adept_AIO.SDK.Usables;
 using Aimtec;
 using Aimtec.SDK.Extensions;
+using Aimtec.SDK.Util;
 
 namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 {
@@ -20,11 +21,6 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                 return;
             }
         
-            if (args.SpellData.DisplayName.Contains("BasicAttack"))
-            {
-                Extensions.DidJustAuto = true;
-            }
-
             switch (args.SpellData.Name)
             {
                 case "RivenTriCleave":
@@ -38,9 +34,12 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                     break;
                 case "RivenFengShuiEngine":
                     Extensions.UltimateMode = UltimateMode.Second;
+                    Extensions.DidR2 = false;
                     break;
                 case "RivenIzunaBlade":
                     Extensions.UltimateMode = UltimateMode.First;
+                    Extensions.DidR2 = true;
+                    DelayAction.Queue(800, () => Extensions.DidR2 = false);
                     break;
             }
         }

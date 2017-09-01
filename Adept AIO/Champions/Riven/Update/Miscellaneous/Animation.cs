@@ -33,7 +33,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
             var isQ3 = Extensions.CurrentQCount == 1;
             var delay = Game.Ping / 2f;
             var level = Global.Player.Level;
-            delay += (isQ3 ? 380 : 330) - 3.33f * level;
+            delay += (isQ3 ? 380 : 340) - 3.33f * level;
 
             var unit = ObjectManager.Get<Obj_AI_Base>().FirstOrDefault(x => x.Distance(Global.Player) <= Global.Player.AttackRange + x.BoundingRadius && !x.IsAlly && !x.IsMe);
 

@@ -1,8 +1,10 @@
 ﻿using System.Drawing;
 using System.Linq;
+using Adept_AIO.Champions.LeeSin.Core;
 using Adept_AIO.Champions.LeeSin.Core.Insec_Manager;
 using Adept_AIO.Champions.LeeSin.Core.Spells;
 using Adept_AIO.SDK.Extensions;
+using Adept_AIO.SDK.Methods;
 using Aimtec;
 using Aimtec.SDK.Extensions;
 
@@ -56,31 +58,42 @@ namespace Adept_AIO.Champions.LeeSin.Drawings
 
             var selected = Global.TargetSelector.GetSelectedTarget();
 
-            if (PositionEnabled && selected != null && !selected.UnitSkinName.ToLower().Contains("dummy"))
+            if (!PositionEnabled || selected == null)
             {
-                if (!_insecManager.InsecQPosition.IsZero)
-                {
-                    Render.Line(Geometry.To2D(Global.Player.ServerPosition), Geometry.To2D(_insecManager.InsecQPosition), 5, false, Color.Gray);
-                }
-
-                if (!_insecManager.InsecWPosition.IsZero)
-                {
-                    Render.Line(Geometry.To2D(Global.Player.ServerPosition), Geometry.To2D(_insecManager.InsecWPosition), 5, false, Color.Yellow);
-                }
-
-                if (!_insecManager.BKPosition(selected).IsZero)
-                {
-                    Render.WorldToScreen(_insecManager.BKPosition(selected), out var screen);
-                    Render.Text(screen, Color.Orange, "BK");
-
-                    Render.Circle(_insecManager.BKPosition(selected), 65, (uint)SegmentsValue, Color.Orange);
-                }
-
-                if (!_insecManager.InsecPosition(selected).IsZero)
-                {
-                    Render.Circle(_insecManager.InsecPosition(selected), 65, (uint)SegmentsValue, Color.White);
-                }
+                return;
             }
+
+            if (Temp.IsBubbaKush && !_insecManager.BKPosition(selected).IsZero)
+            {
+                var bkPos = _insecManager.BKPosition(selected);
+                Render.WorldToScreen(bkPos, out var bkScreen);
+                Render.Text(bkScreen, Color.Orange, "BK");
+
+                var bkEndPos = selected.ServerPosition + (selected.ServerPosition - bkPos).Normalized() * 900;
+                Render.WorldToScreen(bkEndPos, out var bkEndPosV2);
+                Render.WorldToScreen(bkPos, out var bkPosV2);
+
+                Render.Line(bkPosV2, bkEndPosV2, Color.Orange);
+
+                Render.Circle(bkPos, 65, (uint)SegmentsValue, Color.Orange);
+                Render.Circle(bkEndPos, 65, (uint)SegmentsValue, Color.White);
+            }
+
+            if (Temp.IsBubbaKush || _insecManager.InsecPosition(selected).IsZero)
+            {
+                return;
+            }
+
+            var insecPos = _insecManager.InsecPosition(selected);
+            var targetEndPos = selected.ServerPosition + (selected.ServerPosition - insecPos).Normalized() * 900;
+
+            Render.WorldToScreen(targetEndPos, out var targetEndPosScreen);
+            Render.WorldToScreen(insecPos, out var insecPosScreen);
+
+            Render.Line(insecPosScreen, targetEndPosScreen, Color.Orange);
+                    
+            Render.Circle(targetEndPos, 50, 200, Color.White);
+            Render.Circle(insecPos, 65, (uint)SegmentsValue, Color.White);
         }
     }
 }

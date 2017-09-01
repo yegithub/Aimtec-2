@@ -38,7 +38,7 @@ namespace Adept_AIO.Champions.Riven.Core
             }
         }
 
-
+        public static bool DidR2;
         public static bool DidJustAuto;
         public static bool AllIn;
 

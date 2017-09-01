@@ -9,7 +9,7 @@ using Spell = Aimtec.SDK.Spell;
 
 namespace Adept_AIO.Champions.LeeSin.Core.Spells
 {
-    internal class SpellConfig : ISpellConfig 
+    internal class SpellConfig : ISpellConfig
     {
         public float LastQ1CastAttempt { get; set; }
 
@@ -35,20 +35,31 @@ namespace Adept_AIO.Champions.LeeSin.Core.Spells
 
         public void QSmite(Obj_AI_Base target)
         {
-          
-            var list = Q.GetPrediction(target).CollisionObjects;
-            var first = list.FirstOrDefault();
+            var pred = Q.GetPrediction(target);
+            var objects = pred.CollisionObjects;
 
-            if (SummonerSpells.Smite == null || !SummonerSpells.Smite.Ready || SummonerSpells.Ammo("Smite") < 2 ||
-                list.Count < 1 || first == null || first.NetworkId == target.NetworkId ||
-                first.Health > SummonerSpells.SmiteMonsters() ||
-                first.ServerPosition.Distance(Global.Player) > SummonerSpells.Smite.Range)
+            if (pred.HitChance != HitChance.Collision || !objects.Any())
             {
                 return;
             }
 
-            SummonerSpells.Smite.CastOnUnit(first);
-            Global.Player.SpellBook.CastSpell(SpellSlot.Q, target.ServerPosition);
+            if (SummonerSpells.Smite == null || !SummonerSpells.Smite.Ready || SummonerSpells.Ammo("Smite") < 2 || objects.Count < 1)
+            {
+                return;
+            }
+
+            foreach (var current in objects)
+            {
+                if (current == null || current.NetworkId == target.NetworkId ||
+                    current.Health > SummonerSpells.SmiteMonsters() ||
+                    current.ServerPosition.Distance(Global.Player) > SummonerSpells.Smite.Range)
+                {
+                    return;
+                }
+
+                SummonerSpells.Smite.CastOnUnit(current);
+                Global.Player.SpellBook.CastSpell(SpellSlot.Q, target.ServerPosition);
+            }
         }
 
         public Spell W { get; private set; }
@@ -65,7 +76,7 @@ namespace Adept_AIO.Champions.LeeSin.Core.Spells
 
         public int PassiveStack()
         {
-           return Global.Player.HasBuff(PassiveName) ? Global.Player.GetBuffCount(PassiveName) : 0;
+            return Global.Player.HasBuff(PassiveName) ? Global.Player.GetBuffCount(PassiveName) : 0;
         }
 
         public void Load()
@@ -74,7 +85,7 @@ namespace Adept_AIO.Champions.LeeSin.Core.Spells
             Q.SetSkillshot(0.25f, 65, 1800, true, SkillshotType.Line);
 
             W = new Spell(SpellSlot.W, 700);
-         
+
             E = new Spell(SpellSlot.E, 350);
 
             R = new Spell(SpellSlot.R, 375);

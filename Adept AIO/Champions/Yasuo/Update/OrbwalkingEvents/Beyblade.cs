@@ -70,7 +70,6 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                     case Mode.Dashing:
                         if (minion != null)
                         {
-                            Console.WriteLine(dashDistance);
                             if (MenuConfig.Combo["Flash"].Enabled && distance > 220 && dashDistance <= 350)
                             {
                                 DelayAction.Queue(145, () =>

@@ -57,10 +57,13 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 
         public static void PostAttack(object sender, PostAttackEventArgs args)
         {
-            if (Game.TickCount - Extensions.LastQCastAttempt < 500)
+            if (Game.TickCount - Extensions.LastQCastAttempt < 400 + Game.Ping / 2f)
             {
+                Extensions.DidJustAuto = false; 
                 return;
             }
+
+            Extensions.DidJustAuto = true;
 
             var target = args.Target as Obj_AI_Base;
 

@@ -21,6 +21,7 @@ namespace Adept_AIO.Champions.Yasuo.Core
         public static OrbwalkerMode FleeMode, BeybladeMode;
 
         public static Vector3 ExtendedMinion;
+        public static Vector3 ExtendedTarget;
 
         public static bool KnockedUp(Obj_AI_Base target)
         {
@@ -77,5 +78,14 @@ namespace Adept_AIO.Champions.Yasuo.Core
             }
             return Global.Player.ServerPosition.Extend(minion.ServerPosition, overrideValue).Distance(target.ServerPosition);
         }
+    }
+
+    public class KnockUpHelper
+    {
+        public static Obj_AI_Base Sender;
+        public static float TimeLeftOnKnockup;
+        public static float BuffStart;
+        public static float BuffEnd;
+        public static bool TimeToUlt = -(Game.TickCount - (BuffStart + BuffEnd)) > Game.Ping / 2f + 25;
     }
 }

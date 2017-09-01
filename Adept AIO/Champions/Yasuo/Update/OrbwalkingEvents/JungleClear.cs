@@ -23,7 +23,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                 SpellConfig.E.CastOnUnit(minion);
             }
 
-            if (SpellConfig.Q.Ready)
+            if (!SpellConfig.Q.Ready) return;
             {
                 var minion = GameObjects.Jungle.FirstOrDefault(x => x.Distance(Global.Player) < SpellConfig.Q.Range && x.Health > 5);
                 if (minion == null)
@@ -37,7 +37,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                     return;
                 }
             
-                Global.Player.SpellBook.CastSpell(SpellSlot.Q, minion.ServerPosition);
+                SpellConfig.Q.CastOnUnit(minion);
             }
         }
     }

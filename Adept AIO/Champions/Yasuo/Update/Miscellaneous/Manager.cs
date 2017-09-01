@@ -1,6 +1,8 @@
-﻿using Adept_AIO.Champions.Yasuo.Core;
+﻿using System;
+using Adept_AIO.Champions.Yasuo.Core;
 using Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents;
 using Adept_AIO.SDK.Extensions;
+using Adept_AIO.SDK.Methods;
 using Aimtec;
 using Aimtec.SDK.Orbwalking;
 using Aimtec.SDK.Util;
@@ -56,6 +58,17 @@ namespace Adept_AIO.Champions.Yasuo.Update.Miscellaneous
                 return;
             }
 
+            if (sender.IsEnemy)
+            {
+                if (buff.Type == BuffType.Knockup)
+                {
+                    KnockUpHelper.Sender = sender;
+                    KnockUpHelper.TimeLeftOnKnockup = Game.TickCount;
+                    KnockUpHelper.BuffStart = buff.StartTime;
+                    KnockUpHelper.BuffEnd = buff.EndTime;
+                }
+            }
+
             if (sender.IsMe)
             {
                 switch (buff.Name)
@@ -73,6 +86,17 @@ namespace Adept_AIO.Champions.Yasuo.Update.Miscellaneous
             if (sender == null)
             {
                 return;
+            }
+
+            if (sender.IsEnemy)
+            {
+                if (buff.Type == BuffType.Knockup)
+                {
+                    KnockUpHelper.Sender = null;
+                    KnockUpHelper.TimeLeftOnKnockup = 0;
+                    KnockUpHelper.BuffStart = 0;
+                    KnockUpHelper.BuffEnd = 0;
+                }
             }
 
             if (sender.IsMe)
@@ -105,7 +129,6 @@ namespace Adept_AIO.Champions.Yasuo.Update.Miscellaneous
                     }
                     else
                     {
-                       
                         Extension.CurrentMode = Mode.Dashing;
                         SpellConfig.SetSkill(Mode.Dashing);
                         DelayAction.Queue(500, () => Extension.CurrentMode = Mode.Normal);

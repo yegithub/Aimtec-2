@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using Adept_AIO.Champions.Yasuo.Core;
 using Adept_AIO.SDK.Extensions;
@@ -40,19 +41,32 @@ namespace Adept_AIO.Champions.Yasuo.Drawings
 
             if (MenuConfig.Drawings["Debug"].Enabled)
             {
-                Vector2 temp;
-                Render.WorldToScreen(Global.Player.Position, out temp);
+                if (KnockUpHelper.Sender != null)
+                {
+                    Render.Text(KnockUpHelper.Sender.ServerPosition.To2D(), Color.Yellow, (-(Game.TickCount - (KnockUpHelper.BuffStart + KnockUpHelper.BuffEnd))).ToString(CultureInfo.InvariantCulture));
+                }
+
+                Render.WorldToScreen(Global.Player.Position, out var temp);
                 Render.Text(new Vector2(temp.X - 55, temp.Y + 40), Color.White, "Q Mode: " + Extension.CurrentMode + "- Range: " + SpellConfig.Q.Range);
             }
 
             if (SpellConfig.E.Ready)
             {
-                if (!Extension.ExtendedMinion.IsZero)
+                if (Extension.ExtendedMinion.IsZero || Extension.ExtendedTarget.IsZero)
                 {
-                    Render.Circle(Extension.ExtendedMinion, 50, 300, Color.AliceBlue);
+                    return;
                 }
+
+                Render.WorldToScreen(Extension.ExtendedTarget, out var targetV2);
+                Render.WorldToScreen(Extension.ExtendedMinion, out var lineV2);
+                Render.WorldToScreen(Global.Player.ServerPosition, out var playerV2);
+
+                Render.Line(playerV2, lineV2, Color.DeepSkyBlue);
+                Render.Line(lineV2, targetV2, Color.DeepPink);
+
+                Render.Circle(Extension.ExtendedMinion, 50, 300, Color.White);
             }
-         
+
             if (SpellConfig.R.Ready)
             {
                 if (MenuConfig.Drawings["R"].Enabled)
