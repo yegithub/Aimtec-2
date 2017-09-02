@@ -43,17 +43,19 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.LaneClear
 
         public void OnUpdate()
         {
-            var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(Global.Player) < _spellConfig.Q.Range + x.BoundingRadius);
-
-            if (minion == null || !CheckEnabled && Global.Player.CountEnemyHeroesInRange(2000) >= 1)
+            if (_spellConfig.Q.Ready && Q1Enabled || Global.Orbwalker.IsWindingUp || CheckEnabled && Global.Player.CountEnemyHeroesInRange(2000) >= 1)
             {
                 return;
             }
 
-            if (_spellConfig.Q.Ready && Q1Enabled)
+            var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(Global.Player) < (Global.Player.IsUnderEnemyTurret() ? _spellConfig.Q.Range : _spellConfig.Q.Range / 2f));
+
+            if (minion == null)
             {
-                _spellConfig.Q.Cast(minion);
+                return;
             }
+
+            _spellConfig.Q.Cast(minion);
         }
     }
 }

@@ -2,6 +2,7 @@
 using Adept_AIO.SDK.Extensions;
 using Aimtec;
 using Aimtec.SDK.Damage;
+using Aimtec.SDK.Damage.JSON;
 
 namespace Adept_AIO.Champions.LeeSin.Core.Damage
 {
@@ -30,7 +31,16 @@ namespace Adept_AIO.Champions.LeeSin.Core.Damage
 
             if (_spellConfig.Q.Ready)
             {
-                dmg += Global.Player.GetSpellDamage(target, SpellSlot.Q) + dmg;
+                if (_spellConfig.IsQ2())
+                {
+                    dmg += Global.Player.GetSpellDamage(target, SpellSlot.Q, DamageStage.SecondCast) + dmg;
+                }
+                else
+                {
+                    dmg += Global.Player.GetSpellDamage(target, SpellSlot.Q) 
+                        +  Global.Player.GetSpellDamage(target, SpellSlot.Q, DamageStage.SecondCast)
+                        +  dmg;
+                }
             }
 
             if (_spellConfig.R.Ready)

@@ -8,7 +8,7 @@ namespace Adept_AIO.SDK.Methods
         {
             Console.BackgroundColor = backgroundColor;
             Console.ForegroundColor = foregroundColor;
-            Console.WriteLine(message);
+            Console.WriteLine("[" + DateTime.Now + "] " + message);
             Console.ResetColor();
         }
     }

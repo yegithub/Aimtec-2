@@ -21,9 +21,8 @@ namespace Adept_AIO.Champions.LeeSin.Update.Ward_Manager
 
         public void WardJump(Vector3 position, int range)
         {
-            if (!_wardTracker.ActiveWardInSlot() || Game.TickCount - _wardTracker.LastWardCreated < 500)
+            if (Game.TickCount - _wardTracker.LastWardCreated < 500)
             {
-                DebugConsole.Print("DEBUG: [Warning] Cannot Wardjump. Failed to continue.", ConsoleColor.Yellow); 
                 return;
             }
 

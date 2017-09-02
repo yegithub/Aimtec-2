@@ -30,7 +30,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.WardJump
                 return;
             }
 
-            if (_spellConfig.W.Ready && _spellConfig.IsFirst(_spellConfig.W) && _wardTracker.IsWardReady())
+            if (_spellConfig.W.Ready && _spellConfig.IsFirst(_spellConfig.W) && _wardTracker.ActiveWardInSlot())
             {
                 _wardManager.WardJump(Game.CursorPos, Range);
             }
