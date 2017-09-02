@@ -55,6 +55,9 @@ namespace Adept_AIO.Champions.LeeSin.Drawings
                 Render.Circle(Global.Player.Position, _spellConfig.Q.Range, (uint)SegmentsValue, Color.IndianRed);
             }
 
+            Render.WorldToScreen(Global.Player.ServerPosition, out var bkToggleV2);
+            Render.Text(new Vector2(bkToggleV2.X - 40, bkToggleV2.Y + 60), Temp.IsBubbaKush ? Color.White : Color.LightSlateGray, "Bubba Kush: " + Temp.IsBubbaKush);
+
             var selected = Global.TargetSelector.GetSelectedTarget();
 
             if (!PositionEnabled || selected == null)
@@ -77,22 +80,21 @@ namespace Adept_AIO.Champions.LeeSin.Drawings
                 Render.Circle(bkPos, 65, (uint)SegmentsValue, Color.Orange);
                 Render.Circle(bkEndPos, 65, (uint)SegmentsValue, Color.White);
             }
-
-            if (Temp.IsBubbaKush || _insecManager.InsecPosition(selected).IsZero)
+            else
             {
-                return;
+                var insecPos = _insecManager.InsecPosition(selected);
+                var targetEndPos = selected.ServerPosition + (selected.ServerPosition - insecPos).Normalized() * 900;
+
+                Render.WorldToScreen(targetEndPos, out var targetEndPosScreen);
+                Render.WorldToScreen(insecPos, out var insecPosScreen);
+
+                Render.Line(insecPosScreen, targetEndPosScreen, Color.Orange);
+
+                Render.Circle(targetEndPos, 50, 200, Color.White);
+                Render.Circle(insecPos, 65, (uint)SegmentsValue, Color.White);
             }
-
-            var insecPos = _insecManager.InsecPosition(selected);
-            var targetEndPos = selected.ServerPosition + (selected.ServerPosition - insecPos).Normalized() * 900;
-
-            Render.WorldToScreen(targetEndPos, out var targetEndPosScreen);
-            Render.WorldToScreen(insecPos, out var insecPosScreen);
-
-            Render.Line(insecPosScreen, targetEndPosScreen, Color.Orange);
-                    
-            Render.Circle(targetEndPos, 50, 200, Color.White);
-            Render.Circle(insecPos, 65, (uint)SegmentsValue, Color.White);
+         
+           
         }
     }
 }

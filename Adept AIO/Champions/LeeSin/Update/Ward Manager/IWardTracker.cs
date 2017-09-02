@@ -11,7 +11,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.Ward_Manager
         string WardName { get; }
         Vector3 WardPosition { get; set; }
 
-        bool ActiveWardInSlot();
+        bool DidJustWard { get; }
         bool IsWardReady();
 
         string Ward();

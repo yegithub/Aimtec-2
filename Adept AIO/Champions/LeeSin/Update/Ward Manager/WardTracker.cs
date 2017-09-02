@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Adept_AIO.Champions.LeeSin.Core.Spells;
 using Adept_AIO.SDK.Extensions;
@@ -19,14 +20,11 @@ namespace Adept_AIO.Champions.LeeSin.Update.Ward_Manager
             _spellConfig = spellConfig;
         }
 
-        public bool ActiveWardInSlot()
-        {
-            return _wardNames.Any(Items.CanUseItem);
-        }
+        public bool DidJustWard => Game.TickCount - LastWardCreated <= 800 + Game.Ping / 2f;
 
         public bool IsWardReady()
         {
-            return ActiveWardInSlot() && Game.TickCount - LastWardCreated > 500;
+            return _wardNames.Any(Items.CanUseItem);
         }
 
         public string Ward()
@@ -43,26 +41,21 @@ namespace Adept_AIO.Champions.LeeSin.Update.Ward_Manager
 
         public void OnCreate(GameObject sender)
         {
-            var ward = sender as Obj_AI_Minion;
-
-            if (ward == null || WardPosition.Distance(ward.Position) > 700 ||
-                Game.TickCount - LastWardCreated > 800 ||
-                !_spellConfig.IsFirst(_spellConfig.W) || !IsAtWall)
+            if (DidJustWard || !_spellConfig.IsFirst(_spellConfig.W) || !IsAtWall)
             {
                 return;
             }
-     
-            if (ward.Team != GameObjectTeam.Neutral && ward.Name.ToLower().Contains("ward"))
+
+            var ward = sender as Obj_AI_Minion;
+
+            if (ward != null && ward.Name.ToLower().Contains("ward"))
             {
-                DebugConsole.Print("Located Ally Ward.", ConsoleColor.Green);
                 LastWardCreated = Game.TickCount;
                 WardName = ward.Name;
-                WardPosition = ward.Position;
-                Global.Player.SpellBook.CastSpell(SpellSlot.W, sender.Position);
-            }
-            else
-            {
-                DebugConsole.Print("Could Not Locate Ally Ward. Object: " + ward.Name, ConsoleColor.Yellow);
+                WardPosition = ward.ServerPosition;
+
+                DebugConsole.Print("Located Ally Ward.", ConsoleColor.Green);
+                Global.Player.SpellBook.CastSpell(SpellSlot.W, WardPosition); // Bug: This position is unrealistic and does not work.
             }
         }
 

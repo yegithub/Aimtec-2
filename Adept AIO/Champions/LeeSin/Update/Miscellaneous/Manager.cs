@@ -1,4 +1,6 @@
-﻿using Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Combo;
+﻿using System;
+using System.Linq;
+using Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Combo;
 using Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Harass;
 using Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Insec;
 using Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.JungleClear;
@@ -53,26 +55,32 @@ namespace Adept_AIO.Champions.LeeSin.Update.Miscellaneous
                 return;
             }
 
-            _insec?.OnKeyPressed();
-
-            switch (Global.Orbwalker.Mode)
+            try
             {
-                case OrbwalkingMode.Combo:
-                    _combo.OnUpdate();
-                    break;
-                case OrbwalkingMode.Mixed:
-                    _harass.OnUpdate();
-                    break;
-                case OrbwalkingMode.Laneclear:
-                    _laneClear.OnUpdate();
-                    _jungleClear.OnUpdate();
-                    break;
+                switch (Global.Orbwalker.Mode)
+                {
+                    case OrbwalkingMode.Combo:
+                        _combo.OnUpdate();
+                        break;
+                    case OrbwalkingMode.Mixed:
+                        _harass.OnUpdate();
+                        break;
+                    case OrbwalkingMode.Laneclear:
+                        _laneClear.OnUpdate();
+                        _jungleClear.OnUpdate();
+                        break;
                     case OrbwalkingMode.Lasthit:
-                    _lasthit.OnUpdate();
-                    break;
-            }
+                        _lasthit.OnUpdate();
+                        break;
+                }
 
-            _jungleClear.StealMobs();
+                _jungleClear.StealMobs();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
     }
 }

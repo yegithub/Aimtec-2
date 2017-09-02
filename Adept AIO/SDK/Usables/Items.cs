@@ -41,9 +41,6 @@ namespace Adept_AIO.SDK.Usables
                 return;
             }
 
-            if(Global.Player.ChampionName == "LeeSin")
-            DebugConsole.Print("DEBUG: [Success] CASTING WARD.", ConsoleColor.Green);
-         
             if (position.IsZero)
             {
                 Global.Player.SpellBook.CastSpell(slot);
@@ -66,10 +63,10 @@ namespace Adept_AIO.SDK.Usables
         }
 
         private static SpellSlot GetItemSlot(string itemName)
-        {   
-            var slot = Global.Player.Inventory.Slots.FirstOrDefault(x => x.ItemName == itemName);
+        {
+            var slot = Global.Player.SpellBook.Spells.FirstOrDefault(x => !string.IsNullOrEmpty(x.Name) && string.Equals(x.Name, itemName, StringComparison.CurrentCultureIgnoreCase));
 
-            return slot?.SpellSlot ?? SpellSlot.Unknown;
+            return slot?.Slot ?? SpellSlot.Unknown;
         }
     }
 }

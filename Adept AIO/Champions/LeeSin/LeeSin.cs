@@ -1,4 +1,5 @@
-﻿using Adept_AIO.SDK.Delegates;
+﻿using Adept_AIO.Champions.LeeSin.Core;
+using Adept_AIO.SDK.Delegates;
 
 namespace Adept_AIO.Champions.LeeSin
 {
@@ -89,7 +90,11 @@ namespace Adept_AIO.Champions.LeeSin
             insecManager.InsecPositionValue = insecMenu["Position"].Value;
             insecManager.InsecKickValue = insecMenu["Kick"].Value;
 
-            insecBk.OnValueChanged += (sender, args) => insec.Bk = args.GetNewValue<MenuKeyBind>().Value;
+            insecBk.OnValueChanged += (sender, args) =>
+            {
+                insec.Bk = args.GetNewValue<MenuKeyBind>().Value;
+                Temp.IsBubbaKush = args.GetNewValue<MenuKeyBind>().Value;
+            };
             insecObject.OnValueChanged += (sender, args) => insec.ObjectEnabled = args.GetNewValue<MenuBool>().Value;
             insecQLast.OnValueChanged += (sender, args) => insec.QLast = args.GetNewValue<MenuBool>().Value;
             insecPosition.OnValueChanged += (sender, args) => insecManager.InsecPositionValue = args.GetNewValue<MenuList>().Value;
