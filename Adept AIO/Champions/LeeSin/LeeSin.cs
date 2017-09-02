@@ -44,7 +44,7 @@ namespace Adept_AIO.Champions.LeeSin
             var insec = new Insec(wardtracker, wardmanager, spellConfig, insecManager);
             var kickFlash = new KickFlash(spellConfig, insecManager);
 
-            var combo = new Combo(wardmanager, spellConfig);
+            var combo = new Combo(wardmanager, spellConfig, wardtracker);
            
             var harass = new Harass(wardmanager, spellConfig);
             var jungle = new JungleClear(wardmanager, spellConfig);
@@ -265,10 +265,10 @@ namespace Adept_AIO.Champions.LeeSin
             drawQ.OnValueChanged += (sender, args) => drawManager.QEnabled = args.GetNewValue<MenuBool>().Value;
            
             Gapcloser.Attach(mainmenu, "Gapcloser");
-            var gapcloser = new AntiGapcloser(spellConfig, wardmanager);
+            var gapcloser = new AntiGapcloser(spellConfig, wardmanager, wardtracker);
             Gapcloser.OnGapcloser += gapcloser.OnGapcloser;
 
-            var wardjumpRange = new MenuSlider("WardRange", "WardJump Range", 600, 1, 600);
+            var wardjumpRange = new MenuSlider("WardRange", "WardJump Range", 600, 1, 620);
             mainmenu.Add(wardjumpRange);
 
             wardjump.Range = mainmenu["WardRange"].Value;

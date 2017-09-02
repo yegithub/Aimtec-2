@@ -4,7 +4,6 @@ using Adept_AIO.Champions.LeeSin.Core;
 using Adept_AIO.Champions.LeeSin.Core.Insec_Manager;
 using Adept_AIO.Champions.LeeSin.Core.Spells;
 using Adept_AIO.SDK.Extensions;
-using Adept_AIO.SDK.Methods;
 using Aimtec;
 using Aimtec.SDK.Extensions;
 
@@ -63,9 +62,9 @@ namespace Adept_AIO.Champions.LeeSin.Drawings
                 return;
             }
 
-            if (Temp.IsBubbaKush && !_insecManager.BKPosition(selected).IsZero)
+            if (Temp.IsBubbaKush && !_insecManager.BkPosition(selected).IsZero)
             {
-                var bkPos = _insecManager.BKPosition(selected);
+                var bkPos = _insecManager.BkPosition(selected);
                 Render.WorldToScreen(bkPos, out var bkScreen);
                 Render.Text(bkScreen, Color.Orange, "BK");
 

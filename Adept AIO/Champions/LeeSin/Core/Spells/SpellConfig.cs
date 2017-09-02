@@ -72,6 +72,7 @@ namespace Adept_AIO.Champions.LeeSin.Core.Spells
         public OrbwalkerMode WardjumpMode { get; set; }
         public OrbwalkerMode KickFlashMode { get; set; }
 
+        public int WardRange { get; } = 620;
         private const string PassiveName = "blindmonkpassive_cosmetic";
 
         public int PassiveStack()
@@ -82,15 +83,15 @@ namespace Adept_AIO.Champions.LeeSin.Core.Spells
         public void Load()
         {
             Q = new Spell(SpellSlot.Q, 1100);
-            Q.SetSkillshot(0.25f, 65, 1800, true, SkillshotType.Line);
+            Q.SetSkillshot(0.25f, 60, 1800, true, SkillshotType.Line);
 
             W = new Spell(SpellSlot.W, 700);
 
-            E = new Spell(SpellSlot.E, 350);
+            E = new Spell(SpellSlot.E, 425);
 
             R = new Spell(SpellSlot.R, 375);
             R2 = new Spell(SpellSlot.R, 900);
-            R2.SetSkillshot(0.25f, 80, 1700, false, SkillshotType.Line);
+            R2.SetSkillshot(0.25f, 80, 1500, false, SkillshotType.Line);
         }
 
         public void OnProcessSpellCast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)

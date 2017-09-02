@@ -20,7 +20,7 @@ namespace Adept_AIO.Champions.Tristana.Update.OrbwalkingEvents
 
         public void OnPostAttack()
         {
-            if (!_spellConfig.Q.Ready || _menuConfig.LaneClear["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(2000) > 0)
+            if (!_spellConfig.Q.Ready || !_menuConfig.LaneClear["Q"].Enabled || _menuConfig.LaneClear["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(2000) > 0)
             {
                 return;
             }

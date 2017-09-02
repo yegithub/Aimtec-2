@@ -12,11 +12,13 @@ namespace Adept_AIO.Champions.LeeSin.Update.Miscellaneous
     {
         private readonly ISpellConfig _spellConfig;
         private readonly IWardManager _wardManager;
+        private readonly IWardTracker _wardTracker;
 
-        public AntiGapcloser(ISpellConfig spellConfig, IWardManager wardManager)
+        public AntiGapcloser(ISpellConfig spellConfig, IWardManager wardManager, IWardTracker wardTracker)
         {
             _spellConfig = spellConfig;
             _wardManager = wardManager;
+            _wardTracker = wardTracker;
         }
 
         public void OnGapcloser(Obj_AI_Hero sender, GapcloserArgs args)
@@ -25,8 +27,8 @@ namespace Adept_AIO.Champions.LeeSin.Update.Miscellaneous
             || !sender.IsEnemy 
             || !_spellConfig.W.Ready 
             || !_spellConfig.IsFirst(_spellConfig.W)
-            || !_wardManager.IsWardReady() 
-            ||  args.EndPosition.Distance(Global.Player) > 600)
+            || !_wardTracker.IsWardReady() 
+            ||  args.EndPosition.Distance(Global.Player) > _spellConfig.WardRange)
             {
                 return;
             }
@@ -37,7 +39,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.Miscellaneous
                 return;
             }
 
-            _wardManager.WardJump(Game.CursorPos, 600);
+            _wardManager.WardJump(Game.CursorPos, _spellConfig.WardRange);
         }
     }
 }

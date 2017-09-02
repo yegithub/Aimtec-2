@@ -116,8 +116,8 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
         public static bool InsideKiBurst(GameObject target)
         {
             return Global.Player.HasBuff("RivenFengShuiEngine")
-                 ? Global.Player.Distance(target) <= 265 + target.BoundingRadius
-                 : Global.Player.Distance(target) <= 195 + target.BoundingRadius;
+                 ? Global.Player.Distance(target) <= 200 + target.BoundingRadius
+                 : Global.Player.Distance(target) <= 135 + target.BoundingRadius;
         }
 
         public static bool InsideKiBurst(Vector3 position)

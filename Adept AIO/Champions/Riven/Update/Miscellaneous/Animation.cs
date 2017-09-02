@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Adept_AIO.Champions.Riven.Core;
 using Adept_AIO.SDK.Extensions;
 using Aimtec;
@@ -30,16 +31,40 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 
         public static float GetDelay()
         {
-            var isQ3 = Extensions.CurrentQCount == 1;
             var delay = Game.Ping / 2f;
             var level = Global.Player.Level;
-            delay += (isQ3 ? 380 : 340) - 3.33f * level;
+            var castDelay = 380;
+
+            switch (Extensions.CurrentQCount)
+            {
+                case 2:
+                    castDelay -= 20;
+                    break;
+                case 1:
+                    castDelay -= 40;
+                    break;
+            }
+
+            delay += castDelay - 3.33f * level;
 
             var unit = ObjectManager.Get<Obj_AI_Base>().FirstOrDefault(x => x.Distance(Global.Player) <= Global.Player.AttackRange + x.BoundingRadius && !x.IsAlly && !x.IsMe);
 
-            if (unit != null && (unit.UnitSkinName.Contains("Crab") || unit.IsHero || unit.IsBuilding()))
+            if (unit == null || !unit.UnitSkinName.Contains("Crab") && !unit.IsHero && !unit.IsBuilding())
             {
-                delay *= isQ3 ? 1.3f : 1.15f;
+                return delay;
+            }
+
+            switch (Extensions.CurrentQCount)
+            {
+                case 3:
+                    delay *= 1.15f;
+                    break;
+                case 2:
+                    delay *= 1.225f;
+                    break;
+                case 1:
+                    delay *= 1.3f;
+                    break;
             }
 
             return delay;

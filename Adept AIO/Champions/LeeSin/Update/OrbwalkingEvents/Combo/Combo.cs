@@ -1,5 +1,4 @@
-﻿using System;
-using Adept_AIO.Champions.LeeSin.Core.Spells;
+﻿using Adept_AIO.Champions.LeeSin.Core.Spells;
 using Adept_AIO.Champions.LeeSin.Update.Ward_Manager;
 using Adept_AIO.SDK.Extensions;
 using Aimtec;
@@ -19,12 +18,14 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Combo
         public bool EEnabled { get; set; }
 
         private readonly IWardManager _wardManager;
+        private readonly IWardTracker _wardTracker;
         private readonly ISpellConfig _spellConfig;
       
-        public Combo(IWardManager wardManager, ISpellConfig spellConfig)
+        public Combo(IWardManager wardManager, ISpellConfig spellConfig, IWardTracker wardTracker)
         {
             _wardManager = wardManager;
             _spellConfig = spellConfig;
+            _wardTracker = wardTracker;
         }
 
         public void OnPostAttack(AttackableUnit target)
@@ -87,14 +88,14 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Combo
                     _spellConfig.Q.Cast(target);
                 }
             }
-            else if (_spellConfig.W.Ready && _spellConfig.IsFirst(_spellConfig.W) && _wardManager.IsWardReady() && WEnabled && WardEnabled && distance > (_spellConfig.Q.Ready ? 1000 : 600))
+            else if (_spellConfig.W.Ready && _spellConfig.IsFirst(_spellConfig.W) && _wardTracker.IsWardReady() && WEnabled && WardEnabled && distance > (_spellConfig.Q.Ready ? 1000 : _spellConfig.WardRange))
             {
                 if (Game.TickCount - _spellConfig.Q.LastCastAttemptT <= 3000 || target.Position.CountEnemyHeroesInRange(2000) > 1)
                 {
                     return;
                 }
 
-                _wardManager.WardJump(target.Position, 600);
+                _wardManager.WardJump(target.Position, _spellConfig.WardRange);
             }
 
             if (_spellConfig.E.Ready && EEnabled && _spellConfig.IsFirst(_spellConfig.E) && distance <= 350)

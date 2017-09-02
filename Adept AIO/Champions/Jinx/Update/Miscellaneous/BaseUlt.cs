@@ -39,14 +39,25 @@ namespace Adept_AIO.Champions.Jinx.Update.Miscellaneous
             _recallTick = tickCount;
             _target = target;
         }
+
         public void OnTeleport(Obj_AI_Base sender, Teleport.TeleportEventArgs args)
         {
-            if (args.Status == TeleportStatus.Abort || sender.IsMe || sender.IsAlly || !_menuConfig.Killsteal["BaseUlt"].Enabled || args.Type != TeleportType.Recall)
+            if (sender.IsMe || sender.IsAlly || !_menuConfig.Killsteal["BaseUlt"].Enabled)
             {
                 return;
             }
 
-            SetRecall(args.Duration, Game.TickCount, (Obj_AI_Hero) sender);
+            if (args.Status == TeleportStatus.Abort)
+            {
+                SetRecall(0, 0, null);
+            }
+
+            if (args.Type != TeleportType.Recall)
+            {
+                return;
+            }
+
+            SetRecall(args.Duration, Game.TickCount, (Obj_AI_Hero)sender);
             DebugConsole.Print(sender.UnitSkinName + " Is Recalling", ConsoleColor.Red);
         }
      
@@ -63,7 +74,7 @@ namespace Adept_AIO.Champions.Jinx.Update.Miscellaneous
 
             _timeUntilCasting = (int) (time - TravelTime(pos));
 
-            if (GameObjects.EnemyHeroes.Any(x => poly.IsInside(Geometry.To2D(x.ServerPosition))) && _target.Health < Global.Player.GetSpellDamage(_target, SpellSlot.R) * 1.15f) // Bug: Sort of broken? Not sure.
+            if (GameObjects.EnemyHeroes.Any(x => poly.IsInside(Geometry.To2D(x.ServerPosition))) && _target.Health < Global.Player.GetSpellDamage(_target, SpellSlot.R)) 
             {
                 if (time - TravelTime(pos) > Game.Ping / 2f + 30)
                 {
@@ -88,8 +99,7 @@ namespace Adept_AIO.Champions.Jinx.Update.Miscellaneous
 
             var ts = TimeSpan.FromMilliseconds(_timeUntilCasting);
 
-            Vector2 xd;
-            Render.WorldToScreen(Global.Player.ServerPosition, out xd);
+            Render.WorldToScreen(Global.Player.ServerPosition, out var xd);
             Render.Text(new Vector2(xd.X - 35, xd.Y + 20), Color.White, "Ulting " + _target.ChampionName + " In " + $"{ts.Seconds:00}:{ts.Milliseconds:00}");
         }
     }

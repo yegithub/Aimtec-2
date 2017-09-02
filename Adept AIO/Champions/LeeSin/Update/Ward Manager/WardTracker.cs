@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Adept_AIO.Champions.LeeSin.Core.Spells;
 using Adept_AIO.SDK.Extensions;
@@ -18,9 +19,22 @@ namespace Adept_AIO.Champions.LeeSin.Update.Ward_Manager
             _spellConfig = spellConfig;
         }
 
-        public bool IsWardReady => WardNames.Any(Items.CanUseItem) && Game.TickCount - LastWardCreated > 800;
+        public bool ActiveWardInSlot()
+        {
+            return _wardNames.Any(Items.CanUseItem);
+        }
 
-        public string[] WardNames { get; } =
+        public bool IsWardReady()
+        {
+            return ActiveWardInSlot() && Game.TickCount - LastWardCreated > 500;
+        }
+
+        public string Ward()
+        {
+            return _wardNames.FirstOrDefault(Items.CanUseItem);
+        }
+
+        private readonly IEnumerable<string> _wardNames = new List<string>
         {
             "TrinketTotemLvl1",
             "ItemGhostWard",
@@ -31,7 +45,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.Ward_Manager
         {
             var ward = sender as Obj_AI_Minion;
 
-            if (ward == null || WardPosition.Distance(ward.Position) > 800 ||
+            if (ward == null || WardPosition.Distance(ward.Position) > 700 ||
                 Game.TickCount - LastWardCreated > 800 ||
                 !_spellConfig.IsFirst(_spellConfig.W) || !IsAtWall)
             {

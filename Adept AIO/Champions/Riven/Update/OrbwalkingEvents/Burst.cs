@@ -4,7 +4,6 @@ using Adept_AIO.SDK.Extensions;
 using Adept_AIO.SDK.Usables;
 using Aimtec;
 using Aimtec.SDK.Extensions;
-using Aimtec.SDK.Util;
 
 namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
 {

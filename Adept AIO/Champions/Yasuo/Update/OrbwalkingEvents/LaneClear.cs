@@ -79,35 +79,29 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                 }
             }
 
-            var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(Global.Player) <= SpellConfig.E.Range &&
-                                                                      x.Distance(Game.CursorPos) < MenuConfig.Combo["Range"].Value &&
-                                                                     !x.HasBuff("YasuoDashWrapper"));
+            var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(Global.Player) <= SpellConfig.E.Range && !x.HasBuff("YasuoDashWrapper"));
 
-            if (minion == null || minion.IsUnderEnemyTurret() ||
-                MenuConfig.LaneClear["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(2000) != 0)
+            if (!SpellConfig.E.Ready || minion == null || minion.IsUnderEnemyTurret() || MenuConfig.LaneClear["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(2000) != 0)
             {
                 return;
             }
-           
-            if (SpellConfig.E.Ready && !Global.Orbwalker.IsWindingUp)
+
+            switch (MenuConfig.LaneClear["Mode"].Value)
             {
-                switch (MenuConfig.LaneClear["Mode"].Value)
-                {
-                    case 1:
-                        if (MenuConfig.LaneClear["EAA"].Enabled)
-                        {
-                            return;
-                        }
-                        SpellConfig.E.CastOnUnit(minion);
-                        break;
-                    case 2:
-                        if (minion.Health < Global.Player.GetAutoAttackDamage(minion) * 1.5f)
-                        {
-                            return;
-                        }
-                        SpellConfig.E.CastOnUnit(minion);
-                        break;
-                }
+                case 1:
+                    if (MenuConfig.LaneClear["EAA"].Enabled)
+                    {
+                        return;
+                    }
+                    SpellConfig.E.CastOnUnit(minion);
+                    break;
+                case 2:
+                    if (minion.Health > Global.Player.GetSpellDamage(minion, SpellSlot.E))
+                    {
+                        return;
+                    }
+                    SpellConfig.E.CastOnUnit(minion);
+                    break;
             }
         }
     }

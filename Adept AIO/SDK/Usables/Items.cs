@@ -41,6 +41,7 @@ namespace Adept_AIO.SDK.Usables
                 return;
             }
 
+            if(Global.Player.ChampionName == "LeeSin")
             DebugConsole.Print("DEBUG: [Success] CASTING WARD.", ConsoleColor.Green);
          
             if (position.IsZero)

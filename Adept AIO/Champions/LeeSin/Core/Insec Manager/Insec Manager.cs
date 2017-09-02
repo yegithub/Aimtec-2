@@ -19,18 +19,10 @@ namespace Adept_AIO.Champions.LeeSin.Core.Insec_Manager
             _spellConfig = spellConfig;
         }
 
-        public float DistanceBehindTarget(Obj_AI_Base target)
+        public float DistanceBehindTarget(Obj_AI_Base target = null)
         {
-            return Math.Min((Global.Player.BoundingRadius + target.BoundingRadius + 50) * 1.25f, _spellConfig.R.Range);
+            return Math.Min((Global.Player.BoundingRadius + (target == null ? 65 : target.BoundingRadius) + 50) * 1.25f, _spellConfig.R.Range);
         }
-
-        public float DistanceBehindTarget()
-        {
-            return Math.Min((Global.Player.BoundingRadius + 65 + 50) * 1.25f, _spellConfig.R.Range);
-        }
-
-        public Vector3 InsecQPosition { get; set; }
-        public Vector3 InsecWPosition { get; set; }
 
         public Vector3 InsecPosition(Obj_AI_Base target)
         {
@@ -38,14 +30,15 @@ namespace Adept_AIO.Champions.LeeSin.Core.Insec_Manager
                    DistanceBehindTarget(target);
         }
 
-        public Vector3 BKPosition(Obj_AI_Base target)
+        public Vector3 BkPosition(Obj_AI_Base target)
         {
             if (target == null)
             {
                 return Vector3.Zero;
             }
 
-            var secondEnemy = GameObjects.EnemyHeroes.FirstOrDefault(x => x.IsValid && x.Distance(target) <= _spellConfig.R2.Range && x.NetworkId != target.NetworkId);
+            var secondEnemy = GameObjects.EnemyHeroes.FirstOrDefault(x => x.NetworkId != target.NetworkId && x.IsValid && x.Distance(target) <= _spellConfig.R2.Range);
+
             if (secondEnemy == null)
             {
                 return Vector3.Zero;

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Adept_AIO.Champions.LeeSin.Core;
 using Adept_AIO.Champions.LeeSin.Core.Insec_Manager;
 using Adept_AIO.Champions.LeeSin.Core.Spells;
@@ -40,9 +39,9 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Insec
         private bool CanWardJump(Vector3 source)
         {
             var temp = 0;
-            if (_wardManager.IsWardReady() && _spellConfig.W.Ready && _spellConfig.IsFirst(_spellConfig.W))
+            if (_wardTracker.IsWardReady() && _spellConfig.W.Ready && _spellConfig.IsFirst(_spellConfig.W))
             {
-                temp += 600;
+                temp += _spellConfig.WardRange;
             }
 
             if (FlashReady)
@@ -54,9 +53,9 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Insec
 
         private Vector3 GetInsecPosition()
         {
-            if (Bk && !_insecManager.BKPosition(Target).IsZero)
+            if (Bk && !_insecManager.BkPosition(Target).IsZero)
             {
-                return _insecManager.BKPosition(Target);
+                return _insecManager.BkPosition(Target);
             }
             return _insecManager.InsecPosition(Target);
         }
@@ -66,7 +65,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Insec
         private Obj_AI_Base EnemyObject => ObjectManager.Get<Obj_AI_Base>().Where(x =>
                 CanWardJump(x.ServerPosition) && x.IsEnemy && !x.IsDead &&
                 x.Health > Global.Player.GetSpellDamage(x, SpellSlot.Q) && x.MaxHealth > 7 &&
-                Global.Player.Distance(x) <= _spellConfig.Q.Range + 600)
+                Global.Player.Distance(x) <= _spellConfig.Q.Range + _spellConfig.WardRange)
             .OrderBy(x => x.Distance(GetInsecPosition()))
             .FirstOrDefault(x => x.Distance(GetInsecPosition()) < Global.Player.Distance(GetInsecPosition()));
 
@@ -79,7 +78,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Insec
 
             if (Target == null
                 || args.SpellSlot != SpellSlot.R
-                || _wardManager.IsWardReady() && _spellConfig.IsFirst(_spellConfig.W)
+                || _wardTracker.IsWardReady() && _spellConfig.IsFirst(_spellConfig.W)
                 || FlashReady && Global.Player.Distance(GetInsecPosition()) <= 125
                 || Game.TickCount - _wardTracker.LastWardCreated < 1200 && !_wardFlash)
             {
@@ -103,18 +102,17 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Insec
                 Q();
             }
 
-            if (_spellConfig.W.Ready && _spellConfig.IsFirst(_spellConfig.W) && _wardManager.IsWardReady())
+            if (_spellConfig.W.Ready && _spellConfig.IsFirst(_spellConfig.W) && _wardTracker.IsWardReady())
             {
-                if (Game.TickCount - _spellConfig.Q.LastCastAttemptT <= 600 && !_spellConfig.Q.Ready)
+                if (Game.TickCount - _spellConfig.Q.LastCastAttemptT <= _spellConfig.WardRange && !_spellConfig.Q.Ready)
                 {
                     return; // Avoids Q2 -> Wardjump cancelling Q2 mid air
                 }
 
-                if (GetInsecPosition().Distance(Global.Player) <= 600)
+                if (GetInsecPosition().Distance(Global.Player) <= _spellConfig.WardRange)
                 {
                     var dist = (int) GetInsecPosition().Distance(Global.Player);
 
-                    _insecManager.InsecWPosition = Global.Player.ServerPosition.Extend(GetInsecPosition(), dist);
                     _wardManager.WardJump(GetInsecPosition(), dist);
                     _wardFlash = false;
                 }
@@ -124,16 +122,13 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Insec
                         GetInsecPosition().Distance(Global.Player) <= _spellConfig.Q.Range + 400)
                     {
                         if (EnemyObject != null && _spellConfig.HasQ2(EnemyObject) &&
-                            GetInsecPosition().Distance(EnemyObject.ServerPosition) <= 600 ||
-                            _spellConfig.HasQ2(Target) && GetInsecPosition().Distance(Target.ServerPosition) <= 600)
+                            GetInsecPosition().Distance(EnemyObject.ServerPosition) <= _spellConfig.WardRange ||
+                            _spellConfig.HasQ2(Target) && GetInsecPosition().Distance(Target.ServerPosition) <= _spellConfig.WardRange)
                         {
                             return;
                         }
 
-
-                        _insecManager.InsecWPosition = Global.Player.ServerPosition.Extend(GetInsecPosition(), 600);
-
-                        _wardManager.WardJump(GetInsecPosition(), 600);
+                        _wardManager.WardJump(GetInsecPosition(), _spellConfig.WardRange);
                         _wardFlash = true;
                     }
                 }
@@ -169,17 +164,9 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Insec
             }
             else if (!_spellConfig.IsQ2())
             {
-                if (Target.IsValidTarget(_spellConfig.Q.Range + 600))
+                if (Target.IsValidTarget(_spellConfig.Q.Range + _spellConfig.WardRange))
                 {
-                    if (_spellConfig.W.Ready && _spellConfig.IsFirst(_spellConfig.W) && _wardManager.IsWardReady() &&
-                        QLast)
-                    {
-                        return;
-                    }
-
-                    _insecManager.InsecQPosition = Target.ServerPosition;
-
-                    if (!Target.IsValidTarget(_spellConfig.Q.Range))
+                    if (!Target.IsValidTarget(_spellConfig.Q.Range) || _spellConfig.W.Ready && _spellConfig.IsFirst(_spellConfig.W) && _wardTracker.IsWardReady() && QLast)
                     {
                         return;
                     }
@@ -194,12 +181,10 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Insec
                     return;
                 }
 
-                if (EnemyObject.Distance(GetInsecPosition()) <= 600)
+                if (EnemyObject.Distance(GetInsecPosition()) <= _spellConfig.WardRange)
                 {
                     _lastQ1TickCount = Game.TickCount;
                 }
-
-                _insecManager.InsecQPosition = EnemyObject.ServerPosition;
 
                 if (!EnemyObject.IsValidTarget(_spellConfig.Q.Range))
                 {

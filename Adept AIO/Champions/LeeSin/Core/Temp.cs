@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Adept_AIO.Champions.LeeSin.Core
+﻿namespace Adept_AIO.Champions.LeeSin.Core
 {
-    class Temp
+    internal class Temp
     {
-        public static bool IsBubbaKush;
+        public static bool IsBubbaKush = false;
     }
 }

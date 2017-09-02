@@ -11,6 +11,7 @@ namespace Adept_AIO.Champions.LeeSin.Core.Spells
         bool IsQ2();
 
         bool HasQ2(Obj_AI_Base target);
+        int WardRange { get; }
         int PassiveStack();
         bool IsFirst(Spell spell);
 

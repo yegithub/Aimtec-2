@@ -13,8 +13,8 @@ namespace Adept_AIO.Champions.Yasuo.Core
         /// </summary>
         public static void Load()
         {
-            Q = new Spell(SpellSlot.Q, 475);
-            Q.SetSkillshot(0.25f, 55, 1600, false, SkillshotType.Line);
+            Q = new Spell(SpellSlot.Q, 520);
+            Q.SetSkillshot(0.25f, 60, 1600, false, SkillshotType.Line);
             Extension.CurrentMode = Mode.Normal;
 
             W = new Spell(SpellSlot.W, 400);
@@ -29,17 +29,17 @@ namespace Adept_AIO.Champions.Yasuo.Core
             switch (mode)
             {
                 case Mode.Normal:
-                    Q.SetSkillshot(0.25f, 55, int.MaxValue, false, SkillshotType.Line);
-                    Q.Range = 475;
+                    Q.SetSkillshot(0.25f, 60, 1600, false, SkillshotType.Line);
+                    Q.Range = 520;
                     break;
                 case Mode.Tornado:
-                    Q.SetSkillshot(0.25f, 150, 1900, false, SkillshotType.Line);
+                    Q.SetSkillshot(0.25f, 90, 1200, false, SkillshotType.Line);
                     Q.Range = 1100;
                     break;
                 case Mode.Dashing:
                 case Mode.DashingTornado:
-                    Q.SetSkillshot(0, 375, int.MaxValue, false, SkillshotType.Circle);
-                    Q.Range = 220;
+                    Q.SetSkillshot(0.4333f, 375, 543, false, SkillshotType.Circle);
+                    Q.Range = 400;  
                     break;
              
             }

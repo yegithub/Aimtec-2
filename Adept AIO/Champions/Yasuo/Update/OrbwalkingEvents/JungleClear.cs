@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using Adept_AIO.Champions.Yasuo.Core;
 using Adept_AIO.SDK.Extensions;
-using Aimtec;
 using Aimtec.SDK.Extensions;
 using GameObjects = Adept_AIO.SDK.Extensions.GameObjects;
 
@@ -25,7 +24,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
 
             if (!SpellConfig.Q.Ready) return;
             {
-                var minion = GameObjects.Jungle.FirstOrDefault(x => x.Distance(Global.Player) < SpellConfig.Q.Range && x.Health > 5);
+                var minion = GameObjects.Jungle.FirstOrDefault(x => x.Distance(Global.Player) <= SpellConfig.Q.Range && x.Health > 7);
                 if (minion == null)
                 {
                     return;
@@ -37,7 +36,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                     return;
                 }
             
-                SpellConfig.Q.CastOnUnit(minion);
+                SpellConfig.Q.Cast(minion);
             }
         }
     }

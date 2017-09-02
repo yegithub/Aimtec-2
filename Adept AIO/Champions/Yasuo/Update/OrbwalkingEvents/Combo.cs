@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using Adept_AIO.Champions.Yasuo.Core;
 using Adept_AIO.SDK.Extensions;
-using Adept_AIO.SDK.Methods;
 using Adept_AIO.SDK.Usables;
 using Aimtec;
 using Aimtec.SDK.Extensions;
@@ -23,16 +22,10 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
             {
                 SpellConfig.R.Cast();
             }
-            else if (SpellConfig.Q.Ready)
+
+            if (SpellConfig.Q.Ready)
             {
-                if (Extension.CurrentMode == Mode.Normal)
-                {
-                    Global.Player.SpellBook.CastSpell(SpellSlot.Q, target.ServerPosition);
-                }
-                else
-                {
-                    SpellConfig.Q.Cast(target);
-                }
+                SpellConfig.Q.Cast(target);
             }
 
             if (!SpellConfig.E.Ready)
@@ -128,11 +121,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                         SpellConfig.Q.Cast(target);
                         break;
                     case Mode.Normal:
-                        if (distance <= SpellConfig.Q.Range)
-                        {
-                            SpellConfig.Q.Cast(target);
-                        }
-                        else if (distance > 1200)
+                        if (distance > 1200)
                         {
                             var stackableMinion = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsEnemy && x.Distance(Global.Player) <= SpellConfig.Q.Range);
                             if (stackableMinion == null)
@@ -141,6 +130,10 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                             }
 
                             SpellConfig.Q.Cast(stackableMinion);
+                        }
+                        else
+                        {
+                            SpellConfig.Q.Cast(target);
                         }
                         break;
                 }

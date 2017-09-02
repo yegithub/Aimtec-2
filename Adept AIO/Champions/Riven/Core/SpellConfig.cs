@@ -15,12 +15,12 @@ namespace Adept_AIO.Champions.Riven.Core
             W = new Spell(SpellSlot.W, 125);
 
             E = new Spell(SpellSlot.E, 325);
-            E.SetSkillshot(0.25f, 325, int.MaxValue, false, SkillshotType.Line);
+            E.SetSkillshot(0.1f, 325, int.MaxValue, false, SkillshotType.Line);
 
             R = new Spell(SpellSlot.R);
 
-            R2 = new Spell(SpellSlot.R, 900);
-            R2.SetSkillshot(0.25f, 40, 1600, false, SkillshotType.Cone);
+            R2 = new Spell(SpellSlot.R, 1100);
+            R2.SetSkillshot(0.25f, 100, 1600, false, SkillshotType.Cone);
             Extensions.UltimateMode = UltimateMode.First;
         }
     }

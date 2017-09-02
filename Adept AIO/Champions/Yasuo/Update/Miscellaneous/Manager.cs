@@ -1,8 +1,6 @@
-﻿using System;
-using Adept_AIO.Champions.Yasuo.Core;
+﻿using Adept_AIO.Champions.Yasuo.Core;
 using Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents;
 using Adept_AIO.SDK.Extensions;
-using Adept_AIO.SDK.Methods;
 using Aimtec;
 using Aimtec.SDK.Orbwalking;
 using Aimtec.SDK.Util;

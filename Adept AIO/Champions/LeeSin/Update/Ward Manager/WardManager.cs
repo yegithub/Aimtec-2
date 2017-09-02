@@ -14,11 +14,6 @@ namespace Adept_AIO.Champions.LeeSin.Update.Ward_Manager
 
         public float LastTimeCasted { get; private set; }
 
-        public bool IsWardReady()
-        {
-            return _wardTracker.WardNames.Any(Items.CanUseItem) && Game.TickCount - _wardTracker.LastWardCreated > 1500;
-        }
-
         public WardManager(IWardTracker wardTracker)
         {
             _wardTracker = wardTracker;
@@ -26,21 +21,17 @@ namespace Adept_AIO.Champions.LeeSin.Update.Ward_Manager
 
         public void WardJump(Vector3 position, int range)
         {
-            if (Game.TickCount - _wardTracker.LastWardCreated < 1500)
+            if (!_wardTracker.ActiveWardInSlot() || Game.TickCount - _wardTracker.LastWardCreated < 500)
             {
-                DebugConsole.Print("DEBUG: [Warning] Just Created A Ward. Failed to continue.", ConsoleColor.Yellow); 
+                DebugConsole.Print("DEBUG: [Warning] Cannot Wardjump. Failed to continue.", ConsoleColor.Yellow); 
                 return;
             }
 
-            if (!_wardTracker.WardNames.Any(Items.CanUseItem))
-            {
-                DebugConsole.Print("DEBUG: [Error] CANNOT CAST ANY WARD AT ALL.", ConsoleColor.Red);
-            }
-
-            var ward = _wardTracker.WardNames.FirstOrDefault(Items.CanUseItem);
+            var ward = _wardTracker.Ward();
             
             if (ward == null)
             {
+                DebugConsole.Print("DEBUG: [Warning] There are no wards. Failed to continue.", ConsoleColor.Yellow);
                 return;
             }
 
@@ -50,18 +41,16 @@ namespace Adept_AIO.Champions.LeeSin.Update.Ward_Manager
             _wardTracker.LastWardCreated = Game.TickCount;
             _wardTracker.WardPosition = position;
 
-            DebugConsole.Print("DEBUG: Calling 'CastItem(...)' Method!");
-          
             Items.CastItem(ward, position);
 
-            if (!NavMesh.WorldToCell(position).Flags.HasFlag(NavCellFlags.Wall))
+            if (NavMesh.WorldToCell(position).Flags.HasFlag(NavCellFlags.Wall))
             {
-                _wardTracker.IsAtWall = false;
-                Global.Player.SpellBook.CastSpell(SpellSlot.W, position);
+                _wardTracker.IsAtWall = true;
             }
             else
             {
-                _wardTracker.IsAtWall = true;
+                _wardTracker.IsAtWall = false;
+                Global.Player.SpellBook.CastSpell(SpellSlot.W, position);
             }
         }
     }
