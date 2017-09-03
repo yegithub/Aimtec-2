@@ -2,6 +2,7 @@
 {
     internal class Temp
     {
-        public static bool IsBubbaKush = false;
+        public static bool IsBubbaKush;
+        public static bool IsAlly;
     }
 }

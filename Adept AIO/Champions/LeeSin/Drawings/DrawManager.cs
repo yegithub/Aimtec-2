@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Linq;
 using Adept_AIO.Champions.LeeSin.Core;
 using Adept_AIO.Champions.LeeSin.Core.Insec_Manager;
@@ -56,7 +57,7 @@ namespace Adept_AIO.Champions.LeeSin.Drawings
             }
 
             Render.WorldToScreen(Global.Player.ServerPosition, out var bkToggleV2);
-            Render.Text(new Vector2(bkToggleV2.X - 40, bkToggleV2.Y + 60), Temp.IsBubbaKush ? Color.White : Color.LightSlateGray, "Bubba Kush: " + Temp.IsBubbaKush);
+            Render.Text(new Vector2(bkToggleV2.X - 40, bkToggleV2.Y + 70), Temp.IsBubbaKush ? Color.White : Color.LightSlateGray, "Bubba Kush: " + Temp.IsBubbaKush);
 
             var selected = Global.TargetSelector.GetSelectedTarget();
 
@@ -75,26 +76,33 @@ namespace Adept_AIO.Champions.LeeSin.Drawings
                 Render.WorldToScreen(bkEndPos, out var bkEndPosV2);
                 Render.WorldToScreen(bkPos, out var bkPosV2);
 
+                var pos1 = bkEndPosV2 + (bkPosV2 - bkEndPosV2).Normalized().Rotated(40 * (float)Math.PI / 180) * selected.BoundingRadius;
+                var pos2 = bkEndPosV2 + (bkPosV2 - bkEndPosV2).Normalized().Rotated(-40 * (float)Math.PI / 180) * selected.BoundingRadius;
+
+                Render.Line(bkEndPosV2, pos1, Color.White);
+                Render.Line(bkEndPosV2, pos2, Color.White);
                 Render.Line(bkPosV2, bkEndPosV2, Color.Orange);
 
                 Render.Circle(bkPos, 65, (uint)SegmentsValue, Color.Orange);
-                Render.Circle(bkEndPos, 65, (uint)SegmentsValue, Color.White);
             }
-            else
+            else if(!_insecManager.InsecPosition(selected).IsZero)
             {
                 var insecPos = _insecManager.InsecPosition(selected);
                 var targetEndPos = selected.ServerPosition + (selected.ServerPosition - insecPos).Normalized() * 900;
 
-                Render.WorldToScreen(targetEndPos, out var targetEndPosScreen);
+                Render.WorldToScreen(targetEndPos, out var endPosV2);
                 Render.WorldToScreen(insecPos, out var insecPosScreen);
 
-                Render.Line(insecPosScreen, targetEndPosScreen, Color.Orange);
+                var pos1 = endPosV2 + (insecPosScreen - endPosV2).Normalized().Rotated( 40 * (float)Math.PI / 180) * selected.BoundingRadius;
+                var pos2 = endPosV2 + (insecPosScreen - endPosV2).Normalized().Rotated(-40 * (float)Math.PI / 180) * selected.BoundingRadius;
 
-                Render.Circle(targetEndPos, 50, 200, Color.White);
+                Render.Line(endPosV2, pos1, Color.White);
+                Render.Line(endPosV2, pos2, Color.White);
+                Render.Line(insecPosScreen, endPosV2, Color.Orange);
+
                 Render.Circle(insecPos, 65, (uint)SegmentsValue, Color.White);
+                Render.Text(insecPosScreen, Color.Orange, Temp.IsAlly ? "Ally" : "Turret");
             }
-         
-           
         }
     }
 }

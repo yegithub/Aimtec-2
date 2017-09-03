@@ -32,7 +32,7 @@ namespace Adept_AIO.Champions.LeeSin.Core.Insec_Manager
 
         public Vector3 BkPosition(Obj_AI_Base target)
         {
-            if (target == null)
+            if (target == null || GameObjects.EnemyHeroes.Count() < 2)
             {
                 return Vector3.Zero;
             }
@@ -45,8 +45,8 @@ namespace Adept_AIO.Champions.LeeSin.Core.Insec_Manager
             }
 
             var pred = _spellConfig.R2.GetPrediction(secondEnemy, target.ServerPosition, target.ServerPosition).UnitPosition;
-
-            return target.ServerPosition.Extend(target.ServerPosition + (target.ServerPosition - pred).Normalized(), DistanceBehindTarget());
+            var final = target.ServerPosition.Extend(target.ServerPosition + (target.ServerPosition - pred).Normalized(), DistanceBehindTarget());
+            return final;
         }
 
         public Vector3 GetTargetEndPosition()
@@ -57,23 +57,26 @@ namespace Adept_AIO.Champions.LeeSin.Core.Insec_Manager
             switch (InsecPositionValue)
             {
                 case 0:
-
                     if (turret != null)
                     {
+                        Temp.IsAlly = false;
                         return turret.ServerPosition;
                     }
                     else if (ally != null)
                     {
+                        Temp.IsAlly = true;
                         return ally.ServerPosition;
                     }
                     break;
                 case 1:
                     if (ally != null)
                     {
+                        Temp.IsAlly = true;
                         return ally.ServerPosition;
                     }
                     else if (turret != null)
                     {
+                        Temp.IsAlly = false;
                         return turret.ServerPosition;
                     }
                     break;

@@ -37,7 +37,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.JungleClear
 
             if (_spellConfig.Q.Ready && _spellConfig.IsQ2() && _spellConfig.QAboutToEnd)
             {
-                Global.Player.SpellBook.CastSpell(SpellSlot.Q);
+                _spellConfig.Q.CastOnUnit(mob);
             }
 
             if (Global.Player.Level <= 12)

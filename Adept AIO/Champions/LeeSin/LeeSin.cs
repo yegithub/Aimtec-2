@@ -84,7 +84,8 @@ namespace Adept_AIO.Champions.LeeSin
             insecMenu.Add(insecKick);
             mainmenu.Add(insecMenu);
 
-            insec.Bk = insecMenu["BK"].Enabled;
+            
+            Temp.IsBubbaKush = insec.Bk = insecMenu["BK"].Enabled;
             insec.ObjectEnabled = insecMenu["Object"].Enabled;
             insec.QLast = insecMenu["Last"].Enabled;
             insecManager.InsecPositionValue = insecMenu["Position"].Value;
