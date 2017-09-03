@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Combo;
 using Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Harass;
 using Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.JungleClear;
@@ -7,7 +6,6 @@ using Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.LaneClear;
 using Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.LastHit;
 using Adept_AIO.SDK.Extensions;
 using Aimtec;
-using Aimtec.SDK.Events;
 using Aimtec.SDK.Orbwalking;
 
 namespace Adept_AIO.Champions.LeeSin.Update.Miscellaneous

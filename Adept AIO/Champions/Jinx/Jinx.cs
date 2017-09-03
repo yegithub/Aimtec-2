@@ -24,22 +24,17 @@ namespace Adept_AIO.Champions.Jinx
 
             var misc = new Misc(spellConfig, menuConfig);
             var gapcloser = new AntiGapcloser(spellConfig);
-            var baseUlt = new BaseUlt(spellConfig, menuConfig);
-
+          
             var manager = new Manager(combo, harass, laneclear, jungleclear);
 
             var drawManager = new DrawManager(menuConfig, new Dmg(spellConfig), spellConfig);
 
             Game.OnUpdate += manager.OnUpdate;
             Game.OnUpdate += misc.OnUpdate;
-            Game.OnUpdate += baseUlt.OnUpdate;
-
-            Teleport.OnTeleport += baseUlt.OnTeleport;
-
+         
             Render.OnPresent += drawManager.OnPresent;
             Render.OnRender  += drawManager.OnRender;
-            Render.OnRender += baseUlt.OnRender;
-
+            
             Gapcloser.OnGapcloser += gapcloser.OnGapcloser;
         }
     }

@@ -1,0 +1,2 @@
+C:\Users\Nechrito\Documents\GitHub\LeagueTec\Adept BaseUlt\obj\Debug\Adept BaseUlt.csprojResolveAssemblyReference.cache
+C:\Users\Nechrito\Documents\GitHub\LeagueTec\Adept BaseUlt\obj\Debug\Adept BaseUlt.csproj.CoreCompileInputs.cache

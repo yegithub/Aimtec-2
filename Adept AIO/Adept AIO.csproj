@@ -84,7 +84,6 @@
     <Compile Include="Champions\Jinx\Drawings\DrawManager.cs" />
     <Compile Include="Champions\Jinx\Jinx.cs" />
     <Compile Include="Champions\Jinx\Update\Miscellaneous\AntiGapcloser.cs" />
-    <Compile Include="Champions\Jinx\Update\Miscellaneous\BaseUlt.cs" />
     <Compile Include="Champions\Jinx\Update\Miscellaneous\Manager.cs" />
     <Compile Include="Champions\Jinx\Update\OrbwalkingEvents\Combo.cs" />
     <Compile Include="Champions\Jinx\Update\Miscellaneous\Misc.cs" />
@@ -207,7 +206,6 @@
     <Compile Include="SDK\Extensions\RenderExtension.cs" />
     <Compile Include="SDK\Extensions\TargetState.cs" />
     <Compile Include="SDK\Extensions\WallExtension.cs" />
-    <Compile Include="SDK\Methods\BaseUlt.cs" />
     <Compile Include="SDK\Methods\DebugConsole.cs" />
     <Compile Include="SDK\Methods\SpellData.cs" />
     <Compile Include="SDK\Methods\SpellDatase.cs" />

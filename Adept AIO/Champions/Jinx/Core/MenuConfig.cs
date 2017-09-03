@@ -62,7 +62,6 @@ namespace Adept_AIO.Champions.Jinx.Core
 
             Killsteal = new Menu("Killsteal", "Killsteal")
             {
-                new MenuBool("BaseUlt", "Base Ult"),
                 new MenuSliderBool("Range", "[R] Maximum Range", true, 1500, 500, 5000),
                 new MenuBool("W", "Use W")
             };
@@ -71,7 +70,6 @@ namespace Adept_AIO.Champions.Jinx.Core
             {
                 new MenuSlider("Segments", "Segments", 200, 100, 300).SetToolTip("Smoothness of the circles. Less equals more FPS."),
                 new MenuBool("Dmg", "Damage"),
-                new MenuBool("Status", "Base Ult Status"),
                 new MenuBool("R", "R Auto Range"),
                 new MenuBool("W", "W Range")
             };
