@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading;
 using Adept_AIO.Champions.Riven.Core;
 using Adept_AIO.SDK.Extensions;
 using Adept_AIO.SDK.Usables;
@@ -34,12 +35,11 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                     break;
                 case "RivenFengShuiEngine":
                     Extensions.UltimateMode = UltimateMode.Second;
-                    Extensions.DidR2 = false;
+                    Global.Orbwalker.ResetAutoAttackTimer();
                     break;
                 case "RivenIzunaBlade":
                     Extensions.UltimateMode = UltimateMode.First;
-                    Extensions.DidR2 = true;
-                    DelayAction.Queue(800, () => Extensions.DidR2 = false);
+                    Global.Orbwalker.ResetAutoAttackTimer();
                     break;
             }
         }
@@ -53,7 +53,16 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 
             if (_canUseQ && Extensions.DidJustAuto)
             {
-                Global.Player.SpellBook.CastSpell(SpellSlot.Q, _unit);
+                if (Extensions.CurrentQCount == 3)
+                {
+                    Items.CastTiamat();
+                    DelayAction.Queue(1, ()=> Global.Player.SpellBook.CastSpell(SpellSlot.Q, _unit), new CancellationToken(false));
+                }
+                else
+                {
+                    Global.Player.SpellBook.CastSpell(SpellSlot.Q, _unit);
+                }
+                
                 Extensions.DidJustAuto = false;
             }
 

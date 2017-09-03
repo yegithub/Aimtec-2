@@ -17,11 +17,7 @@ namespace Adept_AIO.Champions.Yasuo.Core
     internal class Extension
     {
         public static Mode CurrentMode;
-
         public static OrbwalkerMode FleeMode, BeybladeMode;
-
-        public static Vector3 ExtendedMinion;
-        public static Vector3 ExtendedTarget;
 
         public static bool KnockedUp(Obj_AI_Base target)
         {
@@ -32,18 +28,24 @@ namespace Adept_AIO.Champions.Yasuo.Core
 
             return target.HasBuffOfType(BuffType.Knockback) || target.HasBuffOfType(BuffType.Knockup);
         }
+    }
 
-        public static Obj_AI_Minion GetDashableMinion(Obj_AI_Base target, bool walk = false)
+    public class KnockUpHelper
+    {
+        public static Obj_AI_Base Sender;
+        public static float TimeLeftOnKnockup;
+        public static float BuffStart;
+        public static float BuffEnd;
+        public static bool TimeToUlt = -(Game.TickCount - (BuffStart + BuffEnd)) > Game.Ping / 2f + 25;
+    }
+
+    public class MinionHelper
+    {
+        public static Vector3 ExtendedMinion;
+        public static Vector3 ExtendedTarget;
+
+        public static Obj_AI_Minion GetDashableMinion(Obj_AI_Base target)
         {
-            if (walk)
-            {
-                return GameObjects.EnemyMinions.Where(x => !x.HasBuff("YasuoDashWrapper") &&
-                                                           x.IsValid &&
-                                                           x.MaxHealth > 7 &&
-                                                           x.Distance(Global.Player) <= SpellConfig.E.Range)
-                    .FirstOrDefault(x => DashDistance(x, target) > 0 &&
-                                        x.Distance(target) < Global.Player.Distance(target));
-            }
             return GameObjects.EnemyMinions.Where(x => !x.HasBuff("YasuoDashWrapper") &&
                                                        x.IsValid &&
                                                        x.MaxHealth > 7 &&
@@ -52,13 +54,25 @@ namespace Adept_AIO.Champions.Yasuo.Core
                                     x.Distance(target) < Global.Player.Distance(target));
         }
 
+
         public static Obj_AI_Minion GetDashableMinion()
         {
             return GameObjects.EnemyMinions.LastOrDefault(x => !x.HasBuff("YasuoDashWrapper") && x.Distance(Global.Player) <= SpellConfig.E.Range);
         }
 
-        public static Vector3 WalkBehindMinion(Obj_AI_Minion minion, Obj_AI_Base target)
+        public static Obj_AI_Minion GetClosest(Obj_AI_Base target)
         {
+            return GameObjects.EnemyMinions.Where(x => !x.HasBuff("YasuoDashWrapper") &&
+                                                       x.IsValid &&
+                                                       x.MaxHealth > 7 &&
+                                                       x.Distance(Global.Player) <= SpellConfig.E.Range).OrderBy(x => x.Distance(Global.Player))
+                .FirstOrDefault(x => DashDistance(x, target) > 0 && x.Distance(target) < Global.Player.Distance(target));
+        }
+
+        public static Vector3 WalkBehindMinion(Obj_AI_Base target)
+        {
+            var minion = GetClosest(target);
+
             if (target == null || minion == null || minion.IsDead)
             {
                 return Vector3.Zero;
@@ -78,14 +92,5 @@ namespace Adept_AIO.Champions.Yasuo.Core
             }
             return Global.Player.ServerPosition.Extend(minion.ServerPosition, overrideValue).Distance(target.ServerPosition);
         }
-    }
-
-    public class KnockUpHelper
-    {
-        public static Obj_AI_Base Sender;
-        public static float TimeLeftOnKnockup;
-        public static float BuffStart;
-        public static float BuffEnd;
-        public static bool TimeToUlt = -(Game.TickCount - (BuffStart + BuffEnd)) > Game.Ping / 2f + 25;
     }
 }

@@ -32,7 +32,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
             if (SpellConfig.E.Ready && MenuConfig.Harass["E"].Enabled && !target.IsUnderEnemyTurret())
             {
                 var distance = target.Distance(Global.Player);
-                var minion = Extension.GetDashableMinion(target);
+                var minion = MinionHelper.GetDashableMinion(target);
 
                 if (!target.HasBuff("YasuoDashWrapper") && target.IsValidTarget(SpellConfig.E.Range))
                 {

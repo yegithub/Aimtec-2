@@ -1,10 +1,13 @@
 ﻿using System.Linq;
+using System.Threading;
 using Adept_AIO.Champions.Yasuo.Core;
 using Adept_AIO.SDK.Extensions;
 using Adept_AIO.SDK.Usables;
 using Aimtec;
+using Aimtec.SDK.Events;
 using Aimtec.SDK.Extensions;
 using Aimtec.SDK.Util;
+using Geometry = Adept_AIO.SDK.Extensions.Geometry;
 
 namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
 {
@@ -33,8 +36,8 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                 return;
             }
 
-            var minion = Extension.GetDashableMinion(target);
-            var walkDashMinion = Extension.WalkBehindMinion(minion, target);
+            var minion = MinionHelper.GetDashableMinion(target);
+            var walkDashMinion = MinionHelper.WalkBehindMinion(target);
 
             if (!walkDashMinion.IsZero && MenuConfig.Combo["Walk"].Enabled && Global.Orbwalker.CanMove())
             {
@@ -59,20 +62,20 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
             var target = Global.TargetSelector.GetTarget(2500);
             if (target == null)
             {
-                Extension.ExtendedTarget = Vector3.Zero;
+                MinionHelper.ExtendedTarget = Vector3.Zero;
                 return;
             }
 
             var distance = target.Distance(Global.Player);
-            var minion = Extension.GetDashableMinion(target);
+            var minion = MinionHelper.GetDashableMinion(target);
 
-            var m2 = Extension.GetDashableMinion(target, true);
-            var positionBehindMinion = Extension.WalkBehindMinion(m2, target);
+            var m2 = MinionHelper.GetClosest(target);
+            var positionBehindMinion = MinionHelper.WalkBehindMinion(target);
+       
+            MinionHelper.ExtendedMinion = positionBehindMinion;
+            MinionHelper.ExtendedTarget = target.ServerPosition;
 
-            Extension.ExtendedMinion = positionBehindMinion;
-            Extension.ExtendedTarget = target.ServerPosition;
-
-            var dashDistance = Extension.DashDistance(minion, target);
+            var dashDistance = MinionHelper.DashDistance(minion, target);
 
             var airbourneTargets = GameObjects.EnemyHeroes.Where(x => Extension.KnockedUp(x) && x.Distance(Global.Player) <= SpellConfig.R.Range);
             var targetCount = (airbourneTargets as Obj_AI_Hero[] ?? airbourneTargets.ToArray()).Length;
@@ -81,7 +84,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
             {
                 if (targetCount >= MenuConfig.Combo["Count"].Value || distance > 350 && minion == null)
                 {
-                    DelayAction.Queue(MenuConfig.Combo["Delay"].Enabled ? 375 + Game.Ping / 2 : 250, () => SpellConfig.R.Cast());
+                    DelayAction.Queue(MenuConfig.Combo["Delay"].Enabled ? 375 + Game.Ping / 2 : 250, () => SpellConfig.R.Cast(), new CancellationToken(false));
                 }
                 else if (Game.TickCount - KnockUpHelper.TimeLeftOnKnockup >= 1000 &&
                          Game.TickCount - KnockUpHelper.TimeLeftOnKnockup <= 3000)
@@ -90,12 +93,16 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                 }
             }
 
+            var circle = new Geometry.Circle(Global.Player.GetDashInfo().EndPos, 220);
+            var circleCount = GameObjects.EnemyHeroes.Count(x => circle.Center.Distance(x.ServerPosition) <= circle.Radius);
+
             if (SpellConfig.Q.Ready)
             {
                 switch (Extension.CurrentMode)
                 {
                     case Mode.Dashing:
-                        if (dashDistance <= 220)
+
+                        if (circleCount >= 1)
                         {
                             SpellConfig.Q.Cast(target);
                         }
@@ -103,18 +110,22 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                     case Mode.DashingTornado:
                         if (minion != null)
                         {
-                            if (MenuConfig.Combo["Flash"].Enabled && dashDistance > 400 && target.IsValidTarget(425) && (Dmg.Damage(target) * 1.25 > target.Health || target.CountEnemyHeroesInRange(220) >= 2))
+                            if (MenuConfig.Combo["Flash"].Enabled && dashDistance > 400 && target.IsValidTarget(425) &&
+                                (Dmg.Damage(target) * 1.25 > target.Health || target.CountEnemyHeroesInRange(220) >= 2))
                             {
                                 DelayAction.Queue(190, () =>
                                 {
                                     SpellConfig.Q.Cast();
                                     SummonerSpells.Flash.Cast(target.Position);
-                                });
+                                }, new CancellationToken(false));
                             }
                         }
-                        else if (dashDistance <= 220)
+                        else
                         {
-                            SpellConfig.Q.Cast(target);
+                            if (circleCount >= 1)
+                            {
+                                SpellConfig.Q.Cast(target);
+                            }
                         }
                         break;
                     case Mode.Tornado:

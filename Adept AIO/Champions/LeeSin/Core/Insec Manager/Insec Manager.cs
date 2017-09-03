@@ -26,8 +26,8 @@ namespace Adept_AIO.Champions.LeeSin.Core.Insec_Manager
 
         public Vector3 InsecPosition(Obj_AI_Base target)
         {
-            return target.ServerPosition + (target.ServerPosition - GetTargetEndPosition()).Normalized() *
-                   DistanceBehindTarget(target);
+            var pos = target.ServerPosition + (target.ServerPosition - GetTargetEndPosition()).Normalized() * DistanceBehindTarget(target);
+            return NavMesh.WorldToCell(pos).Flags.HasFlag(NavCellFlags.Wall) ? Vector3.Zero : pos;
         }
 
         public Vector3 BkPosition(Obj_AI_Base target)

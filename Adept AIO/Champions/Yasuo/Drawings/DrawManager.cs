@@ -1,9 +1,11 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using Adept_AIO.Champions.Yasuo.Core;
 using Adept_AIO.SDK.Extensions;
 using Aimtec;
+using Aimtec.SDK.Extensions;
 using Aimtec.SDK.Orbwalking;
 
 namespace Adept_AIO.Champions.Yasuo.Drawings
@@ -43,7 +45,7 @@ namespace Adept_AIO.Champions.Yasuo.Drawings
             {
                 if (KnockUpHelper.Sender != null)
                 {
-                    Render.Text(KnockUpHelper.Sender.ServerPosition.To2D(), Color.Yellow, (-(Game.TickCount - (KnockUpHelper.BuffStart + KnockUpHelper.BuffEnd))).ToString(CultureInfo.InvariantCulture));
+                    Render.Text(Geometry.To2D(KnockUpHelper.Sender.ServerPosition), Color.Yellow, (-(Game.TickCount - (KnockUpHelper.BuffStart + KnockUpHelper.BuffEnd))).ToString(CultureInfo.InvariantCulture));
                 }
 
                 Render.WorldToScreen(Global.Player.Position, out var temp);
@@ -52,19 +54,19 @@ namespace Adept_AIO.Champions.Yasuo.Drawings
 
             if (SpellConfig.E.Ready)
             {
-                if (Extension.ExtendedMinion.IsZero || Extension.ExtendedTarget.IsZero)
+                if (MinionHelper.ExtendedMinion.IsZero || MinionHelper.ExtendedTarget.IsZero)
                 {
                     return;
                 }
 
-                Render.WorldToScreen(Extension.ExtendedTarget, out var targetV2);
-                Render.WorldToScreen(Extension.ExtendedMinion, out var lineV2);
+                Render.WorldToScreen(MinionHelper.ExtendedTarget, out var targetV2);
+                Render.WorldToScreen(MinionHelper.ExtendedMinion, out var minionV2);
                 Render.WorldToScreen(Global.Player.ServerPosition, out var playerV2);
 
-                Render.Line(playerV2, lineV2, Color.DeepSkyBlue);
-                Render.Line(lineV2, targetV2, Color.DeepPink);
+                Render.Line(playerV2, minionV2, Color.DeepSkyBlue);
+                Render.Line(minionV2, targetV2, Color.DeepPink);
 
-                Render.Circle(Extension.ExtendedMinion, 50, 300, Color.White);
+                Render.Circle(MinionHelper.ExtendedMinion, 50, 300, Color.White);
             }
 
             if (SpellConfig.R.Ready)

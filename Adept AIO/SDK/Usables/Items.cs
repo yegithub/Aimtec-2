@@ -29,6 +29,7 @@ namespace Adept_AIO.SDK.Usables
             }
 
             Global.Player.SpellBook.CastSpell((SpellSlot) slot);
+            Global.Orbwalker.ResetAutoAttackTimer();
             TiamatCastTime = Game.TickCount;
         }
 

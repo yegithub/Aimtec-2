@@ -29,13 +29,16 @@ namespace Adept_AIO.Champions.Riven.Core
             _mainMenu = new Menu(string.Empty, "Adept AIO", true);
             _mainMenu.Attach();
 
-            BurstMode = new OrbwalkerMode("Burst", KeyCode.T, null, Burst.OnUpdate);
+            BurstMode = new OrbwalkerMode("Burst", KeyCode.T, () => Global.TargetSelector.GetSelectedTarget(), Burst.OnUpdate);
             FleeMode = new OrbwalkerMode("Flee", KeyCode.A, null, Flee.OnKeyPressed);
 
+            BurstMode.ModeBehaviour.Invoke();
+            BurstMode.GetTargetImplementation.Invoke();
+            
             Global.Orbwalker.AddMode(BurstMode);
             Global.Orbwalker.AddMode(FleeMode);
-            Global.Orbwalker.Attach(_mainMenu);
 
+            Global.Orbwalker.Attach(_mainMenu);
             Gapcloser.Attach(_mainMenu, "Anti Gapcloser");
 
             Combo = new Menu("Combo", "Combo")

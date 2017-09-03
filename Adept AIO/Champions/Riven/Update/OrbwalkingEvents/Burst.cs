@@ -4,6 +4,7 @@ using Adept_AIO.SDK.Extensions;
 using Adept_AIO.SDK.Usables;
 using Aimtec;
 using Aimtec.SDK.Extensions;
+using Aimtec.SDK.Util;
 
 namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
 {
@@ -11,27 +12,11 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
     {
         public static void OnPostAttack(Obj_AI_Base target)
         {
-            if (Extensions.DidR2)
-            {
-                SpellManager.CastQ(target);
-                Global.Orbwalker.ResetAutoAttackTimer();
-                Global.Orbwalker.Attack(target);
-            }
-
             if (SpellConfig.R2.Ready)
             {
-                SpellManager.CastQ(target);
-                SpellManager.CastR2(target);
-               
-                return;
+                SpellConfig.R2.CastOnUnit(target);
             }
-
-            if (SpellConfig.R2.Ready)
-            {
-                SpellManager.CastR2(target);
-            }
-
-            if (SpellConfig.Q.Ready)
+            else if (SpellConfig.Q.Ready)
             {
                 SpellManager.CastQ(target);
             }
@@ -39,18 +24,13 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
 
         public static void OnUpdate()
         {
-            var target = Global.TargetSelector.GetSelectedTarget();
+            var target = MenuConfig.BurstMode.GetTarget() as Obj_AI_Hero;
             if (target == null || !MenuConfig.BurstMenu[target.ChampionName].Enabled)
             {
                 return;
             }
-
+  
             var distance = target.Distance(Global.Player);
-         
-            if (SpellConfig.Q.Ready || SpellConfig.R2.Ready || SpellConfig.W.Ready && distance <= 400)
-            {
-                Global.Orbwalker.Attack(target);
-            }
 
             Extensions.AllIn = SummonerSpells.IsValid(SummonerSpells.Flash);
 

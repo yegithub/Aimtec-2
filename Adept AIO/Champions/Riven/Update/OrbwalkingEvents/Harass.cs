@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading;
 using Adept_AIO.Champions.Riven.Core;
 using Adept_AIO.Champions.Riven.Update.Miscellaneous;
 using Adept_AIO.SDK.Extensions;
@@ -97,7 +98,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
                     }
                     else if (Extensions.CurrentQCount == 3)
                     {
-                        DelayAction.Queue(190, ()=> SpellConfig.Q.Cast(antiPosition));
+                        DelayAction.Queue(190, ()=> SpellConfig.Q.Cast(antiPosition), new CancellationToken(false));
                     }
                     #endregion
                     break;
@@ -113,11 +114,11 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
                     {
                         SpellConfig.E.Cast(antiPosition);
                         SpellManager.CastW(target);
-                        DelayAction.Queue(190, () => SpellConfig.Q.Cast(target));
+                        DelayAction.Queue(190, () => SpellConfig.Q.Cast(target), new CancellationToken(false));
                     }
                     else if (Extensions.CurrentQCount == 3)
                     {
-                        DelayAction.Queue(190, () => SpellConfig.Q.Cast(target));
+                        DelayAction.Queue(190, () => SpellConfig.Q.Cast(target), new CancellationToken(false));
                     }
                     #endregion
                     break;

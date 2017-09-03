@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading;
 using Adept_AIO.Champions.Riven.Core;
 using Adept_AIO.Champions.Riven.Update.Miscellaneous;
 using Adept_AIO.SDK.Extensions;
@@ -40,7 +41,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
                 if (SpellConfig.E.Ready && distance <= SpellConfig.E.Range + 200 && distance > 100)
                 {
                     SpellConfig.E.Cast(wall);
-                    DelayAction.Queue(190, () => Global.Player.SpellBook.CastSpell(SpellSlot.Q, wall));
+                    DelayAction.Queue(190, () => Global.Player.SpellBook.CastSpell(SpellSlot.Q, wall), new CancellationToken(false));
                 }
 
                 if (distance > 125)

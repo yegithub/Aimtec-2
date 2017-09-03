@@ -28,7 +28,10 @@ namespace Adept_AIO.Champions.Yasuo.Core
             _mainMenu.Attach();
 
             Extension.FleeMode     = new OrbwalkerMode("Flee", KeyCode.A, null, Flee.OnKeyPressed);
-            Extension.BeybladeMode = new OrbwalkerMode("Beyblade", KeyCode.T, null, Beyblade.OnKeyPressed);
+            Extension.BeybladeMode = new OrbwalkerMode("Beyblade", KeyCode.T, () => Global.TargetSelector.GetSelectedTarget(), Beyblade.OnKeyPressed);
+
+            Extension.BeybladeMode.ModeBehaviour.Invoke();
+            Extension.BeybladeMode.GetTargetImplementation.Invoke();
 
             Global.Orbwalker.AddMode(Extension.FleeMode);
             Global.Orbwalker.AddMode(Extension.BeybladeMode);

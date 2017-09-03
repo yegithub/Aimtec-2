@@ -69,9 +69,8 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Insec
 
         private static Obj_AI_Hero Target => Global.TargetSelector.GetSelectedTarget();
 
-        private Obj_AI_Base EnemyObject => ObjectManager.Get<Obj_AI_Base>().FirstOrDefault(x => InsecInRange(x.ServerPosition) 
+        private Obj_AI_Base EnemyObject => GameObjects.Enemy.FirstOrDefault(x => InsecInRange(x.ServerPosition) 
         && !x.IsDead 
-        && x.IsEnemy 
         && x.IsValid
         && x.NetworkId != Target.NetworkId 
         && x.HealthPercent() > 40
@@ -143,14 +142,12 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Insec
                 return;
             }
 
-            if (GetInsecPosition().Distance(Global.Player) <= _spellConfig.WardRange)
+            if (GetInsecPosition().Distance(Global.Player) <= _spellConfig.WardRange)   
             {
-           
                 _wardManager.WardJump(GetInsecPosition(), (int)GetInsecPosition().Distance(Global.Player));
-                return;
             }
 
-            if (!FlashReady || EnemyObject != null || Global.Player.GetDashInfo().EndPos.Distance(GetInsecPosition()) <= _spellConfig.WardRange)
+            if (!FlashReady || Global.Player.Distance(GetInsecPosition()) > InsecRange() || Game.TickCount - _spellConfig.Q.LastCastAttemptT <= 1000)
             {
                 return;
             }

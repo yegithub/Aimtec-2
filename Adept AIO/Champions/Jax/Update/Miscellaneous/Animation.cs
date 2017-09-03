@@ -1,4 +1,5 @@
-﻿using Adept_AIO.Champions.Jax.Core;
+﻿using System.Threading;
+using Adept_AIO.Champions.Jax.Core;
 using Aimtec;
 using Aimtec.SDK.Util;
 
@@ -20,7 +21,7 @@ namespace Adept_AIO.Champions.Jax.Update.Miscellaneous
                     break;
                 case "Spell3b":
                     SpellConfig.SecondE = true;
-                    DelayAction.Queue(300, ()=> SpellConfig.SecondE = false);
+                    DelayAction.Queue(300, ()=> SpellConfig.SecondE = false, new CancellationToken(false));
                     break;
             }
         }

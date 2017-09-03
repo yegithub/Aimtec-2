@@ -1,8 +1,10 @@
 ﻿using System.Linq;
 using Adept_AIO.Champions.Yasuo.Core;
 using Adept_AIO.SDK.Extensions;
+using Adept_AIO.SDK.Methods;
 using Aimtec;
 using Aimtec.SDK.Damage;
+using Aimtec.SDK.Events;
 using Aimtec.SDK.Extensions;
 using GameObjects = Adept_AIO.SDK.Extensions.GameObjects;
 
@@ -54,26 +56,43 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                 switch (Extension.CurrentMode)
                 {
                     case Mode.Tornado:
-                    case Mode.Normal:
-                        var m = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsValidTarget(SpellConfig.Q.Range));
+
+                        var m = GameObjects.EnemyMinions.LastOrDefault(x => x.IsValidSpellTarget(SpellConfig.Q.Range));
                         if (m == null)
                         {
                             return;
                         }
 
-                        if (MenuConfig.LaneClear["Q3"].Enabled)
+                        var rect = new Geometry.Rectangle(Geometry.To2D(Global.Player.ServerPosition), Geometry.To2D(m.ServerPosition), SpellConfig.Q.Width);
+                        var count = GameObjects.EnemyMinions.Count(x => rect.IsInside(Geometry.To2D(x.ServerPosition)));
+
+                        if (MenuConfig.LaneClear["Q3"].Enabled && count >= 2)
                         {
-                            Global.Player.SpellBook.CastSpell(SpellSlot.Q, SpellConfig.Q.GetPrediction(m).CastPosition);
+                            SpellConfig.Q.Cast(m);
                         }
+                        break;
+                    case Mode.Normal:
+                        var nM = GameObjects.EnemyMinions.LastOrDefault(x => x.IsValidSpellTarget(SpellConfig.Q.Range));
+                        if (nM == null)
+                        {
+                            return;
+                        }
+                        SpellConfig.Q.Cast(nM);
                         break;
                     case Mode.DashingTornado:
                     case Mode.Dashing:
-                        var dashM = GameObjects.EnemyMinions.Where(x => Extension.DashDistance(x, (Obj_AI_Base) Global.Orbwalker.GetOrbwalkingTarget()) <= 220);
-
-                        var minions = dashM as Obj_AI_Minion[] ?? dashM.ToArray();
-                        if (minions.Length >= 3)
+                        var dashM = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsValidSpellTarget(SpellConfig.Q.Range));
+                        if (dashM == null)
                         {
-                            SpellConfig.Q.Cast(minions.FirstOrDefault());
+                            return;
+                        }
+
+                        var circle = new Geometry.Circle(Global.Player.GetDashInfo().EndPos, 220);
+                        var circleCount = GameObjects.EnemyMinions.Count(x => circle.Center.Distance(x.ServerPosition) <= circle.Radius);
+                        DebugConsole.Print(circleCount.ToString());
+                        if (circleCount >= 2)
+                        {
+                            SpellConfig.Q.Cast(dashM);
                         }
                         break;
                 }

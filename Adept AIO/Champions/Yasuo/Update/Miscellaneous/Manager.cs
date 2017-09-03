@@ -1,4 +1,5 @@
-﻿using Adept_AIO.Champions.Yasuo.Core;
+﻿using System.Threading;
+using Adept_AIO.Champions.Yasuo.Core;
 using Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents;
 using Adept_AIO.SDK.Extensions;
 using Aimtec;
@@ -56,15 +57,12 @@ namespace Adept_AIO.Champions.Yasuo.Update.Miscellaneous
                 return;
             }
 
-            if (sender.IsEnemy)
+            if (sender.IsEnemy && buff.Type == BuffType.Knockup)
             {
-                if (buff.Type == BuffType.Knockup)
-                {
-                    KnockUpHelper.Sender = sender;
-                    KnockUpHelper.TimeLeftOnKnockup = Game.TickCount;
-                    KnockUpHelper.BuffStart = buff.StartTime;
-                    KnockUpHelper.BuffEnd = buff.EndTime;
-                }
+                KnockUpHelper.Sender = sender;
+                KnockUpHelper.TimeLeftOnKnockup = Game.TickCount;
+                KnockUpHelper.BuffStart = buff.StartTime;
+                KnockUpHelper.BuffEnd = buff.EndTime;
             }
 
             if (sender.IsMe)
@@ -86,15 +84,12 @@ namespace Adept_AIO.Champions.Yasuo.Update.Miscellaneous
                 return;
             }
 
-            if (sender.IsEnemy)
+            if (sender.IsEnemy && buff.Type == BuffType.Knockup)
             {
-                if (buff.Type == BuffType.Knockup)
-                {
-                    KnockUpHelper.Sender = null;
-                    KnockUpHelper.TimeLeftOnKnockup = 0;
-                    KnockUpHelper.BuffStart = 0;
-                    KnockUpHelper.BuffEnd = 0;
-                }
+                KnockUpHelper.Sender = null;
+                KnockUpHelper.TimeLeftOnKnockup = 0;
+                KnockUpHelper.BuffStart = 0;
+                KnockUpHelper.BuffEnd = 0;
             }
 
             if (sender.IsMe)
@@ -123,15 +118,12 @@ namespace Adept_AIO.Champions.Yasuo.Update.Miscellaneous
                     {
                         Extension.CurrentMode = Mode.DashingTornado;
                         SpellConfig.SetSkill(Mode.DashingTornado);
-                        DelayAction.Queue(500, () => Extension.CurrentMode = Mode.Normal);
                     }
                     else
                     {
                         Extension.CurrentMode = Mode.Dashing;
                         SpellConfig.SetSkill(Mode.Dashing);
-                        DelayAction.Queue(500, () => Extension.CurrentMode = Mode.Normal);
                     }
-                   
                     break;
             }
         }
