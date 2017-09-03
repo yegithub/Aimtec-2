@@ -1,6 +1,7 @@
 ﻿using Adept_AIO.Champions.Jinx.Core;
 using Adept_AIO.SDK.Delegates;
 using Adept_AIO.SDK.Extensions;
+using Adept_AIO.SDK.Methods;
 using Aimtec;
 using Aimtec.SDK.Extensions;
 
@@ -17,11 +18,17 @@ namespace Adept_AIO.Champions.Jinx.Update.Miscellaneous
 
         public void OnGapcloser(Obj_AI_Hero sender, GapcloserArgs args)
         {
-            if (sender.IsMe || !sender.IsEnemy || !_spellConfig.E.Ready || args.EndPosition.Distance(Global.Player) > _spellConfig.E.Range)
+            if (sender.IsMe || !sender.IsEnemy || !_spellConfig.E.Ready || args.EndPosition.Distance(Global.Player) > _spellConfig.E.Range )
             {
                 return;
             }
 
+            var missile = SpellDatabase.GetByName(args.SpellName);
+            if (missile == null || !missile.IsDangerous)
+            {
+                return;
+            }
+           
             _spellConfig.E.Cast(args.EndPosition);
         }
     }

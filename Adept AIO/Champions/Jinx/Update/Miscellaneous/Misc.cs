@@ -48,9 +48,9 @@ namespace Adept_AIO.Champions.Jinx.Update.Miscellaneous
 
             if (_spellConfig.E.Ready)
             {
-                var count = GameObjects.EnemyHeroes.Count(x => x.Distance(target) < 500);
+                var count = GameObjects.EnemyHeroes.Count(x => x.Distance(target) < 500 && x.NetworkId != target.NetworkId); // Todo: Check if this is buggy?
 
-                if (_menuConfig.Combo["Count"].Enabled && count >= 2 || 
+                if (_menuConfig.Combo["Count"].Enabled && count >= 3 || 
                     _menuConfig.Combo["Immovable"].Enabled && TargetState.IsHardCc(target))
                 {
                     _spellConfig.E.Cast(target);
