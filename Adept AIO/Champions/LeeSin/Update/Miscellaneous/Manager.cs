@@ -2,12 +2,12 @@
 using System.Linq;
 using Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Combo;
 using Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Harass;
-using Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Insec;
 using Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.JungleClear;
 using Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.LaneClear;
 using Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.LastHit;
 using Adept_AIO.SDK.Extensions;
 using Aimtec;
+using Aimtec.SDK.Events;
 using Aimtec.SDK.Orbwalking;
 
 namespace Adept_AIO.Champions.LeeSin.Update.Miscellaneous
@@ -16,16 +16,14 @@ namespace Adept_AIO.Champions.LeeSin.Update.Miscellaneous
     {
         private readonly ICombo _combo;
         private readonly IHarass _harass;
-        private readonly IInsec _insec;
         private readonly IJungleClear _jungleClear;
         private readonly ILaneClear _laneClear;
         private readonly ILasthit _lasthit;
 
-        public Manager(ICombo combo, IHarass harass, IInsec insec, IJungleClear jungleClear, ILaneClear laneClear, ILasthit lasthit)
+        public Manager(ICombo combo, IHarass harass, IJungleClear jungleClear, ILaneClear laneClear, ILasthit lasthit)
         {
             _combo = combo;
             _harass = harass;
-            _insec = insec;
             _jungleClear = jungleClear;
             _laneClear = laneClear;
             _lasthit = lasthit;
@@ -54,7 +52,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.Miscellaneous
             {
                 return;
             }
-
+            
             try
             {
                 switch (Global.Orbwalker.Mode)

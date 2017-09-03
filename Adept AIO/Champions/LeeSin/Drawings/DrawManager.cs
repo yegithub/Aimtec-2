@@ -76,11 +76,11 @@ namespace Adept_AIO.Champions.LeeSin.Drawings
                 Render.WorldToScreen(bkEndPos, out var bkEndPosV2);
                 Render.WorldToScreen(bkPos, out var bkPosV2);
 
-                var pos1 = bkEndPosV2 + (bkPosV2 - bkEndPosV2).Normalized().Rotated(40 * (float)Math.PI / 180) * selected.BoundingRadius;
-                var pos2 = bkEndPosV2 + (bkPosV2 - bkEndPosV2).Normalized().Rotated(-40 * (float)Math.PI / 180) * selected.BoundingRadius;
+                var arrowLine1 = bkEndPosV2 + (bkPosV2 - bkEndPosV2).Normalized().Rotated( 40 * (float)Math.PI / 180) * selected.BoundingRadius;
+                var arrowLine2 = bkEndPosV2 + (bkPosV2 - bkEndPosV2).Normalized().Rotated(-40 * (float)Math.PI / 180) * selected.BoundingRadius;
 
-                Render.Line(bkEndPosV2, pos1, Color.White);
-                Render.Line(bkEndPosV2, pos2, Color.White);
+                Render.Line(bkEndPosV2, arrowLine1, Color.White);
+                Render.Line(bkEndPosV2, arrowLine2, Color.White);
                 Render.Line(bkPosV2, bkEndPosV2, Color.Orange);
 
                 Render.Circle(bkPos, 65, (uint)SegmentsValue, Color.Orange);
@@ -93,11 +93,11 @@ namespace Adept_AIO.Champions.LeeSin.Drawings
                 Render.WorldToScreen(targetEndPos, out var endPosV2);
                 Render.WorldToScreen(insecPos, out var insecPosScreen);
 
-                var pos1 = endPosV2 + (insecPosScreen - endPosV2).Normalized().Rotated( 40 * (float)Math.PI / 180) * selected.BoundingRadius;
-                var pos2 = endPosV2 + (insecPosScreen - endPosV2).Normalized().Rotated(-40 * (float)Math.PI / 180) * selected.BoundingRadius;
+                var arrowLine1 = endPosV2 + (insecPosScreen - endPosV2).Normalized().Rotated( 40 * (float)Math.PI / 180) * selected.BoundingRadius;
+                var arrowLine2 = endPosV2 + (insecPosScreen - endPosV2).Normalized().Rotated(-40 * (float)Math.PI / 180) * selected.BoundingRadius;
 
-                Render.Line(endPosV2, pos1, Color.White);
-                Render.Line(endPosV2, pos2, Color.White);
+                Render.Line(endPosV2, arrowLine1, Color.White);
+                Render.Line(endPosV2, arrowLine2, Color.White);
                 Render.Line(insecPosScreen, endPosV2, Color.Orange);
 
                 Render.Circle(insecPos, 65, (uint)SegmentsValue, Color.White);

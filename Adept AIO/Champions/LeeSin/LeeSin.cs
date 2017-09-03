@@ -281,7 +281,7 @@ namespace Adept_AIO.Champions.LeeSin
            
             wardjumpRange.OnValueChanged += (sender, args) => wardjump.Range = args.GetNewValue<MenuSlider>().Value;
 
-            var manager = new Manager(combo, harass, insec, jungle, lane, lasthit);
+            var manager = new Manager(combo, harass, jungle, lane, lasthit);
           
             Game.OnUpdate += manager.OnUpdate;
             Game.OnUpdate += killsteal.OnUpdate;
