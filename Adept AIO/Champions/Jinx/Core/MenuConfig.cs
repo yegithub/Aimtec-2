@@ -36,6 +36,7 @@ namespace Adept_AIO.Champions.Jinx.Core
             {
                 new MenuBool("Q", "Automatic Q"),
                 new MenuSliderBool("W", "Use W If Distance <", true, 1350, 0, 1500),
+                new MenuBool("Close", "Use E If Enemy Is Close"),
                 new MenuBool("Count", "Use E As AoE & Close Targets"),
                 new MenuBool("Teleport", "Use E On Teleport"),
                 new MenuBool("Immovable", "Use E At Immovable Targets"),

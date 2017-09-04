@@ -1,17 +1,20 @@
-﻿namespace Adept_BaseUlt.Manager
+﻿using Aimtec;
+using Spell = Aimtec.SDK.Spell;
+
+namespace Adept_BaseUlt.Manager
 {
     using System;
     using System.Drawing;
     using System.Linq;
     using Local_SDK;
-    using Aimtec;
+   
     using Aimtec.SDK.Damage;
     using Aimtec.SDK.Extensions;
     using Aimtec.SDK.Util.Cache;
 
     internal class BaseUlt
     {
-        private readonly Aimtec.SDK.Spell _spell;
+        private readonly Spell _ultimate;
 
         private readonly float _speed;
         private readonly float _width;
@@ -19,14 +22,15 @@
         private readonly float _range;
         private readonly int _maxCollisionObjects;
 
-        private int _timeUntilCasting;
+        private int _timeUntilCasting = -1;
+   
         private int _recallTick;
         private float _recallTime;
         private Obj_AI_Hero _target;
 
         public BaseUlt(float speed, float width, float delay, int maxCollisionObjects = int.MaxValue, float range = float.MaxValue)
         {
-            _spell = new Aimtec.SDK.Spell(SpellSlot.R, _range);
+            _ultimate = new Spell(SpellSlot.R, _range);
 
             this._range = range;
             this._speed = speed;
@@ -43,27 +47,24 @@
 
         private void OnTeleport(Obj_AI_Base sender, Teleport.TeleportEventArgs args)
         {
-            if (sender.IsMe || sender.IsAlly)
+            if (!sender.IsEnemy)
             {
                 return;
             }
 
             if (args.Status == TeleportStatus.Abort)
             {
-                SetRecall(0, 0, null);
+                Reset();
             }
-
-            if (args.Type != TeleportType.Recall)
+            else if (args.Type == TeleportType.Recall)
             {
-                return;
+                Set(args.Duration, Game.TickCount, (Obj_AI_Hero)sender);
             }
-
-            SetRecall(args.Duration, Game.TickCount, (Obj_AI_Hero)sender);
         }
 
         private void OnUpdate()
         {
-            if (_target == null || Global.Player.GetSpell(SpellSlot.R).State != SpellState.Ready || _target.Health > Global.Player.GetSpellDamage(_target, SpellSlot.R))
+            if (_target == null || !_target.IsValid || !_ultimate.Ready || _target.Health > Global.Player.GetSpellDamage(_target, SpellSlot.R))
             {
                 return;
             }
@@ -80,34 +81,25 @@
 
             _timeUntilCasting = (int)(time - TravelTime(pos));
 
-            if (GameObjects.EnemyHeroes.Count(x => poly.IsInside(Geometry.To2D(x.ServerPosition))) <= _maxCollisionObjects)
+            if (GameObjects.EnemyHeroes.Count(x => poly.IsInside(Geometry.To2D(x.ServerPosition))) > _maxCollisionObjects || _timeUntilCasting > Game.Ping / 2f + 30)
             {
-                if (_timeUntilCasting > Game.Ping / 2f + 30)
-                {
-                    return;
-                }
+                return;
+            }
 
-                _spell.Cast(pos);
-                SetRecall(0, 0, null);
-            }
-            else
-            {
-                SetRecall(0, 0, null);
-            }
+            _ultimate.Cast(pos); 
+            Reset();
         }
 
         private void OnRender()
         {
-            if (_target == null || _timeUntilCasting < Game.Ping / 2f + 30)
+            if (_target == null || _timeUntilCasting == -1)
             {
                 return;
             }
 
             var ts = TimeSpan.FromMilliseconds(_timeUntilCasting);
-
             Render.WorldToScreen(Global.Player.ServerPosition, out var player);
-
-            Render.Text(new Vector2(player.X - 60, player.Y + 70), Color.Cyan, "Ulting (" + _target.ChampionName + ") In " + $"{ts.Seconds}:{ts.Milliseconds / 10}");
+            Render.Text(new Vector2(player.X - 60, player.Y + 70), Color.Cyan, $"Ulting ({_target.ChampionName}) In {ts.Seconds}:{ts.Milliseconds / 10}");
         }
 
         private float TravelTime(Vector3 pos)
@@ -132,11 +124,19 @@
             return Vector3.Zero;
         }
 
-        private void SetRecall(float recall, int tickCount, Obj_AI_Hero target)
+        private void Set(float recall, int tickCount, Obj_AI_Hero target)
         {
             _recallTime = recall;
             _recallTick = tickCount;
             _target = target;
+        }
+
+        private void Reset()
+        {
+            _recallTime = 0;
+            _recallTick = 0;
+            _target = null;
+            _timeUntilCasting = -1;
         }
     }
 }

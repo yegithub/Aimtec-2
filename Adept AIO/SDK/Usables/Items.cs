@@ -10,7 +10,22 @@ namespace Adept_AIO.SDK.Usables
         private static readonly string[] Tiamats = {"ItemTiamatCleave", "ItemTitanicHydraCleave", "ItemTiamatCleave"};
         public static float TiamatCastTime;
 
-        public static void CastTiamat()
+        public static bool CanUseTiamat()
+        {
+            SpellSlot? slot = null;
+
+            foreach (var tiamat in Tiamats)
+            {
+                if (CanUseItem(tiamat))
+                {
+                    slot = GetItemSlot(tiamat);
+                }
+            }
+
+            return slot != null;
+        }
+
+        public static void CastTiamat(bool cancelAA = true)
         {
             SpellSlot? slot = null;
           
@@ -28,8 +43,12 @@ namespace Adept_AIO.SDK.Usables
             }
 
             Global.Player.SpellBook.CastSpell((SpellSlot) slot);
-            Global.Orbwalker.ResetAutoAttackTimer();
             TiamatCastTime = Game.TickCount;
+
+            if (cancelAA)
+            {
+                Global.Orbwalker.ResetAutoAttackTimer();
+            }
         }
 
         public static void CastItem(string itemName, Vector3 position = new Vector3())

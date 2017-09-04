@@ -53,10 +53,10 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 
             if (_canUseQ && Extensions.DidJustAuto)
             {
-                if (Extensions.CurrentQCount == 3)
+                if (Extensions.CurrentQCount == 3 && Items.CanUseTiamat())
                 {
-                    Items.CastTiamat();
-                    DelayAction.Queue(1, ()=> Global.Player.SpellBook.CastSpell(SpellSlot.Q, _unit), new CancellationToken(false));
+                    Items.CastTiamat(false);
+                    DelayAction.Queue(280 + Game.Ping / 2, ()=> Global.Player.SpellBook.CastSpell(SpellSlot.Q, _unit), new CancellationToken(false));
                 }
                 else
                 {
@@ -71,7 +71,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                 return;
             }
           
-            Items.CastTiamat();
+            Items.CastTiamat(false);
 
             _canUseW = false;
 

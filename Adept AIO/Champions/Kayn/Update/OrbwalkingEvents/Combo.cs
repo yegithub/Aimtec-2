@@ -55,7 +55,7 @@ namespace Adept_AIO.Champions.Kayn.Update.OrbwalkingEvents
                 if (target.IsValidTarget(SpellConfig.W.Range))
                 {
                     Global.Player.SpellBook.CastSpell(SpellSlot.Q, target.ServerPosition);
-                    DelayAction.Queue(1050, Items.CastTiamat, new CancellationToken(false));
+                    DelayAction.Queue(500, ()=> Items.CastTiamat(), new CancellationToken(false));
                 }
                 else if (SpellConfig.R.Ready && MenuConfig.Combo["Beyblade"].Enabled && SummonerSpells.IsValid(SummonerSpells.Flash) && target.Distance(Global.Player) > SpellConfig.Q.Range && Dmg.Damage(target) * 1.5f >= target.Health)
                 {

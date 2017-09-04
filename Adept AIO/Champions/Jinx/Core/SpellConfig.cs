@@ -11,7 +11,7 @@ namespace Adept_AIO.Champions.Jinx.Core
         public Spell Q, W, E, R;
 
         public bool IsQ2 => Global.Player.HasBuff("JinxQ");
-        public int Q2Range => 600 + 25 * Global.Player.GetSpell(SpellSlot.Q).Level;
+        public int Q2Range => 665 + 25 * Global.Player.GetSpell(SpellSlot.Q).Level;
         public int DefaultAuotAttackRange = 590;
 
         public void Load()

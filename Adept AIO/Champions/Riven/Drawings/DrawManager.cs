@@ -34,8 +34,7 @@ namespace Adept_AIO.Champions.Riven.Drawings
 
             if (MenuConfig.Drawings["Harass"].Enabled && Global.Orbwalker.Mode == OrbwalkingMode.Mixed)
             {
-                Vector2 screenPos;
-                Render.WorldToScreen(Global.Player.Position, out screenPos);
+                Render.WorldToScreen(Global.Player.Position, out var screenPos);
                 Render.Text(new Vector2(screenPos.X - 65, screenPos.Y + 30), Color.Aqua, "PATTERN: " + Extensions.Current);
             }
 

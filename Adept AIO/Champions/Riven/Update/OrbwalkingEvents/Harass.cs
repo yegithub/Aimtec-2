@@ -94,7 +94,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
                     if (SpellConfig.Q.Ready && SpellConfig.E.Ready && Extensions.CurrentQCount == 3 && !Global.Orbwalker.CanAttack())
                     {
                         SpellConfig.E.Cast(antiPosition);
-                        SpellManager.CastW(target);
+                        SpellConfig.W.Cast();
                     }
                     else if (Extensions.CurrentQCount == 3)
                     {
@@ -113,7 +113,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
                     if (SpellConfig.Q.Ready && SpellConfig.E.Ready && Extensions.CurrentQCount == 3 && !Global.Orbwalker.CanAttack())
                     {
                         SpellConfig.E.Cast(antiPosition);
-                        SpellManager.CastW(target);
+                        SpellConfig.W.Cast();
                         DelayAction.Queue(190, () => SpellConfig.Q.Cast(target), new CancellationToken(false));
                     }
                     else if (Extensions.CurrentQCount == 3)

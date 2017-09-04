@@ -26,6 +26,11 @@ namespace Adept_AIO.Champions.Jinx.Update.OrbwalkingEvents
 
             var dist = target.Distance(Global.Player);
 
+            if (_spellConfig.E.Ready && _menuConfig.Combo["Close"].Enabled && target.Distance(Global.Player) <= Global.Player.AttackRange)
+            {
+                _spellConfig.E.Cast(target);
+            }
+
             if (_spellConfig.Q.Ready && _menuConfig.Combo["Q"].Enabled)
             {
                 if (!_spellConfig.IsQ2 && dist > _spellConfig.DefaultAuotAttackRange && dist <= _spellConfig.Q2Range ||
@@ -35,7 +40,7 @@ namespace Adept_AIO.Champions.Jinx.Update.OrbwalkingEvents
                 }
             }
 
-            if (_spellConfig.W.Ready && _menuConfig.Combo["W"].Enabled && dist <= _menuConfig.Combo["W"].Value)
+            if (_spellConfig.W.Ready && _menuConfig.Combo["W"].Enabled && dist <= _menuConfig.Combo["W"].Value && target.Distance(Global.Player) > Global.Player.AttackRange)
             {
                 _spellConfig.W.Cast(target);
             }
