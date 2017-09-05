@@ -46,7 +46,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
 
             if (SpellConfig.E.Ready && MenuConfig.Lane["E"].Enabled)
             {
-                SpellConfig.E.CastOnUnit(minion);
+                SpellConfig.E.Cast(minion);
             }
         }
     }

@@ -47,8 +47,6 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
             }
 
             Enums.BurstPattern = GeneratePattern(target);
- 
-            DebugConsole.Print(Mixed.PercentDmg(target, Dmg.Damage(target)).ToString());
             var distance = target.Distance(Global.Player);
 
             Extensions.AllIn = SummonerSpells.IsValid(SummonerSpells.Flash);

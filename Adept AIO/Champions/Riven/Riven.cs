@@ -26,7 +26,6 @@ namespace Adept_AIO.Champions.Riven
             Global.Orbwalker.PostAttack += Manager.PostAttack;
             Render.OnRender += DrawManager.RenderBasics;
             Render.OnPresent += DrawManager.OnPresent;   
-
         }
     }
 }

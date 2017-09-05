@@ -44,7 +44,12 @@ namespace Adept_AIO.SDK.Extensions
         {
             var from = EndPosition(0);
             var to = EndPosition(dmg);
-        
+
+            if (from.IsZero || to.IsZero)
+            {
+                return;
+            }
+
             Render.Line(new Vector2(from.X, from.Y - 5), new Vector2(to.X, to.Y - 5), Height, false, color);
         }
     }

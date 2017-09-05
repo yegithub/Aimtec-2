@@ -29,7 +29,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
 
             if (SpellConfig.E.Ready && MenuConfig.Jungle["E"].Enabled)
             {
-                SpellConfig.E.Cast(mob);
+                SpellConfig.E.Cast(mob.ServerPosition);
             }
         }
 

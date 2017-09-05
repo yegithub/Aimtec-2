@@ -105,6 +105,7 @@ namespace Adept_AIO.Champions.Riven.Core
             {
                 new MenuSlider("Segments", "Segments", 200, 100, 300).SetToolTip("Smoothness of the circles. Less equals more FPS."),
                 new MenuBool("Dmg", "Damage"),
+                new MenuBool("Target", "Draw Line At Target"),
                 new MenuBool("Engage", "Engage Range"),
                 new MenuBool("R2", "R2 Range", false),
                 new MenuBool("Harass", "Harass Pattern")

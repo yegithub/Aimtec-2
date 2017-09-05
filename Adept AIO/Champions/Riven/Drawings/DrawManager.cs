@@ -1,8 +1,10 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Linq;
 using Adept_AIO.Champions.Riven.Core;
 using Adept_AIO.SDK.Extensions;
 using Aimtec;
+using Aimtec.SDK.Extensions;
 using Aimtec.SDK.Orbwalking;
 
 namespace Adept_AIO.Champions.Riven.Drawings
@@ -34,20 +36,26 @@ namespace Adept_AIO.Champions.Riven.Drawings
 
             if (MenuConfig.Drawings["Harass"].Enabled && Global.Orbwalker.Mode == OrbwalkingMode.Mixed)
             {
-                Render.WorldToScreen(Global.Player.Position, out var screenPos);
-                Render.Text(new Vector2(screenPos.X - 65, screenPos.Y + 30), Color.Aqua, "PATTERN: " + Enums.Current);
+                RenderArrow(Global.TargetSelector.GetTarget(Extensions.EngageRange + 800));
+
+                Render.WorldToScreen(Global.Player.Position, out var playerV2);
+                Render.Text(new Vector2(playerV2.X - 65, playerV2.Y + 30), Color.Aqua, "PATTERN: " + Enums.Current);
             }
 
             if (Global.Orbwalker.Mode == OrbwalkingMode.Combo)
             {
-                Render.WorldToScreen(Global.Player.Position, out var screenPos);
-                Render.Text(new Vector2(screenPos.X - 65, screenPos.Y + 30), Color.Aqua, "PATTERN: " + Enums.ComboPattern);
+                RenderArrow(Global.TargetSelector.GetTarget(Extensions.EngageRange + 800));
+
+                Render.WorldToScreen(Global.Player.Position, out var playerV2);             
+                Render.Text(new Vector2(playerV2.X - 65, playerV2.Y + 30), Color.Aqua, "PATTERN: " + Enums.ComboPattern);
             }
 
             if (MenuConfig.BurstMode.Active)
             {
-                Render.WorldToScreen(Global.Player.Position, out var screenPos);
-                Render.Text(new Vector2(screenPos.X - 65, screenPos.Y + 30), Color.Aqua, "PATTERN: " + Enums.BurstPattern);
+                RenderArrow(Global.TargetSelector.GetSelectedTarget());
+
+                Render.WorldToScreen(Global.Player.Position, out var playerV2);
+                Render.Text(new Vector2(playerV2.X - 65, playerV2.Y + 30), Color.Aqua, "PATTERN: " + Enums.BurstPattern);
             }
 
             if (MenuConfig.Drawings["Engage"].Enabled)
@@ -68,6 +76,25 @@ namespace Adept_AIO.Champions.Riven.Drawings
             {
                 Render.Circle(Global.Player.Position, SpellConfig.R2.Range, (uint)MenuConfig.Drawings["Segments"].Value, Color.OrangeRed);
             }
+        }
+
+        private static void RenderArrow(GameObject target)
+        {
+            if (!MenuConfig.Drawings["Target"].Enabled || target == null)
+            {
+                return;
+            }
+
+            var extended = Global.Player.ServerPosition.Extend(target.ServerPosition, target.Distance(Global.Player));
+            Render.WorldToScreen(extended, out var extendedVector2);
+            Render.WorldToScreen(Global.Player.Position, out var playerV2);
+
+            var arrowLine1 = extendedVector2 + (playerV2 - extendedVector2).Normalized().Rotated(40 * (float)Math.PI / 180) * 65;
+            var arrowLine2 = extendedVector2 + (playerV2 - extendedVector2).Normalized().Rotated(-40 * (float)Math.PI / 180) * 65;
+
+            Render.Line(extendedVector2, arrowLine1, Color.White);
+            Render.Line(extendedVector2, arrowLine2, Color.White);
+            Render.Line(playerV2, extendedVector2, Color.Orange);
         }
     }
 }
