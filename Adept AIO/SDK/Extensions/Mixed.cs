@@ -20,5 +20,10 @@ namespace Adept_AIO.SDK.Extensions
             }
             return Vector3.Zero;
         }
+
+        public static int PercentDmg(Obj_AI_Base target, double dmg)
+        {
+            return (int)(dmg / target.Health * 100);
+        }
     }
 }

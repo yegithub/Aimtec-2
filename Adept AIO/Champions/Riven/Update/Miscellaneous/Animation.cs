@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Adept_AIO.Champions.Riven.Core;
 using Adept_AIO.SDK.Extensions;
+using Adept_AIO.SDK.Methods;
 using Aimtec;
 using Aimtec.SDK.Extensions;
 using Aimtec.SDK.Orbwalking;
@@ -36,12 +37,14 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 
             switch (Extensions.CurrentQCount)
             {
-                case 2:
+                case 1:
                     castDelay -= 20;
                     break;
-                case 1:
+                case 2:
+                case 3:
                     castDelay -= 40;
                     break;
+               
             }
 
             delay += castDelay - 3.33f * level;
@@ -55,28 +58,26 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 
             switch (Extensions.CurrentQCount)
             {
-                case 3:
-                    delay *= 1.15f;
-                    break;
-                case 2:
-                    delay *= 1.225f;
-                    break;
                 case 1:
                     delay *= 1.3f;
+                    break;
+                case 2:
+                case 3:
+                    delay *= 1.15f;
                     break;
             }
 
             return delay;
         }
 
-        public static void OnPlayAnimation(Obj_AI_Base sender, Obj_AI_BasePlayAnimationEventArgs objAiBasePlayAnimationEventArgs)
+        public static void OnPlayAnimation(Obj_AI_Base sender, Obj_AI_BasePlayAnimationEventArgs args)
         {
             if (sender == null || !sender.IsMe)
             {
                 return;
             }
 
-            switch (objAiBasePlayAnimationEventArgs.Animation)
+            switch (args.Animation)
             {
                 case "Spell1a":
                     Extensions.CurrentQCount = 2;

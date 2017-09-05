@@ -1,4 +1,6 @@
-﻿using Adept_AIO.SDK.Extensions;
+﻿using System;
+using Adept_AIO.SDK.Extensions;
+using Adept_AIO.SDK.Usables;
 
 namespace Adept_AIO.Champions.Riven.Core
 {
@@ -6,8 +8,16 @@ namespace Adept_AIO.Champions.Riven.Core
     {
         public static float FlashRange()
         {
-            var flashRange = 425 + 35 + SpellConfig.W.Range;
-            return AllIn ? flashRange : 0;
+            switch (Enums.BurstPattern)
+            {
+                case BurstPattern.TheShy:
+                    return SummonerSpells.Flash.Range + SpellConfig.W.Range + 35;
+
+                case BurstPattern.Execution:
+                    return 800;
+
+                default: throw new ArgumentOutOfRangeException();
+            }
         }
 
         public static int EngageRange
@@ -15,6 +25,17 @@ namespace Adept_AIO.Champions.Riven.Core
             get
             {
                 var range = 0f;
+
+                //switch (Enums.ComboPattern)
+                //{
+                //    case ComboPattern.MaximizeDmg:
+                //        break;
+                //    case ComboPattern.FastCombo:
+                //        break;
+                //    case ComboPattern.FastCombo:
+                //        break;
+                //    default: throw new ArgumentOutOfRangeException();
+                //}
 
                 if (AllIn)
                 {
@@ -27,7 +48,7 @@ namespace Adept_AIO.Champions.Riven.Core
 
                 if (SpellConfig.E.Ready)
                 {
-                    range += SpellConfig.E.Range - 80;
+                    range += SpellConfig.E.Range - 50;
                 }
                 else if (SpellConfig.Q.Ready && !SpellConfig.E.Ready)
                 {
@@ -45,21 +66,5 @@ namespace Adept_AIO.Champions.Riven.Core
         public static int LastQCastAttempt;
 
         public static string[] InvulnerableList = { "FioraW", "kindrednodeathbuff", "Undying Rage", "JudicatorIntervention" };
-   
-        public static HarassPattern Current;
-        public static UltimateMode UltimateMode;
-    }
-
-    public enum HarassPattern
-    {
-        SemiCombo = 0,
-        AvoidTarget = 1, 
-        BackToTarget = 2 
-    }
-
-    public enum UltimateMode
-    {
-        First,
-        Second
     }
 }

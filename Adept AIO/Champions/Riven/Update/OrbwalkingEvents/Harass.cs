@@ -19,7 +19,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
                 return;
             }
 
-            switch (Extensions.Current)
+            switch (Enums.Current)
             {
                 case HarassPattern.SemiCombo:
                     if (SpellConfig.Q.Ready)
@@ -69,9 +69,9 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
             var qwRange = target.Distance(Global.Player) < SpellConfig.Q.Range + SpellConfig.W.Range + target.BoundingRadius;
             var antiPosition = GetDashPosition(target);
 
-            Extensions.Current = Generate(target);
+            Enums.Current = Generate(target);
 
-            switch (Extensions.Current)
+            switch (Enums.Current)
             {
                 case HarassPattern.SemiCombo:
                     #region SemiCombo

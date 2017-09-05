@@ -34,11 +34,11 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                     Global.Orbwalker.ResetAutoAttackTimer();
                     break;
                 case "RivenFengShuiEngine":
-                    Extensions.UltimateMode = UltimateMode.Second;
+                    Enums.UltimateMode = UltimateMode.Second;
                     Global.Orbwalker.ResetAutoAttackTimer();
                     break;
                 case "RivenIzunaBlade":
-                    Extensions.UltimateMode = UltimateMode.First;
+                    Enums.UltimateMode = UltimateMode.First;
                     Global.Orbwalker.ResetAutoAttackTimer();
                     break;
             }
@@ -56,7 +56,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                 if (Extensions.CurrentQCount == 3 && Items.CanUseTiamat())
                 {
                     Items.CastTiamat(false);
-                    DelayAction.Queue(280 + Game.Ping / 2, ()=> Global.Player.SpellBook.CastSpell(SpellSlot.Q, _unit), new CancellationToken(false));
+                    DelayAction.Queue(250 + Game.Ping / 2, ()=> Global.Player.SpellBook.CastSpell(SpellSlot.Q, _unit), new CancellationToken(false));
                 }
                 else
                 {

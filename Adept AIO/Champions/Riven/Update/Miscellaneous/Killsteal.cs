@@ -20,7 +20,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
             }
 
             if (SpellConfig.R2.Ready
-                && Extensions.UltimateMode == UltimateMode.Second
+                && Enums.UltimateMode == UltimateMode.Second
                 && MenuConfig.Killsteal["R2"].Enabled 
                 && (target.Health <= Global.Player.GetSpellDamage(target, SpellSlot.R) ||
                 target.Health <= Global.Player.GetSpellDamage(target, SpellSlot.R) +

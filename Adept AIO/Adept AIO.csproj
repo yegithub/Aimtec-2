@@ -105,7 +105,10 @@
     <Compile Include="Champions\LeeSin\Core\Temp.cs" />
     <Compile Include="Champions\LeeSin\Drawings\IDrawManager.cs" />
     <Compile Include="Champions\LeeSin\Update\Miscellaneous\AntiGapcloser.cs" />
+    <Compile Include="Champions\Riven\Core\Enums.cs" />
     <Compile Include="Champions\Riven\Update\Miscellaneous\AntiGapcloser.cs" />
+    <Compile Include="Champions\Riven\Update\OrbwalkingEvents\Combo\FastCombo.cs" />
+    <Compile Include="Champions\Riven\Update\OrbwalkingEvents\Combo\MaximizeDmg.cs" />
     <Compile Include="Champions\Tristana\Core\Dmg.cs" />
     <Compile Include="Champions\Tristana\Core\MenuConfig.cs" />
     <Compile Include="Champions\Tristana\Core\SpellConfig.cs" />
@@ -178,7 +181,7 @@
     <Compile Include="Champions\Riven\Update\Miscellaneous\SafetyMeasure.cs" />
     <Compile Include="Champions\Riven\Update\Miscellaneous\SpellManager.cs" />
     <Compile Include="Champions\Riven\Update\OrbwalkingEvents\Burst.cs" />
-    <Compile Include="Champions\Riven\Update\OrbwalkingEvents\Combo.cs" />
+    <Compile Include="Champions\Riven\Update\OrbwalkingEvents\Combo\ComboManager.cs" />
     <Compile Include="Champions\Riven\Update\OrbwalkingEvents\Flee.cs" />
     <Compile Include="Champions\Riven\Update\OrbwalkingEvents\Harass.cs" />
     <Compile Include="Champions\Riven\Update\OrbwalkingEvents\Jungle.cs" />

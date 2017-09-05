@@ -1,6 +1,9 @@
-﻿using Adept_AIO.Champions.Riven.Core;
+﻿using System;
+using Adept_AIO.Champions.Riven.Core;
 using Adept_AIO.Champions.Riven.Update.OrbwalkingEvents;
+using Adept_AIO.Champions.Riven.Update.OrbwalkingEvents.Combo;
 using Adept_AIO.SDK.Extensions;
+using Adept_AIO.SDK.Methods;
 using Aimtec;
 using Aimtec.SDK.Extensions;
 using Aimtec.SDK.Orbwalking;
@@ -15,7 +18,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
             {
                 return;
             }
-        
+         
             if (Animation.AmSoTired)
             {
                 if (Game.TickCount - Animation.LastReset< Animation.GetDelay())
@@ -30,7 +33,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
             switch (Global.Orbwalker.Mode)
             {
                 case OrbwalkingMode.Combo:
-                   Combo.OnUpdate();
+                   ComboManager.OnUpdate();
                     break;
                 case OrbwalkingMode.Mixed:
                     Harass.OnUpdate();
@@ -76,7 +79,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                 switch (Global.Orbwalker.Mode)
                 {
                     case OrbwalkingMode.Combo:
-                        Combo.OnPostAttack(target);
+                        ComboManager.OnPostAttack(target);
                         break;
                     case OrbwalkingMode.Mixed:
                         Harass.OnPostAttack();

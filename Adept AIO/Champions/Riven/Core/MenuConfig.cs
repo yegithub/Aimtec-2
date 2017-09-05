@@ -29,8 +29,8 @@ namespace Adept_AIO.Champions.Riven.Core
             _mainMenu = new Menu(string.Empty, "Adept AIO", true);
             _mainMenu.Attach();
 
-            BurstMode = new OrbwalkerMode("Burst", KeyCode.T, () => Global.TargetSelector.GetSelectedTarget(), Burst.OnUpdate);
             FleeMode = new OrbwalkerMode("Flee", KeyCode.A, null, Flee.OnKeyPressed);
+            BurstMode = new OrbwalkerMode("Burst", KeyCode.T, () => Global.TargetSelector.GetSelectedTarget(), Burst.OnUpdate);
 
             BurstMode.ModeBehaviour.Invoke();
             BurstMode.GetTargetImplementation.Invoke();

@@ -23,7 +23,7 @@ namespace Adept_BaseUlt.Manager
         private readonly int _maxCollisionObjects;
 
         private int _timeUntilCasting = -1;
-   
+
         private int _recallTick;
         private float _recallTime;
         private Obj_AI_Hero _target;
@@ -45,9 +45,15 @@ namespace Adept_BaseUlt.Manager
             Render.OnRender += OnRender;
         }
 
+     
         private void OnTeleport(Obj_AI_Base sender, Teleport.TeleportEventArgs args)
         {
-            if (!sender.IsEnemy)
+            if (!sender.IsEnemy
+             || !sender.IsValid 
+             || sender.IsDead
+             || Game.TickCount - _ultimate.LastCastAttemptT <= 8000
+             || args.Status == TeleportStatus.Unknown 
+             || args.Status == TeleportStatus.Finish)
             {
                 return;
             }
@@ -56,7 +62,8 @@ namespace Adept_BaseUlt.Manager
             {
                 Reset();
             }
-            else if (args.Type == TeleportType.Recall)
+
+            if (args.Type == TeleportType.Recall)
             {
                 Set(args.Duration, Game.TickCount, (Obj_AI_Hero)sender);
             }
@@ -66,6 +73,7 @@ namespace Adept_BaseUlt.Manager
         {
             if (_target == null || !_target.IsValid || !_ultimate.Ready || _target.Health > Global.Player.GetSpellDamage(_target, SpellSlot.R))
             {
+                Reset();
                 return;
             }
 
@@ -86,7 +94,8 @@ namespace Adept_BaseUlt.Manager
                 return;
             }
 
-            _ultimate.Cast(pos); 
+            _ultimate.Cast(pos);
+            _timeUntilCasting = -1;
             Reset();
         }
 

@@ -35,7 +35,19 @@ namespace Adept_AIO.Champions.Riven.Drawings
             if (MenuConfig.Drawings["Harass"].Enabled && Global.Orbwalker.Mode == OrbwalkingMode.Mixed)
             {
                 Render.WorldToScreen(Global.Player.Position, out var screenPos);
-                Render.Text(new Vector2(screenPos.X - 65, screenPos.Y + 30), Color.Aqua, "PATTERN: " + Extensions.Current);
+                Render.Text(new Vector2(screenPos.X - 65, screenPos.Y + 30), Color.Aqua, "PATTERN: " + Enums.Current);
+            }
+
+            if (Global.Orbwalker.Mode == OrbwalkingMode.Combo)
+            {
+                Render.WorldToScreen(Global.Player.Position, out var screenPos);
+                Render.Text(new Vector2(screenPos.X - 65, screenPos.Y + 30), Color.Aqua, "PATTERN: " + Enums.ComboPattern);
+            }
+
+            if (MenuConfig.BurstMode.Active)
+            {
+                Render.WorldToScreen(Global.Player.Position, out var screenPos);
+                Render.Text(new Vector2(screenPos.X - 65, screenPos.Y + 30), Color.Aqua, "PATTERN: " + Enums.BurstPattern);
             }
 
             if (MenuConfig.Drawings["Engage"].Enabled)
@@ -52,7 +64,7 @@ namespace Adept_AIO.Champions.Riven.Drawings
                 }
             }
 
-            if (MenuConfig.Drawings["R2"].Enabled && SpellConfig.R2.Ready && Extensions.UltimateMode == UltimateMode.Second)
+            if (MenuConfig.Drawings["R2"].Enabled && SpellConfig.R2.Ready && Enums.UltimateMode == UltimateMode.Second)
             {
                 Render.Circle(Global.Player.Position, SpellConfig.R2.Range, (uint)MenuConfig.Drawings["Segments"].Value, Color.OrangeRed);
             }
