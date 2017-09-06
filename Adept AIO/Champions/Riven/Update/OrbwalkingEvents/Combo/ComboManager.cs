@@ -34,6 +34,8 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents.Combo
 
         public static void OnUpdate()
         {
+            ChaseTarget();
+
             var target = Global.TargetSelector.GetTarget(Extensions.EngageRange);
             if (target == null)
             {
@@ -41,8 +43,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents.Combo
             }
 
             Enums.ComboPattern = Generate(target);
-
-            ChaseTarget(target);
+           
             Flash();
 
             switch (Enums.ComboPattern)
@@ -65,18 +66,30 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents.Combo
 
         private static ComboPattern Generate(Obj_AI_Base target)
         {
-            DebugConsole.Print($"{Mixed.PercentDmg(target, Dmg.Damage(target))}");
-
-            if (Mixed.PercentDmg(target, Dmg.Damage(target)) >= 90)
+            switch (MenuConfig.Combo["Mode"].Value)
             {
-                return ComboPattern.FastCombo;
+                case 0:
+                    if (Mixed.PercentDmg(target, Dmg.Damage(target)) >= 90)
+                    {
+                        return ComboPattern.FastCombo;
+                    }
+                    return ComboPattern.MaximizeDmg;
+
+                case 1: return ComboPattern.MaximizeDmg;
+                case 2: return ComboPattern.FastCombo;
             }
 
             return ComboPattern.MaximizeDmg; //Dmg.Damage(target) / target.Health >= 70 ? ComboPattern.Normal : ComboPattern.MaximizeDmg;
         }
 
-        private static void ChaseTarget(Obj_AI_Base target)
+        private static void ChaseTarget()
         {
+            var target = GameObjects.EnemyHeroes.FirstOrDefault(x => x.IsValidTarget(1500));
+            if (target == null)
+            {
+                return;
+            }
+
             if (MenuConfig.Combo["Chase"].Value != 0 && target.Distance(Global.Player) > Global.Player.AttackRange)
             {
                 switch (MenuConfig.Combo["Chase"].Value)
@@ -91,13 +104,14 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents.Combo
                     case 2:
                         if (target.Distance(Global.Player) <= Global.Player.AttackRange + SpellConfig.E.Range)
                         {
-                            SpellConfig.E.CastOnUnit(target);
+                            SpellConfig.E.Cast(target.ServerPosition);
                         }
                         break;
                     case 3:
-                        if (target.Distance(Global.Player) <= Global.Player.AttackRange + SpellConfig.Q.Range + SpellConfig.E.Range)
+                        if (target.Distance(Global.Player) <= Global.Player.AttackRange + SpellConfig.Q.Range + SpellConfig.E.Range
+                         && target.Distance(Global.Player) > Global.Player.AttackRange + SpellConfig.Q.Range)
                         {
-                            SpellConfig.E.CastOnUnit(target);
+                            SpellConfig.E.Cast(target.ServerPosition);
                             SpellManager.CastQ(target);
                         }
                         break;

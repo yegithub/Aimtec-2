@@ -15,6 +15,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
     {
         private static bool _canUseQ;
         private static bool _canUseW;
+    
         private static Obj_AI_Base _unit;
         private static Vector3 _position;
 
@@ -34,7 +35,6 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                     break;
                 case "RivenMartyr":
                     _canUseW = false;
-                    Global.Orbwalker.ResetAutoAttackTimer();
                     break;
                 case "RivenFengShuiEngine":
                     Enums.UltimateMode = UltimateMode.Second;
@@ -42,7 +42,6 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                     break;
                 case "RivenIzunaBlade":
                     Enums.UltimateMode = UltimateMode.First;
-                    Global.Orbwalker.ResetAutoAttackTimer();
                     break;
             }
         }
@@ -61,7 +60,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                     if (Extensions.CurrentQCount == 3 && Items.CanUseTiamat())
                     {
                         Items.CastTiamat(false);
-                        DelayAction.Queue(250 + Game.Ping / 2,
+                        DelayAction.Queue(230 + Game.Ping / 2,
                             () => Global.Player.SpellBook.CastSpell(SpellSlot.Q, _unit), new CancellationToken(false));
                     }
                     else
@@ -135,8 +134,8 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
         public static bool InsideKiBurst(GameObject target)
         {
             return Global.Player.HasBuff("RivenFengShuiEngine")
-                 ? Global.Player.Distance(target) <= 200 + target.BoundingRadius
-                 : Global.Player.Distance(target) <= 135 + target.BoundingRadius;
+                 ? Global.Player.Distance(target) <= 230 + target.BoundingRadius
+                 : Global.Player.Distance(target) <= 165 + target.BoundingRadius;
         }
 
         public static bool InsideKiBurst(Vector3 position)

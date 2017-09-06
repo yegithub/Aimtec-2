@@ -36,7 +36,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents.Combo
                 return;
             }
 
-            if (SpellConfig.Q.Ready)
+            if (SpellConfig.Q.Ready && target.IsInRange(Global.Player.AttackRange))
             {
                 Global.Orbwalker.Attack(target); // Prevents E WQ (1s delay) -> AA. (BUG)
             }
@@ -45,7 +45,8 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents.Combo
             {
                 SpellConfig.E.Cast(target.ServerPosition);
             }
-            else if (ComboManager.CanCastR1(target))
+
+            if (ComboManager.CanCastR1(target))
             {
                 SpellConfig.R.Cast();
             }
