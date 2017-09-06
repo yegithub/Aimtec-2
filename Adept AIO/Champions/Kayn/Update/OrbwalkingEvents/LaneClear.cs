@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using Adept_AIO.Champions.Kayn.Core;
-using Adept_AIO.SDK.Extensions;
+using Adept_AIO.SDK.Junk;
 using Aimtec.SDK.Extensions;
 
 namespace Adept_AIO.Champions.Kayn.Update.OrbwalkingEvents

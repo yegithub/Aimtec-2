@@ -1,6 +1,6 @@
 ﻿using Adept_AIO.Champions.Riven.Core;
 using Adept_AIO.SDK.Delegates;
-using Adept_AIO.SDK.Extensions;
+using Adept_AIO.SDK.Junk;
 using Aimtec;
 using Aimtec.SDK.Extensions;
 
@@ -10,7 +10,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
     {
         public static void OnGapcloser(Obj_AI_Hero sender, GapcloserArgs args)
         {
-            if (sender.IsMe || !sender.IsEnemy || args.EndPosition.Distance(Global.Player) > SpellConfig.E.Range)
+            if (!sender.IsEnemy || args.EndPosition.Distance(Global.Player) > SpellConfig.E.Range)
             {
                 return;
             }
@@ -24,6 +24,10 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
             else if (SpellConfig.W.Ready && args.EndPosition.Distance(Global.Player) <= SpellConfig.W.Range)
             {
                 SpellConfig.W.Cast();
+            }
+            else if (SpellConfig.Q.Ready)
+            {
+                SpellManager.CastQ(Game.CursorPos);
             }
         }
     }

@@ -4,7 +4,7 @@ using System.Linq;
 using Adept_AIO.Champions.LeeSin.Core;
 using Adept_AIO.Champions.LeeSin.Core.Insec_Manager;
 using Adept_AIO.Champions.LeeSin.Core.Spells;
-using Adept_AIO.SDK.Extensions;
+using Adept_AIO.SDK.Junk;
 using Aimtec;
 using Aimtec.SDK.Extensions;
 

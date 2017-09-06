@@ -3,7 +3,7 @@ using Aimtec.SDK.Orbwalking;
 using Aimtec.SDK.Prediction.Health;
 using Aimtec.SDK.TargetSelector;
 
-namespace Adept_AIO.SDK.Extensions
+namespace Adept_AIO.SDK.Junk
 {
     internal class Global
     {

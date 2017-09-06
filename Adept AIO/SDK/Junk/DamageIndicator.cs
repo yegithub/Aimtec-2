@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using Aimtec;
 
-namespace Adept_AIO.SDK.Extensions
+namespace Adept_AIO.SDK.Junk
 {
     internal class DamageIndicator
     {

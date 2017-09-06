@@ -1,5 +1,5 @@
 ﻿using System;
-using Adept_AIO.SDK.Extensions;
+using Adept_AIO.SDK.Junk;
 using Adept_AIO.SDK.Usables;
 
 namespace Adept_AIO.Champions.Riven.Core

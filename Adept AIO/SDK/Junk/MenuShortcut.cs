@@ -1,7 +1,7 @@
 ﻿using Aimtec.SDK.Menu;
 using Aimtec.SDK.Menu.Components;
 
-namespace Adept_AIO.SDK.Extensions
+namespace Adept_AIO.SDK.Junk
 {
     internal class MenuShortcut
     {

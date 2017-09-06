@@ -2,7 +2,7 @@
 using System.Linq;
 using Adept_AIO.Champions.Riven.Core;
 using Adept_AIO.Champions.Riven.Update.Miscellaneous;
-using Adept_AIO.SDK.Extensions;
+using Adept_AIO.SDK.Junk;
 using Adept_AIO.SDK.Methods;
 using Adept_AIO.SDK.Usables;
 using Aimtec;

@@ -1,6 +1,6 @@
 ﻿using Adept_AIO.Champions.LeeSin.Core.Insec_Manager;
 using Adept_AIO.Champions.LeeSin.Core.Spells;
-using Adept_AIO.SDK.Extensions;
+using Adept_AIO.SDK.Junk;
 using Adept_AIO.SDK.Usables;
 using Aimtec;
 using Aimtec.SDK.Extensions;

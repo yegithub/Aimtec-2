@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Linq;
 using Adept_AIO.Champions.Yasuo.Core;
-using Adept_AIO.SDK.Extensions;
+using Adept_AIO.SDK.Junk;
 using Aimtec;
 using Aimtec.SDK.Orbwalking;
 

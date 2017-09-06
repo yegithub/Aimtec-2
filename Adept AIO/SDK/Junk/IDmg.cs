@@ -1,6 +1,6 @@
 using Aimtec;
 
-namespace Adept_AIO.SDK.Extensions
+namespace Adept_AIO.SDK.Junk
 {
     internal interface IDmg
     {

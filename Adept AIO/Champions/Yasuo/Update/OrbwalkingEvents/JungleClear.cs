@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 using Adept_AIO.Champions.Yasuo.Core;
-using Adept_AIO.SDK.Extensions;
+using Adept_AIO.SDK.Junk;
 using Aimtec.SDK.Extensions;
-using GameObjects = Adept_AIO.SDK.Extensions.GameObjects;
+using GameObjects = Adept_AIO.SDK.Junk.GameObjects;
 
 namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
 {

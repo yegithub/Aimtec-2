@@ -1,7 +1,7 @@
 ﻿using Adept_AIO.Champions.Irelia.Core;
 using Adept_AIO.Champions.Irelia.Drawings;
 using Adept_AIO.Champions.Irelia.Update.Miscellaneous;
-using Adept_AIO.SDK.Extensions;
+using Adept_AIO.SDK.Junk;
 using Aimtec;
 
 namespace Adept_AIO.Champions.Irelia

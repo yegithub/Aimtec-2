@@ -1,5 +1,5 @@
 ﻿using Adept_AIO.Champions.Tristana.Core;
-using Adept_AIO.SDK.Extensions;
+using Adept_AIO.SDK.Junk;
 
 namespace Adept_AIO.Champions.Tristana.Update.OrbwalkingEvents
 {

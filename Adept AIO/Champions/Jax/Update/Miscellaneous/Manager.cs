@@ -1,6 +1,6 @@
 ﻿using Adept_AIO.Champions.Jax.Core;
 using Adept_AIO.Champions.Jax.Update.OrbwalkingEvents;
-using Adept_AIO.SDK.Extensions;
+using Adept_AIO.SDK.Junk;
 using Aimtec;
 using Aimtec.SDK.Orbwalking;
 

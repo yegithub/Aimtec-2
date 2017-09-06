@@ -1,13 +1,13 @@
 ﻿using System.Linq;
 using System.Threading;
 using Adept_AIO.Champions.Yasuo.Core;
-using Adept_AIO.SDK.Extensions;
+using Adept_AIO.SDK.Junk;
 using Adept_AIO.SDK.Usables;
 using Aimtec;
 using Aimtec.SDK.Events;
 using Aimtec.SDK.Extensions;
 using Aimtec.SDK.Util;
-using Geometry = Adept_AIO.SDK.Extensions.Geometry;
+using Geometry = Adept_AIO.SDK.Junk.Geometry;
 
 namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
 {

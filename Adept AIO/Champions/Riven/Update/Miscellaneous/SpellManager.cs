@@ -1,7 +1,9 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading;
 using Adept_AIO.Champions.Riven.Core;
-using Adept_AIO.SDK.Extensions;
+using Adept_AIO.SDK.Junk;
+using Adept_AIO.SDK.Methods;
 using Adept_AIO.SDK.Usables;
 using Aimtec;
 using Aimtec.SDK.Extensions;
@@ -14,6 +16,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
         private static bool _canUseQ;
         private static bool _canUseW;
         private static Obj_AI_Base _unit;
+        private static Vector3 _position;
 
         public static void OnProcessSpellCast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
         {
@@ -46,36 +49,37 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 
         public static void OnUpdate()
         {
-            if (_unit == null)
-            {
-                return;
-            }
-
             if (_canUseQ && Extensions.DidJustAuto)
             {
-                if (Extensions.CurrentQCount == 3 && Items.CanUseTiamat())
+                if (_unit == null && !_position.IsZero)
                 {
-                    Items.CastTiamat(false);
-                    DelayAction.Queue(250 + Game.Ping / 2, ()=> Global.Player.SpellBook.CastSpell(SpellSlot.Q, _unit), new CancellationToken(false));
+                    Global.Player.SpellBook.CastSpell(SpellSlot.Q, _position);
+                    _position = Vector3.Zero;
                 }
-                else
+                else if (_unit != null)
                 {
-                    Global.Player.SpellBook.CastSpell(SpellSlot.Q, _unit);
+                    if (Extensions.CurrentQCount == 3 && Items.CanUseTiamat())
+                    {
+                        Items.CastTiamat(false);
+                        DelayAction.Queue(250 + Game.Ping / 2,
+                            () => Global.Player.SpellBook.CastSpell(SpellSlot.Q, _unit), new CancellationToken(false));
+                    }
+                    else
+                    {
+                        Global.Player.SpellBook.CastSpell(SpellSlot.Q, _unit);
+                    }
                 }
-                
+
+
                 Extensions.DidJustAuto = false;
             }
 
-            if (!_canUseW)
+            if (!_canUseW || _unit == null)
             {
                 return;
             }
-          
-            Items.CastTiamat(false);
 
-            _canUseW = false;
-
-            SpellConfig.W.Cast();
+            SpellConfig.W.Cast(_unit);
         }
 
         public static void CastQ(Obj_AI_Base target)
@@ -89,6 +93,12 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
             _canUseQ = true;
         }
 
+        public static void CastQ(Vector3 pos)
+        {
+            _position = pos;
+            _canUseQ = true;
+        }
+
         public static void CastW(Obj_AI_Base target)
         {
             if (target.HasBuff("FioraW"))
@@ -96,7 +106,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                 return;
             }
 
-            _canUseW = SpellConfig.W.Ready && InsideKiBurst(target);
+            _canUseW = InsideKiBurst(target);
             _unit = target;  
         }
 

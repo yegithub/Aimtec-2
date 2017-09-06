@@ -1,5 +1,6 @@
 ﻿using Adept_AIO.Champions.LeeSin.Core;
 using Adept_AIO.SDK.Delegates;
+using Adept_AIO.SDK.Junk;
 
 namespace Adept_AIO.Champions.LeeSin
 {
@@ -10,9 +11,6 @@ namespace Adept_AIO.Champions.LeeSin
     using Aimtec.SDK.Menu.Components;
     using Aimtec.SDK.Orbwalking;
     using Aimtec.SDK.Util;
-
-    using SDK.Extensions;
-
     using Drawings;
     using Core.Damage;
     using Core.Insec_Manager;
@@ -72,12 +70,14 @@ namespace Adept_AIO.Champions.LeeSin
 
             var insecMenu     = new Menu("Insec", "Insec");
             var insecBk       = new MenuKeyBind("BK", "Bubba Kush Toggle", KeyCode.L, KeybindType.Toggle);
+            var insecF        = new MenuBool("Flash", "Enable Flash");
             var insecObject   = new MenuBool("Object", "Use Q On Minions").SetToolTip("Uses Q to gapclose to every minion");
             var insecQLast    = new MenuBool("Last", "Use Q After Insec").SetToolTip("Only possible if no minions near target");
             var insecPosition = new MenuList("Position", "Insec Position", new[] {"Ally Turret", "Ally Hero"}, 0);
             var insecKick     = new MenuList("Kick", "Kick Type: ", new[] {"Flash R", "R Flash"}, 1);
 
             insecMenu.Add(insecBk);
+            insecMenu.Add(insecF);
             insecMenu.Add(insecObject);
             insecMenu.Add(insecQLast);
             insecMenu.Add(insecPosition);
@@ -96,6 +96,7 @@ namespace Adept_AIO.Champions.LeeSin
                 insec.Bk = args.GetNewValue<MenuKeyBind>().Value;
                 Temp.IsBubbaKush = args.GetNewValue<MenuKeyBind>().Value;
             };
+            insecF.OnValueChanged += (sender, args) => insec.FlashEnabled = args.GetNewValue<MenuBool>().Value;
             insecObject.OnValueChanged += (sender, args) => insec.ObjectEnabled = args.GetNewValue<MenuBool>().Value;
             insecQLast.OnValueChanged += (sender, args) => insec.QLast = args.GetNewValue<MenuBool>().Value;
             insecPosition.OnValueChanged += (sender, args) => insecManager.InsecPositionValue = args.GetNewValue<MenuList>().Value;

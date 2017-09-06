@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using Adept_AIO.SDK.Extensions;
+using Adept_AIO.SDK.Junk;
 using Aimtec;
 using Spell = Aimtec.SDK.Spell;
 

@@ -3,7 +3,7 @@ using Adept_AIO.Champions.LeeSin.Core;
 using Adept_AIO.Champions.LeeSin.Core.Insec_Manager;
 using Adept_AIO.Champions.LeeSin.Core.Spells;
 using Adept_AIO.Champions.LeeSin.Update.Ward_Manager;
-using Adept_AIO.SDK.Extensions;
+using Adept_AIO.SDK.Junk;
 using Adept_AIO.SDK.Usables;
 using Aimtec;
 using Aimtec.SDK.Events;
@@ -13,7 +13,8 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Insec
 {
     internal class Insec : IInsec
     {
-        public bool Enabled { get; set; } 
+        public bool Enabled { get; set; }
+        public bool FlashEnabled { get; set; }
         public bool Bk { get; set; } = false;
         public bool QLast { get; set; }
         public bool ObjectEnabled { get; set; }
@@ -32,7 +33,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Insec
             _insecManager = insecManager;
         }
 
-        private static bool FlashReady => SummonerSpells.IsValid(SummonerSpells.Flash);
+        private bool FlashReady => SummonerSpells.IsValid(SummonerSpells.Flash) && FlashEnabled;
 
         private int InsecRange()
         {
@@ -105,7 +106,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Insec
 
             if (_spellConfig.R.Ready)
             {
-                if (Target.IsValidTarget(_spellConfig.R.Range) && (_wardTracker.DidJustWard || Game.TickCount - SummonerSpells.Flash.LastCastAttemptT <= 1500))
+                if (Target.IsValidTarget(_spellConfig.R.Range) && GetInsecPosition().Distance(Global.Player) <= 300 && (_wardTracker.DidJustWard || Game.TickCount - SummonerSpells.Flash.LastCastAttemptT <= 1000))
                 {
                     _spellConfig.R.CastOnUnit(Target);
                 }

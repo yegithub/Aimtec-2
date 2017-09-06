@@ -6,7 +6,7 @@ using Aimtec;
 using Aimtec.SDK.Extensions;
 using Aimtec.SDK.Util.ThirdParty;
 
-namespace Adept_AIO.SDK.Extensions
+namespace Adept_AIO.SDK.Junk
 {
     using Path = List<IntPoint>;
     using Paths = List<List<IntPoint>>;

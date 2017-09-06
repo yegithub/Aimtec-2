@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Linq;
 using Adept_AIO.Champions.Riven.Core;
-using Adept_AIO.SDK.Extensions;
+using Adept_AIO.SDK.Junk;
 using Aimtec;
 using Aimtec.SDK.Extensions;
 using Aimtec.SDK.Orbwalking;
@@ -34,9 +34,21 @@ namespace Adept_AIO.Champions.Riven.Drawings
                 return;
             }
 
+            if (MenuConfig.Drawings["Mouse"].Enabled && Global.Orbwalker.Mode != OrbwalkingMode.None)
+            {
+                var temp = Global.Orbwalker.GetOrbwalkingTarget();
+                if (temp != null && temp.IsHero)
+                {
+                    var pos = Global.Player.ServerPosition.Extend(temp.ServerPosition, 450);
+                    Render.Circle(pos, 200, (uint)MenuConfig.Drawings["Segments"].Value, Color.Yellow);
+                    Render.WorldToScreen(pos, out var posV2);
+                    Render.Text(new Vector2(posV2.X - 50, posV2.Y), Color.White, "Put Mouse Here");
+                }
+            }
+         
             if (MenuConfig.Drawings["Harass"].Enabled && Global.Orbwalker.Mode == OrbwalkingMode.Mixed)
             {
-                RenderArrow(Global.TargetSelector.GetTarget(Extensions.EngageRange + 800));
+                Mixed.RenderArrowFromPlayer(Global.TargetSelector.GetTarget(Extensions.EngageRange + 800));
 
                 Render.WorldToScreen(Global.Player.Position, out var playerV2);
                 Render.Text(new Vector2(playerV2.X - 65, playerV2.Y + 30), Color.Aqua, "PATTERN: " + Enums.Current);
@@ -44,7 +56,7 @@ namespace Adept_AIO.Champions.Riven.Drawings
 
             if (Global.Orbwalker.Mode == OrbwalkingMode.Combo)
             {
-                RenderArrow(Global.TargetSelector.GetTarget(Extensions.EngageRange + 800));
+                Mixed.RenderArrowFromPlayer(Global.TargetSelector.GetTarget(Extensions.EngageRange + 800));
 
                 Render.WorldToScreen(Global.Player.Position, out var playerV2);             
                 Render.Text(new Vector2(playerV2.X - 65, playerV2.Y + 30), Color.Aqua, "PATTERN: " + Enums.ComboPattern);
@@ -52,7 +64,7 @@ namespace Adept_AIO.Champions.Riven.Drawings
 
             if (MenuConfig.BurstMode.Active)
             {
-                RenderArrow(Global.TargetSelector.GetSelectedTarget());
+                Mixed.RenderArrowFromPlayer(Global.TargetSelector.GetSelectedTarget());
 
                 Render.WorldToScreen(Global.Player.Position, out var playerV2);
                 Render.Text(new Vector2(playerV2.X - 65, playerV2.Y + 30), Color.Aqua, "PATTERN: " + Enums.BurstPattern);

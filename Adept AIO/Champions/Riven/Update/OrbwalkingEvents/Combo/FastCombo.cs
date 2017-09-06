@@ -1,6 +1,6 @@
 ﻿using Adept_AIO.Champions.Riven.Core;
 using Adept_AIO.Champions.Riven.Update.Miscellaneous;
-using Adept_AIO.SDK.Extensions;
+using Adept_AIO.SDK.Junk;
 using Aimtec;
 using Aimtec.SDK.Extensions;
 

@@ -1,5 +1,5 @@
 ﻿using Adept_AIO.Champions.Kayn.Update.OrbwalkingEvents;
-using Adept_AIO.SDK.Extensions;
+using Adept_AIO.SDK.Junk;
 using Aimtec.SDK.Orbwalking;
 
 namespace Adept_AIO.Champions.Kayn.Update.Miscellaneous

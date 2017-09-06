@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Adept_AIO.Champions.Riven.Update.OrbwalkingEvents;
 using Adept_AIO.SDK.Delegates;
-using Adept_AIO.SDK.Extensions;
+using Adept_AIO.SDK.Junk;
 using Aimtec.SDK.Menu;
 using Aimtec.SDK.Menu.Components;
 using Aimtec.SDK.Orbwalking;
@@ -105,6 +105,7 @@ namespace Adept_AIO.Champions.Riven.Core
             {
                 new MenuSlider("Segments", "Segments", 200, 100, 300).SetToolTip("Smoothness of the circles. Less equals more FPS."),
                 new MenuBool("Dmg", "Damage"),
+                new MenuBool("Mouse", "Mouse Helper").SetToolTip("Shows where to put mouse to properly Q AA chase the target"),
                 new MenuBool("Target", "Draw Line At Target"),
                 new MenuBool("Engage", "Engage Range"),
                 new MenuBool("R2", "R2 Range", false),

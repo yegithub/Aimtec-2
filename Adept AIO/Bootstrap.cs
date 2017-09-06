@@ -1,8 +1,8 @@
-﻿namespace Adept_AIO
+﻿using Adept_AIO.SDK.Junk;
+
+namespace Adept_AIO
 {
     using System.Linq;
-
-    using SDK.Extensions;
     using SDK.Usables;
     using Aimtec.SDK.Events;
 

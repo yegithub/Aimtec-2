@@ -2,11 +2,11 @@
 using System.Threading;
 using Adept_AIO.Champions.Riven.Core;
 using Adept_AIO.Champions.Riven.Update.Miscellaneous;
-using Adept_AIO.SDK.Extensions;
+using Adept_AIO.SDK.Junk;
 using Aimtec;
 using Aimtec.SDK.Extensions;
 using Aimtec.SDK.Util;
-using GameObjects = Adept_AIO.SDK.Extensions.GameObjects;
+using GameObjects = Adept_AIO.SDK.Junk.GameObjects;
 
 namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
 {
