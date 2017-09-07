@@ -1,6 +1,7 @@
 ﻿using System;
 using Adept_AIO.SDK.Junk;
 using Adept_AIO.SDK.Usables;
+using Aimtec;
 
 namespace Adept_AIO.Champions.Riven.Core
 {
@@ -25,17 +26,6 @@ namespace Adept_AIO.Champions.Riven.Core
             get
             {
                 var range = 0f;
-
-                //switch (Enums.ComboPattern)
-                //{
-                //    case ComboPattern.MaximizeDmg:
-                //        break;
-                //    case ComboPattern.FastCombo:
-                //        break;
-                //    case ComboPattern.FastCombo:
-                //        break;
-                //    default: throw new ArgumentOutOfRangeException();
-                //}
 
                 if (AllIn)
                 {
@@ -64,6 +54,8 @@ namespace Adept_AIO.Champions.Riven.Core
 
         public static int CurrentQCount = 1;
         public static int LastQCastAttempt;
+
+        public static Vector3 FleePos;
 
         public static string[] InvulnerableList = { "FioraW", "kindrednodeathbuff", "Undying Rage", "JudicatorIntervention" };
     }

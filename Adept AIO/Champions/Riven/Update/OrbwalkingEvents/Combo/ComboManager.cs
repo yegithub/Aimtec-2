@@ -8,6 +8,7 @@ using Adept_AIO.SDK.Usables;
 using Aimtec;
 using Aimtec.SDK.Damage;
 using Aimtec.SDK.Extensions;
+using Aimtec.SDK.Prediction.Skillshots;
 
 namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents.Combo
 {
@@ -35,16 +36,19 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents.Combo
         public static void OnUpdate()
         {
             ChaseTarget();
+            Flash();
+            Manage();
+        }
+
+        private static void Manage()
+        {
+            Enums.ComboPattern = Generate();
 
             var target = Global.TargetSelector.GetTarget(Extensions.EngageRange);
             if (target == null)
             {
                 return;
             }
-
-            Enums.ComboPattern = Generate(target);
-           
-            Flash();
 
             switch (Enums.ComboPattern)
             {
@@ -64,12 +68,19 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents.Combo
             }
         }
 
-        private static ComboPattern Generate(Obj_AI_Base target)
+        private static ComboPattern Generate()
         {
+            var target = Global.TargetSelector.GetTarget(Extensions.EngageRange + 700);
+            if (target == null)
+            {
+                return ComboPattern.MaximizeDmg;
+            }
+
             switch (MenuConfig.Combo["Mode"].Value)
             {
                 case 0:
-                    if (Mixed.PercentDmg(target, Dmg.Damage(target)) >= 90)
+                    DebugConsole.Print(Mixed.PercentDmg(target, Dmg.Damage(target)).ToString());
+                    if (Mixed.PercentDmg(target, Dmg.Damage(target)) >= MenuConfig.Combo["Change"].Value)
                     {
                         return ComboPattern.FastCombo;
                     }

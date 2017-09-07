@@ -27,7 +27,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
 
             if (SpellConfig.W.Ready && MenuConfig.Lane["W"].Enabled &&
                 minion.Health < Global.Player.GetSpellDamage(minion, SpellSlot.W) &&
-                (minion.UnitSkinName == "SRU_ChaosMinionSiege" || minion.UnitSkinName == "SRU_OrderMinionSiege"))
+                minion.UnitSkinName.Contains("Siege"))
             {
                 SpellManager.CastW(minion);
             }

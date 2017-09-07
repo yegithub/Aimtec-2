@@ -71,7 +71,7 @@ namespace Adept_BaseUlt.Manager
 
         private void OnUpdate()
         {
-            if (_target == null || !_target.IsValid || !_ultimate.Ready || _target.Health > Global.Player.GetSpellDamage(_target, SpellSlot.R))
+            if (_target == null || !_target.IsValid || !_ultimate.Ready || _target.Health > Global.Player.GetSpellDamage(_target, SpellSlot.R) * 0.9f)
             {
                 Reset();
                 return;

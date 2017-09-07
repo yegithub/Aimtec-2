@@ -34,10 +34,17 @@ namespace Adept_AIO.Champions.Riven.Drawings
                 return;
             }
 
+            if (MenuConfig.FleeMode.Active && !Extensions.FleePos.IsZero)
+            {
+                Mixed.RenderArrowFromPlayer(Extensions.FleePos);
+
+                Render.Circle(Extensions.FleePos, 50, (uint)MenuConfig.Drawings["Segments"].Value, Color.White);
+            }
+
             if (MenuConfig.Drawings["Mouse"].Enabled && Global.Orbwalker.Mode != OrbwalkingMode.None)
             {
                 var temp = Global.Orbwalker.GetOrbwalkingTarget();
-                if (temp != null && temp.IsHero)
+                if (temp != null && temp.IsHero && temp.Distance(Global.Player) > Global.Player.AttackRange - 100)
                 {
                     var pos = Global.Player.ServerPosition.Extend(temp.ServerPosition, 450);
                     Render.Circle(pos, 200, (uint)MenuConfig.Drawings["Segments"].Value, Color.Yellow);

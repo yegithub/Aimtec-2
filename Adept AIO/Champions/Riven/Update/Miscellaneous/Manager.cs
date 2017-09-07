@@ -56,6 +56,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
             {
                 SpellConfig.Q.Cast(Game.CursorPos);
             }
+
         }
 
         public static void PostAttack(object sender, PostAttackEventArgs args)

@@ -3,6 +3,7 @@ using System.Threading;
 using Adept_AIO.Champions.Riven.Core;
 using Adept_AIO.Champions.Riven.Update.Miscellaneous;
 using Adept_AIO.SDK.Junk;
+using Adept_AIO.SDK.Methods;
 using Aimtec;
 using Aimtec.SDK.Extensions;
 using Aimtec.SDK.Util;
@@ -22,31 +23,35 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
                     return;
                 }
 
-                const int dashRange = 350;
-                var end = Global.Player.Position.Extend(Game.CursorPos, dashRange);
-                var wall = WallExtension.GeneratePoint(Global.Player.Position, end).OrderBy(x => x.Distance(Global.Player.Position)).FirstOrDefault();
+                const int dashRange = 275;
+                var end = Global.Player.Position.Extend(Game.CursorPos, dashRange * 2);
+                var wall = WallExtension.GeneratePoint(Global.Player.Position, end).FirstOrDefault();
 
                 if (wall.IsZero)
                 {
                     return;
                 }
 
-                var distance = wall.Distance(Global.Player.Position);
+                Extensions.FleePos = wall;
 
-                if (distance <= 5)
+                var wallWidth = WallExtension.GetWallWidth(wall, end);
+
+                if (wallWidth > dashRange / 2f)
                 {
                     return;
                 }
 
-                if (SpellConfig.E.Ready && distance <= SpellConfig.E.Range + 200 && distance > 100)
+                var distance = wall.Distance(Global.Player.Position);
+                Global.Orbwalker.Move(wall);
+
+                if (distance < SpellConfig.E.Range + 100)
                 {
-                    SpellConfig.E.Cast(wall);
+                    Global.Player.SpellBook.CastSpell(SpellSlot.E, Global.Player.ServerPosition.Extend(wall, 400));
                     DelayAction.Queue(190, () => Global.Player.SpellBook.CastSpell(SpellSlot.Q, wall), new CancellationToken(false));
                 }
 
-                if (distance > 125)
+                if (distance > 65)
                 {
-                    Global.Player.IssueOrder(OrderType.MoveTo, wall);
                     return;
                 }
 

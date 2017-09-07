@@ -17,8 +17,7 @@ namespace Adept_AIO.SDK.Junk
             for (var i = 0; i < start.Distance(end); i++)
             {
                 var newPoint = new List<Vector3> {start.Extend(end, i)};
-                var width = GetWallWidth(Global.Player.Position, newPoint.FirstOrDefault());
-
+              
                 if (HasFlag(newPoint))
                 {
                     return newPoint;

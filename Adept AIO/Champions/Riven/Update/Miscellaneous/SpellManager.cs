@@ -17,7 +17,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
         private static bool _canUseW;
     
         private static Obj_AI_Base _unit;
-        private static Vector3 _position;
+        private static bool _serverPosition;
 
         public static void OnProcessSpellCast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
         {
@@ -31,6 +31,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                 case "RivenTriCleave":
                     Extensions.LastQCastAttempt = Game.TickCount;
                     _canUseQ = false;
+                    _serverPosition = false;
                     Animation.Reset();
                     break;
                 case "RivenMartyr":
@@ -48,54 +49,51 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 
         public static void OnUpdate()
         {
+            if (_unit == null)
+            {
+                return;
+            }
+
+            if (_serverPosition && _canUseQ)
+            {
+                SpellConfig.Q.Cast(_unit.ServerPosition);
+            }
+
             if (_canUseQ && Extensions.DidJustAuto)
             {
-                if (_unit == null && !_position.IsZero)
+                if (Extensions.CurrentQCount == 3 && Items.CanUseTiamat())
                 {
-                    Global.Player.SpellBook.CastSpell(SpellSlot.Q, _position);
-                    _position = Vector3.Zero;
+                    Items.CastTiamat(false);
+                    DelayAction.Queue(230 + Game.Ping / 2,
+                        () => Global.Player.SpellBook.CastSpell(SpellSlot.Q, _unit), new CancellationToken(false));
                 }
-                else if (_unit != null)
+                else
                 {
-                    if (Extensions.CurrentQCount == 3 && Items.CanUseTiamat())
-                    {
-                        Items.CastTiamat(false);
-                        DelayAction.Queue(230 + Game.Ping / 2,
-                            () => Global.Player.SpellBook.CastSpell(SpellSlot.Q, _unit), new CancellationToken(false));
-                    }
-                    else
-                    {
-                        Global.Player.SpellBook.CastSpell(SpellSlot.Q, _unit);
-                    }
+                    Global.Player.SpellBook.CastSpell(SpellSlot.Q, _unit);
                 }
-
 
                 Extensions.DidJustAuto = false;
             }
 
-            if (!_canUseW || _unit == null)
+            if (!_canUseW)
             {
                 return;
             }
 
             SpellConfig.W.Cast(_unit);
+            _canUseW = false;
         }
 
-        public static void CastQ(Obj_AI_Base target)
+        public static void CastQ(Obj_AI_Base target, bool serverPosition = false)
         {
             if (target.HasBuff("FioraW") || target.HasBuff("PoppyW"))
             {
                 return;
             }
-
+            
             _unit = target;
             _canUseQ = true;
-        }
-
-        public static void CastQ(Vector3 pos)
-        {
-            _position = pos;
-            _canUseQ = true;
+            _serverPosition = serverPosition;
         }
 
         public static void CastW(Obj_AI_Base target)

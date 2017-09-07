@@ -25,10 +25,6 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
             {
                 SpellConfig.W.Cast();
             }
-            else if (SpellConfig.Q.Ready)
-            {
-                SpellManager.CastQ(Game.CursorPos);
-            }
         }
     }
 }

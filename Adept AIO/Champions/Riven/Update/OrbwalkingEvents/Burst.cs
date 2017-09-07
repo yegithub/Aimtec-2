@@ -110,16 +110,6 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
 
                 case BurstPattern.Execution:
 
-                    if (distance > 1200)
-                    {
-                        return;
-                    }
-
-                    if (SpellConfig.R.Ready && Enums.UltimateMode == UltimateMode.First)
-                    {
-                        SpellConfig.R.Cast();
-                    }
-                  
                     if (distance > Extensions.FlashRange())
                     {
                         return;

@@ -18,7 +18,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
             {
                 return;
             }
-
+            var antiPosition = GetDashPosition(target);
             switch (Enums.Current)
             {
                 case HarassPattern.SemiCombo:
@@ -28,23 +28,13 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
                     }
                     break;
                 case HarassPattern.AvoidTarget:
-                    if (SpellConfig.W.Ready)
-                    {
-                        SpellManager.CastW(target);
-                    }
-
                     if (SpellConfig.Q.Ready && Extensions.CurrentQCount == 2)
                     {
                         SpellManager.CastQ(target);
                     }
                     break;
                 case HarassPattern.BackToTarget:
-                    if (SpellConfig.W.Ready)
-                    {
-                        SpellManager.CastW(target);
-                    }
-
-                    if (SpellConfig.Q.Ready && Extensions.CurrentQCount >= 2)
+                    if (SpellConfig.Q.Ready && Extensions.CurrentQCount == 2)
                     {
                         SpellManager.CastQ(target);
                     }
@@ -54,7 +44,9 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
 
         public static void OnUpdate()
         {
-            var target = Global.TargetSelector.GetTarget(Extensions.EngageRange + 50);
+            Enums.Current = Generate();
+
+            var target = Global.TargetSelector.GetTarget(Extensions.EngageRange);
 
             if (target == null)
             {
@@ -66,61 +58,71 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
                 return;
             }
 
-            var qwRange = target.Distance(Global.Player) < SpellConfig.Q.Range + SpellConfig.W.Range + target.BoundingRadius;
             var antiPosition = GetDashPosition(target);
-
-            Enums.Current = Generate(target);
 
             switch (Enums.Current)
             {
                 case HarassPattern.SemiCombo:
+
                     #region SemiCombo
-                 
-                    if (!SpellConfig.Q.Ready && SpellConfig.E.Ready && Extensions.CurrentQCount == 1 && !Global.Orbwalker.CanAttack() && Global.Orbwalker.CanMove())
+
+                    if (!SpellConfig.Q.Ready && SpellConfig.E.Ready && Extensions.CurrentQCount == 1 &&
+                        !Global.Orbwalker.CanAttack() && Global.Orbwalker.CanMove())
                     {
                         SpellConfig.E.Cast(antiPosition);
                         SpellConfig.W.Cast();
                     }
+
                     #endregion
+
                     break;
                 case HarassPattern.AvoidTarget:
+
                     #region Away
 
-                    if (SpellConfig.Q.Ready && SpellConfig.W.Ready && Extensions.CurrentQCount == 1 && qwRange)
+                    if (SpellConfig.Q.Ready && Extensions.CurrentQCount == 1)
                     {
-                        SpellManager.CastQ(target);
+                        SpellManager.CastQ(target, true);
                     }
 
-                    if (SpellConfig.Q.Ready && SpellConfig.E.Ready && Extensions.CurrentQCount == 3 && !Global.Orbwalker.CanAttack())
+                    if (SpellConfig.W.Ready)
+                    {
+                        SpellManager.CastW(target);
+                    }
+
+                    if (SpellConfig.Q.Ready && SpellConfig.E.Ready && Extensions.CurrentQCount == 3 &&
+                        !Global.Orbwalker.CanAttack())
                     {
                         SpellConfig.E.Cast(antiPosition);
-                        SpellConfig.W.Cast();
+                        DelayAction.Queue(190, () => SpellConfig.Q.Cast(antiPosition), new CancellationToken(false));
                     }
-                    else if (Extensions.CurrentQCount == 3)
-                    {
-                        DelayAction.Queue(190, ()=> SpellConfig.Q.Cast(antiPosition), new CancellationToken(false));
-                    }
+
                     #endregion
+
                     break;
                 case HarassPattern.BackToTarget:
+
                     #region Target
 
-                    if (SpellConfig.Q.Ready && SpellConfig.W.Ready && Extensions.CurrentQCount == 1 && qwRange)
+                    if (SpellConfig.Q.Ready && Extensions.CurrentQCount == 1)
                     {
-                        SpellManager.CastQ(target);
+                        SpellManager.CastQ(target, true);
                     }
 
-                    if (SpellConfig.Q.Ready && SpellConfig.E.Ready && Extensions.CurrentQCount == 3 && !Global.Orbwalker.CanAttack())
+                    if (SpellConfig.W.Ready)
+                    {
+                        SpellManager.CastW(target);
+                    }
+
+                    if (SpellConfig.Q.Ready && SpellConfig.E.Ready && Extensions.CurrentQCount == 3 &&
+                        !Global.Orbwalker.CanAttack())
                     {
                         SpellConfig.E.Cast(antiPosition);
-                        SpellConfig.W.Cast();
                         DelayAction.Queue(190, () => SpellConfig.Q.Cast(target), new CancellationToken(false));
                     }
-                    else if (Extensions.CurrentQCount == 3)
-                    {
-                        DelayAction.Queue(190, () => SpellConfig.Q.Cast(target), new CancellationToken(false));
-                    }
+
                     #endregion
+
                     break;
             }
         }
@@ -130,20 +132,28 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
             switch (MenuConfig.Harass["Dodge"].Value)
             {
                 case 0:
-                    var turret = GameObjects.AllyTurrets.Where(x => x.IsValid).OrderBy(x => x.Distance(Global.Player)).FirstOrDefault();
+                    var turret = GameObjects.AllyTurrets.Where(x => x.IsValid).OrderBy(x => x.Distance(Global.Player))
+                        .FirstOrDefault();
                     return turret != null ? turret.ServerPosition : Game.CursorPos;
                 case 1:
                     return Game.CursorPos;
 
                 case 2:
-                    return Global.Player.ServerPosition + (Global.Player.ServerPosition - target.ServerPosition).Normalized() * 300;
+                    return Global.Player.ServerPosition +
+                           (Global.Player.ServerPosition - target.ServerPosition).Normalized() * 300;
             }
             return Vector3.Zero;
         }
 
         // Prob going to need a rework
-        private static HarassPattern Generate(Obj_AI_Hero target)
+        private static HarassPattern Generate()
         {
+            var target = Global.TargetSelector.GetTarget(Extensions.EngageRange + 700);
+            if (target == null)
+            {
+                return HarassPattern.SemiCombo;
+            }
+
             switch (MenuConfig.Harass["Mode"].Value)
             {
                 case 0:
@@ -156,27 +166,32 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
                     {
                         return HarassPattern.BackToTarget;
                     }
-                    return SemiCombo.Contains(target.ChampionName) ? HarassPattern.SemiCombo : HarassPattern.AvoidTarget;
+                    return SemiCombo.Contains(target.ChampionName)
+                        ? HarassPattern.SemiCombo
+                        : HarassPattern.AvoidTarget;
 
-                case 1: 
+                case 1:
                     return HarassPattern.SemiCombo;
                 case 2:
                     return HarassPattern.AvoidTarget;
                 case 3:
                     return HarassPattern.BackToTarget;
             }
-           return HarassPattern.SemiCombo;
+            return HarassPattern.SemiCombo;
         }
 
         // Goes for CC heavy & (or) ranged enemies
-        private static readonly string[] Dangerous = { "Darius", "Garen", "Galio", "Kled", "Malphite", "Maokai",
+        private static readonly string[] Dangerous =
+        {
+            "Darius", "Garen", "Galio", "Kled", "Malphite", "Maokai",
             "Trundle", "Swain", "Tahm Kench", "Ryze", "Shen", "Singed",
-            "Poppy", "Pantheon", "Nasus", "Renekton", "Quinn" };
+            "Poppy", "Pantheon", "Nasus", "Renekton", "Quinn"
+        };
 
         // Melee's who are weak with CC
-        private static readonly string[] Melee = { "Fiora", "Irelia", "Akali", "Udyr", "Rengar", "Jarvan IV" };
+        private static readonly string[] Melee = {"Fiora", "Irelia", "Akali", "Udyr", "Rengar", "Jarvan IV"};
 
         // Mostly fighters
-        private static readonly string[] SemiCombo = { "Yasuo", "LeeSin", "XinZhao", "Aatrox" };
+        private static readonly string[] SemiCombo = {"Yasuo", "LeeSin", "XinZhao", "Aatrox"};
     }
 }

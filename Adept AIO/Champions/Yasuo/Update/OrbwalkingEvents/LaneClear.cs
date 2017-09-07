@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Globalization;
+using System.Linq;
 using Adept_AIO.Champions.Yasuo.Core;
 using Adept_AIO.SDK.Junk;
 using Adept_AIO.SDK.Methods;
@@ -89,7 +90,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
 
                         var circle = new Geometry.Circle(Global.Player.GetDashInfo().EndPos, 220);
                         var circleCount = GameObjects.EnemyMinions.Count(x => circle.Center.Distance(x.ServerPosition) <= circle.Radius);
-                        DebugConsole.Print(circleCount.ToString());
+                       
                         if (circleCount >= 2)
                         {
                             SpellConfig.Q.Cast(dashM);
@@ -98,7 +99,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                 }
             }
 
-            var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(Global.Player) <= SpellConfig.E.Range && !x.HasBuff("YasuoDashWrapper"));
+            var minion = GameObjects.EnemyMinions.OrderBy(x => x.Health).FirstOrDefault(x => x.Distance(Global.Player) <= SpellConfig.E.Range && !x.HasBuff("YasuoDashWrapper"));
 
             if (!SpellConfig.E.Ready || minion == null || minion.IsUnderEnemyTurret() || MenuConfig.LaneClear["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(2000) != 0)
             {
@@ -108,18 +109,22 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
             switch (MenuConfig.LaneClear["Mode"].Value)
             {
                 case 1:
-                    if (MenuConfig.LaneClear["EAA"].Enabled)
-                    {
-                        return;
-                    }
-                    SpellConfig.E.CastOnUnit(minion);
-                    break;
-                case 2:
+                 
                     if (minion.Health > Global.Player.GetSpellDamage(minion, SpellSlot.E))
                     {
                         return;
                     }
+
                     SpellConfig.E.CastOnUnit(minion);
+                    break;
+                case 2:
+                    if (MenuConfig.LaneClear["EAA"].Enabled)
+                    {
+                        return;
+                    }
+                
+                    SpellConfig.E.CastOnUnit(minion);
+                  
                     break;
             }
         }
