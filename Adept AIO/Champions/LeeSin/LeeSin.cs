@@ -254,7 +254,7 @@ namespace Adept_AIO.Champions.LeeSin
             ksR.OnValueChanged += (sender, args) => killsteal.REnabled = args.GetNewValue<MenuBool>().Value;
 
             var drawMenu = new Menu("Draw", "Drawings");
-            var drawSegments = new MenuSlider("Segments", "Segments", 200, 100, 300).SetToolTip("Smoothness of the circles. Less equals more FPS.");
+            var drawSegments = new MenuSlider("Segments", "Segments", 100, 100, 200).SetToolTip("Smoothness of the circles");
             var drawPosition = new MenuBool("Position", "Insec Position");
             var drawQ = new MenuBool("Q", "Q Range");
 

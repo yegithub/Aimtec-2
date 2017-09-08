@@ -56,7 +56,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 
             if (_serverPosition && _canUseQ)
             {
-                SpellConfig.Q.Cast(_unit.ServerPosition);
+                SpellConfig.Q.CastOnUnit(_unit);
             }
 
             if (_canUseQ && Extensions.DidJustAuto)

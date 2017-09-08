@@ -4,7 +4,7 @@ using Aimtec;
 
 namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents.Combo
 {
-    class MaximizeDmg
+    internal class MaximizeDmg
     {
         public static void OnPostAttack(Obj_AI_Base target)
         {

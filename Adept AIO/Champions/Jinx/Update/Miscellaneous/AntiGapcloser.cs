@@ -18,7 +18,7 @@ namespace Adept_AIO.Champions.Jinx.Update.Miscellaneous
 
         public void OnGapcloser(Obj_AI_Hero sender, GapcloserArgs args)
         {
-            if (sender.IsMe || !sender.IsEnemy || !_spellConfig.E.Ready || args.EndPosition.Distance(Global.Player) > _spellConfig.E.Range )
+            if (!sender.IsEnemy || !_spellConfig.E.Ready || args.EndPosition.Distance(Global.Player) > _spellConfig.E.Range )
             {
                 return;
             }

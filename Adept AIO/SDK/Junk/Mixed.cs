@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Drawing;
+using System.Linq;
 using Aimtec;
+using Aimtec.SDK.Damage;
 using Aimtec.SDK.Extensions;
 
 namespace Adept_AIO.SDK.Junk
@@ -22,6 +24,17 @@ namespace Adept_AIO.SDK.Junk
                         : new Vector3(14320, 151.9291f, 7235);
             }
             return Vector3.Zero;
+        }
+
+        private static readonly uint[] TearId =
+        {
+            ItemId.TearoftheGoddess, ItemId.Manamune, ItemId.ArchangelsStaff, ItemId.TearoftheGoddessQuickCharge,
+            ItemId.ArchangelsStaffQuickCharge
+        };
+
+        public static bool HasTear()
+        {
+            return TearId.Any(u => Global.Player.HasItem(u));
         }
 
         public static int PercentDmg(Obj_AI_Base target, double dmg)

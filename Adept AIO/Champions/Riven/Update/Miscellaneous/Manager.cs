@@ -54,7 +54,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                 Game.TickCount - Extensions.LastQCastAttempt >= 3580 + Game.Ping / 2 &&
                 Game.TickCount - Extensions.LastQCastAttempt <= 3700 + Game.Ping / 2) 
             {
-                SpellConfig.Q.Cast(Game.CursorPos);
+                SpellConfig.Q.Cast();
             }
 
         }

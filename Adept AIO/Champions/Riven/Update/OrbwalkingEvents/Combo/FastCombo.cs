@@ -6,7 +6,7 @@ using Aimtec.SDK.Extensions;
 
 namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents.Combo
 {
-    class FastCombo
+    internal class FastCombo
     {
         public static void OnPostAttack(Obj_AI_Base target)
         {

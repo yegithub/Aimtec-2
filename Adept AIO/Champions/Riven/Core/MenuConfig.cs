@@ -11,8 +11,7 @@ namespace Adept_AIO.Champions.Riven.Core
 {
     internal class MenuConfig
     {
-        private static Menu _mainMenu;
-
+       
         public static Menu Combo,
                            BurstMenu,
                            Harass,
@@ -26,8 +25,8 @@ namespace Adept_AIO.Champions.Riven.Core
 
         public static void Attach()
         {
-            _mainMenu = new Menu(string.Empty, "Adept AIO", true);
-            _mainMenu.Attach();
+            var mainMenu = new Menu(string.Empty, "Adept AIO", true);
+            mainMenu.Attach();
 
             FleeMode = new OrbwalkerMode("Flee", KeyCode.A, null, Flee.OnKeyPressed);
             BurstMode = new OrbwalkerMode("Burst", KeyCode.T, () => Global.TargetSelector.GetSelectedTarget(), Burst.OnUpdate);
@@ -38,8 +37,8 @@ namespace Adept_AIO.Champions.Riven.Core
             Global.Orbwalker.AddMode(BurstMode);
             Global.Orbwalker.AddMode(FleeMode);
 
-            Global.Orbwalker.Attach(_mainMenu);
-            Gapcloser.Attach(_mainMenu, "Anti Gapcloser");
+            Global.Orbwalker.Attach(mainMenu);
+            Gapcloser.Attach(mainMenu, "Anti Gapcloser");
 
             Combo = new Menu("Combo", "Combo")
             {
@@ -51,7 +50,7 @@ namespace Adept_AIO.Champions.Riven.Core
                 new MenuList("R",  "R1 Mode: ",  new []{"Never", "Always", "Killable"}, 2),
                 new MenuBool("R2", "Use R2")
             };
-
+                
             BurstMenu = new Menu("Burst", "Burst")
             {
                 new MenuSeperator("Note", "Select Target To Burst")
@@ -105,7 +104,7 @@ namespace Adept_AIO.Champions.Riven.Core
 
             Drawings = new Menu("Drawings", "Drawings")
             {
-                new MenuSlider("Segments", "Segments", 200, 100, 300).SetToolTip("Smoothness of the circles. Less equals more FPS."),
+                new MenuSlider("Segments", "Segments", 100, 100, 200).SetToolTip("Smoothness of the circles"),
                 new MenuBool("Dmg", "Damage"),
                 new MenuBool("Mouse", "Mouse Helper").SetToolTip("Shows where to put mouse to properly Q AA chase the target"),
                 new MenuBool("Target", "Draw Line At Target"),
@@ -125,7 +124,7 @@ namespace Adept_AIO.Champions.Riven.Core
                 Drawings,
                 Miscellaneous,
                 MenuShortcut.Credits
-            }) _mainMenu.Add(menu);
+            }) mainMenu.Add(menu);
         }
     }
 }

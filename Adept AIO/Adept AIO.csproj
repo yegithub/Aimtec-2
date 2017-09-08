@@ -54,6 +54,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrap.cs" />
+    <Compile Include="Champions\Ezreal\Core\Dmg.cs" />
+    <Compile Include="Champions\Ezreal\Core\MenuConfig.cs" />
+    <Compile Include="Champions\Ezreal\Core\SpellConfig.cs" />
+    <Compile Include="Champions\Ezreal\Drawings\DrawManager.cs" />
+    <Compile Include="Champions\Ezreal\Ezreal.cs" />
+    <Compile Include="Champions\Ezreal\Update\Miscellaneous\AntiGapcloser.cs" />
+    <Compile Include="Champions\Ezreal\Update\Miscellaneous\Killsteal.cs" />
+    <Compile Include="Champions\Ezreal\Update\Miscellaneous\Manager.cs" />
+    <Compile Include="Champions\Ezreal\Update\Miscellaneous\Misc.cs" />
+    <Compile Include="Champions\Ezreal\Update\OrbwalkingEvents\Combo.cs" />
+    <Compile Include="Champions\Ezreal\Update\OrbwalkingEvents\Harass.cs" />
+    <Compile Include="Champions\Ezreal\Update\OrbwalkingEvents\JungleClear.cs" />
+    <Compile Include="Champions\Ezreal\Update\OrbwalkingEvents\LaneClear.cs" />
     <Compile Include="Champions\Irelia\Core\Dmg.cs" />
     <Compile Include="Champions\Irelia\Core\MenuConfig.cs" />
     <Compile Include="Champions\Irelia\Core\SpellConfig.cs" />
@@ -218,5 +231,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

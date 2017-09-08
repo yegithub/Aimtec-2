@@ -73,7 +73,7 @@ namespace Adept_AIO.Champions.Tristana.Core
 
             Drawings = new Menu("Drawings", "Drawings")
             {
-                new MenuSlider("Segments", "Segments", 200, 50, 300).SetToolTip("Smoothness of the circles. Less equals more FPS."),
+                new MenuSlider("Segments", "Segments", 200, 50, 300).SetToolTip("Smoothness of the circles"),
                 new MenuBool("Dmg", "Damage"),
                 new MenuBool("W", "W Range")
             };

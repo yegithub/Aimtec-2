@@ -53,7 +53,7 @@ namespace Adept_AIO.Champions.Jax.Core
 
             Drawings = new Menu("Drawings", "Drawings")
             {
-                new MenuSlider("Segments", "Segments", 200, 100, 300).SetToolTip("Smoothness of the circles. Less equals more FPS."),
+                new MenuSlider("Segments", "Segments", 100, 100, 200).SetToolTip("Smoothness of the circles"),
                 new MenuBool("Q", "Draw Q Range"),
                 new MenuBool("E", "Draw E-Q Time"),
                 new MenuBool("Dmg", "Draw Damage"),

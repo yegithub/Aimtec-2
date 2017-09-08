@@ -11,7 +11,7 @@ namespace Adept_AIO.Champions.Riven.Core
         public static void Load()
         {
             Q = new Spell(SpellSlot.Q, 275);
-
+           
             W = new Spell(SpellSlot.W, 500);
             W.SetSkillshot(0.25f, 800, 1500, false, SkillshotType.Circle);
 

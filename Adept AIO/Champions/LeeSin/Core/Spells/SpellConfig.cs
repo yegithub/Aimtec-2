@@ -43,23 +43,22 @@ namespace Adept_AIO.Champions.LeeSin.Core.Spells
                 return;
             }
 
-            if (SummonerSpells.Smite == null || !SummonerSpells.Smite.Ready || SummonerSpells.Ammo("Smite") < 2 || objects.Count < 1)
+            if (SummonerSpells.Smite == null || !SummonerSpells.Smite.Ready || SummonerSpells.Ammo("Smite") < 2)
             {
                 return;
             }
 
-            foreach (var current in objects)
-            {
-                if (current == null || current.NetworkId == target.NetworkId ||
-                    current.Health > SummonerSpells.SmiteMonsters() ||
-                    current.ServerPosition.Distance(Global.Player) > SummonerSpells.Smite.Range)
-                {
-                    return;
-                }
+            var current = objects.FirstOrDefault();
 
-                SummonerSpells.Smite.CastOnUnit(current);
-                Global.Player.SpellBook.CastSpell(SpellSlot.Q, target.ServerPosition);
+            if (current == null || current.NetworkId == target.NetworkId ||
+                current.Health > SummonerSpells.SmiteMonsters() ||
+                current.ServerPosition.Distance(Global.Player) > SummonerSpells.Smite.Range)
+            {
+                return;
             }
+
+            SummonerSpells.Smite.CastOnUnit(current);
+            Global.Player.SpellBook.CastSpell(SpellSlot.Q, target.ServerPosition);
         }
 
         public Spell W { get; private set; }
