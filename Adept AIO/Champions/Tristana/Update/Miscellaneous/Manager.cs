@@ -32,9 +32,9 @@ namespace Adept_AIO.Champions.Tristana.Update.Miscellaneous
 
         public void OnUpdate()
         {
-            if (Global.Player.IsDead)
+            if (Global.Player.IsDead || Global.Orbwalker.IsWindingUp)
             {
-                return;
+                return; 
             }
 
             switch (Global.Orbwalker.Mode)

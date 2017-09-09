@@ -10,18 +10,19 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
     {
         public static void OnGapcloser(Obj_AI_Hero sender, GapcloserArgs args)
         {
-            if (!sender.IsEnemy || args.EndPosition.Distance(Global.Player) > SpellConfig.E.Range)
+            if (!sender.IsEnemy)
             {
                 return;
             }
 
             var pos = Global.Player.ServerPosition + (Global.Player.ServerPosition - args.EndPosition).Normalized();
 
-            if (SpellConfig.E.Ready)
+            if (SpellConfig.E.Ready && args.EndPosition.Distance(Global.Player) < SpellConfig.E.Range)
             {
                 SpellConfig.E.Cast(pos);
             }
-            else if (SpellConfig.W.Ready && args.EndPosition.Distance(Global.Player) <= SpellConfig.W.Range)
+            else if (SpellConfig.W.Ready
+                  && (args.EndPosition.Distance(Global.Player) <= SpellConfig.W.Range || args.EndPosition.Distance(Global.Player) <= SpellConfig.W.Range))
             {
                 SpellConfig.W.Cast();
             }

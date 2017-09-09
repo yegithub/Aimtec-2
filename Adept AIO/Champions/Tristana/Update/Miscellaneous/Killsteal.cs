@@ -20,8 +20,8 @@ namespace Adept_AIO.Champions.Tristana.Update.Miscellaneous
 
         public void OnUpdate()
         {
-            var target = GameObjects.EnemyHeroes.FirstOrDefault(x => x.Distance(Global.Player) < _spellConfig.FullRange);
-            if (target == null || !target.IsValid)
+            var target = GameObjects.EnemyHeroes.FirstOrDefault(x => x.Distance(Global.Player) < _spellConfig.FullRange + 65);
+            if (target == null || !target.IsValid || target.IsDead)
             {
                 return;
             }
@@ -36,10 +36,10 @@ namespace Adept_AIO.Champions.Tristana.Update.Miscellaneous
                     (Global.Player.GetSpellDamage(target, SpellSlot.R) + (target.HasBuff("TristanaECharge") ? Global.Player.GetSpellDamage(target, SpellSlot.E) : 0)))
                 {
                     _spellConfig.R.CastOnUnit(target);
-                    Global.Orbwalker.Attack(target);
+                    Global.Orbwalker.ForceTarget(target);
                 }
             }
-            else if(_spellConfig.W.Ready && target.Health < Global.Player.GetSpellDamage(target, SpellSlot.W) && _menuConfig.Killsteal["W"].Enabled)
+            else if(_spellConfig.W.Ready && target.Health < Global.Player.GetSpellDamage(target, SpellSlot.W) && _menuConfig.Killsteal["W"].Enabled && target.ServerPosition.CountEnemyHeroesInRange(1500) <= 2)
             {
                 _spellConfig.W.Cast(target);
             }

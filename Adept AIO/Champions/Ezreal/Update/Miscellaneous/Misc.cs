@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using Aimtec;
 using Aimtec.SDK.Orbwalking;
 using Aimtec.SDK.Util;
@@ -26,10 +27,10 @@ namespace Adept_AIO.Champions.Ezreal.Update.Miscellaneous
 
                 if (MenuConfig.Miscellaneous["TH"].Enabled)
                 {
-                    DelayAction.Queue(500, ()=>
-                        {
-                            SpellConfig.Q.Cast(objects != null ? objects.ServerPosition : Game.CursorPos);
-                        }, new CancellationToken(false));
+                    DelayAction.Queue(GetRandom.Next(400, 1200), ()=>
+                    {
+                        SpellConfig.Q.Cast(objects != null ? objects.ServerPosition : Game.CursorPos);
+                    }, new CancellationToken(false));
                 }
                 else
                 {

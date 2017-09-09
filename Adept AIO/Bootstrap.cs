@@ -36,6 +36,7 @@ namespace Adept_AIO
             SummonerSpells.Init();
             GameObjects.Init();
             Global.Init();
+            GetRandom.Init();
 
             switch (Global.Player.ChampionName)
             {

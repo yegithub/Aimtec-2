@@ -141,6 +141,7 @@
     <Compile Include="SDK\Delegates\TeleportType.cs" />
     <Compile Include="SDK\Junk\DamageIndicator.cs" />
     <Compile Include="SDK\Junk\Geometry.cs" />
+    <Compile Include="SDK\Junk\GetRandom.cs" />
     <Compile Include="SDK\Junk\IDmg.cs" />
     <Compile Include="Champions\LeeSin\Core\Insec Manager\IInsec Manager.cs" />
     <Compile Include="Champions\LeeSin\Core\Insec Manager\Insec Manager.cs" />
