@@ -8,24 +8,24 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
     {
         public static void OnProcessSpellCast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
         {
-            //if (!MenuConfig.Miscellaneous["Interrupt"].Enabled ||
-            //    args == null ||
-            //    args.Sender == null ||
-            //    sender == null ||
-            //    args.SpellData == null)
-            //{
-            //    return;
-            //}
-            
-            //if (SpellConfig.E.Ready && (TargetedSpells.Contains(args.SpellData.Name) || AntigapclosingSpells.Contains(args.SpellData.Name)) && args.Target.IsMe)
-            //{
-            //    SpellConfig.E.Cast(Game.CursorPos);
-            //}
-            //else if (SpellConfig.W.Ready && SpellManager.InsideKiBurst(args.End) &&
-            //    (AntigapclosingSpells.Contains(args.SpellData.Name) || InterrupterSpell.Contains(args.SpellData.Name)))
-            //{
-            //    SpellConfig.W.Cast();
-            //}
+            if (!MenuConfig.Miscellaneous["Interrupt"].Enabled ||
+                args == null ||
+                args.Sender == null ||
+                sender == null ||
+                args.SpellData == null)
+            {
+                return;
+            }
+
+            if (SpellConfig.E.Ready && (TargetedSpells.Contains(args.SpellData.Name) || AntigapclosingSpells.Contains(args.SpellData.Name)) && args.Target.IsMe)
+            {
+                SpellConfig.E.Cast(Game.CursorPos);
+            }
+            else if (SpellConfig.W.Ready && SpellManager.InsideKiBurst(args.End) &&
+                (AntigapclosingSpells.Contains(args.SpellData.Name) || InterrupterSpell.Contains(args.SpellData.Name)))
+            {
+                SpellConfig.W.Cast();
+            }
         }
 
         private static readonly string[] AntigapclosingSpells =
