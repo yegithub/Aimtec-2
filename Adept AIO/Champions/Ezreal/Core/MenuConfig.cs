@@ -67,6 +67,7 @@ namespace Adept_AIO.Champions.Ezreal.Core
             Miscellaneous = new Menu("Misc", "Miscellaneous")
             {
                 new MenuSliderBool("Stack", "Stack Tear (min. Mana%)", true, 80, 0, 100),
+                new MenuBool("TH", "Humanize Tear Stack", false),
                 new MenuBool("WT", "W When Attacking Turret").SetToolTip("Wont be activated when enemies are nearby")
             };
 

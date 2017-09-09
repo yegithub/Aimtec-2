@@ -1,5 +1,7 @@
-﻿using Aimtec;
+﻿using System.Threading;
+using Aimtec;
 using Aimtec.SDK.Orbwalking;
+using Aimtec.SDK.Util;
 
 namespace Adept_AIO.Champions.Ezreal.Update.Miscellaneous
 {
@@ -21,9 +23,17 @@ namespace Adept_AIO.Champions.Ezreal.Update.Miscellaneous
              && Mixed.HasTear())
             {
                 var objects = GameObjects.Enemy.FirstOrDefault(x => x.IsValidTarget(SpellConfig.Q.Range) && x.MaxHealth >= 10);
-                if (objects != null)
+
+                if (MenuConfig.Miscellaneous["TH"].Enabled)
                 {
-                    SpellConfig.Q.Cast(objects);
+                    DelayAction.Queue(500, ()=>
+                        {
+                            SpellConfig.Q.Cast(objects != null ? objects.ServerPosition : Game.CursorPos);
+                        }, new CancellationToken(false));
+                }
+                else
+                {
+                    SpellConfig.Q.Cast(objects != null ? objects.ServerPosition : Game.CursorPos);
                 }
             }
 

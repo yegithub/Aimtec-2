@@ -12,7 +12,7 @@ namespace Adept_AIO.Champions.Riven.Core
             switch (Enums.BurstPattern)
             {
                 case BurstPattern.TheShy:
-                    return SummonerSpells.Flash.Range + SpellConfig.W.Range + 35;
+                    return 700;
 
                 case BurstPattern.Execution:
                     return 800;

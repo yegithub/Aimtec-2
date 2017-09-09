@@ -53,7 +53,9 @@ namespace Adept_AIO.Champions.Riven.Core
                 
             BurstMenu = new Menu("Burst", "Burst")
             {
-                new MenuSeperator("Note", "Select Target To Burst")
+                new MenuSeperator("Note", "Select Target To Burst"),
+                new MenuList("Mode","Burst Mode:", new []{"Automatic", "The Shy", "Execution"}, 0),
+                new MenuSeperator("endmylife")
             };
             foreach (var hero in GameObjects.EnemyHeroes)
             {
