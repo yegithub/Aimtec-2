@@ -113,7 +113,7 @@ namespace Adept_BaseUlt.Manager
 
         private float TravelTime(Vector3 pos)
         {
-            return Global.Player.Distance(pos) / _speed * 1000 + _delay;
+            return Global.Player.Distance(pos) / _speed * 1000 + _delay + Game.Ping / 2f;
         }
 
         private float Damage()
