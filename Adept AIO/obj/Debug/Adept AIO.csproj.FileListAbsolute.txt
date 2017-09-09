@@ -9,3 +9,6 @@ C:\Users\Nechrito\Documents\GitHub\LeagueTec\Adept AIO\obj\Debug\Adept AIO.cspro
 C:\Users\Nechrito\Documents\GitHub\LeagueTec\Adept AIO\obj\Debug\Adept AIO.csproj.CoreCompileInputs.cache
 C:\Users\Nechrito\Documents\GitHub\LeagueTec\Adept AIO\obj\Debug\Adept AIO.exe
 C:\Users\Nechrito\Documents\GitHub\LeagueTec\Adept AIO\obj\Debug\Adept AIO.pdb
+C:\Users\Nechrito\Documents\GitHub\LeagueTec\Adept AIO\bin\Debug\Adept BaseUlt.exe
+C:\Users\Nechrito\Documents\GitHub\LeagueTec\Adept AIO\bin\Debug\Adept BaseUlt.pdb
+C:\Users\Nechrito\Documents\GitHub\LeagueTec\Adept AIO\bin\Debug\Adept BaseUlt.exe.config

@@ -71,7 +71,7 @@ namespace Adept_BaseUlt.Manager
 
         private void OnUpdate()
         {
-            if (_target == null || !_target.IsValid || !_ultimate.Ready || _target.Health > Global.Player.GetSpellDamage(_target, SpellSlot.R) * 0.9f)
+            if (_target == null || !_target.IsValid || !_ultimate.Ready || _target.Health > Damage())
             {
                 Reset();
                 return;
@@ -114,6 +114,18 @@ namespace Adept_BaseUlt.Manager
         private float TravelTime(Vector3 pos)
         {
             return Global.Player.Distance(pos) / _speed * 1000 + _delay;
+        }
+
+        private float Damage()
+        {
+            if (_target == null)
+            {
+                return 0;
+            }
+
+            var hpReg = _target.BaseHPRegenRate;
+            var dmg = (float)Global.Player.GetSpellDamage(_target, SpellSlot.R);
+            return Math.Min(dmg, dmg + hpReg * TravelTime(GetFountainPos(_target)) / 1000);
         }
 
         private static Vector3 GetFountainPos(GameObject target)

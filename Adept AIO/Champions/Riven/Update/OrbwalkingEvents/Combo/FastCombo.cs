@@ -18,7 +18,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents.Combo
                 SpellManager.CastR2(target);
             }
 
-            if (SpellManager.InsideKiBurst(target) && SpellConfig.W.Ready)
+            if (SpellManager.InsideKiBurst(target.ServerPosition, target.BoundingRadius) && SpellConfig.W.Ready)
             {
                 SpellConfig.W.Cast();
             }

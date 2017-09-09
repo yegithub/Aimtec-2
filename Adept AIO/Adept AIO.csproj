@@ -232,6 +232,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Adept BaseUlt\Adept BaseUlt.csproj">
+      <Project>{E00C6A6C-9D7A-49B3-87A5-056AC2F6B474}</Project>
+      <Name>Adept BaseUlt</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

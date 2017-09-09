@@ -17,12 +17,11 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 
             var pos = Global.Player.ServerPosition + (Global.Player.ServerPosition - args.EndPosition).Normalized();
 
-            if (SpellConfig.E.Ready && args.EndPosition.Distance(Global.Player) < SpellConfig.E.Range)
+            if (SpellConfig.E.Ready && args.EndPosition.Distance(Global.Player) < 65)
             {
                 SpellConfig.E.Cast(pos);
             }
-            else if (SpellConfig.W.Ready
-                  && (args.EndPosition.Distance(Global.Player) <= SpellConfig.W.Range || args.EndPosition.Distance(Global.Player) <= SpellConfig.W.Range))
+            else if (SpellConfig.W.Ready && SpellManager.InsideKiBurst(sender.ServerPosition, sender.BoundingRadius))
             {
                 SpellConfig.W.Cast();
             }

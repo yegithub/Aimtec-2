@@ -1,38 +1,39 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Aimtec;
+﻿using Aimtec;
 using Aimtec.SDK.Extensions;
 
 namespace Adept_AIO.SDK.Junk
 {
     internal class WallExtension
     {
-        private static bool HasFlag(IEnumerable<Vector3> pos)
+        private static bool HasFlag(Vector3 pos)
         {
-            return NavMesh.WorldToCell(pos.FirstOrDefault()).Flags.HasFlag(NavCellFlags.Wall | NavCellFlags.Building);
+            return NavMesh.WorldToCell(pos).Flags.HasFlag(NavCellFlags.Wall) || NavMesh.WorldToCell(pos).Flags.HasFlag(NavCellFlags.Building);
         }
 
-        public static List<Vector3> GeneratePoint(Vector3 start, Vector3 end)
+        public static Vector3 EndPoint = Vector3.Zero;
+
+        public static Vector3 GeneratePoint(Vector3 start, Vector3 end)
         {
             for (var i = 0; i < start.Distance(end); i++)
             {
-                var newPoint = new List<Vector3> {start.Extend(end, i)};
+                var newPoint = start.Extend(end, i);
               
                 if (HasFlag(newPoint))
                 {
+                    EndPoint = end.Extend(start, i);
                     return newPoint;
                 }
             }
-            return new List<Vector3> {Vector3.Zero};
+            return Vector3.Zero;
         }
 
-        public static float GetWallWidth(Vector3 start, Vector3 direction, int maxWallWidth = 300)
+        public static float GetWallWidth(Vector3 start, Vector3 direction, int maxWallWidth = 275)
         {
             var thickness = 0f;
 
             for (var i = 0; i < maxWallWidth; i++)
             {
-                if (HasFlag(new List<Vector3> {start.Extend(direction, i)}))
+                if (HasFlag(start.Extend(direction, i)))
                 {
                     thickness += i;
                 }

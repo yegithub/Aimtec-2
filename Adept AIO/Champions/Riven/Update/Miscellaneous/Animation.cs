@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Globalization;
+using System.Linq;
 using Adept_AIO.Champions.Riven.Core;
 using Adept_AIO.SDK.Junk;
 using Adept_AIO.SDK.Methods;
@@ -32,28 +34,10 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
         public static float GetDelay()
         {
             var level = Global.Player.Level;
-            var delay = Game.Ping / 2f + (Extensions.CurrentQCount == 1 ? 365 : 345);
+            var delay = Game.Ping / 2f + (Extensions.CurrentQCount == 1 ? 420 : 360);
 
-            delay -= 3.33f * level;
-
-            var unit = Global.Orbwalker.GetOrbwalkingTarget();
-
-            if (unit == null || !((Obj_AI_Base)unit).UnitSkinName.Contains("Crab") && !unit.IsBuilding())
-            {
-                return delay;
-            }
-
-            switch (Extensions.CurrentQCount)
-            {
-                case 1:
-                    delay *= 1.3f;
-                    break;
-                case 2:
-                case 3:
-                    delay *= 1.15f;
-                    break;
-            }
-
+            delay -= 3.3f * level;
+            DebugConsole.Print($"Delay: {delay} | Q: {Extensions.CurrentQCount}", ConsoleColor.Red);
             return delay;
         }
 

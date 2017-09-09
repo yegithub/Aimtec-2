@@ -151,7 +151,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents.Combo
 
             SummonerSpells.Flash.Cast(target);
 
-            if (SpellManager.InsideKiBurst(target))
+            if (SpellManager.InsideKiBurst(target.ServerPosition, target.BoundingRadius))
             {
                 SpellManager.CastW(target);
             }

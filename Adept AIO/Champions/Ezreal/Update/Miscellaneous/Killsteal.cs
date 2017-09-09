@@ -53,6 +53,7 @@ namespace Adept_AIO.Champions.Ezreal.Update.Miscellaneous
             else if (SpellConfig.R.Ready
                      && (target.Health < Global.Player.GetSpellDamage(target, SpellSlot.R) || target.Health < Global.Player.GetSpellDamage(target, SpellSlot.R, DamageStage.AreaOfEffect))
                      && target.IsValidTarget(MenuConfig.Killsteal["Range"].Value)
+                     && MenuConfig.Killsteal["Range"].Enabled
                      && target.Distance(Global.Player) > Global.Player.AttackRange + 250)
             {
                 SpellConfig.R.Cast(target);

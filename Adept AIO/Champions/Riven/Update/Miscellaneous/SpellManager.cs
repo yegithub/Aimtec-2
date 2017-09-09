@@ -61,7 +61,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 
             if (_canUseQ && Extensions.DidJustAuto)
             {
-                if (Extensions.CurrentQCount == 3 && Items.CanUseTiamat())
+                if (Items.CanUseTiamat() && Global.Player.IsFacingUnit(_unit) && Extensions.CurrentQCount != 2)
                 {
                     Items.CastTiamat(false);
                     DelayAction.Queue(230 + Game.Ping / 2,
@@ -104,44 +104,30 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                 return;
             }
 
-            _canUseW = InsideKiBurst(target);
+            _canUseW = InsideKiBurst(target.ServerPosition, target.BoundingRadius);
             _unit = target;  
         }
 
         public static void CastR2(Obj_AI_Base target)
         {
-            if (target.ValidActiveBuffs()
-                .Where(buff => Extensions.InvulnerableList.Contains(buff.Name))
-                .Any(buff => buff.Remaining > Time(target)))
+            if (target.ValidActiveBuffs().Any(buff => Extensions.InvulnerableList.Contains(buff.Name)))
             {
                 return;
             }
 
             SpellConfig.R2.Cast(target);
 
-            if (target.Distance(Global.Player) <= Global.Player.AttackRange)
+            if (target.IsValidTarget(Global.Player.AttackRange))
             {
                 Items.CastTiamat();
             }
         }
 
-        private static int Time(GameObject target)
-        {
-            return (int)(Global.Player.Distance(target) / (SpellConfig.R2.Speed * 1000 + SpellConfig.R2.Delay));
-        }
-
-        public static bool InsideKiBurst(GameObject target)
+        public static bool InsideKiBurst(Vector3 position, float extra = 0)
         {
             return Global.Player.HasBuff("RivenFengShuiEngine")
-                 ? Global.Player.Distance(target) <= 230 + target.BoundingRadius
-                 : Global.Player.Distance(target) <= 165 + target.BoundingRadius;
-        }
-
-        public static bool InsideKiBurst(Vector3 position)
-        {
-            return Global.Player.HasBuff("RivenFengShuiEngine")
-                ? Global.Player.Distance(position) <= 265
-                : Global.Player.Distance(position) <= 195;
+                 ? Global.Player.Distance(position) <= 135 + extra
+                 : Global.Player.Distance(position) <= 125 + extra;
         }
     }
 }

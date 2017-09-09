@@ -43,7 +43,7 @@ namespace Adept_AIO.Champions.Yasuo.Drawings
             {
                 if (KnockUpHelper.Sender != null)
                 {
-                    Render.Text(Geometry.To2D(KnockUpHelper.Sender.ServerPosition), Color.Yellow, (-(Game.TickCount - (KnockUpHelper.BuffStart + KnockUpHelper.BuffEnd))).ToString(CultureInfo.InvariantCulture));
+                    Render.Text(Geometry.TO2D(KnockUpHelper.Sender.ServerPosition), Color.Yellow, (-(Game.TickCount - (KnockUpHelper.BuffStart + KnockUpHelper.BuffEnd))).ToString(CultureInfo.InvariantCulture));
                 }
 
                 Render.WorldToScreen(Global.Player.Position, out var temp);

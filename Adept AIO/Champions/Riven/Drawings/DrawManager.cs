@@ -36,9 +36,15 @@ namespace Adept_AIO.Champions.Riven.Drawings
 
             if (MenuConfig.FleeMode.Active && !Extensions.FleePos.IsZero)
             {
-                Mixed.RenderArrowFromPlayer(Extensions.FleePos);
-
                 Render.Circle(Extensions.FleePos, 50, (uint)MenuConfig.Drawings["Segments"].Value, Color.White);
+
+                if (!WallExtension.EndPoint.IsZero)
+                {
+                    Render.WorldToScreen(Extensions.FleePos, out var startPointVector2);
+                    Render.WorldToScreen(WallExtension.EndPoint, out var endPointVector2);
+                    Render.Line(startPointVector2, endPointVector2, Color.Orange);
+                    Render.Circle(WallExtension.EndPoint, 50, (uint)MenuConfig.Drawings["Segments"].Value, Color.White);
+                }
             }
 
             if (MenuConfig.Drawings["Mouse"].Enabled && Global.Orbwalker.Mode != OrbwalkingMode.None)
@@ -53,28 +59,28 @@ namespace Adept_AIO.Champions.Riven.Drawings
                 }
             }
          
-            if (MenuConfig.Drawings["Harass"].Enabled && Global.Orbwalker.Mode == OrbwalkingMode.Mixed)
+            if (MenuConfig.Drawings["Pattern"].Enabled)
             {
-                Mixed.RenderArrowFromPlayer(Global.TargetSelector.GetTarget(Extensions.EngageRange + 800));
-
                 Render.WorldToScreen(Global.Player.Position, out var playerV2);
-                Render.Text(new Vector2(playerV2.X - 65, playerV2.Y + 30), Color.Aqua, "PATTERN: " + Enums.Current);
-            }
 
-            if (Global.Orbwalker.Mode == OrbwalkingMode.Combo)
-            {
-                Mixed.RenderArrowFromPlayer(Global.TargetSelector.GetTarget(Extensions.EngageRange + 800));
+                if (MenuConfig.BurstMode.Active)
+                {
+                    Mixed.RenderArrowFromPlayer(Global.TargetSelector.GetSelectedTarget());
+                    Render.Text(new Vector2(playerV2.X - 65, playerV2.Y + 30), Color.Aqua, "PATTERN: " + Enums.BurstPattern);
+                }
 
-                Render.WorldToScreen(Global.Player.Position, out var playerV2);             
-                Render.Text(new Vector2(playerV2.X - 65, playerV2.Y + 30), Color.Aqua, "PATTERN: " + Enums.ComboPattern);
-            }
+                switch (Global.Orbwalker.Mode)
+                {
+                    case OrbwalkingMode.Combo:
+                        Mixed.RenderArrowFromPlayer(Global.TargetSelector.GetTarget(Extensions.EngageRange + 800));
+                        Render.Text(new Vector2(playerV2.X - 65, playerV2.Y + 30), Color.Aqua, "PATTERN: " + Enums.ComboPattern);
+                        break;
 
-            if (MenuConfig.BurstMode.Active)
-            {
-                Mixed.RenderArrowFromPlayer(Global.TargetSelector.GetSelectedTarget());
-
-                Render.WorldToScreen(Global.Player.Position, out var playerV2);
-                Render.Text(new Vector2(playerV2.X - 65, playerV2.Y + 30), Color.Aqua, "PATTERN: " + Enums.BurstPattern);
+                    case OrbwalkingMode.Mixed:
+                        Mixed.RenderArrowFromPlayer(Global.TargetSelector.GetTarget(Extensions.EngageRange + 800));
+                        Render.Text(new Vector2(playerV2.X - 65, playerV2.Y + 30), Color.Aqua, "PATTERN: " + Enums.Current);
+                        break;
+                }
             }
 
             if (MenuConfig.Drawings["Engage"].Enabled)
@@ -95,25 +101,6 @@ namespace Adept_AIO.Champions.Riven.Drawings
             {
                 Render.Circle(Global.Player.Position, SpellConfig.R2.Range, (uint)MenuConfig.Drawings["Segments"].Value, Color.OrangeRed);
             }
-        }
-
-        private static void RenderArrow(GameObject target)
-        {
-            if (!MenuConfig.Drawings["Target"].Enabled || target == null)
-            {
-                return;
-            }
-
-            var extended = Global.Player.ServerPosition.Extend(target.ServerPosition, target.Distance(Global.Player));
-            Render.WorldToScreen(extended, out var extendedVector2);
-            Render.WorldToScreen(Global.Player.Position, out var playerV2);
-
-            var arrowLine1 = extendedVector2 + (playerV2 - extendedVector2).Normalized().Rotated(40 * (float)Math.PI / 180) * 65;
-            var arrowLine2 = extendedVector2 + (playerV2 - extendedVector2).Normalized().Rotated(-40 * (float)Math.PI / 180) * 65;
-
-            Render.Line(extendedVector2, arrowLine1, Color.White);
-            Render.Line(extendedVector2, arrowLine2, Color.White);
-            Render.Line(playerV2, extendedVector2, Color.Orange);
         }
     }
 }

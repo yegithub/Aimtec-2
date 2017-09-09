@@ -112,7 +112,7 @@ namespace Adept_AIO.Champions.Riven.Core
                 new MenuBool("Target", "Draw Line At Target"),
                 new MenuBool("Engage", "Engage Range"),
                 new MenuBool("R2", "R2 Range", false),
-                new MenuBool("Harass", "Harass Pattern")
+                new MenuBool("Pattern", "Current Pattern")
             };
 
             foreach (var menu in new List<Menu>
