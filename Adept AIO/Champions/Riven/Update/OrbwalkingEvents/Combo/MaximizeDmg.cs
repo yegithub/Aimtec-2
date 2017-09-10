@@ -1,6 +1,7 @@
 ﻿using Adept_AIO.Champions.Riven.Core;
 using Adept_AIO.Champions.Riven.Update.Miscellaneous;
 using Aimtec;
+using Aimtec.SDK.Extensions;
 
 namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents.Combo
 {
@@ -33,7 +34,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents.Combo
             {
                 SpellConfig.R.Cast();
             }
-            else if (SpellConfig.R2.Ready && Enums.UltimateMode == UltimateMode.Second && !SpellConfig.W.Ready)
+            else if (SpellConfig.R2.Ready && Enums.UltimateMode == UltimateMode.Second && !SpellConfig.W.Ready && target.HealthPercent() <= 30)
             {
                 SpellManager.CastR2(target);
             }

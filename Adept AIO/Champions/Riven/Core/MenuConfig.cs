@@ -91,7 +91,6 @@ namespace Adept_AIO.Champions.Riven.Core
             Killsteal = new Menu("Killsteal", "Killsteal")
             {
                 new MenuBool("Ignite", "Ignite"),
-                new MenuBool("Items", "Items"),
                 new MenuBool("Q", "Q"),
                 new MenuBool("W", "W"),
                 new MenuBool("R2", "R2"),

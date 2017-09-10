@@ -21,18 +21,21 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 
             if (SpellConfig.R2.Ready
                 && Enums.UltimateMode == UltimateMode.Second
-                && MenuConfig.Killsteal["R2"].Enabled 
-                && (target.Health <= Global.Player.GetSpellDamage(target, SpellSlot.R) ||
-                target.Health <= Global.Player.GetSpellDamage(target, SpellSlot.R) +
-                Global.Player.GetAutoAttackDamage(target) &&
-                target.Distance(Global.Player) <= Global.Player.AttackRange))
+                && MenuConfig.Killsteal["R2"].Enabled)
             {
-                SpellConfig.R2.Cast(target);
+                var killable = target.Health <= Global.Player.GetSpellDamage(target, SpellSlot.R) 
+                            || target.Health <= Global.Player.GetSpellDamage(target, SpellSlot.R) +
+                               Global.Player.GetAutoAttackDamage(target) && target.Distance(Global.Player) <= Global.Player.AttackRange;
+
+                if (killable)
+                {
+                    SpellConfig.R2.Cast(target);
+                }
             }
             else if (SpellConfig.W.Ready
                 && MenuConfig.Killsteal["W"].Enabled
                 && target.Health <= Global.Player.GetSpellDamage(target, SpellSlot.W)
-                && target.Distance(Global.Player) <= SpellConfig.W.Range)
+                && SpellManager.InsideKiBurst(target.ServerPosition, target.BoundingRadius))
             {
                 SpellManager.CastW(target);
             }
@@ -43,13 +46,10 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
             {
                 SpellManager.CastQ(target);
             }
-            else if (MenuConfig.Killsteal["Items"].Enabled && Global.Player.HealthPercent() <= 5)
+         
+            if (MenuConfig.Killsteal["Ignite"].Enabled && SummonerSpells.IsValid(SummonerSpells.Ignite) && target.Health < SummonerSpells.IgniteDamage(target))
             {
-                Items.CastTiamat();
-            }
-            else if (MenuConfig.Killsteal["Ignite"].Enabled && SummonerSpells.IsValid(SummonerSpells.Ignite) && target.Health < SummonerSpells.IgniteDamage(target))
-            {
-                SummonerSpells.Ignite.Cast(target);
+                SummonerSpells.Ignite.CastOnUnit(target);
             }
         }
     }

@@ -8,31 +8,27 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
     {
         public static void OnProcessSpellCast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
         {
-            if (!MenuConfig.Miscellaneous["Interrupt"].Enabled ||
-                args == null ||
-                args.Sender == null ||
-                sender == null ||
-                args.SpellData == null)
+            if (!MenuConfig.Miscellaneous["Interrupt"].Enabled || sender == null)
             {
                 return;
             }
 
-            if (SpellConfig.E.Ready && (TargetedSpells.Contains(args.SpellData.Name) || AntigapclosingSpells.Contains(args.SpellData.Name)) && args.Target.IsMe)
+            if (SpellConfig.E.Ready && (TargetedSpells.Contains(args.SpellData.Name) || DamageSpells.Contains(args.SpellData.Name)) && args.Target.IsMe)
             {
                 SpellConfig.E.Cast(Game.CursorPos);
             }
-            else if (SpellConfig.W.Ready && SpellManager.InsideKiBurst(args.End) &&
-                (AntigapclosingSpells.Contains(args.SpellData.Name) || InterrupterSpell.Contains(args.SpellData.Name)))
+
+            if (SpellConfig.W.Ready && SpellManager.InsideKiBurst(sender.ServerPosition, sender.BoundingRadius) && InterrupterSpell.Contains(args.SpellData.Name))
             {
                 SpellConfig.W.Cast();
             }
         }
 
-        private static readonly string[] AntigapclosingSpells =
+        private static readonly string[] DamageSpells =
         {
             "MonkeyKingSpinToWin", "KatarinaRTrigger", "HungeringStrike",
             "TwitchEParticle", "RengarPassiveBuffDashAADummy",
-            "RengarPassiveBuffDash", "IreliaEquilibriumStrike",
+            "RengarPassiveBuffDash",
             "BraumBasicAttackPassiveOverride", "gnarwproc",
             "hecarimrampattack", "illaoiwattack", "JaxEmpowerTwo",
             "JayceThunderingBlow", "RenektonSuperExecute",
@@ -49,7 +45,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 
         private static readonly string[] InterrupterSpell =
         {
-            "RenektonPreExecute", "TalonCutthroat", "IreliaEquilibriumStrike",
+            "RenektonPreExecute", "TalonCutthroat",
             "XenZhaoThrust3", "KatarinaRTrigger", "KatarinaE",
         };
     }

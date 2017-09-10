@@ -108,9 +108,11 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
             _unit = target;  
         }
 
+        private static readonly string[] InvulnerableList = { "FioraW", "kindrednodeathbuff", "Undying Rage", "JudicatorIntervention" };
+
         public static void CastR2(Obj_AI_Base target)
         {
-            if (target.ValidActiveBuffs().Any(buff => Extensions.InvulnerableList.Contains(buff.Name)))
+            if (target.ValidActiveBuffs().Any(buff => InvulnerableList.Contains(buff.Name)))
             {
                 return;
             }

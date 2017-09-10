@@ -12,10 +12,10 @@ namespace Adept_AIO.Champions.Riven.Core
             switch (Enums.BurstPattern)
             {
                 case BurstPattern.TheShy:
-                    return 700;
+                    return 650;
 
                 case BurstPattern.Execution:
-                    return 800;
+                    return 750;
 
                 default: throw new ArgumentOutOfRangeException();
             }
@@ -57,6 +57,6 @@ namespace Adept_AIO.Champions.Riven.Core
 
         public static Vector3 FleePos;
 
-        public static string[] InvulnerableList = { "FioraW", "kindrednodeathbuff", "Undying Rage", "JudicatorIntervention" };
+        
     }
 }

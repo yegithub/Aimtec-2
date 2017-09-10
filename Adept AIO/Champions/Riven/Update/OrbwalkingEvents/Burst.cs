@@ -68,43 +68,33 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
                 return;
             }
 
+            if (SpellConfig.R.Ready
+                && Enums.UltimateMode == UltimateMode.First
+                && SpellConfig.E.Ready)
+            {
+                SpellConfig.E.Cast(target.ServerPosition);
+                SpellConfig.R.Cast();
+            }
+            else if (SpellConfig.E.Ready)
+            {
+                SpellConfig.E.Cast(target.ServerPosition);
+            }
+
+
             switch (Enums.BurstPattern)
             {
                 case BurstPattern.TheShy:
 
                     if (Extensions.AllIn)
                     {
-                       
-                        if (SpellConfig.R.Ready
-                         && Enums.UltimateMode == UltimateMode.First
-                         && SpellConfig.E.Ready)
-                        {
-                            SpellConfig.E.Cast(target.ServerPosition);
-                            SpellConfig.R.Cast();
-                        }
-
-                        if (SpellConfig.W.Ready && SpellConfig.R.Ready && SummonerSpells.IsValid(SummonerSpells.Flash))
+                        if (SpellConfig.W.Ready && SummonerSpells.IsValid(SummonerSpells.Flash))
                         {
                             Global.Player.SpellBook.CastSpell(SpellSlot.W);
                             DelayAction.Queue(250, ()=> SummonerSpells.Flash.Cast(target.ServerPosition.Extend(Global.Player.ServerPosition, 150 + target.BoundingRadius)));
                         }
-                        else if (SpellConfig.E.Ready)
-                        {
-                            SpellConfig.E.Cast(target);
-                        }
                     }
                     else if (target.IsValidTarget(SpellConfig.E.Range + Global.Player.AttackRange))
                     {
-                        if (SpellConfig.E.Ready)
-                        {
-                            SpellConfig.E.Cast(target.ServerPosition);
-
-                            if (SpellConfig.R.Ready && Enums.UltimateMode == UltimateMode.First)
-                            {
-                                SpellConfig.R.Cast();
-                            }
-                        }
-
                         if (SpellConfig.W.Ready)
                         {
                             SpellManager.CastW(target);
@@ -115,7 +105,11 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
 
                 case BurstPattern.Execution:
 
-                    if (SpellConfig.E.Ready && Enums.UltimateMode == UltimateMode.Second && Game.TickCount - SpellConfig.R.LastCastAttemptT >= 1100)
+                    if (SpellConfig.R.Ready && Enums.UltimateMode == UltimateMode.First)
+                    {
+                        SpellConfig.R.Cast();
+                    }
+                    else if (SpellConfig.E.Ready && Enums.UltimateMode == UltimateMode.Second && Game.TickCount - SpellConfig.R.LastCastAttemptT >= 1100)
                     {
                         SpellConfig.E.Cast(target.ServerPosition);
                         SpellConfig.R2.Cast(target.ServerPosition);
