@@ -9,6 +9,7 @@ namespace Adept_AIO.SDK.Junk
         {
             new MenuSeperator("WhyAreYouReadingThis", "Written by: Nechrito | Haki | Adept"),
             new MenuSeperator("ThisStringIsUtterlyUseless", "Platform: LeageTec 2017"),
+            new MenuSeperator("pp", "Paypal: Nechrito@live.se")
         };
     }
 }

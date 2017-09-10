@@ -34,9 +34,10 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
         public static float GetDelay()
         {
             var level = Global.Player.Level;
-            var delay = Game.Ping / 2f + (Extensions.CurrentQCount == 1 ? 380 : 360);
+            var delay = Extensions.CurrentQCount == 1 ? 415f : 385f;
 
-            delay -= 3.333f * level;
+            delay -= (Extensions.CurrentQCount != 1 ? 3.333f : 2.9f) * level;
+
             DebugConsole.Print($"Delay: {delay} | Q: {Extensions.CurrentQCount}", ConsoleColor.Red);
             return delay;
         }
@@ -51,13 +52,13 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
             switch (args.Animation)
             {
                 case "Spell1a":
-                    Extensions.CurrentQCount = 2;
+                    Extensions.CurrentQCount = 2; // Q1
                     break;
                 case "Spell1b":
-                    Extensions.CurrentQCount = 3;
+                    Extensions.CurrentQCount = 3; // Q2
                     break;
                 case "Spell1c":
-                    Extensions.CurrentQCount = 1;
+                    Extensions.CurrentQCount = 1; // Q3 
                     break;
             }
         }

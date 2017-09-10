@@ -66,6 +66,7 @@ namespace Adept_AIO.Champions.Riven.Core
             {
                 new MenuList("Mode", "Mode: ", new []{"Automatic", "Semi Combo", "Q3 To Safety", "Q3 To Target"}, 0),
                 new MenuList("Dodge", "Dodge: ", new []{"Turret", "Cursor", "Away From Target"}, 0),
+                new MenuSeperator("Whitelist", "Whitelist")
             };
             foreach (var hero in GameObjects.EnemyHeroes)
             {

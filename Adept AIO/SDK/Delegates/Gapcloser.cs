@@ -86,7 +86,7 @@ namespace Adept_AIO.SDK.Delegates
 
                 foreach (var spell in Spells.Where(x => x.ChampionName == enemy.ChampionName))
                 {
-                    heroMenu.Add(new MenuBool(spell.SpellName, "Anti Slot: " + spell.Slot + "(" + spell.SpellName + ")"));
+                    heroMenu.Add(new MenuBool(spell.SpellName, "Spell: " + spell.Slot + " (" + spell.SpellName + ")"));
                 }
             }
 
