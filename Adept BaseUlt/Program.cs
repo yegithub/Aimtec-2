@@ -1,6 +1,8 @@
 ﻿using Adept_BaseUlt.Local_SDK;
 using Adept_BaseUlt.Manager;
 using Aimtec.SDK.Events;
+using Aimtec.SDK.Menu;
+using Aimtec.SDK.Menu.Components;
 
 namespace Adept_BaseUlt
 {
