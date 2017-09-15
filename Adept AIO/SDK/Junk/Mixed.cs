@@ -37,6 +37,11 @@ namespace Adept_AIO.SDK.Junk
             return TearId.Any(u => Global.Player.HasItem(u));
         }
 
+        public static bool KillableBySpell(Obj_AI_Base target, Aimtec.SDK.Spell spell)
+        {
+            return (int) (target.Distance(Global.Player) - target.BoundingRadius - Global.Player.BoundingRadius / spell.Speed) < target.Health;
+        }
+
         public static int PercentDmg(Obj_AI_Base target, double dmg)
         {
             return (int)(dmg / target.Health * 100);

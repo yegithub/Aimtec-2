@@ -70,7 +70,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Insec
         && !x.IsDead 
         && x.IsValid
         && x.NetworkId != Target.NetworkId 
-        && x.HealthPercent() > 40
+        && !Mixed.KillableBySpell(x, _spellConfig.Q)
         && x.MaxHealth > 7
         && Global.Player.Distance(x) <= _spellConfig.Q.Range 
         && x.Distance(GetInsecPosition()) < Global.Player.Distance(GetInsecPosition()));
@@ -106,7 +106,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Insec
 
             if (_spellConfig.R.Ready)
             {
-                if (Target.IsValidTarget(_spellConfig.R.Range) && GetInsecPosition().Distance(Global.Player) <= 300 && (_wardTracker.DidJustWard || Game.TickCount - SummonerSpells.Flash.LastCastAttemptT <= 1000))
+                if (Target.IsValidTarget(_spellConfig.R.Range) && (_wardTracker.DidJustWard || Game.TickCount - SummonerSpells.Flash.LastCastAttemptT <= 1000 || GetInsecPosition().Distance(Global.Player) <= 200))
                 {
                     _spellConfig.R.CastOnUnit(Target);
                 }

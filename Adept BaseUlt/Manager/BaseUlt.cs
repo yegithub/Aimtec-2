@@ -1,4 +1,7 @@
-﻿namespace Adept_BaseUlt.Manager
+﻿using System.Threading;
+using Aimtec.SDK.Util;
+
+namespace Adept_BaseUlt.Manager
 {
     using System.Collections.Generic;
     using Aimtec;
@@ -26,13 +29,12 @@
         private int _timeUntilCastingUlt = -1;
 
         private int _lastSeenTick;
-        private int _lastSeenId;
 
         private Vector3 _lastSeenPosition;
         private Vector3 _predictedPosition;
         private Vector3 _castPos;
 
-        private int _recallTick;
+        private int _recallStartTick;
         private float _recallTime;
 
         private Obj_AI_Hero _target;
@@ -51,7 +53,11 @@
             AttatchMenu();
             Global.Init();
 
-            hotfixDirection = new List<Obj_AI_Hero>();
+            lastEnemyChecked = new List<Obj_AI_Hero>();
+            foreach (var enemies in GameObjects.EnemyHeroes)
+            {
+                lastEnemyChecked.Add(enemies);
+            }
 
             Teleport.OnTeleport += OnTeleport;
             Game.OnUpdate += OnUpdate;
@@ -74,6 +80,9 @@
             {
                 Menu.Add(new MenuBool(hero.ChampionName, "ULT: " + hero.ChampionName));
             }
+
+            Menu.Add(new MenuSeperator("no"));
+            Menu.Add(new MenuSlider("Distance", "Max Distance | RandomUlt", 2000, 500, 4000));
         }
 
         private void OnTeleport(Obj_AI_Base sender, Teleport.TeleportEventArgs args)
@@ -97,60 +106,51 @@
             }
         }
 
-        private readonly List<Obj_AI_Hero> hotfixDirection;
-        private int hotfixTick;
+        private readonly List<Obj_AI_Hero> lastEnemyChecked;
 
         private void OnUpdate()
         {
             if (Menu["RandomUlt"].Enabled)
             {
-                foreach (var enemy in GameObjects.EnemyHeroes.Where(x =>
+               
+                foreach (var enemy in lastEnemyChecked.Where(x =>
                     x.IsFloatingHealthBarActive && !x.IsDead && x.IsValidTarget()))
                 {
-                    if (Game.TickCount - hotfixTick <= 80)
+                    if (Game.TickCount - _lastSeenTick <= Game.Ping / 2f)
                     {
-                        continue;
+                        return;
                     }
 
                     _lastSeenTick = Game.TickCount;
-                    _lastSeenId = enemy.NetworkId;
                     _lastSeenPosition = enemy.ServerPosition;
-
-                    hotfixDirection.Add(enemy);
-                    hotfixTick = Game.TickCount;
-                }
-
-                if (hotfixDirection.Count >= 5)
-                {
-                    hotfixDirection.Clear();
                 }
             }
-
-            if (_target == null || !Menu[_target.ChampionName].Enabled || !_target.IsValid || !_ultimate.Ready ||
-                _target.Health > Damage())
+       
+            if (_target == null
+             || !Menu[_target.ChampionName].Enabled
+             || !_target.IsValid
+             || !_ultimate.Ready
+             || _target.Health > Damage())
             {
                 return;
             }
 
-            var fountainPos = GetFountainPos(_target);
-
             if (Menu["RandomUlt"].Enabled)
             {
-                var hotfixID = hotfixDirection.FirstOrDefault(x => x.NetworkId == _target.NetworkId);
-                if (hotfixID == null)
+                var enemy = lastEnemyChecked.FirstOrDefault(x => x.NetworkId == _target.NetworkId);
+                if (enemy == null)
                 {
                     return;
                 }
 
-                var direction = _target.ServerPosition +
-                                (_target.ServerPosition - hotfixID.ServerPosition).Normalized();
-                _predictedPosition = _target.ServerPosition.Extend(direction,
-                    _target.MoveSpeed * ((_lastSeenTick - _recallTick) / 1000f));
+                var direction = _target.ServerPosition + (_target.ServerPosition - enemy.ServerPosition).Normalized() * _target.BoundingRadius;
+                _predictedPosition = enemy.ServerPosition.Extend(direction, (_recallStartTick - _lastSeenTick) / 1000f * enemy.MoveSpeed);
 
-                var distance = (_recallTick - _lastSeenTick) / 1000f * _target.MoveSpeed;
+                var distance = (_recallStartTick - _lastSeenTick) / 1000f * _target.MoveSpeed;
+               
                 _castPos = _lastSeenPosition.Extend(_predictedPosition, distance);
 
-                if (distance > 2200 || Global.Player.Distance(fountainPos) < Global.Player.Distance(_castPos))
+                if (distance > Menu["Distance"].Value)
                 {
                     return;
                 }
@@ -160,9 +160,9 @@
             }
             else
             {
-                _timeUntilCastingUlt = GetCastTime(fountainPos);
+                _timeUntilCastingUlt = GetCastTime(GetFountainPos(_target));
 
-                if (_timeUntilCastingUlt <= Game.Ping / 2f + 30)
+                if (_timeUntilCastingUlt <= Game.Ping)
                 {
                     CastUlt(GetFountainPos(_target));
                 }
@@ -181,46 +181,50 @@
             }
 
             Console.WriteLine($"BASEULT SUCCESS | {_target.ChampionName}");
+
+            DelayAction.Queue(1500, () =>
+            {
+                _lastSeenPosition = Vector3.Zero;
+                _predictedPosition = Vector3.Zero;
+                _castPos = Vector3.Zero;
+            }, new CancellationToken(false));
+
             _ultimate.Cast(pos);
+
             Reset();
         }
 
         private int GetCastTime(Vector3 pos)
         {
-            return (int) (-(Game.TickCount - (_recallTick + _recallTime)) - TravelTime(pos));
+            return (int) (-(Game.TickCount - (_recallStartTick + _recallTime)) - TravelTime(pos));
         }
 
         private void OnRender()
         {
-            if (_target == null)
-            {
-                return;
-            }
-
-            if (_timeUntilCastingUlt != -1)
-            {
-                var ts = TimeSpan.FromMilliseconds(_timeUntilCastingUlt);
-                Render.WorldToScreen(Global.Player.ServerPosition, out var player);
-                Render.Text(new Vector2(player.X - 60, player.Y + 70), Color.Cyan,
-                    $"Ulting ({_target.ChampionName}) In {ts.Seconds}:{ts.Milliseconds / 10}");
-            }
-
-            if (!_castPos.IsZero)
-            {
-                Render.Circle(_castPos, 50, 100, Color.Red);
-            }
-
-            if (!_lastSeenPosition.IsZero)
+            if (_lastSeenPosition != Vector3.Zero && _castPos != Vector3.Zero)
             {
                 Render.Circle(_lastSeenPosition, 50, 100, Color.White);
-            }
+                Render.Circle(_castPos, _width, 100, Color.Red);
 
-            if (_castPos != Vector3.Zero && _lastSeenPosition != Vector3.Zero)
-            {
+                Render.WorldToScreen(_castPos, out var castVector2);
+                Render.Text(castVector2, Color.White, "Random Ult");
+
                 Render.WorldToScreen(_lastSeenPosition, out var lsV2);
                 Render.WorldToScreen(_castPos, out var ppV2);
                 Render.Line(lsV2, ppV2, Color.Orange);
             }
+
+            if (_timeUntilCastingUlt == -1 || _target == null)
+            {
+                return;
+            }
+
+            var ts = TimeSpan.FromMilliseconds(_timeUntilCastingUlt);
+
+            Render.WorldToScreen(Global.Player.ServerPosition, out var player);
+
+            Render.Text(new Vector2(player.X - 60, player.Y + 70), Color.Cyan,
+                $"Ulting ({_target.ChampionName}) In {ts.Seconds}:{ts.Milliseconds / 10}");
         }
 
         private float TravelTime(Vector3 pos)
@@ -260,7 +264,7 @@
         private void Set(float recall, int tickCount, Obj_AI_Hero target, int timeUntilCastingUlt = -1)
         {
             _recallTime = recall;
-            _recallTick = tickCount;
+            _recallStartTick = tickCount;
             _target = target;
             _timeUntilCastingUlt = timeUntilCastingUlt;
         }
@@ -268,7 +272,7 @@
         private void Reset()
         {
             _recallTime = 0;
-            _recallTick = 0;
+            _recallStartTick = 0;
             _target = null;
             _timeUntilCastingUlt = -1;
         }

@@ -24,7 +24,7 @@ namespace Adept_BaseUlt
                         new BaseUlt(2000, 160, 1000);
                         break;
                     case "Jinx":
-                        new BaseUlt(2200, 140, 550, 1);
+                        new BaseUlt(2200, 140, 500, 1);
                         break;
                     case "Karthus":
                         new BaseUlt(int.MaxValue, int.MaxValue, 3000);
