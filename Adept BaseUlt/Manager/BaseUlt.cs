@@ -262,9 +262,14 @@ namespace Adept_BaseUlt.Manager
             }
 
             var hpReg = _target.HPRegenRate;
+
             Console.WriteLine($"BaseHPRegenRate: {_target.BaseHPRegenRate} | HPRegenRate: {_target.HPRegenRate}");
+
             var dmg = (float)Global.Player.GetSpellDamage(_target, SpellSlot.R);
-            return Math.Min(dmg, dmg + hpReg * TravelTime(GetFountainPos(_target)) / 1000);
+            var final = Math.Min(dmg, dmg + hpReg * TravelTime(GetFountainPos(_target)) / 1000);
+
+            Console.WriteLine($"KILLABLE: {final > _target.Health}");
+            return final;
         }
 
         private static Vector3 GetFountainPos(GameObject target)
