@@ -1,4 +1,5 @@
 ﻿using System.Threading;
+using Aimtec.SDK.Damage.JSON;
 using Aimtec.SDK.Util;
 
 namespace Adept_BaseUlt.Manager
@@ -234,6 +235,7 @@ namespace Adept_BaseUlt.Manager
                         16, false, Color.LightSeaGreen);
 
             var temp = TravelTime(GetFountainPos(_target)) / 100 + 60; //Todo: I'm noob and don't know how to make this work properly. 
+
             Render.Line(xpos + 5 + temp,
                         80,
                         xpos + 10 + temp,
@@ -260,14 +262,14 @@ namespace Adept_BaseUlt.Manager
                 return 0;
             }
 
-            var hpReg = _target.HPRegenRate;
+            var hpReg = _target.BaseHPRegenRate;
 
            // Console.WriteLine($"BaseHPRegenRate: {_target.BaseHPRegenRate} | HPRegenRate: {_target.HPRegenRate}");
 
            // var dmg = (float)Global.Player.GetSpellDamage(_target, SpellSlot.R);
-            var final = Math.Min(_target.Health, _target.Health + hpReg * (_lastSeenTick / 1000f + TravelTime(GetFountainPos(_target)) / 1000));
+            var final = _target.Health + hpReg * (_lastSeenTick / 1000f + TravelTime(GetFountainPos(_target)) / 1000);
 
-           // Console.WriteLine($"KILLABLE: {final > _target.Health}");
+            Console.WriteLine($"Health: {final} DMG: {Global.Player.GetSpellDamage(_target, SpellSlot.R)}");
             return final;
         }
 
