@@ -32,8 +32,7 @@ namespace Adept_BaseUlt.Manager
 
         private Vector3 _lastSeenPosition;
         private Vector3 _predictedPosition;
-        private Vector3 _castPos;
-
+     
         private int _recallStartTick;
         private float _recallTime;
 
@@ -132,8 +131,7 @@ namespace Adept_BaseUlt.Manager
 
             if (_target == null
              || !Menu[_target.ChampionName].Enabled
-             || !_ultimate.Ready
-             || _target.Health > Damage())
+             || !_ultimate.Ready)
             {
                 return;
             }
@@ -147,19 +145,18 @@ namespace Adept_BaseUlt.Manager
                 }
 
                 var direction = _target.ServerPosition + (_target.ServerPosition - enemy.ServerPosition).Normalized();
-                _predictedPosition = enemy.ServerPosition.Extend(direction, (_recallStartTick - _lastSeenTick) / 1000f * enemy.MoveSpeed);
 
                 var distance = (_recallStartTick - _lastSeenTick) / 1000f * _target.MoveSpeed;
 
-                _castPos = _lastSeenPosition.Extend(_predictedPosition, distance);
-
+                _predictedPosition = _lastSeenPosition.Extend(enemy.ServerPosition.Extend(direction, distance), distance);
+             
                 if (distance > Menu["Distance"].Value)
                 {
                     return;
                 }
 
                 Console.WriteLine("RANDOM ULT SUCCESS");
-                CastUlt(_castPos);
+                CastUlt(_predictedPosition);
             }
             else
             {
@@ -176,7 +173,7 @@ namespace Adept_BaseUlt.Manager
         {
             var rectangle = new Geometry.Rectangle(Global.Player.ServerPosition.To2D(), pos.To2D(), _width);
 
-            if (GameObjects.EnemyHeroes.Count(x => x.NetworkId != _target.NetworkId && rectangle.IsInside(x.ServerPosition.To2D())) > _maxCollisionObjects || pos.Distance(Global.Player) > _range)
+            if (GameObjects.EnemyHeroes.Count(x => x.NetworkId != _target.NetworkId && rectangle.IsInside(x.ServerPosition.To2D())) > _maxCollisionObjects || pos.Distance(Global.Player) > _range || _target.Health > Damage())
             {
                 return;
             }
@@ -187,7 +184,7 @@ namespace Adept_BaseUlt.Manager
             {
                 _lastSeenPosition = Vector3.Zero;
                 _predictedPosition = Vector3.Zero;
-                _castPos = Vector3.Zero;
+              
             }, new CancellationToken(false));
 
             _ultimate.Cast(pos);
@@ -202,16 +199,16 @@ namespace Adept_BaseUlt.Manager
 
         private void OnRender()
         {
-            if (_lastSeenPosition != Vector3.Zero && _castPos != Vector3.Zero)
+            if (_lastSeenPosition != Vector3.Zero && _predictedPosition != Vector3.Zero)
             {
                 Render.Circle(_lastSeenPosition, 50, 100, Color.White);
-                Render.Circle(_castPos, _width, 100, Color.Red);
+                Render.Circle(_predictedPosition, _width, 100, Color.Red);
 
-                Render.WorldToScreen(_castPos, out var castVector2);
+                Render.WorldToScreen(_predictedPosition, out var castVector2);
                 Render.Text(castVector2, Color.White, "Random Ult");
 
                 Render.WorldToScreen(_lastSeenPosition, out var lsV2);
-                Render.WorldToScreen(_castPos, out var ppV2);
+                Render.WorldToScreen(_predictedPosition, out var ppV2);
                 Render.Line(lsV2, ppV2, Color.Orange);
             }
 
