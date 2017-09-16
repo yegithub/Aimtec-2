@@ -131,7 +131,8 @@ namespace Adept_BaseUlt.Manager
 
             if (_target == null
              || !Menu[_target.ChampionName].Enabled
-             || !_ultimate.Ready)
+             || !_ultimate.Ready
+             || _target.Health > Damage())
             {
                 return;
             }
@@ -173,7 +174,7 @@ namespace Adept_BaseUlt.Manager
         {
             var rectangle = new Geometry.Rectangle(Global.Player.ServerPosition.To2D(), pos.To2D(), _width);
 
-            if (GameObjects.EnemyHeroes.Count(x => x.NetworkId != _target.NetworkId && rectangle.IsInside(x.ServerPosition.To2D())) > _maxCollisionObjects || pos.Distance(Global.Player) > _range || _target.Health > Damage())
+            if (GameObjects.EnemyHeroes.Count(x => x.NetworkId != _target.NetworkId && rectangle.IsInside(x.ServerPosition.To2D())) > _maxCollisionObjects || pos.Distance(Global.Player) > _range)
             {
                 return;
             }
@@ -260,7 +261,8 @@ namespace Adept_BaseUlt.Manager
                 return 0;
             }
 
-            var hpReg = _target.BaseHPRegenRate;
+            var hpReg = _target.HPRegenRate;
+            Console.WriteLine($"BaseHPRegenRate: {_target.BaseHPRegenRate} | HPRegenRate: {_target.HPRegenRate}");
             var dmg = (float)Global.Player.GetSpellDamage(_target, SpellSlot.R);
             return Math.Min(dmg, dmg + hpReg * TravelTime(GetFountainPos(_target)) / 1000);
         }
