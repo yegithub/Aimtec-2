@@ -3,6 +3,7 @@ using System.Linq;
 using Adept_AIO.Champions.Jinx.Core;
 using Adept_AIO.SDK.Junk;
 using Aimtec;
+using Aimtec.SDK.Damage;
 
 namespace Adept_AIO.Champions.Jinx.Drawings
 {
@@ -28,7 +29,7 @@ namespace Adept_AIO.Champions.Jinx.Drawings
 
             foreach (var target in GameObjects.EnemyHeroes.Where(x => !x.IsDead && x.IsFloatingHealthBarActive && x.IsVisible))
             {
-                var damage = _dmg.Damage(target);
+                var damage = Global.Player.GetSpellDamage(target, SpellSlot.R);
 
                 Global.DamageIndicator.Unit = target;
                 Global.DamageIndicator.DrawDmg((float)damage, Color.FromArgb(153, 12, 177, 28));

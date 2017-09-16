@@ -115,7 +115,6 @@ namespace Adept_BaseUlt.Manager
         {
             if (Menu["RandomUlt"].Enabled)
             {
-
                 foreach (var enemy in lastEnemyChecked.Where(x =>
                     x.IsFloatingHealthBarActive && !x.IsDead && x.IsValidTarget()))
                 {
@@ -132,7 +131,7 @@ namespace Adept_BaseUlt.Manager
             if (_target == null
              || !Menu[_target.ChampionName].Enabled
              || !_ultimate.Ready
-             || _target.Health > Damage())
+             || Global.Player.GetSpellDamage(_target, SpellSlot.R) < TargetHealth())
             {
                 return;
             }
@@ -254,7 +253,7 @@ namespace Adept_BaseUlt.Manager
             return Global.Player.Distance(pos) / _speed * 1000 + _delay + Game.Ping / 2f;
         }
 
-        private float Damage()
+        private float TargetHealth()
         {
             if (_target == null)
             {
@@ -263,12 +262,12 @@ namespace Adept_BaseUlt.Manager
 
             var hpReg = _target.HPRegenRate;
 
-            Console.WriteLine($"BaseHPRegenRate: {_target.BaseHPRegenRate} | HPRegenRate: {_target.HPRegenRate}");
+           // Console.WriteLine($"BaseHPRegenRate: {_target.BaseHPRegenRate} | HPRegenRate: {_target.HPRegenRate}");
 
-            var dmg = (float)Global.Player.GetSpellDamage(_target, SpellSlot.R);
-            var final = Math.Min(dmg, dmg + hpReg * TravelTime(GetFountainPos(_target)) / 1000);
+           // var dmg = (float)Global.Player.GetSpellDamage(_target, SpellSlot.R);
+            var final = Math.Min(_target.Health, _target.Health + hpReg * (_lastSeenTick / 1000f + TravelTime(GetFountainPos(_target)) / 1000));
 
-            Console.WriteLine($"KILLABLE: {final > _target.Health}");
+           // Console.WriteLine($"KILLABLE: {final > _target.Health}");
             return final;
         }
 
