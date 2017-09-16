@@ -19,7 +19,7 @@ namespace Adept_AIO.Champions.Jinx.Core
 
         public void Attach()
         {
-            var mainMenu = new Menu(string.Empty, "Adept AIO", true);
+            var mainMenu = new Menu(string.Empty, $"Adept AIO - {Global.Player.ChampionName}", true);
             mainMenu.Attach();
 
             Global.Orbwalker.Attach(mainMenu);
@@ -58,7 +58,7 @@ namespace Adept_AIO.Champions.Jinx.Core
             JungleClear = new Menu("JungleClear", "JungleClear")
             {
                 new MenuBool("Q", "Automatic Q"),
-                new MenuSliderBool("W", "Use W (Min. Mana %)", true, 65, 0, 100)
+                new MenuSliderBool("W", "Use W (Min. Mana %)", true, 65)
             };
 
             Killsteal = new Menu("Killsteal", "Killsteal")

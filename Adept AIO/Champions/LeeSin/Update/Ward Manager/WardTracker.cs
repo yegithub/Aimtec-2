@@ -46,15 +46,17 @@ namespace Adept_AIO.Champions.LeeSin.Update.Ward_Manager
 
             var ward = sender as Obj_AI_Minion;
 
-            if (ward != null && ward.Name.ToLower().Contains("ward"))
+            if (ward == null || !ward.Name.ToLower().Contains("ward"))
             {
-                LastWardCreated = Game.TickCount;
-                WardName = ward.Name;
-                WardPosition = ward.ServerPosition;
-
-                DebugConsole.Print("Located Ally Ward.", ConsoleColor.Green);
-                Global.Player.SpellBook.CastSpell(SpellSlot.W, WardPosition); // Bug: This position is unrealistic and does not work.
+                return;
             }
+
+            LastWardCreated = Game.TickCount;
+            WardName = ward.Name;
+            WardPosition = ward.ServerPosition;
+
+            DebugConsole.Print("Located Ally Ward.", ConsoleColor.Green);
+            Global.Player.SpellBook.CastSpell(SpellSlot.W, WardPosition); // Bug: This position is unrealistic and does not work.
         }
 
         public bool IsAtWall { get; set; }

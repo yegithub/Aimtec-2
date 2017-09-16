@@ -17,7 +17,7 @@ namespace Adept_AIO.Champions.Irelia.Core
 
         public static void Attach()
         {
-            _mainMenu = new Menu(string.Empty, "Adept AIO", true);
+            _mainMenu = new Menu(string.Empty, $"Adept AIO - {Global.Player.ChampionName}", true);
             _mainMenu.Attach();
 
             Global.Orbwalker.Attach(_mainMenu);
@@ -37,18 +37,18 @@ namespace Adept_AIO.Champions.Irelia.Core
             {
                 new MenuBool("Turret", "Check Turret"),
                 new MenuBool("Check", "Avoid Farming When Nearby Enemies"),
-                new MenuSliderBool("Q", "Use Q On Killable Minions (Min. Mana %)", true, 50, 0, 100),
-                new MenuSliderBool("Lasthit", "Lasthit Q", true, 65, 0, 100),
+                new MenuSliderBool("Q", "Use Q On Killable Minions (Min. Mana %)", true, 50),
+                new MenuSliderBool("Lasthit", "Lasthit Q", true, 65),
                 new MenuBool("W", "Use W (Jungle)"),
-                new MenuSliderBool("E", "Use E On Big Mobs (Jungle) (Min. Mana %)", true, 50, 0, 100)
+                new MenuSliderBool("E", "Use E On Big Mobs (Jungle) (Min. Mana %)", true, 50)
             };
 
             Harass = new Menu("Harass", "Harass")
             {
                 new MenuBool("Away", "Safe Harass (Q Away)"),
-                new MenuSliderBool("Q", "(Q) Min. Mana %", true, 50, 0, 100),
+                new MenuSliderBool("Q", "(Q) Min. Mana %", true, 50),
                 new MenuBool("W", "Use W"),
-                new MenuSliderBool("E", "(E) Min. Mana %", true, 50, 0, 100)
+                new MenuSliderBool("E", "(E) Min. Mana %", true, 50)
             };
 
             Killsteal = new Menu("Killsteal", "Killsteal")

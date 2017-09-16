@@ -17,7 +17,7 @@ namespace Adept_AIO.Champions.Tristana.Core
 
         public MenuConfig()
         {
-            var mainMenu = new Menu(string.Empty, "Adept AIO", true);
+            var mainMenu = new Menu(string.Empty, $"Adept AIO - {Global.Player.ChampionName}", true);
             mainMenu.Attach();
 
             Global.Orbwalker.Attach(mainMenu);

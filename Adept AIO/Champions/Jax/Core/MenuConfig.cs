@@ -17,7 +17,7 @@ namespace Adept_AIO.Champions.Jax.Core
 
         public static void Attach()
         {
-            _mainMenu = new Menu(string.Empty, "Adept AIO", true);
+            _mainMenu = new Menu(string.Empty, $"Adept AIO - {Global.Player.ChampionName}", true);
             _mainMenu.Attach();
 
             Global.Orbwalker.Attach(_mainMenu);

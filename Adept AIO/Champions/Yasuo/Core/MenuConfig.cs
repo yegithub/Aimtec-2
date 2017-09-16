@@ -24,7 +24,7 @@ namespace Adept_AIO.Champions.Yasuo.Core
 
         public static void Attach()
         {
-            _mainMenu = new Menu(string.Empty, "Adept AIO", true);
+            _mainMenu = new Menu(string.Empty, $"Adept AIO - {Global.Player.ChampionName}", true);
             _mainMenu.Attach();
 
             Extension.FleeMode     = new OrbwalkerMode("Flee", KeyCode.A, null, Flee.OnKeyPressed);

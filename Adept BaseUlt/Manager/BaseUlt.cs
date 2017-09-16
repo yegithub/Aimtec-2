@@ -87,22 +87,26 @@ namespace Adept_BaseUlt.Manager
 
         private void OnTeleport(Obj_AI_Base sender, Teleport.TeleportEventArgs args)
         {
-            if (!sender.IsEnemy
-                || !sender.IsValid
-                || sender.IsDead)
+            if (!sender.IsEnemy || sender.IsDead)
             {
                 return;
             }
 
-            if (args.Status == TeleportStatus.Abort || args.Status == TeleportStatus.Unknown ||
-                args.Status == TeleportStatus.Finish)
+            switch (args.Status)
             {
-                Reset();
-            }
+                case TeleportStatus.Abort:
+                case TeleportStatus.Finish:
+                case TeleportStatus.Unknown:
+                    Reset();
+                    break;
+                case TeleportStatus.Start:
 
-            else if (args.Type == TeleportType.Recall)
-            {
-                Set(args.Duration, Game.TickCount, (Obj_AI_Hero)sender);
+                    if (args.Type == TeleportType.Recall)
+                    {
+                        Set(args.Duration, Game.TickCount, (Obj_AI_Hero)sender);
+                    }
+
+                    break;
             }
         }
 

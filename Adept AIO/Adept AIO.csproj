@@ -54,6 +54,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrap.cs" />
+    <Compile Include="Champions\Azir\Azir.cs" />
+    <Compile Include="Champions\Azir\Core\Dmg.cs" />
+    <Compile Include="Champions\Azir\Core\MenuConfig.cs" />
+    <Compile Include="Champions\Azir\Core\SoldierHelper.cs" />
+    <Compile Include="Champions\Azir\Core\SpellConfig.cs" />
+    <Compile Include="Champions\Azir\Drawings\DrawManager.cs" />
+    <Compile Include="Champions\Azir\Update\Miscellaneous\AntiGapcloser.cs" />
+    <Compile Include="Champions\Azir\Update\Miscellaneous\Killsteal.cs" />
+    <Compile Include="Champions\Azir\Update\Miscellaneous\Manager.cs" />
+    <Compile Include="Champions\Azir\Update\OrbwalkingEvents\Combo.cs" />
     <Compile Include="Champions\Ezreal\Core\Dmg.cs" />
     <Compile Include="Champions\Ezreal\Core\MenuConfig.cs" />
     <Compile Include="Champions\Ezreal\Core\SpellConfig.cs" />
@@ -238,5 +248,6 @@
       <Name>Adept BaseUlt</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

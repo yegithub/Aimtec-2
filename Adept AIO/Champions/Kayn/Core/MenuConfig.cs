@@ -19,7 +19,7 @@ namespace Adept_AIO.Champions.Kayn.Core
 
         public static void Attach()
         {
-            _mainMenu = new Menu(string.Empty, "Adept AIO", true);
+            _mainMenu = new Menu(string.Empty, $"Adept AIO - {Global.Player.ChampionName}", true);
             _mainMenu.Attach();
 
             Global.Orbwalker.Attach(_mainMenu);
@@ -36,7 +36,7 @@ namespace Adept_AIO.Champions.Kayn.Core
                 new MenuBool("Q", "Use Q"),
                 new MenuBool("W", "Use W"),
                 new MenuBool("E", "Use E", false),
-                new MenuSliderBool("R", "Force R When Below (% HP)", true, 15, 1, 100)
+                new MenuSliderBool("R", "Force R When Below (% HP)", true, 15, 1)
             };
 
             Harass = new Menu("Harass", "Harass")
@@ -48,14 +48,14 @@ namespace Adept_AIO.Champions.Kayn.Core
             LaneClear = new Menu("LaneClear", "LaneClear")
             {
                 new MenuBool("Check", "Dont' Clear When Enemies Nearby"),
-                new MenuSliderBool("Q", "[Q] (Min. Mana %", true, 25, 1, 100),
-                new MenuSliderBool("W", "[W] (Min. Mana %", true, 25, 1, 100)
+                new MenuSliderBool("Q", "[Q] (Min. Mana %", true, 25, 1),
+                new MenuSliderBool("W", "[W] (Min. Mana %", true, 25, 1)
             };
 
             JungleClear = new Menu("JungleClear", "JungleClear")
             {
-                new MenuSliderBool("Q", "[Q] (Min. Mana %", true, 25, 1, 100),
-                new MenuSliderBool("W", "[W] (Min. Mana %", true, 25, 1, 100)
+                new MenuSliderBool("Q", "[Q] (Min. Mana %", true, 25, 1),
+                new MenuSliderBool("W", "[W] (Min. Mana %", true, 25, 1)
             };
 
             Killsteal = new Menu("Killsteal", "Killsteal")
