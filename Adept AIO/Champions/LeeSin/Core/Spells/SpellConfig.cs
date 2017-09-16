@@ -81,8 +81,8 @@ namespace Adept_AIO.Champions.LeeSin.Core.Spells
 
         public void Load()
         {
-            Q = new Spell(SpellSlot.Q, 1100);
-            Q.SetSkillshot(0.25f, 60, 1800, true, SkillshotType.Line);
+            Q = new Spell(SpellSlot.Q, 1000);
+            Q.SetSkillshot(0.25f, 60, 1800, true, SkillshotType.Line, false, HitChance.VeryHigh);
 
             W = new Spell(SpellSlot.W, 700);
 

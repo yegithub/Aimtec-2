@@ -102,7 +102,7 @@ namespace Adept_BaseUlt.Manager
 
             else if (args.Type == TeleportType.Recall)
             {
-                Set(args.Duration, Game.TickCount, (Obj_AI_Hero) sender);
+                Set(args.Duration, Game.TickCount, (Obj_AI_Hero)sender);
             }
         }
 
@@ -112,7 +112,7 @@ namespace Adept_BaseUlt.Manager
         {
             if (Menu["RandomUlt"].Enabled)
             {
-               
+
                 foreach (var enemy in lastEnemyChecked.Where(x =>
                     x.IsFloatingHealthBarActive && !x.IsDead && x.IsValidTarget()))
                 {
@@ -125,7 +125,7 @@ namespace Adept_BaseUlt.Manager
                     _lastSeenPosition = enemy.ServerPosition;
                 }
             }
-       
+
             if (_target == null
              || !Menu[_target.ChampionName].Enabled
              || !_target.IsValid
@@ -143,11 +143,11 @@ namespace Adept_BaseUlt.Manager
                     return;
                 }
 
-                var direction = _target.ServerPosition + (_target.ServerPosition - enemy.ServerPosition).Normalized() * _target.BoundingRadius;
+                var direction = _target.ServerPosition + (_target.ServerPosition - enemy.ServerPosition).Normalized();
                 _predictedPosition = enemy.ServerPosition.Extend(direction, (_recallStartTick - _lastSeenTick) / 1000f * enemy.MoveSpeed);
 
                 var distance = (_recallStartTick - _lastSeenTick) / 1000f * _target.MoveSpeed;
-               
+
                 _castPos = _lastSeenPosition.Extend(_predictedPosition, distance);
 
                 if (distance > Menu["Distance"].Value)
@@ -196,7 +196,7 @@ namespace Adept_BaseUlt.Manager
 
         private int GetCastTime(Vector3 pos)
         {
-            return (int) (-(Game.TickCount - (_recallStartTick + _recallTime)) - TravelTime(pos));
+            return (int)(-(Game.TickCount - (_recallStartTick + _recallTime)) - TravelTime(pos));
         }
 
         private void OnRender()
@@ -218,9 +218,25 @@ namespace Adept_BaseUlt.Manager
             {
                 return;
             }
-
             var ts = TimeSpan.FromMilliseconds(_timeUntilCastingUlt);
+            var percent = (_recallStartTick - Game.TickCount + _recallTime) / _recallTime;
+         
+            var xpos = 650;
 
+            Render.Line(xpos,
+                        80,
+                        xpos + 200,
+                        80,
+                        18, false, Color.LightSlateGray);
+
+            Render.Line(xpos, 
+                        80, 
+                        xpos + 200 * percent, 
+                        80, 
+                        16, false, Color.LightSeaGreen);
+
+
+            Render.Text(xpos + 100, 70, Color.White, _target.ChampionName);
             Render.WorldToScreen(Global.Player.ServerPosition, out var player);
 
             Render.Text(new Vector2(player.X - 60, player.Y + 70), Color.Cyan,
@@ -240,7 +256,7 @@ namespace Adept_BaseUlt.Manager
             }
 
             var hpReg = _target.BaseHPRegenRate;
-            var dmg = (float) Global.Player.GetSpellDamage(_target, SpellSlot.R);
+            var dmg = (float)Global.Player.GetSpellDamage(_target, SpellSlot.R);
             return Math.Min(dmg, dmg + hpReg * TravelTime(GetFountainPos(_target)) / 1000);
         }
 

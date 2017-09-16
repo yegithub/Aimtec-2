@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using Adept_AIO.Champions.Riven.Core;
 using Adept_AIO.Champions.Riven.Update.OrbwalkingEvents;
 using Adept_AIO.Champions.Riven.Update.OrbwalkingEvents.Combo;
@@ -18,16 +19,11 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
             {
                 return;
             }
-
-            if (Animation.AmSoTired)
+          
+            if (Animation.DidRecentlyCancel && Game.TickCount - Animation.LastReset >= Animation.GetDelay())
             {
-                if (Game.TickCount - Animation.LastReset < Animation.GetDelay())
-                {
-                    return;
-                }
-
                 Global.Orbwalker.AttackingEnabled = true;
-                Animation.AmSoTired = false;
+                Animation.DidRecentlyCancel = false;
             }
 
             switch (Global.Orbwalker.Mode)
@@ -65,8 +61,8 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                 Extensions.DidJustAuto = false; 
                 return;
             }
-
             Extensions.DidJustAuto = true;
+
 
             var target = args.Target as Obj_AI_Base;
 

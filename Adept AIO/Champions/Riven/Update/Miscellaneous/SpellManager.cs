@@ -29,6 +29,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
             switch (args.SpellData.Name)
             {
                 case "RivenTriCleave":
+                    DebugConsole.Print("JUST USED Q", ConsoleColor.DarkGreen);
                     Extensions.LastQCastAttempt = Game.TickCount;
                     _canUseQ = false;
                     _serverPosition = false;

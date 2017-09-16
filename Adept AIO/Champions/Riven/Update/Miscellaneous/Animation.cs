@@ -13,7 +13,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
     internal class Animation
     {
         public static float LastReset;
-        public static bool AmSoTired;
+        public static bool DidRecentlyCancel;
       
         public static void Reset()
         {
@@ -28,18 +28,16 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
             Global.Orbwalker.Move(Game.CursorPos);
 
             LastReset = Game.TickCount;
-            AmSoTired = true;
+            DidRecentlyCancel = true;
         }
 
         public static float GetDelay()
         {
-            var level = Global.Player.Level;
-            var delay = Extensions.CurrentQCount == 1 ? 415f : 385f;
+            var level =  Global.Player.Level;
+            var delay =  Extensions.CurrentQCount == 1 ? 415f : 385f;
+            delay    -= (Extensions.CurrentQCount != 1 ? 3.333f : 2.9f) * level;
 
-            delay -= (Extensions.CurrentQCount != 1 ? 3.333f : 2.9f) * level;
-
-            DebugConsole.Print($"Delay: {delay} | Q: {Extensions.CurrentQCount}", ConsoleColor.Red);
-            return delay;
+            return delay; 
         }
 
         public static void OnPlayAnimation(Obj_AI_Base sender, Obj_AI_BasePlayAnimationEventArgs args)
