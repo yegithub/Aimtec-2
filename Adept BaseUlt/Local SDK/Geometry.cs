@@ -129,7 +129,7 @@ namespace Adept_BaseUlt.Local_SDK
         /// </summary>
         /// <param name="v">The v.</param>
         /// <returns></returns>
-        public static Vector2 To2D(this Vector3 v)
+        public static Vector2 TO2D(this Vector3 v)
         {
             return new Vector2(v.X, v.Y);
         }

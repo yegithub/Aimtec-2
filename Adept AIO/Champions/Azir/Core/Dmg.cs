@@ -14,7 +14,7 @@ namespace Adept_AIO.Champions.Azir.Core
                 return 0;
             }
 
-            var dmg = Global.Player.GetAutoAttackDamage(target);
+            var dmg = SoldierHelper.Soldiers.Count * Global.Player.GetSpellDamage(target, SpellSlot.W);
 
             if (SpellConfig.E.Ready)
             {

@@ -132,7 +132,6 @@ namespace Adept_BaseUlt.Manager
 
             if (_target == null
              || !Menu[_target.ChampionName].Enabled
-             || !_target.IsValid
              || !_ultimate.Ready
              || _target.Health > Damage())
             {
@@ -175,11 +174,9 @@ namespace Adept_BaseUlt.Manager
 
         private void CastUlt(Vector3 pos)
         {
-            var rectangle =
-                new Geometry.Rectangle(Geometry.To2D(Global.Player.ServerPosition), Geometry.To2D(pos), _width);
+            var rectangle = new Geometry.Rectangle(Global.Player.ServerPosition.To2D(), pos.To2D(), _width);
 
-            if (GameObjects.EnemyHeroes.Count(x => rectangle.IsInside(Geometry.To2D(x.ServerPosition))) >
-                _maxCollisionObjects || pos.Distance(Global.Player) > _range)
+            if (GameObjects.EnemyHeroes.Count(x => x.NetworkId != _target.NetworkId && rectangle.IsInside(x.ServerPosition.To2D())) > _maxCollisionObjects || pos.Distance(Global.Player) > _range)
             {
                 return;
             }
@@ -239,10 +236,10 @@ namespace Adept_BaseUlt.Manager
                         80, 
                         16, false, Color.LightSeaGreen);
 
-            var Beta = (TravelTime(GetFountainPos(_target)) / 100) + 60; //Todo: I'm noob and don't know how to make this work properly. 
-            Render.Line(xpos + 5 + Beta,
+            var temp = TravelTime(GetFountainPos(_target)) / 100 + 60; //Todo: I'm noob and don't know how to make this work properly. 
+            Render.Line(xpos + 5 + temp,
                         80,
-                        xpos + 10 + Beta,
+                        xpos + 10 + temp,
                         80,
                         16, false, Color.Red);
 
