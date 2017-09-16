@@ -36,21 +36,22 @@ namespace Adept_AIO.SDK.Junk
 
         private float GetHpProc(float dmg)
         {
-            return Unit.Health - dmg > 0 ? Unit.Health - dmg : 0 
+            return (Unit.Health - dmg > 0 ? Unit.Health - dmg : 0) 
                  / Unit.MaxHealth;
         }
 
         public void DrawDmg(float dmg, Color color)
         {
             var from = EndPosition(0);
-            var to = EndPosition(dmg);
+            var to   = EndPosition(dmg);
 
-            if (from.IsZero || to.IsZero)
+            if (from.IsZero || to.IsZero || Unit == null)
             {
                 return;
             }
 
-            Render.Line(new Vector2(from.X, from.Y - 5), new Vector2(to.X, to.Y - 5), Height, false, color);
+            Render.Line(new Vector2(from.X, from.Y - 5),
+                        new Vector2(to.X, to.Y - 5), Height, false, color);
         }
     }
 }

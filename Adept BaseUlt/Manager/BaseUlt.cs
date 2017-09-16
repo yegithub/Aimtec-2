@@ -235,8 +235,15 @@ namespace Adept_BaseUlt.Manager
                         80, 
                         16, false, Color.LightSeaGreen);
 
+            var Beta = (TravelTime(GetFountainPos(_target)) / 100) + 60; //Todo: I'm noob and don't know how to make this work properly. 
+            Render.Line(xpos + 5 + Beta,
+                        80,
+                        xpos + 10 + Beta,
+                        80,
+                        16, false, Color.Red);
 
-            Render.Text(xpos + 100, 70, Color.White, _target.ChampionName);
+
+            Render.Text(xpos + 100, 75, Color.White, _target.ChampionName);
             Render.WorldToScreen(Global.Player.ServerPosition, out var player);
 
             Render.Text(new Vector2(player.X - 60, player.Y + 70), Color.Cyan,

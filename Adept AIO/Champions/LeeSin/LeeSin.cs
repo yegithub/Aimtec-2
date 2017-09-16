@@ -290,7 +290,7 @@ namespace Adept_AIO.Champions.LeeSin
             Global.Orbwalker.PostAttack += manager.PostAttack;
 
             Render.OnRender += drawManager.OnRender;
-            //Render.OnPresent += drawManager.RenerDamage;
+            Render.OnPresent += drawManager.RenerDamage;
 
             Obj_AI_Base.OnProcessSpellCast += insec.OnProcessSpellCast;
             Obj_AI_Base.OnProcessSpellCast += kickFlash.OnProcessSpellCast;

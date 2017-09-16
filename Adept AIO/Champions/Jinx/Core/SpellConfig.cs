@@ -22,7 +22,7 @@ namespace Adept_AIO.Champions.Jinx.Core
             W.SetSkillshot(0.75f, 80, 3300, true, SkillshotType.Line, false, HitChance.VeryHigh);
 
             E = new Spell(SpellSlot.E, 900);
-            E.SetSkillshot(0.75f, 325, 1750, false, SkillshotType.Circle, false, HitChance.VeryHigh);
+            E.SetSkillshot(1f, 325, 1750, false, SkillshotType.Circle, false, HitChance.VeryHigh);
 
             R = new Spell(SpellSlot.R, int.MaxValue);
             R.SetSkillshot(0.5f, 140, 2200, false, SkillshotType.Line, false, HitChance.VeryHigh);

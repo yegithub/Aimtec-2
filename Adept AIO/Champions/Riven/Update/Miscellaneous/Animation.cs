@@ -33,9 +33,9 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 
         public static float GetDelay()
         {
-            var level =  Global.Player.Level;
-            var delay =  Extensions.CurrentQCount == 1 ? 415f : 385f;
-            delay    -= (Extensions.CurrentQCount != 1 ? 3.333f : 2.9f) * level;
+            var level  =  Global.Player.Level;
+            var delay  =  Extensions.CurrentQCount == 1 ? 415f : 385f;
+                delay -= (Extensions.CurrentQCount != 1 ? 3.333f : 2.9f) * level;
 
             return delay; 
         }

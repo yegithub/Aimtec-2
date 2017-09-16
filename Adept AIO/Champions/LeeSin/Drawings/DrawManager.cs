@@ -35,7 +35,7 @@ namespace Adept_AIO.Champions.LeeSin.Drawings
                 return;
             }
 
-            foreach (var target in GameObjects.EnemyHeroes.Where(x => !x.IsDead && x.IsFloatingHealthBarActive && x.IsVisible))
+            foreach (var target in GameObjects.EnemyHeroes.Where(x =>  x.IsVisible))
             {
                 var damage = _damage.Damage(target);
 

@@ -57,7 +57,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Insec
 
         private bool InsecInRange(Vector3 source)
         {
-            return GetInsecPosition().Distance(source) - 65 <= InsecRange();
+            return GetInsecPosition().Distance(source) <= InsecRange();
         }
 
         private Vector3 GetInsecPosition()
@@ -113,7 +113,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Insec
           
             if (_spellConfig.R.Ready)
             {
-                if (Target.IsValidTarget(_spellConfig.R.Range) && (_wardTracker.DidJustWard || Game.TickCount - SummonerSpells.Flash.LastCastAttemptT <= 1000 || dist <= 200))
+                if (Target.IsValidTarget(_spellConfig.R.Range) && dist <= 200 && (_wardTracker.DidJustWard || Game.TickCount - SummonerSpells.Flash.LastCastAttemptT <= 1000 || dist <= 100))
                 {
                     _spellConfig.R.CastOnUnit(Target);
                 }
@@ -146,8 +146,8 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Insec
             {
                 return;
             }
-            DebugConsole.Print(InsecRange().ToString());
-            if (dist <= _spellConfig.WardRange)   
+        
+            if (dist < _spellConfig.WardRange)   
             {
                 _wardManager.WardJump(GetInsecPosition(), (int)dist);
             }
