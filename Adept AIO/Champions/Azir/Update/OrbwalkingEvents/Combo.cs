@@ -18,14 +18,6 @@ namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
 
             var dist = target.Distance(Global.Player) - Global.Player.BoundingRadius - target.BoundingRadius;
 
-            if (SpellConfig.Q.Ready && MenuConfig.Combo["Q"].Enabled && dist < SpellConfig.Q.Range + 200)
-            {
-                if (SoldierHelper.Soldiers.Count >= MenuConfig.Combo["QCount"].Value)
-                {
-                    SpellConfig.CastQ(target, MenuConfig.Combo["Extend"].Enabled);
-                }
-            }
-
             if (SpellConfig.E.Ready && MenuConfig.Combo["E"].Enabled)
             {
                 foreach (var soldier in SoldierHelper.Soldiers)
@@ -41,15 +33,20 @@ namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
 
                 if (target.HealthPercent() <= MenuConfig.Combo["EDmg"].Value)
                 {
-                    var soldierPos = SoldierHelper.GetSoldierNearestTo(target.ServerPosition);
-                    if (soldierPos != Vector3.Zero)
+                    var soldier = SoldierHelper.Soldiers.FirstOrDefault(x => x.Distance(target) <= 500 && !x.IsMoving);
+                    if (soldier != null && soldier.ServerPosition != Vector3.Zero)
                     {
-                        if (soldierPos.Distance(target) <= 500)
-                        {
-                            SpellConfig.E.Cast(soldierPos);
-                        }
+                        SpellConfig.E.Cast(soldier);
                     }
-                }              
+                }
+            }
+
+            if (SpellConfig.Q.Ready && MenuConfig.Combo["Q"].Enabled && dist < SpellConfig.Q.Range + 200)
+            {
+                if (SoldierHelper.Soldiers.Count >= MenuConfig.Combo["QCount"].Value)
+                {
+                    SpellConfig.CastQ(target, MenuConfig.Combo["Extend"].Enabled);
+                }
             }
 
             if (SpellConfig.W.Ready && MenuConfig.Combo["W"].Enabled)
