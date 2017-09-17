@@ -263,11 +263,11 @@ namespace Adept_BaseUlt.Manager
             }
 
             var hpReg = _target.BaseHPRegenRate;
-
+            var invisible = lastEnemyChecked.FirstOrDefault(x => x.NetworkId == _target.NetworkId);
            // Console.WriteLine($"BaseHPRegenRate: {_target.BaseHPRegenRate} | HPRegenRate: {_target.HPRegenRate}");
 
            // var dmg = (float)Global.Player.GetSpellDamage(_target, SpellSlot.R);
-            var final = _target.Health + hpReg * (_lastSeenTick / 1000f + TravelTime(GetFountainPos(_target)) / 1000);
+            var final = _target.Health + (hpReg * (invisible?.LifetimeTicks / 10000f ?? 0f) + TravelTime(GetFountainPos(_target)) / 1000);
 
             Console.WriteLine($"Health: {final} DMG: {Global.Player.GetSpellDamage(_target, SpellSlot.R)}");
             return final;
