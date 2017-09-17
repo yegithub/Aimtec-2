@@ -48,8 +48,8 @@ namespace Adept_AIO.Champions.Azir.Core
                     SpellConfig.W.Cast(extend);
                 }
 
-                SpellConfig.E.Cast(extend);
-                DelayAction.Queue(100, ()=> SpellConfig.Q.Cast(pos), new CancellationToken(false));
+                DelayAction.Queue(350, () => SpellConfig.Q.Cast(pos), new CancellationToken(false));
+                DelayAction.Queue(150, () => SpellConfig.E.Cast(extend), new CancellationToken(false));
             }
             else if (SoldierHelper.GetSoldierNearestTo(pos).Distance(pos) <= 300)
             {
@@ -58,8 +58,8 @@ namespace Adept_AIO.Champions.Azir.Core
                 {
                     SpellConfig.W.Cast(extend);
                 }
-                SpellConfig.E.Cast(extend);
-                DelayAction.Queue(100, () => SpellConfig.Q.Cast(pos), new CancellationToken(false));
+                DelayAction.Queue(350, () => SpellConfig.Q.Cast(pos), new CancellationToken(false));
+                DelayAction.Queue(150, () => SpellConfig.E.Cast(extend), new CancellationToken(false));
             }
         }
     }
