@@ -12,11 +12,11 @@ namespace Adept_AIO.Champions.Azir.Core
     class MenuConfig
     {
         public static Menu Combo,
+                           InsecMenu,
                            Harass,
                            Lane,
                            Jungle,
                            Killsteal,
-                           Miscellaneous,
                            Drawings;
 
         public static void Attach()
@@ -32,6 +32,12 @@ namespace Adept_AIO.Champions.Azir.Core
 
             Global.Orbwalker.AddMode(AzirHelper.JumpMode);
             Global.Orbwalker.AddMode(AzirHelper.InsecMode);
+
+            InsecMenu = new Menu("Insec", "Insec")
+            {
+                new MenuBool("Flash", "Flash"),
+
+            };
 
             Combo = new Menu("Combo", "Combo")
             {
@@ -72,11 +78,6 @@ namespace Adept_AIO.Champions.Azir.Core
                 new MenuBool("E", "Use E"),
             };
 
-            Miscellaneous = new Menu("Misc", "Miscellaneous")
-            {
-                // Todo: Check if need
-            };
-
             Drawings = new Menu("Drawings", "Drawings")
             {
                 new MenuSlider("Segments", "Segments", 100, 100, 200).SetToolTip("Smoothness of the circles"),
@@ -88,13 +89,13 @@ namespace Adept_AIO.Champions.Azir.Core
 
             foreach (var menu in new List<Menu>
             {
+                InsecMenu,
                 Combo,
                 Harass,
                 Lane,
                 Jungle,
                 Killsteal,
                 Drawings,
-                Miscellaneous,
                 MenuShortcut.Credits
             }) mainMenu.Add(menu);
         }

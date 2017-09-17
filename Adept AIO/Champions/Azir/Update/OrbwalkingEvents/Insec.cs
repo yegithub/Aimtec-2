@@ -4,6 +4,7 @@ using System.Threading;
 using Adept_AIO.Champions.Azir.Core;
 using Adept_AIO.SDK.Junk;
 using Adept_AIO.SDK.Methods;
+using Adept_AIO.SDK.Usables;
 using Aimtec;
 using Aimtec.SDK.Extensions;
 using Aimtec.SDK.Util;
@@ -49,27 +50,42 @@ namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
 
             if (rect.IsInside(target.ServerPosition.To2D()) && allyT != null)
             {
-                DelayAction.Queue(250, () =>
+                if (SpellConfig.Q.Ready && soldierPos.Distance(Global.Player) <= 350)
                 {
                     SpellConfig.Q.Cast(allyT.ServerPosition);
-                }, new CancellationToken(false));
+                }
 
-                DelayAction.Queue(350, () =>
+                if (SpellConfig.E.Ready)
                 {
                     SpellConfig.E.Cast(allyT.ServerPosition);
-                }, new CancellationToken(false));
-                SpellConfig.R.Cast(allyT.ServerPosition);
+                }
+
+                if (SpellConfig.R.Ready)
+                {
+                    SpellConfig.R.Cast(allyT.ServerPosition);
+                }
             }
             else
             {
-                DelayAction.Queue(250, () =>
-                {
-                    SpellConfig.Q.Cast(pos);
-                }, new CancellationToken(false));
-                DelayAction.Queue(350, () =>
+                if (SpellConfig.E.Ready)
                 {
                     SpellConfig.E.Cast(pos);
-                }, new CancellationToken(false));
+                }
+
+                if (SpellConfig.Q.Ready && soldierPos.Distance(Global.Player) <= 350)
+                {
+                    SpellConfig.Q.Cast(pos);
+                }
+
+                if (Game.TickCount - AzirHelper.LastQ <= 1100
+                 && Game.TickCount - AzirHelper.LastQ > 300
+                 && Game.TickCount - AzirHelper.LastE <= 1100 
+                 && pos.Distance(Global.Player) > SpellConfig.RSqrt
+                 && pos.Distance(Global.Player) < SpellConfig.RSqrt / 2 + 425 && SummonerSpells.IsValid(SummonerSpells.Flash) &&
+                    MenuConfig.InsecMenu["Flash"].Enabled)
+                {
+                    SummonerSpells.Flash.Cast(pos);
+                }
             }
         }
 
@@ -84,6 +100,11 @@ namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
             if (SpellConfig.R.Ready)
             {
                 range += (float)SpellConfig.RSqrt - 65;
+            }
+
+            if (MenuConfig.InsecMenu["Flash"].Enabled && SummonerSpells.IsValid(SummonerSpells.Flash))
+            {
+                range += SummonerSpells.Flash.Range;
             }
             return range;
         }
