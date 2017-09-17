@@ -1,31 +1,37 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using Adept_AIO.Champions.Azir.Core;
 using Adept_AIO.Champions.Azir.Update.OrbwalkingEvents;
 using Adept_AIO.SDK.Junk;
 using Aimtec;
 using Aimtec.SDK.Extensions;
 using Aimtec.SDK.Orbwalking;
+using Aimtec.SDK.Util;
 
 namespace Adept_AIO.Champions.Azir.Update.Miscellaneous
 {
     class Manager
     {
+        private static int LastAA;
+
         public static void OnUpdate()
         {
             try
             {
-                if (Global.Player.IsDead || Global.Orbwalker.IsWindingUp)
+                if (Global.Player.IsDead || Global.Orbwalker.IsWindingUp || Global.Player.IsRecalling())
                 {
                     return;
                 }
 
                 foreach (var soldier in SoldierHelper.Soldiers)
                 {
-                    var enemy = GameObjects.Enemy.FirstOrDefault(x => x.Distance(soldier) <= 325 + x.BoundingRadius && x.IsValid && x.MaxHealth > 10);
-                    if (enemy != null && Global.Orbwalker.CanAttack())
+                    var enemy = GameObjects.Enemy.FirstOrDefault(x => x.Distance(soldier) <= 250 + x.BoundingRadius && x.IsValid && x.MaxHealth > 10 && soldier.Distance(Global.Player) <= SpellConfig.Q.Range && soldier.Distance(Global.Player) > Global.Player.AttackRange);
+                    if (enemy != null && Game.TickCount - LastAA >= 1000)
                     {
-                        Global.Orbwalker.Attack(enemy);
+                        LastAA = Game.TickCount;
+                        Global.Player.IssueOrder(OrderType.AttackUnit, enemy);
+                        DelayAction.Queue(250, ()=> Global.Player.IssueOrder(OrderType.MoveTo, Game.CursorPos), new CancellationToken(false));
                     }
                 }
 
