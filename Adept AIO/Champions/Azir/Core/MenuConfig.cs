@@ -36,7 +36,7 @@ namespace Adept_AIO.Champions.Azir.Core
             InsecMenu = new Menu("Insec", "Insec")
             {
                 new MenuBool("Flash", "Flash"),
-
+                new MenuSlider("Range", "Use Q When X Distance To Soldier", 600, 250, 1200)
             };
 
             Combo = new Menu("Combo", "Combo")

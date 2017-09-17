@@ -20,15 +20,12 @@ namespace Adept_AIO.Champions.Azir.Update.Miscellaneous
                     return;
                 }
 
-                if (SoldierHelper.Soldiers.Any())
+                foreach (var soldier in SoldierHelper.Soldiers)
                 {
-                    foreach (var soldier in SoldierHelper.Soldiers)
+                    var enemy = GameObjects.Enemy.FirstOrDefault(x => x.Distance(soldier) <= 325 + x.BoundingRadius && x.IsValid && x.MaxHealth > 10);
+                    if (enemy != null && Global.Orbwalker.CanAttack())
                     {
-                        var enemy = GameObjects.Enemy.FirstOrDefault(x => x.Distance(soldier) <= 450 && x.IsValid && x.MaxHealth > 10);
-                        if (enemy != null && Global.Orbwalker.CanAttack())
-                        {
-                            Global.Orbwalker.Attack(enemy);
-                        }
+                        Global.Orbwalker.Attack(enemy);
                     }
                 }
 

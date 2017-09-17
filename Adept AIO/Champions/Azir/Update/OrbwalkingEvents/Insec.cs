@@ -28,13 +28,35 @@ namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
             var allyT = GameObjects.AllyTurrets.OrderBy(x => x.Distance(Global.Player)).FirstOrDefault(x => x.IsValid && !x.IsDead);
 
             var pos = target.ServerPosition;
+            var soldierPos = SoldierHelper.GetSoldierNearestTo(target.ServerPosition);
+            
+            if (!SpellConfig.E.Ready
+                && soldierPos.Distance(target.ServerPosition) > 350
+                && Game.TickCount - AzirHelper.LastQ <= 890 
+                && Game.TickCount - AzirHelper.LastQ >= 300
+                && soldierPos != Vector3.Zero
+                && SummonerSpells.IsValid(SummonerSpells.Flash) && MenuConfig.InsecMenu["Flash"].Enabled)
+            {
+                if (Game.TickCount - AzirHelper.LastR <= 2000)
+                {
+                    return;
+                }
+                SummonerSpells.Flash.Cast(pos);
+            }
 
-            if (pos == Vector3.Zero || dist > InsecRange())
+            var tempPos = Global.Player.ServerPosition + (Global.Player.ServerPosition - allyT.ServerPosition).Normalized();
+            var rect = new Geometry.Rectangle(Global.Player.ServerPosition.Extend(tempPos, (float)SpellConfig.RSqrt / 2f).To2D(), Global.Player.ServerPosition.Extend(target.ServerPosition, (float)SpellConfig.RSqrt / 2f).To2D(), SpellConfig.R.Width);
+
+            if (SpellConfig.Q.Ready && soldierPos.Distance(Global.Player) <= MenuConfig.InsecMenu["Range"].Value && !rect.IsInside(target.ServerPosition.To2D()))
+            {
+                SpellConfig.Q.Cast(pos);
+            }
+
+            if (pos == Vector3.Zero || dist > InsecRange() && soldierPos.Distance(target) > InsecRange())
             {
                 return;
             }
 
-            var soldierPos = SoldierHelper.GetSoldierNearestTo(target.ServerPosition);
             if (soldierPos != Vector3.Zero)
             {
                 if (soldierPos.Distance(target) <= SpellConfig.RSqrt - 65)
@@ -44,12 +66,11 @@ namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
             }
             else
             {
-                SpellConfig.W.Cast(pos);
+                SpellConfig.W.Cast(Global.Player.ServerPosition.Extend(pos, SpellConfig.W.Range));
             }
 
-            var tempPos = Global.Player.ServerPosition + (Global.Player.ServerPosition - allyT.ServerPosition).Normalized();
-            var rect = new Geometry.Rectangle(Global.Player.ServerPosition.Extend(tempPos, (float)SpellConfig.RSqrt / 2f).To2D(), Global.Player.ServerPosition.Extend(target.ServerPosition, (float)SpellConfig.RSqrt / 2f).To2D(), SpellConfig.R.Width);
-            
+        
+           
             if (rect.IsInside(target.ServerPosition.To2D()))
             {
                 if (SpellConfig.E.Ready)
@@ -73,46 +94,20 @@ namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
                 {
                     SpellConfig.E.Cast(pos);
                 }
-
-                if (SpellConfig.Q.Ready && soldierPos.Distance(Global.Player) <= 800)
-                {
-                    SpellConfig.Q.Cast(pos);
-                }
-              
-                 else if (ShouldFlash
-                       && !SpellConfig.E.Ready
-                       && Game.TickCount - AzirHelper.LastE > 700
-                       && pos.Distance(Global.Player) > 600
-                       && SummonerSpells.IsValid(SummonerSpells.Flash) && MenuConfig.InsecMenu["Flash"].Enabled)
-                {
-                    SummonerSpells.Flash.Cast(pos);
-                }
             }
         }
 
-        private static bool ShouldFlash;
-
-        private static float InsecRange()
+        public static float InsecRange()
         {
             var range = 0f;
             if (SpellConfig.E.Ready)
             {
-                range += SpellConfig.E.Range;
-            }
-
-            if (SpellConfig.R.Ready)
-            {
-                range += (float)SpellConfig.RSqrt - 65;
+                range += SpellConfig.E.Range - 65;
             }
 
             if (MenuConfig.InsecMenu["Flash"].Enabled && SummonerSpells.IsValid(SummonerSpells.Flash))
             {
-                ShouldFlash = true;
                 range += SummonerSpells.Flash.Range;
-            }
-            else
-            {
-                ShouldFlash = false;
             }
 
             return range;
