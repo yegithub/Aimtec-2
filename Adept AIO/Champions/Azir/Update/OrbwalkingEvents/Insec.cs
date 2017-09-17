@@ -35,7 +35,7 @@ namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
             if (soldierPos != Vector3.Zero)
             {
                 var spos = soldierPos.Extend(soldierPos + (soldierPos - target.ServerPosition).Normalized(), 150);
-                if (spos.Distance(target) <= 235)
+                if (spos.Distance(target) <= SpellConfig.RSqrt / 2f)
                 {
                     SpellConfig.E.Cast(spos);
                 }

@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Adept_AIO.Champions.Azir.Core;
 using Adept_AIO.SDK.Junk;
+using Aimtec;
 using Aimtec.SDK.Extensions;
 
 namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
@@ -22,6 +23,33 @@ namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
                 SpellConfig.CastQ(target, MenuConfig.Combo["Extend"].Enabled);
             }
 
+
+            if (SpellConfig.E.Ready && MenuConfig.Combo["E"].Enabled)
+            {
+                foreach (var soldier in SoldierHelper.Soldiers)
+                {
+                    var rect = new Geometry.Rectangle(Global.Player.ServerPosition.To2D(), soldier.ServerPosition.To2D(), SpellConfig.E.Width);
+                    var count = GameObjects.EnemyHeroes.Count(x => rect.IsInside(x.ServerPosition.To2D()));
+
+                    if (count >= 2)
+                    {
+                        SpellConfig.E.Cast(soldier.ServerPosition);
+                    }
+                }
+
+                if (target.HealthPercent() <= MenuConfig.Combo["EDmg"].Value)
+                {
+                    var soldierPos = SoldierHelper.GetSoldierNearestTo(target.ServerPosition);
+                    if (soldierPos != Vector3.Zero)
+                    {
+                        if (soldierPos.Distance(target) <= 500)
+                        {
+                            SpellConfig.E.Cast(soldierPos);
+                        }
+                    }
+                }              
+            }
+
             if (SpellConfig.W.Ready && MenuConfig.Combo["W"].Enabled)
             {
                 if (SpellConfig.Q.Ready && MenuConfig.Combo["Q"].Enabled)
@@ -31,20 +59,6 @@ namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
                 else if(dist < SpellConfig.W.Range)
                 {
                     SpellConfig.W.Cast(target);
-                }
-            }
-
-            if (SpellConfig.E.Ready && MenuConfig.Combo["E"].Enabled)
-            {
-                foreach (var soldier in SoldierHelper.Soldiers)
-                {
-                    var rect = new Geometry.Rectangle(Global.Player.ServerPosition.To2D(), soldier.ServerPosition.To2D(), SpellConfig.E.Width);
-
-                    var count = GameObjects.EnemyHeroes.Count(x => rect.IsInside(x.ServerPosition.To2D()));
-                    if (target.HealthPercent() <= MenuConfig.Combo["EDmg"].Value && count >= 1 || count >= 2)
-                    {
-                        SpellConfig.E.Cast(soldier.ServerPosition);
-                    }
                 }
             }
 

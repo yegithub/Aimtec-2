@@ -39,17 +39,25 @@ namespace Adept_AIO.Champions.Azir.Core
 
         public static void Jump(Vector3 pos)
         {
+           
             if(SpellConfig.W.Ready || Game.TickCount - LastW <= 1000)
             {
                 var extend = Global.Player.ServerPosition.Extend(pos, SpellConfig.W.Range);
-                SpellConfig.W.Cast(extend);
+                if (SoldierHelper.Soldiers.Count == 0)
+                {
+                    SpellConfig.W.Cast(extend);
+                }
+
                 SpellConfig.E.Cast(extend);
                 DelayAction.Queue(100, ()=> SpellConfig.Q.Cast(pos), new CancellationToken(false));
             }
             else if (SoldierHelper.GetSoldierNearestTo(pos).Distance(pos) <= 300)
             {
                 var extend = SoldierHelper.GetSoldierNearestTo(pos).Extend(pos, SpellConfig.Q.Range);
-                SpellConfig.W.Cast(extend);
+                if (SoldierHelper.Soldiers.Count == 0)
+                {
+                    SpellConfig.W.Cast(extend);
+                }
                 SpellConfig.E.Cast(extend);
                 DelayAction.Queue(100, () => SpellConfig.Q.Cast(pos), new CancellationToken(false));
             }
