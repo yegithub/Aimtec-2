@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Adept_AIO.Champions.Azir.Core;
 using Adept_AIO.Champions.Azir.Update.OrbwalkingEvents;
 using Adept_AIO.SDK.Junk;
@@ -17,6 +18,18 @@ namespace Adept_AIO.Champions.Azir.Update.Miscellaneous
                 if (Global.Player.IsDead || Global.Orbwalker.IsWindingUp)
                 {
                     return;
+                }
+
+                if (SoldierHelper.Soldiers.Any())
+                {
+                    foreach (var soldier in SoldierHelper.Soldiers)
+                    {
+                        var enemy = GameObjects.Enemy.FirstOrDefault(x => x.Distance(soldier) <= 450 && x.IsValid && x.MaxHealth > 10);
+                        if (enemy != null && Global.Orbwalker.CanAttack())
+                        {
+                            Global.Orbwalker.Attack(enemy);
+                        }
+                    }
                 }
 
                 SpellConfig.R.Width = 133 * (3 + Global.Player.GetSpell(SpellSlot.R).Level);
