@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Adept_AIO.SDK.Junk;
 using Aimtec;
 using Aimtec.SDK.Extensions;
 using Aimtec.SDK.Prediction.Skillshots;
@@ -26,13 +27,14 @@ namespace Adept_AIO.Champions.Azir.Core
 
         public static void CastQ(Obj_AI_Base target)
         {
-            var soldier = SoldierHelper.Soldiers.FirstOrDefault(x => x.Distance(target) <= Q.Range);
-            if (soldier == null)
+            var soldier = SoldierHelper.GetSoldierNearestTo(target.ServerPosition);
+            if (soldier == Vector3.Zero)
             {
                 return;
             }
 
-            Q.GetPrediction(target, soldier.ServerPosition, soldier.ServerPosition);
+            var pred = Q.GetPrediction(target, soldier, soldier);
+            Q.Cast(Global.Player.ServerPosition.Extend(pred.CastPosition, Q.Range));
         }
     }
 }
