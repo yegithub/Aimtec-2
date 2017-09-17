@@ -13,7 +13,7 @@ namespace Adept_AIO.Champions.Azir.Core
         public static void Load()
         {
             Q = new Spell(SpellSlot.Q, 875);
-            Q.SetSkillshot(0.25f, 70, 1600, false, SkillshotType.Line);
+            Q.SetSkillshot(0.25f, 70, 1600, false, SkillshotType.Line, false, HitChance.VeryHigh);
 
             W = new Spell(SpellSlot.W, 450);
           
@@ -21,7 +21,7 @@ namespace Adept_AIO.Champions.Azir.Core
             E.SetSkillshot(0.25f, 100, 1700, false, SkillshotType.Line);
 
             R = new Spell(SpellSlot.R, 450);
-            R.SetSkillshot(0.5f, 300, 1400, false, SkillshotType.Line, false, HitChance.VeryHigh);
+            R.SetSkillshot(0.5f, 300, 1400, false, SkillshotType.Line);
         }
 
         public static void CastQ(Obj_AI_Base target)

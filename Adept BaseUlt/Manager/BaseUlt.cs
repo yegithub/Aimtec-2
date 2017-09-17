@@ -33,7 +33,7 @@ namespace Adept_BaseUlt.Manager
 
         private Vector3 _lastSeenPosition;
         private Vector3 _predictedPosition;
-     
+
         private int _recallStartTick;
         private float _recallTime;
 
@@ -103,7 +103,7 @@ namespace Adept_BaseUlt.Manager
 
                     if (args.Type == TeleportType.Recall)
                     {
-                        Set(args.Duration, Game.TickCount, (Obj_AI_Hero)sender);
+                        Set(args.Duration, Game.TickCount, (Obj_AI_Hero) sender);
                     }
 
                     break;
@@ -130,9 +130,9 @@ namespace Adept_BaseUlt.Manager
             }
 
             if (_target == null
-             || !Menu[_target.ChampionName].Enabled
-             || !_ultimate.Ready
-             || Global.Player.GetSpellDamage(_target, SpellSlot.R) < TargetHealth())
+                || !Menu[_target.ChampionName].Enabled
+                || !_ultimate.Ready
+                || PlayerDamage() < TargetHealth())
             {
                 return;
             }
@@ -149,8 +149,9 @@ namespace Adept_BaseUlt.Manager
 
                 var distance = (_recallStartTick - _lastSeenTick) / 1000f * _target.MoveSpeed;
 
-                _predictedPosition = _lastSeenPosition.Extend(enemy.ServerPosition.Extend(direction, distance), distance);
-             
+                _predictedPosition =
+                    _lastSeenPosition.Extend(enemy.ServerPosition.Extend(direction, distance), distance);
+
                 if (distance > Menu["Distance"].Value)
                 {
                     return;
@@ -174,7 +175,9 @@ namespace Adept_BaseUlt.Manager
         {
             var rectangle = new Geometry.Rectangle(Global.Player.ServerPosition.To2D(), pos.To2D(), _width);
 
-            if (GameObjects.EnemyHeroes.Count(x => x.NetworkId != _target.NetworkId && rectangle.IsInside(x.ServerPosition.To2D())) > _maxCollisionObjects || pos.Distance(Global.Player) > _range)
+            if (GameObjects.EnemyHeroes.Count(x =>
+                    x.NetworkId != _target.NetworkId && rectangle.IsInside(x.ServerPosition.To2D())) >
+                _maxCollisionObjects || pos.Distance(Global.Player) > _range)
             {
                 return;
             }
@@ -185,7 +188,6 @@ namespace Adept_BaseUlt.Manager
             {
                 _lastSeenPosition = Vector3.Zero;
                 _predictedPosition = Vector3.Zero;
-              
             }, new CancellationToken(false));
 
             _ultimate.Cast(pos);
@@ -195,7 +197,7 @@ namespace Adept_BaseUlt.Manager
 
         private int GetCastTime(Vector3 pos)
         {
-            return (int)(-(Game.TickCount - (_recallStartTick + _recallTime)) - TravelTime(pos));
+            return (int) (-(Game.TickCount - (_recallStartTick + _recallTime)) - TravelTime(pos));
         }
 
         private void OnRender()
@@ -219,28 +221,29 @@ namespace Adept_BaseUlt.Manager
             }
             var ts = TimeSpan.FromMilliseconds(_timeUntilCastingUlt);
             var percent = (_recallStartTick - Game.TickCount + _recallTime) / _recallTime;
-         
+
             var xpos = 650;
 
             Render.Line(xpos,
-                        80,
-                        xpos + 200,
-                        80,
-                        18, false, Color.LightSlateGray);
+                80,
+                xpos + 200,
+                80,
+                18, false, Color.LightSlateGray);
 
-            Render.Line(xpos, 
-                        80, 
-                        xpos + 200 * percent, 
-                        80, 
-                        16, false, Color.LightSeaGreen);
+            Render.Line(xpos,
+                80,
+                xpos + 200 * percent,
+                80,
+                16, false, Color.LightSeaGreen);
 
-            var temp = TravelTime(GetFountainPos(_target)) / 100 + 60; //Todo: I'm noob and don't know how to make this work properly. 
+            var temp = TravelTime(GetFountainPos(_target)) / 100 +
+                       60; //Todo: I'm noob and don't know how to make this work properly. 
 
             Render.Line(xpos + 5 + temp,
-                        80,
-                        xpos + 10 + temp,
-                        80,
-                        16, false, Color.Red);
+                80,
+                xpos + 10 + temp,
+                80,
+                16, false, Color.Red);
 
 
             Render.Text(xpos + 100, 75, Color.White, _target.ChampionName);
@@ -255,6 +258,15 @@ namespace Adept_BaseUlt.Manager
             return Global.Player.Distance(pos) / _speed * 1000 + _delay + Game.Ping / 2f;
         }
 
+        private float PlayerDamage()
+        {
+            if (Global.Player.ChampionName == "Draven")
+            {
+                return (float)Global.Player.GetSpellDamage(_target, SpellSlot.R, DamageStage.SecondForm);
+            }
+            return (float)Global.Player.GetSpellDamage(_target, SpellSlot.R);
+        }
+
         private float TargetHealth()
         {
             if (_target == null)
@@ -264,10 +276,11 @@ namespace Adept_BaseUlt.Manager
 
             var hpReg = _target.BaseHPRegenRate;
             var invisible = lastEnemyChecked.FirstOrDefault(x => x.NetworkId == _target.NetworkId);
-           // Console.WriteLine($"BaseHPRegenRate: {_target.BaseHPRegenRate} | HPRegenRate: {_target.HPRegenRate}");
+            // Console.WriteLine($"BaseHPRegenRate: {_target.BaseHPRegenRate} | HPRegenRate: {_target.HPRegenRate}");
 
-           // var dmg = (float)Global.Player.GetSpellDamage(_target, SpellSlot.R);
-            var final = _target.Health + (hpReg * (invisible?.LifetimeTicks / 10000f ?? 0f) + TravelTime(GetFountainPos(_target)) / 1000);
+            // var dmg = (float)Global.Player.GetSpellDamage(_target, SpellSlot.R);
+            var final = _target.Health + (hpReg * (invisible?.LifetimeTicks / 10000f ?? 0f) +
+                                          TravelTime(GetFountainPos(_target)) / 1000);
 
             Console.WriteLine($"Health: {final} DMG: {Global.Player.GetSpellDamage(_target, SpellSlot.R)}");
             return final;
