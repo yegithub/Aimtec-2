@@ -18,8 +18,10 @@ namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
     {
         public static void OnKeyPressed()
         {
+          
             var target = Global.TargetSelector.GetSelectedTarget();
-            if (target == null)
+            if (target == null || !AzirHelper.InsecMode.Active && !(MenuConfig.InsecMenu["Auto"].Enabled &&
+                                                                    MenuConfig.InsecMenu["Auto"].Value <= target.CountEnemyHeroesInRange(500)))
             {
                 return;
             }
@@ -30,9 +32,9 @@ namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
             var pos = target.ServerPosition;
             var soldierPos = SoldierHelper.GetSoldierNearestTo(target.ServerPosition);
             
-            if (!SpellConfig.E.Ready
-                && soldierPos.Distance(target.ServerPosition) > 350
-                && Game.TickCount - AzirHelper.LastQ <= 890 
+            if (!SpellConfig.E.Ready && SpellConfig.R.Ready
+                && soldierPos.Distance(target.ServerPosition) > 400
+                && Game.TickCount - AzirHelper.LastQ <= 900 
                 && Game.TickCount - AzirHelper.LastQ >= 300
                 && soldierPos != Vector3.Zero
                 && SummonerSpells.IsValid(SummonerSpells.Flash) && MenuConfig.InsecMenu["Flash"].Enabled)
@@ -49,7 +51,7 @@ namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
 
             if (SpellConfig.Q.Ready && soldierPos.Distance(Global.Player) <= MenuConfig.InsecMenu["Range"].Value)
             {
-                if(target.Distance(Global.Player) <= 500)
+                if(target.Distance(Global.Player) <= 550)
                 {
                     SpellConfig.Q.Cast(allyT.ServerPosition);
                 }
@@ -67,7 +69,7 @@ namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
 
             if (soldierPos != Vector3.Zero)
             {
-                if (soldierPos.Distance(target) <= SpellConfig.RSqrt + 200 && soldierPos.Distance(target) > SpellConfig.RSqrt)
+                if (soldierPos.Distance(target) <= SpellConfig.RSqrt + 200)
                 {
                     SpellConfig.E.Cast(soldierPos);
                 }
@@ -75,12 +77,11 @@ namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
             else
             {
                 SpellConfig.W.Cast(Global.Player.ServerPosition.Extend(pos, SpellConfig.W.Range));
-                SpellConfig.E.Cast(pos);
             }
 
             if (rect.IsInside(target.ServerPosition.To2D()))
             {
-                if (SpellConfig.E.Ready && soldierPos.Distance(Global.Player) > 500)
+                if (SpellConfig.E.Ready && soldierPos.Distance(Global.Player) > 550)
                 {
                     SpellConfig.E.Cast(allyT.ServerPosition);
                 }

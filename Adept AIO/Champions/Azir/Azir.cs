@@ -2,6 +2,7 @@
 using Adept_AIO.Champions.Azir.Core;
 using Adept_AIO.Champions.Azir.Drawings;
 using Adept_AIO.Champions.Azir.Update.Miscellaneous;
+using Adept_AIO.SDK.Delegates;
 using Aimtec;
 
 namespace Adept_AIO.Champions.Azir
@@ -23,6 +24,7 @@ namespace Adept_AIO.Champions.Azir
             GameObject.OnCreate += SoldierHelper.OnCreate;
             GameObject.OnDestroy += SoldierHelper.OnDestroy;
             Obj_AI_Base.OnProcessSpellCast += AzirHelper.OnProcessSpellCast;
+            Gapcloser.OnGapcloser += AntiGapcloser.OnGapcloser;
         }
     }
 }

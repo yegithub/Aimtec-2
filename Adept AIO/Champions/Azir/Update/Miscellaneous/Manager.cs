@@ -26,7 +26,7 @@ namespace Adept_AIO.Champions.Azir.Update.Miscellaneous
 
                 foreach (var soldier in SoldierHelper.Soldiers)
                 {
-                    var enemy = GameObjects.Enemy.FirstOrDefault(x => x.Distance(soldier) <= 250 + x.BoundingRadius && x.IsValid && x.MaxHealth > 10 && soldier.Distance(Global.Player) <= SpellConfig.Q.Range && soldier.Distance(Global.Player) > Global.Player.AttackRange);
+                    var enemy = GameObjects.Enemy.FirstOrDefault(x => x.Distance(soldier) <= 250 + x.BoundingRadius && !x.IsDead && x.IsValid && x.MaxHealth > 10 && soldier.Distance(Global.Player) <= SpellConfig.Q.Range && soldier.Distance(Global.Player) > Global.Player.AttackRange);
                     if (enemy != null && Game.TickCount - LastAA >= 1000)
                     {
                         LastAA = Game.TickCount;
@@ -36,6 +36,8 @@ namespace Adept_AIO.Champions.Azir.Update.Miscellaneous
                 }
 
                 SpellConfig.R.Width = 133 * (3 + Global.Player.GetSpell(SpellSlot.R).Level);
+
+                Insec.OnKeyPressed();
 
                 switch (Global.Orbwalker.Mode)
                 {
@@ -49,7 +51,6 @@ namespace Adept_AIO.Champions.Azir.Update.Miscellaneous
                         JungleClear.OnUpdate();
                         LaneClear.OnUpdate();
                         break;
-
                 }
             }
             catch (Exception e)

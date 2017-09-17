@@ -28,7 +28,7 @@ namespace Adept_AIO.Champions.Azir.Core
             Gapcloser.Attach(mainMenu, "Anti Gapcloser");
 
             AzirHelper.JumpMode = new OrbwalkerMode("Jump (Cursor)", KeyCode.A, null, Flee.OnKeyPressed);
-            AzirHelper.InsecMode = new OrbwalkerMode("Insec", KeyCode.T, () => Global.TargetSelector.GetSelectedTarget(), Insec.OnKeyPressed);
+            AzirHelper.InsecMode = new OrbwalkerMode("Insec", KeyCode.T, () => null, null);
 
             Global.Orbwalker.AddMode(AzirHelper.JumpMode);
             Global.Orbwalker.AddMode(AzirHelper.InsecMode);
@@ -36,7 +36,8 @@ namespace Adept_AIO.Champions.Azir.Core
             InsecMenu = new Menu("Insec", "Insec")
             {
                 new MenuBool("Flash", "Flash"),
-                new MenuSlider("Range", "Use Q When X Distance To Soldier", 600, 250, 1200)
+                new MenuSlider("Range", "Use Q When X Distance To Soldier", 600, 250, 1200),
+                new MenuSliderBool("Auto", "Auto Insec If X Hit", true, 3, 0, 5)
             };
 
             Combo = new Menu("Combo", "Combo")

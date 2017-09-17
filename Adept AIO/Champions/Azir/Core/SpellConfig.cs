@@ -28,14 +28,17 @@ namespace Adept_AIO.Champions.Azir.Core
 
         public static void CastQ(Obj_AI_Base target, bool extend = true)
         {
-            var soldier = SoldierHelper.GetSoldierNearestTo(target.ServerPosition);
-            if (soldier == Vector3.Zero)
+            foreach (var soldier in SoldierHelper.Soldiers)
             {
-                return;
-            }
+                if (soldier == null || soldier.ServerPosition == Vector3.Zero)
+                {
+                    return;
+                }
 
-            var pred = Q.GetPrediction(target);
-            Q.Cast(extend ? soldier.Extend(pred.CastPosition, Q.Range) : pred.CastPosition);
+                var pred = Q.GetPrediction(target, soldier.ServerPosition);
+                Q.Cast(extend ? soldier.ServerPosition.Extend(pred.CastPosition, target.Distance(soldier) + 200) : pred.CastPosition);
+            }
+          
         }
 
         public static Vector3 GetQPred(Obj_AI_Base target)
