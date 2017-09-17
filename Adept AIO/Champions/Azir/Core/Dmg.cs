@@ -1,7 +1,9 @@
-﻿using Adept_AIO.SDK.Junk;
+﻿using System.Linq;
+using Adept_AIO.SDK.Junk;
 using Adept_AIO.SDK.Usables;
 using Aimtec;
 using Aimtec.SDK.Damage;
+using Aimtec.SDK.Extensions;
 
 namespace Adept_AIO.Champions.Azir.Core
 {
@@ -14,8 +16,13 @@ namespace Adept_AIO.Champions.Azir.Core
                 return 0;
             }
 
-            var dmg = SoldierHelper.Soldiers.Count * Global.Player.GetSpellDamage(target, SpellSlot.W);
+            var dmg = 0d;
 
+            if (SoldierHelper.Soldiers != null && SoldierHelper.Soldiers.Any())
+            {
+                dmg += (SoldierHelper.Soldiers.Count + Global.Player.GetSpell(SpellSlot.W).Ammo) * Global.Player.GetSpellDamage(target, SpellSlot.W);
+            }
+           
             if (SpellConfig.E.Ready)
             {
                 dmg += Global.Player.GetSpellDamage(target, SpellSlot.E);

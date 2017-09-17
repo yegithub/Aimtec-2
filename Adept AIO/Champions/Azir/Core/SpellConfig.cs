@@ -1,4 +1,4 @@
-﻿using System.Linq;
+﻿using System;
 using Adept_AIO.SDK.Junk;
 using Aimtec;
 using Aimtec.SDK.Extensions;
@@ -10,6 +10,7 @@ namespace Adept_AIO.Champions.Azir.Core
     class SpellConfig
     {
         public static Spell Q, W, E, R;
+        public static double RSqrt => 450;
 
         public static void Load()
         {
@@ -35,6 +36,12 @@ namespace Adept_AIO.Champions.Azir.Core
 
             var pred = Q.GetPrediction(target, soldier, soldier);
             Q.Cast(extend ? Global.Player.ServerPosition.Extend(pred.CastPosition, Q.Range) : pred.CastPosition);
+        }
+
+        public static Vector3 GetQPred(Obj_AI_Base target)
+        {
+            var soldier = SoldierHelper.GetSoldierNearestTo(target.ServerPosition);
+            return soldier == Vector3.Zero ? Vector3.Zero : Q.GetPrediction(target, soldier, soldier).CastPosition;
         }
     }
 }

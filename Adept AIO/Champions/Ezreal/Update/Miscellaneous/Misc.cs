@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using Aimtec;
 using Aimtec.SDK.Orbwalking;
 using Aimtec.SDK.Util;

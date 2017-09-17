@@ -55,8 +55,6 @@
   <ItemGroup>
     <Compile Include="Local SDK\Geometry.cs" />
     <Compile Include="Local SDK\Teleport.cs" />
-    <Compile Include="Local SDK\TeleportStatus.cs" />
-    <Compile Include="Local SDK\TeleportType.cs" />
     <Compile Include="Manager\BaseUlt.cs" />
     <Compile Include="Local SDK\MenuConfig.cs" />
     <Compile Include="Program.cs" />

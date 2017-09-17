@@ -26,6 +26,14 @@ namespace Adept_AIO.Champions.Azir.Update.Miscellaneous
                     case OrbwalkingMode.Combo:
                         Combo.OnUpdate();
                         break;
+                    case OrbwalkingMode.Mixed:
+                        Harass.OnUpdate();
+                        break;
+                    case OrbwalkingMode.Laneclear:
+                        JungleClear.OnUpdate();
+                        LaneClear.OnUpdate();
+                        break;
+
                 }
             }
             catch (Exception e)

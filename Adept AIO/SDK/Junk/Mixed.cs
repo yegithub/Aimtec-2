@@ -80,7 +80,7 @@ namespace Adept_AIO.SDK.Junk
             Render.Line(playerV2, extendedVector2, Color.Orange);
         }
 
-        public static void RenderArrowFromPoint(Vector3 start, Vector3 end)
+        public static void RenderArrowFromPoint(Vector3 start, Vector3 end, int width = 1)
         {
             if (end.IsZero)
             {
@@ -94,9 +94,9 @@ namespace Adept_AIO.SDK.Junk
             var arrowLine1 = extendedVector2 + (startV2 - extendedVector2).Normalized().Rotated( 40 * (float)Math.PI / 180) * 65;
             var arrowLine2 = extendedVector2 + (startV2 - extendedVector2).Normalized().Rotated(-40 * (float)Math.PI / 180) * 65;
 
-            Render.Line(extendedVector2, arrowLine1, Color.White);
-            Render.Line(extendedVector2, arrowLine2, Color.White);
-            Render.Line(startV2, extendedVector2, Color.Orange);
+            Render.Line(extendedVector2, arrowLine1, width, false, Color.White);
+            Render.Line(extendedVector2, arrowLine2, width, false, Color.White);
+            Render.Line(startV2, extendedVector2, width, false, Color.Orange);
         }
     }
 }

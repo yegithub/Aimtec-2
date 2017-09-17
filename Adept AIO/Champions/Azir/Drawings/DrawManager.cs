@@ -3,6 +3,7 @@ using System.Linq;
 using Adept_AIO.Champions.Azir.Core;
 using Adept_AIO.SDK.Junk;
 using Aimtec;
+using Aimtec.SDK.Extensions;
 
 namespace Adept_AIO.Champions.Azir.Drawings
 {
@@ -38,7 +39,27 @@ namespace Adept_AIO.Champions.Azir.Drawings
 
             if (MenuConfig.Drawings["R"].Enabled)
             {
-                Render.Circle(Global.Player.Position, MenuConfig.Killsteal["Range"].Value, (uint)MenuConfig.Drawings["Segments"].Value, Color.CadetBlue);
+                Render.Circle(Global.Player.Position, SpellConfig.R.Range, (uint)MenuConfig.Drawings["Segments"].Value, Color.Red);
+            }
+
+            if (!SoldierHelper.Soldiers.Any() || !MenuConfig.Drawings["Soldiers"].Enabled)
+            {
+                return;
+            }
+
+            foreach (var soldier in SoldierHelper.Soldiers)
+            {
+                Render.Circle(soldier.ServerPosition, 400, (uint)MenuConfig.Drawings["Segments"].Value, Color.SlateBlue);
+            }
+
+            foreach (var soldier in SoldierHelper.Soldiers)
+            {
+                var target = GameObjects.EnemyHeroes.FirstOrDefault(x => x.Distance(soldier) <= 250 && x.IsValid && !x.IsDead && x.IsFloatingHealthBarActive);
+                if (target == null)
+                {
+                    return;
+                }
+                Mixed.RenderArrowFromPoint(soldier.ServerPosition, soldier.ServerPosition.Extend(SpellConfig.GetQPred(target), soldier.ServerPosition.Distance(target)), 3);
             }
         }
     }

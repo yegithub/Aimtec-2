@@ -10,24 +10,28 @@ namespace Adept_AIO.Champions.Azir.Core
     {
         public static List<Obj_AI_Minion> Soldiers;
 
+
         private static bool IsSoldier(Obj_AI_Minion soldier)
         {
+            if(soldier == null)
+            {
+                return false;
+            }
             return soldier.IsAlly && soldier.UnitSkinName.ToLower().Contains("soldier");
         }
 
         public static void OnDestroy(GameObject sender)
         {
-            var potentialSoldier = sender as Obj_AI_Minion;
-
-            if (sender != null && IsSoldier(potentialSoldier))
-            {
-                Soldiers.Add(potentialSoldier);
-            }
+            Soldiers.RemoveAll(x => x.NetworkId == sender.NetworkId);
         }
 
         public static void OnCreate(GameObject sender)
         {
-            Soldiers.RemoveAll(x => x.NetworkId == sender.NetworkId);
+            var soldier = sender as Obj_AI_Minion;
+            if (soldier != null && IsSoldier(soldier) && Game.TickCount - AzirHelper.LastR >= 100)
+            {
+                Soldiers.Add(soldier);
+            }
         }
 
         public static Vector3 GetSoldierNearestTo(Vector3 pos)

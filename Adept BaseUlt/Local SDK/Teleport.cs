@@ -114,4 +114,21 @@ namespace Adept_BaseUlt.Local_SDK
             public TeleportStatus Status { get; internal set; }
         }
     }
+
+    public enum TeleportType
+    {
+        Recall,
+        Teleport,
+        TwistedFate,
+        Shen,
+        Unknown
+    }
+
+    public enum TeleportStatus
+    {
+        Start,
+        Abort,
+        Finish,
+        Unknown
+    }
 }

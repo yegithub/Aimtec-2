@@ -24,7 +24,14 @@ namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
 
             if (SpellConfig.W.Ready && MenuConfig.Combo["W"].Enabled)
             {
-                SpellConfig.W.Cast(Global.Player.ServerPosition.Extend(target.ServerPosition, SpellConfig.W.Range));
+                if (SpellConfig.Q.Ready && MenuConfig.Combo["Q"].Enabled)
+                {
+                    SpellConfig.W.Cast(Global.Player.ServerPosition.Extend(target.ServerPosition, SpellConfig.W.Range));
+                }
+                else if(dist < SpellConfig.W.Range)
+                {
+                    SpellConfig.W.Cast(target);
+                }
             }
 
             if (SpellConfig.E.Ready && MenuConfig.Combo["E"].Enabled)
@@ -34,14 +41,14 @@ namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
                     var rect = new Geometry.Rectangle(Global.Player.ServerPosition.To2D(), soldier.ServerPosition.To2D(), SpellConfig.E.Width);
 
                     var count = GameObjects.EnemyHeroes.Count(x => rect.IsInside(x.ServerPosition.To2D()));
-                    if (target.Health < Dmg.Damage(target) && count >= 1 || count >= 2)
+                    if (target.HealthPercent() <= MenuConfig.Combo["EDmg"].Value && count >= 1 || count >= 2)
                     {
                         SpellConfig.E.Cast(soldier.ServerPosition);
                     }
                 }
             }
 
-            if (SpellConfig.R.Ready && MenuConfig.Combo["R"].Enabled && Dmg.Damage(target) > target.Health && dist < SpellConfig.R.Range)
+            if (SpellConfig.R.Ready && MenuConfig.Combo["R"].Enabled && target.HealthPercent() <= 40 && dist < SpellConfig.R.Range)
             {
                 SpellConfig.R.Cast(target);
             }

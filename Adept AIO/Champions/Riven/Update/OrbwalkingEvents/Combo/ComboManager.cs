@@ -8,7 +8,6 @@ using Adept_AIO.SDK.Usables;
 using Aimtec;
 using Aimtec.SDK.Damage;
 using Aimtec.SDK.Extensions;
-using Aimtec.SDK.Prediction.Skillshots;
 
 namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents.Combo
 {
