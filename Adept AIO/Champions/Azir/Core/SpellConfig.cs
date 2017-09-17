@@ -25,7 +25,7 @@ namespace Adept_AIO.Champions.Azir.Core
             R.SetSkillshot(0.5f, 300, 1400, false, SkillshotType.Line);
         }
 
-        public static void CastQ(Obj_AI_Base target)
+        public static void CastQ(Obj_AI_Base target, bool extend = true)
         {
             var soldier = SoldierHelper.GetSoldierNearestTo(target.ServerPosition);
             if (soldier == Vector3.Zero)
@@ -34,7 +34,7 @@ namespace Adept_AIO.Champions.Azir.Core
             }
 
             var pred = Q.GetPrediction(target, soldier, soldier);
-            Q.Cast(Global.Player.ServerPosition.Extend(pred.CastPosition, Q.Range));
+            Q.Cast(extend ? Global.Player.ServerPosition.Extend(pred.CastPosition, Q.Range) : pred.CastPosition);
         }
     }
 }

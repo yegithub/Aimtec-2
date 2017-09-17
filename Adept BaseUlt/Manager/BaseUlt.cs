@@ -282,7 +282,7 @@ namespace Adept_BaseUlt.Manager
             var final = _target.Health + (hpReg * (invisible?.LifetimeTicks / 10000f ?? 0f) +
                                           TravelTime(GetFountainPos(_target)) / 1000);
 
-            Console.WriteLine($"Health: {(int)final} DMG: {(int)Global.Player.GetSpellDamage(_target, SpellSlot.R)}");
+            Console.WriteLine($"Health: {(int)final} DMG: {(int)PlayerDamage()}");
             return final;
         }
 

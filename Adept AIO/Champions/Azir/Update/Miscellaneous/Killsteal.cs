@@ -31,7 +31,11 @@ namespace Adept_AIO.Champions.Azir.Update.Miscellaneous
             else if(SpellConfig.E.Ready && target.Health < Global.Player.GetSpellDamage(target, SpellSlot.E)
                     && MenuConfig.Killsteal["E"].Enabled)
             {
-                SpellConfig.E.Cast(target);
+                var nearest = SoldierHelper.GetSoldierNearestTo(target.ServerPosition);
+                if (nearest != Vector3.Zero)
+                {
+                    SpellConfig.E.Cast(nearest);
+                }
             }
         }
     }

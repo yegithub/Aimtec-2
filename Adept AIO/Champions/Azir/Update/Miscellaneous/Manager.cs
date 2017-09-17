@@ -1,4 +1,5 @@
-﻿using Adept_AIO.Champions.Azir.Core;
+﻿using System;
+using Adept_AIO.Champions.Azir.Core;
 using Adept_AIO.Champions.Azir.Update.OrbwalkingEvents;
 using Adept_AIO.SDK.Junk;
 using Aimtec;
@@ -11,18 +12,26 @@ namespace Adept_AIO.Champions.Azir.Update.Miscellaneous
     {
         public static void OnUpdate()
         {
-            if (Global.Player.IsDead || Global.Orbwalker.IsWindingUp)
+            try
             {
-                return;
+                if (Global.Player.IsDead || Global.Orbwalker.IsWindingUp)
+                {
+                    return;
+                }
+
+                SpellConfig.R.Width = 133 * (3 + Global.Player.GetSpell(SpellSlot.R).Level);
+
+                switch (Global.Orbwalker.Mode)
+                {
+                    case OrbwalkingMode.Combo:
+                        Combo.OnUpdate();
+                        break;
+                }
             }
-
-            SpellConfig.R.Width = 133 * (3 + Global.Player.GetSpell(SpellSlot.R).Level);
-
-            switch (Global.Orbwalker.Mode)
+            catch (Exception e)
             {
-                case OrbwalkingMode.Combo:
-                    Combo.OnUpdate();
-                    break;
+                Console.WriteLine(e);
+                throw;
             }
         }
     }

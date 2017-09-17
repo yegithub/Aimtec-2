@@ -27,6 +27,7 @@ namespace Adept_AIO.Champions.Azir.Core
             Combo = new Menu("Combo", "Combo")
             {
                 new MenuBool("Q", "Use Q"),
+                new MenuBool("Extend", "Extended Q"),
                 new MenuBool("W", "Use W"),
                 new MenuBool("E", "Use E"),
                 new MenuBool("R", "Use R")

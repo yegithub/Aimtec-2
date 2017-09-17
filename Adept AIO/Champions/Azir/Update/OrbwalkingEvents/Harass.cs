@@ -5,7 +5,7 @@ using Aimtec.SDK.Extensions;
 
 namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
 {
-    class Combo
+    class Harass
     {
         public static void OnUpdate()
         {
@@ -17,33 +17,33 @@ namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
 
             var dist = target.Distance(Global.Player) - Global.Player.BoundingRadius - target.BoundingRadius;
 
-            if (SpellConfig.Q.Ready && MenuConfig.Combo["Q"].Enabled && dist < SpellConfig.Q.Range + 200)
+            if (SpellConfig.Q.Ready 
+             && MenuConfig.Harass["Q"].Enabled 
+             && Global.Player.ManaPercent() > MenuConfig.Harass["Q"].Value
+             && dist < SpellConfig.Q.Range + 200)
             {
-                SpellConfig.CastQ(target, MenuConfig.Combo["Extend"].Enabled);
+                SpellConfig.CastQ(target);
             }
 
-            if (SpellConfig.W.Ready && MenuConfig.Combo["W"].Enabled)
+            if (SpellConfig.W.Ready
+             && MenuConfig.Harass["W"].Enabled
+             && Global.Player.ManaPercent() > MenuConfig.Harass["W"].Value)
             {
                 SpellConfig.W.Cast(Global.Player.ServerPosition.Extend(target.ServerPosition, SpellConfig.W.Range));
             }
 
-            if (SpellConfig.E.Ready && MenuConfig.Combo["E"].Enabled)
+            if (SpellConfig.E.Ready && MenuConfig.Harass["E"].Enabled && Global.Player.ManaPercent() > MenuConfig.Harass["E"].Value)
             {
                 foreach (var soldier in SoldierHelper.Soldiers)
                 {
                     var rect = new Geometry.Rectangle(Global.Player.ServerPosition.To2D(), soldier.ServerPosition.To2D(), SpellConfig.E.Width);
-
                     var count = GameObjects.EnemyHeroes.Count(x => rect.IsInside(x.ServerPosition.To2D()));
-                    if (target.Health < Dmg.Damage(target) && count >= 1 || count >= 2)
+
+                    if (count >= 1)
                     {
                         SpellConfig.E.Cast(soldier.ServerPosition);
                     }
                 }
-            }
-
-            if (SpellConfig.R.Ready && MenuConfig.Combo["R"].Enabled && Dmg.Damage(target) > target.Health && dist < SpellConfig.R.Range)
-            {
-                SpellConfig.R.Cast(target);
             }
         }
     }

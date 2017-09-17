@@ -64,6 +64,8 @@
     <Compile Include="Champions\Azir\Update\Miscellaneous\Killsteal.cs" />
     <Compile Include="Champions\Azir\Update\Miscellaneous\Manager.cs" />
     <Compile Include="Champions\Azir\Update\OrbwalkingEvents\Combo.cs" />
+    <Compile Include="Champions\Azir\Update\OrbwalkingEvents\Harass.cs" />
+    <Compile Include="Champions\Azir\Update\OrbwalkingEvents\LaneClear.cs" />
     <Compile Include="Champions\Ezreal\Core\Dmg.cs" />
     <Compile Include="Champions\Ezreal\Core\MenuConfig.cs" />
     <Compile Include="Champions\Ezreal\Core\SpellConfig.cs" />
