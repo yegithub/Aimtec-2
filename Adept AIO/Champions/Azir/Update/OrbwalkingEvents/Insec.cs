@@ -82,7 +82,7 @@ namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
                  else if (ShouldFlash
                        && !SpellConfig.E.Ready
                        && Game.TickCount - AzirHelper.LastE > 700
-                       && pos.Distance(Global.Player) > 400
+                       && pos.Distance(Global.Player) > 600
                        && SummonerSpells.IsValid(SummonerSpells.Flash) && MenuConfig.InsecMenu["Flash"].Enabled)
                 {
                     SummonerSpells.Flash.Cast(pos);
