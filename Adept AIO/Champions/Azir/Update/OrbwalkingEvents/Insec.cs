@@ -47,19 +47,27 @@ namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
             var tempPos = Global.Player.ServerPosition + (Global.Player.ServerPosition - allyT.ServerPosition).Normalized();
             var rect = new Geometry.Rectangle(Global.Player.ServerPosition.Extend(tempPos, (float)SpellConfig.RSqrt / 2f).To2D(), Global.Player.ServerPosition.Extend(target.ServerPosition, (float)SpellConfig.RSqrt / 2f).To2D(), SpellConfig.R.Width);
 
-            if (SpellConfig.Q.Ready && soldierPos.Distance(Global.Player) <= MenuConfig.InsecMenu["Range"].Value && !rect.IsInside(target.ServerPosition.To2D()))
+            if (SpellConfig.Q.Ready && soldierPos.Distance(Global.Player) <= MenuConfig.InsecMenu["Range"].Value)
             {
-                SpellConfig.Q.Cast(pos);
+                if(target.Distance(Global.Player) <= 500)
+                {
+                    SpellConfig.Q.Cast(allyT.ServerPosition);
+                }
+                else
+                {
+                    SpellConfig.Q.Cast(pos);
+                }
+                
             }
 
-            if (pos == Vector3.Zero || dist > InsecRange() && soldierPos.Distance(target) > InsecRange())
+            if (dist > InsecRange())
             {
                 return;
             }
 
             if (soldierPos != Vector3.Zero)
             {
-                if (soldierPos.Distance(target) <= SpellConfig.RSqrt - 65)
+                if (soldierPos.Distance(target) <= SpellConfig.RSqrt + 200 && soldierPos.Distance(target) > SpellConfig.RSqrt)
                 {
                     SpellConfig.E.Cast(soldierPos);
                 }
@@ -67,32 +75,19 @@ namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
             else
             {
                 SpellConfig.W.Cast(Global.Player.ServerPosition.Extend(pos, SpellConfig.W.Range));
+                SpellConfig.E.Cast(pos);
             }
 
-        
-           
             if (rect.IsInside(target.ServerPosition.To2D()))
             {
-                if (SpellConfig.E.Ready)
+                if (SpellConfig.E.Ready && soldierPos.Distance(Global.Player) > 500)
                 {
-                    DelayAction.Queue(250, ()=> SpellConfig.E.Cast(allyT.ServerPosition), new CancellationToken(false));
-                }
-
-                if (SpellConfig.Q.Ready && soldierPos.Distance(Global.Player) <= 300)
-                {
-                    SpellConfig.Q.Cast(allyT.ServerPosition);
+                    SpellConfig.E.Cast(allyT.ServerPosition);
                 }
 
                 if (SpellConfig.R.Ready)
                 {
                     SpellConfig.R.Cast(allyT.ServerPosition);
-                }
-            }
-            else
-            {
-                if (SpellConfig.E.Ready)
-                {
-                    SpellConfig.E.Cast(pos);
                 }
             }
         }

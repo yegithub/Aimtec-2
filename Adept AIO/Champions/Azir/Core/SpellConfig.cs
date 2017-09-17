@@ -34,8 +34,8 @@ namespace Adept_AIO.Champions.Azir.Core
                 return;
             }
 
-            var pred = Q.GetPrediction(target, soldier, soldier);
-            Q.Cast(extend ? soldier.Extend(pred.UnitPosition, Q.Range) : pred.CastPosition);
+            var pred = Q.GetPrediction(target);
+            Q.Cast(extend ? soldier.Extend(pred.CastPosition, Q.Range) : pred.CastPosition);
         }
 
         public static Vector3 GetQPred(Obj_AI_Base target)
