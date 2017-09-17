@@ -41,7 +41,7 @@ namespace Adept_AIO.Champions.Azir.Drawings
             {
                 Render.Circle(Global.Player.Position, SpellConfig.R.Range, (uint)MenuConfig.Drawings["Segments"].Value, Color.Red);
             }
-
+          
             if (!SoldierHelper.Soldiers.Any() || !MenuConfig.Drawings["Soldiers"].Enabled)
             {
                 return;

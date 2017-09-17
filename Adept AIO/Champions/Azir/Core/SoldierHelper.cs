@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using Adept_AIO.SDK.Junk;
 using Aimtec;
 using Aimtec.SDK.Extensions;
@@ -17,7 +18,7 @@ namespace Adept_AIO.Champions.Azir.Core
             {
                 return false;
             }
-            return soldier.IsAlly && soldier.UnitSkinName.ToLower().Contains("soldier");
+            return soldier.IsAlly && !soldier.IsDead && soldier.IsValid && soldier.UnitSkinName.ToLower().Contains("soldier");
         }
 
         public static void OnDestroy(GameObject sender)
