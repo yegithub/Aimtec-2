@@ -24,7 +24,7 @@ namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
             var dist = Global.Player.Distance(target);
             var allyT = GameObjects.AllyTurrets.OrderBy(x => x.Distance(Global.Player)).FirstOrDefault(x => x.IsValid && !x.IsDead);
 
-            var pos = GetPos(target);
+            var pos = target.ServerPosition;
 
             if (pos == Vector3.Zero || pos.Distance(target) > InsecRange() || dist > InsecRange())
             {
@@ -35,7 +35,7 @@ namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
             if (soldierPos != Vector3.Zero)
             {
                 var spos = soldierPos.Extend(soldierPos + (soldierPos - target.ServerPosition).Normalized(), 150);
-                if (spos.Distance(target) <= SpellConfig.RSqrt / 2f)
+                if (spos.Distance(target) <= SpellConfig.RSqrt)
                 {
                     SpellConfig.E.Cast(spos);
                 }
@@ -45,9 +45,9 @@ namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
                 SpellConfig.W.Cast(pos);
             }
 
-            var rect = new Geometry.Rectangle(Global.Player.ServerPosition.To2D(), Global.Player.ServerPosition.Extend(target.ServerPosition, (float)SpellConfig.RSqrt / 2f).To2D(), SpellConfig.R.Width);
+            var rect = new Geometry.Rectangle(Global.Player.ServerPosition.To2D(), Global.Player.ServerPosition.Extend(target.ServerPosition, (float)SpellConfig.RSqrt).To2D(), SpellConfig.R.Width);
 
-            if (rect.IsInside(target.ServerPosition.To2D()) && allyT != null && !allyT.ServerPosition.IsZero)
+            if (rect.IsInside(target.ServerPosition.To2D()) && allyT != null)
             {
                 DelayAction.Queue(250, () =>
                 {
@@ -71,15 +71,6 @@ namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
                     SpellConfig.E.Cast(pos);
                 }, new CancellationToken(false));
             }
-        }
-
-
-        private static Vector3 GetPos(Obj_AI_Base target)
-        {
-          
-
-                return Global.Player.ServerPosition.Extend(target.ServerPosition, InsecRange());
-           
         }
 
         private static float InsecRange()

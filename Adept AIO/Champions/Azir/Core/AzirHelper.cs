@@ -39,7 +39,6 @@ namespace Adept_AIO.Champions.Azir.Core
 
         public static void Jump(Vector3 pos)
         {
-           
             if(SpellConfig.W.Ready || Game.TickCount - LastW <= 1000)
             {
                 var extend = Global.Player.ServerPosition.Extend(pos, SpellConfig.W.Range);
