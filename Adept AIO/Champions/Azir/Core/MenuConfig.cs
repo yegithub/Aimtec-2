@@ -37,7 +37,7 @@ namespace Adept_AIO.Champions.Azir.Core
             {
                 new MenuBool("Flash", "Flash"),
                 new MenuSlider("Range", "Use Q When X Distance To Soldier", 600, 250, 1200),
-                new MenuSliderBool("Auto", "Auto Insec If X Hit", true, 3, 0, 5)
+                new MenuSliderBool("Auto", "Auto Insec If X Hit", true, 3, 2, 5)
             };
 
             Combo = new Menu("Combo", "Combo")
