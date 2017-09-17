@@ -50,14 +50,14 @@ namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
             var tempPos = Global.Player.ServerPosition + (Global.Player.ServerPosition - allyT.ServerPosition).Normalized();
             var rect = new Geometry.Rectangle(Global.Player.ServerPosition.Extend(tempPos, (float)SpellConfig.RSqrt / 2f).To2D(), Global.Player.ServerPosition.Extend(target.ServerPosition, (float)SpellConfig.RSqrt / 2f).To2D(), SpellConfig.R.Width);
             
-            if (rect.IsInside(target.ServerPosition.To2D()) && allyT != null)
+            if (rect.IsInside(target.ServerPosition.To2D()))
             {
                 if (SpellConfig.E.Ready)
                 {
-                    SpellConfig.E.Cast(allyT.ServerPosition);
+                    DelayAction.Queue(250, ()=> SpellConfig.E.Cast(allyT.ServerPosition), new CancellationToken(false));
                 }
 
-                if (SpellConfig.Q.Ready && soldierPos.Distance(Global.Player) <= 500)
+                if (SpellConfig.Q.Ready && soldierPos.Distance(Global.Player) <= 300)
                 {
                     SpellConfig.Q.Cast(allyT.ServerPosition);
                 }
@@ -79,10 +79,11 @@ namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
                     SpellConfig.Q.Cast(pos);
                 }
               
-                if (Game.TickCount - AzirHelper.LastE > 800 
-                 && pos.Distance(Global.Player) > 650
-                 && pos.Distance(Global.Player) < 900
-                 && SummonerSpells.IsValid(SummonerSpells.Flash) && MenuConfig.InsecMenu["Flash"].Enabled)
+                 else if (Game.TickCount - AzirHelper.LastE > 500 
+                       && Game.TickCount - AzirHelper.LastE < 3000
+                       && pos.Distance(Global.Player) > 500
+                       && pos.Distance(Global.Player) < 900
+                       && SummonerSpells.IsValid(SummonerSpells.Flash) && MenuConfig.InsecMenu["Flash"].Enabled)
                 {
                     SummonerSpells.Flash.Cast(pos);
                 }
