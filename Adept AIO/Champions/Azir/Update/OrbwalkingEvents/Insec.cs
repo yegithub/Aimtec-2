@@ -33,17 +33,13 @@ namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
             var soldierPos = SoldierHelper.GetSoldierNearestTo(target.ServerPosition);
             
             if (!SpellConfig.E.Ready && SpellConfig.R.Ready
-                && soldierPos.Distance(target.ServerPosition) > 400
-                && Game.TickCount - AzirHelper.LastQ <= 900 
-                && Game.TickCount - AzirHelper.LastQ >= 300
                 && soldierPos != Vector3.Zero
+                && soldierPos.Distance(target.ServerPosition) > 450
+                && Game.TickCount - AzirHelper.LastQ <= 900 
+                && Game.TickCount - AzirHelper.LastQ >= 400
                 && SummonerSpells.IsValid(SummonerSpells.Flash) && MenuConfig.InsecMenu["Flash"].Enabled)
             {
-                if (Game.TickCount - AzirHelper.LastR <= 2000)
-                {
-                    return;
-                }
-                SummonerSpells.Flash.Cast(pos);
+              //  SummonerSpells.Flash.Cast(pos);
             }
 
             var tempPos = Global.Player.ServerPosition + (Global.Player.ServerPosition - allyT.ServerPosition).Normalized();
@@ -67,12 +63,9 @@ namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
                 return;
             }
 
-            if (soldierPos != Vector3.Zero)
+            if (soldierPos != Vector3.Zero && soldierPos.Distance(target) <= Global.Player.Distance(target))
             {
-                if (soldierPos.Distance(target) <= SpellConfig.RSqrt + 200)
-                {
-                    SpellConfig.E.Cast(soldierPos);
-                }
+                SpellConfig.E.Cast(soldierPos);
             }
             else
             {
@@ -81,7 +74,7 @@ namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
 
             if (rect.IsInside(target.ServerPosition.To2D()))
             {
-                if (SpellConfig.E.Ready && soldierPos.Distance(Global.Player) > 550)
+                if (SpellConfig.E.Ready && soldierPos.Distance(Global.Player) > 350)
                 {
                     SpellConfig.E.Cast(allyT.ServerPosition);
                 }
@@ -95,7 +88,7 @@ namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
 
         public static float InsecRange()
         {
-            var range = 0f;
+            var range = 250f;
             if (SpellConfig.E.Ready)
             {
                 range += SpellConfig.E.Range - 65;
@@ -103,7 +96,7 @@ namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
 
             if (MenuConfig.InsecMenu["Flash"].Enabled && SummonerSpells.IsValid(SummonerSpells.Flash))
             {
-                range += SummonerSpells.Flash.Range;
+                //range += SummonerSpells.Flash.Range;
             }
 
             return range;

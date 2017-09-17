@@ -5,6 +5,7 @@ using Adept_AIO.Champions.Azir.Core;
 using Adept_AIO.Champions.Azir.Update.OrbwalkingEvents;
 using Adept_AIO.SDK.Junk;
 using Aimtec;
+using Aimtec.SDK.Events;
 using Aimtec.SDK.Extensions;
 using Aimtec.SDK.Orbwalking;
 using Aimtec.SDK.Util;
@@ -36,7 +37,7 @@ namespace Adept_AIO.Champions.Azir.Update.Miscellaneous
                 }
 
                 SpellConfig.R.Width = 133 * (3 + Global.Player.GetSpell(SpellSlot.R).Level);
-
+            
                 Insec.OnKeyPressed();
 
                 switch (Global.Orbwalker.Mode)
