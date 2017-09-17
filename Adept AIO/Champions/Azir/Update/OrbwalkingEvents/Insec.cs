@@ -79,16 +79,18 @@ namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
                     SpellConfig.Q.Cast(pos);
                 }
               
-                 else if (Game.TickCount - AzirHelper.LastE > 500 
-                       && Game.TickCount - AzirHelper.LastE < 3000
-                       && pos.Distance(Global.Player) > 500
-                       && pos.Distance(Global.Player) < 900
+                 else if (ShouldFlash
+                       && !SpellConfig.E.Ready
+                       && Game.TickCount - AzirHelper.LastE > 700
+                       && pos.Distance(Global.Player) > 400
                        && SummonerSpells.IsValid(SummonerSpells.Flash) && MenuConfig.InsecMenu["Flash"].Enabled)
                 {
                     SummonerSpells.Flash.Cast(pos);
                 }
             }
         }
+
+        private static bool ShouldFlash;
 
         private static float InsecRange()
         {
@@ -105,8 +107,14 @@ namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
 
             if (MenuConfig.InsecMenu["Flash"].Enabled && SummonerSpells.IsValid(SummonerSpells.Flash))
             {
+                ShouldFlash = true;
                 range += SummonerSpells.Flash.Range;
             }
+            else
+            {
+                ShouldFlash = false;
+            }
+
             return range;
         }
     }

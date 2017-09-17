@@ -20,9 +20,11 @@ namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
 
             if (SpellConfig.Q.Ready && MenuConfig.Combo["Q"].Enabled && dist < SpellConfig.Q.Range + 200)
             {
-                SpellConfig.CastQ(target, MenuConfig.Combo["Extend"].Enabled);
+                if (SoldierHelper.Soldiers.Any() && SoldierHelper.Soldiers.Count >= MenuConfig.Combo["QCount"].Value)
+                {
+                    SpellConfig.CastQ(target, MenuConfig.Combo["Extend"].Enabled);
+                }
             }
-
 
             if (SpellConfig.E.Ready && MenuConfig.Combo["E"].Enabled)
             {

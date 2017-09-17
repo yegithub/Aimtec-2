@@ -43,6 +43,7 @@ namespace Adept_AIO.Champions.Azir.Core
             {
                 new MenuBool("Q", "Use Q"),
                 new MenuBool("Extend", "Extended Q"),
+                new MenuSlider("QCount", "Q If X Soldiers Alive", 2, 1, 4),
                 new MenuBool("W", "Use W"),
                 new MenuBool("E", "Use E"),
                 new MenuSlider("EDmg", "Force E When Health% <= ", 80),
