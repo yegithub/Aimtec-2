@@ -33,13 +33,12 @@ namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
             var soldierPos = SoldierHelper.GetSoldierNearestTo(target.ServerPosition);
             
             if (!SpellConfig.E.Ready && SpellConfig.R.Ready
-                && soldierPos != Vector3.Zero
-                && soldierPos.Distance(target.ServerPosition) > 450
-                && Game.TickCount - AzirHelper.LastQ <= 900 
-                && Game.TickCount - AzirHelper.LastQ >= 400
+                && Global.Player.IsDashing()
+                && Global.Player.GetDashInfo().EndPos.Distance(target) > 450
+                && soldierPos.Distance(target) > 450
                 && SummonerSpells.IsValid(SummonerSpells.Flash) && MenuConfig.InsecMenu["Flash"].Enabled)
             {
-              //  SummonerSpells.Flash.Cast(pos);
+                SummonerSpells.Flash.Cast(pos);
             }
 
             var tempPos = Global.Player.ServerPosition + (Global.Player.ServerPosition - allyT.ServerPosition).Normalized();
@@ -47,15 +46,7 @@ namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
 
             if (SpellConfig.Q.Ready && soldierPos.Distance(Global.Player) <= MenuConfig.InsecMenu["Range"].Value)
             {
-                if(target.Distance(Global.Player) <= 550)
-                {
-                    SpellConfig.Q.Cast(allyT.ServerPosition);
-                }
-                else
-                {
-                    SpellConfig.Q.Cast(pos);
-                }
-                
+                SpellConfig.Q.Cast(target.Distance(Global.Player) <= 550 ? allyT.ServerPosition : pos);
             }
 
             if (dist > InsecRange())
@@ -63,7 +54,7 @@ namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
                 return;
             }
 
-            if (soldierPos != Vector3.Zero && soldierPos.Distance(target) <= Global.Player.Distance(target))
+            if (soldierPos != Vector3.Zero)
             {
                 SpellConfig.E.Cast(soldierPos);
             }
@@ -96,7 +87,7 @@ namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
 
             if (MenuConfig.InsecMenu["Flash"].Enabled && SummonerSpells.IsValid(SummonerSpells.Flash))
             {
-                //range += SummonerSpells.Flash.Range;
+                range += SummonerSpells.Flash.Range;
             }
 
             return range;
