@@ -1,7 +1,9 @@
-﻿using Adept_AIO.Champions.Riven.Core;
+﻿using System;
+using Adept_AIO.Champions.Riven.Core;
 using Adept_AIO.Champions.Riven.Update.OrbwalkingEvents;
 using Adept_AIO.Champions.Riven.Update.OrbwalkingEvents.Combo;
 using Adept_AIO.SDK.Junk;
+using Adept_AIO.SDK.Methods;
 using Aimtec;
 using Aimtec.SDK.Extensions;
 using Aimtec.SDK.Orbwalking;
@@ -21,6 +23,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
             {
                 Global.Orbwalker.AttackingEnabled = true;
                 Animation.DidRecentlyCancel = false;
+                DebugConsole.Print($"Attack Possible {Global.Orbwalker.CanAttack()}", ConsoleColor.Red);
             }
 
             switch (Global.Orbwalker.Mode)
@@ -56,6 +59,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
             if (Game.TickCount - Extensions.LastQCastAttempt < 400 + Game.Ping / 2f)
             {
                 Extensions.DidJustAuto = false; 
+                Global.Orbwalker.ResetAutoAttackTimer();
                 return;
             }
             Extensions.DidJustAuto = true;

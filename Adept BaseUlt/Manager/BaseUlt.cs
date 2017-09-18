@@ -208,7 +208,7 @@ namespace Adept_BaseUlt.Manager
                 Render.Circle(_predictedPosition, _width, 100, Color.Red);
 
                 Render.WorldToScreen(_predictedPosition, out var castVector2);
-                Render.Text(castVector2, Color.White, "Random Ult");
+                Render.Text("Random Ult", castVector2, RenderTextFlags.Center, Color.White);
 
                 Render.WorldToScreen(_lastSeenPosition, out var lsV2);
                 Render.WorldToScreen(_predictedPosition, out var ppV2);
@@ -246,11 +246,10 @@ namespace Adept_BaseUlt.Manager
                 16, false, Color.Red);
 
 
-            Render.Text(xpos + 100, 75, Color.White, _target.ChampionName);
+            Render.Text(_target.ChampionName, new Vector2(xpos + 100, 75), RenderTextFlags.Center, Color.White);
             Render.WorldToScreen(Global.Player.ServerPosition, out var player);
 
-            Render.Text(new Vector2(player.X - 60, player.Y + 70), Color.Cyan,
-                $"Ulting ({_target.ChampionName}) In {ts.Seconds}:{ts.Milliseconds / 10}");
+            Render.Text($"Ulting ({_target.ChampionName}) In {ts.Seconds}:{ts.Milliseconds / 10}", new Vector2(player.X - 60, player.Y + 70), RenderTextFlags.Center, Color.Cyan);
         }
 
         private float TravelTime(Vector3 pos)

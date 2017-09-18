@@ -4,6 +4,7 @@ using System.Linq;
 using Adept_AIO.Champions.Yasuo.Core;
 using Adept_AIO.SDK.Junk;
 using Aimtec;
+using Aimtec.SDK.Extensions;
 using Aimtec.SDK.Orbwalking;
 
 namespace Adept_AIO.Champions.Yasuo.Drawings
@@ -43,11 +44,11 @@ namespace Adept_AIO.Champions.Yasuo.Drawings
             {
                 if (KnockUpHelper.Sender != null)
                 {
-                    Render.Text(Geometry.TO2D(KnockUpHelper.Sender.ServerPosition), Color.Yellow, (-(Game.TickCount - (KnockUpHelper.BuffStart + KnockUpHelper.BuffEnd))).ToString(CultureInfo.InvariantCulture));
+                    Render.Text((-(Game.TickCount - (KnockUpHelper.BuffStart + KnockUpHelper.BuffEnd))).ToString(CultureInfo.InvariantCulture), KnockUpHelper.Sender.ServerPosition.To2D(), RenderTextFlags.Center, Color.Yellow);
                 }
 
                 Render.WorldToScreen(Global.Player.Position, out var temp);
-                Render.Text(new Vector2(temp.X - 55, temp.Y + 40), Color.White, "Q Mode: " + Extension.CurrentMode + "- Range: " + SpellConfig.Q.Range);
+                Render.Text("Q Mode: " + Extension.CurrentMode + "- Range: " + SpellConfig.Q.Range, new Vector2(temp.X - 55, temp.Y + 40), RenderTextFlags.Center, Color.White);
             }
 
             if (SpellConfig.E.Ready)

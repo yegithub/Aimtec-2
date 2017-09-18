@@ -57,7 +57,7 @@ namespace Adept_AIO.Champions.LeeSin.Drawings
             }
 
             Render.WorldToScreen(Global.Player.ServerPosition, out var bkToggleV2);
-            Render.Text(new Vector2(bkToggleV2.X - 40, bkToggleV2.Y + 70), Temp.IsBubbaKush ? Color.White : Color.LightSlateGray, "Bubba Kush: " + Temp.IsBubbaKush);
+            Render.Text("Bubba Kush: " + Temp.IsBubbaKush, new Vector2(bkToggleV2.X - 40, bkToggleV2.Y + 70), RenderTextFlags.Center, Temp.IsBubbaKush ? Color.White : Color.LightSlateGray);
 
             var selected = Global.TargetSelector.GetSelectedTarget();
 
@@ -70,7 +70,7 @@ namespace Adept_AIO.Champions.LeeSin.Drawings
             {
                 var bkPos = _insecManager.BkPosition(selected);
                 Render.WorldToScreen(bkPos, out var bkScreen);
-                Render.Text(bkScreen, Color.Orange, "BK");
+                Render.Text("BK", bkScreen, RenderTextFlags.Center, Color.Orange);
 
                 var bkEndPos = selected.ServerPosition + (selected.ServerPosition - bkPos).Normalized() * 900;
                 Render.WorldToScreen(bkEndPos, out var bkEndPosV2);
@@ -101,7 +101,7 @@ namespace Adept_AIO.Champions.LeeSin.Drawings
                 Render.Line(startPosV2, endPosV2, Color.Orange);
 
                 Render.Circle(insecPos, 65, (uint)SegmentsValue, Color.White);
-                Render.Text(startPosV2, Color.Orange, Temp.IsAlly ? "Ally" : "Turret");
+                Render.Text(Temp.IsAlly ? "Ally" : "Turret", startPosV2, RenderTextFlags.Center, Color.Orange);
             }
         }
     }

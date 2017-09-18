@@ -54,7 +54,7 @@ namespace Adept_AIO.Champions.Riven.Drawings
                     var pos = Global.Player.ServerPosition.Extend(temp.ServerPosition, 450);
                     Render.Circle(pos, 200, (uint)MenuConfig.Drawings["Segments"].Value, Color.Yellow);
                     Render.WorldToScreen(pos, out var posV2);
-                    Render.Text(new Vector2(posV2.X - 50, posV2.Y), Color.White, "Put Mouse Here");
+                    Render.Text("Put Mouse Here", new Vector2(posV2.X - 50, posV2.Y), RenderTextFlags.Center, Color.White);
                 }
             }
          
@@ -65,19 +65,19 @@ namespace Adept_AIO.Champions.Riven.Drawings
                 if (MenuConfig.BurstMode.Active)
                 {
                     Mixed.RenderArrowFromPlayer(Global.TargetSelector.GetSelectedTarget());
-                    Render.Text(new Vector2(playerV2.X - 65, playerV2.Y + 30), Color.Aqua, "PATTERN: " + Enums.BurstPattern);
+                    Render.Text("PATTERN: " + Enums.BurstPattern, new Vector2(playerV2.X - 65, playerV2.Y + 30), RenderTextFlags.Center, Color.Aqua);
                 }
 
                 switch (Global.Orbwalker.Mode)
                 {
                     case OrbwalkingMode.Combo:
                         Mixed.RenderArrowFromPlayer(Global.TargetSelector.GetTarget(Extensions.EngageRange + 800));
-                        Render.Text(new Vector2(playerV2.X - 65, playerV2.Y + 30), Color.Aqua, "PATTERN: " + Enums.ComboPattern);
+                        Render.Text("PATTERN: " + Enums.ComboPattern, new Vector2(playerV2.X - 65, playerV2.Y + 30), RenderTextFlags.Center, Color.Aqua);
                         break;
 
                     case OrbwalkingMode.Mixed:
                         Mixed.RenderArrowFromPlayer(Global.TargetSelector.GetTarget(Extensions.EngageRange + 800));
-                        Render.Text(new Vector2(playerV2.X - 65, playerV2.Y + 30), Color.Aqua, "PATTERN: " + Enums.Current);
+                        Render.Text("PATTERN: " + Enums.Current, new Vector2(playerV2.X - 65, playerV2.Y + 30), RenderTextFlags.Center, Color.Aqua);
                         break;
                 }
             }

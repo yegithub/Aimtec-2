@@ -51,7 +51,7 @@ namespace Adept_AIO.Champions.Rengar.Drawings
             if (Extensions.AssassinTarget != null)
             {
                 Render.WorldToScreen(Global.Player.Position, out var screen);
-                Render.Text(new Vector2(screen.X - 55, screen.Y + 40), Color.White, "Target: " + Extensions.AssassinTarget.ChampionName);
+                Render.Text("Target: " + Extensions.AssassinTarget.ChampionName, new Vector2(screen.X - 55, screen.Y + 40), RenderTextFlags.Center, Color.White);
                 DelayAction.Queue(2500, () => Extensions.AssassinTarget = null, new CancellationToken(false));
             }
         }
