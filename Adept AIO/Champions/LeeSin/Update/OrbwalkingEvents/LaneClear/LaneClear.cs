@@ -1,9 +1,11 @@
 ﻿using System.Linq;
 using Adept_AIO.Champions.LeeSin.Core.Spells;
 using Adept_AIO.SDK.Junk;
+using Adept_AIO.SDK.Usables;
 using Aimtec;
 using Aimtec.SDK.Damage;
 using Aimtec.SDK.Extensions;
+using Aimtec.SDK.Util;
 
 namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.LaneClear
 {
@@ -33,7 +35,15 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.LaneClear
 
             if (_spellConfig.E.Ready && EEnabled && minion.Health < Global.Player.GetSpellDamage(minion, SpellSlot.E))
             {
-                _spellConfig.E.Cast(minion);
+                if (Items.CanUseTiamat())
+                {
+                    Items.CastTiamat(false);
+                    DelayAction.Queue(50, () => _spellConfig.E.Cast(minion));
+                }
+                else
+                {
+                    _spellConfig.E.Cast(minion);
+                }
             }
             else if (_spellConfig.W.Ready && WEnabled)
             {

@@ -7,6 +7,7 @@ using Aimtec;
 using Aimtec.SDK.Damage;
 using Aimtec.SDK.Damage.JSON;
 using Aimtec.SDK.Extensions;
+using Aimtec.SDK.Util;
 
 namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.JungleClear
 {
@@ -54,7 +55,15 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.JungleClear
                 {
                     if (_spellConfig.IsFirst(_spellConfig.E))
                     {
-                        _spellConfig.E.Cast(mob);
+                        if (Items.CanUseTiamat())
+                        {
+                            Items.CastTiamat(false);
+                            DelayAction.Queue(50, () => _spellConfig.E.Cast(mob));
+                        }
+                        else
+                        {
+                            _spellConfig.E.Cast(mob);
+                        }
                     }
                    else if (_spellConfig.W.Ready || _spellConfig.Q.Ready)
                     {
@@ -67,7 +76,15 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.JungleClear
             {
                 if (_spellConfig.E.Ready && EEnabled)
                 {
-                    _spellConfig.E.Cast(mob);
+                    if (Items.CanUseTiamat())
+                    {
+                        Items.CastTiamat(false);
+                        DelayAction.Queue(50, () => _spellConfig.E.Cast(mob));
+                    }
+                    else
+                    {
+                        _spellConfig.E.Cast(mob);
+                    }
                 }
                 else if (_spellConfig.W.Ready && WEnabled && !_spellConfig.IsQ2())
                 {

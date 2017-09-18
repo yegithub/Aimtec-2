@@ -36,14 +36,14 @@ namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
             var rect = new Geometry.Rectangle(Global.Player.ServerPosition.Extend(tempPos, (float)SpellConfig.RSqrt / 2f).To2D(), Global.Player.ServerPosition.Extend(target.ServerPosition, (float)SpellConfig.RSqrt / 2f).To2D(), SpellConfig.R.Width);
 
             if (!SpellConfig.E.Ready && SpellConfig.R.Ready
+                && Game.TickCount - AzirHelper.LastQ > 800
                 && Global.Player.IsDashing()
                 && Global.Player.GetDashInfo().EndPos.Distance(target) > 450
-                && soldierPos.Distance(target) > 450
-                && soldierPos.Distance(target) < 800
+                && Global.Player.Distance(target) > 450
                 && !rect.IsInside(target.ServerPosition.To2D())
                 && SummonerSpells.IsValid(SummonerSpells.Flash) && MenuConfig.InsecMenu["Flash"].Enabled)
             {
-                SummonerSpells.Flash.Cast(pos);
+                SummonerSpells.Flash.Cast(Global.Player.ServerPosition.Extend(target.ServerPosition, SummonerSpells.Flash.Range));
             }
 
             if (SpellConfig.Q.Ready && soldierPos.Distance(Global.Player) <= MenuConfig.InsecMenu["Range"].Value)

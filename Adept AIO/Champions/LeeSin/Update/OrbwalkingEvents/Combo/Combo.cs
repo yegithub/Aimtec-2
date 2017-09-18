@@ -1,10 +1,12 @@
 ﻿using Adept_AIO.Champions.LeeSin.Core.Spells;
 using Adept_AIO.Champions.LeeSin.Update.Ward_Manager;
 using Adept_AIO.SDK.Junk;
+using Adept_AIO.SDK.Usables;
 using Aimtec;
 using Aimtec.SDK.Damage;
 using Aimtec.SDK.Damage.JSON;
 using Aimtec.SDK.Extensions;
+using Aimtec.SDK.Util;
 
 namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Combo
 {
@@ -100,7 +102,15 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Combo
 
             if (_spellConfig.E.Ready && EEnabled && _spellConfig.IsFirst(_spellConfig.E) && distance <= 350)
             {
-               _spellConfig.E.Cast(target);
+                if (Items.CanUseTiamat())
+                {
+                    Items.CastTiamat(false);
+                    DelayAction.Queue(50, () => _spellConfig.E.Cast(target));
+                }
+                else
+                {
+                    _spellConfig.E.Cast(target);
+                }
             }
         }
     }
