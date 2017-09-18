@@ -60,14 +60,6 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Combo
         
             var distance = target.Distance(Global.Player);
 
-            if (_spellConfig.R.Ready && _spellConfig.Q.Ready && Q1Enabled && distance <= 550 && target.Health <= Global.Player.GetSpellDamage(target, SpellSlot.R) + 
-                                                                                                               Global.Player.GetSpellDamage(target, SpellSlot.Q) + 
-                                                                                                               Global.Player.GetSpellDamage(target, SpellSlot.Q, DamageStage.SecondCast))
-            {
-                _spellConfig.R.CastOnUnit(target);
-                _spellConfig.Q.Cast(target); 
-            }
-
             if (_spellConfig.Q.Ready && Q1Enabled)
             {
                 if (distance > 1300)
@@ -81,7 +73,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Combo
                     {
                         return;
                     }
-                 
+
                     _spellConfig.Q.Cast();
                 }
                 else
@@ -90,7 +82,17 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Combo
                     _spellConfig.Q.Cast(target);
                 }
             }
-            else if (_spellConfig.W.Ready && _spellConfig.IsFirst(_spellConfig.W) && _wardTracker.IsWardReady() && WEnabled && WardEnabled && distance > (_spellConfig.Q.Ready ? 1000 : _spellConfig.WardRange))
+
+            if (_spellConfig.R.Ready && _spellConfig.Q.Ready && Q1Enabled && distance <= 550 && target.Health <= Global.Player.GetSpellDamage(target, SpellSlot.R) + 
+                                                                                                               Global.Player.GetSpellDamage(target, SpellSlot.Q) + 
+                                                                                                               Global.Player.GetSpellDamage(target, SpellSlot.Q, DamageStage.SecondCast))
+            {
+                _spellConfig.R.CastOnUnit(target);
+                _spellConfig.Q.Cast(target); 
+            }
+
+          
+            if (_spellConfig.W.Ready && _spellConfig.IsFirst(_spellConfig.W) && _wardTracker.IsWardReady() && WEnabled && WardEnabled && distance > (_spellConfig.Q.Ready ? 1000 : _spellConfig.WardRange))
             {
                 if (Game.TickCount - _spellConfig.Q.LastCastAttemptT <= 3000 || target.Position.CountEnemyHeroesInRange(2000) > 1)
                 {
