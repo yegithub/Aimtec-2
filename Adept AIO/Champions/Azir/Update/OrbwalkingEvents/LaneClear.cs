@@ -37,7 +37,7 @@ namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
             if (SpellConfig.W.Ready && MenuConfig.Lane["W"].Enabled &&
                 Global.Player.ManaPercent() > MenuConfig.Lane["W"].Value)
             {
-                var minion = GameObjects.EnemyMinions.LastOrDefault(x => x.Distance(Global.Player) <= SpellConfig.W.Range && x.MaxHealth > 10 && x.IsValid && !x.IsDead);
+                var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(Global.Player) <= SpellConfig.W.Range && x.MaxHealth > 10 && x.IsValid && !x.IsDead);
                 if (minion == null)
                 {
                     return;

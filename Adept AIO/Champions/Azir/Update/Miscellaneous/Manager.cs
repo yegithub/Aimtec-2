@@ -27,7 +27,7 @@ namespace Adept_AIO.Champions.Azir.Update.Miscellaneous
 
                 foreach (var soldier in SoldierHelper.Soldiers)
                 {
-                    var enemy = GameObjects.Enemy.FirstOrDefault(x => x.Distance(soldier) <= 250 + x.BoundingRadius && !x.IsDead && x.IsValid && x.MaxHealth > 10 && soldier.Distance(Global.Player) <= SpellConfig.Q.Range && soldier.Distance(Global.Player) > Global.Player.AttackRange);
+                    var enemy = GameObjects.Enemy.FirstOrDefault(x => x.Distance(soldier) <= 285 + x.BoundingRadius && !x.IsDead && x.MaxHealth > 10 && soldier.Distance(Global.Player) <= SpellConfig.Q.Range + 65 && soldier.Distance(Global.Player) > Global.Player.AttackRange);
                     if (enemy != null && Game.TickCount - LastAA >= 1000)
                     {
                         LastAA = Game.TickCount;
