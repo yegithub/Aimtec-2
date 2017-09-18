@@ -41,7 +41,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.JungleClear
                 _spellConfig.Q.CastOnUnit(mob);
             }
 
-            if (Global.Player.Level <= 12)
+            if (Global.Player.Level <= 8)
             {
                 if (_spellConfig.PassiveStack() > 0)
                 {

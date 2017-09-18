@@ -46,13 +46,14 @@ namespace Adept_AIO.Champions.LeeSin.Update.Miscellaneous
 
         public void OnUpdate()
         {
-            if (Global.Player.IsDead)
-            {
-                return;
-            }
-            
             try
             {
+                if (Global.Player.IsDead || Global.Orbwalker.IsWindingUp)
+                {
+                    return;
+                }
+
+
                 switch (Global.Orbwalker.Mode)
                 {
                     case OrbwalkingMode.Combo:
