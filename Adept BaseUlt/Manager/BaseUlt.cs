@@ -261,8 +261,13 @@ namespace Adept_BaseUlt.Manager
         {
             if (Global.Player.ChampionName == "Draven")
             {
-                return (float)Global.Player.GetSpellDamage(_target, SpellSlot.R, DamageStage.SecondForm);
+                return (float)(Global.Player.GetSpellDamage(_target, SpellSlot.R, DamageStage.SecondForm) + Global.Player.GetSpellDamage(_target, SpellSlot.R));
             }
+            if (Global.Player.ChampionName == "Jinx")
+            {
+                return (float) Global.Player.GetSpellDamage(_target, SpellSlot.R, DamageStage.Empowered);
+            }
+
             return (float)Global.Player.GetSpellDamage(_target, SpellSlot.R);
         }
 
@@ -275,11 +280,8 @@ namespace Adept_BaseUlt.Manager
 
             var hpReg = _target.BaseHPRegenRate;
             var invisible = lastEnemyChecked.FirstOrDefault(x => x.NetworkId == _target.NetworkId);
-            // Console.WriteLine($"BaseHPRegenRate: {_target.BaseHPRegenRate} | HPRegenRate: {_target.HPRegenRate}");
 
-            // var dmg = (float)Global.Player.GetSpellDamage(_target, SpellSlot.R);
-            var final = _target.Health + (hpReg * (invisible?.LifetimeTicks / 10000f ?? 0f) +
-                                          TravelTime(GetFountainPos(_target)) / 1000);
+            var final = _target.Health + (hpReg * (invisible?.LifetimeTicks / 10000f ?? 0f) + TravelTime(GetFountainPos(_target)) / 1000);
 
             Console.WriteLine($"Health: {(int)final} DMG: {(int)PlayerDamage()}");
             return final;
