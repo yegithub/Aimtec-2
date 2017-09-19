@@ -1,6 +1,4 @@
-﻿using System;
-using Adept_AIO.SDK.Junk;
-using Aimtec;
+﻿using Aimtec;
 using Aimtec.SDK.Extensions;
 using Aimtec.SDK.Prediction.Skillshots;
 using Spell = Aimtec.SDK.Spell;
@@ -10,14 +8,13 @@ namespace Adept_AIO.Champions.Azir.Core
     class SpellConfig
     {
         public static Spell Q, W, E, R;
-        public static double RSqrt => 450;
-
+     
         public static void Load()
         {
             Q = new Spell(SpellSlot.Q, 875);
             Q.SetSkillshot(0.25f, 70, 1600, false, SkillshotType.Line, false, HitChance.VeryHigh);
 
-            W = new Spell(SpellSlot.W, 450);
+            W = new Spell(SpellSlot.W, 425);
           
             E = new Spell(SpellSlot.E, 1100);
             E.SetSkillshot(0.25f, 100, 1700, false, SkillshotType.Line);

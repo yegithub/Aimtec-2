@@ -20,7 +20,7 @@
                 case OrbwalkingMode.Combo:
                     Combo.OnUpdate();
                     break;
-                case OrbwalkingMode.Freeze:
+                case OrbwalkingMode.Mixed:
                     Harass.OnUpdate();
                     break;
                 case OrbwalkingMode.Laneclear:

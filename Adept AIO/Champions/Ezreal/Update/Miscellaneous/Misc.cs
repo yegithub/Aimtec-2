@@ -14,6 +14,11 @@ namespace Adept_AIO.Champions.Ezreal.Update.Miscellaneous
     {
         public static void OnUpdate()
         {
+            if (NavMesh.WorldToCell(Global.Player.ServerPosition).Flags.HasFlag(NavCellFlags.Grass))
+            {
+                return;
+            }
+
             if (SpellConfig.Q.Ready
              && Global.Orbwalker.Mode == OrbwalkingMode.None
              && Global.Player.IsMoving

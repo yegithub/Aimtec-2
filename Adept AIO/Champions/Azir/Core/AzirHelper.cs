@@ -4,6 +4,7 @@ using Aimtec;
 using Aimtec.SDK.Extensions;
 using Aimtec.SDK.Orbwalking;
 using Aimtec.SDK.Util;
+using Geometry = Adept_AIO.SDK.Junk.Geometry;
 
 namespace Adept_AIO.Champions.Azir.Core
 {
@@ -12,6 +13,8 @@ namespace Adept_AIO.Champions.Azir.Core
         public static OrbwalkerMode JumpMode, InsecMode;
 
         public static int LastR, LastQ, LastW, LastE;
+
+        public static Geometry.Rectangle Rect;
 
         public static void OnProcessSpellCast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
         {

@@ -4,7 +4,6 @@ using Adept_AIO.Champions.Azir.Core;
 using Adept_AIO.Champions.Azir.Update.OrbwalkingEvents;
 using Adept_AIO.SDK.Junk;
 using Aimtec;
-using Aimtec.SDK.Extensions;
 
 namespace Adept_AIO.Champions.Azir.Drawings
 {
@@ -46,8 +45,15 @@ namespace Adept_AIO.Champions.Azir.Drawings
                     Color.Red);
             }
 
-            Render.Circle(Global.Player.ServerPosition, Insec.InsecRange(),
-                (uint) MenuConfig.Drawings["Segments"].Value, Color.LightGray);
+            if (AzirHelper.InsecMode.Active)
+            {
+                Render.Circle(Global.Player.ServerPosition, Insec.InsecRange(), (uint)MenuConfig.Drawings["Segments"].Value, Color.LightGray);
+
+                if (AzirHelper.Rect != null)
+                {
+                    AzirHelper.Rect.Draw(Color.SlateGray);
+                }
+            }
 
             if (!SoldierHelper.Soldiers.Any() || !MenuConfig.Drawings["Soldiers"].Enabled)
             {
@@ -59,23 +65,6 @@ namespace Adept_AIO.Champions.Azir.Drawings
                 Render.Circle(soldier.ServerPosition, 325, (uint) MenuConfig.Drawings["Segments"].Value,
                     Color.SlateBlue);
             }
-
-            //foreach (var soldier in SoldierHelper.Soldiers)
-            //{
-            //    var target = GameObjects.EnemyHeroes.FirstOrDefault(x => x.Distance(soldier) <= 325 + x.BoundingRadius && x.IsValid && !x.IsDead && x.IsFloatingHealthBarActive);
-            //    if (target == null)
-            //    {
-            //        return;
-            //    }
-
-            //    var pred = SpellConfig.GetQPred(target);
-            //    if (pred != Vector3.Zero)
-            //    {
-            //        Mixed.RenderArrowFromPoint(soldier.ServerPosition,
-            //            soldier.ServerPosition.Extend(pred, soldier.ServerPosition.Distance(target)), 3);
-            //    }
-               
-            //}
         }
     }
 }

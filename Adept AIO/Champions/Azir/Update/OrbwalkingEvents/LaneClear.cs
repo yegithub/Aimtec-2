@@ -18,19 +18,19 @@ namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
             if (SpellConfig.Q.Ready && MenuConfig.Lane["Q"].Enabled &&
                 Global.Player.ManaPercent() > MenuConfig.Lane["Q"].Value)
             {
-                var lastMinion = GameObjects.EnemyMinions.LastOrDefault(x => x.IsValid);
-                if (lastMinion == null)
+                var minion = GameObjects.EnemyMinions.LastOrDefault(x => x.IsValid);
+                if (minion == null)
                 {
                     return;
                 }
 
-                var rect = new Geometry.Rectangle(Global.Player.ServerPosition.To2D(), lastMinion.ServerPosition.To2D(), SpellConfig.Q.Width);
+                var rect = new Geometry.Rectangle(Global.Player.ServerPosition.To2D(), minion.ServerPosition.To2D(), SpellConfig.Q.Width + 65);
 
                 var count = GameObjects.EnemyMinions.Count(x => rect.IsInside(x.ServerPosition.To2D()));
 
                 if (count >= MenuConfig.Lane["QHit"].Value)
                 {
-                    SpellConfig.Q.Cast(lastMinion);
+                    SpellConfig.Q.Cast(minion);
                 }
             }
 
@@ -43,11 +43,11 @@ namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
                     return;
                 }
 
-                var circle = new Geometry.Circle(minion.ServerPosition.To2D(), 250);
+                var circle = new Geometry.Circle(minion.ServerPosition.To2D(), 280);
 
                 if (GameObjects.EnemyMinions.Count(x => circle.Center.Distance(x.ServerPosition) <= circle.Radius) >= 3 && Global.Player.GetSpell(SpellSlot.W).Ammo > 1)
                 {
-                    SpellConfig.W.Cast(Global.Player.ServerPosition.Extend(minion.ServerPosition, SpellConfig.W.Range + 100));
+                    SpellConfig.W.Cast(Global.Player.ServerPosition.Extend(minion.ServerPosition, SpellConfig.W.Range));
                 }
             }
 
@@ -55,7 +55,7 @@ namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
             {
                 foreach (var soldier in SoldierHelper.Soldiers)
                 {
-                    var rect = new Geometry.Rectangle(Global.Player.ServerPosition.To2D(), soldier.ServerPosition.To2D(), SpellConfig.E.Width);
+                    var rect = new Geometry.Rectangle(Global.Player.ServerPosition.To2D(), soldier.ServerPosition.To2D(), SpellConfig.E.Width + 65);
 
                     var count = GameObjects.EnemyMinions.Count(x => rect.IsInside(x.ServerPosition.To2D()));
                     if (count >= MenuConfig.Lane["EHit"].Value)

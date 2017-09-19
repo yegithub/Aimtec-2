@@ -1,7 +1,5 @@
-﻿using System;
-using Adept_AIO.Champions.Riven.Core;
+﻿using Adept_AIO.Champions.Riven.Core;
 using Adept_AIO.SDK.Junk;
-using Adept_AIO.SDK.Methods;
 using Aimtec;
 using Aimtec.SDK.Orbwalking;
 

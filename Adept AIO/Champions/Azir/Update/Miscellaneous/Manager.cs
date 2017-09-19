@@ -5,7 +5,6 @@ using Adept_AIO.Champions.Azir.Core;
 using Adept_AIO.Champions.Azir.Update.OrbwalkingEvents;
 using Adept_AIO.SDK.Junk;
 using Aimtec;
-using Aimtec.SDK.Events;
 using Aimtec.SDK.Extensions;
 using Aimtec.SDK.Orbwalking;
 using Aimtec.SDK.Util;
@@ -27,8 +26,8 @@ namespace Adept_AIO.Champions.Azir.Update.Miscellaneous
 
                 foreach (var soldier in SoldierHelper.Soldiers)
                 {
-                    var enemy = GameObjects.Enemy.FirstOrDefault(x => x.Distance(soldier) <= 285 + x.BoundingRadius && !x.IsDead && x.MaxHealth > 10 && soldier.Distance(Global.Player) <= SpellConfig.Q.Range + 65 && soldier.Distance(Global.Player) > Global.Player.AttackRange);
-                    if (enemy != null && Game.TickCount - LastAA >= 1000)
+                    var enemy = GameObjects.Enemy.FirstOrDefault(x => x.Distance(soldier) <= 250 + x.BoundingRadius && !x.IsDead && x.MaxHealth > 10 && soldier.Distance(Global.Player) <= SpellConfig.Q.Range + 65 && soldier.Distance(Global.Player) > Global.Player.AttackRange);
+                    if (enemy != null && Game.TickCount - LastAA > 1000)
                     {
                         LastAA = Game.TickCount;
                         Global.Player.IssueOrder(OrderType.AttackUnit, enemy);
