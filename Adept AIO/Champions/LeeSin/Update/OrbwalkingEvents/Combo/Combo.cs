@@ -41,7 +41,8 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Combo
             {
                 _spellConfig.W.Cast(Global.Player);
             }
-            else if (_spellConfig.E.Ready && EEnabled)
+
+            if (_spellConfig.E.Ready && EEnabled)
             {
                 if (!_spellConfig.IsFirst(_spellConfig.E))
                 {
@@ -58,7 +59,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Combo
                 return;
             }
         
-            var distance = target.Distance(Global.Player);
+            var distance = target.Distance(Global.Player) - target.BoundingRadius;
 
             if (_spellConfig.Q.Ready && Q1Enabled)
             {
@@ -74,7 +75,10 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Combo
                         return;
                     }
 
-                    _spellConfig.Q.Cast();
+                    if (_spellConfig.QAboutToEnd || distance >= Global.Player.AttackRange + 300)
+                    {
+                        _spellConfig.Q.Cast();
+                    }
                 }
                 else
                 {

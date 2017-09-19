@@ -36,6 +36,8 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Insec
 
         private bool FlashReady => SummonerSpells.IsValid(SummonerSpells.Flash) && FlashEnabled;
 
+        private bool CanWardJump => _spellConfig.W.Ready && _spellConfig.IsFirst(_spellConfig.W) && _wardTracker.IsWardReady();
+
         private int InsecRange()
         {
             var temp = 0;
@@ -86,11 +88,14 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Insec
                 return;
             }
 
+            if (CanWardJump || _wardTracker.DidJustWard && Global.Player.Distance(GetInsecPosition()) < 175)
+            {
+                return;
+            }
+
             if (Target == null
                 || args.SpellSlot != SpellSlot.R
-                || _wardTracker.DidJustWard && (Global.Player.GetDashInfo().EndPos.Distance(GetInsecPosition()) <= 200 || _wardTracker.WardPosition.Distance(GetInsecPosition()) <= 180)
-                || _wardTracker.IsWardReady() && _spellConfig.IsFirst(_spellConfig.W) && _spellConfig.W.Ready
-                ||  Global.Player.Distance(GetInsecPosition()) <= 100)
+                ||  Global.Player.Distance(GetInsecPosition()) <= 80)
             {
                 return;
             }
@@ -107,11 +112,11 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Insec
 
             Temp.IsBubbaKush = Bk;
 
-            var dist = GetInsecPosition().Distance(Global.Player) - Target.BoundingRadius - Global.Player.BoundingRadius;
+            var dist = GetInsecPosition().Distance(Global.Player);
           
             if (_spellConfig.R.Ready)
             {
-                if (Target.IsValidTarget(_spellConfig.R.Range) && dist <= 200 && (_wardTracker.DidJustWard || Game.TickCount - SummonerSpells.Flash.LastCastAttemptT <= 1000 || dist <= 100))
+                if (Target.IsValidTarget(_spellConfig.R.Range) && (dist <= 150 || FlashReady && _insecManager.InsecKickValue == 1))
                 {
                     _spellConfig.R.CastOnUnit(Target);
                 }
@@ -119,10 +124,10 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Insec
                 if (_insecManager.InsecKickValue == 0 && FlashReady &&
                     GetInsecPosition().Distance(Global.Player) <= 500)
                 {
-                    if (_wardTracker.DidJustWard && (Global.Player.GetDashInfo().EndPos.Distance(GetInsecPosition()) <= 200 || _wardTracker.WardPosition.Distance(GetInsecPosition()) <= 180)
-                     || GetInsecPosition().Distance(Global.Player) <= 150
-                     || _spellConfig.W.Ready && _spellConfig.IsFirst(_spellConfig.W) && _wardTracker.IsWardReady()
-                     || Game.TickCount - _spellConfig.Q.LastCastAttemptT <= 1000)
+                    if (Global.Player.GetDashInfo().EndPos.Distance(GetInsecPosition()) <= 100
+                     || GetInsecPosition().Distance(Global.Player) <= 100
+                     || CanWardJump
+                    )
                     {
                         return;
                     }
@@ -137,10 +142,9 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Insec
                 Q();
             }
 
-            if (!_spellConfig.W.Ready 
-             || !_spellConfig.IsFirst(_spellConfig.W) 
-             || !_wardTracker.IsWardReady() 
-             ||  Game.TickCount - _spellConfig.LastQ1CastAttempt <= 800)
+            if (!CanWardJump
+             || _spellConfig.Q.Ready && !_spellConfig.IsQ2() && EnemyObject != null && EnemyObject.IsValidTarget(_spellConfig.Q.Range)
+             || Game.TickCount - _spellConfig.LastQ1CastAttempt <= 500)
             {
                 return;
             }
@@ -151,7 +155,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Insec
             }
             else if (dist <= InsecRange())
             {
-                if (!FlashReady || Game.TickCount - _spellConfig.Q.LastCastAttemptT <= 1200)
+                if (!FlashReady || Game.TickCount - _spellConfig.Q.LastCastAttemptT <= 1000)
                 {
                     return;
                 }

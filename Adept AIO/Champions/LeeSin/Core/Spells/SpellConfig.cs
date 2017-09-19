@@ -13,7 +13,7 @@ namespace Adept_AIO.Champions.LeeSin.Core.Spells
     {
         public float LastQ1CastAttempt { get; set; }
 
-        public bool QAboutToEnd => Game.TickCount - LastQ1CastAttempt >= 1900 + Game.Ping / 2f;
+        public bool QAboutToEnd => Game.TickCount - LastQ1CastAttempt >= 3100 - Game.Ping / 2f;
 
         public bool IsQ2()
         {

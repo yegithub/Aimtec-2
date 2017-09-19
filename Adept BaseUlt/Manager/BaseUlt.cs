@@ -74,6 +74,13 @@ namespace Adept_BaseUlt.Manager
             Menu.Add(new MenuBool("RandomUlt", "Use RandomUlt").SetToolTip(
                 "Will GUESS the enemy position and ult there"));
 
+            if (Global.Player.ChampionName == "Draven")
+            {
+                Menu.Add(new MenuBool("Draven", "Include R Back (Draven)"));
+            }
+
+            Menu.Add(new MenuBool("Collision", "Check Collision"));
+
             Menu.Add(new MenuSeperator("yes", "Whitelist"));
 
             foreach (var hero in GameObjects.EnemyHeroes)
@@ -175,9 +182,9 @@ namespace Adept_BaseUlt.Manager
         {
             var rectangle = new Geometry.Rectangle(Global.Player.ServerPosition.To2D(), pos.To2D(), _width);
 
-            if (GameObjects.EnemyHeroes.Count(x =>
-                    x.NetworkId != _target.NetworkId && rectangle.IsInside(x.ServerPosition.To2D())) >
-                _maxCollisionObjects || pos.Distance(Global.Player) > _range)
+            if (Menu["Collision"].Enabled 
+                && GameObjects.EnemyHeroes.Count(x => x.NetworkId != _target.NetworkId && rectangle.IsInside(x.ServerPosition.To2D())) > _maxCollisionObjects 
+                || pos.Distance(Global.Player) > _range)
             {
                 return;
             }
@@ -259,15 +266,17 @@ namespace Adept_BaseUlt.Manager
 
         private float PlayerDamage()
         {
-            if (Global.Player.ChampionName == "Draven")
+            switch (Global.Player.ChampionName)
             {
-                return (float)(Global.Player.GetSpellDamage(_target, SpellSlot.R, DamageStage.SecondForm) + Global.Player.GetSpellDamage(_target, SpellSlot.R));
+                case "Draven":
+                    if (Menu["Draven"].Enabled)
+                    {
+                        return (float)(Global.Player.GetSpellDamage(_target, SpellSlot.R, DamageStage.SecondForm) + Global.Player.GetSpellDamage(_target, SpellSlot.R));
+                    }
+                    return (float)Global.Player.GetSpellDamage(_target, SpellSlot.R, DamageStage.SecondForm);
+                case "Jinx":
+                    return (float) Global.Player.GetSpellDamage(_target, SpellSlot.R, DamageStage.Empowered);
             }
-            if (Global.Player.ChampionName == "Jinx")
-            {
-                return (float) Global.Player.GetSpellDamage(_target, SpellSlot.R, DamageStage.Empowered);
-            }
-
             return (float)Global.Player.GetSpellDamage(_target, SpellSlot.R);
         }
 
