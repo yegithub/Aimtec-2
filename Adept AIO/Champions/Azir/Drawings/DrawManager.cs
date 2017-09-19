@@ -4,6 +4,7 @@ using Adept_AIO.Champions.Azir.Core;
 using Adept_AIO.Champions.Azir.Update.OrbwalkingEvents;
 using Adept_AIO.SDK.Junk;
 using Aimtec;
+using Aimtec.SDK.Orbwalking;
 
 namespace Adept_AIO.Champions.Azir.Drawings
 {
@@ -48,11 +49,6 @@ namespace Adept_AIO.Champions.Azir.Drawings
             if (AzirHelper.InsecMode.Active)
             {
                 Render.Circle(Global.Player.ServerPosition, Insec.InsecRange(), (uint)MenuConfig.Drawings["Segments"].Value, Color.LightGray);
-
-                if (AzirHelper.Rect != null)
-                {
-                    AzirHelper.Rect.Draw(Color.SlateGray);
-                }
             }
 
             if (!SoldierHelper.Soldiers.Any() || !MenuConfig.Drawings["Soldiers"].Enabled)

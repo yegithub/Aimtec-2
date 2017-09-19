@@ -18,15 +18,17 @@ namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
             if (SpellConfig.Q.Ready && MenuConfig.Lane["Q"].Enabled &&
                 Global.Player.ManaPercent() > MenuConfig.Lane["Q"].Value)
             {
-                var minion = GameObjects.EnemyMinions.LastOrDefault(x => x.IsValid);
+                var minion = GameObjects.EnemyMinions.LastOrDefault(x => x.Distance(Global.Player) <= SpellConfig.Q.Range && x.MaxHealth > 10 && x.IsValid && !x.IsDead);
                 if (minion == null)
                 {
                     return;
                 }
 
-                var rect = new Geometry.Rectangle(Global.Player.ServerPosition.To2D(), minion.ServerPosition.To2D(), SpellConfig.Q.Width + 65);
+                var soldier = SoldierHelper.GetSoldierNearestTo(minion.ServerPosition);
 
-                var count = GameObjects.EnemyMinions.Count(x => rect.IsInside(x.ServerPosition.To2D()));
+                AzirHelper.Rect = new Geometry.Rectangle(soldier.To2D(), minion.ServerPosition.To2D(), SpellConfig.Q.Width + 65);
+
+                var count = GameObjects.EnemyMinions.Count(x => AzirHelper.Rect.IsInside(x.ServerPosition.To2D()));
 
                 if (count >= MenuConfig.Lane["QHit"].Value)
                 {
@@ -55,9 +57,9 @@ namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
             {
                 foreach (var soldier in SoldierHelper.Soldiers)
                 {
-                    var rect = new Geometry.Rectangle(Global.Player.ServerPosition.To2D(), soldier.ServerPosition.To2D(), SpellConfig.E.Width + 65);
+                    AzirHelper.Rect = new Geometry.Rectangle(Global.Player.ServerPosition.To2D(), soldier.ServerPosition.To2D(), SpellConfig.E.Width);
 
-                    var count = GameObjects.EnemyMinions.Count(x => rect.IsInside(x.ServerPosition.To2D()));
+                    var count = GameObjects.EnemyMinions.Count(x => AzirHelper.Rect.IsInside(x.ServerPosition.To2D()));
                     if (count >= MenuConfig.Lane["EHit"].Value)
                     {
                         SpellConfig.E.Cast(soldier.ServerPosition);

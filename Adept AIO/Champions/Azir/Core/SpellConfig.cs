@@ -14,7 +14,7 @@ namespace Adept_AIO.Champions.Azir.Core
             Q = new Spell(SpellSlot.Q, 875);
             Q.SetSkillshot(0.25f, 70, 1600, false, SkillshotType.Line, false, HitChance.VeryHigh);
 
-            W = new Spell(SpellSlot.W, 425);
+            W = new Spell(SpellSlot.W, 450);
           
             E = new Spell(SpellSlot.E, 1100);
             E.SetSkillshot(0.25f, 100, 1700, false, SkillshotType.Line);
@@ -38,10 +38,10 @@ namespace Adept_AIO.Champions.Azir.Core
           
         }
 
-        public static Vector3 GetQPred(Obj_AI_Base target)
+        public static PredictionOutput GetQPred(Obj_AI_Base target)
         {
             var soldier = SoldierHelper.GetSoldierNearestTo(target.ServerPosition);
-            return soldier == Vector3.Zero ? Vector3.Zero : Q.GetPrediction(target, soldier, soldier).CastPosition;
+            return soldier == Vector3.Zero ? null : Q.GetPrediction(target, soldier, soldier);
         }
     }
 }

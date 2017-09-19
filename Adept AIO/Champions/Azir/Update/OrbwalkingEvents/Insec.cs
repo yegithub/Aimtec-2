@@ -11,26 +11,18 @@ namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
 {
     class Insec
     {
-        public static void OnKeyPressed()
+        public static void OnKeyPressed(Obj_AI_Hero target)
         {
-            var target = Global.TargetSelector.GetSelectedTarget();
-
-            if (target == null || !AzirHelper.InsecMode.Active && !(MenuConfig.InsecMenu["Auto"].Enabled &&
-                                                                    MenuConfig.InsecMenu["Auto"].Value <= target.CountEnemyHeroesInRange(500)))
-            {
-                return;
-            }
-
             var dist = Global.Player.Distance(target);
             var allyT = GameObjects.AllyTurrets.OrderBy(x => x.Distance(Global.Player)).FirstOrDefault(x => x.IsValid && !x.IsDead);
 
             var targetPos = target.ServerPosition;
             var soldierPos = SoldierHelper.GetSoldierNearestTo(target.ServerPosition);
 
-            var targetExtend = Global.Player.ServerPosition.Extend(target.ServerPosition, SpellConfig.R.Range - target.BoundingRadius - 30);
+            var targetExtend = Global.Player.ServerPosition.Extend(allyT.ServerPosition, SpellConfig.R.Range - target.BoundingRadius - 30);
 
-            AzirHelper.Rect = new Geometry.Rectangle(targetExtend.To2D(), Global.Player.ServerPosition.To2D(), SpellConfig.R.Width /2f - target.BoundingRadius);
-            
+            AzirHelper.Rect = new Geometry.Rectangle(targetExtend.To2D(), Global.Player.ServerPosition.Extend(allyT.ServerPosition, -SpellConfig.R.Width / 2f).To2D(), SpellConfig.R.Width /2f);
+
             if (SpellConfig.Q.Ready)
             {
                 if (soldierPos.Distance(target) <= 350)

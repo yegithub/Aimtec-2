@@ -63,6 +63,8 @@ namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
 
             if (SpellConfig.R.Ready && MenuConfig.Combo["R"].Enabled && target.HealthPercent() <= 40 && dist < SpellConfig.R.Range)
             {
+                AzirHelper.Rect = new Geometry.Rectangle(target.ServerPosition.To2D(), Global.Player.ServerPosition.Extend(target.ServerPosition, -SpellConfig.R.Width / 2f).To2D(), SpellConfig.R.Width / 2f);
+                if(AzirHelper.Rect.IsInside(target.ServerPosition.To2D()))
                 SpellConfig.R.Cast(target);
             }
         }
