@@ -34,33 +34,26 @@ namespace Adept_AIO.Champions.Azir.Update.Miscellaneous
                         DelayAction.Queue(250, ()=> Global.Player.IssueOrder(OrderType.MoveTo, Game.CursorPos), new CancellationToken(false));
                     }
                 }
-
+            
                 SpellConfig.R.Width = 133 * (3 + Global.Player.GetSpell(SpellSlot.R).Level);
 
-                var target = Global.TargetSelector.GetSelectedTarget();
+                Insec.OnKeyPressed();
 
-                if (target != null && (AzirHelper.InsecMode.Active || MenuConfig.InsecMenu["Auto"].Enabled && MenuConfig.InsecMenu["Auto"].Value <= target.CountEnemyHeroesInRange(500)))
+                switch (Global.Orbwalker.Mode)
                 {
-                    Insec.OnKeyPressed(target);
-                }
-                else
-                {
-                    switch (Global.Orbwalker.Mode)
-                    {
-                        case OrbwalkingMode.Combo:
-                            Combo.OnUpdate();
-                            break;
-                        case OrbwalkingMode.Mixed:
-                            Harass.OnUpdate();
-                            break;
-                        case OrbwalkingMode.Laneclear:
-                            JungleClear.OnUpdate();
-                            LaneClear.OnUpdate();
-                            break;
-                        case OrbwalkingMode.None:
-                            AzirHelper.Rect = null;
-                            break;
-                    }
+                    case OrbwalkingMode.Combo:
+                        Combo.OnUpdate();
+                        break;
+                    case OrbwalkingMode.Mixed:
+                        Harass.OnUpdate();
+                        break;
+                    case OrbwalkingMode.Laneclear:
+                        JungleClear.OnUpdate();
+                        LaneClear.OnUpdate();
+                        break;
+                    case OrbwalkingMode.None:
+                        AzirHelper.Rect = null;
+                        break;
                 }
             }
             catch (Exception e)

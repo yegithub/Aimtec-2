@@ -51,6 +51,11 @@ namespace Adept_AIO.Champions.Azir.Drawings
                 Render.Circle(Global.Player.ServerPosition, Insec.InsecRange(), (uint)MenuConfig.Drawings["Segments"].Value, Color.LightGray);
             }
 
+            if (AzirHelper.Rect != null)
+            {
+                AzirHelper.Rect.Draw(Color.SlateGray);
+            }
+
             if (!SoldierHelper.Soldiers.Any() || !MenuConfig.Drawings["Soldiers"].Enabled)
             {
                 return;

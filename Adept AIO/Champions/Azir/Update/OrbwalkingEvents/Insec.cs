@@ -11,74 +11,79 @@ namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
 {
     class Insec
     {
-        public static void OnKeyPressed(Obj_AI_Hero target)
+        public static void OnKeyPressed()
         {
-            var dist = Global.Player.Distance(target);
-            var allyT = GameObjects.AllyTurrets.OrderBy(x => x.Distance(Global.Player)).FirstOrDefault(x => x.IsValid && !x.IsDead);
+            var target = Global.TargetSelector.GetSelectedTarget();
 
-            var targetPos = target.ServerPosition;
-            var soldierPos = SoldierHelper.GetSoldierNearestTo(target.ServerPosition);
-
-            var targetExtend = Global.Player.ServerPosition.Extend(allyT.ServerPosition, SpellConfig.R.Range - target.BoundingRadius - 30);
-
-            AzirHelper.Rect = new Geometry.Rectangle(targetExtend.To2D(), Global.Player.ServerPosition.Extend(allyT.ServerPosition, -SpellConfig.R.Width / 2f).To2D(), SpellConfig.R.Width /2f);
-
-            if (SpellConfig.Q.Ready)
+            if (target != null && (AzirHelper.InsecMode.Active || MenuConfig.InsecMenu["Auto"].Enabled && MenuConfig.InsecMenu["Auto"].Value <= target.CountEnemyHeroesInRange(500)))
             {
-                if (soldierPos.Distance(target) <= 350)
+                var dist = Global.Player.Distance(target);
+                var allyT = GameObjects.AllyTurrets.OrderBy(x => x.Distance(Global.Player)).FirstOrDefault(x => x.IsValid && !x.IsDead).ServerPosition;
+
+                var targetPos = target.ServerPosition;
+                var soldierPos = SoldierHelper.GetSoldierNearestTo(target.ServerPosition);
+
+                var targetExtend = Global.Player.ServerPosition.Extend(allyT, SpellConfig.R.Range - target.BoundingRadius - 30);
+
+                AzirHelper.Rect = new Geometry.Rectangle(targetExtend.To2D(), Global.Player.ServerPosition.Extend(allyT, -SpellConfig.R.Width / 2f).To2D(), SpellConfig.R.Width / 2f);
+
+                if (SpellConfig.Q.Ready)
                 {
-                    if (dist <= MenuConfig.InsecMenu["Range"].Value) // Todo: Continue working on this.
+                    if (soldierPos.Distance(target) <= 350)
                     {
-                        SpellConfig.Q.Cast(allyT.ServerPosition);
+                        if (dist <= MenuConfig.InsecMenu["Range"].Value) 
+                        {
+                            SpellConfig.Q.Cast(allyT.Extend(Game.CursorPos, -600)); 
+                        }
+                    }
+                    else if (soldierPos.Distance(Global.Player) <= MenuConfig.InsecMenu["Range"].Value)
+                    {
+                        SpellConfig.Q.Cast(targetPos);
                     }
                 }
-                else if (soldierPos.Distance(Global.Player) <= MenuConfig.InsecMenu["Range"].Value)
-                {
-                    SpellConfig.Q.Cast(targetPos);
-                }
-            }
 
-            if (dist > InsecRange())
-            {
-                return;
-            }
-
-            if (soldierPos != Vector3.Zero)
-            {
-                SpellConfig.E.Cast(soldierPos);
-            }
-            else
-            {
-                SpellConfig.W.Cast(Global.Player.ServerPosition.Extend(targetPos, SpellConfig.W.Range));
-            }
-
-            if (AzirHelper.Rect.IsInside(target.ServerPosition.To2D()))
-            {
-                if (SpellConfig.E.Ready && soldierPos.Distance(Global.Player) > 600)
-                {
-                    SpellConfig.E.Cast(allyT.ServerPosition);
-                }
-
-                if (SpellConfig.R.Ready)
-                {
-                    SpellConfig.R.Cast(allyT.ServerPosition);
-                }
-            }
-
-            if (SummonerSpells.IsValid(SummonerSpells.Flash) && MenuConfig.InsecMenu["Flash"].Enabled
-            &&  SpellConfig.R.Ready
-            && !SpellConfig.Q.Ready
-            && !SpellConfig.E.Ready
-            &&  dist > 450
-            &&  soldierPos.Distance(target) > 450
-            && !Global.Player.IsDashing())
-            {
-                if (Game.TickCount - AzirHelper.LastE <= 900
-                    || Game.TickCount - AzirHelper.LastQ <= 900)
+                if (dist > InsecRange())
                 {
                     return;
                 }
-                SummonerSpells.Flash.Cast(target.ServerPosition);
+
+                if (soldierPos != Vector3.Zero)
+                {
+                    SpellConfig.E.Cast(soldierPos);
+                }
+                else
+                {
+                    SpellConfig.W.Cast(Global.Player.ServerPosition.Extend(targetPos, SpellConfig.W.Range));
+                }
+
+                if (AzirHelper.Rect.IsInside(target.ServerPosition.To2D()))
+                {
+                    if (SpellConfig.E.Ready && soldierPos.Distance(Global.Player) > 600)
+                    {
+                        SpellConfig.E.Cast(allyT);
+                    }
+
+                    if (SpellConfig.R.Ready)
+                    {
+                        SpellConfig.R.Cast(allyT);
+                    }
+                }
+
+                if (SummonerSpells.IsValid(SummonerSpells.Flash) && MenuConfig.InsecMenu["Flash"].Enabled
+                && SpellConfig.R.Ready
+                && !SpellConfig.Q.Ready
+                && !SpellConfig.E.Ready
+                && dist > 450
+                && soldierPos.Distance(target) > 450
+                && !Global.Player.IsDashing())
+                {
+                    if (Game.TickCount - AzirHelper.LastE <= 900
+                        || Game.TickCount - AzirHelper.LastQ <= 900)
+                    {
+                        return;
+                    }
+                    SummonerSpells.Flash.Cast(target.ServerPosition);
+                }
             }
         }
 
