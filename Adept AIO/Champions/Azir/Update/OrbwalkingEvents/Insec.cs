@@ -35,13 +35,15 @@ namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
             var tempPos = Global.Player.ServerPosition + (Global.Player.ServerPosition - allyT.ServerPosition).Normalized();
             var rect = new Geometry.Rectangle(Global.Player.ServerPosition.Extend(tempPos, (float)SpellConfig.RSqrt / 2f).To2D(), Global.Player.ServerPosition.Extend(target.ServerPosition, (float)SpellConfig.RSqrt / 2f).To2D(), SpellConfig.R.Width);
 
-            if (!SpellConfig.E.Ready && SpellConfig.R.Ready
-                && Game.TickCount - AzirHelper.LastQ > 800
-                && Global.Player.IsDashing()
-                && Global.Player.GetDashInfo().EndPos.Distance(target) > 450
-                && Global.Player.Distance(target) > 450
-                && !rect.IsInside(target.ServerPosition.To2D())
-                && SummonerSpells.IsValid(SummonerSpells.Flash) && MenuConfig.InsecMenu["Flash"].Enabled)
+            if (!SpellConfig.E.Ready 
+             && !SpellConfig.Q.Ready
+             &&  SpellConfig.R.Ready
+             &&  Game.TickCount - AzirHelper.LastQ > 800
+             &&  Global.Player.IsDashing()
+             &&  Global.Player.GetDashInfo().EndPos.Distance(target) > 450
+             &&  Global.Player.Distance(target) > 450
+             &&  !rect.IsInside(target.ServerPosition.To2D())
+             &&  SummonerSpells.IsValid(SummonerSpells.Flash) && MenuConfig.InsecMenu["Flash"].Enabled)
             {
                 SummonerSpells.Flash.Cast(Global.Player.ServerPosition.Extend(target.ServerPosition, SummonerSpells.Flash.Range));
             }
