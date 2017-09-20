@@ -1,8 +1,7 @@
 ﻿using Adept_AIO.Champions.LeeSin.Core.Spells;
 using Adept_AIO.Champions.LeeSin.Update.Ward_Manager;
 using Adept_AIO.SDK.Delegates;
-using Adept_AIO.SDK.Junk;
-using Adept_AIO.SDK.Spell_DB;
+using Adept_AIO.SDK.Unit_Extensions;
 using Aimtec;
 using Aimtec.SDK.Extensions;
 
@@ -28,13 +27,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.Miscellaneous
             || !_spellConfig.W.Ready 
             || !_spellConfig.IsFirst(_spellConfig.W)
             || !_wardTracker.IsWardReady() 
-            ||  args.EndPosition.Distance(Global.Player) > _spellConfig.WardRange)
-            {
-                return;
-            }
-
-            var missile = SpellDatabase.GetByName(args.SpellName);
-            if (missile == null || !missile.IsDangerous)
+            ||  args.EndPosition.Distance(Global.Player) > 425)
             {
                 return;
             }

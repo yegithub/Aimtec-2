@@ -1,5 +1,5 @@
 ﻿using Adept_AIO.Champions.Tristana.Update.OrbwalkingEvents;
-using Adept_AIO.SDK.Junk;
+using Adept_AIO.SDK.Unit_Extensions;
 using Aimtec.SDK.Orbwalking;
 
 namespace Adept_AIO.Champions.Tristana.Update.Miscellaneous

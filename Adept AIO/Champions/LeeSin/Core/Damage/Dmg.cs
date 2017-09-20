@@ -1,5 +1,5 @@
 ﻿using Adept_AIO.Champions.LeeSin.Core.Spells;
-using Adept_AIO.SDK.Junk;
+using Adept_AIO.SDK.Unit_Extensions;
 using Aimtec;
 using Aimtec.SDK.Damage;
 using Aimtec.SDK.Damage.JSON;

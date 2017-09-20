@@ -1,7 +1,7 @@
 ﻿using Adept_AIO.Champions.Kayn.Core;
 using Adept_AIO.Champions.Kayn.Drawings;
 using Adept_AIO.Champions.Kayn.Update.Miscellaneous;
-using Adept_AIO.SDK.Junk;
+using Adept_AIO.SDK.Unit_Extensions;
 using Aimtec;
 
 namespace Adept_AIO.Champions.Kayn

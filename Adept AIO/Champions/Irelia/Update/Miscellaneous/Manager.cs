@@ -1,6 +1,6 @@
 ﻿using Adept_AIO.Champions.Irelia.Core;
 using Adept_AIO.Champions.Irelia.Update.OrbwalkingEvents;
-using Adept_AIO.SDK.Junk;
+using Adept_AIO.SDK.Unit_Extensions;
 using Aimtec;
 using Aimtec.SDK.Orbwalking;
 

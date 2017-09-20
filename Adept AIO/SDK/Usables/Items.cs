@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using Adept_AIO.SDK.Junk;
+using Adept_AIO.SDK.Unit_Extensions;
 using Aimtec;
 
 namespace Adept_AIO.SDK.Usables
@@ -49,6 +50,46 @@ namespace Adept_AIO.SDK.Usables
             {
                 Global.Orbwalker.ResetAutoAttackTimer();
             }
+        }
+
+        private static readonly IEnumerable<string> WardNames = new List<string>
+        {
+            "TrinketTotemLvl1",
+            "ItemGhostWard",
+            "JammerDevice",
+        };
+
+        public static Vector3 LastWardPos;
+        private static int LastWardTick;
+
+        public static void WardJump(Aimtec.SDK.Spell spell, Vector3 position)
+        {
+            foreach (var wardName in WardNames)
+            {
+                if (CanUseItem(wardName))
+                {
+                    CastItem(wardName, position);
+                    spell.Cast(position);
+                }
+            }
+        }
+
+        public static void OnCreate(GameObject sender)
+        {
+            if (Game.TickCount - LastWardTick <= 500)
+            {
+                return;
+            }
+
+            var ward = sender as Obj_AI_Minion;
+
+            if (ward == null || !ward.Name.ToLower().Contains("ward"))
+            {
+                return;
+            }
+
+            LastWardTick = Game.TickCount;
+            LastWardPos = ward.ServerPosition;
         }
 
         public static void CastItem(string itemName, Vector3 position = new Vector3())

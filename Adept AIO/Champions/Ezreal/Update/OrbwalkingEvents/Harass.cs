@@ -1,8 +1,9 @@
-﻿namespace Adept_AIO.Champions.Ezreal.Update.OrbwalkingEvents
+﻿using Adept_AIO.SDK.Unit_Extensions;
+
+namespace Adept_AIO.Champions.Ezreal.Update.OrbwalkingEvents
 {
     using System.Linq;
     using Core;
-    using SDK.Junk;
     using Aimtec.SDK.Extensions;
 
     internal class Harass

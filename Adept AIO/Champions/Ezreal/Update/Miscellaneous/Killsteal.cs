@@ -1,10 +1,10 @@
-﻿using Aimtec.SDK.Damage.JSON;
+﻿using Adept_AIO.SDK.Unit_Extensions;
+using Aimtec.SDK.Damage.JSON;
 
 namespace Adept_AIO.Champions.Ezreal.Update.Miscellaneous
 {
     using System.Linq;
     using Core;
-    using SDK.Junk;
     using Aimtec;
     using Aimtec.SDK.Damage;
     using Aimtec.SDK.Extensions;

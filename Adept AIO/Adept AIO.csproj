@@ -157,7 +157,7 @@
     <Compile Include="SDK\Draw Extension\DamageIndicator.cs" />
     <Compile Include="SDK\Geometry Related\Geometry.cs" />
     <Compile Include="SDK\Generic\GetRandom.cs" />
-    <Compile Include="SDK\Junk\IDmg.cs" />
+    <Compile Include="Champions\LeeSin\Core\Damage\IDmg.cs" />
     <Compile Include="Champions\LeeSin\Core\Insec Manager\IInsec Manager.cs" />
     <Compile Include="Champions\LeeSin\Core\Insec Manager\Insec Manager.cs" />
     <Compile Include="Champions\LeeSin\Core\Spells\ISpellConfig.cs" />
@@ -231,8 +231,8 @@
     <Compile Include="Champions\Yasuo\Update\OrbwalkingEvents\LaneClear.cs" />
     <Compile Include="Champions\Yasuo\Yasuo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SDK\Junk\GameObjects.cs" />
-    <Compile Include="SDK\Junk\Global.cs" />
+    <Compile Include="SDK\Unit Extensions\GameObjects.cs" />
+    <Compile Include="SDK\Unit Extensions\Global.cs" />
     <Compile Include="SDK\Junk\MenuShortcut.cs" />
     <Compile Include="SDK\Draw Extension\RenderHelper.cs" />
     <Compile Include="SDK\Unit Extensions\TargetState.cs" />

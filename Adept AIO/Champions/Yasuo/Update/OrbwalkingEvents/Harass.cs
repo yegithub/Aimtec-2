@@ -1,5 +1,5 @@
 ﻿using Adept_AIO.Champions.Yasuo.Core;
-using Adept_AIO.SDK.Junk;
+using Adept_AIO.SDK.Unit_Extensions;
 using Aimtec.SDK.Extensions;
 
 namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents

@@ -1,15 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Adept_AIO.SDK.Junk;
+using System.Threading;
+using Adept_AIO.SDK.Unit_Extensions;
 using Aimtec;
 using Aimtec.SDK.Extensions;
+using Aimtec.SDK.Util;
 
 namespace Adept_AIO.Champions.Azir.Core
 {
     class SoldierHelper
     {
         public static List<Obj_AI_Minion> Soldiers;
-
+      
         private static bool IsSoldier(Obj_AI_Minion soldier)
         {
             if(soldier == null)
@@ -21,6 +23,7 @@ namespace Adept_AIO.Champions.Azir.Core
 
         public static void OnDestroy(GameObject sender)
         {
+            if(Soldiers.Any(x => x.NetworkId == sender.NetworkId))
             Soldiers.RemoveAll(x => x.NetworkId == sender.NetworkId);
         }
 
@@ -30,6 +33,7 @@ namespace Adept_AIO.Champions.Azir.Core
             if (soldier != null && IsSoldier(soldier) && Game.TickCount - AzirHelper.LastR >= 100)
             {
                 Soldiers.Add(soldier);
+                DelayAction.Queue(9000 - Game.Ping / 2, () => Soldiers.RemoveAll(x => x.NetworkId == soldier.NetworkId), new CancellationToken(false));
             }
         }
 

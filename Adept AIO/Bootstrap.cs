@@ -1,7 +1,7 @@
 ﻿using Adept_AIO.Champions.Azir;
 using Adept_AIO.Champions.Ezreal;
 using Adept_AIO.SDK.Generic;
-using Adept_AIO.SDK.Junk;
+using Adept_AIO.SDK.Unit_Extensions;
 
 namespace Adept_AIO
 {

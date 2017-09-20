@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Aimtec;
 
-namespace Adept_AIO.SDK.Junk
+namespace Adept_AIO.SDK.Unit_Extensions
 {
     /// <summary>
     ///     A static (stack) class which contains a sort-of cached versions of the important game objects.

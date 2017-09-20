@@ -9,7 +9,6 @@ namespace Adept_AIO.Champions.Ezreal.Update.Miscellaneous
 {
     using System.Linq;
     using Core;
-    using SDK.Junk;
     using Aimtec.SDK.Extensions;
 
     internal class Misc

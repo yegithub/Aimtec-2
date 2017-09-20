@@ -1,7 +1,8 @@
-﻿namespace Adept_AIO.Champions.Ezreal.Update.Miscellaneous
+﻿using Adept_AIO.SDK.Unit_Extensions;
+
+namespace Adept_AIO.Champions.Ezreal.Update.Miscellaneous
 {
     using OrbwalkingEvents;
-    using SDK.Junk;
     using Aimtec.SDK.Orbwalking;
 
     internal class Manager

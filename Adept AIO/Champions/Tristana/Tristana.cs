@@ -3,7 +3,7 @@ using Adept_AIO.Champions.Tristana.Drawings;
 using Adept_AIO.Champions.Tristana.Update.Miscellaneous;
 using Adept_AIO.Champions.Tristana.Update.OrbwalkingEvents;
 using Adept_AIO.SDK.Delegates;
-using Adept_AIO.SDK.Junk;
+using Adept_AIO.SDK.Unit_Extensions;
 using Aimtec;
 
 namespace Adept_AIO.Champions.Tristana

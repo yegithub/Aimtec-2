@@ -1,7 +1,9 @@
-﻿using Adept_AIO.Champions.Jax.Core;
+﻿using System;
+using Adept_AIO.Champions.Jax.Core;
 using Adept_AIO.Champions.Jax.Drawings;
 using Adept_AIO.Champions.Jax.Update.Miscellaneous;
-using Adept_AIO.SDK.Junk;
+using Adept_AIO.SDK.Unit_Extensions;
+using Adept_AIO.SDK.Usables;
 using Aimtec;
 
 namespace Adept_AIO.Champions.Jax
@@ -21,6 +23,8 @@ namespace Adept_AIO.Champions.Jax
             Obj_AI_Base.OnProcessSpellCast += SpellManager.OnProcessSpellCast;
             Render.OnRender += DrawManager.OnRender;
             Render.OnPresent += DrawManager.OnPresent;
+
+            GameObject.OnCreate += Items.OnCreate;
         }
     }
 }

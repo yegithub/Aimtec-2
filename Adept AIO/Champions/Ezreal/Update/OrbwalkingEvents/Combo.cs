@@ -1,11 +1,11 @@
-﻿using Aimtec;
+﻿using Adept_AIO.SDK.Unit_Extensions;
+using Aimtec;
 using Aimtec.SDK.Damage;
 
 namespace Adept_AIO.Champions.Ezreal.Update.OrbwalkingEvents
 {
     using System.Linq;
     using Core;
-    using SDK.Junk;
     using Aimtec.SDK.Extensions;
 
     internal class Combo

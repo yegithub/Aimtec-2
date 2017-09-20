@@ -1,5 +1,5 @@
 ﻿using Adept_AIO.Champions.Jinx.Core;
-using Adept_AIO.SDK.Junk;
+using Adept_AIO.SDK.Unit_Extensions;
 using Aimtec.SDK.Extensions;
 
 namespace Adept_AIO.Champions.Jinx.Update.OrbwalkingEvents
