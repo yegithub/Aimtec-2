@@ -5,7 +5,6 @@ using Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.JungleClear;
 using Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.LaneClear;
 using Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.LastHit;
 using Adept_AIO.SDK.Junk;
-using Aimtec;
 using Aimtec.SDK.Orbwalking;
 
 namespace Adept_AIO.Champions.LeeSin.Update.Miscellaneous
@@ -39,7 +38,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.Miscellaneous
                     break;
                 case OrbwalkingMode.Laneclear:
                     _laneClear.OnPostAttack();
-                    _jungleClear.OnPostAttack((Obj_AI_Minion)args.Target);
+                    _jungleClear.OnPostAttack(args.Target);
                     break;
             }
         }

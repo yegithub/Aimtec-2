@@ -29,29 +29,27 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.JungleClear
             _spellConfig = spellConfig;
         }
 
-        public void OnPostAttack(Obj_AI_Minion mob)
+        public void OnPostAttack(AttackableUnit mobPre)
         {
+            var mob = mobPre as Obj_AI_Minion;
+
             if (mob == null || mob.Health < Global.Player.GetAutoAttackDamage(mob))
             {
                 return;
             }
 
-            if (_spellConfig.Q.Ready && _spellConfig.IsQ2() && _spellConfig.QAboutToEnd)
-            {
-                _spellConfig.Q.CastOnUnit(mob);
-            }
-
             if (Global.Player.Level <= 8)
             {
-                if (_spellConfig.PassiveStack() > 0)
+                if (_spellConfig.PassiveStack() >= 1)
                 {
                     return;
                 }
-                if (_spellConfig.W.Ready && WEnabled && !_spellConfig.Q.Ready)
+
+                if (_spellConfig.W.Ready && WEnabled)
                 {
                     _spellConfig.W.CastOnUnit(Global.Player);
                 }
-                else if (_spellConfig.E.Ready && EEnabled && !_spellConfig.W.Ready)
+                else if (_spellConfig.E.Ready && EEnabled)
                 {
                     if (_spellConfig.IsFirst(_spellConfig.E))
                     {
@@ -65,11 +63,10 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.JungleClear
                             _spellConfig.E.Cast(mob);
                         }
                     }
-                   else if (_spellConfig.W.Ready || _spellConfig.Q.Ready)
+                    else
                     {
-                        return;
+                        _spellConfig.E.Cast();
                     }
-                    _spellConfig.E.Cast();
                 }
             }
             else 
@@ -86,8 +83,13 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.JungleClear
                         _spellConfig.E.Cast(mob);
                     }
                 }
-                else if (_spellConfig.W.Ready && WEnabled && !_spellConfig.IsQ2())
+
+                if (_spellConfig.W.Ready && WEnabled)
                 {
+                    if (_spellConfig.E.Ready && EEnabled && !_spellConfig.IsFirst(_spellConfig.E))
+                    {
+                        return;
+                    }
                     _spellConfig.W.CastOnUnit(Global.Player);
                 }
             }
@@ -105,6 +107,11 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.JungleClear
             if (mob == null)
             {
                 return;
+            }
+
+            if (_spellConfig.Q.Ready && _spellConfig.IsQ2() && (_spellConfig.QAboutToEnd || Global.Player.GetSpellDamage(mob, SpellSlot.Q, DamageStage.SecondCast) > mob.Health))
+            {
+                _spellConfig.Q.CastOnUnit(mob);
             }
 
             if (!_smiteOptional.Contains(mob.UnitSkinName) && !_smiteAlways.Contains(mob.UnitSkinName))

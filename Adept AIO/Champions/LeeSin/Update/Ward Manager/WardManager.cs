@@ -1,6 +1,6 @@
 ﻿using System;
+using Adept_AIO.SDK.Generic;
 using Adept_AIO.SDK.Junk;
-using Adept_AIO.SDK.Methods;
 using Adept_AIO.SDK.Usables;
 using Aimtec;
 using Aimtec.SDK.Extensions;

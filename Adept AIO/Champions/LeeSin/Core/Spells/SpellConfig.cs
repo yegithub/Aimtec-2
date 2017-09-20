@@ -76,7 +76,7 @@ namespace Adept_AIO.Champions.LeeSin.Core.Spells
 
         public int PassiveStack()
         {
-            return Global.Player.HasBuff(PassiveName) ? Global.Player.GetBuffCount(PassiveName) : 0;
+            return Global.Player.GetBuffCount(PassiveName);
         }
 
         public void Load()

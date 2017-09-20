@@ -1,7 +1,8 @@
 ﻿using Adept_AIO.Champions.Tristana.Core;
 using Adept_AIO.SDK.Delegates;
 using Adept_AIO.SDK.Junk;
-using Adept_AIO.SDK.Methods;
+using Adept_AIO.SDK.Spell_DB;
+using Adept_AIO.SDK.Unit_Extensions;
 using Aimtec;
 using Aimtec.SDK.Extensions;
 
@@ -31,7 +32,7 @@ namespace Adept_AIO.Champions.Tristana.Update.Miscellaneous
 
             if (_spellConfig.W.Ready)
             {
-                _spellConfig.W.Cast(Mixed.GetFountainPos(Global.Player));
+                _spellConfig.W.Cast(TargetState.GetFountainPos(Global.Player));
             }
             else if (_spellConfig.R.Ready)
             {

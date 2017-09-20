@@ -7,7 +7,7 @@ using Aimtec;
 using Aimtec.SDK.Events;
 using Aimtec.SDK.Extensions;
 using Aimtec.SDK.Util;
-using Geometry = Adept_AIO.SDK.Junk.Geometry;
+using Geometry = Adept_AIO.SDK.Geometry_Related.Geometry;
 
 namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
 {

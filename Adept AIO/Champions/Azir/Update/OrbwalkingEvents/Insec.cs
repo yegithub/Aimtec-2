@@ -5,7 +5,7 @@ using Adept_AIO.SDK.Usables;
 using Aimtec;
 using Aimtec.SDK.Events;
 using Aimtec.SDK.Extensions;
-using Geometry = Adept_AIO.SDK.Junk.Geometry;
+using Geometry = Adept_AIO.SDK.Geometry_Related.Geometry;
 
 namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
 {

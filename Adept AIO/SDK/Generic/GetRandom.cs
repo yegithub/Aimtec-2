@@ -1,5 +1,6 @@
 ﻿using System;
-namespace Adept_AIO.SDK.Junk
+
+namespace Adept_AIO.SDK.Generic
 {
     class GetRandom
     {

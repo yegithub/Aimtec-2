@@ -1,7 +1,7 @@
 ﻿using Aimtec;
 using Aimtec.SDK.Extensions;
 
-namespace Adept_AIO.SDK.Junk
+namespace Adept_AIO.SDK.Geometry_Related
 {
     internal class WallExtension
     {

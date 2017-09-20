@@ -114,4 +114,21 @@ namespace Adept_AIO.SDK.Delegates
             public TeleportStatus Status { get; internal set; }
         }
     }
+
+    public enum TeleportStatus
+    {
+        Start,
+        Abort,
+        Finish,
+        Unknown
+    }
+
+    public enum TeleportType
+    {
+        Recall,
+        Teleport,
+        TwistedFate,
+        Shen,
+        Unknown
+    }
 }

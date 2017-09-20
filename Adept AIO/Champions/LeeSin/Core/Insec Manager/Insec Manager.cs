@@ -32,21 +32,19 @@ namespace Adept_AIO.Champions.LeeSin.Core.Insec_Manager
 
         public Vector3 BkPosition(Obj_AI_Base target)
         {
-            if (target == null || GameObjects.EnemyHeroes.Count() < 2)
+            if (target == null)
             {
                 return Vector3.Zero;
             }
 
-            var secondEnemy = GameObjects.EnemyHeroes.FirstOrDefault(x => x.NetworkId != target.NetworkId && x.IsValid && x.Distance(target) <= _spellConfig.R2.Range);
-
+            var secondEnemy = GameObjects.EnemyHeroes.FirstOrDefault(x => x.NetworkId != target.NetworkId && x.Distance(target) <= _spellConfig.R2.Range);
+          
             if (secondEnemy == null)
             {
                 return Vector3.Zero;
             }
-
-            var pred = _spellConfig.R2.GetPrediction(secondEnemy, target.ServerPosition, target.ServerPosition).UnitPosition;
-            var final = target.ServerPosition.Extend(target.ServerPosition + (target.ServerPosition - pred).Normalized(), DistanceBehindTarget());
-            return final;
+        
+            return target.ServerPosition.Extend(target.ServerPosition + (target.ServerPosition - secondEnemy.ServerPosition).Normalized(), DistanceBehindTarget());
         }
 
         public Vector3 GetTargetEndPosition()
@@ -58,7 +56,7 @@ namespace Adept_AIO.Champions.LeeSin.Core.Insec_Manager
             {
                 case 0:
                     if (turret != null)
-                    {
+                    {   
                         Temp.IsAlly = false;
                         return turret.ServerPosition;
                     }

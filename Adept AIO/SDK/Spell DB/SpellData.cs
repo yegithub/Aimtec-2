@@ -2,7 +2,7 @@
 using Aimtec.SDK.Prediction.Collision;
 using Aimtec.SDK.Prediction.Skillshots;
 
-namespace Adept_AIO.SDK.Methods
+namespace Adept_AIO.SDK.Spell_DB
 {
     public class SpellData
     {

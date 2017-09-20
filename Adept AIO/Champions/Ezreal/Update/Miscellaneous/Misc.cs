@@ -1,4 +1,6 @@
 ﻿using System.Threading;
+using Adept_AIO.SDK.Generic;
+using Adept_AIO.SDK.Unit_Extensions;
 using Aimtec;
 using Aimtec.SDK.Orbwalking;
 using Aimtec.SDK.Util;
@@ -25,7 +27,7 @@ namespace Adept_AIO.Champions.Ezreal.Update.Miscellaneous
              && Global.Player.CountEnemyHeroesInRange(2500) == 0
              && MenuConfig.Miscellaneous["Stack"].Enabled 
              && Global.Player.ManaPercent() >= MenuConfig.Miscellaneous["Stack"].Value  
-             && Mixed.HasTear())
+             && TargetState.HasTear())
             {
                 var objects = GameObjects.Enemy.FirstOrDefault(x => x.IsValidTarget(SpellConfig.Q.Range) && x.MaxHealth >= 10);
 

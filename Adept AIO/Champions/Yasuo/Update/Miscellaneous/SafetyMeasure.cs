@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using Adept_AIO.Champions.Yasuo.Core;
 using Adept_AIO.SDK.Junk;
-using Adept_AIO.SDK.Methods;
+using Adept_AIO.SDK.Spell_DB;
 using Aimtec;
 using Aimtec.SDK.Extensions;
 

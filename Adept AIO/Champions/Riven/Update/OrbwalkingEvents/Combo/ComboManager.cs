@@ -2,8 +2,8 @@
 using System.Linq;
 using Adept_AIO.Champions.Riven.Core;
 using Adept_AIO.Champions.Riven.Update.Miscellaneous;
+using Adept_AIO.SDK.Generic;
 using Adept_AIO.SDK.Junk;
-using Adept_AIO.SDK.Methods;
 using Adept_AIO.SDK.Usables;
 using Aimtec;
 using Aimtec.SDK.Damage;
@@ -78,8 +78,8 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents.Combo
             switch (MenuConfig.Combo["Mode"].Value)
             {
                 case 0:
-                    DebugConsole.Print(Mixed.PercentDmg(target, Dmg.Damage(target)).ToString());
-                    if (Mixed.PercentDmg(target, Dmg.Damage(target)) >= MenuConfig.Combo["Change"].Value)
+                    DebugConsole.Print(Maths.PercentDmg(target, Dmg.Damage(target)).ToString());
+                    if (Maths.PercentDmg(target, Dmg.Damage(target)) >= MenuConfig.Combo["Change"].Value)
                     {
                         return ComboPattern.FastCombo;
                     }

@@ -116,7 +116,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Insec
           
             if (_spellConfig.R.Ready)
             {
-                if (Target.IsValidTarget(_spellConfig.R.Range) && (dist <= 150 || FlashReady && _insecManager.InsecKickValue == 1))
+                if (Target.IsValidTarget(_spellConfig.R.Range) && (dist <= 125 || FlashReady && _insecManager.InsecKickValue == 1))
                 {
                     _spellConfig.R.CastOnUnit(Target);
                 }

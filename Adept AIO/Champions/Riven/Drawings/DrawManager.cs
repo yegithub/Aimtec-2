@@ -1,6 +1,9 @@
 ﻿using System.Drawing;
 using System.Linq;
 using Adept_AIO.Champions.Riven.Core;
+using Adept_AIO.SDK.Draw_Extension;
+using Adept_AIO.SDK.Generic;
+using Adept_AIO.SDK.Geometry_Related;
 using Adept_AIO.SDK.Junk;
 using Aimtec;
 using Aimtec.SDK.Extensions;
@@ -64,19 +67,19 @@ namespace Adept_AIO.Champions.Riven.Drawings
 
                 if (MenuConfig.BurstMode.Active)
                 {
-                    Mixed.RenderArrowFromPlayer(Global.TargetSelector.GetSelectedTarget());
+                    RenderHelper.RenderArrowFromPlayer(Global.TargetSelector.GetSelectedTarget());
                     Render.Text("PATTERN: " + Enums.BurstPattern, new Vector2(playerV2.X - 65, playerV2.Y + 30), RenderTextFlags.Center, Color.Aqua);
                 }
 
                 switch (Global.Orbwalker.Mode)
                 {
                     case OrbwalkingMode.Combo:
-                        Mixed.RenderArrowFromPlayer(Global.TargetSelector.GetTarget(Extensions.EngageRange + 800));
+                        RenderHelper.RenderArrowFromPlayer(Global.TargetSelector.GetTarget(Extensions.EngageRange + 800));
                         Render.Text("PATTERN: " + Enums.ComboPattern, new Vector2(playerV2.X - 65, playerV2.Y + 30), RenderTextFlags.Center, Color.Aqua);
                         break;
 
                     case OrbwalkingMode.Mixed:
-                        Mixed.RenderArrowFromPlayer(Global.TargetSelector.GetTarget(Extensions.EngageRange + 800));
+                        RenderHelper.RenderArrowFromPlayer(Global.TargetSelector.GetTarget(Extensions.EngageRange + 800));
                         Render.Text("PATTERN: " + Enums.Current, new Vector2(playerV2.X - 65, playerV2.Y + 30), RenderTextFlags.Center, Color.Aqua);
                         break;
                 }

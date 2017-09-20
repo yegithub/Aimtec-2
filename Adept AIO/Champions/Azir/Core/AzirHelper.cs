@@ -1,6 +1,6 @@
 ﻿using Aimtec;
 using Aimtec.SDK.Orbwalking;
-using Geometry = Adept_AIO.SDK.Junk.Geometry;
+using Geometry = Adept_AIO.SDK.Geometry_Related.Geometry;
 
 namespace Adept_AIO.Champions.Azir.Core
 {

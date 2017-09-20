@@ -66,7 +66,7 @@ namespace Adept_AIO.Champions.LeeSin.Drawings
                 return;
             }
 
-            if (Temp.IsBubbaKush && !_insecManager.BkPosition(selected).IsZero)
+            if (Temp.IsBubbaKush && _insecManager.BkPosition(selected) != Vector3.Zero)
             {
                 var bkPos = _insecManager.BkPosition(selected);
                 Render.WorldToScreen(bkPos, out var bkScreen);

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Adept_AIO.SDK.Methods
+namespace Adept_AIO.SDK.Generic
 {
     internal class DebugConsole
     {
