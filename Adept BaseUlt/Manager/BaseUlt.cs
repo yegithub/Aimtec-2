@@ -89,7 +89,7 @@ namespace Adept_BaseUlt.Manager
             }
 
             Menu.Add(new MenuSeperator("no"));
-            Menu.Add(new MenuSlider("Distance", "Max Distance | RandomUlt", 2000, 500, 4000));
+            Menu.Add(new MenuSlider("Distance", "Max Distance | RandomUlt", 20000, 5000, 40000));
         }
 
         private void OnTeleport(Obj_AI_Base sender, Teleport.TeleportEventArgs args)
@@ -144,7 +144,7 @@ namespace Adept_BaseUlt.Manager
             {
                 return;
             }
-            Console.WriteLine(Global.Player.Distance(GetFountainPos(_target)));
+          
             if (Menu["RandomUlt"].Enabled)
             {
                 var enemy = lastEnemyChecked.FirstOrDefault(x => x.NetworkId == _target.NetworkId);
@@ -157,8 +157,7 @@ namespace Adept_BaseUlt.Manager
 
                 var distance = (_recallStartTick - _lastSeenTick) / 1000f * _target.MoveSpeed;
 
-                _predictedPosition =
-                    _lastSeenPosition.Extend(enemy.ServerPosition.Extend(direction, distance), distance);
+                _predictedPosition = _lastSeenPosition.Extend(enemy.ServerPosition.Extend(direction, distance), distance);
 
                 if (distance > Menu["Distance"].Value)
                 {
