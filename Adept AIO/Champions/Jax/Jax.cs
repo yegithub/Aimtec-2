@@ -23,8 +23,6 @@ namespace Adept_AIO.Champions.Jax
             Obj_AI_Base.OnProcessSpellCast += SpellManager.OnProcessSpellCast;
             Render.OnRender += DrawManager.OnRender;
             Render.OnPresent += DrawManager.OnPresent;
-
-            GameObject.OnCreate += Items.OnCreate;
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Adept_AIO.SDK.Unit_Extensions;
 using Aimtec;
+using Aimtec.SDK.Util;
 
 namespace Adept_AIO.SDK.Usables
 {
@@ -62,34 +63,15 @@ namespace Adept_AIO.SDK.Usables
         public static Vector3 LastWardPos;
         private static int LastWardTick;
 
-        public static void WardJump(Aimtec.SDK.Spell spell, Vector3 position)
+        public static void WardJump(Vector3 position)
         {
             foreach (var wardName in WardNames)
             {
                 if (CanUseItem(wardName))
                 {
-                    CastItem(wardName, position);
-                    spell.Cast(position);
+                    CastItem(wardName, position);  
                 }
             }
-        }
-
-        public static void OnCreate(GameObject sender)
-        {
-            if (Game.TickCount - LastWardTick <= 500)
-            {
-                return;
-            }
-
-            var ward = sender as Obj_AI_Minion;
-
-            if (ward == null || !ward.Name.ToLower().Contains("ward"))
-            {
-                return;
-            }
-
-            LastWardTick = Game.TickCount;
-            LastWardPos = ward.ServerPosition;
         }
 
         public static void CastItem(string itemName, Vector3 position = new Vector3())

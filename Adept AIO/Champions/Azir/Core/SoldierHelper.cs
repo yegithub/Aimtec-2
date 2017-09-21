@@ -21,7 +21,7 @@ namespace Adept_AIO.Champions.Azir.Core
             return soldier.IsAlly && !soldier.IsDead && soldier.IsValid && soldier.UnitSkinName.ToLower().Contains("soldier");
         }
 
-        public static void OnDestroy(GameObject sender)
+        public static void OnDelete(GameObject sender) 
         {
             if(Soldiers.Any(x => x.NetworkId == sender.NetworkId))
             Soldiers.RemoveAll(x => x.NetworkId == sender.NetworkId);

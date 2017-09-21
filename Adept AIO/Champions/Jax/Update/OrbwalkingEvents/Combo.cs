@@ -67,17 +67,6 @@ namespace Adept_AIO.Champions.Jax.Update.OrbwalkingEvents
                 {
                     SpellConfig.Q.CastOnUnit(minion);
                 }
-                //else if(MenuConfig.Combo["Jump"].Enabled)
-                //{
-                //    var pos = Global.Player.ServerPosition.Extend(target.ServerPosition, 600);
-                //    if (pos.Distance(target) >= SpellConfig.E.Range + target.BoundingRadius + 200)
-                //    {
-                //        return;
-                //    }
-                //    DebugConsole.Print("JAX Q WARDJUMP TEST", ConsoleColor.Red);
-                //    Items.WardJump(SpellConfig.Q, pos);
-               
-                //}
             }
             else
             {

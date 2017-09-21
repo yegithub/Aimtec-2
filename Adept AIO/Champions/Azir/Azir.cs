@@ -22,7 +22,7 @@ namespace Adept_AIO.Champions.Azir
             Render.OnRender += DrawManager.OnRender;
 
             GameObject.OnCreate += SoldierHelper.OnCreate;
-            GameObject.OnDestroy += SoldierHelper.OnDestroy;
+            GameObject.OnDestroy += SoldierHelper.OnDelete;
             Obj_AI_Base.OnProcessSpellCast += AzirHelper.OnProcessSpellCast;
             Gapcloser.OnGapcloser += AntiGapcloser.OnGapcloser;
         }
