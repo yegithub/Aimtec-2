@@ -90,7 +90,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
                         if (SpellConfig.W.Ready && SummonerSpells.IsValid(SummonerSpells.Flash))
                         {
                             Global.Player.SpellBook.CastSpell(SpellSlot.W);
-                            DelayAction.Queue(250, ()=> SummonerSpells.Flash.Cast(target.ServerPosition.Extend(Global.Player.ServerPosition, 150 + target.BoundingRadius)));
+                            DelayAction.Queue(250, ()=> SummonerSpells.Flash.Cast(target.ServerPosition + target.BoundingRadius));
                         }
                     }
                     else if (target.IsValidTarget(SpellConfig.E.Range + Global.Player.AttackRange))

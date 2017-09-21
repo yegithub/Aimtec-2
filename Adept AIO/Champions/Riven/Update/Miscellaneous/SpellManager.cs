@@ -13,7 +13,8 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
     {
         private static bool _canUseQ;
         private static bool _canUseW;
-    
+        private static bool _canWQ;
+
         private static Obj_AI_Base _unit;
         private static bool _serverPosition;
 
@@ -29,8 +30,9 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                 case "RivenTriCleave":
                     Extensions.LastQCastAttempt = Game.TickCount;
                     _canUseQ = false;
+                    _canWQ = false;
                     _serverPosition = false;
-                    Animation.Reset();
+                  
                     break;
                 case "RivenMartyr":
                     _canUseW = false;
@@ -47,9 +49,15 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 
         public static void OnUpdate()
         {
-            if (_unit == null)
+            if (_unit == null || _unit.HasBuff("FioraW") || _unit.HasBuff("FioraW") || _unit.HasBuff("PoppyW"))
             {
                 return;
+            }
+
+            if (_canWQ)
+            {
+                SpellConfig.W.Cast();
+                Global.Player.SpellBook.CastSpell(SpellSlot.Q, _unit);
             }
 
             if (_serverPosition && _canUseQ)
@@ -64,12 +72,13 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                     Items.CastTiamat(false);
                     DelayAction.Queue(230 + Game.Ping / 2,
                         () => Global.Player.SpellBook.CastSpell(SpellSlot.Q, _unit), new CancellationToken(false));
+                    Extensions.DidJustAuto = false;
                 }
                 else
                 {
                     Global.Player.SpellBook.CastSpell(SpellSlot.Q, _unit);
+                    Extensions.DidJustAuto = false;
                 }
-                Extensions.DidJustAuto = false;
             }
 
             if (!_canUseW)
@@ -84,11 +93,6 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 
         public static void CastQ(Obj_AI_Base target, bool serverPosition = false)
         {
-            if (target.HasBuff("FioraW") || target.HasBuff("PoppyW"))
-            {
-                return;
-            }
-            
             _unit = target;
             _canUseQ = true;
             _serverPosition = serverPosition;
@@ -96,13 +100,14 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 
         public static void CastW(Obj_AI_Base target)
         {
-            if (target.HasBuff("FioraW"))
-            {
-                return;
-            }
-
             _canUseW = InsideKiBurst(target.ServerPosition, target.BoundingRadius);
             _unit = target;  
+        }
+
+        public static void CastWQ(Obj_AI_Base target)
+        {
+            _unit = target;
+            _canWQ = true;
         }
 
         private static readonly string[] InvulnerableList = { "FioraW", "kindrednodeathbuff", "Undying Rage", "JudicatorIntervention" };

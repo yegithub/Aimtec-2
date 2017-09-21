@@ -60,9 +60,6 @@ namespace Adept_AIO.SDK.Usables
             "JammerDevice",
         };
 
-        public static Vector3 LastWardPos;
-        private static int LastWardTick;
-
         public static void WardJump(Vector3 position)
         {
             foreach (var wardName in WardNames)

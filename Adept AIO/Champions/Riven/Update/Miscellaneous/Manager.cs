@@ -14,43 +14,58 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
     {
         public static void OnUpdate()
         {
-            if (Global.Player.IsDead)
+            try
             {
-                return;
-            }
-          
-            if (Animation.DidRecentlyCancel && Game.TickCount - Animation.LastReset >= Animation.GetDelay())
-            {
-                Global.Orbwalker.AttackingEnabled = true;
-                Animation.DidRecentlyCancel = false;
-                DebugConsole.Print($"Attack Possible {Global.Orbwalker.CanAttack()}", ConsoleColor.Red);
-            }
+                if (Global.Player.IsDead || Global.Orbwalker.IsWindingUp)
+                {
+                    return;
+                }
 
-            switch (Global.Orbwalker.Mode)
-            {
-                case OrbwalkingMode.Combo:
-                   ComboManager.OnUpdate();
-                    break;
-                case OrbwalkingMode.Mixed:
-                    Harass.OnUpdate();
-                    break;
-                case OrbwalkingMode.Laneclear:
-                    Lane.OnUpdate();
-                    Jungle.OnUpdate();
-                    break;
-                case OrbwalkingMode.None:
-                    Extensions.AllIn = false;
-                    break;
+                if (Animation.DidRecentlyCancel)
+                {
+                    if (Game.TickCount - Animation.LastReset >= Animation.GetDelay() - 150)
+                    {
+                        Global.Orbwalker.ResetAutoAttackTimer();
+                    }
+
+                    if (Game.TickCount - Animation.LastReset >= Animation.GetDelay())
+                    {
+                        Global.Orbwalker.AttackingEnabled = true;
+                        Animation.DidRecentlyCancel = false;
+                    }
+                }
+
+                switch (Global.Orbwalker.Mode)
+                {
+                    case OrbwalkingMode.Combo:
+                        ComboManager.OnUpdate();
+                        break;
+                    case OrbwalkingMode.Mixed:
+                        Harass.OnUpdate();
+                        break;
+                    case OrbwalkingMode.Laneclear:
+                        Lane.OnUpdate();
+                        Jungle.OnUpdate();
+                        break;
+                    case OrbwalkingMode.None:
+                        Extensions.AllIn = false;
+                        break;
+                }
+
+                if (SpellConfig.Q.Ready &&
+                    Extensions.CurrentQCount != 1 &&
+                    MenuConfig.Miscellaneous["Active"].Enabled &&
+                    !Global.Player.HasBuff("Recall") &&
+                    Game.TickCount - Extensions.LastQCastAttempt >= 3580 + Game.Ping / 2 &&
+                    Game.TickCount - Extensions.LastQCastAttempt <= 3700 + Game.Ping / 2)
+                {
+                    SpellConfig.Q.Cast();
+                }
             }
-       
-            if (SpellConfig.Q.Ready &&
-                Extensions.CurrentQCount != 1 &&
-                MenuConfig.Miscellaneous["Active"].Enabled &&
-               !Global.Player.HasBuff("Recall") &&
-                Game.TickCount - Extensions.LastQCastAttempt >= 3580 + Game.Ping / 2 &&
-                Game.TickCount - Extensions.LastQCastAttempt <= 3700 + Game.Ping / 2) 
+            catch (Exception e)
             {
-                SpellConfig.Q.Cast();
+                Console.WriteLine(e);
+                throw;
             }
         }
 
@@ -58,12 +73,11 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
         {
             if (Game.TickCount - Extensions.LastQCastAttempt < 400 + Game.Ping / 2f)
             {
-                Extensions.DidJustAuto = false; 
-                Global.Orbwalker.ResetAutoAttackTimer();
+                Extensions.DidJustAuto = false;
+                Animation.Reset();
                 return;
             }
             Extensions.DidJustAuto = true;
-
 
             var target = args.Target as Obj_AI_Base;
 

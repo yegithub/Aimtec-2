@@ -21,7 +21,7 @@ namespace Adept_AIO.Champions.Riven.Core
             R = new Spell(SpellSlot.R);
 
             R2 = new Spell(SpellSlot.R, 1100);
-            R2.SetSkillshot(0.25f, 100, 1600, false, SkillshotType.Cone);
+            R2.SetSkillshot(0.25f, 100, 1600, false, SkillshotType.Cone, false, HitChance.VeryHigh);
 
             Enums.UltimateMode = UltimateMode.First;
         }

@@ -19,11 +19,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
             }
 
             Global.Orbwalker.Move(Game.CursorPos);
-       
-            Global.Orbwalker.ResetAutoAttackTimer();
-          
-            Global.Orbwalker.AttackingEnabled = false;
-
+      
             LastReset = Game.TickCount;
             DidRecentlyCancel = true;
         }
@@ -31,8 +27,8 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
         public static float GetDelay()
         {
             var level  =  Global.Player.Level;
-            var delay  =  Extensions.CurrentQCount == 1 ? 440f : 420f;
-                delay -= (Extensions.CurrentQCount != 1 ? 3.333f : 3.1f) * level;
+            var delay  =  Extensions.CurrentQCount == 1 ? 435f : 400f; // Temp until API fixed (?)
+                delay -=  3.333f * level;
 
             return delay; 
         }
