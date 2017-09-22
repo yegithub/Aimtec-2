@@ -6,7 +6,7 @@ using Aimtec.SDK.Extensions;
 
 namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
 {
-    class Harass
+    internal class Harass
     {
         public static void OnUpdate()
         {

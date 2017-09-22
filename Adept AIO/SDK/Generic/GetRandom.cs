@@ -2,7 +2,7 @@
 
 namespace Adept_AIO.SDK.Generic
 {
-    class GetRandom
+    internal class GetRandom
     {
         private static Random _random;
 

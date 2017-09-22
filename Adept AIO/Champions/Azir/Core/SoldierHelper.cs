@@ -8,7 +8,7 @@ using Aimtec.SDK.Util;
 
 namespace Adept_AIO.Champions.Azir.Core
 {
-    class SoldierHelper
+    internal class SoldierHelper
     {
         public static List<Obj_AI_Minion> Soldiers;
       

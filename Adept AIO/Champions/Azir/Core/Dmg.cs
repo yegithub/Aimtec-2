@@ -7,7 +7,7 @@ using Aimtec.SDK.Extensions;
 
 namespace Adept_AIO.Champions.Azir.Core
 {
-    class Dmg
+    internal class Dmg
     {
         public static double Damage(Obj_AI_Base target)
         {

@@ -78,8 +78,8 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents.Combo
             switch (MenuConfig.Combo["Mode"].Value)
             {
                 case 0:
-                    DebugConsole.Print(Maths.PercentDmg(target, Dmg.Damage(target)).ToString());
-                    if (Maths.PercentDmg(target, Dmg.Damage(target)) >= MenuConfig.Combo["Change"].Value)
+                    DebugConsole.Print(Maths.Percent(target.Health, Dmg.Damage(target)).ToString());
+                    if (Maths.Percent(target.Health, Dmg.Damage(target)) >= MenuConfig.Combo["Change"].Value)
                     {
                         return ComboPattern.FastCombo;
                     }

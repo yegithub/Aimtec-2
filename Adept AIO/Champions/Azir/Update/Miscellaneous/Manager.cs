@@ -11,7 +11,7 @@ using Aimtec.SDK.Util;
 
 namespace Adept_AIO.Champions.Azir.Update.Miscellaneous
 {
-    class Manager
+    internal class Manager
     {
         private static int LastAA;
 

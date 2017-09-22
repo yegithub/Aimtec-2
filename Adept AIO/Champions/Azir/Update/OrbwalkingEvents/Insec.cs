@@ -9,7 +9,7 @@ using Geometry = Adept_AIO.SDK.Geometry_Related.Geometry;
 
 namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
 {
-    class Insec
+    internal class Insec
     {
         public static void OnKeyPressed()
         {

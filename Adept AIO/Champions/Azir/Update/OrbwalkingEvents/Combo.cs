@@ -7,7 +7,7 @@ using Aimtec.SDK.Extensions;
 
 namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
 {
-    class Combo
+    internal class Combo
     {
         public static void OnUpdate()
         {

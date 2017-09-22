@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Adept_AIO.Champions.Riven.Update.OrbwalkingEvents;
 using Adept_AIO.SDK.Delegates;
-using Adept_AIO.SDK.Junk;
+using Adept_AIO.SDK.Menu_Extension;
 using Adept_AIO.SDK.Unit_Extensions;
 using Aimtec.SDK.Menu;
 using Aimtec.SDK.Menu.Components;

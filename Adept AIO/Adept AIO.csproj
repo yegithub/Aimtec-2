@@ -233,7 +233,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SDK\Unit Extensions\GameObjects.cs" />
     <Compile Include="SDK\Unit Extensions\Global.cs" />
-    <Compile Include="SDK\Junk\MenuShortcut.cs" />
+    <Compile Include="SDK\Menu Extension\MenuShortcut.cs" />
     <Compile Include="SDK\Draw Extension\RenderHelper.cs" />
     <Compile Include="SDK\Unit Extensions\TargetState.cs" />
     <Compile Include="SDK\Geometry Related\WallExtension.cs" />

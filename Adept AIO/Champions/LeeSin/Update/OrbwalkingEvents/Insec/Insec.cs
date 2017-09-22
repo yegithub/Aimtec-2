@@ -76,28 +76,29 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Insec
         private Obj_AI_Base EnemyObject => GameObjects.Enemy.FirstOrDefault(x => InsecInRange(x.ServerPosition) 
         && !x.IsDead 
         && x.IsValid
+        && !x.IsTurret
         && x.NetworkId != Target.NetworkId 
         && x.Health * 0.9 > Global.Player.GetSpellDamage(x, SpellSlot.Q)
         && x.MaxHealth > 7
         && Global.Player.Distance(x) <= _spellConfig.Q.Range 
         && x.Distance(GetInsecPosition()) < Global.Player.Distance(GetInsecPosition()));
 
+        private Obj_AI_Base LastQUnit;
+
         // R Flash
         public void OnProcessSpellCast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
         {
-            if (!Enabled || !FlashReady || sender == null || !sender.IsMe || _insecManager.InsecKickValue != 1)
-            {
-                return;
-            }
-
-            if (CanWardJump || _wardTracker.DidJustWard && Global.Player.Distance(GetInsecPosition()) <= 215)
-            {
-                return;
-            }
-
-            if (Target == null
-                || args.SpellSlot != SpellSlot.R
-                ||  Global.Player.Distance(GetInsecPosition()) <= 80)
+            if (!Enabled
+             || !FlashReady
+             ||  sender == null 
+             || !sender.IsMe
+             ||  _insecManager.InsecKickValue != 1 
+             ||  CanWardJump && !_wardTracker.DidJustWard
+             ||  _wardTracker.DidJustWard
+             || Global.Player.Distance(GetInsecPosition()) <= 215
+             || Target == null
+             || args.SpellSlot != SpellSlot.R
+             || Global.Player.Distance(GetInsecPosition()) <= 80)
             {
                 return;
             }
@@ -123,7 +124,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Insec
                     _spellConfig.R.CastOnUnit(Target);
                 }
 
-                if (_insecManager.InsecKickValue == 0 && FlashReady && GetInsecPosition().Distance(Global.Player) <= 500 && GetInsecPosition().Distance(Global.Player) > 215)
+                if (_insecManager.InsecKickValue == 0 && FlashReady && GetInsecPosition().Distance(Global.Player) <= 500 && GetInsecPosition().Distance(Global.Player) > 215 && (!CanWardJump || _wardTracker.DidJustWard))
                 {
                     if (Global.Player.GetDashInfo().EndPos.Distance(GetInsecPosition()) <= 215 || CanWardJump)
                     {
@@ -140,7 +141,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Insec
                 Q();
             }
 
-            if (!CanWardJump || Game.TickCount - _spellConfig.LastQ1CastAttempt <= 500)
+            if (!CanWardJump || Game.TickCount - _spellConfig.LastQ1CastAttempt <= 900 || LastQUnit != null && _spellConfig.IsQ2() && InsecInRange(LastQUnit.ServerPosition))
             {
                 return;
             }
@@ -175,11 +176,13 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Insec
             {
                 if (Target.IsValidTarget(_spellConfig.Q.Range))
                 {
-                    if (GetInsecPosition().Distance(Global.Player) <= InsecRange() && _spellConfig.W.Ready && _spellConfig.IsFirst(_spellConfig.W) && _wardTracker.IsWardReady() && QLast)
+                    if (GetInsecPosition().Distance(Global.Player) <= InsecRange() && _spellConfig.W.Ready && _spellConfig.IsFirst(_spellConfig.W) && _wardTracker.IsWardReady() && QLast || Global.Player.IsDashing())
                     {
                         return;
                     }
-                 
+
+                    LastQUnit = Target;
+
                     if (_spellConfig.Q.GetPrediction(Target).CollisionObjects.Count == 1)
                     {
                         _spellConfig.QSmite(Target);
@@ -192,6 +195,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Insec
                     return;
                 }
 
+                LastQUnit = EnemyObject;
                 _spellConfig.Q.Cast(EnemyObject.ServerPosition);
             }
         }

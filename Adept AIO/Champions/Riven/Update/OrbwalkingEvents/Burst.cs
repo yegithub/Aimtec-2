@@ -134,7 +134,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
         {
             switch (MenuConfig.BurstMenu["Mode"].Value)
             {
-                case 0: return Maths.PercentDmg(target, Dmg.Damage(target)) > 135 ? BurstPattern.Execution : BurstPattern.TheShy;
+                case 0: return Maths.Percent(target.Health, Dmg.Damage(target)) > 135 ? BurstPattern.Execution : BurstPattern.TheShy;
                 case 1: return BurstPattern.TheShy;
                 case 2: return BurstPattern.Execution;
                 default: throw new ArgumentOutOfRangeException();

@@ -7,7 +7,7 @@ using Aimtec.SDK.Extensions;
 
 namespace Adept_AIO.Champions.Azir.Update.Miscellaneous
 {
-    class Killsteal
+    internal class Killsteal
     {
         public static void OnUpdate()
         {

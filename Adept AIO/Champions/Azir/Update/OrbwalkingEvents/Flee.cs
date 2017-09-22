@@ -7,7 +7,7 @@ using Aimtec.SDK.Util;
 
 namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
 {
-    class Flee
+    internal class Flee
     {
         public static void OnKeyPressed()
         {

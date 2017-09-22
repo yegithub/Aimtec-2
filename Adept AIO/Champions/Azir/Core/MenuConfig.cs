@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Adept_AIO.Champions.Azir.Update.OrbwalkingEvents;
 using Adept_AIO.SDK.Delegates;
-using Adept_AIO.SDK.Junk;
+using Adept_AIO.SDK.Menu_Extension;
 using Adept_AIO.SDK.Unit_Extensions;
 using Aimtec.SDK.Menu;
 using Aimtec.SDK.Menu.Components;
@@ -10,7 +10,7 @@ using Aimtec.SDK.Util;
 
 namespace Adept_AIO.Champions.Azir.Core
 {
-    class MenuConfig
+    internal class MenuConfig
     {
         public static Menu Combo,
                            InsecMenu,

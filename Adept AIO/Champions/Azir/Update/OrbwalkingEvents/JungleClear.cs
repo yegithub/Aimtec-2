@@ -5,7 +5,7 @@ using Aimtec.SDK.Extensions;
 
 namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
 {
-    class JungleClear
+    internal class JungleClear
     {
         public static void OnUpdate()
         {

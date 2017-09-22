@@ -9,7 +9,7 @@ using Aimtec.SDK.Extensions;
 
 namespace Adept_AIO.Champions.Azir.Drawings
 {
-    class DrawManager
+    internal class DrawManager
     {
         public static void OnPresent()
         {

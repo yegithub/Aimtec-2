@@ -7,7 +7,7 @@ using Aimtec;
 
 namespace Adept_AIO.Champions.Azir
 {
-    class Azir
+    internal class Azir
     {
         public static void Init()
         {

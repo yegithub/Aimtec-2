@@ -5,7 +5,7 @@ using Spell = Aimtec.SDK.Spell;
 
 namespace Adept_AIO.Champions.Azir.Core
 {
-    class SpellConfig
+    internal class SpellConfig
     {
         public static Spell Q, W, E, R;
      

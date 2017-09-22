@@ -4,7 +4,7 @@ using Geometry = Adept_AIO.SDK.Geometry_Related.Geometry;
 
 namespace Adept_AIO.Champions.Azir.Core
 {
-    class AzirHelper
+    internal class AzirHelper
     {
         public static OrbwalkerMode JumpMode, InsecMode;
         public static Geometry.Rectangle Rect;

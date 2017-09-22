@@ -1,12 +1,10 @@
-﻿using Aimtec;
-
-namespace Adept_AIO.SDK.Generic
+﻿namespace Adept_AIO.SDK.Generic
 {
-    class Maths
+    internal class Maths
     {
-        public static int PercentDmg(Obj_AI_Base target, double dmg)
+        public static int Percent(double value1, double value2, int multiplier = 100)
         {
-            return (int)(dmg / target.Health * 100);
+            return (int)(value2 / value1 * multiplier);
         }
     }
 }
