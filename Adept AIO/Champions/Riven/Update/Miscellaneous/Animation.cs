@@ -1,7 +1,12 @@
-﻿using Adept_AIO.Champions.Riven.Core;
+﻿using System;
+using System.Diagnostics;
+using System.Threading;
+using Adept_AIO.Champions.Riven.Core;
+using Adept_AIO.SDK.Generic;
 using Adept_AIO.SDK.Unit_Extensions;
 using Aimtec;
 using Aimtec.SDK.Orbwalking;
+using Aimtec.SDK.Util;
 
 namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 {
@@ -18,8 +23,10 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                 return;
             }
 
+            Global.Orbwalker.ResetAutoAttackTimer();
+            Global.Orbwalker.AttackingEnabled = false;
             Global.Orbwalker.Move(Game.CursorPos);
-      
+
             LastReset = Game.TickCount;
             DidRecentlyCancel = true;
         }
@@ -27,9 +34,9 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
         public static float GetDelay()
         {
             var level  =  Global.Player.Level;
-            var delay  =  Extensions.CurrentQCount == 1 ? 435f : 400f; // Temp until API fixed (?)
+            float delay  =  Extensions.CurrentQCount == 1 ? 385 : 340; // Temp until API fixed (?)
                 delay -=  3.333f * level;
-
+            DebugConsole.Print($"Delay: {delay} | Q: {Extensions.CurrentQCount}", ConsoleColor.Red);
             return delay; 
         }
 

@@ -24,7 +24,12 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
             {
                 return;
             }
-        
+
+            if (args.SpellData.DisplayName.Contains("BasicAttack"))
+            {
+                Extensions.DidJustAuto = true;
+            }
+
             switch (args.SpellData.Name)
             {
                 case "RivenTriCleave":
@@ -32,7 +37,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                     _canUseQ = false;
                     _canWQ = false;
                     _serverPosition = false;
-                  
+                    Animation.Reset();
                     break;
                 case "RivenMartyr":
                     _canUseW = false;
@@ -110,11 +115,11 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
             _canWQ = true;
         }
 
-        private static readonly string[] InvulnerableList = { "FioraW", "kindrednodeathbuff", "Undying Rage", "JudicatorIntervention" };
+        private static readonly string[] InvulnerableSpells = { "FioraW", "kindrednodeathbuff", "Undying Rage", "JudicatorIntervention" };
 
         public static void CastR2(Obj_AI_Base target)
         {
-            if (target.ValidActiveBuffs().Any(buff => InvulnerableList.Contains(buff.Name)))
+            if (target.ValidActiveBuffs().Any(buff => InvulnerableSpells.Contains(buff.Name)))
             {
                 return;
             }

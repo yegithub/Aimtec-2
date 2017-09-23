@@ -3008,6 +3008,8 @@ namespace Adept_AIO.SDK.Spell_DB
 
             #endregion Morgana
 
+
+
             #region Nami
 
             Spells.Add(
@@ -4447,6 +4449,123 @@ namespace Adept_AIO.SDK.Spell_DB
                 });
 
             #endregion Viktor
+
+            #region Rakan
+
+            Spells.Add(new SpellData
+            {
+                ChampionName = "Rakan",
+                SpellName = "RakanQ",
+                Slot = SpellSlot.Q,
+                Type = SkillshotType.Line,
+                Delay = 250,
+                Range = 900,
+                Radius = 200,
+                MissileSpeed = 1850,
+                FixedRange = true,
+                AddHitbox = true,
+                DangerValue = 1,
+                IsDangerous = false,
+                MissileSpellName = "RakanQMis",
+                CollisionObjects = new[] { CollisionableObjects.YasuoWall, CollisionableObjects.Heroes, CollisionableObjects.Minions}
+            });
+
+            Spells.Add(new SpellData
+            {
+                ChampionName = "Rakan",
+                SpellName = "RakanW",
+                Slot = SpellSlot.W,
+                Type = SkillshotType.Circle,
+                Delay = 250,
+                Range = 600,
+                Radius = 250,
+                MissileSpeed = 1800,
+                FixedRange = true,
+                AddHitbox = true,
+                DangerValue = 2,
+                IsDangerous = false,
+                MissileSpellName = "RakanWCast",
+            });
+
+            #endregion
+
+            #region Kayn
+
+            Spells.Add(new SpellData
+            {
+                ChampionName = "Kayn",
+                SpellName = "KaynQ",
+                Slot = SpellSlot.Q,
+                Type = SkillshotType.Circle,
+                Delay = 250,
+                Range = 350,
+                Radius = 600,
+                MissileSpeed = 2400,
+                FixedRange = true,
+                AddHitbox = true,
+                DangerValue = 2,
+                IsDangerous = false,
+                MissileSpellName = "KaynQ", //?
+            });
+
+            Spells.Add(new SpellData
+            {
+                ChampionName = "Kayn",
+                SpellName = "KaynW",
+                Slot = SpellSlot.W,
+                Type = SkillshotType.Line,
+                Delay = 500,
+                Range = 750,
+                Radius = 120,
+                MissileSpeed = 1600,
+                FixedRange = true,
+                AddHitbox = true,
+                DangerValue = 2,
+                IsDangerous = false,
+                MissileSpellName = "KaynW"
+            });
+
+            #endregion
+
+            #region Ornn
+
+            Spells.Add(new SpellData
+            {
+                ChampionName = "Ornn",
+                SpellName = "OrnnQ",
+                Slot = SpellSlot.Q,
+                Type = SkillshotType.Line,
+                Delay = 250,
+                Range = 800,
+                Radius = 80,
+                MissileSpeed = 1800,
+                FixedRange = true,
+                AddHitbox = true,
+                DangerValue = 1,
+                IsDangerous = false,
+                MissileSpellName = "OrnnQ",
+                CollisionObjects = new[] { CollisionableObjects.Heroes, CollisionableObjects.Minions }
+            });
+
+            Spells.Add(new SpellData
+            {
+                ChampionName = "Ornn",
+                SpellName = "OrnnE",
+                Slot = SpellSlot.E,
+                Type = SkillshotType.Line,
+                Delay = 250,
+                Range = 800,
+                Radius = 140,
+                MissileSpeed = 1600,
+                FixedRange = true,
+                AddHitbox = true,
+                DangerValue = 2,
+                IsDangerous = false,
+                MissileSpellName = "OrnnE",
+                CollisionObjects = new[] { CollisionableObjects.Minions }
+            });
+
+            #endregion
 
             #region Xayah
 
