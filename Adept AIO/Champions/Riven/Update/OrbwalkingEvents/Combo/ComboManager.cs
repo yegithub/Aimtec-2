@@ -89,7 +89,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents.Combo
                 case 2: return ComboPattern.FastCombo;
             }
 
-            return ComboPattern.MaximizeDmg; //Dmg.Damage(target) / target.Health >= 70 ? ComboPattern.Normal : ComboPattern.MaximizeDmg;
+            return ComboPattern.MaximizeDmg;
         }
 
         private static void ChaseTarget()

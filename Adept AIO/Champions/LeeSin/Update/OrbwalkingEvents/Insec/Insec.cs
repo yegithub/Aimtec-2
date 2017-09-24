@@ -83,7 +83,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Insec
         && Global.Player.Distance(x) <= _spellConfig.Q.Range 
         && x.Distance(GetInsecPosition()) < Global.Player.Distance(GetInsecPosition()));
 
-        private Obj_AI_Base LastQUnit;
+        private Obj_AI_Base _lastQUnit;
 
         // R Flash
         public void OnProcessSpellCast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
@@ -141,7 +141,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Insec
                 Q();
             }
 
-            if (!CanWardJump || Game.TickCount - _spellConfig.LastQ1CastAttempt <= 900 || LastQUnit != null && _spellConfig.IsQ2() && InsecInRange(LastQUnit.ServerPosition))
+            if (!CanWardJump || Game.TickCount - _spellConfig.LastQ1CastAttempt <= 900 || _lastQUnit != null && _spellConfig.IsQ2() && InsecInRange(_lastQUnit.ServerPosition))
             {
                 return;
             }
@@ -163,11 +163,6 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Insec
 
         private void Q()
         {
-            if (InsecInRange(Global.Player.ServerPosition) && CanWardJump)
-            {
-                return;
-            }
-
             if (_spellConfig.IsQ2())
             {
                 _spellConfig.Q.Cast();
@@ -181,7 +176,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Insec
                         return;
                     }
 
-                    LastQUnit = Target;
+                    _lastQUnit = Target;
 
                     if (_spellConfig.Q.GetPrediction(Target).CollisionObjects.Count == 1)
                     {
@@ -195,7 +190,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Insec
                     return;
                 }
 
-                LastQUnit = EnemyObject;
+                _lastQUnit = EnemyObject;
                 _spellConfig.Q.Cast(EnemyObject.ServerPosition);
             }
         }

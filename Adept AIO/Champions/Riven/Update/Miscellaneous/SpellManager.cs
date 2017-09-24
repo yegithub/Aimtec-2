@@ -13,7 +13,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
     {
         private static bool _canUseQ;
         private static bool _canUseW;
-        private static bool _canWQ;
+        private static bool _canWq;
 
         private static Obj_AI_Base _unit;
         private static bool _serverPosition;
@@ -35,7 +35,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                 case "RivenTriCleave":
                     Extensions.LastQCastAttempt = Game.TickCount;
                     _canUseQ = false;
-                    _canWQ = false;
+                    _canWq = false;
                     _serverPosition = false;
                     Animation.Reset();
                     break;
@@ -59,7 +59,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                 return;
             }
 
-            if (_canWQ)
+            if (_canWq)
             {
                 SpellConfig.W.Cast();
                 Global.Player.SpellBook.CastSpell(SpellSlot.Q, _unit);
@@ -109,10 +109,10 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
             _unit = target;  
         }
 
-        public static void CastWQ(Obj_AI_Base target)
+        public static void CastWq(Obj_AI_Base target)
         {
             _unit = target;
-            _canWQ = true;
+            _canWq = true;
         }
 
         private static readonly string[] InvulnerableSpells = { "FioraW", "kindrednodeathbuff", "Undying Rage", "JudicatorIntervention" };

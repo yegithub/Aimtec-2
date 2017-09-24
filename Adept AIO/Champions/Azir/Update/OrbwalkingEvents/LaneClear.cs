@@ -27,9 +27,9 @@ namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
 
                 var soldier = SoldierHelper.GetSoldierNearestTo(minion.ServerPosition);
 
-                AzirHelper.Rect = new Geometry.Rectangle(soldier.To2D(), minion.ServerPosition.To2D(), SpellConfig.Q.Width + 65);
+                AzirHelper.Rect = new Geometry.Rectangle(Vector3Extensions.To2D(soldier), Vector3Extensions.To2D(minion.ServerPosition), SpellConfig.Q.Width + 65);
 
-                var count = GameObjects.EnemyMinions.Count(x => AzirHelper.Rect.IsInside(x.ServerPosition.To2D()));
+                var count = GameObjects.EnemyMinions.Count(x => AzirHelper.Rect.IsInside(Vector3Extensions.To2D(x.ServerPosition)));
 
                 if (count >= MenuConfig.Lane["QHit"].Value)
                 {
@@ -46,7 +46,7 @@ namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
                     return;
                 }
 
-                var circle = new Geometry.Circle(minion.ServerPosition.To2D(), 280);
+                var circle = new Geometry.Circle(Vector3Extensions.To2D(minion.ServerPosition), 280);
 
                 if (GameObjects.EnemyMinions.Count(x => circle.Center.Distance(x.ServerPosition) <= circle.Radius) >= 3 && Global.Player.GetSpell(SpellSlot.W).Ammo > 1)
                 {
@@ -58,9 +58,9 @@ namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
             {
                 foreach (var soldier in SoldierHelper.Soldiers)
                 {
-                    AzirHelper.Rect = new Geometry.Rectangle(Global.Player.ServerPosition.To2D(), soldier.ServerPosition.To2D(), SpellConfig.E.Width);
+                    AzirHelper.Rect = new Geometry.Rectangle(Vector3Extensions.To2D(Global.Player.ServerPosition), Vector3Extensions.To2D(soldier.ServerPosition), SpellConfig.E.Width);
 
-                    var count = GameObjects.EnemyMinions.Count(x => AzirHelper.Rect.IsInside(x.ServerPosition.To2D()));
+                    var count = GameObjects.EnemyMinions.Count(x => AzirHelper.Rect.IsInside(Vector3Extensions.To2D(x.ServerPosition)));
                     if (count >= MenuConfig.Lane["EHit"].Value)
                     {
                         SpellConfig.E.Cast(soldier.ServerPosition);

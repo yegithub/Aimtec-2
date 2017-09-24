@@ -20,7 +20,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents.Combo
 
             if (SpellConfig.Q.Ready && SpellConfig.W.Ready)
             {
-                SpellManager.CastWQ(target);
+                SpellManager.CastWq(target);
             }
             else
             {

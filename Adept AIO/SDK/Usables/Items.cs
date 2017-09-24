@@ -27,7 +27,7 @@ namespace Adept_AIO.SDK.Usables
             return slot != null;
         }
 
-        public static void CastTiamat(bool cancelAA = true)
+        public static void CastTiamat(bool cancelAa = true)
         {
             SpellSlot? slot = null;
           
@@ -47,7 +47,7 @@ namespace Adept_AIO.SDK.Usables
             Global.Player.SpellBook.CastSpell((SpellSlot) slot);
             TiamatCastTime = Game.TickCount;
 
-            if (cancelAA)
+            if (cancelAa)
             {
                 Global.Orbwalker.ResetAutoAttackTimer();
             }

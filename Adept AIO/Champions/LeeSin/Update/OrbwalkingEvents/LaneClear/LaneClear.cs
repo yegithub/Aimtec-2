@@ -28,12 +28,12 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.LaneClear
             var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(Global.Player) < Global.Player.AttackRange + x.BoundingRadius &&
                                                                       x.Health > Global.Player.GetAutoAttackDamage(x));
 
-            if (minion == null || !CheckEnabled && Global.Player.CountEnemyHeroesInRange(2000) >= 1)
+            if (minion == null || CheckEnabled && Global.Player.CountEnemyHeroesInRange(2000) >= 1)
             {
                 return;
             }
 
-            if (_spellConfig.E.Ready && EEnabled && minion.Health < Global.Player.GetSpellDamage(minion, SpellSlot.E))
+            if (_spellConfig.E.Ready && EEnabled)
             {
                 if (Items.CanUseTiamat())
                 {
