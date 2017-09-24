@@ -69,7 +69,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.Miscellaneous
                         break;
                 }
 
-                _jungleClear.StealMobs();
+                _jungleClear.SmiteMob();
             }
             catch (Exception e)
             {

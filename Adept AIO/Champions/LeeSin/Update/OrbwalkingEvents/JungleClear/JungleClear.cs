@@ -33,12 +33,50 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.JungleClear
         {
             var mob = mobPre as Obj_AI_Minion;
 
-            if (mob == null || mob.Health < Global.Player.GetAutoAttackDamage(mob))
+            if (mob == null)
             {
                 return;
             }
 
-            if (Global.Player.Level <= 8)
+            var count = GameObjects.Jungle.Count(x => x.Distance(Global.Player) <= _spellConfig.Q.Range / 2f);
+
+            if (count <= 1 && mob.Health < Global.Player.GetAutoAttackDamage(mob))
+            {
+                return;
+            }
+
+            if (Global.Player.Level <= 4)
+            {
+                if (_spellConfig.PassiveStack() >= 1)
+                {
+                    return;
+                }
+
+                if (_spellConfig.W.Ready && WEnabled && !_spellConfig.IsQ2())
+                {
+                    _spellConfig.W.CastOnUnit(Global.Player);
+                }
+                else if (_spellConfig.E.Ready && EEnabled && !_spellConfig.IsQ2())
+                {
+                    if (_spellConfig.IsFirst(_spellConfig.E))
+                    {
+                        if (Items.CanUseTiamat())
+                        {
+                            Items.CastTiamat(false);
+                            DelayAction.Queue(50, () => _spellConfig.E.Cast(mob));
+                        }
+                        else
+                        {
+                            _spellConfig.E.Cast(mob);
+                        }
+                    }
+                    else
+                    {
+                        _spellConfig.E.Cast();
+                    }
+                }
+            }
+            else if (Global.Player.Level <= 8)
             {
                 if (_spellConfig.PassiveStack() >= 1)
                 {
@@ -109,7 +147,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.JungleClear
                 return;
             }
 
-            if (_spellConfig.Q.Ready && _spellConfig.IsQ2() && (_spellConfig.QAboutToEnd || Global.Player.GetSpellDamage(mob, SpellSlot.Q, DamageStage.SecondCast) > mob.Health))
+            if (_spellConfig.Q.Ready && _spellConfig.IsQ2() && (_spellConfig.QAboutToEnd || Global.Player.GetSpellDamage(mob, SpellSlot.Q, DamageStage.SecondCast) + Global.Player.GetAutoAttackDamage(mob) > mob.Health))
             {
                 _spellConfig.Q.CastOnUnit(mob);
             }
@@ -145,11 +183,11 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.JungleClear
            return SummonerSpells.SmiteMonsters() + (_spellConfig.IsQ2() ? Global.Player.GetSpellDamage(mob, SpellSlot.Q, DamageStage.SecondCast) : 0);
         }
 
-        private readonly string[] _smiteAlways = { "SRU_Dragon_Air", "SRU_Dragon_Fire", "SRU_Dragon_Earth", "SRU_Dragon_Water", "SRU_Dragon_Elder", "SRU_Baron", "SRU_RiftHerald" };
+        private readonly string[] _smiteAlways   = { "SRU_Dragon_Air", "SRU_Dragon_Fire", "SRU_Dragon_Earth", "SRU_Dragon_Water", "SRU_Dragon_Elder", "SRU_Baron", "SRU_RiftHerald" };
         private readonly string[] _smiteOptional = {"Sru_Crab", "SRU_Razorbeak", "SRU_Krug", "SRU_Murkwolf", "SRU_Gromp", "SRU_Blue", "SRU_Red"};
         private float _q2Time;
 
-        public void StealMobs()
+        public void SmiteMob()
         {
             var smiteAbleMob = ObjectManager.Get<Obj_AI_Minion>().FirstOrDefault(x => x.Distance(Global.Player) < 1300);
 
@@ -157,27 +195,20 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.JungleClear
             {
                 if (smiteAbleMob.Health < StealDamage(smiteAbleMob))
                 {
-                    if (_smiteOptional.Contains(smiteAbleMob.UnitSkinName) && SummonerSpells.Ammo("Smite") <= 1 || 
-                        smiteAbleMob.UnitSkinName.ToLower().Contains("blue") && !BlueEnabled ||
-                        smiteAbleMob.UnitSkinName.ToLower().Contains("red") && Global.Player.HealthPercent() <= 75)
+                    if (_smiteOptional.Contains(smiteAbleMob.UnitSkinName) && Global.Player.HealthPercent() >= (SummonerSpells.Ammo("Smite") <= 1 ? 35 : 55) || 
+                        smiteAbleMob.UnitSkinName.ToLower().Contains("blue") && !BlueEnabled)
                     {
                         return;
-                    }
-
-                    if (_smiteOptional.Contains(smiteAbleMob.UnitSkinName) &&
-                        Global.Player.HealthPercent() >= 70)
-                    {
-                        return;
-                    }
-
-                    if (_spellConfig.IsQ2())
-                    {
-                        _spellConfig.Q.Cast();
                     }
 
                     if (SmiteEnabled && SummonerSpells.IsValid(SummonerSpells.Smite))
                     {
                         SummonerSpells.Smite.CastOnUnit(smiteAbleMob);
+                    }
+
+                    if (_spellConfig.IsQ2() && _spellConfig.Q.Ready)
+                    {
+                        _spellConfig.Q.Cast();
                     }
                 }
             }

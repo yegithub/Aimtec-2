@@ -8,6 +8,6 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.JungleClear
 
         void OnUpdate();
 
-        void StealMobs();
+        void SmiteMob();
     }
 }
