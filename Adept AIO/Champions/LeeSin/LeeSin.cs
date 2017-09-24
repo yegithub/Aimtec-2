@@ -96,6 +96,7 @@ namespace Adept_AIO.Champions.LeeSin
                 insec.Bk = args.GetNewValue<MenuKeyBind>().Value;
                 Temp.IsBubbaKush = args.GetNewValue<MenuKeyBind>().Value;
             };
+         
             insecF.OnValueChanged += (sender, args) => insec.FlashEnabled = args.GetNewValue<MenuBool>().Value;
             insecObject.OnValueChanged += (sender, args) => insec.ObjectEnabled = args.GetNewValue<MenuBool>().Value;
             insecQLast.OnValueChanged += (sender, args) => insec.QLast = args.GetNewValue<MenuBool>().Value;

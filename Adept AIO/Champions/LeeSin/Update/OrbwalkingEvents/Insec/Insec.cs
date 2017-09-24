@@ -18,7 +18,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Insec
     {
         public bool Enabled { get; set; }
         public bool FlashEnabled { get; set; }
-        public bool Bk { get; set; } = false;
+        public bool Bk { get; set; }
         public bool QLast { get; set; }
         public bool ObjectEnabled { get; set; }
 
@@ -39,6 +39,8 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Insec
         private bool FlashReady => SummonerSpells.IsValid(SummonerSpells.Flash) && FlashEnabled;
 
         private bool CanWardJump => _spellConfig.W.Ready && _spellConfig.IsFirst(_spellConfig.W) && _wardTracker.IsWardReady();
+
+        private bool IsBK;
 
         private int InsecRange()
         {
@@ -66,8 +68,10 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Insec
         {
             if (Bk && _insecManager.BkPosition(Target) != Vector3.Zero)
             {
+                IsBK = true;
                 return _insecManager.BkPosition(Target);
             }
+            IsBK = false;
             return _insecManager.InsecPosition(Target);
         }
 
@@ -96,7 +100,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Insec
              ||  CanWardJump && !_wardTracker.DidJustWard
              ||  _wardTracker.DidJustWard
              || Global.Player.Distance(GetInsecPosition()) <= 215
-             || Target == null
+             || Target== null
              || args.SpellSlot != SpellSlot.R
              || Global.Player.Distance(GetInsecPosition()) <= 80)
             {
@@ -108,7 +112,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Insec
 
         public void OnKeyPressed()
         {
-            if (Target == null || !Enabled)
+            if (!Enabled || Target== null || Global.Player.Level < 6)
             {
                 return;
             }
@@ -119,9 +123,20 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Insec
           
             if (_spellConfig.R.Ready)
             {
-                if (Target.IsValidTarget(_spellConfig.R.Range) && (dist <= 125 || FlashReady && _insecManager.InsecKickValue == 1))
+                if (dist <= 125 || FlashReady && _insecManager.InsecKickValue == 1)
                 {
-                    _spellConfig.R.CastOnUnit(Target);
+                    if (IsBK)
+                    {
+                        var enemy = GameObjects.EnemyHeroes.FirstOrDefault(x => x.IsValidTarget(_spellConfig.R.Range));
+                        if (enemy != null)
+                        {
+                            _spellConfig.R.CastOnUnit(enemy);
+                        }
+                    }
+                    else if (Target.IsValidTarget(_spellConfig.R.Range))
+                    {
+                        _spellConfig.R.CastOnUnit(Target);
+                    }
                 }
 
                 if (_insecManager.InsecKickValue == 0 && FlashReady && GetInsecPosition().Distance(Global.Player) <= 500 && GetInsecPosition().Distance(Global.Player) > 215 && (!CanWardJump || _wardTracker.DidJustWard))

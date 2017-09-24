@@ -1,4 +1,5 @@
-﻿using Adept_AIO.SDK.Unit_Extensions;
+﻿using Adept_AIO.SDK.Geometry_Related;
+using Adept_AIO.SDK.Unit_Extensions;
 using Aimtec.SDK.Damage.JSON;
 
 namespace Adept_AIO.Champions.Ezreal.Update.Miscellaneous
@@ -13,7 +14,7 @@ namespace Adept_AIO.Champions.Ezreal.Update.Miscellaneous
     {
         public static void OnUpdate()
         {
-            var target = GameObjects.EnemyHeroes.FirstOrDefault(x => x.IsValidTarget(SpellConfig.Q.Range));
+            var target = GameObjects.EnemyHeroes.FirstOrDefault(x => x.IsValidTarget(5000));
 
             if (target == null)
             {
@@ -32,6 +33,7 @@ namespace Adept_AIO.Champions.Ezreal.Update.Miscellaneous
             
             if (SpellConfig.Q.Ready 
              && target.Health < Global.Player.GetSpellDamage(target, SpellSlot.Q)
+             && target.IsValidTarget(SpellConfig.Q.Range)
              && MenuConfig.Killsteal["Q"].Enabled)
             {
                 SpellConfig.Q.Cast(target);
@@ -51,11 +53,18 @@ namespace Adept_AIO.Champions.Ezreal.Update.Miscellaneous
                 SpellConfig.E.Cast(target);
             }
             else if (SpellConfig.R.Ready
-                     && (target.Health < Global.Player.GetSpellDamage(target, SpellSlot.R) || target.Health < Global.Player.GetSpellDamage(target, SpellSlot.R, DamageStage.AreaOfEffect))
+                     && target.Health < Global.Player.GetSpellDamage(target, SpellSlot.R)
                      && target.IsValidTarget(MenuConfig.Killsteal["Range"].Value)
                      && MenuConfig.Killsteal["Range"].Enabled
-                     && target.Distance(Global.Player) > Global.Player.AttackRange + 250)
+                     && target.Distance(Global.Player) > Global.Player.AttackRange + 275)
             {
+                var rectangle = new Geometry.Rectangle(Global.Player.ServerPosition.To2D(), target.ServerPosition.To2D(), SpellConfig.R.Width);
+                if (GameObjects.EnemyHeroes.Count(x => rectangle.IsInside(x.ServerPosition.To2D())) >= 2 &&
+                    target.Health > Global.Player.GetSpellDamage(target, SpellSlot.R, DamageStage.AreaOfEffect))
+                {
+                    return;
+                }
+
                 SpellConfig.R.Cast(target);
             }
         }

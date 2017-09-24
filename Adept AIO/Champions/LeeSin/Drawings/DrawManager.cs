@@ -60,25 +60,25 @@ namespace Adept_AIO.Champions.LeeSin.Drawings
             Render.WorldToScreen(Global.Player.ServerPosition, out var bkToggleV2);
             Render.Text("Bubba Kush: " + Temp.IsBubbaKush, new Vector2(bkToggleV2.X - 40, bkToggleV2.Y + 70), RenderTextFlags.Center, Temp.IsBubbaKush ? Color.White : Color.LightSlateGray);
 
-            var selected = Global.TargetSelector.GetSelectedTarget();
+            var target = Global.TargetSelector.GetSelectedTarget();
 
-            if (!PositionEnabled || selected == null)
+            if (!PositionEnabled || target == null)
             {
                 return;
             }
 
-            if (Temp.IsBubbaKush && _insecManager.BkPosition(selected) != Vector3.Zero)
+            if (Temp.IsBubbaKush && _insecManager.BkPosition(target) != Vector3.Zero)
             {
-                var bkPos = _insecManager.BkPosition(selected);
+                var bkPos = _insecManager.BkPosition(target);
                 Render.WorldToScreen(bkPos, out var bkScreen);
                 Render.Text("BK", bkScreen, RenderTextFlags.Center, Color.Orange);
 
-                var bkEndPos = selected.ServerPosition + (selected.ServerPosition - bkPos).Normalized() * 900;
+                var bkEndPos = target.ServerPosition;
                 Render.WorldToScreen(bkEndPos, out var bkEndPosV2);
                 Render.WorldToScreen(bkPos, out var bkPosV2);
 
-                var arrowLine1 = bkEndPosV2 + (bkPosV2 - bkEndPosV2).Normalized().Rotated( 40 * (float)Math.PI / 180) * selected.BoundingRadius;
-                var arrowLine2 = bkEndPosV2 + (bkPosV2 - bkEndPosV2).Normalized().Rotated(-40 * (float)Math.PI / 180) * selected.BoundingRadius;
+                var arrowLine1 = bkEndPosV2 + (bkPosV2 - bkEndPosV2).Normalized().Rotated( 40 * (float)Math.PI / 180) * target.BoundingRadius;
+                var arrowLine2 = bkEndPosV2 + (bkPosV2 - bkEndPosV2).Normalized().Rotated(-40 * (float)Math.PI / 180) * target.BoundingRadius;
 
                 Render.Line(bkEndPosV2, arrowLine1, Color.White);
                 Render.Line(bkEndPosV2, arrowLine2, Color.White);
@@ -86,16 +86,16 @@ namespace Adept_AIO.Champions.LeeSin.Drawings
 
                 Render.Circle(bkPos, 65, (uint)SegmentsValue, Color.Orange);
             }
-            else if(!_insecManager.InsecPosition(selected).IsZero)
+            else if(!_insecManager.InsecPosition(target).IsZero)
             {
-                var insecPos = _insecManager.InsecPosition(selected);
-                var targetEndPos = selected.ServerPosition + (selected.ServerPosition - insecPos).Normalized() * 900;
+                var insecPos = _insecManager.InsecPosition(target);
+                var targetEndPos = target.ServerPosition + (target.ServerPosition - insecPos).Normalized() * 900;
 
                 Render.WorldToScreen(targetEndPos, out var endPosV2);
                 Render.WorldToScreen(insecPos, out var startPosV2);
 
-                var arrowLine1 = endPosV2 + (startPosV2 - endPosV2).Normalized().Rotated( 40 * (float)Math.PI / 180) * selected.BoundingRadius;
-                var arrowLine2 = endPosV2 + (startPosV2 - endPosV2).Normalized().Rotated(-40 * (float)Math.PI / 180) * selected.BoundingRadius;
+                var arrowLine1 = endPosV2 + (startPosV2 - endPosV2).Normalized().Rotated( 40 * (float)Math.PI / 180) * target.BoundingRadius;
+                var arrowLine2 = endPosV2 + (startPosV2 - endPosV2).Normalized().Rotated(-40 * (float)Math.PI / 180) * target.BoundingRadius;
 
                 Render.Line(endPosV2, arrowLine1, Color.White);
                 Render.Line(endPosV2, arrowLine2, Color.White);
