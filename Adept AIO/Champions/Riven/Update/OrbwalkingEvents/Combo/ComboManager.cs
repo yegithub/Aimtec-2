@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using Adept_AIO.Champions.Riven.Core;
 using Adept_AIO.Champions.Riven.Update.Miscellaneous;
 using Adept_AIO.SDK.Generic;
@@ -8,17 +9,23 @@ using Adept_AIO.SDK.Usables;
 using Aimtec;
 using Aimtec.SDK.Damage;
 using Aimtec.SDK.Extensions;
+using Aimtec.SDK.Util;
 
 namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents.Combo
 {
     internal class ComboManager
     {
-        public static void OnPostAttack(Obj_AI_Base target)
+        public static void OnPostAttack()
         {
+            var target = GameObjects.EnemyHeroes.OrderBy(x => x.Distance(Global.Player)).FirstOrDefault();
+            if (target == null)
+            {
+                return;
+            }
             switch (Enums.ComboPattern)
             {
                 case ComboPattern.MaximizeDmg:
-                    MaximizeDmg.OnPostAttack(target);
+                    MaximizeDmg.OnPostAttack();
                     break;
 
                 case ComboPattern.Normal:
@@ -105,24 +112,19 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents.Combo
                 switch (MenuConfig.Combo["Chase"].Value)
                 {
                     case 1:
-                        if (target.Distance(Global.Player) <= Global.Player.AttackRange + SpellConfig.Q.Range && Extensions.CurrentQCount == 1)
+                        if (target.Distance(Global.Player) <= Global.Player.AttackRange + SpellConfig.Q.Range && Extensions.CurrentQCount == 1 &&
+                            target.Distance(Global.Player) > Global.Player.AttackRange)
                         {
-                            SpellManager.CastQ(target); // Bug: Will only cast Q when inside of Q range. CBA fix now
-                                                        // Todo: Add Q casting towards a Vector3
+                            SpellManager.CastQ(target, true);
+                                                       
                         }
                         break;
                     case 2:
-                        if (target.Distance(Global.Player) <= Global.Player.AttackRange + SpellConfig.E.Range)
-                        {
-                            SpellConfig.E.Cast(target.ServerPosition);
-                        }
-                        break;
-                    case 3:
                         if (target.Distance(Global.Player) <= Global.Player.AttackRange + SpellConfig.Q.Range + SpellConfig.E.Range
-                         && target.Distance(Global.Player) > Global.Player.AttackRange + SpellConfig.Q.Range)
+                         && target.Distance(Global.Player) > Global.Player.AttackRange + SpellConfig.Q.Range && SpellConfig.E.Ready && SpellConfig.Q.Ready && Extensions.CurrentQCount == 1)
                         {
                             SpellConfig.E.Cast(target.ServerPosition);
-                            SpellManager.CastQ(target);
+                         DelayAction.Queue(190, ()=> SpellManager.CastQ(target, true), new CancellationToken(false));
                         }
                         break;
                 }

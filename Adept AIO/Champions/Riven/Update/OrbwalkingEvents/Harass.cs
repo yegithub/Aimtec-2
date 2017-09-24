@@ -13,12 +13,12 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
     {
         public static void OnPostAttack()
         {
-            var target = Global.TargetSelector.GetTarget(1000);
+            var target = GameObjects.EnemyHeroes.OrderBy(x => x.Distance(Global.Player)).FirstOrDefault();
             if (target == null || !MenuConfig.Harass[target.ChampionName].Enabled)
             {
                 return;
             }
-            var antiPosition = GetDashPosition(target);
+          
             switch (Enums.Current)
             {
                 case HarassPattern.SemiCombo:

@@ -1,5 +1,7 @@
-﻿using Adept_AIO.Champions.Riven.Core;
+﻿using System.Linq;
+using Adept_AIO.Champions.Riven.Core;
 using Adept_AIO.Champions.Riven.Update.Miscellaneous;
+using Adept_AIO.SDK.Unit_Extensions;
 using Aimtec;
 using Aimtec.SDK.Extensions;
 
@@ -7,8 +9,14 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents.Combo
 {
     internal class MaximizeDmg
     {
-        public static void OnPostAttack(Obj_AI_Base target)
+        public static void OnPostAttack()
         {
+            var target = GameObjects.EnemyHeroes.FirstOrDefault(x => x.Distance(Global.Player) <= 600);
+            if (target == null)
+            {
+                return;
+            }
+
             if (SpellConfig.Q.Ready)
             {
                 SpellManager.CastQ(target);

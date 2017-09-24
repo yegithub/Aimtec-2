@@ -43,11 +43,11 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 
             if (shouldAddExtra)
             {
-                delay += 100;
+                delay += 150;
             }
 
             delay -=  3.333f * level;
-            DebugConsole.Print($"Delay: {delay} | Q: {Extensions.CurrentQCount}", ConsoleColor.Red);
+            //DebugConsole.Print($"Delay: {delay} | Q: {Extensions.CurrentQCount}", ConsoleColor.Red);
             return delay; 
         }
 

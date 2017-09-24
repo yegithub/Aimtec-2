@@ -16,7 +16,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
     {
         public static void OnPostAttack()
         {
-            var target = GameObjects.EnemyHeroes.FirstOrDefault(x => x.Distance(Global.Player) <= 600);
+            var target = GameObjects.EnemyHeroes.OrderBy(x => x.Distance(Global.Player)).FirstOrDefault();
             if (target == null)
             {
                 return;
@@ -28,10 +28,10 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
                     if (SpellConfig.R2.Ready)
                     {
                         SpellConfig.R2.Cast(target);
-                        DelayAction.Queue(250 + Game.Ping / 2, ()=> SpellManager.CastQ(target), new CancellationToken(false));
+                        //DelayAction.Queue(250 + Game.Ping / 2, ()=> SpellManager.CastQ(target), new CancellationToken(false));
                     }
 
-                    else if (SpellConfig.Q.Ready)
+                    if (SpellConfig.Q.Ready)
                     {
                         SpellManager.CastQ(target);
                     }

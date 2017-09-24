@@ -45,7 +45,7 @@ namespace Adept_AIO.Champions.Riven.Core
             {
                 new MenuList("Mode", "Combo Mode: ", new []{"Automatic", "Max Damage", "Fast"}, 0),
                 new MenuSlider("Change", "Fast Combo When DMG% (target) >= ", 70),
-                new MenuList("Chase", "Chase Mode", new []{"Disabled", "Q", "E", "E & Q"}, 0),
+                new MenuList("Chase", "Chase Mode", new []{"Disabled", "Q", "Q & E"}, 0),
                 new MenuBool("Flash", "Flash").SetToolTip("Will flash when an target is safely killable."),
                 new MenuSliderBool("Check", "Don't Use R1 If X (% HP) <=", true, 20),
                 new MenuList("R",  "R1 Mode: ",  new []{"Never", "Always", "Killable"}, 2),

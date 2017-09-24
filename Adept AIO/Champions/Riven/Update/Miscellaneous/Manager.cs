@@ -83,7 +83,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                 switch (Global.Orbwalker.Mode)
                 {
                     case OrbwalkingMode.Combo:
-                        ComboManager.OnPostAttack(target);
+                        ComboManager.OnPostAttack();
                         break;
                     case OrbwalkingMode.Mixed:
                         Harass.OnPostAttack();
@@ -96,7 +96,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                         }
                         else if (args.Target.IsBuilding() && SpellConfig.Q.Ready)
                         {
-                            SpellConfig.Q.Cast(Global.Player.ServerPosition.Extend(Game.CursorPos, 400));
+                            SpellConfig.Q.Cast(Global.Player.ServerPosition.Extend(args.Target.ServerPosition, 100));
                         }
                         break;
                 }
