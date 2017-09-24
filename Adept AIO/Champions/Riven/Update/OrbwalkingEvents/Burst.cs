@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 using Adept_AIO.Champions.Riven.Core;
 using Adept_AIO.Champions.Riven.Update.Miscellaneous;
@@ -13,27 +14,23 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
 {
     internal class Burst
     {
-        public static void OnPostAttack(Obj_AI_Base target)
+        public static void OnPostAttack()
         {
+            var target = GameObjects.EnemyHeroes.FirstOrDefault(x => x.Distance(Global.Player) <= 600);
+            if (target == null)
+            {
+                return;
+            }
             switch (Enums.BurstPattern)
             {
                 case BurstPattern.TheShy:
 
                     if (SpellConfig.R2.Ready)
                     {
-                        SpellConfig.R2.CastOnUnit(target);
-
-                        DelayAction.Queue(250, () =>
-                        {
-                            SpellManager.CastQ(target);
-                        });
-
-                        DelayAction.Queue(500, () =>
-                        {
-                            Global.Orbwalker.ResetAutoAttackTimer();
-                            Global.Orbwalker.AttackingEnabled = true;
-                        }, new CancellationToken(false));
+                        SpellConfig.R2.Cast(target);
+                        DelayAction.Queue(250 + Game.Ping / 2, ()=> SpellManager.CastQ(target), new CancellationToken(false));
                     }
+
                     else if (SpellConfig.Q.Ready)
                     {
                         SpellManager.CastQ(target);

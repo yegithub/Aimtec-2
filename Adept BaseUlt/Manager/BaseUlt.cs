@@ -287,7 +287,7 @@ namespace Adept_BaseUlt.Manager
                 return 0;
             }
 
-            var hpReg = _target.BaseHPRegenRate;
+            var hpReg = _target.HPRegenRate;
             var invisible = lastEnemyChecked.FirstOrDefault(x => x.NetworkId == _target.NetworkId);
 
             var final = _target.Health + (hpReg * (invisible?.LifetimeTicks / 10000f ?? 0f) + TravelTime(GetFountainPos(_target)) / 1000);

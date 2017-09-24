@@ -25,11 +25,6 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                 return;
             }
 
-            if (args.SpellData.DisplayName.Contains("BasicAttack"))
-            {
-                Extensions.DidJustAuto = true;
-            }
-
             switch (args.SpellData.Name)
             {
                 case "RivenTriCleave":
@@ -81,8 +76,8 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                 }
                 else
                 {
-                    Global.Player.SpellBook.CastSpell(SpellSlot.Q, _unit);
                     Extensions.DidJustAuto = false;
+                    Global.Player.SpellBook.CastSpell(SpellSlot.Q, _unit);
                 }
             }
 

@@ -23,8 +23,9 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 
                 if (Animation.DidRecentlyCancel)
                 {
-                    if (Game.TickCount - Animation.LastReset >= Animation.GetDelay())
+                    if (Game.TickCount - Extensions.LastQCastAttempt >= Animation.GetDelay())
                     {
+                        Global.Orbwalker.ResetAutoAttackTimer();
                         Global.Orbwalker.AttackingEnabled = true;
                         Animation.DidRecentlyCancel = false;
                     }
@@ -68,16 +69,14 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
         {
             if (Game.TickCount - Extensions.LastQCastAttempt < 400 + Game.Ping / 2f)
             {
-                Extensions.DidJustAuto = false;
                 return;
             }
-            Extensions.DidJustAuto = true;
 
             var target = args.Target as Obj_AI_Base;
 
             if (MenuConfig.BurstMode.Active)
             {
-                Burst.OnPostAttack(target);
+                Burst.OnPostAttack();
             }
             else
             {
