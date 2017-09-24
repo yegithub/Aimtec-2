@@ -127,7 +127,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Insec
                 {
                     if (IsBKActive)
                     {
-                        var enemy = GameObjects.EnemyHeroes.FirstOrDefault(x => x.IsValidTarget(_spellConfig.R.Range));
+                        var enemy = GameObjects.EnemyHeroes.FirstOrDefault(x => x.IsValidTarget(_spellConfig.R.Range) && x.NetworkId != Target.NetworkId);
                         if (enemy != null)
                         {
                             _spellConfig.R.CastOnUnit(enemy);
