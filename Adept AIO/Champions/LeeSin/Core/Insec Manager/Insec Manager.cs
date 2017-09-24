@@ -38,7 +38,7 @@ namespace Adept_AIO.Champions.LeeSin.Core.Insec_Manager
                 return Vector3.Zero;
             }
 
-            var secondEnemy = GameObjects.EnemyHeroes.FirstOrDefault(x => x.NetworkId != target.NetworkId && x.Distance(target) <= _spellConfig.R2.Range);
+            var secondEnemy = GameObjects.EnemyHeroes.FirstOrDefault(x => x.NetworkId != target.NetworkId && x.Distance(target) <= _spellConfig.R2.Range + 100);
           
             if (secondEnemy == null)
             {
