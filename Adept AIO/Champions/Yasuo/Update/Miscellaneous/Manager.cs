@@ -1,5 +1,7 @@
-﻿using Adept_AIO.Champions.Yasuo.Core;
+﻿using System;
+using Adept_AIO.Champions.Yasuo.Core;
 using Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents;
+using Adept_AIO.SDK.Generic;
 using Adept_AIO.SDK.Unit_Extensions;
 using Aimtec;
 using Aimtec.SDK.Orbwalking;
@@ -54,8 +56,8 @@ namespace Adept_AIO.Champions.Yasuo.Update.Miscellaneous
             {
                 return;
             }
-
-            if (sender.IsEnemy && buff.Type == BuffType.Knockup)
+          
+            if (sender.IsEnemy && (buff.Type == BuffType.Knockup || buff.Type == BuffType.Knockback))
             {
                 KnockUpHelper.Sender = sender;
                 KnockUpHelper.TimeLeftOnKnockup = Game.TickCount;
@@ -81,8 +83,8 @@ namespace Adept_AIO.Champions.Yasuo.Update.Miscellaneous
             {
                 return;
             }
-
-            if (sender.IsEnemy && buff.Type == BuffType.Knockup)
+           
+            if (sender.IsEnemy && (buff.Type == BuffType.Knockup || buff.Type == BuffType.Knockback))
             {
                 KnockUpHelper.Sender = null;
                 KnockUpHelper.TimeLeftOnKnockup = 0;

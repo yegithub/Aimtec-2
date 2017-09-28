@@ -17,7 +17,7 @@ namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
                 return;
             }
 
-            var dist = target.Distance(Global.Player) - Global.Player.BoundingRadius - target.BoundingRadius;
+            var dist = target.Distance(Global.Player);
 
             if (SpellConfig.E.Ready && MenuConfig.Combo["E"].Enabled)
             {
@@ -44,6 +44,11 @@ namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
 
             if (SpellConfig.Q.Ready && MenuConfig.Combo["Q"].Enabled && dist < SpellConfig.Q.Range + 200)
             {
+                if (SoldierHelper.Soldiers.All(soldier => soldier.Distance(target) <= 200))
+                {
+                    return;
+                }
+
                 if (SoldierHelper.Soldiers.Count >= MenuConfig.Combo["QCount"].Value)
                 {
                     SpellConfig.CastQ(target, MenuConfig.Combo["Extend"].Enabled);

@@ -51,7 +51,7 @@ namespace Adept_AIO.Champions.Yasuo.Drawings
                 Render.Text("Q Mode: " + Extension.CurrentMode + "- Range: " + SpellConfig.Q.Range, new Vector2(temp.X - 55, temp.Y + 40), RenderTextFlags.Center, Color.White);
             }
 
-            if (SpellConfig.E.Ready)
+            if (SpellConfig.E.Ready && MenuConfig.Drawings["Path"].Enabled)
             {
                 if (MinionHelper.ExtendedMinion.IsZero || MinionHelper.ExtendedTarget.IsZero)
                 {

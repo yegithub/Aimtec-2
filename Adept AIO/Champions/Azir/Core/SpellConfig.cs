@@ -11,10 +11,10 @@ namespace Adept_AIO.Champions.Azir.Core
      
         public static void Load()
         {
-            Q = new Spell(SpellSlot.Q, 875);
+            Q = new Spell(SpellSlot.Q, 720);
             Q.SetSkillshot(0.25f, 70, 1600, false, SkillshotType.Line, false, HitChance.VeryHigh);
 
-            W = new Spell(SpellSlot.W, 450);
+            W = new Spell(SpellSlot.W, 500);
           
             E = new Spell(SpellSlot.E, 1100);
             E.SetSkillshot(0.25f, 100, 1700, false, SkillshotType.Line);

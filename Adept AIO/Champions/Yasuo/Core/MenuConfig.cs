@@ -94,6 +94,7 @@ namespace Adept_AIO.Champions.Yasuo.Core
                 new MenuSlider("Segments", "Segments", 100, 100, 200).SetToolTip("Smoothness of the circles"),
                 new MenuBool("Dmg", "Damage"),
                 new MenuBool("R", "Draw R Range"),
+                new MenuBool("Path", "Draw Minion Path"),
                 new MenuBool("Range", "Draw Minion Search Range"),
                 new MenuBool("Debug", "Debug")
             };
