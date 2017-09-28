@@ -27,7 +27,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
                 SpellManager.CastW(mob);
             }
 
-            if (SpellConfig.E.Ready && MenuConfig.Jungle["E"].Enabled)
+            if (SpellConfig.E.Ready && MenuConfig.Jungle["E"].Enabled && Global.Player.Level <= 4)
             {
                 SpellConfig.E.Cast(mob.ServerPosition);
             }
@@ -35,6 +35,16 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
 
         public static void OnUpdate()
         {
+
+            if (SpellConfig.E.Ready && MenuConfig.Jungle["E"].Enabled && Global.Player.Level > 4)
+            {
+                var mob = GameObjects.Jungle.FirstOrDefault(x => x.IsValidTarget() && x.MaxHealth > 10 && x.Distance(Global.Player) <= Extensions.EngageRange);
+                if (mob != null)
+                {
+                    SpellConfig.E.Cast(mob.ServerPosition);
+                }
+            }
+
             if (SpellConfig.Q.Ready)
             {
                 var legendary = GameObjects.JungleLegendary.FirstOrDefault(x => x.Health < Global.Player.GetSpellDamage(x, SpellSlot.Q));

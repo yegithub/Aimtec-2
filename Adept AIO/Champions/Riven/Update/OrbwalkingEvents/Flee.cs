@@ -15,9 +15,21 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
     {
         public static void OnKeyPressed()
         {
-            if (MenuConfig.Miscellaneous["Walljump"].Enabled &&
-                Global.Player.CountEnemyHeroesInRange(2000) == 0)
+            if (MenuConfig.Miscellaneous["Walljump"].Enabled && Global.Player.CountEnemyHeroesInRange(2000) == 0)
             {
+                if (MenuConfig.Miscellaneous["Force"].Enabled && Extensions.CurrentQCount != 3)
+                {
+                    switch (Extensions.CurrentQCount)
+                    {
+                        case 2:
+                            DelayAction.Queue(250, () => Global.Player.SpellBook.CastSpell(SpellSlot.Q, Game.CursorPos), new CancellationToken(false));
+                            break;
+                        default:
+                            Global.Player.SpellBook.CastSpell(SpellSlot.Q, Game.CursorPos);
+                            break;
+                    }
+                }
+
                 if (Extensions.CurrentQCount != 3)
                 {
                     return;

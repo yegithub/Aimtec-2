@@ -55,7 +55,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
             //    }
             //}
 
-            DebugConsole.Print($"TIME LEFT: {KnockUpHelper.TimeLeftOnKnockup - Game.TickCount}");
+            DebugConsole.Write($"TIME LEFT: {KnockUpHelper.TimeLeftOnKnockup - Game.TickCount}");
 
             if (Game.TickCount - KnockUpHelper.TimeLeftOnKnockup >= 500 &&
                 Game.TickCount - KnockUpHelper.TimeLeftOnKnockup <= 4000 - Game.Ping / 2)

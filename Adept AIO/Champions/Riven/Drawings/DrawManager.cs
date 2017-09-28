@@ -50,6 +50,11 @@ namespace Adept_AIO.Champions.Riven.Drawings
 
             if (MenuConfig.Drawings["Mouse"].Enabled && Global.Orbwalker.Mode != OrbwalkingMode.None)
             {
+                if (!SpellConfig.Q.Ready && Extensions.CurrentQCount == 1)
+                {
+                    return;
+                }
+
                 var temp = Global.Orbwalker.GetOrbwalkingTarget();
                 if (temp != null && temp.IsHero && temp.Distance(Global.Player) > Global.Player.AttackRange - 100)
                 {

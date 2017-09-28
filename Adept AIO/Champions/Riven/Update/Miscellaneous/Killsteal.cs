@@ -25,11 +25,11 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
             {
                 var killable = target.Health <= Global.Player.GetSpellDamage(target, SpellSlot.R) 
                             || target.Health <= Global.Player.GetSpellDamage(target, SpellSlot.R) +
-                               Global.Player.GetAutoAttackDamage(target) && target.Distance(Global.Player) <= Global.Player.AttackRange;
+                               Global.Player.GetAutoAttackDamage(target) && target.Distance(Global.Player) <= Global.Player.AttackRange + 65;
 
                 if (killable)
                 {
-                    SpellConfig.R2.Cast(target);
+                   SpellManager.CastR2(target);
                 }
             }
             else if (SpellConfig.W.Ready

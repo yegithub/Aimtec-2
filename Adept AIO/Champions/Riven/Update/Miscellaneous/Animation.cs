@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Threading;
 using Adept_AIO.Champions.Riven.Core;
 using Adept_AIO.SDK.Generic;
 using Adept_AIO.SDK.Unit_Extensions;
+using Adept_AIO.SDK.Usables;
 using Aimtec;
 using Aimtec.SDK.Extensions;
 using Aimtec.SDK.Orbwalking;
+using Aimtec.SDK.Util;
 
 namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 {
@@ -12,7 +15,8 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
     {
         public static float LastReset;
         public static bool DidRecentlyCancel;
-      
+
+     
         public static void Reset()
         {
             if (Global.Orbwalker.Mode == OrbwalkingMode.None)
@@ -22,33 +26,21 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
             }
 
             Global.Orbwalker.AttackingEnabled = false;
-            Global.Orbwalker.Move(Game.CursorPos);
 
-            LastReset = Game.TickCount;
-            DidRecentlyCancel = true;
+            DelayAction.Queue(Game.Ping / 2 + 20 + (Game.TickCount - SpellConfig.W.LastCastAttemptT <= 750 ? 750 / 2 : 0), () =>
+            {
+            
+                Global.Orbwalker.Move(Game.CursorPos);
+                
+                LastReset = Game.TickCount;
+                DidRecentlyCancel = true;
+              
+            }, new CancellationToken(false));
         }
 
         public static float GetDelay()
         {
-            var level  =  Global.Player.Level;
-            var target = Global.Orbwalker.GetOrbwalkingTarget();
-            if (target == null)
-            {
-                return 0;
-            }
-
-            var shouldAddExtra = target.IsHero || target.IsBuilding();
-
-            float delay  = Extensions.CurrentQCount == 1 ? 405 : 375; // Temp until API fixed (?)
-
-            if (shouldAddExtra)
-            {
-                delay += 150;
-            }
-
-            delay -=  3.333f * level;
-            //DebugConsole.Print($"Delay: {delay} | Q: {Extensions.CurrentQCount}", ConsoleColor.Red);
-            return delay; 
+            return (Extensions.CurrentQCount == 1 ? 450 : 350) - 3.333f * Global.Player.Level; 
         }
 
         public static void OnProcessAutoAttack(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
@@ -58,7 +50,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                 return;
             }
 
-            Extensions.DidJustAuto = true;
+            DelayAction.Queue(Game.Ping / 2 + 100, ()=> Extensions.DidJustAuto = true, new CancellationToken(false));
         }
 
         public static void OnPlayAnimation(Obj_AI_Base sender, Obj_AI_BasePlayAnimationEventArgs args)

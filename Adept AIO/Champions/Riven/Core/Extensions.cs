@@ -24,7 +24,7 @@ namespace Adept_AIO.Champions.Riven.Core
         {
             get
             {
-                var range = 0f;
+                var range = 65f;
 
                 if (AllIn)
                 {
@@ -35,9 +35,14 @@ namespace Adept_AIO.Champions.Riven.Core
                     range += Global.Player.AttackRange;
                 }
 
+                if (SpellConfig.E.Ready && SpellConfig.R.Ready)
+                {
+                    range += 50;
+                }
+
                 if (SpellConfig.E.Ready)
                 {
-                    range += SpellConfig.E.Range - 50;
+                    range += SpellConfig.E.Range;
                 }
                 else if (SpellConfig.Q.Ready && !SpellConfig.E.Ready)
                 {

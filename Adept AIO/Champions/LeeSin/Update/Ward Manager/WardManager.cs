@@ -29,7 +29,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.Ward_Manager
             
             if (ward == null)
             {
-                DebugConsole.Print("DEBUG: [Warning] There are no wards. Failed to continue.", ConsoleColor.Yellow);
+                DebugConsole.Write("DEBUG: [Warning] There are no wards. Failed to continue.", ConsoleColor.Yellow);
                 return;
             }
 

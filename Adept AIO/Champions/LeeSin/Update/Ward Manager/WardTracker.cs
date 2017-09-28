@@ -55,7 +55,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.Ward_Manager
             WardName = ward.Name;
             WardPosition = ward.ServerPosition;
 
-            DebugConsole.Print("Located Ally Ward.", ConsoleColor.Green);
+            DebugConsole.Write("Located Ally Ward.", ConsoleColor.Green);
             Global.Player.SpellBook.CastSpell(SpellSlot.W, WardPosition); // Bug: This position is unrealistic and does not work.
         }
 

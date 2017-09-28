@@ -87,7 +87,7 @@ namespace Adept_AIO.Champions.Riven.Core
                 new MenuBool("Check", "Safe Clear").SetToolTip("Wont clear when enemies are nearby"),
                 new MenuBool("Q", "Q"),
                 new MenuBool("W", "W"),
-                new MenuBool("E", "E"),
+                new MenuBool("E", "E")
             };
 
             Killsteal = new Menu("Killsteal", "Killsteal")
@@ -101,6 +101,7 @@ namespace Adept_AIO.Champions.Riven.Core
             Miscellaneous = new Menu("Miscellaneous", "Miscellaneous")
             {
                 new MenuBool("Walljump", "Walljump During Flee"),
+                new MenuBool("Force", "Spam Q1, Q2 During Flee"),
                 new MenuBool("Active", "Keep Q Active"),
                 new MenuBool("Interrupt", "Dodge Certain Spells"),
             };

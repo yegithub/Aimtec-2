@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading;
 using Adept_AIO.Champions.Riven.Core;
+using Adept_AIO.SDK.Generic;
 using Adept_AIO.SDK.Unit_Extensions;
 using Adept_AIO.SDK.Usables;
 using Aimtec;
@@ -39,9 +41,8 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                     break;
                 case "RivenFengShuiEngine":
                     Enums.UltimateMode = UltimateMode.Second;
-                    Global.Orbwalker.ResetAutoAttackTimer();
                     break;
-                case "RivenIzunaBlade":
+                case "RivenIzunaBlade": 
                     Enums.UltimateMode = UltimateMode.First;
                     break;
             }
