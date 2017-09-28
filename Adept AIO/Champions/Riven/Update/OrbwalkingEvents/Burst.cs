@@ -87,7 +87,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
                         if (SpellConfig.W.Ready && SummonerSpells.IsValid(SummonerSpells.Flash))
                         {
                             Global.Player.SpellBook.CastSpell(SpellSlot.W);
-                            DelayAction.Queue(250, ()=> SummonerSpells.Flash.Cast(target.ServerPosition + target.BoundingRadius));
+                            DelayAction.Queue(188, ()=> SummonerSpells.Flash.Cast(target.ServerPosition));
                         }
                     }
                     else if (target.IsValidTarget(SpellConfig.E.Range + Global.Player.AttackRange))

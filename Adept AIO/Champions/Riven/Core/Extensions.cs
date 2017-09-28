@@ -35,11 +35,6 @@ namespace Adept_AIO.Champions.Riven.Core
                     range += Global.Player.AttackRange;
                 }
 
-                if (SpellConfig.E.Ready && SpellConfig.R.Ready)
-                {
-                    range += 50;
-                }
-
                 if (SpellConfig.E.Ready)
                 {
                     range += SpellConfig.E.Range;
