@@ -4,6 +4,7 @@ using Adept_AIO.SDK.Spell_DB;
 using Adept_AIO.SDK.Unit_Extensions;
 using Aimtec;
 using Aimtec.SDK.Extensions;
+using Aimtec.SDK.Prediction.Collision;
 
 namespace Adept_AIO.Champions.Yasuo.Update.Miscellaneous
 {
@@ -29,7 +30,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.Miscellaneous
             {
                 SpellConfig.E.CastOnUnit(minion);
             }
-            else if (args.End.Distance(Global.Player.ServerPosition) <= 300 && SpellConfig.W.Ready && missile.IsDangerous)
+            else if (args.End.Distance(Global.Player.ServerPosition) <= 300 && SpellConfig.W.Ready && missile.CollisionObjects.Any(x => x.HasFlag(CollisionableObjects.YasuoWall)))
             {
                 SpellConfig.W.Cast(sender.ServerPosition);
             }

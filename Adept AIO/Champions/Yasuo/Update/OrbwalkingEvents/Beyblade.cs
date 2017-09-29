@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Linq;
+using System.Threading;
 using Adept_AIO.Champions.Yasuo.Core;
 using Adept_AIO.SDK.Generic;
 using Adept_AIO.SDK.Unit_Extensions;
@@ -14,20 +15,22 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
     {
         public static void OnPostAttack()
         {
-            var target = Global.TargetSelector.GetSelectedTarget();
+            var target = GameObjects.EnemyHeroes.FirstOrDefault(x => x.Distance(Global.Player) <= Global.Player.AttackRange + 200);
             if (target == null)
             {
                 return;
             }
-            var distance = target.Distance(Global.Player);
-            if (!target.HasBuff("YasuoDashWrapper") && distance <= SpellConfig.E.Range + 65)
+        
+            if (!target.HasBuff("YasuoDashWrapper"))
             {
-                SpellConfig.E.CastOnUnit(target);
+                SpellConfig.E.Cast(target);
 
-                DelayAction.Queue(Game.Ping / 2, () => SpellConfig.Q.Cast(), new CancellationToken(false));
-                DelayAction.Queue(Game.Ping / 2 + 20, () => SpellConfig.R.Cast(), new CancellationToken(false));
+                DelayAction.Queue(Game.Ping / 2 + 40, () => SpellConfig.Q.Cast(), new CancellationToken(false));
+
+                DelayAction.Queue(Game.Ping / 2 + 95, () => SpellConfig.R.Cast(), new CancellationToken(false));
+
             }
-            if (SpellConfig.Q.Ready)
+            else if (SpellConfig.Q.Ready)
             {
                 SpellConfig.Q.Cast(target);
             }
@@ -52,35 +55,28 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
 
             var dashDistance = MinionHelper.DashDistance(minion, target);
 
-            //if (Extension.KnockedUp(target) && 
-            //    Game.TickCount - KnockUpHelper.TimeLeftOnKnockup >= 900 &&
-            //    Game.TickCount - KnockUpHelper.TimeLeftOnKnockup <= 2000 && 
-            //    SpellConfig.R.Ready)
-            //{
-            //    SpellConfig.R.Cast();
-            //}
-
             if (SpellConfig.Q.Ready)
             {
                 switch (Extension.CurrentMode)
                 {
-                    case Mode.DashingTornado:
                     case Mode.Dashing:
-                        if (minion != null && minion.Distance(target) <= 350)
+                        SpellConfig.Q.Cast();
+                        break;
+                    case Mode.DashingTornado:
+                        if (minion != null && Global.Player.Distance(target) <= 525)
                         {
-                            if (MenuConfig.Combo["Flash"].Enabled && SummonerSpells.IsValid(SummonerSpells.Flash) && distance > 220 && dashDistance <= 350)
+                            if (MenuConfig.Combo["Flash"].Enabled && SummonerSpells.IsValid(SummonerSpells.Flash))
                             {
-                                DelayAction.Queue(Game.Ping / 2, () =>
+                                DelayAction.Queue(Game.Ping / 2 + 10, () =>
                                 {
                                     SpellConfig.Q.Cast();
                                     SummonerSpells.Flash.Cast(target.Position);
-                                }, new CancellationToken(false));
+                                }, new CancellationToken(false)); ;
                             }
                         }
                         break;
-                    case Mode.Tornado:
                     case Mode.Normal:
-                        if (target.IsValidTarget(SpellConfig.Q.Range) && Game.TickCount - SpellConfig.E.LastCastAttemptT >= 500 && Game.TickCount - SpellConfig.E.LastCastAttemptT <= 5000)
+                        if (target.IsValidTarget(SpellConfig.Q.Range))
                         {
                             SpellConfig.Q.CastOnUnit(target);
                         }
@@ -88,9 +84,14 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                 }
             }
 
+            //if (KnockUpHelper.IsItTimeToUlt(target, 860) && SpellConfig.R.Ready)
+            //{
+            //    SpellConfig.R.Cast();
+            //}
+
             if (SpellConfig.E.Ready)
             {
-                if (distance <= 300)
+                if (distance <= 320)
                 {
                     return;
                 }

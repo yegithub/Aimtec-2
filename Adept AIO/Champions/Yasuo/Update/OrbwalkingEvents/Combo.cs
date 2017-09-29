@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading;
 using Adept_AIO.Champions.Yasuo.Core;
+using Adept_AIO.SDK.Generic;
 using Adept_AIO.SDK.Unit_Extensions;
 using Adept_AIO.SDK.Usables;
 using Aimtec;
@@ -80,16 +81,20 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
             var airbourneTargets = GameObjects.EnemyHeroes.Where(x => Extension.KnockedUp(x) && x.Distance(Global.Player) <= SpellConfig.R.Range);
             var targetCount = (airbourneTargets as Obj_AI_Hero[] ?? airbourneTargets.ToArray()).Length;
 
+            DebugConsole.Write($"Time Left: {KnockUpHelper.IsItTimeToUlt(target)})");
+
             if (SpellConfig.R.Ready && Extension.KnockedUp(target))
             {
                 if (targetCount >= MenuConfig.Combo["Count"].Value || distance > 350 && minion == null)
                 {
-                    DelayAction.Queue(MenuConfig.Combo["Delay"].Enabled ? 375 + Game.Ping / 2 : 250, () => SpellConfig.R.Cast(), new CancellationToken(false));
-                }
-                else if (Game.TickCount - KnockUpHelper.TimeLeftOnKnockup >= 1000 &&
-                         Game.TickCount - KnockUpHelper.TimeLeftOnKnockup <= 3000)
-                {
-                    SpellConfig.R.Cast();
+                    if (MenuConfig.Combo["Delay"].Enabled && KnockUpHelper.IsItTimeToUlt(target))
+                    {
+                        SpellConfig.R.Cast();
+                    }
+                    else
+                    {
+                        DelayAction.Queue(250, () => SpellConfig.R.Cast(), new CancellationToken(false));
+                    }  
                 }
             }
 
