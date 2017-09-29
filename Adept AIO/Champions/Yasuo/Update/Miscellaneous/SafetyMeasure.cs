@@ -20,7 +20,6 @@ namespace Adept_AIO.Champions.Yasuo.Update.Miscellaneous
 
             if (missile == null)
             {
-               
                 return;
             }
 
@@ -30,7 +29,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.Miscellaneous
             {
                 SpellConfig.E.CastOnUnit(minion);
             }
-            else if (args.End.Distance(Global.Player.ServerPosition) <= 300 && SpellConfig.W.Ready)
+            else if (args.End.Distance(Global.Player.ServerPosition) <= 300 && SpellConfig.W.Ready && missile.IsDangerous)
             {
                 SpellConfig.W.Cast(sender.ServerPosition);
             }
