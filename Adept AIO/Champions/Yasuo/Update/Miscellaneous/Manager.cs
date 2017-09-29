@@ -50,6 +50,8 @@ namespace Adept_AIO.Champions.Yasuo.Update.Miscellaneous
             }
         }
 
+        private static int LastTimeChecked;
+
         public static void BuffManagerOnOnAddBuff(Obj_AI_Base sender, Buff buff)
         {
             if (sender == null)
@@ -57,12 +59,14 @@ namespace Adept_AIO.Champions.Yasuo.Update.Miscellaneous
                 return;
             }
           
-            if (sender.IsEnemy && (buff.Type == BuffType.Knockup || buff.Type == BuffType.Knockback))
+            if (sender.IsEnemy && (buff.Type == BuffType.Knockup || buff.Type == BuffType.Knockback) && Game.TickCount - LastTimeChecked >= 800)
             {
+                DebugConsole.Write("ENEMY KNOCKED UP");
                 KnockUpHelper.Sender = sender;
                 KnockUpHelper.TimeLeftOnKnockup = Game.TickCount;
                 KnockUpHelper.BuffStart = buff.StartTime;
                 KnockUpHelper.BuffEnd = buff.EndTime;
+                LastTimeChecked = Game.TickCount;
             }
 
             if (sender.IsMe)
@@ -82,14 +86,6 @@ namespace Adept_AIO.Champions.Yasuo.Update.Miscellaneous
             if (sender == null)
             {
                 return;
-            }
-           
-            if (sender.IsEnemy && (buff.Type == BuffType.Knockup || buff.Type == BuffType.Knockback))
-            {
-                KnockUpHelper.Sender = null;
-                KnockUpHelper.TimeLeftOnKnockup = 0;
-                KnockUpHelper.BuffStart = 0;
-                KnockUpHelper.BuffEnd = 0;
             }
 
             if (sender.IsMe)
