@@ -46,7 +46,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
             }
             else if (minion != null)
             {
-                if (MenuConfig.Combo["Turret"].Enabled && minion.IsUnderEnemyTurret() || MenuConfig.Combo["Dash"].Value == 0 && minion.Distance(Game.CursorPos) > MenuConfig.Combo["Range"].Value)
+                if (MenuConfig.Combo["Turret"].Enabled && minion.ServerPosition.PointUnderEnemyTurret() || MenuConfig.Combo["Dash"].Value == 0 && minion.Distance(Game.CursorPos) > MenuConfig.Combo["Range"].Value)
                 {
                     return;
                 }
@@ -67,7 +67,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                 return;
             }
 
-            var distance = target.Distance(Global.Player);
+            var targetDist = target.Distance(Global.Player);
             var minion = MinionHelper.GetDashableMinion(target);
 
             var m2 = MinionHelper.GetClosest(target);
@@ -83,7 +83,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
 
             if (SpellConfig.R.Ready && Extension.KnockedUp(target))
             {
-                if (targetCount >= MenuConfig.Combo["Count"].Value || distance > 350 && minion == null)
+                if (targetCount >= MenuConfig.Combo["Count"].Value || targetDist > 350 && minion == null)
                 {
                     if (MenuConfig.Combo["Delay"].Enabled && KnockUpHelper.IsItTimeToUlt(target))
                     {
@@ -117,11 +117,12 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                             if (MenuConfig.Combo["Flash"].Enabled && dashDistance > 400 && target.IsValidTarget(425) &&
                                 (Dmg.Damage(target) * 1.25 > target.Health || target.CountEnemyHeroesInRange(220) >= 2))
                             {
-                                DelayAction.Queue(190, () =>
+                                SpellConfig.Q.Cast();
+
+                                DelayAction.Queue(Game.Ping / 2 + 30, () =>
                                 {
-                                    SpellConfig.Q.Cast();
                                     SummonerSpells.Flash.Cast(target.Position);
-                                }, new CancellationToken(false));
+                                }, new CancellationToken(false)); ;
                             }
                         }
                         else
@@ -133,7 +134,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                         SpellConfig.Q.Cast(target);
                         break;
                     case Mode.Normal:
-                        if (distance > 1200)
+                        if (targetDist > 1200)
                         {
                             var stackableMinion = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsEnemy && x.Distance(Global.Player) <= SpellConfig.Q.Range);
                             if (stackableMinion == null)
@@ -163,16 +164,16 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                     SpellConfig.E.CastOnUnit(m2);
                 }
             }
-            else if (minion != null && distance > 475)
+            if (minion != null && targetDist > 385 && dashDistance <= Global.Player.Distance(target) + 100)
             {
-                if (MenuConfig.Combo["Turret"].Enabled && minion.IsUnderEnemyTurret() || MenuConfig.Combo["Dash"].Value == 0 && minion.Distance(Game.CursorPos) > MenuConfig.Combo["Range"].Value)
+                if (MenuConfig.Combo["Turret"].Enabled && minion.ServerPosition.PointUnderEnemyTurret() || MenuConfig.Combo["Dash"].Value == 0 && minion.Distance(Game.CursorPos) > MenuConfig.Combo["Range"].Value)
                 {
                     return;
                 }
 
                 SpellConfig.E.CastOnUnit(minion);
             }
-            else if (!target.HasBuff("YasuoDashWrapper") && distance <= SpellConfig.E.Range && distance > SpellConfig.E.Range - target.BoundingRadius)
+            else if (!target.HasBuff("YasuoDashWrapper") && targetDist <= SpellConfig.E.Range && targetDist > SpellConfig.E.Range - target.BoundingRadius)
             {
                 SpellConfig.E.CastOnUnit(target);
             }

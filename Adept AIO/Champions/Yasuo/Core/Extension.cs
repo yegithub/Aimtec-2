@@ -100,7 +100,7 @@ namespace Adept_AIO.Champions.Yasuo.Core
             var position = minion.ServerPosition.Extend(minion.ServerPosition + (minion.ServerPosition - target.ServerPosition).Normalized(), 75 + minion.BoundingRadius);
 
             var isValid = position.Distance(ObjectManager.GetLocalPlayer()) > minion.BoundingRadius &&
-                          position.Distance(ObjectManager.GetLocalPlayer()) < 220;
+                          position.Distance(ObjectManager.GetLocalPlayer()) < MenuConfig.Combo["MRange"].Value;
 
             return isValid ? position : Vector3.Zero;
         }

@@ -27,8 +27,12 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
 
                 DelayAction.Queue(Game.Ping / 2, () => SpellConfig.Q.Cast(), new CancellationToken(false));
 
-                DelayAction.Queue(Game.Ping / 2 + 75, () => SpellConfig.R.Cast(), new CancellationToken(false));
+                DelayAction.Queue(Game.Ping / 2 + 70, () => SpellConfig.R.Cast(), new CancellationToken(false));
 
+            }
+            else if (SpellConfig.R.Ready)
+            {
+                SpellConfig.R.Cast();
             }
             else if (SpellConfig.Q.Ready)
             {

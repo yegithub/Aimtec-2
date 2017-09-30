@@ -61,7 +61,6 @@ namespace Adept_AIO.Champions.Yasuo.Update.Miscellaneous
           
             if (sender.IsEnemy && (buff.Type == BuffType.Knockup || buff.Type == BuffType.Knockback))
             {
-                DebugConsole.Write($"ENEMY KNOCKED UP, {(buff.EndTime - buff.StartTime) * 1000}");
                 KnockUpHelper.Sender = sender;
                 KnockUpHelper.KnockedUpTick = Game.TickCount;
                 KnockUpHelper.BuffStart = (int)buff.StartTime;

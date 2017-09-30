@@ -42,11 +42,6 @@ namespace Adept_AIO.Champions.Yasuo.Drawings
 
             if (MenuConfig.Drawings["Debug"].Enabled)
             {
-                if (KnockUpHelper.Sender != null)
-                {
-                    Render.Text((-(Game.TickCount - (KnockUpHelper.BuffStart + KnockUpHelper.BuffEnd))).ToString(CultureInfo.InvariantCulture), KnockUpHelper.Sender.ServerPosition.To2D(), RenderTextFlags.Center, Color.Yellow);
-                }
-
                 Render.WorldToScreen(Global.Player.Position, out var temp);
                 Render.Text("Q Mode: " + Extension.CurrentMode + " | Range: " + SpellConfig.Q.Range, new Vector2(temp.X - 55, temp.Y + 40), RenderTextFlags.Center, Color.Cyan);
             }
