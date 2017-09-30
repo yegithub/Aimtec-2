@@ -429,7 +429,7 @@ namespace Adept_Tracker
             Menu.Add(new MenuBool("DrawCards", "Draw Cards"));
             //Menu.Add(new MenuBool("DrawJungle", "Draw Jungle"));
             Menu.Add(new MenuBool("DrawTeleport", "Draw Teleports"));
-            //Menu.Add(new MenuBool("AddTestCard", "Draw Test Card", false));
+            Menu.Add(new MenuBool("AddTestCard", "Draw Test Card", false));
 
             Menu.Add(new MenuSeperator("endmylife", "Whitelist"));
             foreach (var enemy in GameObjects.EnemyHeroes)
@@ -437,22 +437,22 @@ namespace Adept_Tracker
                 Menu.Add(new MenuBool($"Track.{enemy.UnitSkinName}", "Track " + enemy.ChampionName));
             }
 
-            //Menu["AddTestCard"].OnValueChanged += (sender, args) =>
-            //{
-            //    if (sender.Enabled == false)
-            //    {
-            //        return;
-            //    }
+            Menu["AddTestCard"].OnValueChanged += (sender, args) =>
+            {
+                if (sender.Enabled == false)
+                {
+                    return;
+                }
 
-            //    Cards.Add(new Card
-            //    {
-            //        EndMessage = "Ready",
-            //        EndTime = Game.ClockTime + 11,
-            //        FriendlyName = $"Sample Text",
-            //        StartTime = Game.ClockTime,
-            //        Name = "NamiQ"
-            //    });
-            //};
+                Cards.Add(new Card
+                {
+                    EndMessage = "Ready",
+                    EndTime = Game.ClockTime + 11,
+                    FriendlyName = $"Sample Text",
+                    StartTime = Game.ClockTime,
+                    Name = "NamiQ"
+                });
+            };
         }
 
         #endregion
