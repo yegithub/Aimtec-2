@@ -16,7 +16,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
             {
                 var qminion = GameObjects.Jungle.FirstOrDefault(x => x.Distance(Global.Player) <= SpellConfig.Q.Range);
 
-                if (qminion == null)
+                if (qminion == null )
                 {
                     return;
                 }

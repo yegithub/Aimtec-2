@@ -569,7 +569,7 @@ namespace Adept_AIO.SDK.Unit_Extensions
             }
 
             var minion = sender as Obj_AI_Minion;
-            if (minion != null && !minion.UnitSkinName.Contains("plant") && !minion.Name.Contains("plant"))
+            if (minion != null && !minion.UnitSkinName.ToLower().Contains("plant") && !minion.Name.Contains("plant"))
             {
                 if (minion.Team != GameObjectTeam.Neutral)
                 {
