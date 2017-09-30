@@ -175,7 +175,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
 
                 SpellConfig.E.CastOnUnit(minion);
             }
-            else if (!target.HasBuff("YasuoDashWrapper") && targetDist <= SpellConfig.E.Range && targetDist > SpellConfig.E.Range - target.BoundingRadius)
+            else if (!target.HasBuff("YasuoDashWrapper") && targetDist <= SpellConfig.E.Range && targetDist > SpellConfig.E.Range - 100)
             {
                 SpellConfig.E.CastOnUnit(target);
             }
