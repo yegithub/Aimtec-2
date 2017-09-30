@@ -122,6 +122,11 @@ namespace Adept_Tracker
 
             foreach (var unit in GameObjects.EnemyHeroes)
             {
+                if (unit.ChampionName == "Lux" || unit.ChampionName == "Blitzcrank" || unit.ChampionName == "Leblanc")
+                {
+                    continue;
+                }
+
                 foreach (var spell in unit.SpellBook.Spells)
                 {
                     if (spell.Slot != SpellSlot.R)
