@@ -78,19 +78,17 @@ namespace Adept_AIO.Champions.Yasuo.Core
 
         public static Obj_AI_Minion GetClosest(Obj_AI_Base target)
         {
-            return GameObjects.EnemyMinions.Where(x => !x.HasBuff("YasuoDashWrapper") &&
-                                                       x.IsValid &&
-                                                       x.MaxHealth > 7 &&
-                                                       x.Distance(Global.Player) <= SpellConfig.E.Range)
+            return GameObjects.EnemyMinions
                 .OrderBy(x => x.Distance(Global.Player))
-                .FirstOrDefault(x =>
-                    DashDistance(x, target) > 0);
+                .FirstOrDefault(x => !x.HasBuff("YasuoDashWrapper") &&
+                                     x.IsValid &&
+                                     x.MaxHealth > 10 &&
+                                     x.Distance(Global.Player.ServerPosition.Extend(target.ServerPosition, 80)) <= SpellConfig.E.Range);
         }
 
         public static Vector3 WalkBehindMinion(Obj_AI_Base target)
         {
             var minion = GetClosest(target);
-          
 
             if (target == null || minion == null || minion.IsDead)
             {
@@ -100,7 +98,7 @@ namespace Adept_AIO.Champions.Yasuo.Core
             var position = minion.ServerPosition.Extend(minion.ServerPosition + (minion.ServerPosition - target.ServerPosition).Normalized(), 75 + minion.BoundingRadius);
 
             var isValid = position.Distance(ObjectManager.GetLocalPlayer()) > minion.BoundingRadius &&
-                          position.Distance(ObjectManager.GetLocalPlayer()) < MenuConfig.Combo["MRange"].Value;
+                          position.Distance(ObjectManager.GetLocalPlayer()) < 300;
 
             return isValid ? position : Vector3.Zero;
         }

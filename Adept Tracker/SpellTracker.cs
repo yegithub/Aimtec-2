@@ -129,7 +129,7 @@ namespace Adept_Tracker
 
                 foreach (var spell in unit.SpellBook.Spells)
                 {
-                    if (spell.Slot != SpellSlot.R)
+                    if (spell.Slot != SpellSlot.R || spell.Name == "BaseSpell")
                     {
                         continue;
                     }

@@ -63,7 +63,6 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
             var target = Global.TargetSelector.GetTarget(2500);
             if (target == null)
             {
-                MinionHelper.ExtendedTarget = Vector3.Zero;
                 return;
             }
 
@@ -81,31 +80,11 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
             var airbourneTargets = GameObjects.EnemyHeroes.Where(x => Extension.KnockedUp(x) && x.Distance(Global.Player) <= SpellConfig.R.Range);
             var targetCount = (airbourneTargets as Obj_AI_Hero[] ?? airbourneTargets.ToArray()).Length;
 
-            if (SpellConfig.R.Ready && Extension.KnockedUp(target))
-            {
-                if (targetCount >= MenuConfig.Combo["Count"].Value || targetDist > 350 && minion == null)
-                {
-                    if (MenuConfig.Combo["Delay"].Enabled && KnockUpHelper.IsItTimeToUlt(target))
-                    {
-                        SpellConfig.R.Cast();
-                    }
-                    else
-                    {
-                        DelayAction.Queue(250, () => SpellConfig.R.Cast(), new CancellationToken(false));
-                    }  
-                }
-            }
-
             var circle = new Geometry.Circle(Global.Player.GetDashInfo().EndPos, 220);
             var circleCount = GameObjects.EnemyHeroes.Count(x => circle.Center.Distance(x.ServerPosition) <= circle.Radius);
 
-            if (SpellConfig.Q.Ready && target.IsValidTarget(SpellConfig.Q.Range))
+            if (SpellConfig.Q.Ready && !(Global.Player.IsDashing() && circleCount <= 0))
             {
-                if (Global.Player.IsDashing() && circleCount <= 0)
-                {
-                    return;
-                }
-
                 switch (Extension.CurrentMode)
                 {
                     case Mode.Dashing:
@@ -131,7 +110,10 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                         }
                         break;
                     case Mode.Tornado:
-                        SpellConfig.Q.Cast(target);
+                        if (target.IsValidTarget(SpellConfig.Q.Range))
+                        {
+                            SpellConfig.Q.Cast(target);
+                        }
                         break;
                     case Mode.Normal:
                         if (targetDist > 1200)
@@ -144,7 +126,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
 
                             SpellConfig.Q.Cast(stackableMinion);
                         }
-                        else
+                        else if (target.IsValidTarget(SpellConfig.Q.Range))
                         {
                             SpellConfig.Q.Cast(target);
                         }
@@ -152,19 +134,39 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                 }
             }
 
+            if (SpellConfig.R.Ready && Extension.KnockedUp(target))
+            {
+                if (targetCount >= MenuConfig.Combo["Count"].Value || targetDist > 350 && minion == null)
+                {
+                    if (MenuConfig.Combo["Delay"].Enabled && KnockUpHelper.IsItTimeToUlt(target))
+                    {
+                        SpellConfig.R.Cast();
+                    }
+                    else
+                    {
+                        DelayAction.Queue(250, () => SpellConfig.R.Cast(), new CancellationToken(false));
+                    }  
+                }
+            }
+
             if (!SpellConfig.E.Ready)
             {
                 return;
             }
-            if (!positionBehindMinion.IsZero && MenuConfig.Combo["Walk"].Enabled && Global.Orbwalker.CanMove() && !(MenuConfig.Combo["Turret"].Enabled && minion.IsUnderEnemyTurret() && target.IsUnderEnemyTurret()))
+
+            if (!positionBehindMinion.IsZero && MenuConfig.Combo["Walk"].Enabled && targetDist > Global.Player.AttackRange 
+                && Global.Orbwalker.CanMove() 
+                && positionBehindMinion.Distance(Global.Player) <= MenuConfig.Combo["MRange"].Value
+                && !(MenuConfig.Combo["Turret"].Enabled && minion != null && minion.IsUnderEnemyTurret() && target.IsUnderEnemyTurret()))
             {
                 Global.Orbwalker.Move(positionBehindMinion);
+
                 if (positionBehindMinion.Distance(Global.Player) <= 65)
                 {
                     SpellConfig.E.CastOnUnit(m2);
                 }
             }
-            if (minion != null && targetDist > 385 && dashDistance <= Global.Player.Distance(target) + 100)
+            else if (minion != null && targetDist > Global.Player.AttackRange + 150)
             {
                 if (MenuConfig.Combo["Turret"].Enabled && minion.ServerPosition.PointUnderEnemyTurret() || MenuConfig.Combo["Dash"].Value == 0 && minion.Distance(Game.CursorPos) > MenuConfig.Combo["Range"].Value)
                 {

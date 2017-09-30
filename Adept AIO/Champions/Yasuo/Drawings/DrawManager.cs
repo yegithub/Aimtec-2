@@ -34,6 +34,11 @@ namespace Adept_AIO.Champions.Yasuo.Drawings
                 return;
             }
 
+            if (SpellConfig.R.Ready && MenuConfig.Drawings["R"].Enabled)
+            {
+                Render.Circle(Global.Player.Position, SpellConfig.R.Range, (uint)MenuConfig.Drawings["Segments"].Value, Color.Cyan);
+            }
+
             if (MenuConfig.Drawings["Range"].Enabled && MenuConfig.Combo["Dash"].Value == 0 && Global.Orbwalker.Mode != OrbwalkingMode.None)
             {
                 Render.Circle(Game.CursorPos, MenuConfig.Combo["Range"].Value,
@@ -61,14 +66,6 @@ namespace Adept_AIO.Champions.Yasuo.Drawings
                 Render.Line(minionV2, targetV2, Color.DeepPink);
 
                 Render.Circle(MinionHelper.ExtendedMinion, 50, 300, Color.White);
-            }
-
-            if (SpellConfig.R.Ready)
-            {
-                if (MenuConfig.Drawings["R"].Enabled)
-                {
-                    Render.Circle(Global.Player.Position, SpellConfig.R.Range, (uint)MenuConfig.Drawings["Segments"].Value, Color.Cyan);
-                }
             }
         }
     }

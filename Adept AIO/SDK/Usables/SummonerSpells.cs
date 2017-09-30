@@ -14,7 +14,6 @@ namespace Adept_AIO.SDK.Usables
             return summonerSpell != null && summonerSpell.Ready;
         }
 
-        //Todo: Improve this bullshit.
         public static void Init()
         {
             var spellbookName1 = Global.Player.SpellBook.GetSpell(SpellSlot.Summoner1).Name.ToLower();

@@ -51,6 +51,39 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
 
         public static void OnUpdate()
         {
+            if (SpellConfig.E.Ready)
+            {
+                var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(Global.Player) <= SpellConfig.E.Range && !x.HasBuff("YasuoDashWrapper"));
+
+                if (!SpellConfig.E.Ready || minion == null || minion.IsUnderEnemyTurret() || MenuConfig.LaneClear["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(2000) != 0)
+                {
+                    return;
+                }
+
+                switch (MenuConfig.LaneClear["Mode"].Value)
+                {
+                    case 1:
+
+                        if (minion.Health > Global.Player.GetSpellDamage(minion, SpellSlot.E))
+                        {
+                            return;
+                        }
+
+                        SpellConfig.E.CastOnUnit(minion);
+                        break;
+                    case 2:
+                        if (MenuConfig.LaneClear["EAA"].Enabled)
+                        {
+                            return;
+                        }
+
+                        SpellConfig.E.CastOnUnit(minion);
+
+                        break;
+                }
+            }
+            
+
             if (SpellConfig.Q.Ready)
             {
                 switch (Extension.CurrentMode)
@@ -96,35 +129,6 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                         }
                         break;
                 }
-            }
-
-            var minion = GameObjects.EnemyMinions.OrderBy(x => x.Health).FirstOrDefault(x => x.Distance(Global.Player) <= SpellConfig.E.Range && !x.HasBuff("YasuoDashWrapper"));
-
-            if (!SpellConfig.E.Ready || minion == null || minion.IsUnderEnemyTurret() || MenuConfig.LaneClear["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(2000) != 0)
-            {
-                return;
-            }
-
-            switch (MenuConfig.LaneClear["Mode"].Value)
-            {
-                case 1:
-                 
-                    if (minion.Health > Global.Player.GetSpellDamage(minion, SpellSlot.E))
-                    {
-                        return;
-                    }
-
-                    SpellConfig.E.CastOnUnit(minion);
-                    break;
-                case 2:
-                    if (MenuConfig.LaneClear["EAA"].Enabled)
-                    {
-                        return;
-                    }
-                
-                    SpellConfig.E.CastOnUnit(minion);
-                  
-                    break;
             }
         }
     }

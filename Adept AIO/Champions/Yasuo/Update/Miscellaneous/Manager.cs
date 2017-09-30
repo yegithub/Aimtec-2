@@ -49,6 +49,10 @@ namespace Adept_AIO.Champions.Yasuo.Update.Miscellaneous
                 case OrbwalkingMode.Laneclear:
                     LaneClear.OnUpdate();
                     break;
+                case OrbwalkingMode.None:
+                    MinionHelper.ExtendedTarget = Vector3.Zero;
+                    MinionHelper.ExtendedMinion = Vector3.Zero;
+                    break;
             }
         }
         

@@ -56,7 +56,7 @@ namespace Adept_AIO.Champions.Yasuo.Core
                 new MenuBool("Stack", "Safely Stack Q"),
                 new MenuList("Dash", "Dash Mode: ", new []{"Cursor", "From Player"}, 0),
                 new MenuSlider("Range", "Mouse Dash Range: ", 650, 1, 1000),
-                new MenuSlider("MRange", "Search Range For Behind Minions", 220, 100, 500)
+                new MenuSlider("MRange", "Search Range For Behind Minions", 150, 100, 500)
             };
             
             // Todo: Add Check and go: EQ AA -> E Out 
