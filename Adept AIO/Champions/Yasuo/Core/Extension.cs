@@ -84,7 +84,7 @@ namespace Adept_AIO.Champions.Yasuo.Core
                                                        x.Distance(Global.Player) <= SpellConfig.E.Range)
                 .OrderBy(x => x.Distance(Global.Player))
                 .FirstOrDefault(x =>
-                    DashDistance(x, target, 300) > 0);
+                    DashDistance(x, target) > 0);
         }
 
         public static Vector3 WalkBehindMinion(Obj_AI_Base target)
