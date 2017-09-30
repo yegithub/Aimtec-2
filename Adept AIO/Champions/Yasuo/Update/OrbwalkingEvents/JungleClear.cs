@@ -10,34 +10,26 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
     {
         public static void OnPostAttack()
         {
-            if (SpellConfig.E.Ready && MenuConfig.JungleClear["E"].Enabled)
+            var minion = GameObjects.Jungle.FirstOrDefault(x => x.IsValid && x.Distance(Global.Player) <= SpellConfig.Q.Range);
+
+            if (minion == null)
             {
-                var minion = GameObjects.Jungle.FirstOrDefault(x => x.IsValid && x.Distance(Global.Player) <= SpellConfig.E.Range && !x.HasBuff("YasuoDashWrapper"));
+                return;
+            }
 
-                if (minion == null)
-                {
-                    return;
-                }
-
+            if (SpellConfig.E.Ready && MenuConfig.JungleClear["E"].Enabled && !minion.HasBuff("YasuoDashWrapper"))
+            {
                 SpellConfig.E.CastOnUnit(minion);
             }
 
-            if (!SpellConfig.Q.Ready) return;
+            if (!SpellConfig.Q.Ready ||
+                Extension.CurrentMode == Mode.Tornado && !MenuConfig.JungleClear["Q3"].Enabled ||
+                Extension.CurrentMode == Mode.Normal && !MenuConfig.JungleClear["Q"].Enabled)
             {
-                var minion = GameObjects.Jungle.FirstOrDefault(x => x.Distance(Global.Player) <= SpellConfig.Q.Range && x.Health > 7);
-                if (minion == null)
-                {
-                    return;
-                }
-
-                if (Extension.CurrentMode == Mode.Tornado && !MenuConfig.JungleClear["Q3"].Enabled ||
-                    Extension.CurrentMode == Mode.Normal && !MenuConfig.JungleClear["Q"].Enabled)
-                {
-                    return;
-                }
-            
-                SpellConfig.Q.Cast(minion);
+                return;
             }
+
+            SpellConfig.Q.Cast(minion);
         }
     }
 }

@@ -1,7 +1,9 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Adept_AIO.SDK.Generic;
 using Adept_AIO.SDK.Unit_Extensions;
 using Aimtec;
+using Aimtec.SDK.Events;
 using Aimtec.SDK.Extensions;
 using Aimtec.SDK.Orbwalking;
 
@@ -38,7 +40,7 @@ namespace Adept_AIO.Champions.Yasuo.Core
         public static int BuffStart;
         public static int BuffEnd;
        
-        public static bool IsItTimeToUlt(Obj_AI_Base target, int timeUntilValid = 680)
+        public static bool IsItTimeToUlt(Obj_AI_Base target, int timeUntilValid = 710)
         {
             var buff = target.Buffs.FirstOrDefault(i => i.Type == BuffType.Knockback || i.Type == BuffType.Knockup);
             if (buff == null)
@@ -47,7 +49,7 @@ namespace Adept_AIO.Champions.Yasuo.Core
             }
 
             var time = Game.TickCount - (buff.StartTime * 1000 - buff.Full);
-            //DebugConsole.Write($"Time: {time}");
+        
             return time >= timeUntilValid + Game.Ping / 2 && time <= 1200;
         }
     }
@@ -88,21 +90,19 @@ namespace Adept_AIO.Champions.Yasuo.Core
         public static Vector3 WalkBehindMinion(Obj_AI_Base target)
         {
             var minion = GetClosest(target);
-            var m2 = GetClosest(minion);
+          
 
             if (target == null || minion == null || minion.IsDead)
             {
                 return Vector3.Zero;
             }
 
-            var opposite = minion.ServerPosition.Extend(
-                minion.ServerPosition + (minion.ServerPosition - target.ServerPosition).Normalized(),
-                75 + minion.BoundingRadius);
+            var position = minion.ServerPosition.Extend(minion.ServerPosition + (minion.ServerPosition - target.ServerPosition).Normalized(), 75 + minion.BoundingRadius);
 
-            return opposite.Distance(ObjectManager.GetLocalPlayer()) > minion.BoundingRadius &&
-                   opposite.Distance(ObjectManager.GetLocalPlayer()) < 600
-                ? opposite
-                : Vector3.Zero;
+            var isValid = position.Distance(ObjectManager.GetLocalPlayer()) > minion.BoundingRadius &&
+                          position.Distance(ObjectManager.GetLocalPlayer()) < 220;
+
+            return isValid ? position : Vector3.Zero;
         }
 
         public static float DashDistance(Obj_AI_Minion minion, Obj_AI_Base target, int overrideValue = 475)
@@ -111,8 +111,7 @@ namespace Adept_AIO.Champions.Yasuo.Core
             {
                 return 0;
             }
-            return Global.Player.ServerPosition.Extend(minion.ServerPosition, overrideValue)
-                .Distance(target.ServerPosition);
+            return Global.Player.GetDashInfo().StartPos.Extend(minion.ServerPosition, overrideValue).Distance(target.ServerPosition);
         }
     }
 }

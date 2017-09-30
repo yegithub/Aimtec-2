@@ -81,8 +81,6 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
             var airbourneTargets = GameObjects.EnemyHeroes.Where(x => Extension.KnockedUp(x) && x.Distance(Global.Player) <= SpellConfig.R.Range);
             var targetCount = (airbourneTargets as Obj_AI_Hero[] ?? airbourneTargets.ToArray()).Length;
 
-            DebugConsole.Write($"Time Left: {KnockUpHelper.IsItTimeToUlt(target)})");
-
             if (SpellConfig.R.Ready && Extension.KnockedUp(target))
             {
                 if (targetCount >= MenuConfig.Combo["Count"].Value || distance > 350 && minion == null)
@@ -101,16 +99,17 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
             var circle = new Geometry.Circle(Global.Player.GetDashInfo().EndPos, 220);
             var circleCount = GameObjects.EnemyHeroes.Count(x => circle.Center.Distance(x.ServerPosition) <= circle.Radius);
 
-            if (SpellConfig.Q.Ready)
+            if (SpellConfig.Q.Ready && target.IsValidTarget(SpellConfig.Q.Range))
             {
+                if (Global.Player.IsDashing() && circleCount <= 0)
+                {
+                    return;
+                }
+
                 switch (Extension.CurrentMode)
                 {
                     case Mode.Dashing:
-
-                        if (circleCount >= 1)
-                        {
-                            SpellConfig.Q.Cast(target);
-                        }
+                        SpellConfig.Q.Cast(target);
                         break;
                     case Mode.DashingTornado:
                         if (minion != null)
@@ -127,10 +126,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                         }
                         else
                         {
-                            if (circleCount >= 1)
-                            {
-                                SpellConfig.Q.Cast(target);
-                            }
+                            SpellConfig.Q.Cast(target);
                         }
                         break;
                     case Mode.Tornado:

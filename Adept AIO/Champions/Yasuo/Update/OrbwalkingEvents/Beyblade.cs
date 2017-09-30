@@ -15,7 +15,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
     {
         public static void OnPostAttack()
         {
-            var target = GameObjects.EnemyHeroes.FirstOrDefault(x => x.Distance(Global.Player) <= Global.Player.AttackRange + 200);
+            var target = GameObjects.EnemyHeroes.OrderBy(x => x.Distance(Global.Player)).FirstOrDefault(x => x.Distance(Global.Player) <= Global.Player.AttackRange + 200);
             if (target == null)
             {
                 return;
@@ -25,9 +25,9 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
             {
                 SpellConfig.E.Cast(target);
 
-                DelayAction.Queue(Game.Ping / 2 + 40, () => SpellConfig.Q.Cast(), new CancellationToken(false));
+                DelayAction.Queue(Game.Ping / 2, () => SpellConfig.Q.Cast(), new CancellationToken(false));
 
-                DelayAction.Queue(Game.Ping / 2 + 95, () => SpellConfig.R.Cast(), new CancellationToken(false));
+                DelayAction.Queue(Game.Ping / 2 + 75, () => SpellConfig.R.Cast(), new CancellationToken(false));
 
             }
             else if (SpellConfig.Q.Ready)
@@ -63,13 +63,14 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                         SpellConfig.Q.Cast();
                         break;
                     case Mode.DashingTornado:
-                        if (minion != null && Global.Player.Distance(target) <= 525)
+                        if (minion != null && dashDistance <= 425)
                         {
                             if (MenuConfig.Combo["Flash"].Enabled && SummonerSpells.IsValid(SummonerSpells.Flash))
                             {
-                                DelayAction.Queue(Game.Ping / 2 + 10, () =>
+                                SpellConfig.Q.Cast();
+
+                                DelayAction.Queue(Game.Ping / 2 + 30, () =>
                                 {
-                                    SpellConfig.Q.Cast();
                                     SummonerSpells.Flash.Cast(target.Position);
                                 }, new CancellationToken(false)); ;
                             }

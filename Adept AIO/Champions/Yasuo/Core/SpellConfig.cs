@@ -8,9 +8,6 @@ namespace Adept_AIO.Champions.Yasuo.Core
     {
         public static Spell Q, W, E, R;
 
-        /// <summary>
-        /// Instances the spells
-        /// </summary>
         public static void Load()
         {
             Q = new Spell(SpellSlot.Q, 520);
@@ -26,19 +23,15 @@ namespace Adept_AIO.Champions.Yasuo.Core
 
         public static void SetSkill(Mode mode)
         {
-            switch (mode)
+            if (mode == Mode.Tornado)
             {
-                case Mode.DashingTornado:
-                case Mode.Dashing:
-                case Mode.Normal:
-                    Q.SetSkillshot(0.25f, 60, 1600, false, SkillshotType.Line, false, HitChance.None);
-                    Q.Range = 520;
-                    break;
-             
-                case Mode.Tornado:
-                    Q.SetSkillshot(0.25f, 90, 1200, false, SkillshotType.Line, false, HitChance.None);
-                    Q.Range = 1100;
-                    break;
+                Q.SetSkillshot(0.25f, 90, 1200, false, SkillshotType.Line, false, HitChance.None);
+                Q.Range = 1100;
+            }
+            else
+            {
+                Q.SetSkillshot(0.25f, 60, 1600, false, SkillshotType.Line, false, HitChance.None);
+                Q.Range = 520;
             }
         }
     }
