@@ -34,9 +34,10 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                     return;
                 }
 
-                Console.WriteLine(pos.Distance(Global.Player));
-                if (pos.Distance(Global.Player) <= mob.BoundingRadius + Global.Player.BoundingRadius + 35)
+                if (pos.Distance(Global.Player) <= mob.BoundingRadius + Global.Player.BoundingRadius + 43)
+                {
                     SpellConfig.E.CastOnUnit(mob);
+                }
             }
             else
             {
