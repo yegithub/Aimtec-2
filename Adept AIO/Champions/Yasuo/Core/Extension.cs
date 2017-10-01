@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using Adept_AIO.SDK.Generic;
+﻿using System.Linq;
 using Adept_AIO.SDK.Unit_Extensions;
 using Aimtec;
 using Aimtec.SDK.Events;

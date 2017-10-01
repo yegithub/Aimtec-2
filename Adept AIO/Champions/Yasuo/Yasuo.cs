@@ -1,8 +1,6 @@
-﻿using System;
-using Adept_AIO.Champions.Yasuo.Core;
+﻿using Adept_AIO.Champions.Yasuo.Core;
 using Adept_AIO.Champions.Yasuo.Drawings;
 using Adept_AIO.Champions.Yasuo.Update.Miscellaneous;
-using Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents;
 using Adept_AIO.SDK.Delegates;
 using Adept_AIO.SDK.Unit_Extensions;
 using Aimtec;

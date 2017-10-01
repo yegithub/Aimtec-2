@@ -1,14 +1,10 @@
-﻿using System;
-using System.Linq;
-using System.Threading;
+﻿using System.Linq;
 using Adept_AIO.Champions.Jax.Core;
 using Adept_AIO.Champions.Jax.Update.Miscellaneous;
-using Adept_AIO.SDK.Generic;
 using Adept_AIO.SDK.Unit_Extensions;
 using Adept_AIO.SDK.Usables;
 using Aimtec;
 using Aimtec.SDK.Extensions;
-using Aimtec.SDK.Util;
 using GameObjects = Aimtec.SDK.Util.Cache.GameObjects;
 
 namespace Adept_AIO.Champions.Jax.Update.OrbwalkingEvents

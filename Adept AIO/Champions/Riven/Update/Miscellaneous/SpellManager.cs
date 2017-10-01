@@ -1,8 +1,6 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading;
 using Adept_AIO.Champions.Riven.Core;
-using Adept_AIO.SDK.Generic;
 using Adept_AIO.SDK.Unit_Extensions;
 using Adept_AIO.SDK.Usables;
 using Aimtec;

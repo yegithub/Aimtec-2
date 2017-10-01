@@ -259,7 +259,7 @@ namespace Adept_Tracker
 
         private void OnDestroy(GameObject sender)
         {
-            if (sender.Type != GameObjectType.obj_AI_Minion)
+            if (sender == null || sender.Type != GameObjectType.obj_AI_Minion)
             {
                 return;
             }
@@ -286,9 +286,9 @@ namespace Adept_Tracker
             CampDied?.Invoke(this, camp);
         }
 
-        private void OnCreate(GameObject sender)
+        private static void OnCreate(GameObject sender)
         {
-            if (sender.Type != GameObjectType.obj_AI_Minion)
+            if (sender == null || sender.Type != GameObjectType.obj_AI_Minion)
             {
                 return;
             }

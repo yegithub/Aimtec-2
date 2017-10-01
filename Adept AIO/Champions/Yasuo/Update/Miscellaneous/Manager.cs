@@ -1,8 +1,6 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using Adept_AIO.Champions.Yasuo.Core;
 using Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents;
-using Adept_AIO.SDK.Generic;
 using Adept_AIO.SDK.Unit_Extensions;
 using Aimtec;
 using Aimtec.SDK.Orbwalking;
@@ -38,6 +36,13 @@ namespace Adept_AIO.Champions.Yasuo.Update.Miscellaneous
                 return;
             }
 
+            Stack.OnUpdate();
+
+            if (Global.Orbwalker.IsWindingUp)
+            {
+                return;
+            }
+
             switch (Global.Orbwalker.Mode)
             {
                 case OrbwalkingMode.Combo:
@@ -48,6 +53,9 @@ namespace Adept_AIO.Champions.Yasuo.Update.Miscellaneous
                     break;
                 case OrbwalkingMode.Laneclear:
                     LaneClear.OnUpdate();
+                    break;
+                case OrbwalkingMode.Lasthit:
+                    Lasthit.OnUpdate();
                     break;
                 case OrbwalkingMode.None:
                     MinionHelper.ExtendedTarget = Vector3.Zero;

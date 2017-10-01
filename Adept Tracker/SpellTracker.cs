@@ -122,7 +122,7 @@ namespace Adept_Tracker
 
             foreach (var unit in GameObjects.EnemyHeroes)
             {
-                if (unit.ChampionName == "Lux" || unit.ChampionName == "Blitzcrank" || unit.ChampionName == "Leblanc")
+                if (unit.ChampionName == "Lux" || unit.ChampionName == "Blitzcrank" || unit.ChampionName == "Leblanc" || unit.ChampionName == "Nidalee" || unit.ChampionName == "Elise")
                 {
                     continue;
                 }
@@ -155,8 +155,33 @@ namespace Adept_Tracker
 
                     Textures[spell.Name].Add(tex);
                 }
+
+                foreach(var imagePath in LocalImages)
+                {
+                    var bitmap = Utility.LoadFromFile(imagePath);
+                    if (bitmap == null)
+                    {
+                        continue;
+                    }
+
+                    var tex = new Texture(Utility.ResizeImage(bitmap, new Size(64, 64)));
+
+                    if (!this.Textures.ContainsKey(imagePath))
+                    {
+                        this.Textures[imagePath] = new List<Texture>();
+                    }
+
+                    Textures[imagePath].Add(tex);
+                }
             }
         }
+
+        private List<string> LocalImages = new List<string>
+        {
+            "Local Images/Dragon.png",
+            "Local Images/Baron.png",
+            "Local Images/Teleport.png"
+        };
 
         private void OnRemoveBuff(Obj_AI_Base sender, Buff buff)
         {

@@ -34,8 +34,6 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                 }
                 SpellConfig.E.CastOnUnit(minion);
             }
-
-          
         }
     }
 }

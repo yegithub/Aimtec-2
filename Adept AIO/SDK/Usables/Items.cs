@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Adept_AIO.SDK.Unit_Extensions;
 using Aimtec;
-using Aimtec.SDK.Util;
 
 namespace Adept_AIO.SDK.Usables
 {

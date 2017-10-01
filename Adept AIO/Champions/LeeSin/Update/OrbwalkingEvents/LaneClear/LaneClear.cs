@@ -2,7 +2,6 @@
 using Adept_AIO.Champions.LeeSin.Core.Spells;
 using Adept_AIO.SDK.Unit_Extensions;
 using Adept_AIO.SDK.Usables;
-using Aimtec;
 using Aimtec.SDK.Damage;
 using Aimtec.SDK.Extensions;
 using Aimtec.SDK.Util;

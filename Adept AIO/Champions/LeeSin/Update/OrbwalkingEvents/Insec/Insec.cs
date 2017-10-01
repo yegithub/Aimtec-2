@@ -1,17 +1,14 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Adept_AIO.Champions.LeeSin.Core;
 using Adept_AIO.Champions.LeeSin.Core.Insec_Manager;
 using Adept_AIO.Champions.LeeSin.Core.Spells;
 using Adept_AIO.Champions.LeeSin.Update.Ward_Manager;
-using Adept_AIO.SDK.Generic;
 using Adept_AIO.SDK.Unit_Extensions;
 using Adept_AIO.SDK.Usables;
 using Aimtec;
 using Aimtec.SDK.Damage;
 using Aimtec.SDK.Events;
 using Aimtec.SDK.Extensions;
-using Aimtec.SDK.Prediction.Skillshots;
 
 namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.Insec
 {

@@ -25,7 +25,7 @@ namespace Adept_AIO.Champions.Yasuo.Core
         {
             if (mode == Mode.Tornado)
             {
-                Q.SetSkillshot(0.25f, 90, 1200, false, SkillshotType.Line);
+                Q.SetSkillshot(0.25f, 90, 1200, false, SkillshotType.Line, false, HitChance.None);
                 Q.Range = 1100;
             }
             else

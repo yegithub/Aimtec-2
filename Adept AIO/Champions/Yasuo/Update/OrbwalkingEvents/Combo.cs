@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using System.Threading;
 using Adept_AIO.Champions.Yasuo.Core;
-using Adept_AIO.SDK.Generic;
 using Adept_AIO.SDK.Unit_Extensions;
 using Adept_AIO.SDK.Usables;
 using Aimtec;
@@ -71,8 +70,12 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
 
             var m2 = MinionHelper.GetClosest(target);
             var positionBehindMinion = MinionHelper.WalkBehindMinion(target);
-       
-            MinionHelper.ExtendedMinion = positionBehindMinion;
+
+            if (positionBehindMinion.Distance(Global.Player) <= MenuConfig.Combo["MRange"].Value)
+            {
+                MinionHelper.ExtendedMinion = positionBehindMinion;
+            }
+
             MinionHelper.ExtendedTarget = target.ServerPosition;
 
             var dashDistance = MinionHelper.DashDistance(minion, target);
@@ -83,54 +86,23 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
             var circle = new Geometry.Circle(Global.Player.GetDashInfo().EndPos, 220);
             var circleCount = GameObjects.EnemyHeroes.Count(x => circle.Center.Distance(x.ServerPosition) <= circle.Radius);
 
-            if (SpellConfig.Q.Ready && !(Global.Player.IsDashing() && circleCount <= 0))
+            if (SpellConfig.Q.Ready && target.IsValidTarget(SpellConfig.Q.Range) && !(Global.Player.IsDashing() && circleCount <= 0))
             {
-                switch (Extension.CurrentMode)
+                if (Extension.CurrentMode == Mode.DashingTornado)
                 {
-                    case Mode.Dashing:
+                    if (minion != null && MenuConfig.Combo["Flash"].Enabled && dashDistance > 400 && (Dmg.Damage(target) * 1.25 > target.Health || target.CountEnemyHeroesInRange(220) >= 2))
+                    {
+                        SpellConfig.Q.Cast();
+                        DelayAction.Queue(Game.Ping / 2 + 30, () => SummonerSpells.Flash.Cast(target.Position), new CancellationToken(false));
+                    }
+                    else
+                    {
                         SpellConfig.Q.Cast(target);
-                        break;
-                    case Mode.DashingTornado:
-                        if (minion != null)
-                        {
-                            if (MenuConfig.Combo["Flash"].Enabled && dashDistance > 400 && target.IsValidTarget(425) &&
-                                (Dmg.Damage(target) * 1.25 > target.Health || target.CountEnemyHeroesInRange(220) >= 2))
-                            {
-                                SpellConfig.Q.Cast();
-
-                                DelayAction.Queue(Game.Ping / 2 + 30, () =>
-                                {
-                                    SummonerSpells.Flash.Cast(target.Position);
-                                }, new CancellationToken(false)); ;
-                            }
-                        }
-                        else
-                        {
-                            SpellConfig.Q.Cast(target);
-                        }
-                        break;
-                    case Mode.Tornado:
-                        if (target.IsValidTarget(SpellConfig.Q.Range))
-                        {
-                            SpellConfig.Q.Cast(target);
-                        }
-                        break;
-                    case Mode.Normal:
-                        if (targetDist > 1200)
-                        {
-                            var stackableMinion = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsEnemy && x.Distance(Global.Player) <= SpellConfig.Q.Range);
-                            if (stackableMinion == null)
-                            {
-                                return;
-                            }
-
-                            SpellConfig.Q.Cast(stackableMinion);
-                        }
-                        else if (target.IsValidTarget(SpellConfig.Q.Range))
-                        {
-                            SpellConfig.Q.Cast(target);
-                        }
-                        break;
+                    }
+                }
+                else
+                {
+                    SpellConfig.Q.Cast(target);
                 }
             }
 
@@ -154,10 +126,11 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                 return;
             }
 
-            if (!positionBehindMinion.IsZero && MenuConfig.Combo["Walk"].Enabled && targetDist > Global.Player.AttackRange 
-                && Global.Orbwalker.CanMove() 
+            if (!positionBehindMinion.IsZero 
                 && positionBehindMinion.Distance(Global.Player) <= MenuConfig.Combo["MRange"].Value
-                && !(MenuConfig.Combo["Turret"].Enabled && minion != null && minion.IsUnderEnemyTurret() && target.IsUnderEnemyTurret()))
+                && MenuConfig.Combo["Walk"].Enabled && targetDist > Global.Player.AttackRange 
+                && Global.Orbwalker.CanMove() 
+                && !(MenuConfig.Combo["Turret"].Enabled && target.IsUnderEnemyTurret()))
             {
                 Global.Orbwalker.Move(positionBehindMinion);
 
@@ -175,7 +148,8 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
 
                 SpellConfig.E.CastOnUnit(minion);
             }
-            else if (!target.HasBuff("YasuoDashWrapper") && targetDist <= SpellConfig.E.Range && targetDist > SpellConfig.E.Range - 100)
+
+            if (!target.HasBuff("YasuoDashWrapper") && targetDist <= SpellConfig.E.Range && targetDist > SpellConfig.E.Range - 100)
             {
                 SpellConfig.E.CastOnUnit(target);
             }

@@ -21,6 +21,7 @@ namespace Adept_AIO.Champions.Yasuo.Core
                            LaneClear,
                            JungleClear,
                            Killsteal,
+                           Misc,
                            Drawings;
 
         public static void Attach()
@@ -53,7 +54,6 @@ namespace Adept_AIO.Champions.Yasuo.Core
                 new MenuBool("Delay", "Delay R").SetToolTip("Tries to Knockup -> AA -> R"),
                 new MenuBool("Flash", "Use Flash (Beyblade)").SetToolTip("Will try to E-Q -> Flash. Known as Beyblade"),
                 new MenuBool("Turret", "Avoid Using E Under Turret"),
-                new MenuBool("Stack", "Safely Stack Q"),
                 new MenuList("Dash", "Dash Mode: ", new []{"Cursor", "From Player"}, 0),
                 new MenuSlider("Range", "Mouse Dash Range: ", 650, 1, 1000),
                 new MenuSlider("MRange", "Search Range For Behind Minions", 150, 100, 500)
@@ -90,6 +90,12 @@ namespace Adept_AIO.Champions.Yasuo.Core
                 new MenuBool("E", "Use E")
             };
 
+            Misc = new Menu("Misc", "Miscellaneous")
+            {
+                new MenuBool("Stack", "Stack Q").SetToolTip("Wont Stack when enemy is within 900 units."),
+                new MenuBool("Lasthit", "Lasthit With E")
+            };
+
             Drawings = new Menu("Drawings", "Drawings")
             {
                 new MenuSlider("Segments", "Segments", 100, 100, 200).SetToolTip("Smoothness of the circles"),
@@ -110,6 +116,7 @@ namespace Adept_AIO.Champions.Yasuo.Core
                 LaneClear,
                 JungleClear,
                 Killsteal,
+                Misc,
                 Drawings,
                 MenuShortcut.Credits
             })

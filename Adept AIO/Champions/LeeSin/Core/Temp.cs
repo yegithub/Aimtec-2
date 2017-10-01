@@ -1,6 +1,4 @@
-﻿using Aimtec;
-
-namespace Adept_AIO.Champions.LeeSin.Core
+﻿namespace Adept_AIO.Champions.LeeSin.Core
 {
     internal class Temp
     {

@@ -1,11 +1,9 @@
 ﻿using System.Linq;
 using System.Threading;
 using Adept_AIO.Champions.Yasuo.Core;
-using Adept_AIO.SDK.Generic;
 using Adept_AIO.SDK.Unit_Extensions;
 using Adept_AIO.SDK.Usables;
 using Aimtec;
-using Aimtec.SDK.Events;
 using Aimtec.SDK.Extensions;
 using Aimtec.SDK.Util;
 

@@ -1,9 +1,7 @@
-﻿using System;
-using Adept_AIO.Champions.Jax.Core;
+﻿using Adept_AIO.Champions.Jax.Core;
 using Adept_AIO.Champions.Jax.Drawings;
 using Adept_AIO.Champions.Jax.Update.Miscellaneous;
 using Adept_AIO.SDK.Unit_Extensions;
-using Adept_AIO.SDK.Usables;
 using Aimtec;
 
 namespace Adept_AIO.Champions.Jax

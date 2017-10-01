@@ -61,5 +61,10 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Local Images\Baron.png" />
+    <Content Include="Local Images\Dragon.png" />
+    <Content Include="Local Images\Teleport.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

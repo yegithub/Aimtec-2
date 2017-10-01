@@ -3,7 +3,6 @@ using Adept_AIO.Champions.Jinx.Drawings;
 using Adept_AIO.Champions.Jinx.Update.Miscellaneous;
 using Adept_AIO.Champions.Jinx.Update.OrbwalkingEvents;
 using Adept_AIO.SDK.Delegates;
-using Adept_AIO.SDK.Unit_Extensions;
 using Aimtec;
 
 namespace Adept_AIO.Champions.Jinx
