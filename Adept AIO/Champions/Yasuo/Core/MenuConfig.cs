@@ -94,7 +94,6 @@ namespace Adept_AIO.Champions.Yasuo.Core
             {
                 new MenuBool("Stack", "Stack Q").SetToolTip("Wont Stack when enemy is within 900 units."),
                 new MenuBool("Lasthit", "Lasthit With E"),
-                new MenuSlider("FleeRange", "Dist Before E (Wall-Flee)", 130, 90, 300)
             };
 
             Drawings = new Menu("Drawings", "Drawings")
