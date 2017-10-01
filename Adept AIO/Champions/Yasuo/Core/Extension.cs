@@ -38,7 +38,7 @@ namespace Adept_AIO.Champions.Yasuo.Core
         public static int BuffStart;
         public static int BuffEnd;
        
-        public static bool IsItTimeToUlt(Obj_AI_Base target, int timeUntilValid = 710)
+        public static bool IsItTimeToUlt(Obj_AI_Base target, int timeUntilValid = 600)
         {
             var buff = target.Buffs.FirstOrDefault(i => i.Type == BuffType.Knockback || i.Type == BuffType.Knockup);
             if (buff == null)

@@ -106,18 +106,11 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                 }
             }
 
-            if (SpellConfig.R.Ready && Extension.KnockedUp(target))
+            if (SpellConfig.R.Ready && Extension.KnockedUp(target) && KnockUpHelper.IsItTimeToUlt(target))
             {
                 if (targetCount >= MenuConfig.Combo["Count"].Value || targetDist > 350 && minion == null)
                 {
-                    if (MenuConfig.Combo["Delay"].Enabled && KnockUpHelper.IsItTimeToUlt(target))
-                    {
-                        SpellConfig.R.Cast();
-                    }
-                    else
-                    {
-                        DelayAction.Queue(250, () => SpellConfig.R.Cast(), new CancellationToken(false));
-                    }  
+                    SpellConfig.R.Cast();
                 }
             }
 

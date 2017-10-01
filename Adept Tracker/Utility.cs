@@ -70,11 +70,12 @@ namespace Adept_Tracker
             return bmp;
         }
 
-        public static Bitmap DownloadBitMap(string link)
+        public static Bitmap DownloadBitMap(string name)
         {
             try
             {
-                var request = WebRequest.Create(link);
+                Write($"Downloading new data | {Game.Version}", ConsoleColor.Red);
+                var request = WebRequest.Create($"http://ddragon.leagueoflegends.com/cdn/7.19.1/img/spell/{name}.png");
                 var response = request.GetResponse();
                 var responseStream = response.GetResponseStream();
 
@@ -88,9 +89,10 @@ namespace Adept_Tracker
             catch (Exception e)
             {
                 Console.Write(e);
-                Console.WriteLine($"Caused by {link}");
+                Console.WriteLine($"Caused by {name}");
                 return null;
             }
+
             return null;
         }
 

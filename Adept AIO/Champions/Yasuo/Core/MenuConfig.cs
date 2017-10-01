@@ -51,7 +51,6 @@ namespace Adept_AIO.Champions.Yasuo.Core
                 new MenuBool("Walk", "Walk Behind Minion To Dash"),
                 new MenuBool("Dodge", "Windwall Targetted Spells"),
                 new MenuSlider("Count", "Use R If X Airbourne", 2, 0, 5),
-                new MenuBool("Delay", "Delay R").SetToolTip("Tries to Knockup -> AA -> R"),
                 new MenuBool("Flash", "Use Flash (Beyblade)").SetToolTip("Will try to E-Q -> Flash. Known as Beyblade"),
                 new MenuBool("Turret", "Avoid Using E Under Turret"),
                 new MenuList("Dash", "Dash Mode: ", new []{"Cursor", "From Player"}, 0),

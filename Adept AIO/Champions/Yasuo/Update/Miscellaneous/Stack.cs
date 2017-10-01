@@ -10,12 +10,12 @@ namespace Adept_AIO.Champions.Yasuo.Update.Miscellaneous
     {
         public static void OnUpdate()
         {
-            if (Global.Player.CountEnemyHeroesInRange(900) >= 1 || Global.Player.IsDashing() || !MenuConfig.Misc["Stack"].Enabled || !SpellConfig.Q.Ready || Extension.CurrentMode == Mode.Tornado || Extension.CurrentMode == Mode.DashingTornado)
+            if (Global.Player.CountEnemyHeroesInRange(500) >= 1 || Global.Player.IsDashing() || !MenuConfig.Misc["Stack"].Enabled || !SpellConfig.Q.Ready || Extension.CurrentMode == Mode.Tornado || Extension.CurrentMode == Mode.DashingTornado)
             {
                 return;
             }
 
-            var mob = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsValidTarget() && x.Distance(Global.Player) <= SpellConfig.Q.Range - 100);
+            var mob = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsValidTarget() && x.Distance(Global.Player) <= 425);
             if (mob == null)
             {
                 return;

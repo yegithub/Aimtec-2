@@ -569,7 +569,7 @@ namespace Adept_AIO.SDK.Unit_Extensions
             }
 
             var minion = sender as Obj_AI_Minion;
-            if (minion != null && !minion.UnitSkinName.ToLower().Contains("plant") && !minion.Name.ToLower().Contains("plant"))
+            if (minion != null && minion.Type != GameObjectType.BasicLevelProp)
             {
                 if (minion.Team != GameObjectTeam.Neutral)
                 {
@@ -681,7 +681,7 @@ namespace Adept_AIO.SDK.Unit_Extensions
             }
 
             var minion = sender as Obj_AI_Minion;
-            if (minion != null && !minion.UnitSkinName.ToLower().Contains("plant") && !minion.Name.ToLower().Contains("plant"))
+            if (minion != null && minion.Type != GameObjectType.BasicLevelProp)
             {
                 if (minion.Team != GameObjectTeam.Neutral)
                 {

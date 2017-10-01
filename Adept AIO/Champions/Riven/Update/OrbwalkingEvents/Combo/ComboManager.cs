@@ -141,7 +141,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents.Combo
 
             Extensions.AllIn = MenuConfig.Combo["Flash"].Enabled &&
                                SummonerSpells.Flash.Ready &&
-                               SafetyCheck(target) &&
+                               CanFlashKill(target) &&
                                target.Distance(Global.Player) > 500 &&
                                target.Distance(Global.Player) < 720;
 
@@ -158,7 +158,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents.Combo
             }
         }
 
-        private static bool SafetyCheck(Obj_AI_Base target)
+        private static bool CanFlashKill(Obj_AI_Base target)
         {
             return target.Health < Dmg.Damage(target) * .3 && Global.Player.HealthPercent() >= 65 ||
                    target.Health < Global.Player.GetAutoAttackDamage(target) && GameObjects.AllyHeroes.FirstOrDefault(x => x.Distance(target) < 300) == null ||
