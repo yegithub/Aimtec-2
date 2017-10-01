@@ -18,6 +18,8 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
         private static Obj_AI_Base _unit;
         private static bool _serverPosition;
 
+        public static float LastR;
+
         public static void OnProcessSpellCast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
         {
             if (!sender.IsMe)
@@ -32,12 +34,14 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                     _canUseQ = false;
                     _canWq = false;
                     _serverPosition = false;
-                    Animation.Reset();
+
+                    DelayAction.Queue(Game.Ping / 2 + 30, Animation.Reset, new CancellationToken(false));
                     break;
                 case "RivenMartyr":
                     _canUseW = false;
                     break;
                 case "RivenFengShuiEngine":
+                    LastR = Game.TickCount;
                     Enums.UltimateMode = UltimateMode.Second;
                     break;
                 case "RivenIzunaBlade": 
@@ -48,7 +52,12 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 
         public static void OnUpdate()
         {
-            if (_unit == null || _unit.HasBuff("FioraW") || _unit.HasBuff("FioraW") || _unit.HasBuff("PoppyW"))
+            if (_unit == null)
+            {
+                return;
+            }
+
+            if (_unit is Obj_AI_Hero && _unit.HasBuff("FioraW"))
             {
                 return;
             }
@@ -105,6 +114,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 
         public static void CastWq(Obj_AI_Base target)
         {
+            
             _unit = target;
             _canWq = true;
         }

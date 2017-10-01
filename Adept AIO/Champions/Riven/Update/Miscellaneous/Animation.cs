@@ -12,7 +12,6 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
         public static float LastReset;
         public static bool DidRecentlyCancel;
 
-     
         public static void Reset()
         {
             if (Global.Orbwalker.Mode == OrbwalkingMode.None)
@@ -22,21 +21,30 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
             }
 
             Global.Orbwalker.AttackingEnabled = false;
+            Global.Orbwalker.Move(Game.CursorPos);
 
-            DelayAction.Queue(Game.Ping / 2 + 20 + (Game.TickCount - SpellConfig.W.LastCastAttemptT <= 750 ? 750 / 2 : 0), () =>
+            LastReset = Game.TickCount;
+            DidRecentlyCancel = true;
+        }
+
+        private static int MoveDelay()
+        {
+            var baseDelay = 0;
+            if (Game.TickCount - SpellConfig.W.LastCastAttemptT <= 900)
             {
-            
-                Global.Orbwalker.Move(Game.CursorPos);
-                
-                LastReset = Game.TickCount;
-                DidRecentlyCancel = true;
-              
-            }, new CancellationToken(false));
+                baseDelay += 600;
+            }
+
+            if (Game.TickCount - SpellManager.LastR <= 1600)
+            {
+                baseDelay *= 2;
+            }
+            return baseDelay;
         }
 
         public static float GetDelay()
         {
-            return (Extensions.CurrentQCount == 1 ? 450 : 350) - 3.333f * Global.Player.Level; 
+            return MoveDelay() + (Extensions.CurrentQCount == 1 ? 450 : 350) - 3.333f * Global.Player.Level; 
         }
 
         public static void OnProcessAutoAttack(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)

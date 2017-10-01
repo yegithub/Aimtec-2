@@ -22,8 +22,9 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 
                 if (Animation.DidRecentlyCancel)
                 {
-                    if (Game.TickCount - Extensions.LastQCastAttempt >= Animation.GetDelay())
+                    if (Game.TickCount - Animation.LastReset >= Animation.GetDelay())
                     {
+                       
                         Global.Orbwalker.ResetAutoAttackTimer();
                         Global.Orbwalker.AttackingEnabled = true;
                         Animation.DidRecentlyCancel = false;

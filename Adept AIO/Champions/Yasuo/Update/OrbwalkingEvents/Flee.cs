@@ -20,7 +20,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
             var mob = GameObjects.Jungle.OrderBy(x => x.Distance(Game.CursorPos)).FirstOrDefault(x => x.Distance(Global.Player) <= SpellConfig.E.Range + 200 && !x.HasBuff("YasuoDashWrapper"));
             if (mob != null)
             {
-                var pos = mob.ServerPosition + (mob.ServerPosition -  Global.Player.ServerPosition).Normalized() * mob.BoundingRadius;
+                var pos = mob.ServerPosition + (mob.ServerPosition - Global.Player.ServerPosition).Normalized() * mob.BoundingRadius;
 
                 var point = WallExtension.GeneratePoint(mob.ServerPosition, Global.Player.ServerPosition.Extend(mob.ServerPosition, 475 + mob.BoundingRadius));
 
