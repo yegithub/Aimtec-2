@@ -14,7 +14,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.Miscellaneous
                 return;
             }
 
-            var mob = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsValidTarget() && x.Distance(Global.Player) <= SpellConfig.Q.Range);
+            var mob = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsValidTarget() && x.Distance(Global.Player) <= SpellConfig.Q.Range - 100);
             if (mob == null)
             {
                 return;
