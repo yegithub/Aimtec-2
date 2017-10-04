@@ -104,8 +104,9 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                         SpellConfig.E.CastOnUnit(m2);
                     }
                 }
-                else if (minion != null && targetDist > Global.Player.AttackRange + 80)
+                else if (minion != null && (targetDist > Global.Player.AttackRange + 80 || SpellConfig.Q.Ready))
                 {
+              
                     if (MenuConfig.Combo["Turret"].Enabled && minion.ServerPosition.PointUnderEnemyTurret() ||
                         MenuConfig.Combo["Dash"].Value == 0 &&
                         minion.Distance(Game.CursorPos) > MenuConfig.Combo["Range"].Value)
@@ -115,9 +116,8 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
 
                     SpellConfig.E.CastOnUnit(minion);
                 }
-
-                if (!target.HasBuff("YasuoDashWrapper") && targetDist <= SpellConfig.E.Range &&
-                    targetDist > SpellConfig.E.Range - 100)
+                else if (!target.HasBuff("YasuoDashWrapper") && targetDist <= SpellConfig.E.Range &&
+                    targetDist > SpellConfig.E.Range - 50)
                 {
                     SpellConfig.E.CastOnUnit(target);
                 }

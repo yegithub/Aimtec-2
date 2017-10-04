@@ -105,7 +105,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                         }
                         break;
                     case Mode.Normal:
-                        var nM = GameObjects.EnemyMinions.LastOrDefault(x => x.IsValidSpellTarget(SpellConfig.Q.Range));
+                        var nM = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsValidSpellTarget(SpellConfig.Q.Range - 100));
                         if (nM == null)
                         {
                             return;
@@ -115,7 +115,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                     case Mode.DashingTornado:
                     case Mode.Dashing:
                         var dashM = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsValidSpellTarget(SpellConfig.Q.Range));
-                        if (dashM == null)
+                        if (dashM == null || !dashM.IsValidTarget())
                         {
                             return;
                         }
@@ -125,7 +125,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                        
                         if (circleCount >= 2)
                         {
-                            SpellConfig.Q.Cast(dashM);
+                            SpellConfig.Q.Cast();
                         }
                         break;
                 }
