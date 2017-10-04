@@ -65,7 +65,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                         SpellConfig.Q.Cast();
                         break;
                     case Mode.DashingTornado:
-                        if (minion != null && dashDistance <= 425)
+                        if (minion != null && dashDistance <= 425 && dashDistance > 220)
                         {
                             if (MenuConfig.Combo["Flash"].Enabled && SummonerSpells.IsValid(SummonerSpells.Flash))
                             {
