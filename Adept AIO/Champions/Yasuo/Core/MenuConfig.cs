@@ -70,7 +70,7 @@ namespace Adept_AIO.Champions.Yasuo.Core
                 new MenuBool("Check", "Don't Clear When Enemies Nearby"),
                 new MenuBool("Turret", "Don't Clear Under Turret"),
                 new MenuBool("Q3", "Use Q3"),
-                new MenuBool("EAA", "Only E After AA (Fast Clear)"),
+                new MenuBool("EAA", "Only E After AA"),
                 new MenuList("Mode", "E Mode: ", new []{"Disabled", "Lasthit", "Fast Clear"}, 1)
             };
 

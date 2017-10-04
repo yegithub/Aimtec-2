@@ -1,6 +1,8 @@
-﻿using Adept_AIO.SDK.Unit_Extensions;
+﻿using System.Threading;
+using Adept_AIO.SDK.Unit_Extensions;
 using Aimtec;
 using Aimtec.SDK.Extensions;
+using Aimtec.SDK.Util;
 
 namespace Adept_AIO.SDK.Generic
 {
@@ -9,6 +11,14 @@ namespace Adept_AIO.SDK.Generic
         public static int Percent(double value1, double value2, int multiplier = 100)
         {
             return (int)(value2 / value1 * multiplier);
+        }
+
+        public static void DisableAutoAttack(int duration = 500)
+        {
+            duration += Game.Ping / 2 + 50;
+            Global.Orbwalker.AttackingEnabled = false;
+
+            DelayAction.Queue(duration, () => Global.Orbwalker.AttackingEnabled = true, new CancellationToken(false));
         }
 
         public static float GetEnergyPercent()

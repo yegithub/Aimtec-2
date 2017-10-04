@@ -50,15 +50,5 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                     break;
             }
         }
-
-        public static void DisableAutoAttack(int duration = 400)
-        {
-            duration += Game.Ping / 2 + 50;
-
-            if(Global.Orbwalker.AttackingEnabled)
-            Global.Orbwalker.AttackingEnabled = false;
-
-            DelayAction.Queue(duration, () => Global.Orbwalker.AttackingEnabled = true, new CancellationToken(false));
-        }
     }
 }

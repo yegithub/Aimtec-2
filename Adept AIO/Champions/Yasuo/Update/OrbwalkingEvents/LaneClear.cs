@@ -20,7 +20,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                 return;
             }
 
-            if (SpellConfig.E.Ready && MenuConfig.LaneClear["Mode"].Value == 2)
+            if (SpellConfig.E.Ready && MenuConfig.LaneClear["Mode"].Value == 2 && MenuConfig.LaneClear["EAA"].Enabled)
             {
                 var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(Global.Player) <= SpellConfig.E.Range &&
                                                                           x.Distance(Game.CursorPos) < MenuConfig.Combo["Range"].Value &&
@@ -51,9 +51,9 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
 
         public static void OnUpdate()
         {
-            if (SpellConfig.E.Ready)
+            if (SpellConfig.E.Ready && !MenuConfig.LaneClear["EAA"].Enabled)
             {
-                var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(Global.Player) <= SpellConfig.E.Range && !x.HasBuff("YasuoDashWrapper"));
+                var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsValidTarget() && x.Distance(Global.Player) <= SpellConfig.E.Range && !x.HasBuff("YasuoDashWrapper"));
 
                 if (!SpellConfig.E.Ready || minion == null || minion.IsUnderEnemyTurret() || MenuConfig.LaneClear["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(2000) != 0)
                 {
@@ -72,18 +72,11 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                         SpellConfig.E.CastOnUnit(minion);
                         break;
                     case 2:
-                        if (MenuConfig.LaneClear["EAA"].Enabled)
-                        {
-                            return;
-                        }
-
                         SpellConfig.E.CastOnUnit(minion);
-
                         break;
                 }
             }
             
-
             if (SpellConfig.Q.Ready)
             {
                 switch (Extension.CurrentMode)

@@ -91,9 +91,13 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
 
             if (SpellConfig.E.Ready)
             {
-                if (!positionBehindMinion.IsZero
-                    && positionBehindMinion.Distance(Global.Player) <= MenuConfig.Combo["MRange"].Value
-                    && MenuConfig.Combo["Walk"].Enabled && targetDist > Global.Player.AttackRange
+                if (targetDist <= Global.Player.AttackRange && !SpellConfig.Q.Ready)
+                {
+                    return;
+                }
+
+                if (positionBehindMinion.Distance(Global.Player) <= MenuConfig.Combo["MRange"].Value
+                    && MenuConfig.Combo["Walk"].Enabled 
                     && Global.Orbwalker.CanMove()
                     && !(MenuConfig.Combo["Turret"].Enabled && target.IsUnderEnemyTurret()))
                 {
@@ -104,9 +108,8 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                         SpellConfig.E.CastOnUnit(m2);
                     }
                 }
-                else if (minion != null && (targetDist > Global.Player.AttackRange + 80 || SpellConfig.Q.Ready))
+                else if (minion != null)
                 {
-              
                     if (MenuConfig.Combo["Turret"].Enabled && minion.ServerPosition.PointUnderEnemyTurret() ||
                         MenuConfig.Combo["Dash"].Value == 0 &&
                         minion.Distance(Game.CursorPos) > MenuConfig.Combo["Range"].Value)

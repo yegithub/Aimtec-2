@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading;
 using Adept_AIO.Champions.Riven.Core;
+using Adept_AIO.SDK.Generic;
 using Adept_AIO.SDK.Unit_Extensions;
 using Adept_AIO.SDK.Usables;
 using Aimtec;
@@ -44,7 +45,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                 case "RivenFengShuiEngine":
                     LastR = Game.TickCount;
                     Enums.UltimateMode = UltimateMode.Second;
-                    Animation.DisableAutoAttack(200); 
+                    Maths.DisableAutoAttack(200); 
                     break;
                 case "RivenIzunaBlade":
                     Enums.UltimateMode = UltimateMode.First;
