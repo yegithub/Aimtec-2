@@ -15,7 +15,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents.Combo
 {
     internal class ComboManager
     {
-        public static void OnPostAttack()
+        public static void OnProcessAutoAttack()
         {
             var target = GameObjects.EnemyHeroes.OrderBy(x => x.Distance(Global.Player)).FirstOrDefault();
             if (target == null)
@@ -152,7 +152,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents.Combo
 
             SummonerSpells.Flash.Cast(target);
 
-            if (SpellManager.InsideKiBurst(target.ServerPosition, target.BoundingRadius))
+            if (target.IsValidTarget(SpellConfig.W.Range))
             {
                 SpellManager.CastW(target);
             }

@@ -276,13 +276,6 @@ namespace Adept_AIO.Champions.LeeSin
             var gapcloser = new AntiGapcloser(spellConfig, wardmanager, wardtracker);
             Gapcloser.OnGapcloser += gapcloser.OnGapcloser;
 
-            var wardjumpRange = new MenuSlider("WardRange", "WardJump Range", 600, 1, 620);
-            mainmenu.Add(wardjumpRange);
-
-            wardjump.Range = mainmenu["WardRange"].Value;
-           
-            wardjumpRange.OnValueChanged += (sender, args) => wardjump.Range = args.GetNewValue<MenuSlider>().Value;
-
             var manager = new Manager(combo, harass, jungle, lane, lasthit);
           
             Game.OnUpdate += manager.OnUpdate;

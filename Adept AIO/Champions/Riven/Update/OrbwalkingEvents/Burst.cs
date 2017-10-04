@@ -14,9 +14,9 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
 {
     internal class Burst
     {
-        public static void OnPostAttack()
+        public static void OnProcessAutoAttack()
         {
-            var target = GameObjects.EnemyHeroes.OrderBy(x => x.Distance(Global.Player)).FirstOrDefault();
+            var target = Global.Orbwalker.GetOrbwalkingTarget() as Obj_AI_Base;
             if (target == null)
             {
                 return;
@@ -25,17 +25,10 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
             {
                 case BurstPattern.TheShy:
 
-                    if (SpellConfig.R2.Ready)
-                    {
-                        SpellConfig.R2.Cast(target);
-                        //DelayAction.Queue(250 + Game.Ping / 2, ()=> SpellManager.CastQ(target), new CancellationToken(false));
-                    }
-
                     if (SpellConfig.Q.Ready)
                     {
                         SpellManager.CastQ(target);
                     }
-
                     break;
 
                 case BurstPattern.Execution:
@@ -65,6 +58,16 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
                 return;
             }
 
+            if (SpellConfig.R2.Ready && Enums.UltimateMode == UltimateMode.Second)
+            {
+                SpellManager.CastR2(target);
+            }
+
+            if (target.IsValidSpellTarget(SpellConfig.W.Range) && SpellConfig.W.Ready)
+            {
+                Global.Player.SpellBook.CastSpell(SpellSlot.W);
+            }
+
             if (SpellConfig.R.Ready
                 && Enums.UltimateMode == UltimateMode.First
                 && SpellConfig.E.Ready)
@@ -77,27 +80,23 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
                 SpellConfig.E.Cast(target.ServerPosition);
             }
 
-
             switch (Enums.BurstPattern)
             {
                 case BurstPattern.TheShy:
 
-                    if (Extensions.AllIn)
+                    if (Extensions.AllIn && target.Distance(Global.Player) > SpellConfig.E.Range + Global.Player.AttackRange && SummonerSpells.IsValid(SummonerSpells.Flash))
                     {
-                        if (SpellConfig.W.Ready && SummonerSpells.IsValid(SummonerSpells.Flash))
+                        DelayAction.Queue(Game.Ping / 2 + 50, delegate
                         {
                             Global.Player.SpellBook.CastSpell(SpellSlot.W);
-                            DelayAction.Queue(188, ()=> SummonerSpells.Flash.Cast(target.ServerPosition));
-                        }
-                    }
-                    else if (target.IsValidTarget(SpellConfig.E.Range + Global.Player.AttackRange))
-                    {
-                        if (SpellConfig.W.Ready)
-                        {
-                            SpellManager.CastW(target);
-                        }
-                    }
 
+                        }, new CancellationToken(false));
+
+                        DelayAction.Queue(280, delegate
+                        {
+                            SummonerSpells.Flash.Cast(target.ServerPosition);
+                        }, new CancellationToken(false));
+                    }
                     break;
 
                 case BurstPattern.Execution:
@@ -106,15 +105,14 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
                     {
                         SpellConfig.R.Cast();
                     }
-                    else if (SpellConfig.E.Ready && Enums.UltimateMode == UltimateMode.Second && Game.TickCount - SpellConfig.R.LastCastAttemptT >= 1100)
+                    else if (SpellConfig.E.Ready && Enums.UltimateMode == UltimateMode.Second &&
+                             Game.TickCount - SpellConfig.R.LastCastAttemptT >= 1100)
                     {
                         SpellConfig.E.Cast(target.ServerPosition);
                         SpellConfig.R2.Cast(target.ServerPosition);
 
-                        DelayAction.Queue(100, () =>
-                        {
-                            SummonerSpells.Flash.Cast(target.ServerPosition);
-                        }, new CancellationToken(false));
+                        DelayAction.Queue(100, () => { SummonerSpells.Flash.Cast(target.ServerPosition); },
+                            new CancellationToken(false));
 
                         DelayAction.Queue(500, () =>
                         {
@@ -122,20 +120,24 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
                             SpellManager.CastQ(target);
                         }, new CancellationToken(false));
                     }
-                 
+
                     break;
-            }  
+            }
         }
 
         private static BurstPattern GeneratePattern(Obj_AI_Base target)
         {
             switch (MenuConfig.BurstMenu["Mode"].Value)
             {
-                case 0: return Maths.Percent(target.Health, Dmg.Damage(target)) > 135 ? BurstPattern.Execution : BurstPattern.TheShy;
+                case 0:
+                    return Maths.Percent(target.Health, Dmg.Damage(target)) > 135
+                        ? BurstPattern.Execution
+                        : BurstPattern.TheShy;
                 case 1: return BurstPattern.TheShy;
                 case 2: return BurstPattern.Execution;
                 default: throw new ArgumentOutOfRangeException();
             }
+            
         }
     }
 }

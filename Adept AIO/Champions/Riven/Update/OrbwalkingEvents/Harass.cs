@@ -11,7 +11,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
 {
     public class Harass
     {
-        public static void OnPostAttack()
+        public static void OnProcessAutoAttack()
         {
             var target = GameObjects.EnemyHeroes.OrderBy(x => x.Distance(Global.Player)).FirstOrDefault();
             if (target == null || !MenuConfig.Harass[target.ChampionName].Enabled)

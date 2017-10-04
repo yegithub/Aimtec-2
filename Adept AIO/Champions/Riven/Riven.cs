@@ -1,9 +1,11 @@
-﻿using Adept_AIO.Champions.Riven.Core;
+﻿using System;
+using Adept_AIO.Champions.Riven.Core;
 using Adept_AIO.Champions.Riven.Drawings;
 using Adept_AIO.Champions.Riven.Update.Miscellaneous;
 using Adept_AIO.SDK.Delegates;
 using Adept_AIO.SDK.Unit_Extensions;
 using Aimtec;
+using Aimtec.SDK.Orbwalking;
 
 namespace Adept_AIO.Champions.Riven
 {
@@ -21,10 +23,10 @@ namespace Adept_AIO.Champions.Riven
 
             Obj_AI_Base.OnProcessSpellCast += SpellManager.OnProcessSpellCast;
             Obj_AI_Base.OnProcessSpellCast += SafetyMeasure.OnProcessSpellCast;
-            Obj_AI_Base.OnProcessAutoAttack += Animation.OnProcessAutoAttack;
+
             Obj_AI_Base.OnPlayAnimation += Animation.OnPlayAnimation;
 
-            Global.Orbwalker.PostAttack += Manager.PostAttack;
+            Global.Orbwalker.PostAttack += Manager.OnPostAttack;
             Render.OnRender += DrawManager.RenderBasics;
             Render.OnPresent += DrawManager.OnPresent;   
         }

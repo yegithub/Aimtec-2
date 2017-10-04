@@ -63,10 +63,10 @@ namespace Adept_AIO.Champions.Azir.Core
             {
                 new MenuBool("Check", "Safe Clear"),
                 new MenuSliderBool("Q", "Use Q (min Mana%)", true, 40),
-                new MenuSliderBool("QHit", "Min Hit By Q", true, 3, 1, 7),
+                new MenuSlider("QHit", "Min Hit By Q", 3, 1, 7),
                 new MenuSliderBool("W", "Use W (min Mana%)", true, 25),
-                new MenuSliderBool("E", "Use E (min Mana%)", true, 70),
-                new MenuSliderBool("EHit", "Min Hit By E", true, 4, 1, 7),
+                new MenuSliderBool("E", "Use E (min Mana%)", false, 70),
+                new MenuSlider("EHit", "Min Hit By E", 4, 1, 7),
             };
 
             Jungle = new Menu("Jungle", "Jungle")

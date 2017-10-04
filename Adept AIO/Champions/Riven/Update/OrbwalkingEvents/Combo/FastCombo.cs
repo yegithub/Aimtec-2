@@ -24,7 +24,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents.Combo
             }
             else
             {
-                if (SpellManager.InsideKiBurst(target.ServerPosition, target.BoundingRadius) && SpellConfig.W.Ready)
+                if (target.IsValidTarget(SpellConfig.W.Range) && SpellConfig.W.Ready)
                 {
                     SpellConfig.W.Cast();
                 }
@@ -56,7 +56,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents.Combo
 
             if (ComboManager.CanCastR1(target))
             {
-                SpellConfig.R.Cast();
+                SpellConfig.R.Cast(target);
             }
         }
     }

@@ -35,7 +35,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
             else if (SpellConfig.W.Ready
                 && MenuConfig.Killsteal["W"].Enabled
                 && target.Health <= Global.Player.GetSpellDamage(target, SpellSlot.W)
-                && SpellManager.InsideKiBurst(target.ServerPosition, target.BoundingRadius))
+                && target.IsValidTarget(SpellConfig.W.Range))
             {
                 SpellManager.CastW(target);
             }

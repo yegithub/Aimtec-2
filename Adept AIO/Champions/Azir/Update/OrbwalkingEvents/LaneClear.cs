@@ -41,12 +41,12 @@ namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
                 Global.Player.ManaPercent() > MenuConfig.Lane["W"].Value)
             {
                 var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(Global.Player) <= SpellConfig.W.Range && x.MaxHealth > 10 && x.IsValid && !x.IsDead);
-                if (minion == null)
+                if (minion == null || SoldierHelper.Soldiers.Count >= 2)
                 {
                     return;
                 }
 
-                var circle = new Geometry.Circle(Vector3Extensions.To2D(minion.ServerPosition), 280);
+                var circle = new Geometry.Circle(Vector3Extensions.To2D(minion.ServerPosition), 265);
 
                 if (GameObjects.EnemyMinions.Count(x => circle.Center.Distance(x.ServerPosition) <= circle.Radius) >= 3 && Global.Player.GetSpell(SpellSlot.W).Ammo > 1)
                 {

@@ -10,7 +10,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
 {
     internal class Jungle
     {
-        public static void OnPostAttack(Obj_AI_Minion mob)
+        public static void OnProcessAutoAttack(Obj_AI_Minion mob)
         {
             if (mob == null || mob.MaxHealth <= 7 || MenuConfig.Jungle["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(1500) >= 1)
             {

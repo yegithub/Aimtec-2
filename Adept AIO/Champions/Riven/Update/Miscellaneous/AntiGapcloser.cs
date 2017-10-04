@@ -15,15 +15,15 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                 return;
             }
 
-            var pos = Global.Player.ServerPosition + (Global.Player.ServerPosition - args.EndPosition).Normalized();
-
-            if (SpellConfig.E.Ready && args.EndPosition.Distance(Global.Player) < 65)
+            if (SpellConfig.E.Ready && args.EndPosition.Distance(Global.Player) <= 100)
             {
+                var pos = Global.Player.ServerPosition + (Global.Player.ServerPosition - args.EndPosition).Normalized() * SpellConfig.E.Range;
                 SpellConfig.E.Cast(pos);
             }
-            else if (SpellConfig.W.Ready && SpellManager.InsideKiBurst(sender.ServerPosition, sender.BoundingRadius))
+
+            if (SpellConfig.W.Ready && sender.IsValidTarget(SpellConfig.W.Range))
             {
-                SpellConfig.W.Cast();
+                SpellManager.CastW(sender);
             }
         }
     }

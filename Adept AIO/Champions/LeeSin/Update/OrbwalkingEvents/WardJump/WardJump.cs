@@ -1,14 +1,15 @@
 ﻿using Adept_AIO.Champions.LeeSin.Core.Spells;
 using Adept_AIO.Champions.LeeSin.Update.Ward_Manager;
+using Adept_AIO.SDK.Unit_Extensions;
 using Aimtec;
+using Aimtec.SDK.Extensions;
 
 namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.WardJump
 {
     internal class WardJump : IWardJump
     {
         public bool Enabled { get; set; }
-        public int Range { get; set; }
-
+     
         private readonly IWardTracker _wardTracker;
 
         private readonly IWardManager _wardManager;
@@ -31,7 +32,9 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.WardJump
 
             if (_spellConfig.W.Ready && _spellConfig.IsFirst(_spellConfig.W) && _wardTracker.IsWardReady())
             {
-                _wardManager.WardJump(Game.CursorPos, Range);
+                var cursorDist = (int) Global.Player.Distance(Game.CursorPos);
+                var dist = cursorDist <= _spellConfig.WardRange ? cursorDist : _spellConfig.WardRange; 
+                _wardManager.WardJump(Game.CursorPos,  dist);
             }
         }
     }

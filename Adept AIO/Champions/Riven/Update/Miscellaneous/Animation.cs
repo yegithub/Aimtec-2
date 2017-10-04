@@ -2,6 +2,7 @@
 using Adept_AIO.Champions.Riven.Core;
 using Adept_AIO.SDK.Unit_Extensions;
 using Aimtec;
+using Aimtec.SDK.Extensions;
 using Aimtec.SDK.Orbwalking;
 using Aimtec.SDK.Util;
 
@@ -14,47 +15,19 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 
         public static void Reset()
         {
-            if (Global.Orbwalker.Mode == OrbwalkingMode.None)
+            DelayAction.Queue(Game.Ping / 2 + 50, delegate
             {
-                Global.Orbwalker.AttackingEnabled = true;
-                return;
-            }
+                Global.Orbwalker.AttackingEnabled = false;
 
-            Global.Orbwalker.AttackingEnabled = false;
-            Global.Orbwalker.Move(Game.CursorPos);
+                LastReset = Game.TickCount;
+                DidRecentlyCancel = true;
 
-            LastReset = Game.TickCount;
-            DidRecentlyCancel = true;
-        }
-
-        private static int MoveDelay()
-        {
-            var baseDelay = 0;
-            if (Game.TickCount - SpellConfig.W.LastCastAttemptT <= 900)
-            {
-                baseDelay += 600;
-            }
-
-            if (Game.TickCount - SpellManager.LastR <= 1600)
-            {
-                baseDelay *= 2;
-            }
-            return baseDelay;
+            }, new CancellationToken(false));
         }
 
         public static float GetDelay()
         {
-            return MoveDelay() + (Extensions.CurrentQCount == 1 ? 450 : 350) - 3.333f * Global.Player.Level; 
-        }
-
-        public static void OnProcessAutoAttack(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
-        {
-            if (!sender.IsMe)
-            {
-                return;
-            }
-
-            DelayAction.Queue(Game.Ping / 2 + 100, ()=> Extensions.DidJustAuto = true, new CancellationToken(false));
+            return (Extensions.CurrentQCount == 1 ? 450 : 325) - 3.333f * Global.Player.Level; 
         }
 
         public static void OnPlayAnimation(Obj_AI_Base sender, Obj_AI_BasePlayAnimationEventArgs args)
@@ -76,6 +49,16 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                     Extensions.CurrentQCount = 1; // Q3 
                     break;
             }
+        }
+
+        public static void DisableAutoAttack(int duration = 400)
+        {
+            duration += Game.Ping / 2 + 50;
+
+            if(Global.Orbwalker.AttackingEnabled)
+            Global.Orbwalker.AttackingEnabled = false;
+
+            DelayAction.Queue(duration, () => Global.Orbwalker.AttackingEnabled = true, new CancellationToken(false));
         }
     }
 }

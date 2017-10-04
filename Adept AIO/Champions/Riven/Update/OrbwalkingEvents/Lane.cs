@@ -10,7 +10,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
 {
     internal class Lane
     {
-        public static void OnPostAttack()
+        public static void OnProcessAutoAttack()
         {
             var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(Global.Player) < Extensions.EngageRange &&
                                                                       x.Health > Global.Player.GetAutoAttackDamage(x));

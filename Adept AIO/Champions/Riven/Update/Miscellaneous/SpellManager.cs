@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading;
 using Adept_AIO.Champions.Riven.Core;
 using Adept_AIO.SDK.Unit_Extensions;
@@ -11,9 +12,9 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 {
     internal class SpellManager
     {
+        private static bool _canWq;
         private static bool _canUseQ;
         private static bool _canUseW;
-        private static bool _canWq;
 
         private static Obj_AI_Base _unit;
         private static bool _serverPosition;
@@ -34,8 +35,8 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                     _canUseQ = false;
                     _canWq = false;
                     _serverPosition = false;
-
-                    DelayAction.Queue(Game.Ping / 2 + 30, Animation.Reset, new CancellationToken(false));
+                   
+                    Animation.Reset();
                     break;
                 case "RivenMartyr":
                     _canUseW = false;
@@ -43,8 +44,9 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                 case "RivenFengShuiEngine":
                     LastR = Game.TickCount;
                     Enums.UltimateMode = UltimateMode.Second;
+                    Animation.DisableAutoAttack(200); 
                     break;
-                case "RivenIzunaBlade": 
+                case "RivenIzunaBlade":
                     Enums.UltimateMode = UltimateMode.First;
                     break;
             }
@@ -52,14 +54,10 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 
         public static void OnUpdate()
         {
-            if (_unit == null)
+            switch (_unit)
             {
-                return;
-            }
-
-            if (_unit is Obj_AI_Hero && _unit.HasBuff("FioraW"))
-            {
-                return;
+                case null: return; 
+                case Obj_AI_Hero _ when _unit.HasBuff("FioraW") || _unit.HasBuff("PoppyW"): return;
             }
 
             if (_canWq)
@@ -68,35 +66,37 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                 Global.Player.SpellBook.CastSpell(SpellSlot.Q, _unit);
             }
 
-            if (_serverPosition && _canUseQ)
+            if (_canUseW)
             {
-                SpellConfig.Q.CastOnUnit(_unit);
+                _canUseW = false;
+
+                if (Items.CanUseTiamat())
+                {
+                    Items.CastTiamat();
+                    DelayAction.Queue(300, () => SpellConfig.W.Cast(_unit));
+                }
+
+                SpellConfig.W.Cast(_unit);
             }
 
-            if (_canUseQ && Extensions.DidJustAuto)
+            if (_canUseQ)
             {
-                if (Items.CanUseTiamat() && Global.Player.IsFacingUnit(_unit) && Extensions.CurrentQCount != 2)
-                {
-                    Items.CastTiamat(false);
-                    DelayAction.Queue(230 + Game.Ping / 2,
-                        () => Global.Player.SpellBook.CastSpell(SpellSlot.Q, _unit), new CancellationToken(false));
-                    Extensions.DidJustAuto = false;
-                }
-                else
+                if (Extensions.DidJustAuto)
                 {
                     Extensions.DidJustAuto = false;
                     Global.Player.SpellBook.CastSpell(SpellSlot.Q, _unit);
                 }
+                else if (_serverPosition)
+                {
+                    SpellConfig.Q.CastOnUnit(_unit);
+                }
             }
+        }
 
-            if (!_canUseW)
-            {
-                return;
-            }
-
-            Items.CastTiamat();
-            SpellConfig.W.Cast(_unit);
-            _canUseW = false;
+        public static void CastWq(Obj_AI_Base target)
+        {
+            _unit = target;
+            _canWq = true;
         }
 
         public static void CastQ(Obj_AI_Base target, bool serverPosition = false)
@@ -108,18 +108,12 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 
         public static void CastW(Obj_AI_Base target)
         {
-            _canUseW = InsideKiBurst(target.ServerPosition, target.BoundingRadius);
-            _unit = target;  
-        }
-
-        public static void CastWq(Obj_AI_Base target)
-        {
-            
+            _canUseW = true;
             _unit = target;
-            _canWq = true;
         }
 
-        private static readonly string[] InvulnerableSpells = { "FioraW", "kindrednodeathbuff", "Undying Rage", "JudicatorIntervention" };
+        private static readonly string[] InvulnerableSpells =
+            {"FioraW", "kindrednodeathbuff", "Undying Rage", "JudicatorIntervention"};
 
         public static void CastR2(Obj_AI_Base target)
         {
@@ -130,17 +124,10 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 
             SpellConfig.R2.Cast(target);
 
-            if (target.IsValidTarget(Global.Player.AttackRange))
+            if (target.IsValidTarget(Global.Player.AttackRange + 80))
             {
                 Items.CastTiamat();
             }
-        }
-
-        public static bool InsideKiBurst(Vector3 position, float extra = 0)
-        {
-            return Global.Player.HasBuff("RivenFengShuiEngine")
-                 ? Global.Player.Distance(position) <= 135 + extra
-                 : Global.Player.Distance(position) <= 125 + extra;
         }
     }
 }

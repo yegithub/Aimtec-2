@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Adept_AIO.Champions.Riven.Core;
 using Aimtec;
+using Aimtec.SDK.Extensions;
 
 namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 {
@@ -18,7 +19,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                 SpellConfig.E.Cast(Game.CursorPos);
             }
 
-            if (SpellConfig.W.Ready && SpellManager.InsideKiBurst(sender.ServerPosition, sender.BoundingRadius) && InterrupterSpell.Contains(args.SpellData.Name))
+            if (SpellConfig.W.Ready && sender.IsValidTarget(SpellConfig.W.Range) && InterrupterSpell.Contains(args.SpellData.Name))
             {
                 SpellConfig.W.Cast();
             }

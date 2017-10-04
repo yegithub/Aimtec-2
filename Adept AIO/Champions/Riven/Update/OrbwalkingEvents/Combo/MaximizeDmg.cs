@@ -40,7 +40,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents.Combo
             }
             else if (ComboManager.CanCastR1(target))
             {
-                SpellConfig.R.Cast();
+                SpellConfig.R.Cast(target);
             }
             else if (SpellConfig.R2.Ready && Enums.UltimateMode == UltimateMode.Second && !SpellConfig.W.Ready && target.HealthPercent() <= 30)
             {

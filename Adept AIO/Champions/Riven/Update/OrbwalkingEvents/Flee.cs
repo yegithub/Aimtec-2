@@ -65,7 +65,7 @@ namespace Adept_AIO.Champions.Riven.Update.OrbwalkingEvents
             {
                 if (SpellConfig.W.Ready)
                 {
-                    foreach (var enemy in GameObjects.EnemyHeroes.Where(x => SpellManager.InsideKiBurst(x.ServerPosition, x.BoundingRadius)))
+                    foreach (var enemy in GameObjects.EnemyHeroes.Where(x => x.IsValidTarget(SpellConfig.W.Range)))
                     {
                         SpellManager.CastW(enemy);
                     }

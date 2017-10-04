@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using Adept_AIO.Champions.Riven.Core;
 using Adept_AIO.Champions.Riven.Update.OrbwalkingEvents;
 using Adept_AIO.Champions.Riven.Update.OrbwalkingEvents.Combo;
@@ -6,6 +7,7 @@ using Adept_AIO.SDK.Unit_Extensions;
 using Aimtec;
 using Aimtec.SDK.Extensions;
 using Aimtec.SDK.Orbwalking;
+using Aimtec.SDK.Util;
 
 namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 {
@@ -20,43 +22,41 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                     return;
                 }
 
-                if (Animation.DidRecentlyCancel)
+                if (Animation.DidRecentlyCancel && Game.TickCount - Animation.LastReset >= Animation.GetDelay())
                 {
-                    if (Game.TickCount - Animation.LastReset >= Animation.GetDelay())
+                    Global.Orbwalker.Move(Game.CursorPos);
+                    Animation.DidRecentlyCancel = false;
+                    Global.Orbwalker.AttackingEnabled = true;
+                    Global.Orbwalker.ResetAutoAttackTimer();
+                }
+                else
+                {
+                    switch (Global.Orbwalker.Mode)
                     {
-                       
-                        Global.Orbwalker.ResetAutoAttackTimer();
-                        Global.Orbwalker.AttackingEnabled = true;
-                        Animation.DidRecentlyCancel = false;
+                        case OrbwalkingMode.Combo:
+                            ComboManager.OnUpdate();
+                            break;
+                        case OrbwalkingMode.Mixed:
+                            Harass.OnUpdate();
+                            break;
+                        case OrbwalkingMode.Laneclear:
+                            Lane.OnUpdate();
+                            Jungle.OnUpdate();
+                            break;
+                        case OrbwalkingMode.None:
+                            Extensions.AllIn = false;
+                            break;
                     }
-                }
 
-                switch (Global.Orbwalker.Mode)
-                {
-                    case OrbwalkingMode.Combo:
-                        ComboManager.OnUpdate();
-                        break;
-                    case OrbwalkingMode.Mixed:
-                        Harass.OnUpdate();
-                        break;
-                    case OrbwalkingMode.Laneclear:
-                        Lane.OnUpdate();
-                        Jungle.OnUpdate();
-                        break;
-                    case OrbwalkingMode.None:
-                        Extensions.AllIn = false;
-                        break;
-                }
+                    if (!SpellConfig.Q.Ready || Extensions.CurrentQCount == 1 || !MenuConfig.Miscellaneous["Active"].Enabled 
+                      || Global.Player.HasBuff("Recall")
+                      || Global.Orbwalker.Mode == OrbwalkingMode.Laneclear || Global.Orbwalker.Mode == OrbwalkingMode.Lasthit
+                      || Game.TickCount - Extensions.LastQCastAttempt < 3580 + Game.Ping / 2
+                      || Game.TickCount - Extensions.LastQCastAttempt > 3700 + Game.Ping / 2)
+                    {
+                        return;
+                    }
 
-                if (SpellConfig.Q.Ready &&
-                    Extensions.CurrentQCount != 1 &&
-                    MenuConfig.Miscellaneous["Active"].Enabled &&
-                   !Global.Player.HasBuff("Recall") &&
-                    Global.Orbwalker.Mode != OrbwalkingMode.Laneclear &&
-                    Global.Orbwalker.Mode != OrbwalkingMode.Lasthit &&
-                    Game.TickCount - Extensions.LastQCastAttempt >= 3580 + Game.Ping / 2 &&
-                    Game.TickCount - Extensions.LastQCastAttempt <= 3700 + Game.Ping / 2)
-                {
                     SpellConfig.Q.Cast();
                 }
             }
@@ -67,36 +67,36 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
             }
         }
 
-        public static void PostAttack(object sender, PostAttackEventArgs args)
+        public static void OnPostAttack(object sender, PostAttackEventArgs args)
         {
-            if (Game.TickCount - Extensions.LastQCastAttempt < 400 + Game.Ping / 2f)
+            if (Game.TickCount - Extensions.LastQCastAttempt <= 320 + Game.Ping / 2)
             {
+                Extensions.DidJustAuto = false;
                 return;
             }
-
-            var target = args.Target as Obj_AI_Base;
+            Extensions.DidJustAuto = true;
 
             if (MenuConfig.BurstMode.Active)
             {
-                Burst.OnPostAttack();
+                Burst.OnProcessAutoAttack();
             }
             else
             {
                 switch (Global.Orbwalker.Mode)
                 {
                     case OrbwalkingMode.Combo:
-                        ComboManager.OnPostAttack();
+                        ComboManager.OnProcessAutoAttack();
                         break;
                     case OrbwalkingMode.Mixed:
-                        Harass.OnPostAttack();
+                        Harass.OnProcessAutoAttack();
                         break;
                     case OrbwalkingMode.Laneclear:
                         if (args.Target.IsMinion)
                         {
-                            Lane.OnPostAttack();
-                            Jungle.OnPostAttack(args.Target as Obj_AI_Minion);
+                            Lane.OnProcessAutoAttack();
+                            Jungle.OnProcessAutoAttack(args.Target as Obj_AI_Minion);
                         }
-                        else if (args.Target.IsBuilding() && SpellConfig.Q.Ready)
+                        else if ((args.Target as Obj_AI_Base).IsBuilding() && SpellConfig.Q.Ready)
                         {
                             SpellConfig.Q.Cast(Global.Player.ServerPosition.Extend(args.Target.ServerPosition, 100));
                         }

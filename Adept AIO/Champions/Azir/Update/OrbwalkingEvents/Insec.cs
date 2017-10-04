@@ -29,7 +29,7 @@ namespace Adept_AIO.Champions.Azir.Update.OrbwalkingEvents
 
                 if (SpellConfig.Q.Ready)
                 {
-                    if (soldierPos.Distance(target) <= 350)
+                    if (soldierPos.Distance(target) <= 200)
                     {
                         if (dist <= MenuConfig.InsecMenu["Range"].Value) 
                         {
