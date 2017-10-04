@@ -52,6 +52,11 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.JungleClear
                     return;
                 }
 
+                if (_spellConfig.Q.Ready)
+                {
+                    _spellConfig.Q.Cast(mob);
+                }
+
                 if (_spellConfig.W.Ready && WEnabled && !_spellConfig.IsQ2())
                 {
                     _spellConfig.W.CastOnUnit(Global.Player);
@@ -83,6 +88,11 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.JungleClear
                     return;
                 }
 
+                if (_spellConfig.Q.Ready)
+                {
+                    _spellConfig.Q.Cast(mob);
+                }
+
                 if (_spellConfig.W.Ready && WEnabled)
                 {
                     _spellConfig.W.CastOnUnit(Global.Player);
@@ -109,26 +119,33 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.JungleClear
             }
             else 
             {
-                if (_spellConfig.E.Ready && EEnabled)
+                if (_spellConfig.Q.Ready)
                 {
-                    if (Items.CanUseTiamat())
-                    {
-                        Items.CastTiamat(false);
-                        DelayAction.Queue(50, () => _spellConfig.E.Cast(mob));
-                    }
-                    else
-                    {
-                        _spellConfig.E.Cast(mob);
-                    }
+                    _spellConfig.Q.Cast(mob);
                 }
-
-                if (_spellConfig.W.Ready && WEnabled)
+                else
                 {
-                    if (_spellConfig.E.Ready && EEnabled && !_spellConfig.IsFirst(_spellConfig.E))
+                    if (_spellConfig.E.Ready && EEnabled)
                     {
-                        return;
+                        if (Items.CanUseTiamat())
+                        {
+                            Items.CastTiamat(false);
+                            DelayAction.Queue(50, () => _spellConfig.E.Cast(mob));
+                        }
+                        else
+                        {
+                            _spellConfig.E.Cast(mob);
+                        }
                     }
-                    _spellConfig.W.CastOnUnit(Global.Player);
+
+                    if (_spellConfig.W.Ready && WEnabled)
+                    {
+                        if (_spellConfig.E.Ready && EEnabled && !_spellConfig.IsFirst(_spellConfig.E))
+                        {
+                            return;
+                        }
+                        _spellConfig.W.CastOnUnit(Global.Player);
+                    }
                 }
             }
         }
@@ -195,7 +212,7 @@ namespace Adept_AIO.Champions.LeeSin.Update.OrbwalkingEvents.JungleClear
             {
                 if (smiteAbleMob.Health < StealDamage(smiteAbleMob))
                 {
-                    if (_smiteOptional.Contains(smiteAbleMob.UnitSkinName) && Global.Player.HealthPercent() >= (SummonerSpells.Ammo("Smite") <= 1 ? 35 : 55) || 
+                    if (_smiteOptional.Contains(smiteAbleMob.UnitSkinName) && Global.Player.HealthPercent() >= (SummonerSpells.Ammo("Smite") <= 1 ? 40 : 50) || 
                         smiteAbleMob.UnitSkinName.ToLower().Contains("blue") && !BlueEnabled)
                     {
                         return;

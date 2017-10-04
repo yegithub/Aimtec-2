@@ -23,7 +23,7 @@ namespace Adept_AIO.Champions.Riven
 
             Obj_AI_Base.OnProcessSpellCast += SpellManager.OnProcessSpellCast;
             Obj_AI_Base.OnProcessSpellCast += SafetyMeasure.OnProcessSpellCast;
-
+          
             Obj_AI_Base.OnPlayAnimation += Animation.OnPlayAnimation;
 
             Global.Orbwalker.PostAttack += Manager.OnPostAttack;

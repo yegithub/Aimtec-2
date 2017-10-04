@@ -27,7 +27,7 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
             {
                 return;
             }
-
+          
             switch (args.SpellData.Name)
             {
                 case "RivenTriCleave":
