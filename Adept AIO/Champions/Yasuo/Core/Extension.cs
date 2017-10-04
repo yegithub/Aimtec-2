@@ -19,16 +19,6 @@ namespace Adept_AIO.Champions.Yasuo.Core
     {
         public static Mode CurrentMode;
         public static OrbwalkerMode FleeMode, BeybladeMode;
-
-        public static bool KnockedUp(Obj_AI_Base target)
-        {
-            if (!MenuConfig.Whitelist[((Obj_AI_Hero) target).ChampionName].Enabled)
-            {
-                return false;
-            }
-
-            return target.HasBuffOfType(BuffType.Knockback) || target.HasBuffOfType(BuffType.Knockup);
-        }
     }
 
     public class KnockUpHelper
@@ -37,8 +27,18 @@ namespace Adept_AIO.Champions.Yasuo.Core
         public static int KnockedUpTick;
         public static int BuffStart;
         public static int BuffEnd;
-       
-        public static bool IsItTimeToUlt(Obj_AI_Base target, int timeUntilValid = 600)
+
+        public static bool KnockedUp(Obj_AI_Base target)
+        {
+            if (!MenuConfig.Whitelist[((Obj_AI_Hero)target).ChampionName].Enabled)
+            {
+                return false;
+            }
+
+            return target.HasBuffOfType(BuffType.Knockback) || target.HasBuffOfType(BuffType.Knockup);
+        }
+
+        public static bool IsItTimeToUlt(Obj_AI_Base target, int timeUntilValid = 450)
         {
             var buff = target.Buffs.FirstOrDefault(i => i.Type == BuffType.Knockback || i.Type == BuffType.Knockup);
             if (buff == null)
@@ -48,7 +48,7 @@ namespace Adept_AIO.Champions.Yasuo.Core
 
             var time = Game.TickCount - (buff.StartTime * 1000 - buff.Full);
         
-            return time >= timeUntilValid + Game.Ping / 2 && time <= 1200;
+            return time >= timeUntilValid - Game.Ping / 2 && time <= 1200;
         }
     }
 

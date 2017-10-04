@@ -10,7 +10,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.Miscellaneous
     {
         public static void OnUpdate()
         {
-            if (Global.Player.CountEnemyHeroesInRange(500) >= 1 || Global.Player.IsDashing() || !MenuConfig.Misc["Stack"].Enabled || !SpellConfig.Q.Ready || Extension.CurrentMode == Mode.Tornado || Extension.CurrentMode == Mode.DashingTornado)
+            if (Global.Player.CountEnemyHeroesInRange(500) >= 1 || Global.Orbwalker.IsWindingUp || Global.Player.IsDashing() || !MenuConfig.Misc["Stack"].Enabled || !SpellConfig.Q.Ready || Extension.CurrentMode == Mode.Tornado || Extension.CurrentMode == Mode.DashingTornado)
             {
                 return;
             }
