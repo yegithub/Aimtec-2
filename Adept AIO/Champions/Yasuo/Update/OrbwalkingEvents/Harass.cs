@@ -8,11 +8,6 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
     {
         public static void OnUpdate()
         {
-            if (Global.Orbwalker.IsWindingUp)
-            {
-                return;
-            }
-
             var target = Global.TargetSelector.GetTarget(1100);
             if (target == null || Global.Orbwalker.IsWindingUp)
             {
