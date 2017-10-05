@@ -15,19 +15,15 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 
         public static void Reset()
         {
-            DelayAction.Queue(Game.Ping / 2 + 50, delegate
-            {
-                Global.Orbwalker.AttackingEnabled = false;
+            Global.Orbwalker.AttackingEnabled = false;
 
-                LastReset = Game.TickCount;
-                DidRecentlyCancel = true;
-
-            }, new CancellationToken(false));
+            LastReset = Game.TickCount;
+            DidRecentlyCancel = true;
         }
 
         public static float GetDelay()
         {
-            return (Extensions.CurrentQCount == 1 ? 450 : 325) - 3.333f * Global.Player.Level; 
+            return (Extensions.CurrentQCount == 1 ? 420 : 310) - 3.333f * Global.Player.Level; 
         }
 
         public static void OnPlayAnimation(Obj_AI_Base sender, Obj_AI_BasePlayAnimationEventArgs args)

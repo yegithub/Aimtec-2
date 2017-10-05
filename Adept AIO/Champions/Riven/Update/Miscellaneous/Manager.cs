@@ -25,9 +25,13 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
                 if (Animation.DidRecentlyCancel && Game.TickCount - Animation.LastReset >= Animation.GetDelay())
                 {
                     Global.Orbwalker.Move(Game.CursorPos);
-                    Animation.DidRecentlyCancel = false;
-                    Global.Orbwalker.AttackingEnabled = true;
-                    Global.Orbwalker.ResetAutoAttackTimer();
+
+                    DelayAction.Queue(Global.Player.HasBuff("RivenFengShuiEngine") ? 80 : 0, () =>
+                    {
+                        Animation.DidRecentlyCancel = false;
+                        Global.Orbwalker.AttackingEnabled = true;
+                        Global.Orbwalker.ResetAutoAttackTimer();
+                    }, new CancellationToken(false));
                 }
                 else
                 {
@@ -69,11 +73,11 @@ namespace Adept_AIO.Champions.Riven.Update.Miscellaneous
 
         public static void OnPostAttack(object sender, PostAttackEventArgs args)
         {
-            if (Game.TickCount - Extensions.LastQCastAttempt <= 320 + Game.Ping / 2)
+            if (Game.TickCount - Extensions.LastQCastAttempt <= 350 + Game.Ping / 2) 
             {
-                Extensions.DidJustAuto = false;
                 return;
             }
+
             Extensions.DidJustAuto = true;
 
             if (MenuConfig.BurstMode.Active)
