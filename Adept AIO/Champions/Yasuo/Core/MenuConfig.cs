@@ -55,7 +55,7 @@ namespace Adept_AIO.Champions.Yasuo.Core
                 new MenuBool("Turret", "Avoid Using E Under Turret"),
                 new MenuList("Dash", "Dash Mode: ", new []{"Cursor", "From Player"}, 0),
                 new MenuSlider("Range", "Mouse Dash Range: ", 650, 1, 1000),
-                new MenuSlider("MRange", "Search Range For Behind Minions", 220, 100, 300)
+                new MenuSlider("MRange", "Search Range For Behind Minions", 180, 100, 240)
             };
             
             // Todo: Add Check and go: EQ AA -> E Out 

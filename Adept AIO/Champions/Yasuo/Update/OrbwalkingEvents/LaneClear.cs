@@ -20,21 +20,35 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                 return;
             }
 
-            if (SpellConfig.E.Ready && MenuConfig.LaneClear["Mode"].Value == 2 && MenuConfig.LaneClear["EAA"].Enabled)
+            if (SpellConfig.E.Ready && MenuConfig.LaneClear["EAA"].Enabled)
             {
-                var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(Global.Player) <= SpellConfig.E.Range &&
-                                                                          x.Distance(Game.CursorPos) < MenuConfig.Combo["Range"].Value &&
-                                                                          !x.HasBuff("YasuoDashWrapper"));
-                if (minion == null || minion.IsUnderEnemyTurret())
+                var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsValidTarget() && x.Distance(Global.Player) <= SpellConfig.E.Range && !x.HasBuff("YasuoDashWrapper"));
+
+                if (!SpellConfig.E.Ready || minion == null || MenuConfig.LaneClear["Turret"].Enabled && minion.IsUnderEnemyTurret() || MenuConfig.LaneClear["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(2000) != 0)
                 {
                     return;
                 }
-                SpellConfig.E.CastOnUnit(minion);
+
+                switch (MenuConfig.LaneClear["Mode"].Value)
+                {
+                    case 1:
+
+                        if (minion.Health > Global.Player.GetSpellDamage(minion, SpellSlot.E))
+                        {
+                            return;
+                        }
+
+                        SpellConfig.E.CastOnUnit(minion);
+                        break;
+                    case 2:
+                        SpellConfig.E.CastOnUnit(minion);
+                        break;
+                }
             }
 
             if (SpellConfig.Q.Ready)
             {
-                var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(Global.Player) <= SpellConfig.Q.Range);
+                var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(Global.Player) <= SpellConfig.Q.Range && x.IsValidTarget());
                 if (minion == null)
                 {
                     return;
@@ -42,8 +56,8 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
 
                 switch (Extension.CurrentMode)
                 {
-                        case Mode.Normal:
-                            SpellConfig.Q.Cast(minion);
+                    case Mode.Normal:
+                        SpellConfig.Q.Cast(minion);
                         break;
                 }
             }
@@ -55,7 +69,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
             {
                 var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsValidTarget() && x.Distance(Global.Player) <= SpellConfig.E.Range && !x.HasBuff("YasuoDashWrapper"));
 
-                if (!SpellConfig.E.Ready || minion == null || minion.IsUnderEnemyTurret() || MenuConfig.LaneClear["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(2000) != 0)
+                if (!SpellConfig.E.Ready || minion == null || MenuConfig.LaneClear["Turret"].Enabled && minion.IsUnderEnemyTurret() || MenuConfig.LaneClear["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(2000) != 0)
                 {
                     return;
                 }

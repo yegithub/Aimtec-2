@@ -41,13 +41,7 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
             }
 
             var minion = MinionHelper.GetDashableMinion(target);
-            var walkDashMinion = MinionHelper.WalkBehindMinion(target);
-
-            if (!walkDashMinion.IsZero && MenuConfig.Combo["Walk"].Enabled && Global.Orbwalker.CanMove())
-            {
-                Global.Orbwalker.Move(walkDashMinion);
-            }
-            else if (minion != null)
+            if (minion != null)
             {
                 if (MenuConfig.Combo["Turret"].Enabled && minion.ServerPosition.PointUnderEnemyTurret() || MenuConfig.Combo["Dash"].Value == 0 && minion.Distance(Game.CursorPos) > MenuConfig.Combo["Range"].Value)
                 {
@@ -83,17 +77,19 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
 
             var dashDistance = MinionHelper.DashDistance(minion, target);
 
-            var airbourneTargets = GameObjects.EnemyHeroes.Where(x => KnockUpHelper.KnockedUp(x) && x.Distance(Global.Player) <= SpellConfig.R.Range);
-            var targetCount = (airbourneTargets as Obj_AI_Hero[] ?? airbourneTargets.ToArray()).Length;
-
-            var circle = new Geometry.Circle(Global.Player.GetDashInfo().EndPos, 220);
-            var circleCount = GameObjects.EnemyHeroes.Count(x => circle.Center.Distance(x.ServerPosition) <= circle.Radius);
+            var circle = new Geometry.Circle(Global.Player.GetDashInfo().EndPos, 200);
+            var circleCount = GameObjects.EnemyHeroes.Count(x => x.Distance(circle.Center.To3D()) <= circle.Radius);
 
             if (SpellConfig.E.Ready)
             {
                 if (targetDist <= Global.Player.AttackRange && !SpellConfig.Q.Ready)
                 {
                     return;
+                }
+
+                if (!target.HasBuff("YasuoDashWrapper") && targetDist <= SpellConfig.E.Range && (targetDist > SpellConfig.E.Range - 50 && minion == null || Extension.CurrentMode == Mode.Tornado))
+                {
+                    SpellConfig.E.CastOnUnit(target);
                 }
 
                 if (positionBehindMinion.Distance(Global.Player) <= MenuConfig.Combo["MRange"].Value
@@ -119,11 +115,6 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
 
                     SpellConfig.E.CastOnUnit(minion);
                 }
-                else if (!target.HasBuff("YasuoDashWrapper") && targetDist <= SpellConfig.E.Range &&
-                    targetDist > SpellConfig.E.Range - 50)
-                {
-                    SpellConfig.E.CastOnUnit(target);
-                }
             }
 
             if (SpellConfig.Q.Ready)
@@ -140,7 +131,8 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                         SpellConfig.Q.Cast(target);
                     }
                 }
-                else if(target.IsValidTarget(SpellConfig.Q.Range))
+            
+                else if(target.IsValidSpellTarget(SpellConfig.Q.Range) && !(SpellConfig.E.Ready && !target.HasBuff("YasuoDashWrapper") && Extension.CurrentMode == Mode.Tornado))
                 {
                     var enemyHero = GameObjects.EnemyHeroes.OrderBy(x => x.Health).FirstOrDefault(x => x.IsValidTarget(SpellConfig.Q.Range));
                     if (enemyHero != null)
@@ -152,7 +144,10 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
 
             if (SpellConfig.R.Ready && KnockUpHelper.KnockedUp(target) && KnockUpHelper.IsItTimeToUlt(target))
             {
-                if (targetCount >= MenuConfig.Combo["Count"].Value || targetDist > 350 && minion == null)
+                var airbourneTargets = GameObjects.EnemyHeroes.Where(x => KnockUpHelper.KnockedUp(x) && x.Distance(Global.Player) <= SpellConfig.R.Range);
+                var targetCount = (airbourneTargets as Obj_AI_Hero[] ?? airbourneTargets.ToArray()).Length;
+
+                if (targetCount >= MenuConfig.Combo["Count"].Value || targetDist > 350)
                 {
                     SpellConfig.R.Cast();
                 }

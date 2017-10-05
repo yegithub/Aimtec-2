@@ -99,7 +99,7 @@ namespace Adept_AIO.SDK.Delegates
 
         private static void OnProcessAutoAttack(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
         {
-            if (sender == null || sender.Type != GameObjectType.obj_AI_Hero || !sender.IsEnemy || !sender.IsMelee)
+            if (sender == null || !sender.IsHero|| !sender.IsEnemy || !sender.IsValidTarget())
             {
                 return;
             }

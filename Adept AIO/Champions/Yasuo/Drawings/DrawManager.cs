@@ -1,8 +1,12 @@
 ﻿using System.Drawing;
 using System.Linq;
 using Adept_AIO.Champions.Yasuo.Core;
+using Adept_AIO.SDK.Generic;
+using Adept_AIO.SDK.Geometry_Related;
 using Adept_AIO.SDK.Unit_Extensions;
 using Aimtec;
+using Aimtec.SDK.Events;
+using Aimtec.SDK.Extensions;
 using Aimtec.SDK.Orbwalking;
 
 namespace Adept_AIO.Champions.Yasuo.Drawings
@@ -30,6 +34,12 @@ namespace Adept_AIO.Champions.Yasuo.Drawings
             if (Global.Player.IsDead)
             {
                 return;
+            }
+
+            if (Global.Orbwalker.Mode != OrbwalkingMode.None && MenuConfig.Drawings["Debug"].Enabled)
+            {
+                var circle = new Geometry.Circle(Global.Player.GetDashInfo().EndPos, 200);
+                Render.Circle(circle.Center.To3D(), circle.Radius, 100, Color.DarkGray);
             }
 
             if (SpellConfig.R.Ready && MenuConfig.Drawings["R"].Enabled)
