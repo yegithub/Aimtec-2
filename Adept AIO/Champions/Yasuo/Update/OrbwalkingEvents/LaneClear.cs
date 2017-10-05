@@ -130,9 +130,9 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
                         var circle = new Geometry.Circle(Global.Player.GetDashInfo().EndPos, 220);
                         var circleCount = GameObjects.EnemyMinions.Count(x => circle.Center.Distance(x.ServerPosition) <= circle.Radius);
                        
-                        if (circleCount >= 2)
+                        if (circleCount >= 1)
                         {
-                            SpellConfig.Q.Cast();
+                            SpellConfig.Q.Cast(dashM);
                         }
                         break;
                 }

@@ -77,8 +77,6 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
 
             var dashDistance = MinionHelper.DashDistance(minion, target);
 
-            var circle = new Geometry.Circle(Global.Player.GetDashInfo().EndPos, 200);
-            var circleCount = GameObjects.EnemyHeroes.Count(x => x.Distance(circle.Center.To3D()) <= circle.Radius);
 
             if (SpellConfig.E.Ready)
             {
@@ -119,26 +117,36 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
 
             if (SpellConfig.Q.Ready)
             {
-                if (Extension.CurrentMode == Mode.DashingTornado)
+                switch (Extension.CurrentMode)
                 {
-                    if (minion != null && MenuConfig.Combo["Flash"].Enabled && dashDistance < 470 && dashDistance > 220 && (Dmg.Damage(target) * 1.25 > target.Health || target.ServerPosition.CountEnemyHeroesInRange(250) >= 2))
-                    {
-                        SpellConfig.Q.Cast();
-                        DelayAction.Queue(Game.Ping / 2 + 30, () => SummonerSpells.Flash.Cast(target.Position), new CancellationToken(false));
-                    }
-                    else if(circleCount >= 1)
-                    {
-                        SpellConfig.Q.Cast(target);
-                    }
-                }
-            
-                else if(target.IsValidSpellTarget(SpellConfig.Q.Range) && !(SpellConfig.E.Ready && !target.HasBuff("YasuoDashWrapper") && Extension.CurrentMode == Mode.Tornado))
-                {
-                    var enemyHero = GameObjects.EnemyHeroes.OrderBy(x => x.Health).FirstOrDefault(x => x.IsValidTarget(SpellConfig.Q.Range));
-                    if (enemyHero != null)
-                    {
-                        SpellConfig.Q.Cast(enemyHero);
-                    }
+                    case Mode.Dashing:
+                    case Mode.DashingTornado:
+                        if (MenuConfig.Combo["Flash"].Enabled && dashDistance < 470 && dashDistance > 220 && (Dmg.Damage(target) * 1.25 > target.Health || target.ServerPosition.CountEnemyHeroesInRange(220) >= 2))
+                        {
+                            SpellConfig.Q.Cast();
+                            DelayAction.Queue(Game.Ping / 2 + 30, () => SummonerSpells.Flash.Cast(target.Position), new CancellationToken(false));
+                        }
+                        else 
+                        {
+                            var circle = new Geometry.Circle(Global.Player.GetDashInfo().EndPos, 220);
+                            var count = GameObjects.EnemyHeroes.Count(x => x.IsValidTarget() && x.Distance(circle.Center.To3D()) <= circle.Radius);
+
+                            if (count != 0)
+                            {
+                                SpellConfig.Q.Cast(target);
+                            }
+                        }
+                        break;
+                    default:
+                        if(!Global.Player.IsDashing() && target.IsValidSpellTarget(SpellConfig.Q.Range) && !(SpellConfig.E.Ready && !target.HasBuff("YasuoDashWrapper") && Extension.CurrentMode == Mode.Tornado))
+                        {
+                            var enemyHero = GameObjects.EnemyHeroes.OrderBy(x => x.Health).FirstOrDefault(x => x.IsValidTarget(SpellConfig.Q.Range));
+                            if (enemyHero != null)
+                            {
+                                SpellConfig.Q.Cast(enemyHero);
+                            }
+                        }
+                        break;
                 }
             }
 

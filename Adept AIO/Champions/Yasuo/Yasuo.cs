@@ -41,7 +41,7 @@ namespace Adept_AIO.Champions.Yasuo
                 return;
             }
 
-            if (args.SpellSlot == SpellSlot.Q && Game.TickCount - SpellConfig.E.LastCastAttemptT <= 500)
+            if (args.SpellSlot == SpellSlot.E)
             {
                 Maths.DisableAutoAttack();
             }
