@@ -43,7 +43,7 @@ namespace Adept_AIO.Champions.Yasuo
 
             if (args.SpellSlot == SpellSlot.E)
             {
-                Maths.DisableAutoAttack();
+                Maths.DisableAutoAttack(SpellConfig.Q.Ready ? 600 : 250);
             }
         }
     }

@@ -77,7 +77,6 @@ namespace Adept_AIO.Champions.Yasuo.Update.OrbwalkingEvents
 
             var dashDistance = MinionHelper.DashDistance(minion, target);
 
-
             if (SpellConfig.E.Ready)
             {
                 if (targetDist <= Global.Player.AttackRange && !SpellConfig.Q.Ready)
