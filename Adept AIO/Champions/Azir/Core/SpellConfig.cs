@@ -25,7 +25,7 @@ namespace Adept_AIO.Champions.Azir.Core
 
         public static void CastQ(Obj_AI_Base target, bool extend = true)
         {
-            foreach (var soldier in SoldierHelper.Soldiers)
+            foreach (var soldier in SoldierManager.Soldiers)
             {
                 if (soldier == null || soldier.ServerPosition == Vector3.Zero)
                 {
@@ -40,7 +40,7 @@ namespace Adept_AIO.Champions.Azir.Core
 
         public static PredictionOutput GetQPred(Obj_AI_Base target)
         {
-            var soldier = SoldierHelper.GetSoldierNearestTo(target.ServerPosition);
+            var soldier = SoldierManager.GetSoldierNearestTo(target.ServerPosition);
             return soldier == Vector3.Zero ? null : Q.GetPrediction(target, soldier, soldier);
         }
     }

@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.Linq;
 using Adept_AIO.Champions.Azir.Core;
-using Adept_AIO.Champions.Azir.Update.OrbwalkingEvents;
+using Adept_AIO.Champions.Azir.OrbwalkingEvents;
 using Adept_AIO.SDK.Unit_Extensions;
 using Aimtec;
 
@@ -55,12 +55,12 @@ namespace Adept_AIO.Champions.Azir.Drawings
                 AzirHelper.Rect.Draw(Color.SlateGray);
             }
 
-            if (!SoldierHelper.Soldiers.Any() || !MenuConfig.Drawings["Soldiers"].Enabled)
+            if (!SoldierManager.Soldiers.Any() || !MenuConfig.Drawings["Soldiers"].Enabled)
             {
                 return;
             }
 
-            foreach (var soldier in SoldierHelper.Soldiers)
+            foreach (var soldier in SoldierManager.Soldiers)
             {
                 Render.Circle(soldier.ServerPosition, 325, (uint) MenuConfig.Drawings["Segments"].Value,
                     Color.SlateBlue);

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Adept_AIO.Champions.Azir.Core;
 using Adept_AIO.Champions.Azir.Drawings;
-using Adept_AIO.Champions.Azir.Update.Miscellaneous;
+using Adept_AIO.Champions.Azir.Miscellaneous;
 using Adept_AIO.SDK.Delegates;
 using Aimtec;
 
@@ -13,7 +13,7 @@ namespace Adept_AIO.Champions.Azir
         {
             MenuConfig.Attach();
             SpellConfig.Load();
-            SoldierHelper.Soldiers = new List<Obj_AI_Minion>();
+            SoldierManager.Soldiers = new List<Obj_AI_Minion>();
 
             Game.OnUpdate += Manager.OnUpdate;
             Game.OnUpdate += Killsteal.OnUpdate;
@@ -21,8 +21,8 @@ namespace Adept_AIO.Champions.Azir
             Render.OnPresent += DrawManager.OnPresent;
             Render.OnRender += DrawManager.OnRender;
 
-            GameObject.OnCreate += SoldierHelper.OnCreate;
-            GameObject.OnDestroy += SoldierHelper.OnDelete;
+            GameObject.OnCreate += SoldierManager.OnCreate;
+            GameObject.OnDestroy += SoldierManager.OnDelete;
             Obj_AI_Base.OnProcessSpellCast += AzirHelper.OnProcessSpellCast;
             Gapcloser.OnGapcloser += AntiGapcloser.OnGapcloser;
         }

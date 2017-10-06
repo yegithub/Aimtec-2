@@ -1,8 +1,9 @@
-﻿namespace Adept_AIO.Champions.Ezreal
+﻿using Adept_AIO.Champions.Ezreal.Miscellaneous;
+
+namespace Adept_AIO.Champions.Ezreal
 {
     using Core;
     using Drawings;
-    using Update.Miscellaneous;
     using SDK.Delegates;
     using Aimtec;
 

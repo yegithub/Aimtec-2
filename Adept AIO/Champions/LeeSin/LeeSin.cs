@@ -1,4 +1,14 @@
 ﻿using Adept_AIO.Champions.LeeSin.Core;
+using Adept_AIO.Champions.LeeSin.Miscellaneous;
+using Adept_AIO.Champions.LeeSin.OrbwalkingEvents.Combo;
+using Adept_AIO.Champions.LeeSin.OrbwalkingEvents.Harass;
+using Adept_AIO.Champions.LeeSin.OrbwalkingEvents.Insec;
+using Adept_AIO.Champions.LeeSin.OrbwalkingEvents.JungleClear;
+using Adept_AIO.Champions.LeeSin.OrbwalkingEvents.KickFlash;
+using Adept_AIO.Champions.LeeSin.OrbwalkingEvents.LaneClear;
+using Adept_AIO.Champions.LeeSin.OrbwalkingEvents.LastHit;
+using Adept_AIO.Champions.LeeSin.OrbwalkingEvents.WardJump;
+using Adept_AIO.Champions.LeeSin.Ward_Manager;
 using Adept_AIO.SDK.Delegates;
 using Adept_AIO.SDK.Unit_Extensions;
 
@@ -15,17 +25,6 @@ namespace Adept_AIO.Champions.LeeSin
     using Core.Damage;
     using Core.Insec_Manager;
     using Core.Spells;
-    using Update.OrbwalkingEvents.KickFlash;
-    using Update.Ward_Manager;
-
-    using Update.Miscellaneous;
-    using Update.OrbwalkingEvents.Combo;
-    using Update.OrbwalkingEvents.Harass;
-    using Update.OrbwalkingEvents.Insec;
-    using Update.OrbwalkingEvents.JungleClear;
-    using Update.OrbwalkingEvents.LaneClear;
-    using Update.OrbwalkingEvents.LastHit;
-    using Update.OrbwalkingEvents.WardJump;
 
     internal class LeeSin
     {

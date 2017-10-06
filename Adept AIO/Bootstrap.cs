@@ -1,5 +1,6 @@
 ﻿using Adept_AIO.Champions.Azir;
 using Adept_AIO.Champions.Ezreal;
+using Adept_AIO.Champions.Zed;
 using Adept_AIO.SDK.Generic;
 using Adept_AIO.SDK.Unit_Extensions;
 
@@ -26,7 +27,7 @@ namespace Adept_AIO
             GameEvents.GameStart += GameEvents_GameStart;
         }
 
-        private static readonly string[] Valid = { "Ezreal", "Azir", "Riven", "Irelia", "Jax", "Rengar", "Yasuo", "Kayn", "LeeSin", "Jinx", "Tristana" };
+        private static readonly string[] Valid = { "Ezreal", "Azir", "Riven", "Irelia", "Jax", "Rengar", "Yasuo", "Kayn", "LeeSin", "Jinx", "Tristana", "Zed" };
 
         private static void GameEvents_GameStart()
         {
@@ -77,6 +78,9 @@ namespace Adept_AIO
                     break;
                 case "Yasuo":
                     Yasuo.Init();
+                    break;
+                case "Zed":
+                    Zed.Init();
                     break;
             }
         }

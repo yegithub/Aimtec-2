@@ -1,0 +1,120 @@
+﻿using System.Collections.Generic;
+using Adept_AIO.SDK.Delegates;
+using Adept_AIO.SDK.Menu_Extension;
+using Adept_AIO.SDK.Unit_Extensions;
+using Aimtec.SDK.Menu;
+using Aimtec.SDK.Menu.Components;
+using Aimtec.SDK.Util;
+
+namespace Adept_AIO.Champions.Zed.Core
+{
+    internal class MenuConfig
+    {
+        private static Menu _mainMenu;
+
+        public static Menu Combo,
+                           Harass,
+                           LaneClear,
+                           JungleClear,
+                           Lasthit,
+                           Killsteal,
+                           Misc,
+                           Drawings;
+
+        public static void Attach()
+        {
+            _mainMenu = new Menu(string.Empty, $"Adept AIO - {Global.Player.ChampionName}", true);
+            _mainMenu.Attach();
+
+            Global.Orbwalker.Attach(_mainMenu);
+
+            Combo = new Menu("Combo", "Combo")
+            {
+                new MenuBool("Q", "Use Q"),
+                new MenuBool("W", "Use W"),
+                new MenuBool("E", "Use E"),
+                new MenuBool("R", "Use R"),
+                new MenuBool("Killable", "Only Use R When Killable"),
+                new MenuBool("Extend", "Max Range (The Line)"),
+                new MenuKeyBind("ToggleStyle", "Change Style", KeyCode.L, KeybindType.Toggle),
+                new MenuSeperator("Whitelist")
+            };
+
+            foreach (var enemy in GameObjects.EnemyHeroes)
+            {
+                Combo.Add(new MenuBool(enemy.ChampionName, $"Use R On: {enemy.ChampionName}"));
+            }
+
+            Harass = new Menu("Harass", "Harass")
+            {
+                new MenuBool("Q", "Use Q"),
+                new MenuBool("W", "Use W"),
+                new MenuSliderBool("W2", "Use W Twice | Not If >= X Enemies", true, 2, 1, 5).SetToolTip("Max Range W, will try to W AA "),
+                new MenuSlider("Health", "Don't Use W2 if % HP is Below", 30),
+                new MenuBool("E", "Use E"),
+                new MenuSlider("Energy", "Min. Energy %", 40)
+            };
+
+            LaneClear = new Menu("Lane", "LaneClear")
+            {
+                new MenuBool("Check", "Don't Clear When Enemies Nearby"),
+                new MenuSliderBool("Q", "Use Q | Min. Minions Hit", true, 3, 1, 6),
+                new MenuBool("W", "Use W"),
+                new MenuSliderBool("E", "Use E | Min. Minions Hit", true, 3, 1, 6),
+                new MenuSlider("Energy", "Min. Energy %", 40)
+            };
+
+            JungleClear = new Menu("Jungle", "JungleClear")
+            {
+                new MenuBool("Q", "Use Q"),
+                new MenuBool("E", "Use E"),
+                new MenuSlider("Energy", "Min. Energy %", 40)
+            };
+
+            Lasthit = new Menu("Lasthit", "Lasthit")
+            {
+                new MenuBool("Q", "Use Q"),
+                new MenuBool("E", "Use E"),
+                new MenuSlider("Energy", "Min. Energy %", 40)
+            };
+
+            Killsteal = new Menu("Killsteal", "Killsteal")
+            {
+                new MenuBool("Q", "Use Q"),
+                new MenuBool("E", "Use E")
+            };
+
+            Misc = new Menu("Misc", "Miscellaneous")
+            {
+                new MenuBool("E", "Use E To Slow Enemies"),
+                new MenuBool("R", "Use R To Dodge Enemy Spells"),
+                new MenuSlider("Health", "Dodge if % Health is below", 20),
+                new MenuBool("W", "Anti-Gapclose with W")
+            };
+
+            Drawings = new Menu("Drawings", "Drawings")
+            {
+                new MenuSlider("Segments", "Segments", 100, 100, 200).SetToolTip("Smoothness of the circles"),
+                new MenuBool("Dmg", "Damage"),
+                new MenuBool("Range", "Draw Engage Range"),
+                new MenuBool("Q", "Draw Q Range"),
+                new MenuBool("Pred", "Draw Q Prediction")
+            };
+
+            Gapcloser.Attach(_mainMenu, "Anti Gapcloser");
+
+            foreach (var menu in new List<Menu>
+            {
+                Combo,
+                Harass,
+                LaneClear,
+                JungleClear,
+                Lasthit,
+                Killsteal,
+                Misc,
+                Drawings,
+                MenuShortcut.Credits
+            }) _mainMenu.Add(menu);
+        }
+    }
+}

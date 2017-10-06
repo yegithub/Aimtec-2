@@ -1,7 +1,6 @@
 ﻿using System.Drawing;
 using System.Linq;
 using Adept_AIO.Champions.Yasuo.Core;
-using Adept_AIO.SDK.Generic;
 using Adept_AIO.SDK.Geometry_Related;
 using Adept_AIO.SDK.Unit_Extensions;
 using Aimtec;

@@ -18,9 +18,9 @@ namespace Adept_AIO.Champions.Azir.Core
 
             var dmg = 0d;
 
-            if (SoldierHelper.Soldiers != null && SoldierHelper.Soldiers.Any())
+            if (SoldierManager.Soldiers != null && SoldierManager.Soldiers.Any())
             {
-                dmg += (SoldierHelper.Soldiers.Count + Global.Player.GetSpell(SpellSlot.W).Ammo) * Global.Player.GetSpellDamage(target, SpellSlot.W);
+                dmg += (SoldierManager.Soldiers.Count + Global.Player.GetSpell(SpellSlot.W).Ammo) * Global.Player.GetSpellDamage(target, SpellSlot.W);
             }
            
             if (SpellConfig.E.Ready)

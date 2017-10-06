@@ -1,15 +1,12 @@
-﻿using System;
-using Adept_AIO.Champions.Riven.Update.Miscellaneous;
-using Adept_AIO.Champions.Yasuo.Core;
+﻿using Adept_AIO.Champions.Yasuo.Core;
 using Adept_AIO.Champions.Yasuo.Drawings;
-using Adept_AIO.Champions.Yasuo.Update.Miscellaneous;
+using Adept_AIO.Champions.Yasuo.Miscellaneous;
 using Adept_AIO.SDK.Delegates;
 using Adept_AIO.SDK.Generic;
 using Adept_AIO.SDK.Unit_Extensions;
 using Aimtec;
-using Aimtec.SDK.Events;
-using AntiGapcloser = Adept_AIO.Champions.Yasuo.Update.Miscellaneous.AntiGapcloser;
-using Manager = Adept_AIO.Champions.Yasuo.Update.Miscellaneous.Manager;
+using AntiGapcloser = Adept_AIO.Champions.Yasuo.Miscellaneous.AntiGapcloser;
+using Manager = Adept_AIO.Champions.Yasuo.Miscellaneous.Manager;
 
 namespace Adept_AIO.Champions.Yasuo
 {

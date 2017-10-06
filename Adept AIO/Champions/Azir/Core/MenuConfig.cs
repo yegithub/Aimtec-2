@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Adept_AIO.Champions.Azir.Update.OrbwalkingEvents;
+using Adept_AIO.Champions.Azir.OrbwalkingEvents;
 using Adept_AIO.SDK.Delegates;
 using Adept_AIO.SDK.Menu_Extension;
 using Adept_AIO.SDK.Unit_Extensions;

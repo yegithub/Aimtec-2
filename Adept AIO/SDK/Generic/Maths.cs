@@ -1,7 +1,6 @@
 ﻿using System.Threading;
 using Adept_AIO.SDK.Unit_Extensions;
 using Aimtec;
-using Aimtec.SDK.Extensions;
 using Aimtec.SDK.Util;
 
 namespace Adept_AIO.SDK.Generic
@@ -21,7 +20,7 @@ namespace Adept_AIO.SDK.Generic
             DelayAction.Queue(duration, () => Global.Orbwalker.AttackingEnabled = true, new CancellationToken(false));
         }
 
-        public static float GetEnergyPercent()
+        public static float GetEnergyCostPercent()
         {
             var total = 0f;
 
@@ -40,12 +39,12 @@ namespace Adept_AIO.SDK.Generic
                 total += Global.Player.SpellBook.GetSpell(SpellSlot.E).Cost;
             }
 
-            if (Global.Player.SpellBook.GetSpell(SpellSlot.R).State == SpellState.Ready)
-            {
-                total += Global.Player.SpellBook.GetSpell(SpellSlot.R).Cost;
-            }
-
             return (Global.Player.Mana - total) / Global.Player.MaxMana * 100;
+        }
+
+        public static float GetEnergyPercent()
+        {
+            return Global.Player.Mana / Global.Player.MaxMana * 100;
         }
     }
 }
