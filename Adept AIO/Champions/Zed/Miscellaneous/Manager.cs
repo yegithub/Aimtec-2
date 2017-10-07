@@ -34,7 +34,7 @@ namespace Adept_AIO.Champions.Zed.Miscellaneous
                     break;
             }
 
-            if (Global.Orbwalker.Mode != OrbwalkingMode.Mixed)
+            if (Global.Orbwalker.Mode != OrbwalkingMode.Mixed && !Global.Player.IsRecalling())
             {
                 PermaSpells();
             }
