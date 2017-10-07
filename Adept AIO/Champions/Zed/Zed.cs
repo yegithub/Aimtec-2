@@ -2,6 +2,7 @@
 using Adept_AIO.Champions.Zed.Core;
 using Adept_AIO.Champions.Zed.Drawings;
 using Adept_AIO.Champions.Zed.Miscellaneous;
+using Adept_AIO.Champions.Zed.OrbwalkingEvents;
 using Adept_AIO.SDK.Delegates;
 using Aimtec;
 
@@ -22,7 +23,8 @@ namespace Adept_AIO.Champions.Zed
 
             Gapcloser.OnGapcloser += AntiGapcloser.OnGapcloser;
 
-            Obj_AI_Base.OnProcessSpellCast += SpellManager.Cast;
+            Obj_AI_Base.OnProcessSpellCast += SpellManager.OnProcessSpellCast;
+            Obj_AI_Base.OnProcessSpellCast += LaneClear.OnProcessSpellCast;
 
             ShadowManager.Shadows = new List<Obj_AI_Minion>();
             GameObject.OnCreate += ShadowManager.OnCreate;

@@ -11,19 +11,30 @@ namespace Adept_AIO.Champions.Yasuo.OrbwalkingEvents
     {
         public static void OnUpdate()
         {
-            if (!SpellConfig.E.Ready || !MenuConfig.Misc["Lasthit"].Enabled)
+            if (SpellConfig.E.Ready && MenuConfig.Misc["LasthitE"].Enabled)
             {
-                return;
+                var minion = GameObjects.EnemyMinions.FirstOrDefault(x =>
+                    !x.HasBuff("YasuoDashWrapper") && x.Health <= Global.Player.GetSpellDamage(x, SpellSlot.E) &&
+                    x.Distance(Global.Player) <= SpellConfig.E.Range);
+
+                if (minion == null)
+                {
+                    return;
+                }
+
+                SpellConfig.E.CastOnUnit(minion);
             }
 
-            var minion = GameObjects.EnemyMinions.FirstOrDefault(x => !x.HasBuff("YasuoDashWrapper") && x.Health < Global.Player.GetSpellDamage(x, SpellSlot.E) && x.Distance(Global.Player) <= SpellConfig.E.Range);
-
-            if (minion == null)
+            if (SpellConfig.Q.Ready && (MenuConfig.Misc["LasthitQ"].Enabled && Extension.CurrentMode == Mode.Normal || MenuConfig.Misc["LasthitQ3"].Enabled && Extension.CurrentMode == Mode.Tornado))
             {
-                return;
-            }
+                var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Health <= Global.Player.GetSpellDamage(x, SpellSlot.Q) && x.Distance(Global.Player) <= SpellConfig.Q.Range - 100);
+                if (minion == null)
+                {
+                    return;
+                }
 
-            SpellConfig.E.CastOnUnit(minion);
+                SpellConfig.Q.Cast(minion);
+            }
         }
     }
 }

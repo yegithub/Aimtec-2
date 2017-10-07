@@ -31,7 +31,7 @@ namespace Adept_AIO.Champions.Yasuo.Miscellaneous
 
         public static void OnUpdate()
         {
-            if (Global.Player.IsDead || Global.Orbwalker.IsWindingUp)
+            if (Global.Player.IsDead || Global.Orbwalker.IsWindingUp && Global.Orbwalker.Mode != OrbwalkingMode.Lasthit)
             {
                 return;
             }

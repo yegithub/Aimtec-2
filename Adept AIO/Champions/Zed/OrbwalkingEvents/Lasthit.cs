@@ -12,7 +12,7 @@ namespace Adept_AIO.Champions.Zed.OrbwalkingEvents
     {
         public static void OnUpdate()
         {
-            var creep = GameObjects.Jungle.OrderByDescending(x => x.Health).FirstOrDefault(x => x.IsValidTarget(SpellManager.Q.Range));
+            var creep = GameObjects.Jungle.FirstOrDefault(x => x.IsValidTarget(SpellManager.Q.Range));
             if (creep == null || Maths.GetEnergyPercent() < MenuConfig.Lasthit["Energy"].Value)
             {
                 return;

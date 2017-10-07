@@ -27,14 +27,12 @@ namespace Adept_AIO.Champions.Zed.Core
             R = new Spell(SpellSlot.R, 625);
         }
 
-        public static void Cast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
+        public static void OnProcessSpellCast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
         {
-            if (!sender.IsMe || args.SpellSlot != SpellSlot.R)
+            if (sender.IsMe && args.SpellSlot == SpellSlot.R)
             {
-                return;
+                LastR = Game.TickCount;
             }
-
-            LastR = Game.TickCount;
         }
 
         public static void CastQ(Obj_AI_Base target, int minHit = 1)

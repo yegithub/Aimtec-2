@@ -163,6 +163,7 @@
     <Compile Include="Champions\Zed\Miscellaneous\Killsteal.cs" />
     <Compile Include="Champions\Zed\Miscellaneous\Manager.cs" />
     <Compile Include="Champions\Zed\OrbwalkingEvents\Combo.cs" />
+    <Compile Include="Champions\Zed\OrbwalkingEvents\Flee.cs" />
     <Compile Include="Champions\Zed\OrbwalkingEvents\Harass.cs" />
     <Compile Include="Champions\Zed\OrbwalkingEvents\JungleClear.cs" />
     <Compile Include="Champions\Zed\OrbwalkingEvents\LaneClear.cs" />

@@ -89,7 +89,7 @@ namespace Adept_AIO.Champions.Yasuo.OrbwalkingEvents
 
             //if (KnockUpHelper.IsItTimeToUlt(target, 860) && SpellConfig.R.Ready)
             //{
-            //    SpellConfig.R.Cast();
+            //    SpellConfig.R.OnProcessSpellCast();
             //}
 
             if (SpellConfig.E.Ready)

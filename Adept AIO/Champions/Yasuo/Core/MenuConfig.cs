@@ -51,7 +51,7 @@ namespace Adept_AIO.Champions.Yasuo.Core
                 new MenuBool("Walk", "Walk Behind Minion To Dash"),
                 new MenuBool("Dodge", "Windwall Targetted Spells"),
                 new MenuSlider("Count", "Use R If X Airbourne", 2, 0, 5),
-                new MenuBool("Flash", "Use Flash (Beyblade)").SetToolTip("Will try to E-Q -> Flash. Known as Beyblade"),
+                new MenuBool("Flash", "Use Flash (Beyblade)").SetToolTip("Will try to E-Q -> Flash. AKA Beyblade"),
                 new MenuBool("Turret", "Avoid Using E Under Turret"),
                 new MenuList("Dash", "Dash Mode: ", new []{"Cursor", "From Player"}, 0),
                 new MenuSlider("Range", "Mouse Dash Range: ", 650, 1, 1000),
@@ -62,7 +62,7 @@ namespace Adept_AIO.Champions.Yasuo.Core
             Harass = new Menu("Harass", "Harass")
             {
                 new MenuBool("Q", "Use Q3"),
-                new MenuBool("E", "Use E", false)
+                new MenuBool("E", "Use E")
             };
 
             LaneClear = new Menu("LaneClear", "LaneClear")
@@ -92,7 +92,9 @@ namespace Adept_AIO.Champions.Yasuo.Core
             Misc = new Menu("Misc", "Miscellaneous")
             {
                 new MenuBool("Stack", "Stack Q").SetToolTip("Wont Stack when enemy is within 900 units."),
-                new MenuBool("Lasthit", "Lasthit With E"),
+                new MenuBool("LasthitE", "Lasthit With E"),
+                new MenuBool("LasthitQ", "Lasthit With Q"),
+                new MenuBool("LasthitQ3", "Lasthit With Tornado (Q3)")
             };
 
             Drawings = new Menu("Drawings", "Drawings")

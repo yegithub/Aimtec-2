@@ -1,15 +1,19 @@
 ﻿using System.Collections.Generic;
+using Adept_AIO.Champions.Zed.OrbwalkingEvents;
 using Adept_AIO.SDK.Delegates;
 using Adept_AIO.SDK.Menu_Extension;
 using Adept_AIO.SDK.Unit_Extensions;
 using Aimtec.SDK.Menu;
 using Aimtec.SDK.Menu.Components;
+using Aimtec.SDK.Orbwalking;
 using Aimtec.SDK.Util;
 
 namespace Adept_AIO.Champions.Zed.Core
 {
     internal class MenuConfig
     {
+        public static OrbwalkerMode FleeOrbwalkerMode;
+
         private static Menu _mainMenu;
 
         public static Menu Combo,
@@ -25,6 +29,9 @@ namespace Adept_AIO.Champions.Zed.Core
         {
             _mainMenu = new Menu(string.Empty, $"Adept AIO - {Global.Player.ChampionName}", true);
             _mainMenu.Attach();
+
+            FleeOrbwalkerMode = new OrbwalkerMode("Flee", KeyCode.A, null, Flee.OnKeyPressed);
+            Global.Orbwalker.AddMode(FleeOrbwalkerMode);
 
             Global.Orbwalker.Attach(_mainMenu);
 
@@ -58,6 +65,7 @@ namespace Adept_AIO.Champions.Zed.Core
             LaneClear = new Menu("Lane", "LaneClear")
             {
                 new MenuBool("Check", "Don't Clear When Enemies Nearby"),
+                new MenuBool("TurretFarm", "Smart Under Turret Farm"),
                 new MenuSliderBool("Q", "Use Q | Min. Minions Hit", true, 3, 1, 6),
                 new MenuBool("W", "Use W"),
                 new MenuSliderBool("E", "Use E | Min. Minions Hit", true, 3, 1, 6),
