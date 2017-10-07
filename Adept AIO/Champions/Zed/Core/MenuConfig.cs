@@ -93,6 +93,7 @@ namespace Adept_AIO.Champions.Zed.Core
 
             Misc = new Menu("Misc", "Miscellaneous")
             {
+                new MenuBool("Q", "Always Use Q On Enemies"),
                 new MenuBool("E", "Use E To Slow Enemies"),
                 new MenuBool("R", "Use R To Dodge Enemy Spells"),
                 new MenuSlider("Health", "Dodge if % Health is below", 20),

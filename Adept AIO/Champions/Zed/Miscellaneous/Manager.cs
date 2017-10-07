@@ -1,7 +1,9 @@
-﻿using Adept_AIO.Champions.Zed.Core;
+﻿using System.Linq;
+using Adept_AIO.Champions.Zed.Core;
 using Adept_AIO.Champions.Zed.OrbwalkingEvents;
 using Adept_AIO.SDK.Generic;
 using Adept_AIO.SDK.Unit_Extensions;
+using Aimtec.SDK.Extensions;
 using Aimtec.SDK.Orbwalking;
 
 namespace Adept_AIO.Champions.Zed.Miscellaneous
@@ -14,7 +16,7 @@ namespace Adept_AIO.Champions.Zed.Miscellaneous
             {
                 return;
             }
-         
+
             switch (Global.Orbwalker.Mode)
             {
                 case OrbwalkingMode.Combo:
@@ -30,6 +32,27 @@ namespace Adept_AIO.Champions.Zed.Miscellaneous
                 case OrbwalkingMode.Lasthit:
                     Lasthit.OnUpdate();
                     break;
+            }
+
+            PermaSpells();
+        }
+
+        private static void PermaSpells()
+        {
+            var enemy = GameObjects.EnemyHeroes.OrderBy(x => x.Distance(Global.Player)).FirstOrDefault(x => x.IsValidTarget());
+            if (enemy == null)
+            {
+                return;
+            }
+
+            if (MenuConfig.Misc["Q"].Enabled)
+            {
+                SpellManager.CastQ(enemy);
+            }
+
+            if (MenuConfig.Misc["E"].Enabled)
+            {
+                SpellManager.CastE(enemy);
             }
         }
     }
