@@ -22,7 +22,7 @@ namespace Adept_AIO.Champions.Zed.OrbwalkingEvents
                 {
                     SpellManager.W.Cast(target.ServerPosition);
                 }
-                else if (ShadowManager.CanSwitchToShadow() && MenuConfig.Harass["W2"].Enabled && Global.Player.HealthPercent() >= MenuConfig.Harass["Health"].Value)
+                else if (ShadowManager.CanSwitchToShadow() && MenuConfig.Harass["W2"].Enabled && Global.Player.HealthPercent() >= MenuConfig.Harass["Health"].Value && !target.IsUnderEnemyTurret())
                 {
                     SpellManager.W.Cast();
                 }
