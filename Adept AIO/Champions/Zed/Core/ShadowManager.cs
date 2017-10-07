@@ -14,7 +14,7 @@ namespace Adept_AIO.Champions.Zed.Core
 
         public static bool CanSwitchToShadow()
         {
-            return Global.Player.GetSpell(SpellSlot.W).ToggleState != 0;
+            return Global.Player.GetSpell(SpellSlot.W).ToggleState != 0 && Shadows.Any(x => x.Distance(Global.Player) <= 1300);
         }
 
         public static bool CanCastW1()
