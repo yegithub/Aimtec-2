@@ -43,7 +43,6 @@ namespace Adept_AIO.Champions.Zed.Core
                 new MenuBool("R", "Use R"),
                 new MenuBool("Killable", "Only Use R When Killable"),
                 new MenuBool("Extend", "Max Range (The Line)"),
-                new MenuKeyBind("ToggleStyle", "Change Style", KeyCode.L, KeybindType.Toggle),
                 new MenuSeperator("Whitelist")
             };
 
