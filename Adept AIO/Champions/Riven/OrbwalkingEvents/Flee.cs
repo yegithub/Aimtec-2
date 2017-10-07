@@ -39,7 +39,7 @@ namespace Adept_AIO.Champions.Riven.OrbwalkingEvents
                 var end = Global.Player.Position.Extend(Game.CursorPos, dashRange);
                 var wall = WallExtension.GeneratePoint(Global.Player.Position, end);
                 
-                if (wall.IsZero || wall.Distance(Global.Player) > SpellConfig.E.Range + 65 || !(Vector3Extensions.To2D(Global.Player.Orientation).Perpendicular().AngleBetween(Vector3Extensions.To2D(WallExtension.EndPoint) - Vector3Extensions.To2D(Global.Player.ServerPosition)) < 160))
+                if (wall.IsZero || wall.Distance(Global.Player) > SpellConfig.E.Range + 65 || !(Global.Player.Orientation.To2D().Perpendicular().AngleBetween(WallExtension.EndPoint.To2D() - Global.Player.ServerPosition.To2D()) < 160))
                 {
                     return;
                 }

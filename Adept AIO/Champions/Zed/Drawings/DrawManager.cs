@@ -45,8 +45,13 @@ namespace Adept_AIO.Champions.Zed.Drawings
                     }
 
                     var pred = SpellManager.Q.GetPrediction(enemy, shadow.ServerPosition, shadow.ServerPosition);
-                    var rect = new Geometry.Rectangle(shadow.ServerPosition.To2D(), shadow.ServerPosition.Extend(pred.CastPosition.To2D(), SpellManager.Q.Range).To2D(), SpellManager.Q.Width);
+                    var extended = shadow.ServerPosition.Extend(pred.CastPosition, SpellManager.Q.Range);
+                    var rect = new Geometry.Rectangle(shadow.ServerPosition.To2D(), extended.To2D(), SpellManager.Q.Width);
                     rect.Draw(Color.Crimson);
+
+                    Render.WorldToScreen(shadow.ServerPosition, out var shadow2D);
+                    Render.WorldToScreen(extended, out var extended2D);
+                    Render.Line(shadow2D, extended2D, Color.MediumVioletRed);
                 }
             }
 

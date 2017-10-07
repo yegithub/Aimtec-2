@@ -52,8 +52,8 @@ namespace Adept_AIO.Champions.Zed.Core
                 {
                     var pred = Q.GetPrediction(target, shadow.ServerPosition, shadow.ServerPosition);
 
-                    var rect = new Geometry.Rectangle(Vector3Extensions.To2D(shadow.ServerPosition), Vector3Extensions.To2D(pred.CastPosition), Q.Width);
-                    if (GameObjects.EnemyMinions.Count(x => rect.IsInside(Vector3Extensions.To2D(x.ServerPosition))) >= minHit)
+                    var rect = new Geometry.Rectangle(shadow.ServerPosition.To2D(), pred.CastPosition.To2D(), Q.Width);
+                    if (GameObjects.EnemyMinions.Count(x => rect.IsInside(x.ServerPosition.To2D())) >= minHit)
                     {
                         Q.Cast(pred.CastPosition);
                     }

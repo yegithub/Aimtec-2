@@ -57,8 +57,8 @@ namespace Adept_AIO.Champions.Ezreal.Miscellaneous
                      && MenuConfig.Killsteal["Range"].Enabled
                      && target.Distance(Global.Player) > Global.Player.AttackRange + 275)
             {
-                var rectangle = new Geometry.Rectangle(Vector3Extensions.To2D(Global.Player.ServerPosition), Vector3Extensions.To2D(target.ServerPosition), SpellConfig.R.Width);
-                if (GameObjects.EnemyHeroes.Count(x => rectangle.IsInside(Vector3Extensions.To2D(x.ServerPosition))) >= 2 &&
+                var rectangle = new Geometry.Rectangle(Global.Player.ServerPosition.To2D(), target.ServerPosition.To2D(), SpellConfig.R.Width);
+                if (GameObjects.EnemyHeroes.Count(x => rectangle.IsInside(x.ServerPosition.To2D())) >= 2 &&
                     target.Health > Global.Player.GetSpellDamage(target, SpellSlot.R, DamageStage.AreaOfEffect))
                 {
                     return;

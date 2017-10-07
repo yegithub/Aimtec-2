@@ -37,8 +37,8 @@ namespace Adept_AIO.Champions.Azir.OrbwalkingEvents
             {
                 foreach (var soldier in SoldierManager.Soldiers)
                 {
-                    var rect = new Geometry.Rectangle(Vector3Extensions.To2D(Global.Player.ServerPosition), Vector3Extensions.To2D(soldier.ServerPosition), SpellConfig.E.Width);
-                    var count = GameObjects.EnemyHeroes.Count(x => rect.IsInside(Vector3Extensions.To2D(x.ServerPosition)));
+                    var rect = new Geometry.Rectangle(Global.Player.ServerPosition.To2D(), soldier.ServerPosition.To2D(), SpellConfig.E.Width);
+                    var count = GameObjects.EnemyHeroes.Count(x => rect.IsInside(x.ServerPosition.To2D()));
 
                     if (count >= 1)
                     {

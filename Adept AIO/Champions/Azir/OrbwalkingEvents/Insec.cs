@@ -25,7 +25,7 @@ namespace Adept_AIO.Champions.Azir.OrbwalkingEvents
 
                 var targetExtend = Global.Player.ServerPosition.Extend(allyT, SpellConfig.R.Range - target.BoundingRadius - 30);
 
-                AzirHelper.Rect = new Geometry.Rectangle(Vector3Extensions.To2D(targetExtend), Vector3Extensions.To2D(Global.Player.ServerPosition.Extend(allyT, -SpellConfig.R.Width / 2f)), SpellConfig.R.Width / 2f);
+                AzirHelper.Rect = new Geometry.Rectangle(targetExtend.To2D(), Global.Player.ServerPosition.Extend(allyT, -SpellConfig.R.Width / 2f).To2D(), SpellConfig.R.Width / 2f);
 
                 if (SpellConfig.Q.Ready)
                 {
@@ -56,7 +56,7 @@ namespace Adept_AIO.Champions.Azir.OrbwalkingEvents
                     SpellConfig.W.Cast(Global.Player.ServerPosition.Extend(targetPos, SpellConfig.W.Range));
                 }
 
-                if (AzirHelper.Rect.IsInside(Vector3Extensions.To2D(target.ServerPosition)))
+                if (AzirHelper.Rect.IsInside(target.ServerPosition.To2D()))
                 {
                     if (SpellConfig.E.Ready && soldierPos.Distance(Global.Player) > 600)
                     {

@@ -39,20 +39,17 @@ namespace Adept_AIO.Champions.Zed.Miscellaneous
 
         private static void PermaSpells()
         {
-            var enemy = GameObjects.EnemyHeroes.OrderBy(x => x.Distance(Global.Player)).FirstOrDefault(x => x.IsValidTarget());
-            if (enemy == null)
+            foreach (var enemy in GameObjects.EnemyHeroes.Where(x => x.IsValidTarget() && x.IsHero))
             {
-                return;
-            }
+                if (MenuConfig.Misc["Q"].Enabled && SpellManager.Q.Ready)
+                {
+                    SpellManager.CastQ(enemy);
+                }
 
-            if (MenuConfig.Misc["Q"].Enabled)
-            {
-                SpellManager.CastQ(enemy);
-            }
-
-            if (MenuConfig.Misc["E"].Enabled)
-            {
-                SpellManager.CastE(enemy);
+                if (MenuConfig.Misc["E"].Enabled && SpellManager.E.Ready)
+                {
+                    SpellManager.CastE(enemy);
+                }
             }
         }
     }
