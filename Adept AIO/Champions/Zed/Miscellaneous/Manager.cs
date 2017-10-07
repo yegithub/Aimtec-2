@@ -32,9 +32,10 @@ namespace Adept_AIO.Champions.Zed.Miscellaneous
                 case OrbwalkingMode.Lasthit:
                     Lasthit.OnUpdate();
                     break;
+                case OrbwalkingMode.None:
+                    PermaSpells();
+                    break;
             }
-
-            PermaSpells();
         }
 
         private static void PermaSpells()
