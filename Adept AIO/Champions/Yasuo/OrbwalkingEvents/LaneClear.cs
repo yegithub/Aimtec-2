@@ -103,8 +103,8 @@ namespace Adept_AIO.Champions.Yasuo.OrbwalkingEvents
                             return;
                         }
 
-                        var rect = new Geometry.Rectangle(Geometry.To2D(Global.Player.ServerPosition), Geometry.To2D(m.ServerPosition), SpellConfig.Q.Width);
-                        var count = GameObjects.EnemyMinions.Count(x => rect.IsInside(Geometry.To2D(x.ServerPosition)));
+                        var rect = new Geometry.Rectangle(Global.Player.ServerPosition.To2D(), m.ServerPosition.To2D(), SpellConfig.Q.Width);
+                        var count = GameObjects.EnemyMinions.Count(x => rect.IsInside(x.ServerPosition.To2D()));
 
                         if (MenuConfig.LaneClear["Q3"].Enabled && count >= 2)
                         {

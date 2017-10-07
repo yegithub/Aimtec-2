@@ -105,7 +105,7 @@ namespace Adept_AIO.Champions.Zed.Core
                 new MenuBool("Dmg", "Damage"),
                 new MenuBool("Range", "Draw Engage Range"),
                 new MenuBool("Q", "Draw Q Range"),
-               // new MenuBool("Pred", "Draw Q Prediction")
+                new MenuBool("Pred", "Draw Q Prediction")
             };
 
             Gapcloser.Attach(_mainMenu, "Anti Gapcloser");

@@ -14,10 +14,7 @@ namespace Adept_AIO.Champions.Zed.Core
 
         public static bool CanSwitchToShadow()
         {
-            return !CanCastW1()
-                && GetShadowNearestTo(Global.Player.ServerPosition).Distance(Global.Player) <= 1300 
-                && Global.Player.GetSpell(SpellSlot.W).ToggleState != 0
-                && Global.Player.Mana > Global.Player.GetSpell(SpellSlot.W).Cost;
+            return Global.Player.GetSpell(SpellSlot.W).ToggleState != 0;
         }
 
         public static bool CanCastW1()
@@ -25,7 +22,7 @@ namespace Adept_AIO.Champions.Zed.Core
             return Global.Player.GetSpell(SpellSlot.W).ToggleState == 0;
         }
 
-        private static bool IsShadow(Obj_AI_Minion shadow)
+        public static bool IsShadow(Obj_AI_Minion shadow)
         {
             if (shadow == null)
             {
@@ -43,15 +40,13 @@ namespace Adept_AIO.Champions.Zed.Core
         public static void OnCreate(GameObject sender)
         {
             var shadow = sender as Obj_AI_Minion;
-            if (shadow != null && IsShadow(shadow))
+            if (shadow == null || !IsShadow(shadow) || Game.TickCount - SpellManager.LastR > 200 && Game.TickCount - SpellManager.LastR <= 1000)
             {
-                if (Game.TickCount - SpellManager.LastR > 200 && Game.TickCount - SpellManager.LastR <= 1000)
-                {
-                    return;
-                }
-                Shadows.Add(shadow);
-                DelayAction.Queue(5000 - Game.Ping / 2, () => Shadows.RemoveAll(x => x.NetworkId == shadow.NetworkId), new CancellationToken(false));
+                return;
             }
+
+            Shadows.Add(shadow);
+            DelayAction.Queue(5000, () => Shadows.RemoveAll(x => x.NetworkId == shadow.NetworkId), new CancellationToken(false));
         }
 
         public static Vector3 GetShadowNearestTo(Vector3 pos)

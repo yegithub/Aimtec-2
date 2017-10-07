@@ -124,16 +124,6 @@ namespace Adept_AIO.SDK.Geometry_Related
             return new Vector3(v.X, v.Y, v.Z);
         }
 
-        /// <summary>
-        ///     Converts a Vector3 to Vector2
-        /// </summary>
-        /// <param name="v">The v.</param>
-        /// <returns></returns>
-        public static Vector2 To2D(this Vector3 v)
-        {
-            return new Vector2(v.X, v.Y);
-        }
-
         public static Polygon ToPolygon(this Path v)
         {
             var polygon = new Polygon();
