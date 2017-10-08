@@ -41,7 +41,7 @@ namespace Adept_AIO.Champions.Yasuo.OrbwalkingEvents
             }
 
             var minion = MinionHelper.GetDashableMinion(target);
-            if (minion != null)
+            if (minion != null && target.Distance(Global.Player) > Global.Player.AttackRange + 65)
             {
                 if (MenuConfig.Combo["Turret"].Enabled && minion.ServerPosition.PointUnderEnemyTurret() || MenuConfig.Combo["Dash"].Value == 0 && minion.Distance(Game.CursorPos) > MenuConfig.Combo["Range"].Value)
                 {
@@ -101,7 +101,7 @@ namespace Adept_AIO.Champions.Yasuo.OrbwalkingEvents
                         SpellConfig.E.CastOnUnit(m2);
                     }
                 }
-                else if (minion != null && targetDist > Global.Player.AttackRange + 20)
+                else if (minion != null && targetDist > Global.Player.AttackRange + 65)
                 {
                     if (MenuConfig.Combo["Turret"].Enabled && minion.ServerPosition.PointUnderEnemyTurret() ||
                         MenuConfig.Combo["Dash"].Value == 0 &&

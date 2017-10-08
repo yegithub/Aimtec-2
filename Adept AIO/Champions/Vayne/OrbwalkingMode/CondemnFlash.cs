@@ -17,12 +17,18 @@ namespace Adept_AIO.Champions.Vayne.OrbwalkingMode
         public static void OnKeyPressed()
         {
             var target = Global.TargetSelector.GetSelectedTarget();
-            if (target == null)
+            if (target == null || !SpellManager.E.Ready)
             {
                 return;
             }
 
-            var point = WallExtension.GeneratePoint(target.ServerPosition, Global.Player.ServerPosition);
+            if (target.IsValidTarget(SpellManager.E.Range))
+            {
+                SpellManager.CastE(target);
+            }
+
+            var extended = target.ServerPosition + (target.ServerPosition - Game.CursorPos).Normalized() * 410;
+            var point = WallExtension.GeneratePoint(target.ServerPosition, extended);
             if (point.IsZero)
             {
                 return;
@@ -32,7 +38,7 @@ namespace Adept_AIO.Champions.Vayne.OrbwalkingMode
             if (pos.Distance(Global.Player) <= 425 && SummonerSpells.IsValid(SummonerSpells.Flash))
             {
                 SummonerSpells.Flash.Cast(pos);
-                SpellManager.E.CastOnUnit(target);
+                SpellManager.E.Cast(target);
             }
         }
     }

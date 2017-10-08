@@ -5,7 +5,7 @@ namespace Adept_AIO.SDK.Geometry_Related
 {
     internal class WallExtension
     {
-        private static bool HasFlag(Vector3 pos)
+        private static bool IsWallAt(Vector3 pos)
         {
             return NavMesh.WorldToCell(pos).Flags.HasFlag(NavCellFlags.Wall) || NavMesh.WorldToCell(pos).Flags.HasFlag(NavCellFlags.Building);
         }
@@ -18,7 +18,7 @@ namespace Adept_AIO.SDK.Geometry_Related
             {
                 var newPoint = start.Extend(end, i);
               
-                if (HasFlag(newPoint))
+                if (IsWallAt(newPoint))
                 {
                     EndPoint = end.Extend(start, i);
                     return newPoint;
@@ -33,7 +33,7 @@ namespace Adept_AIO.SDK.Geometry_Related
             {
                 var newPoint = start.Extend(end, i);
 
-                if (HasFlag(newPoint))
+                if (IsWallAt(newPoint))
                 {
                     EndPoint = end.Extend(start, i);
                     return true;
@@ -48,7 +48,7 @@ namespace Adept_AIO.SDK.Geometry_Related
 
             for (var i = 0; i < maxWallWidth; i++)
             {
-                if (HasFlag(start.Extend(direction, i)))
+                if (IsWallAt(start.Extend(direction, i)))
                 {
                     thickness += i;
                 }

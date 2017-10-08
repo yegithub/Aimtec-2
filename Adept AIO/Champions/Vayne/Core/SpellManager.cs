@@ -29,7 +29,7 @@ namespace Adept_AIO.Champions.Vayne.Core
             }
 
             var pred = E.GetPrediction(target).CastPosition;
-            var endPos = pred + (pred - Global.Player.ServerPosition).Normalized() * 410;
+            var endPos = pred + (pred - Global.Player.ServerPosition).Normalized() * 475;
             return new Geometry.Rectangle(target.ServerPosition.To2D(), endPos.To2D(), target.BoundingRadius);
         }
      
