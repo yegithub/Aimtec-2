@@ -4,7 +4,7 @@ using Aimtec;
 
 namespace Adept_AIO.Champions.Zed.OrbwalkingEvents
 {
-    class Flee
+    internal class Flee
     {
         public static void OnKeyPressed()
         {

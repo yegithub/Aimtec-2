@@ -7,7 +7,7 @@ using Aimtec;
 
 namespace Adept_AIO.Champions.Vayne
 {
-    class Vayne
+    internal class Vayne
     {
         public static void Init()
         {

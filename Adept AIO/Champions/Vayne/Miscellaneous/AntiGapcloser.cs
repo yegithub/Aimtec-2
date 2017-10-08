@@ -6,7 +6,7 @@ using Aimtec.SDK.Extensions;
 
 namespace Adept_AIO.Champions.Vayne.Miscellaneous
 {
-    class AntiGapcloser
+    internal class AntiGapcloser
     {
         public static void OnGapcloser(Obj_AI_Hero sender, GapcloserArgs args)
         {
@@ -21,7 +21,7 @@ namespace Adept_AIO.Champions.Vayne.Miscellaneous
                 SpellManager.Q.Cast(pos);
             }
 
-            else if (SpellManager.E.Ready && MenuConfig.Misc["E"].Enabled && args.EndPosition.Distance(Global.Player) < args.StartPosition.Distance(Global.Player) && args.EndPosition.Distance(Global.Player) <= 100)
+            else if (SpellManager.E.Ready && MenuConfig.Misc["E"].Enabled && args.EndPosition.Distance(Global.Player) < args.StartPosition.Distance(Global.Player) && args.EndPosition.Distance(Global.Player) <= 300)
             {
                 SpellManager.E.CastOnUnit(sender);
             }

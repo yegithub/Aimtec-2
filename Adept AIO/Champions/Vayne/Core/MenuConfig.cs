@@ -10,7 +10,7 @@ using Aimtec.SDK.Util;
 
 namespace Adept_AIO.Champions.Vayne.Core
 {
-    class MenuConfig
+    internal class MenuConfig
     {
         public static OrbwalkerMode FleeOrbwalkerMode;
 

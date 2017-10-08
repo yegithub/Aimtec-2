@@ -4,7 +4,7 @@ using Aimtec.SDK.Events;
 
 namespace Adept_BaseUlt
 {
-    class Program
+    internal class Program
     {
         private static void Main()
         {

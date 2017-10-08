@@ -7,7 +7,7 @@ using Aimtec.SDK.Orbwalking;
 
 namespace Adept_AIO.Champions.Vayne.OrbwalkingMode
 {
-    class Lasthit
+    internal class Lasthit
     {
         public static void PostAttack(object sender, PostAttackEventArgs args)
         {

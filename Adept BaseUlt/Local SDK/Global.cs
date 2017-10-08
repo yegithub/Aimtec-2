@@ -4,7 +4,7 @@ using Aimtec.SDK.TargetSelector;
 
 namespace Adept_BaseUlt.Local_SDK
 {
-    class Global
+    internal class Global
     {
         public static ITargetSelector TargetSelector;
         public static IHealthPrediction HealthPrediction;

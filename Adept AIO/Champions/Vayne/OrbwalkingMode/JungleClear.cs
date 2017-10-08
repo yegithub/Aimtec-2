@@ -6,7 +6,7 @@ using Aimtec.SDK.Orbwalking;
 
 namespace Adept_AIO.Champions.Vayne.OrbwalkingMode
 {
-    class JungleClear
+    internal class JungleClear
     {
         public static void PostAttack(object sender, PostAttackEventArgs args)
         {

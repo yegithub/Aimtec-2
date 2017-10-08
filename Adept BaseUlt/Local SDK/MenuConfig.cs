@@ -4,7 +4,7 @@ using Aimtec.SDK.Util.Cache;
 
 namespace Adept_BaseUlt.Local_SDK
 {
-    class MenuConfig
+    internal class MenuConfig
     {
         public Menu Menu;
 

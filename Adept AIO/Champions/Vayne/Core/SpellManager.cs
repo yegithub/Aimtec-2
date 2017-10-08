@@ -8,7 +8,7 @@ using Spell = Aimtec.SDK.Spell;
 
 namespace Adept_AIO.Champions.Vayne.Core
 {
-    class SpellManager
+    internal class SpellManager
     {
         public static Spell Q, W, E, R;
 

@@ -8,7 +8,7 @@ using Aimtec.SDK.Orbwalking;
 
 namespace Adept_AIO.Champions.Vayne.OrbwalkingMode
 {
-    class LaneClear
+    internal class LaneClear
     {
         private static Obj_AI_Minion _turretTarget;
         private static Obj_AI_Base _turret;

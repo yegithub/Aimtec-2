@@ -7,7 +7,7 @@ using Aimtec.SDK.Extensions;
 
 namespace Adept_AIO.Champions.Vayne.Drawings
 {
-    class DrawManager
+    internal class DrawManager
     {
         public static void OnPresent()
         {

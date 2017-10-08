@@ -1,6 +1,6 @@
 ﻿namespace Adept_AIO.Champions.Vayne.OrbwalkingMode
 {
-    class Flee
+    internal class Flee
     {
         public static void OnKeyPressed()
         {
