@@ -27,6 +27,21 @@ namespace Adept_AIO.SDK.Geometry_Related
             return Vector3.Zero;
         }
 
+        public static bool IsWall(Vector3 start, Vector3 end)
+        {
+            for (var i = 0; i < start.Distance(end); i++)
+            {
+                var newPoint = start.Extend(end, i);
+
+                if (HasFlag(newPoint))
+                {
+                    EndPoint = end.Extend(start, i);
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public static float GetWallWidth(Vector3 start, Vector3 direction, int maxWallWidth = 275)
         {
             var thickness = 0f;
