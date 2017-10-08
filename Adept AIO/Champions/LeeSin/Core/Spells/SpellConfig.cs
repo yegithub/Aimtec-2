@@ -71,7 +71,7 @@ namespace Adept_AIO.Champions.LeeSin.Core.Spells
         public OrbwalkerMode WardjumpMode { get; set; }
         public OrbwalkerMode KickFlashMode { get; set; }
 
-        public int WardRange { get; } = 620;
+        public int WardRange { get; } = 600;
         private const string PassiveName = "blindmonkpassive_cosmetic";
 
         public int PassiveStack()
