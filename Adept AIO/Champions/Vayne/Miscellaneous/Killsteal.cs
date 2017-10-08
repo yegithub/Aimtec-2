@@ -13,7 +13,7 @@ namespace Adept_AIO.Champions.Vayne.Miscellaneous
         {
             var target = GameObjects.EnemyHeroes.FirstOrDefault(x => x.Distance(Global.Player) <= Global.Player.AttackRange + SpellManager.Q.Range && x.IsValid && !x.IsDead);
 
-            if (target == null)
+            if (target == null || Global.Orbwalker.IsWindingUp)
             {
                 return;
             }
