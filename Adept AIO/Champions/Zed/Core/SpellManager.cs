@@ -11,7 +11,7 @@ namespace Adept_AIO.Champions.Zed.Core
     internal class SpellManager
     {
         public static Spell Q, W, E, R;
-        public static float LastR;
+        public static float LastR, LastW;
         public static int WCastRange = 650;
 
         public static void Load()
@@ -29,9 +29,32 @@ namespace Adept_AIO.Champions.Zed.Core
 
         public static void OnProcessSpellCast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
         {
-            if (sender.IsMe && args.SpellSlot == SpellSlot.R)
+            if (!sender.IsMe)
             {
-                LastR = Game.TickCount;
+                return;
+            }
+
+            switch (args.SpellSlot)
+            {
+                case SpellSlot.R:
+                    LastR = Game.TickCount;
+                    break;
+                case SpellSlot.W:
+                    LastW = Game.TickCount;
+                    break;
+            }
+        }
+
+        public static void CastW(Obj_AI_Base target, bool switchToShadow = false)
+        {
+            if (switchToShadow && ShadowManager.CanSwitchToShadow())
+            {
+                W.Cast();
+            }
+            else if(ShadowManager.CanCastW1() && Game.TickCount - LastW > 200)
+            {
+                LastW = Game.TickCount;
+                W.Cast(target.ServerPosition);
             }
         }
 
@@ -42,7 +65,7 @@ namespace Adept_AIO.Champions.Zed.Core
                 return;
             }
 
-            if (target.IsValidTarget(Q.Range))
+            if (target.IsValidTarget(Q.Range, false, false, Global.Player.ServerPosition))
             {
                 Q.Cast(target);
             }
@@ -51,12 +74,19 @@ namespace Adept_AIO.Champions.Zed.Core
                 foreach (var shadow in ShadowManager.Shadows)
                 {
                     var pred = Q.GetPrediction(target, shadow.ServerPosition, shadow.ServerPosition);
-
-                    var rect = new Geometry.Rectangle(shadow.ServerPosition.To2D(), pred.CastPosition.To2D(), Q.Width);
-                    if (GameObjects.EnemyMinions.Count(x => rect.IsInside(x.ServerPosition.To2D())) >= minHit)
+                    if (minHit == 1)
                     {
                         Q.Cast(pred.CastPosition);
                     }
+                    else
+                    {
+                        var rect = new Geometry.Rectangle(shadow.ServerPosition.To2D(), pred.CastPosition.To2D(), Q.Width);
+                        if (GameObjects.EnemyMinions.Count(x => rect.IsInside(x.ServerPosition.To2D())) >= minHit)
+                        {
+                            Q.Cast(pred.CastPosition);
+                        }
+                    }
+                  
                 }
             }
         }
@@ -76,10 +106,23 @@ namespace Adept_AIO.Champions.Zed.Core
             {
                 foreach (var shadow in ShadowManager.Shadows)
                 {
-                    if (GameObjects.EnemyMinions.Count(x => x.IsValidTarget(E.Range, false, false, shadow.ServerPosition)) >= minHit)
+                    if (minHit == 1)
                     {
+                        if (target.Distance(shadow) > E.Range)
+                        {
+                            return;
+                        }
+
                         E.Cast(target);
                     }
+                    else
+                    {
+                        if (GameObjects.EnemyMinions.Count(x => x.IsValidTarget(E.Range, false, false, shadow.ServerPosition)) >= minHit)
+                        {
+                            E.Cast(target);
+                        }
+                    }
+                  
                 }
             }
         }
