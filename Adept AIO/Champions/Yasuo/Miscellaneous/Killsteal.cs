@@ -19,7 +19,14 @@ namespace Adept_AIO.Champions.Yasuo.Miscellaneous
                 return;
             }
 
-            if (SpellConfig.Q.Ready && target.Health < Global.Player.GetSpellDamage(target, SpellSlot.Q) &&
+            if (SpellConfig.E.Ready && target.Health < Global.Player.GetSpellDamage(target, SpellSlot.E) &&
+                target.IsValidTarget(SpellConfig.E.Range) &&
+                !target.HasBuff("YasuoDashWrapper") &&
+                MenuConfig.Killsteal["E"].Enabled)
+            {
+                SpellConfig.E.CastOnUnit(target);
+            }
+            else if (SpellConfig.Q.Ready && target.Health < Global.Player.GetSpellDamage(target, SpellSlot.Q) &&
                 target.IsValidTarget(SpellConfig.Q.Range) &&
                 MenuConfig.Killsteal["Q"].Enabled)
             {
@@ -29,13 +36,6 @@ namespace Adept_AIO.Champions.Yasuo.Miscellaneous
                 }
 
                 SpellConfig.Q.Cast(target);
-            }
-            else if (SpellConfig.E.Ready && target.Health < Global.Player.GetSpellDamage(target, SpellSlot.E) &&
-                     target.IsValidTarget(SpellConfig.E.Range) &&
-                     !target.HasBuff("YasuoDashWrapper") &&
-                     MenuConfig.Killsteal["E"].Enabled)
-            {
-                SpellConfig.E.CastOnUnit(target);
             }
             else if (MenuConfig.Killsteal["Ignite"].Enabled && SummonerSpells.IsValid(SummonerSpells.Ignite) && target.Health < SummonerSpells.IgniteDamage(target))
             {
