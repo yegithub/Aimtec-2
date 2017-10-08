@@ -159,6 +159,7 @@
     <Compile Include="Champions\Vayne\Miscellaneous\Killsteal.cs" />
     <Compile Include="Champions\Vayne\Miscellaneous\Manager.cs" />
     <Compile Include="Champions\Vayne\OrbwalkingMode\Combo.cs" />
+    <Compile Include="Champions\Vayne\OrbwalkingMode\CondemnFlash.cs" />
     <Compile Include="Champions\Vayne\OrbwalkingMode\Flee.cs" />
     <Compile Include="Champions\Vayne\OrbwalkingMode\Harass.cs" />
     <Compile Include="Champions\Vayne\OrbwalkingMode\JungleClear.cs" />

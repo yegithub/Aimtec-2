@@ -1,9 +1,11 @@
-﻿using Adept_AIO.Champions.Vayne.Core;
+﻿using System;
+using Adept_AIO.Champions.Vayne.Core;
 using Adept_AIO.Champions.Vayne.Drawings;
 using Adept_AIO.Champions.Vayne.Miscellaneous;
 using Adept_AIO.SDK.Delegates;
 using Adept_AIO.SDK.Unit_Extensions;
 using Aimtec;
+using Aimtec.SDK.Orbwalking;
 
 namespace Adept_AIO.Champions.Vayne
 {
@@ -19,6 +21,7 @@ namespace Adept_AIO.Champions.Vayne
 
             Gapcloser.OnGapcloser += AntiGapcloser.OnGapcloser;
             Global.Orbwalker.PostAttack += Manager.PostAttack;
+            Global.Orbwalker.PreAttack += Manager.PreAttack;
 
             Render.OnPresent += DrawManager.OnPresent;
             Render.OnRender += DrawManager.OnRender;

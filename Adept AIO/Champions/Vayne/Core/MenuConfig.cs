@@ -12,7 +12,7 @@ namespace Adept_AIO.Champions.Vayne.Core
 {
     internal class MenuConfig
     {
-        public static OrbwalkerMode FleeOrbwalkerMode;
+        public static OrbwalkerMode FleeOrbwalkerMode, CondemnFlashOrbwalkerMode;
 
         private static Menu _mainMenu;
 
@@ -32,6 +32,8 @@ namespace Adept_AIO.Champions.Vayne.Core
             Global.Orbwalker.Attach(_mainMenu);
             FleeOrbwalkerMode = new OrbwalkerMode("Flee", KeyCode.A, null, Flee.OnKeyPressed);
             Global.Orbwalker.AddMode(FleeOrbwalkerMode);
+
+            CondemnFlashOrbwalkerMode = new OrbwalkerMode("Condemn Flash", KeyCode.T, null, () => Global.TargetSelector.GetSelectedTarget());
 
             Combo = new Menu("Combo", "Combo")
             {
