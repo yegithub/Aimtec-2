@@ -21,7 +21,7 @@ namespace Adept_AIO.Champions.Vayne.OrbwalkingMode
             }
 
             var minion = GameObjects.EnemyMinions.FirstOrDefault(x => args.Target.NetworkId != x.NetworkId && x.Health < Global.Player.GetAutoAttackDamage(x) && x.Distance(Global.Player) <= SpellManager.Q.Range);
-            if (minion == null || !minion.IsValidTarget())
+            if (minion == null)
             {
                 return;
             }
@@ -30,8 +30,8 @@ namespace Adept_AIO.Champions.Vayne.OrbwalkingMode
 
         public static void OnUpdate()
         {
-            var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Health < Global.Player.GetAutoAttackDamage(x) && x.Distance(Global.Player) <= SpellManager.Q.Range + Global.Player.AttackRange);
-            if (minion == null || !minion.IsValidTarget())
+            var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(Global.Player) <= SpellManager.Q.Range + Global.Player.AttackRange);
+            if (minion == null)
             {
                 return;
             }
@@ -66,7 +66,7 @@ namespace Adept_AIO.Champions.Vayne.OrbwalkingMode
                     }
                 }
             }
-            else if (SpellManager.Q.Ready && MenuConfig.LaneClear["Q"].Value == 1)
+            else if (SpellManager.Q.Ready && MenuConfig.LaneClear["Q"].Value == 1 && minion.Health < Global.Player.GetAutoAttackDamage(minion))
             {
                 SpellManager.CastQ(minion, MenuConfig.LaneClear["QMode"].Value);
             }
