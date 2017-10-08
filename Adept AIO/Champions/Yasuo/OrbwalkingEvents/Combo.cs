@@ -101,7 +101,7 @@ namespace Adept_AIO.Champions.Yasuo.OrbwalkingEvents
                         SpellConfig.E.CastOnUnit(m2);
                     }
                 }
-                else if (minion != null)
+                else if (minion != null && targetDist > Global.Player.AttackRange + 20)
                 {
                     if (MenuConfig.Combo["Turret"].Enabled && minion.ServerPosition.PointUnderEnemyTurret() ||
                         MenuConfig.Combo["Dash"].Value == 0 &&

@@ -33,7 +33,8 @@ namespace Adept_AIO.Champions.Vayne.Core
             FleeOrbwalkerMode = new OrbwalkerMode("Flee", KeyCode.A, null, Flee.OnKeyPressed);
             Global.Orbwalker.AddMode(FleeOrbwalkerMode);
 
-            CondemnFlashOrbwalkerMode = new OrbwalkerMode("Condemn Flash", KeyCode.T, null, () => Global.TargetSelector.GetSelectedTarget());
+            CondemnFlashOrbwalkerMode = new OrbwalkerMode("Condemn Flash", KeyCode.T, null, CondemnFlash.OnKeyPressed);
+            Global.Orbwalker.AddMode(CondemnFlashOrbwalkerMode);
 
             Combo = new Menu("Combo", "Combo")
             {
