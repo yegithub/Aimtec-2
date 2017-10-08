@@ -37,12 +37,16 @@ namespace Adept_AIO.Champions.LeeSin.OrbwalkingEvents.Combo
                 return;
             }
 
-            if (_spellConfig.W.Ready && WEnabled)
+            if (_spellConfig.Q.Ready && !_spellConfig.IsQ2() && target.IsValidTarget(_spellConfig.Q.Range))
+            {
+                _spellConfig.Q.Cast();
+            }
+
+            else if (_spellConfig.W.Ready && WEnabled)
             {
                 _spellConfig.W.Cast(Global.Player);
             }
-
-            if (_spellConfig.E.Ready && EEnabled)
+            else if (_spellConfig.E.Ready && EEnabled)
             {
                 if (!_spellConfig.IsFirst(_spellConfig.E))
                 {
@@ -54,12 +58,12 @@ namespace Adept_AIO.Champions.LeeSin.OrbwalkingEvents.Combo
         public void OnUpdate()
         {
             var target = Global.TargetSelector.GetTarget(1600);
-            if (target == null)
+            if (!target.IsValidTarget())
             {
                 return;
             }
         
-            var distance = target.Distance(Global.Player) - target.BoundingRadius;
+            var distance = target.Distance(Global.Player);
 
             if (_spellConfig.Q.Ready && Q1Enabled)
             {
@@ -75,12 +79,12 @@ namespace Adept_AIO.Champions.LeeSin.OrbwalkingEvents.Combo
                         return;
                     }
 
-                    if (_spellConfig.QAboutToEnd || distance >= Global.Player.AttackRange + 300)
+                    if (_spellConfig.QAboutToEnd || distance >= Global.Player.AttackRange + 100)
                     {
                         _spellConfig.Q.Cast();
                     }
                 }
-                else
+                else if(target.IsValidTarget(_spellConfig.Q.Range))
                 {
                     _spellConfig.QSmite(target);
                     _spellConfig.Q.Cast(target);
@@ -95,17 +99,6 @@ namespace Adept_AIO.Champions.LeeSin.OrbwalkingEvents.Combo
                 _spellConfig.Q.Cast(target); 
             }
 
-          
-            if (_spellConfig.W.Ready && _spellConfig.IsFirst(_spellConfig.W) && _wardTracker.IsWardReady() && WEnabled && WardEnabled && distance > (_spellConfig.Q.Ready ? 1000 : _spellConfig.WardRange))
-            {
-                if (Game.TickCount - _spellConfig.Q.LastCastAttemptT <= 3000 || target.Position.CountEnemyHeroesInRange(2000) > 1)
-                {
-                    return;
-                }
-
-                _wardManager.WardJump(target.Position, _spellConfig.WardRange);
-            }
-
             if (_spellConfig.E.Ready && EEnabled && _spellConfig.IsFirst(_spellConfig.E) && distance <= 350)
             {
                 if (Items.CanUseTiamat())
@@ -117,6 +110,16 @@ namespace Adept_AIO.Champions.LeeSin.OrbwalkingEvents.Combo
                 {
                     _spellConfig.E.Cast(target);
                 }
+            }
+
+            if (_spellConfig.W.Ready && _spellConfig.IsFirst(_spellConfig.W) && _wardTracker.IsWardReady() && WEnabled && WardEnabled && distance > (_spellConfig.Q.Ready ? 1000 : _spellConfig.WardRange))
+            {
+                if (Game.TickCount - _spellConfig.Q.LastCastAttemptT <= 3000 || target.Position.CountEnemyHeroesInRange(2000) > 1)
+                {
+                    return;
+                }
+
+                _wardManager.WardJump(target.Position, _spellConfig.WardRange);
             }
         }
     }

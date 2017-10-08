@@ -53,18 +53,18 @@ namespace Adept_AIO.Champions.LeeSin
 
             var mainmenu = new Menu("main", "Adept AIO", true);
             mainmenu.Attach();
+            
+            spellConfig.InsecMode = new OrbwalkerMode("Insec", KeyCode.T, Global.TargetSelector.GetSelectedTarget, insec.OnKeyPressed);
+            spellConfig.WardjumpMode = new OrbwalkerMode("Wardjump", KeyCode.G, null, wardjump.OnKeyPressed);
+            spellConfig.KickFlashMode = new OrbwalkerMode("Kick Flash", KeyCode.A, null, kickFlash.OnKeyPressed);
+            
+            spellConfig.InsecMode.MenuItem.OnValueChanged += (sender, args) => insec.Enabled = args.GetNewValue<MenuKeyBind>().Value;
+            spellConfig.WardjumpMode.MenuItem.OnValueChanged += (sender, args) => wardjump.Enabled = args.GetNewValue<MenuKeyBind>().Value;
+            spellConfig.KickFlashMode.MenuItem.OnValueChanged += (sender, args) => kickFlash.Enabled = args.GetNewValue<MenuKeyBind>().Value;
 
-            var insecMode = new OrbwalkerMode("Insec", KeyCode.T, null, insec.OnKeyPressed);
-            var wardjumpMode = new OrbwalkerMode("Wardjump", KeyCode.G, null, wardjump.OnKeyPressed);
-            var kickFlashMode = new OrbwalkerMode("Kick Flash", KeyCode.A, null, kickFlash.OnKeyPressed);
-
-            insecMode.MenuItem.OnValueChanged += (sender, args) => insec.Enabled = args.GetNewValue<MenuKeyBind>().Value;
-            wardjumpMode.MenuItem.OnValueChanged += (sender, args) => wardjump.Enabled = args.GetNewValue<MenuKeyBind>().Value;
-            kickFlashMode.MenuItem.OnValueChanged += (sender, args) => kickFlash.Enabled = args.GetNewValue<MenuKeyBind>().Value;
-
-            Global.Orbwalker.AddMode(insecMode);
-            Global.Orbwalker.AddMode(wardjumpMode);
-            Global.Orbwalker.AddMode(kickFlashMode);
+            Global.Orbwalker.AddMode(spellConfig.InsecMode);
+            Global.Orbwalker.AddMode(spellConfig.WardjumpMode);
+            Global.Orbwalker.AddMode(spellConfig.KickFlashMode);
             Global.Orbwalker.Attach(mainmenu);
 
             var insecMenu     = new Menu("Insec", "Insec");

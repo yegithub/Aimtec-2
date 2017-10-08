@@ -110,7 +110,7 @@ namespace Adept_AIO.Champions.LeeSin.OrbwalkingEvents.Insec
 
         public void OnKeyPressed()
         {
-            if (!Enabled || Target== null || Global.Player.Level < 6)
+            if (!Enabled || !Target.IsValidTarget() || Global.Player.Level < 6)
             {
                 return;
             }
@@ -183,6 +183,7 @@ namespace Adept_AIO.Champions.LeeSin.OrbwalkingEvents.Insec
                     }
                     else if (Target.IsValidTarget(_spellConfig.R.Range))
                     {
+                        
                         _spellConfig.R.CastOnUnit(Target);
                     }
                 }
