@@ -10,16 +10,11 @@ namespace Adept_AIO.Champions.Riven.Miscellaneous
     {
         public static void Reset()
         {
-            Global.Orbwalker.Move(Game.CursorPos);
-            ResetAutoAttack();
-        }
-
-        private static void ResetAutoAttack()
-        {
             Global.Orbwalker.AttackingEnabled = false;
 
             DelayAction.Queue((int)GetDelay(), () =>
             {
+                Global.Orbwalker.Move(Game.CursorPos);
                 Global.Orbwalker.AttackingEnabled = true;
                 Global.Orbwalker.ResetAutoAttackTimer();
             });
@@ -27,8 +22,8 @@ namespace Adept_AIO.Champions.Riven.Miscellaneous
 
         private static float GetDelay()
         {
-            return (Extensions.CurrentQCount == 1 ? 400 : 340) - 3.333f * Global.Player.Level +
-                   (Global.Player.HasBuff("RivenFengShuiEngine") ? 120 : 0); 
+            return (Extensions.CurrentQCount == 1 ? 480 : 380) - 3.333f * Global.Player.Level +
+                   (Global.Player.HasBuff("RivenFengShuiEngine") ? 80 : 0); 
         }
 
         public static void OnPlayAnimation(Obj_AI_Base sender, Obj_AI_BasePlayAnimationEventArgs args)

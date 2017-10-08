@@ -57,9 +57,8 @@ namespace Adept_AIO.Champions.Riven.Miscellaneous
 
         public static void OnPostAttack(object sender, PostAttackEventArgs args)
         {
-            if (Game.TickCount - Extensions.LastQCastAttempt <= 340 + Game.Ping / 2) 
+            if (Game.TickCount - Extensions.LastQCastAttempt <= 340) 
             {
-                Extensions.DidJustAuto = false;
                 return;
             }
 
