@@ -15,7 +15,7 @@ namespace Adept_AIO.Champions.Zed
             MenuConfig.Attach();
             SpellManager.Load();
 
-            
+            Game.OnUpdate += Killsteal.OnUpdate;
             Game.OnUpdate += Manager.OnUpdate;
 
             Render.OnPresent += DrawManager.OnPresent;
