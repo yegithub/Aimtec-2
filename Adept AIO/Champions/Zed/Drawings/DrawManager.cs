@@ -34,7 +34,7 @@ namespace Adept_AIO.Champions.Zed.Drawings
                 return;
             }
 
-            if (MenuConfig.Drawings["Pred"].Enabled)
+            if (MenuConfig.Drawings["Pred"].Enabled && SpellManager.Q.Ready)
             {
                 foreach (var shadow in ShadowManager.Shadows.Where(ShadowManager.IsShadow))
                 {
