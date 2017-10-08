@@ -23,7 +23,7 @@ namespace Adept_AIO.Champions.Zed.OrbwalkingEvents
 
             if (SpellManager.E.Ready && MenuConfig.JungleClear["E"].Enabled)
             {
-                SpellManager.CastE(creep);
+                SpellManager.CastE(creep, 1, true);
             }
         }
     }

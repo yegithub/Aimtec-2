@@ -10,33 +10,33 @@ namespace Adept_AIO.Champions.Zed.OrbwalkingEvents
     {
         public static void OnUpdate()
         {
-            var target = TargetSelector.GetTarget(SpellManager.WCastRange + SpellManager.Q.Range);
+            var target = TargetSelector.GetTarget(SpellManager.WCastRange + Global.Player.AttackRange);
             if (!target.IsValidTarget() || Maths.GetEnergyPercent() < MenuConfig.Harass["Energy"].Value)
             {
                 return;
             }
 
-            if (SpellManager.W.Ready && target.IsValidTarget(SpellManager.WCastRange + Global.Player.AttackRange))
+            if (SpellManager.E.Ready && MenuConfig.Harass["E"].Enabled)
+            {
+                SpellManager.CastE(target);
+            }
+
+            if (SpellManager.W.Ready && target.IsValidTarget(SpellManager.WCastRange))
             {
                 if (ShadowManager.CanCastW1() && MenuConfig.Harass["W"].Enabled)
                 {
                     SpellManager.CastW(target);
                 }
 
-                if (ShadowManager.CanSwitchToShadow() && MenuConfig.Harass["W2"].Enabled && Global.Player.HealthPercent() >= MenuConfig.Harass["Health"].Value && !target.IsUnderEnemyTurret())
+                else if (ShadowManager.CanSwitchToShadow() && MenuConfig.Harass["W2"].Enabled && Global.Player.HealthPercent() >= MenuConfig.Harass["Health"].Value && !target.IsUnderEnemyTurret())
                 {
                     SpellManager.CastW(target, true);
                 }
             }
 
-            if (SpellManager.Q.Ready && MenuConfig.Harass["Q"].Enabled)
+            else if (SpellManager.Q.Ready && MenuConfig.Harass["Q"].Enabled)
             {
                 SpellManager.CastQ(target);
-            }
-
-            if (SpellManager.E.Ready && MenuConfig.Harass["E"].Enabled)
-            {
-                SpellManager.CastE(target);
             }
         }
     }

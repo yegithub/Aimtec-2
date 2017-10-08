@@ -91,7 +91,7 @@ namespace Adept_AIO.Champions.Zed.Core
             }
         }
 
-        public static void CastE(Obj_AI_Base target, int minHit = 1)
+        public static void CastE(Obj_AI_Base target, int minHit = 1, bool minion = false)
         {
             if (Global.Player.Mana < Global.Player.GetSpell(SpellSlot.E).Cost)
             {
@@ -115,7 +115,8 @@ namespace Adept_AIO.Champions.Zed.Core
 
                         E.Cast(target);
                     }
-                    else
+                    
+                    if(minion)
                     {
                         if (GameObjects.EnemyMinions.Count(x => x.IsValidTarget(E.Range, false, false, shadow.ServerPosition)) >= minHit)
                         {

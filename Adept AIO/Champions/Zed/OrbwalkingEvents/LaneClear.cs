@@ -87,7 +87,7 @@ namespace Adept_AIO.Champions.Zed.OrbwalkingEvents
 
                 if (SpellManager.E.Ready && MenuConfig.LaneClear["E"].Enabled)
                 {
-                    SpellManager.CastE(minion, MenuConfig.LaneClear["E"].Value);
+                    SpellManager.CastE(minion, MenuConfig.LaneClear["E"].Value, true);
                 }
             }
         }
