@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Adept_AIO.Champions.Vayne.Core;
 using Adept_AIO.SDK.Unit_Extensions;
+using Aimtec;
 using Aimtec.SDK.Extensions;
 using Aimtec.SDK.Orbwalking;
 
@@ -10,19 +11,23 @@ namespace Adept_AIO.Champions.Vayne.OrbwalkingMode
     {
         public static void PostAttack(object sender, PostAttackEventArgs args)
         {
-            if (!SpellManager.Q.Ready || MenuConfig.JungleClear["Q"].Value == 1)
+            var mob = args.Target as Obj_AI_Minion;
+            if (mob == null)
             {
                 return;
             }
 
-            var mob = GameObjects.Jungle.FirstOrDefault(x => x.Distance(Global.Player) <= SpellManager.Q.Range);
-            if (!mob.IsValidTarget())
+            if (SpellManager.Q.Ready && MenuConfig.JungleClear["Q"].Value != 1)
             {
-                return;
+                SpellManager.CastQ(mob, MenuConfig.JungleClear["Mode"].Value);
             }
 
-            SpellManager.CastQ(mob, MenuConfig.JungleClear["Mode"].Value);
+            if (SpellManager.E.Ready && MenuConfig.JungleClear["E"].Enabled)
+            {
+                SpellManager.CastE(mob);
+            }
         }
+
 
         public static void OnUpdate()
         {
@@ -35,11 +40,6 @@ namespace Adept_AIO.Champions.Vayne.OrbwalkingMode
             if (SpellManager.Q.Ready && MenuConfig.JungleClear["Q"].Value == 1)
             {
                 SpellManager.CastQ(mob, MenuConfig.JungleClear["Mode"].Value);
-            }
-
-            if (SpellManager.E.Ready && MenuConfig.JungleClear["E"].Enabled)
-            {
-                SpellManager.CastE(mob);
             }
         }
     }
