@@ -1,11 +1,9 @@
-﻿using System;
-using Adept_AIO.Champions.Vayne.Core;
+﻿using Adept_AIO.Champions.Vayne.Core;
 using Adept_AIO.Champions.Vayne.Drawings;
 using Adept_AIO.Champions.Vayne.Miscellaneous;
 using Adept_AIO.SDK.Delegates;
 using Adept_AIO.SDK.Unit_Extensions;
 using Aimtec;
-using Aimtec.SDK.Orbwalking;
 
 namespace Adept_AIO.Champions.Vayne
 {
