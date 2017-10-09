@@ -1,4 +1,6 @@
-﻿namespace Adept_AIO.Champions.Vayne.Miscellaneous
+﻿using Aimtec;
+
+namespace Adept_AIO.Champions.Vayne.Miscellaneous
 {
     using System.Linq;
     using Core;
@@ -60,6 +62,10 @@
                 case OrbwalkingMode.Laneclear:
                     LaneClear.OnUpdate();
                     JungleClear.OnUpdate();
+                    break;
+                case OrbwalkingMode.None:
+                    SpellManager.DrawingPred = Vector3.Zero;
+                    SpellManager.QPred = Vector3.Zero;
                     break;
             }
         }

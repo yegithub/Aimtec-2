@@ -22,15 +22,16 @@ namespace Adept_AIO.Champions.Vayne.OrbwalkingMode
                 SpellManager.CastE(target);
             }
 
-            var extended = target.ServerPosition + (target.ServerPosition - Game.CursorPos).Normalized() * 410;
-            var point = WallExtension.GeneratePoint(target.ServerPosition, extended);
+            var point = WallExtension.NearestWall(target.ServerPosition, 475);
             if (point.IsZero)
             {
                 return;
             }
 
             var pos = target.ServerPosition + (target.ServerPosition - point).Normalized() * 200;
-            if (pos.Distance(Global.Player) <= 425 && SummonerSpells.IsValid(SummonerSpells.Flash))
+            SpellManager.DrawingPred = pos;
+
+            if (pos.Distance(Global.Player) <= SummonerSpells.Flash.Range && SummonerSpells.IsValid(SummonerSpells.Flash))
             {
                 SummonerSpells.Flash.Cast(pos);
                 SpellManager.E.Cast(target);

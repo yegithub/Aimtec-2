@@ -28,11 +28,10 @@ namespace Adept_AIO.Champions.Vayne.OrbwalkingMode
             }
         }
 
-
         public static void OnUpdate()
         {
             var mob = GameObjects.Jungle.FirstOrDefault(x => x.Distance(Global.Player) <= SpellManager.Q.Range + Global.Player.AttackRange);
-            if (!mob.IsValidTarget() || MenuConfig.JungleClear["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(2000) >= 1)
+            if (mob == null)
             {
                 return;
             }

@@ -1,4 +1,5 @@
-﻿using Aimtec;
+﻿using Adept_AIO.SDK.Unit_Extensions;
+using Aimtec;
 using Aimtec.SDK.Extensions;
 
 namespace Adept_AIO.SDK.Geometry_Related
@@ -40,6 +41,28 @@ namespace Adept_AIO.SDK.Geometry_Related
                 }
             }
             return false;
+        }
+
+        public static Vector3 NearestWall(Vector3 position, int range = 600)
+        {
+            for (int i = 0; i < range; i++)
+            {
+                var next = position + new Vector3(i, Global.Player.ServerPosition.Y, i);
+                if (IsWallAt(next))
+                {
+                    return next;
+                }
+            }
+
+            for (int i = 0; i < range; i++)
+            {
+                var next = position + new Vector3(-i, Global.Player.ServerPosition.Y, -i);
+                if (IsWallAt(next))
+                {
+                    return next;
+                }
+            }
+            return Vector3.Zero;
         }
 
         public static float GetWallWidth(Vector3 start, Vector3 direction, int maxWallWidth = 275)

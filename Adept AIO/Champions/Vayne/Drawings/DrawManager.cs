@@ -2,6 +2,7 @@
 using System.Linq;
 using Adept_AIO.Champions.Vayne.Core;
 using Adept_AIO.SDK.Unit_Extensions;
+using Adept_AIO.SDK.Usables;
 using Aimtec;
 using Aimtec.SDK.Extensions;
 
@@ -16,12 +17,13 @@ namespace Adept_AIO.Champions.Vayne.Drawings
                 return;
             }
 
-            foreach (var target in GameObjects.EnemyHeroes.Where(x => !x.IsDead && x.IsFloatingHealthBarActive && x.IsVisible))
+            foreach (var target in GameObjects.EnemyHeroes.Where(x =>
+                !x.IsDead && x.IsFloatingHealthBarActive && x.IsVisible))
             {
                 var damage = Dmg.Damage(target);
 
                 Global.DamageIndicator.Unit = target;
-                Global.DamageIndicator.DrawDmg((float)damage, Color.FromArgb(153, 12, 177, 28));
+                Global.DamageIndicator.DrawDmg((float) damage, Color.FromArgb(153, 12, 177, 28));
             }
         }
 
@@ -39,11 +41,25 @@ namespace Adept_AIO.Champions.Vayne.Drawings
                 {
                     SpellManager.Rect(target).Draw(Color.Crimson);
                 }
+
+                if (!SpellManager.DrawingPred.IsZero)
+                {
+                    if (Render.WorldToScreen(SpellManager.DrawingPred, out var screen) &&
+                        Render.WorldToScreen(Global.Player.ServerPosition, out var pos))
+                    {
+                        Render.Line(pos, screen, Color.Yellow);
+                    }
+                   
+                    Render.Circle(SpellManager.DrawingPred, 45, 100, Color.Yellow);
+                    Render.Circle(SpellManager.DrawingPred, 65, 100, Color.Crimson);
+                    Render.Circle(Global.Player.ServerPosition, 425, 100, Color.Orange);
+                }
             }
 
             if (SpellManager.Q.Ready && MenuConfig.Drawings["Q"].Enabled)
             {
-                Render.Circle(Global.Player.Position, SpellManager.Q.Range, (uint)MenuConfig.Drawings["Segments"].Value, Color.Crimson);
+                Render.Circle(Global.Player.Position, SpellManager.Q.Range,
+                    (uint) MenuConfig.Drawings["Segments"].Value, Color.Crimson);
             }
         }
     }

@@ -1,4 +1,5 @@
 ﻿using System;
+using Adept_AIO.SDK.Generic;
 using Adept_AIO.SDK.Geometry_Related;
 using Adept_AIO.SDK.Unit_Extensions;
 using Aimtec;
@@ -10,6 +11,8 @@ namespace Adept_AIO.Champions.Vayne.Core
 {
     internal class SpellManager
     {
+        public static Vector3 DrawingPred, QPred;
+
         public static Spell Q, W, E, R;
 
         public static void Load()
@@ -32,7 +35,13 @@ namespace Adept_AIO.Champions.Vayne.Core
             var endPos = pred + (pred - Global.Player.ServerPosition).Normalized() * 475;
             return new Geometry.Rectangle(target.ServerPosition.To2D(), endPos.To2D(), target.BoundingRadius);
         }
-     
+
+        public static Geometry.Rectangle Rect(Vector3 target)
+        {
+            var endPos = target + (target - Global.Player.ServerPosition).Normalized() * 475;
+            return new Geometry.Rectangle(target.To2D(), endPos.To2D(), 65);
+        }
+
         public static void CastE(Obj_AI_Base target)
         {
             if (!target.IsValidTarget(E.Range))
@@ -45,6 +54,7 @@ namespace Adept_AIO.Champions.Vayne.Core
             if (WallExtension.IsWall(rect.Start.To3D(), rect.End.To3D()))
             {
                 E.CastOnUnit(target);
+                Maths.DisableAutoAttack(650 + Game.Ping / 2);
             }
         }
 
@@ -55,15 +65,27 @@ namespace Adept_AIO.Champions.Vayne.Core
                 return;
             }
 
+            var wallPos = WallExtension.NearestWall(Global.Player.ServerPosition, (int)(Q.Range / 2 + 50));
+            if (!wallPos.IsZero)
+            {
+                QPred = wallPos;
+                Q.Cast(wallPos);
+            }
+
+            var pos = Vector3.Zero;
+
             switch (modeIndex)
             {
                 case 0:
-                    Q.Cast(Game.CursorPos);
+                    pos = Game.CursorPos;
                     break;
                 case 1:
-                    Q.Cast(ToSide(target.ServerPosition.To2D(), -60));
+                    pos = ToSide(target.ServerPosition.To2D(), -60).To3D();
                     break;
             }
+
+            QPred = pos;
+            Q.Cast(pos);
         }
 
         private static Vector2 ToSide(Vector2 targetPos, double angle)
