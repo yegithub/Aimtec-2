@@ -34,7 +34,7 @@ namespace Adept_AIO.Champions.Vayne.OrbwalkingMode
             if (pos.Distance(Global.Player) <= SummonerSpells.Flash.Range && SummonerSpells.IsValid(SummonerSpells.Flash))
             {
                 SummonerSpells.Flash.Cast(pos);
-                SpellManager.E.Cast(target);
+                SpellManager.E.CastOnUnit(target);
             }
         }
     }

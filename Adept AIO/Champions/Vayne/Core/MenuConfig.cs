@@ -40,6 +40,7 @@ namespace Adept_AIO.Champions.Vayne.Core
             {
                 new MenuList("Q", "Q Mode", new[] {"After Auto", "Engage"}, 0),
                 new MenuList("Mode", "Q To:", new[] {"Cursor", "Side"}, 1),
+                new MenuBool("ToE", "Force Q To E Pos"),
                 new MenuBool("W", "Focus Targets With W Stacks"),
                 new MenuBool("E", "Use E"),
                 new MenuBool("R", "Use R"),

@@ -58,7 +58,7 @@ namespace Adept_AIO.Champions.Vayne.Core
             }
         }
 
-        public static void CastQ(Obj_AI_Base target, int modeIndex = 0)
+        public static void CastQ(Obj_AI_Base target, int modeIndex = 0, bool force = true)
         {
             if (!target.IsValidTarget())
             {
@@ -74,14 +74,31 @@ namespace Adept_AIO.Champions.Vayne.Core
 
             var pos = Vector3.Zero;
 
-            switch (modeIndex)
+            if (force && E.Ready)
             {
-                case 0:
-                    pos = Game.CursorPos;
-                    break;
-                case 1:
-                    pos = ToSide(target.ServerPosition.To2D(), -60).To3D();
-                    break;
+                var point = WallExtension.NearestWall(target.ServerPosition, 475);
+                if (point.IsZero)
+                {
+                    return;
+                }
+
+                point = target.ServerPosition + (target.ServerPosition - point).Normalized() * 100;
+                if (point.Distance(Global.Player) < Q.Range)
+                {
+                    pos = point;
+                }
+            }
+            else
+            {
+                switch (modeIndex)
+                {
+                    case 0:
+                        pos = Game.CursorPos;
+                        break;
+                    case 1:
+                        pos = ToSide(target.ServerPosition.To2D(), -60).To3D();
+                        break;
+                }
             }
 
             QPred = pos;

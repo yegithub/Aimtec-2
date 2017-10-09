@@ -15,7 +15,7 @@ namespace Adept_AIO.Champions.Vayne.OrbwalkingMode
                 return;
             }
 
-            SpellManager.CastQ(args.Target as Obj_AI_Base, MenuConfig.Combo["Mode"].Value);
+            SpellManager.CastQ(args.Target as Obj_AI_Base, MenuConfig.Combo["Mode"].Value, MenuConfig.Combo["ToE"].Enabled);
         }
 
         public static void OnUpdate()
@@ -28,10 +28,10 @@ namespace Adept_AIO.Champions.Vayne.OrbwalkingMode
 
             if (SpellManager.Q.Ready && MenuConfig.Combo["Q"].Value == 1)
             {
-                SpellManager.CastQ(target, MenuConfig.Combo["Mode"].Value);
+                SpellManager.CastQ(target, MenuConfig.Combo["Mode"].Value, MenuConfig.Combo["ToE"].Enabled);
             }
 
-            if (SpellManager.E.Ready && MenuConfig.Combo["E"].Enabled && MenuConfig.Combo[target.ChampionName].Enabled)
+            else if (SpellManager.E.Ready && MenuConfig.Combo["E"].Enabled && MenuConfig.Combo[target.ChampionName].Enabled)
             {
                 SpellManager.CastE(target);
             }
