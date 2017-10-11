@@ -11,8 +11,8 @@ namespace Adept_AIO.Champions.Vayne.OrbwalkingMode
     {
         public static void PostAttack(object sender, PostAttackEventArgs args)
         {
-            var mob = args.Target as Obj_AI_Minion;
-            if (mob == null)
+            var mob = GameObjects.JungleLarge.FirstOrDefault(x => x.MaxHealth > 20);
+            if (mob == null || !mob.IsValidTarget())
             {
                 return;
             }

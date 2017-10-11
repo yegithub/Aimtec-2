@@ -36,7 +36,7 @@ namespace Adept_AIO.Champions.Vayne.OrbwalkingMode
                 SpellManager.CastE(target);
             }
 
-            if (SpellManager.R.Ready && MenuConfig.Combo["R"].Enabled)
+            else if (SpellManager.R.Ready && MenuConfig.Combo["R"].Enabled)
             {
                 if (target.Health > Dmg.Damage(target) && MenuConfig.Combo["Killable"].Enabled)
                 {

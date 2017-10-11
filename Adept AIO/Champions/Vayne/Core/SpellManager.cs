@@ -24,6 +24,19 @@ namespace Adept_AIO.Champions.Vayne.Core
             R = new Spell(SpellSlot.R);
         }
 
+        public static void OnProcessSpellCast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
+        {
+            if (!sender.IsMe)
+            {
+                return;
+            }
+
+            if (args.SpellSlot == SpellSlot.E)
+            {
+                Maths.DisableAutoAttack(550 + Game.Ping / 2);
+            }
+        }
+
         public static Geometry.Rectangle Rect(Obj_AI_Base target)
         {
             if (!target.IsValidTarget(E.Range))
@@ -54,34 +67,25 @@ namespace Adept_AIO.Champions.Vayne.Core
             if (WallExtension.IsWall(rect.Start.To3D(), rect.End.To3D()))
             {
                 E.CastOnUnit(target);
-                Maths.DisableAutoAttack(650 + Game.Ping / 2);
             }
         }
 
         public static void CastQ(Obj_AI_Base target, int modeIndex = 0, bool force = true)
         {
-            if (!target.IsValidTarget())
-            {
-                return;
-            }
-
-            var wallPos = WallExtension.NearestWall(Global.Player.ServerPosition, (int)(Q.Range / 2 + 50));
-            if (!wallPos.IsZero)
+            var wallPos = WallExtension.NearestWall(Global.Player.ServerPosition, (int)(Q.Range / 2 + 25));
+            if (!wallPos.IsZero && modeIndex != 0 && target.Distance(wallPos) < Global.Player.Distance(target))
             {
                 QPred = wallPos;
                 Q.Cast(wallPos);
+                return;
             }
 
             var pos = Vector3.Zero;
 
-            if (force && E.Ready)
+            var point = WallExtension.NearestWall(target.ServerPosition, 475);
+          
+            if (force && E.Ready && !point.IsZero)
             {
-                var point = WallExtension.NearestWall(target.ServerPosition, 475);
-                if (point.IsZero)
-                {
-                    return;
-                }
-
                 point = target.ServerPosition + (target.ServerPosition - point).Normalized() * 100;
                 if (point.Distance(Global.Player) < Q.Range)
                 {
@@ -96,7 +100,7 @@ namespace Adept_AIO.Champions.Vayne.Core
                         pos = Game.CursorPos;
                         break;
                     case 1:
-                        pos = ToSide(target.ServerPosition.To2D(), -60).To3D();
+                        pos = ToSide(target.ServerPosition.To2D(), 90).To3D();
                         break;
                 }
             }

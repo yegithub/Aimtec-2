@@ -34,13 +34,18 @@ namespace Adept_AIO.Champions.Vayne.Miscellaneous
 
         public static void PreAttack(object sender, PreAttackEventArgs args)
         {
-            if (Global.Orbwalker.Mode == OrbwalkingMode.Combo && MenuConfig.Combo["W"].Enabled)
+            switch (Global.Orbwalker.Mode)
             {
-                var target = GameObjects.EnemyHeroes.FirstOrDefault(x => x.GetBuffCount("vaynesilvereddebuff") == 2);
-                if (target != null && target.IsValidAutoRange())
-                {
-                    args.Target = target;
-                }
+                case OrbwalkingMode.Combo when MenuConfig.Combo["W"].Enabled:
+                    var target = GameObjects.EnemyHeroes.FirstOrDefault(x => x.GetBuffCount("vaynesilvereddebuff") == 2);
+                    if (target != null && target.IsValidAutoRange())
+                    {
+                        args.Target = target;
+                    }
+                    break;
+                case OrbwalkingMode.Laneclear:
+                    LaneClear.PreAttack(sender, args);
+                    break;
             }
         }
 
