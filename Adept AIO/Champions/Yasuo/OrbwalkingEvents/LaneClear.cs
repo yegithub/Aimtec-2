@@ -1,18 +1,17 @@
-﻿using System.Linq;
-using Adept_AIO.Champions.Yasuo.Core;
-using Adept_AIO.SDK.Geometry_Related;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec;
-using Aimtec.SDK.Damage;
-using Aimtec.SDK.Events;
-using Aimtec.SDK.Extensions;
-using GameObjects = Adept_AIO.SDK.Unit_Extensions.GameObjects;
-
-namespace Adept_AIO.Champions.Yasuo.OrbwalkingEvents
+﻿namespace Adept_AIO.Champions.Yasuo.OrbwalkingEvents
 {
+    using System.Linq;
+    using Core;
+    using SDK.Geometry_Related;
+    using SDK.Unit_Extensions;
+    using Aimtec;
+    using Aimtec.SDK.Damage;
+    using Aimtec.SDK.Events;
+    using Aimtec.SDK.Extensions;
+    using GameObjects = SDK.Unit_Extensions.GameObjects;
+
     internal class LaneClear
     {
-    
         public static void OnPostAttack()
         {
             if (MenuConfig.LaneClear["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(2000) != 0)
@@ -22,22 +21,16 @@ namespace Adept_AIO.Champions.Yasuo.OrbwalkingEvents
 
             if (SpellConfig.E.Ready && MenuConfig.LaneClear["EAA"].Enabled)
             {
-                var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsValidTarget() && x.Distance(Global.Player) <= SpellConfig.E.Range && !x.HasBuff("YasuoDashWrapper"));
+                var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(Global.Player) <= SpellConfig.E.Range && !x.HasBuff("YasuoDashWrapper"));
 
-                if (!SpellConfig.E.Ready || minion == null || MenuConfig.LaneClear["Turret"].Enabled && minion.IsUnderEnemyTurret() || MenuConfig.LaneClear["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(2000) != 0)
+                if (minion == null || MenuConfig.LaneClear["Turret"].Enabled && minion.IsUnderEnemyTurret() || MenuConfig.LaneClear["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(2000) != 0)
                 {
                     return;
                 }
 
                 switch (MenuConfig.LaneClear["Mode"].Value)
                 {
-                    case 1:
-
-                        if (minion.Health > Global.Player.GetSpellDamage(minion, SpellSlot.E))
-                        {
-                            return;
-                        }
-
+                    case 1 when minion.Health < Global.Player.GetSpellDamage(minion, SpellSlot.E):
                         SpellConfig.E.CastOnUnit(minion);
                         break;
                     case 2:
@@ -46,7 +39,7 @@ namespace Adept_AIO.Champions.Yasuo.OrbwalkingEvents
                 }
             }
 
-            if (SpellConfig.Q.Ready)
+            if (SpellConfig.Q.Ready && Extension.CurrentMode == Mode.Normal)
             {
                 var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(Global.Player) <= SpellConfig.Q.Range && x.IsValidTarget());
                 if (minion == null)
@@ -54,12 +47,7 @@ namespace Adept_AIO.Champions.Yasuo.OrbwalkingEvents
                     return;
                 }
 
-                switch (Extension.CurrentMode)
-                {
-                    case Mode.Normal:
-                        SpellConfig.Q.Cast(minion);
-                        break;
-                }
+                SpellConfig.Q.Cast(minion);
             }
         }
 
@@ -96,8 +84,7 @@ namespace Adept_AIO.Champions.Yasuo.OrbwalkingEvents
                 switch (Extension.CurrentMode)
                 {
                     case Mode.Tornado:
-
-                        var m = GameObjects.EnemyMinions.LastOrDefault(x => x.IsValidSpellTarget(SpellConfig.Q.Range));
+                        var m = GameObjects.EnemyMinions.LastOrDefault(x => x.IsValidSpellTarget(false, SpellConfig.Q.Range));
                         if (m == null)
                         {
                             return;
@@ -112,7 +99,7 @@ namespace Adept_AIO.Champions.Yasuo.OrbwalkingEvents
                         }
                         break;
                     case Mode.Normal:
-                        var nM = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsValidSpellTarget(SpellConfig.Q.Range - 100));
+                        var nM = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsValidSpellTarget(false, SpellConfig.Q.Range - 100));
                         if (nM == null)
                         {
                             return;
@@ -121,7 +108,7 @@ namespace Adept_AIO.Champions.Yasuo.OrbwalkingEvents
                         break;
                     case Mode.DashingTornado:
                     case Mode.Dashing:
-                        var dashM = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsValidSpellTarget(SpellConfig.Q.Range));
+                        var dashM = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsValidSpellTarget(false, SpellConfig.Q.Range));
                         if (dashM == null || !dashM.IsValidTarget())
                         {
                             return;

@@ -47,6 +47,11 @@ namespace Adept_AIO.Champions.Zed.Core
 
         public static void CastW(Obj_AI_Base target, bool switchToShadow = false)
         {
+            if (Global.Player.Mana < Global.Player.GetSpell(SpellSlot.W).Cost)
+            {
+                return;
+            }
+
             if (switchToShadow && ShadowManager.CanSwitchToShadow())
             {
                 W.Cast();

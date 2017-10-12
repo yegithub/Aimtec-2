@@ -137,7 +137,7 @@ namespace Adept_AIO.Champions.Yasuo.OrbwalkingEvents
                         }
                         break;
                     default:
-                        if(!Global.Player.IsDashing() && target.IsValidSpellTarget(SpellConfig.Q.Range) && !(SpellConfig.E.Ready && !target.HasBuff("YasuoDashWrapper") && Extension.CurrentMode == Mode.Tornado))
+                        if(!Global.Player.IsDashing() && target.IsValidSpellTarget(false, SpellConfig.Q.Range) && !(SpellConfig.E.Ready && !target.HasBuff("YasuoDashWrapper") && Extension.CurrentMode == Mode.Tornado))
                         {
                             var enemyHero = GameObjects.EnemyHeroes.OrderBy(x => x.Health).FirstOrDefault(x => x.IsValidTarget(SpellConfig.Q.Range));
                             if (enemyHero != null)

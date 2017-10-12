@@ -25,7 +25,7 @@ namespace Adept_AIO.Champions.Yasuo.OrbwalkingEvents
 
                 DelayAction.Queue(Game.Ping / 2, () => SpellConfig.Q.Cast(), new CancellationToken(false));
 
-                DelayAction.Queue(Game.Ping / 2 + 70, () => SpellConfig.R.Cast(), new CancellationToken(false));
+                DelayAction.Queue(Game.Ping / 2 + 30, () => SpellConfig.R.Cast(), new CancellationToken(false));
 
             }
             else if (SpellConfig.R.Ready)
@@ -86,11 +86,6 @@ namespace Adept_AIO.Champions.Yasuo.OrbwalkingEvents
                         break;
                 }
             }
-
-            //if (KnockUpHelper.IsItTimeToUlt(target, 860) && SpellConfig.R.Ready)
-            //{
-            //    SpellConfig.R.OnProcessSpellCast();
-            //}
 
             if (SpellConfig.E.Ready)
             {

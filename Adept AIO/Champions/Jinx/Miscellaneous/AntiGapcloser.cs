@@ -23,12 +23,6 @@ namespace Adept_AIO.Champions.Jinx.Miscellaneous
                 return;
             }
 
-            var missile = SpellDatabase.GetByName(args.SpellName);
-            if (missile == null || !missile.IsDangerous)
-            {
-                return;
-            }
-           
             _spellConfig.E.Cast(args.EndPosition);
         }
     }

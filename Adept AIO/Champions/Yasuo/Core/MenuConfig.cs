@@ -13,8 +13,6 @@ namespace Adept_AIO.Champions.Yasuo.Core
 {
     internal class MenuConfig
     {
-        private static Menu _mainMenu;
-
         public static Menu Combo,
                            Whitelist,
                            Harass,
@@ -26,11 +24,11 @@ namespace Adept_AIO.Champions.Yasuo.Core
 
         public static void Attach()
         {
-            _mainMenu = new Menu(string.Empty, $"Adept AIO - {Global.Player.ChampionName}", true);
-            _mainMenu.Attach();
+            var mainMenu = new Menu(string.Empty, $"Adept AIO - {Global.Player.ChampionName}", true);
+            mainMenu.Attach();
 
             Extension.FleeMode     = new OrbwalkerMode("Flee", KeyCode.A, null, Flee.OnKeyPressed);
-            Extension.BeybladeMode = new OrbwalkerMode("Beyblade", KeyCode.T, () => Global.TargetSelector.GetSelectedTarget(), Beyblade.OnKeyPressed);
+            Extension.BeybladeMode = new OrbwalkerMode("Keyblade", KeyCode.T, () => Global.TargetSelector.GetSelectedTarget(), Beyblade.OnKeyPressed);
 
             Extension.BeybladeMode.ModeBehaviour.Invoke();
             Extension.BeybladeMode.GetTargetImplementation.Invoke();
@@ -38,7 +36,7 @@ namespace Adept_AIO.Champions.Yasuo.Core
             Global.Orbwalker.AddMode(Extension.FleeMode);
             Global.Orbwalker.AddMode(Extension.BeybladeMode);
          
-            Global.Orbwalker.Attach(_mainMenu);
+            Global.Orbwalker.Attach(mainMenu);
 
             Whitelist= new Menu("Whitelist", "Whitelist");
             foreach (var hero in GameObjects.EnemyHeroes)
@@ -107,7 +105,7 @@ namespace Adept_AIO.Champions.Yasuo.Core
                 new MenuBool("Debug", "Debug")
             };
 
-            Gapcloser.Attach(_mainMenu, "Anti Gapcloser");
+            Gapcloser.Attach(mainMenu, "Anti Gapcloser");
 
             foreach (var menu in new List<Menu>
             {
@@ -121,7 +119,7 @@ namespace Adept_AIO.Champions.Yasuo.Core
                 Drawings,
                 MenuShortcut.Credits
             })
-            _mainMenu.Add(menu);
+            mainMenu.Add(menu);
         }
     }
 }
