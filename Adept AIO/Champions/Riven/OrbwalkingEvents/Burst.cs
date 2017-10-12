@@ -62,7 +62,7 @@ namespace Adept_AIO.Champions.Riven.OrbwalkingEvents
                 SpellManager.CastR2(target);
             }
 
-            if (target.IsValidSpellTarget(false, SpellConfig.W.Range) && SpellConfig.W.Ready)
+            if (target.IsValidSpellTarget(SpellConfig.W.Range) && SpellConfig.W.Ready)
             {
                 Global.Player.SpellBook.CastSpell(SpellSlot.W);
             }
