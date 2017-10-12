@@ -285,4 +285,13 @@ __pycache__/
 *.btp.cs
 *.btm.cs
 *.odx.cs
-*.xsd.cs
+*.suo
+
+
+
+*.suo
+*.user
+_ReSharper.*
+bin
+obj
+packages
