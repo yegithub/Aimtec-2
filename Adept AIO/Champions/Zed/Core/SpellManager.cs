@@ -51,7 +51,7 @@ namespace Adept_AIO.Champions.Zed.Core
             {
                 W.Cast();
             }
-            else if(ShadowManager.CanCastW1() && Game.TickCount - LastW > 200)
+            else if(ShadowManager.CanCastW1() && Game.TickCount - LastW > Game.Ping + 100)
             {
                 LastW = Game.TickCount;
                 W.Cast(target.ServerPosition);

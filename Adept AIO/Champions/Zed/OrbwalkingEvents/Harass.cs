@@ -34,7 +34,7 @@ namespace Adept_AIO.Champions.Zed.OrbwalkingEvents
                 }
             }
 
-            else if (SpellManager.Q.Ready && MenuConfig.Harass["Q"].Enabled)
+            if (SpellManager.Q.Ready && MenuConfig.Harass["Q"].Enabled)
             {
                 SpellManager.CastQ(target);
             }
