@@ -54,21 +54,25 @@ namespace Adept_AIO.Champions.Vayne.OrbwalkingMode
         {
             if (MenuConfig.LaneClear["TurretFarm"].Enabled && _turretTarget != null && _turret != null)
             {
-                DebugConsole.Write("??????");
                 var turretDamage = _turret.GetAutoAttackDamage(_turretTarget);
                 var playerDamage = Global.Player.GetAutoAttackDamage(_turretTarget);
 
-                if (TurretTargetKillable(playerDamage))
+
+                if (TurretTargetKillable(turretDamage * 2 + playerDamage) &&
+                    !TurretTargetKillable(turretDamage + playerDamage))
+                {
+                    args.Cancel = true;
+                }
+
+                else if (TurretTargetKillable(playerDamage * 2 + turretDamage) &&
+                    !TurretTargetKillable(turretDamage + playerDamage) && Game.TickCount - LastTurretShotTick >= 1000)
                 {
                     args.Target = _turretTarget;
                 }
-                else if (Game.TickCount - LastTurretShotTick >= 800 && Global.Player.IsUnderAllyTurret() && Global.Orbwalker.CanAttack())
+
+                else if (TurretTargetKillable(playerDamage))
                 {
-                    args.Cancel = true;
-                }
-                else if (TurretTargetKillable(turretDamage * 2) && !TurretTargetKillable(playerDamage))
-                {
-                    args.Cancel = true;
+                    args.Target = _turretTarget;
                 }
             }
         }
@@ -81,10 +85,10 @@ namespace Adept_AIO.Champions.Vayne.OrbwalkingMode
                 return;
             }
 
-            if (_turret != null && _turretTarget != null && TurretTargetKillable(_turret.GetAutoAttackDamage(_turretTarget)) && Game.TickCount - LastTurretShotTick <= 300)
+            if (_turret != null && _turretTarget != null && TurretTargetKillable(_turret.GetAutoAttackDamage(_turretTarget)))
             {
-                DebugConsole.Write("????!!!!!!!!!!");
                 SpellManager.CastQ(_turretTarget);
+                Global.Orbwalker.ForceTarget(_turretTarget);
             }
            
             if (MenuConfig.LaneClear["Q"].Value == 1 && minion.Health < Global.Player.GetAutoAttackDamage(minion))

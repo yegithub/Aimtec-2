@@ -44,12 +44,6 @@ namespace Adept_AIO.Champions.Vayne.Drawings
 
                 if (!SpellManager.DrawingPred.IsZero)
                 {
-                    if (Render.WorldToScreen(SpellManager.DrawingPred, out var screen) &&
-                        Render.WorldToScreen(Global.Player.ServerPosition, out var pos))
-                    {
-                        Render.Line(pos, screen, Color.Yellow);
-                    }
-                   
                     Render.Circle(SpellManager.DrawingPred, 45, 100, Color.Yellow);
                     Render.Circle(SpellManager.DrawingPred, 65, 100, Color.Crimson);
                     Render.Circle(Global.Player.ServerPosition, 425, 100, Color.Orange);

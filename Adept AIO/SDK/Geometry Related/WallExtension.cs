@@ -45,7 +45,7 @@ namespace Adept_AIO.SDK.Geometry_Related
 
         public static Vector3 NearestWall(Vector3 position, int range = 600)
         {
-            for (int i = 0; i < range; i++)
+            for (int i = 0; i < range / 2; i += 10)
             {
                 var next = position + new Vector3(i, Global.Player.ServerPosition.Y, i);
                 if (IsWallAt(next))
@@ -54,7 +54,25 @@ namespace Adept_AIO.SDK.Geometry_Related
                 }
             }
 
-            for (int i = 0; i < range; i++)
+            for (int i = 0; i < range / 2; i += 10)
+            {
+                var next = position + new Vector3(-i, Global.Player.ServerPosition.Y, -i);
+                if (IsWallAt(next))
+                {
+                    return next;
+                }
+            }
+
+            for (int i = 0; i < range; i += 10)
+            {
+                var next = position + new Vector3(i, Global.Player.ServerPosition.Y, i);
+                if (IsWallAt(next))
+                {
+                    return next;
+                }
+            }
+
+            for (int i = 0; i < range; i += 10)
             {
                 var next = position + new Vector3(-i, Global.Player.ServerPosition.Y, -i);
                 if (IsWallAt(next))
