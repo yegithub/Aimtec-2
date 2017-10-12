@@ -84,7 +84,7 @@
                 switch (Extension.CurrentMode)
                 {
                     case Mode.Tornado:
-                        var m = GameObjects.EnemyMinions.LastOrDefault(x => x.IsValidSpellTarget(false, SpellConfig.Q.Range));
+                        var m = GameObjects.EnemyMinions.LastOrDefault(x => x.IsValidSpellTarget(SpellConfig.Q.Range));
                         if (m == null)
                         {
                             return;
@@ -99,7 +99,7 @@
                         }
                         break;
                     case Mode.Normal:
-                        var nM = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsValidSpellTarget(false, SpellConfig.Q.Range - 100));
+                        var nM = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsValidSpellTarget(SpellConfig.Q.Range - 100));
                         if (nM == null)
                         {
                             return;
@@ -108,7 +108,7 @@
                         break;
                     case Mode.DashingTornado:
                     case Mode.Dashing:
-                        var dashM = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsValidSpellTarget(false, SpellConfig.Q.Range));
+                        var dashM = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsValidSpellTarget(SpellConfig.Q.Range));
                         if (dashM == null || !dashM.IsValidTarget())
                         {
                             return;
