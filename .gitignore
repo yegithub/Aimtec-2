@@ -287,11 +287,11 @@ __pycache__/
 *.odx.cs
 *.suo
 
-
-
-*.suo
 *.user
 _ReSharper.*
 bin
 obj
 packages
+Adept AIO/.vs/Adept AIO/v15/.suo
+
+/.vs

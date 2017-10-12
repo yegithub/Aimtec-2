@@ -37,10 +37,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Aimtec">
-      <HintPath>C:\Users\Nechrito\AppData\Local\AimtecLoader\Data\System\Aimtec.dll</HintPath>
+      <HintPath>..\..\..\..\..\AppData\Local\AimtecLoader\Data\System\Aimtec.dll</HintPath>
     </Reference>
     <Reference Include="Aimtec.SDK">
-      <HintPath>C:\Users\Nechrito\AppData\Local\AimtecLoader\Data\System\Aimtec.SDK.dll</HintPath>
+      <HintPath>..\..\..\..\..\AppData\Local\AimtecLoader\Data\System\Aimtec.SDK.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

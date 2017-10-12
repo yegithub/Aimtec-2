@@ -8,7 +8,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>Adept_AIO</RootNamespace>
     <AssemblyName>Adept AIO</AssemblyName>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
@@ -37,11 +37,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Aimtec">
-      <HintPath>C:\Users\Nechrito\AppData\Local\AimtecLoader\Data\System\Aimtec.dll</HintPath>
+      <HintPath>..\..\..\..\..\AppData\Local\AimtecLoader\Data\System\Aimtec.dll</HintPath>
     </Reference>
-    <Reference Include="Aimtec.SDK, Version=1.0.1.42, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\Nechrito\AppData\Local\AimtecLoader\Data\System\Aimtec.SDK.dll</HintPath>
+    <Reference Include="Aimtec.SDK">
+      <HintPath>..\..\..\..\..\AppData\Local\AimtecLoader\Data\System\Aimtec.SDK.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
