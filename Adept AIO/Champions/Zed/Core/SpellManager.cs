@@ -33,7 +33,7 @@ namespace Adept_AIO.Champions.Zed.Core
             {
                 return;
             }
-
+         
             switch (args.SpellSlot)
             {
                 case SpellSlot.R:
@@ -113,7 +113,7 @@ namespace Adept_AIO.Champions.Zed.Core
                     {
                         if (target.Distance(shadow) > E.Range)
                         {
-                            return;
+                            continue;
                         }
 
                         E.Cast(target);
