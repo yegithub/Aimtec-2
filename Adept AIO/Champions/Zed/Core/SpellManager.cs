@@ -70,28 +70,26 @@ namespace Adept_AIO.Champions.Zed.Core
                 return;
             }
 
-            if (target.IsValidTarget(Q.Range, false, false, Global.Player.ServerPosition))
+            if (target.IsValidTarget(Q.Range))
             {
                 Q.Cast(target);
+                return;
             }
-            else
+
+            foreach (var shadow in ShadowManager.Shadows)
             {
-                foreach (var shadow in ShadowManager.Shadows)
+                if (minHit == 1)
+                {
+                    Q.Cast(target.ServerPosition);
+                }
+                else
                 {
                     var pred = Q.GetPrediction(target, shadow.ServerPosition, shadow.ServerPosition);
-                    if (minHit == 1)
+                    var rect = new Geometry.Rectangle(shadow.ServerPosition.To2D(), pred.CastPosition.To2D(), Q.Width);
+                    if (GameObjects.EnemyMinions.Count(x => rect.IsInside(x.ServerPosition.To2D())) >= minHit)
                     {
                         Q.Cast(pred.CastPosition);
                     }
-                    else
-                    {
-                        var rect = new Geometry.Rectangle(shadow.ServerPosition.To2D(), pred.CastPosition.To2D(), Q.Width);
-                        if (GameObjects.EnemyMinions.Count(x => rect.IsInside(x.ServerPosition.To2D())) >= minHit)
-                        {
-                            Q.Cast(pred.CastPosition);
-                        }
-                    }
-                  
                 }
             }
         }

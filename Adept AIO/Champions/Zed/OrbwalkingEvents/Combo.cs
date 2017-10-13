@@ -10,7 +10,7 @@ namespace Adept_AIO.Champions.Zed.OrbwalkingEvents
     {
         public static void OnUpdate()
         {
-            var target = TargetSelector.GetTarget(SpellManager.WCastRange + SpellManager.R.Range);
+            var target = TargetSelector.GetTarget(SpellManager.WCastRange + SpellManager.Q.Range);
             if (target == null)
             {
                 return;
@@ -26,7 +26,7 @@ namespace Adept_AIO.Champions.Zed.OrbwalkingEvents
                 SpellManager.CastR(target);
             }
 
-            if (SpellManager.W.Ready && MenuConfig.Combo["W"].Enabled)
+            if (SpellManager.W.Ready && MenuConfig.Combo["W"].Enabled && target.IsValidTarget(SpellManager.WCastRange + SpellManager.R.Range))
             {
                 if (ShadowManager.CanCastW1())
                 {
