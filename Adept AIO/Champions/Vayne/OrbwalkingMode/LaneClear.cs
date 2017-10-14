@@ -1,5 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Adept_AIO.Champions.Vayne.Core;
+using Adept_AIO.SDK.Generic;
 using Adept_AIO.SDK.Unit_Extensions;
 using Aimtec;
 using Aimtec.SDK.Damage;
@@ -31,29 +33,27 @@ namespace Adept_AIO.Champions.Vayne.OrbwalkingMode
 
         public static void PreAttack(object sender, PreAttackEventArgs args)
         {
-            //if (MenuConfig.LaneClear["TurretFarm"].Enabled)
-            //{
-            //    if (_turretTarget != null && _turret != null)
-            //    {
-            //        var playerDamage = Global.Player.GetAutoAttackDamage(_turretTarget);
-
-            //        if (_turretTarget.Health < playerDamage)
-            //        {
-            //            args.Target = _turretTarget;
-            //        }
-
-            //        var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsUnderAllyTurret());
-            //        if (minion != null)
-            //        {
-            //            var turretDamage = _turret.GetAutoAttackDamage(minion);
-                       
-            //            if (minion.Health < turretDamage + Global.Player.GetAutoAttackDamage(minion) && minion.Health > turretDamage)
-            //            {
-            //                args.Target = minion;
-            //            }
-            //        }
-            //    }
-            //}
+            if (MenuConfig.LaneClear["TurretFarm"].Enabled)
+            {
+                if (_turretTarget != null && _turret != null)
+                {
+                    if (_turretTarget.Health < Global.Player.GetAutoAttackDamage(_turretTarget) && _turretTarget.IsValidAutoRange())
+                    {
+                        args.Target = _turretTarget;
+                    }
+                    else
+                    {
+                        var t = args.Target as Obj_AI_Base;
+                        if (t != null && !t.Name.ToLower().Contains("cannon"))
+                        {
+                            if (t.Health - _turret.GetAutoAttackDamage(t) * 2 > Global.Player.GetAutoAttackDamage(t) || t.Health - _turret.GetAutoAttackDamage(t) >= Global.Player.GetAutoAttackDamage(t))
+                            {
+                                args.Cancel = true;
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         public static void OnUpdate()
@@ -64,22 +64,6 @@ namespace Adept_AIO.Champions.Vayne.OrbwalkingMode
                 return;
             }
 
-            //if (_turret != null && _turretTarget != null && MenuConfig.LaneClear["TurretFarm"].Enabled)
-            //{
-            //    if (_turretTarget.Health > Global.Player.GetAutoAttackDamage(_turretTarget) && _turretTarget.Health <
-            //        Global.Player.GetSpellDamage(_turretTarget, SpellSlot.Q) +
-            //        Global.Player.GetAutoAttackDamage(_turretTarget))
-            //    {
-            //        SpellManager.CastQ(_turretTarget);
-            //    }
-
-            //    if (_turret.IsDead)
-            //    {
-            //        _turret = null;
-            //        _turretTarget = null;
-            //    }
-            //}
-           
             if (MenuConfig.LaneClear["Q3"].Value == 1 && minion.Health < Global.Player.GetAutoAttackDamage(minion))
             {
                 SpellManager.CastQ(minion, MenuConfig.LaneClear["QMode3"].Value);
@@ -102,11 +86,6 @@ namespace Adept_AIO.Champions.Vayne.OrbwalkingMode
                 _turret = sender;
                 _turretTarget = args.Target as Obj_AI_Minion;
                 _turretDamage = args.Sender.GetAutoAttackDamage(_turretTarget);
-            }
-            else
-            {
-                _turret = null;
-                _turretTarget = null;
             }
         }
     }

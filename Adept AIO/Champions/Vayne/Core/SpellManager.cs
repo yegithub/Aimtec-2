@@ -100,13 +100,13 @@ namespace Adept_AIO.Champions.Vayne.Core
                         pos = Game.CursorPos;
                         break;
                     case 1:
-                        var toSide = ToSide(target.ServerPosition.To2D(), 90);
-                        pos = (target.ServerPosition + (target.ServerPosition - toSide.To3D()).Normalized() * Global.Player.Distance(target)).To2D().Perpendicular().To3D();
+                        var toSide = ToSide(target.ServerPosition.To2D(), 65).To3D();
+                        pos = toSide;
                         break;
                 }
             }
 
-            if (target.IsValidAutoRange() && target.Distance(Global.Player) >= Global.Player.AttackRange - 5 && target.HasPath)
+            if (target.Distance(Global.Player) >= Global.Player.AttackRange && !target.IsFacingUnit(Global.Player))
             {
                 pos = target.ServerPosition;
             }
