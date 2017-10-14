@@ -92,21 +92,20 @@ namespace Adept_AIO.SDK.Delegates
 
             Game.OnUpdate += OnUpdate;
          
-            Obj_AI_Base.OnProcessAutoAttack += OnProcessAutoAttack;
+          //  Obj_AI_Base.OnProcessAutoAttack += OnProcessAutoAttack;
             Obj_AI_Base.OnProcessSpellCast += OnProcessSpellCast;
-            Obj_AI_Base.OnNewPath += OnNewPath;
+          //  Obj_AI_Base.OnNewPath += OnNewPath;
         }
 
         private static void OnProcessAutoAttack(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
         {
             if (sender == null
-            || Gapclosers == null
             || !sender.IsHero
             || !sender.IsEnemy
-            || !sender.IsValidTarget()
             || string.IsNullOrEmpty(args.SpellData.Name)
             || args.Target == null
             || !args.Target.IsMe
+            || Gapclosers[sender.NetworkId] == null
             || !Menu[sender.UnitSkinName][sender.UnitSkinName + ".Melee"].Enabled)
             {
                 return;
@@ -132,7 +131,7 @@ namespace Adept_AIO.SDK.Delegates
 
         private static void OnNewPath(Obj_AI_Base sender, Obj_AI_BaseNewPathEventArgs args)
         {
-            if (sender == null || !sender.IsHero || !sender.IsEnemy || Gapclosers == null || !args.IsDash)
+            if (sender == null || !sender.IsHero || !sender.IsEnemy || Gapclosers[sender.NetworkId] == null || !args.IsDash)
             {
                 return;
             }
@@ -217,11 +216,11 @@ namespace Adept_AIO.SDK.Delegates
         private static void OnProcessSpellCast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
         {
             if (sender == null
-            || Gapclosers == null
             || !sender.IsValidTarget()
             || !sender.IsHero
             || !sender.IsEnemy
-            ||  string.IsNullOrEmpty(args.SpellData.Name) 
+            ||  string.IsNullOrEmpty(args.SpellData.Name)
+            || Gapclosers[sender.NetworkId] == null
             ||  args.SpellData.Name.ToLower().Contains("attack") || args.SpellData.Name.ToLower().Contains("crit"))
             {
                 return;

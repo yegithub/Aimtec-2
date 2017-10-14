@@ -31,29 +31,29 @@ namespace Adept_AIO.Champions.Vayne.OrbwalkingMode
 
         public static void PreAttack(object sender, PreAttackEventArgs args)
         {
-            if (MenuConfig.LaneClear["TurretFarm"].Enabled)
-            {
-                if (_turretTarget != null && _turret != null)
-                {
-                    var playerDamage = Global.Player.GetAutoAttackDamage(_turretTarget);
+            //if (MenuConfig.LaneClear["TurretFarm"].Enabled)
+            //{
+            //    if (_turretTarget != null && _turret != null)
+            //    {
+            //        var playerDamage = Global.Player.GetAutoAttackDamage(_turretTarget);
 
-                    if (_turretTarget.Health < playerDamage)
-                    {
-                        args.Target = _turretTarget;
-                    }
+            //        if (_turretTarget.Health < playerDamage)
+            //        {
+            //            args.Target = _turretTarget;
+            //        }
 
-                    var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsUnderAllyTurret());
-                    if (minion != null)
-                    {
-                        var turretDamage = _turret.GetAutoAttackDamage(minion);
+            //        var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsUnderAllyTurret());
+            //        if (minion != null)
+            //        {
+            //            var turretDamage = _turret.GetAutoAttackDamage(minion);
                        
-                        if (minion.Health < turretDamage + Global.Player.GetAutoAttackDamage(minion) && minion.Health > turretDamage)
-                        {
-                            args.Target = minion;
-                        }
-                    }
-                }
-            }
+            //            if (minion.Health < turretDamage + Global.Player.GetAutoAttackDamage(minion) && minion.Health > turretDamage)
+            //            {
+            //                args.Target = minion;
+            //            }
+            //        }
+            //    }
+            //}
         }
 
         public static void OnUpdate()
@@ -64,21 +64,21 @@ namespace Adept_AIO.Champions.Vayne.OrbwalkingMode
                 return;
             }
 
-            if (_turret != null && _turretTarget != null && MenuConfig.LaneClear["TurretFarm"].Enabled)
-            {
-                if (_turretTarget.Health > Global.Player.GetAutoAttackDamage(_turretTarget) && _turretTarget.Health <
-                    Global.Player.GetSpellDamage(_turretTarget, SpellSlot.Q) +
-                    Global.Player.GetAutoAttackDamage(_turretTarget))
-                {
-                    SpellManager.CastQ(_turretTarget);
-                }
+            //if (_turret != null && _turretTarget != null && MenuConfig.LaneClear["TurretFarm"].Enabled)
+            //{
+            //    if (_turretTarget.Health > Global.Player.GetAutoAttackDamage(_turretTarget) && _turretTarget.Health <
+            //        Global.Player.GetSpellDamage(_turretTarget, SpellSlot.Q) +
+            //        Global.Player.GetAutoAttackDamage(_turretTarget))
+            //    {
+            //        SpellManager.CastQ(_turretTarget);
+            //    }
 
-                if (_turret.IsDead)
-                {
-                    _turret = null;
-                    _turretTarget = null;
-                }
-            }
+            //    if (_turret.IsDead)
+            //    {
+            //        _turret = null;
+            //        _turretTarget = null;
+            //    }
+            //}
            
             if (MenuConfig.LaneClear["Q3"].Value == 1 && minion.Health < Global.Player.GetAutoAttackDamage(minion))
             {
