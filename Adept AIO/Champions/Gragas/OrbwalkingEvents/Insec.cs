@@ -15,14 +15,14 @@
                 return;
             }
 
-            if (SpellManager.Q.Ready)
-            {
-                SpellManager.CastQ(target, true);
-            }
-
-            if (SpellManager.R.Ready)
+            if (SpellManager.R.Ready && !(MenuConfig.Combo["Q"].Enabled && SpellManager.Q.Ready))
             {
                 SpellManager.CastR(target);
+            }
+
+            if (SpellManager.Q.Ready)
+            {
+                SpellManager.CastQ(target, MenuConfig.Combo["Q"].Enabled);
             }
 
             else if (SpellManager.E.Ready && !target.IsDashing())

@@ -28,7 +28,7 @@
             InsecMenu = new Menu("Insec", "Insec")
             {
                 new MenuBool("Flash", "Flash | E Flash"),
-                new MenuSliderBool("Auto", "Auto Insec If X Hit", true, 3, 2, 5),
+              //  new MenuSliderBool("Auto", "Auto Insec If X Hit", true, 3, 2, 5),
                 new MenuBool("Q", "Use Q Before R")
             };
 
