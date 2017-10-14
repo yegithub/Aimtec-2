@@ -43,7 +43,7 @@ namespace Adept_AIO.Champions.Vayne.OrbwalkingMode
                     return;
                 }
 
-                if (Global.Player.CountEnemyHeroesInRange(1500) >= MenuConfig.Combo["Count"].Value)
+                if (Global.Player.CountEnemyHeroesInRange(1500) >= MenuConfig.Combo["Count"].Value && target.HealthPercent() >= 25)
                 {
                     SpellManager.R.Cast();
                 }
