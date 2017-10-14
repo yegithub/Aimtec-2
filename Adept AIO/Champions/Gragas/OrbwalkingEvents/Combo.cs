@@ -14,27 +14,27 @@ namespace Adept_AIO.Champions.Gragas.OrbwalkingEvents
                 return;
             }
 
-            if (SpellManager.Q.Ready && MenuConfig.Combo["Q"].Enabled)
+            if (SpellManager.R.Ready && MenuConfig.Combo["R"].Enabled &&
+                (!MenuConfig.Combo["Killable"].Enabled || Dmg.Damage(target) > target.Health ||
+                 !target.IsValidTarget(SpellManager.R.Range)))
+            {
+                SpellManager.CastR(target);
+            }
+
+            else if (SpellManager.Q.Ready && MenuConfig.Combo["Q"].Enabled)
             {
                 SpellManager.CastQ(target);
             }
 
-            if (SpellManager.W.Ready && MenuConfig.Combo["W"].Enabled)
+            else if (SpellManager.W.Ready && MenuConfig.Combo["W"].Enabled)
             {
                 SpellManager.CastW(target);
             }
 
-            if (SpellManager.E.Ready && MenuConfig.Combo["E"].Enabled)
+            else if (SpellManager.E.Ready && MenuConfig.Combo["E"].Enabled)
             {
                 SpellManager.CastE(target, MenuConfig.Combo["Flash"].Enabled);
             }
-
-            if (!SpellManager.R.Ready || !MenuConfig.Combo["R"].Enabled || MenuConfig.Combo["Killable"].Enabled && Dmg.Damage(target) < target.Health && target.IsValidTarget(SpellManager.R.Range))
-            {
-                return;
-            }
-        
-            SpellManager.CastR(target);
         }
     }
 }

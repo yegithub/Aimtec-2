@@ -16,7 +16,7 @@ namespace Adept_AIO.Champions.Vayne.OrbwalkingMode
                 return;
             }
 
-            var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Health < Global.Player.GetAutoAttackDamage(x) && x.Distance(Global.Player) <= SpellManager.Q.Range);
+            var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.NetworkId != args.Target.NetworkId && x.Health < Global.Player.GetAutoAttackDamage(x) && x.Distance(Global.Player) <= SpellManager.Q.Range);
             if (minion == null)
             {
                 return;

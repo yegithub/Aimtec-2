@@ -106,7 +106,7 @@ namespace Adept_AIO.Champions.Vayne.Core
                 }
             }
 
-            if (target.IsValidAutoRange() && target.Distance(Global.Player) >= Global.Player.AttackRange - 10)
+            if (target.IsValidAutoRange() && target.Distance(Global.Player) >= Global.Player.AttackRange - 5 && target.HasPath)
             {
                 pos = target.ServerPosition;
             }
