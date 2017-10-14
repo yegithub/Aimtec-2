@@ -64,11 +64,12 @@ namespace Adept_AIO.Champions.Gragas.Core
 
         public static void OnDestroy(GameObject sender)
         {
-            if (sender.Name == "Gragas_Base_Q_Ally.troy")
+            if (sender.Name != "Gragas_Base_Q_Ally.troy")
             {
-                DebugConsole.Write("?");
-                Barrel = null;
+                return;
             }
+
+            Barrel = null;
         }
 
         public static void CastQ(Obj_AI_Base target, bool insec = false)
