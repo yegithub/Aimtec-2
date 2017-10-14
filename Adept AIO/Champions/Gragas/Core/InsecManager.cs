@@ -31,6 +31,11 @@ namespace Adept_AIO.Champions.Gragas.Core
 
         public static Vector3 GetTargetEndPosition()
         {
+            if (SpellManager.Barrel != null)
+            {
+                return SpellManager.Barrel.Center.To3D();
+            }
+
             var ally = GameObjects.AllyHeroes.FirstOrDefault(x => x.Distance(Global.Player) <= 1500);
             var turret = GameObjects.AllyTurrets.OrderBy(x => x.Distance(Global.Player)).FirstOrDefault();
 

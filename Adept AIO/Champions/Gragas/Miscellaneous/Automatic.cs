@@ -21,10 +21,10 @@ namespace Adept_AIO.Champions.Gragas.Miscellaneous
                 if (MenuConfig.Automatic["Q"].Enabled 
                     && SpellManager.Q.Ready 
                     && SpellManager.Barrel != null
-                    && SpellManager.Barrel.Center.Distance(target) > SpellManager.Barrel.Radius - 50 
+                    && SpellManager.Barrel.Center.Distance(target) > SpellManager.Barrel.Radius - 150 
                     && SpellManager.Barrel.Center.Distance(target) <= SpellManager.Barrel.Radius)
                 {
-                    SpellManager.CastQ(target);
+                    SpellManager.Q.Cast();
                 }
 
                 if (MenuConfig.Automatic["E"].Enabled && SpellManager.E.Ready && target.Health < Global.Player.GetSpellDamage(target, SpellSlot.E))

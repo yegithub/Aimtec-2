@@ -8,7 +8,7 @@ namespace Adept_AIO.Champions.Gragas.OrbwalkingEvents
     {
         public static void OnUpdate()
         {
-            var target = Global.TargetSelector.GetTarget(SpellManager.Q.Range);
+            var target = Global.TargetSelector.GetTarget(2000);
             if (target == null || !target.IsValidTarget())
             {
                 return;
@@ -26,7 +26,7 @@ namespace Adept_AIO.Champions.Gragas.OrbwalkingEvents
 
             if (SpellManager.E.Ready && MenuConfig.Combo["E"].Enabled)
             {
-                SpellManager.CastE(target);
+                SpellManager.CastE(target, MenuConfig.Combo["Flash"].Enabled);
             }
 
             if (!SpellManager.R.Ready || !MenuConfig.Combo["R"].Enabled || MenuConfig.Combo["Killable"].Enabled && Dmg.Damage(target) < target.Health && target.IsValidTarget(SpellManager.R.Range))

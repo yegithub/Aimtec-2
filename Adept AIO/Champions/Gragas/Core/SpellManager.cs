@@ -28,7 +28,7 @@ namespace Adept_AIO.Champions.Gragas.Core
 
         public static Geometry.Circle Barrel;
         
-        public static int QRadius = 250;
+        public static int QRadius = 300;
 
         public SpellManager()
         {
@@ -51,14 +51,9 @@ namespace Adept_AIO.Champions.Gragas.Core
                 return;
             }
 
-            if (args.SpellSlot == SpellSlot.Q)
+            if (args.SpellSlot == SpellSlot.Q && args.SpellData.Name == "GragasQ")
             {
-             
-                if (args.SpellData.Name == "GragasQ")
-                {
-                   
-                    Barrel = new Geometry.Circle(args.End.To2D(), QRadius);
-                }
+                Barrel = new Geometry.Circle(args.End.To2D(), QRadius);
             }
         }
 
@@ -76,22 +71,18 @@ namespace Adept_AIO.Champions.Gragas.Core
         {
             if (Barrel != null)
             {
-                if (Barrel.Center.Distance(target) <= Barrel.Radius && 
-                    Barrel.Center.Distance(target) > Barrel.Radius - 65 && !target.HasBuffOfType(BuffType.Knockback) && target.HasBuffOfType(BuffType.Knockup))
-                {
-                    Q.Cast();
-                }
+              return;
+            }
+
+            if (insec)
+            {
+                Q.Cast(InsecManager.QInsecPos(target));
             }
             else
             {
-                if (insec)
-                {
-                    Q.Cast(InsecManager.QInsecPos(target));
-                }
-                else
-                {
-                    Q.Cast(target);
-                }
+                var pred = Q.GetPrediction(target);
+                if(pred.HitChance >= HitChance.High)
+                Q.Cast(target);
             }
         }
 
@@ -107,12 +98,12 @@ namespace Adept_AIO.Champions.Gragas.Core
 
         public static void CastE(Obj_AI_Base target, bool flash = false)
         {
-            var canFlash = flash && SummonerSpells.IsValid(SummonerSpells.Flash);
+            var canFlash = flash && SummonerSpells.IsValid(SummonerSpells.Flash) && target.Distance(Global.Player) > E.Range && target.Distance(Global.Player) < E.Range + 425;
 
             var pred = E.GetPrediction(target);
             BodySlam = new Geometry.Rectangle(
                 canFlash
-                    ? Global.Player.ServerPosition.Extend(target.ServerPosition, 425).To2D()
+                    ? Global.Player.ServerPosition.Extend(target.ServerPosition, 425 + E.Range - target.BoundingRadius).To2D()
                     : Global.Player.ServerPosition.To2D(),
                 Global.Player.ServerPosition.Extend(pred.CastPosition, E.Range).To2D(),
                 EHitboxRadius);
@@ -130,12 +121,15 @@ namespace Adept_AIO.Champions.Gragas.Core
                 return;
             }
 
-            E.Cast(target);
 
             if (canFlash)
             {
-                SummonerSpells.Flash.Cast(target.ServerPosition);
+                E.Cast(target.ServerPosition);
+                DelayAction.Queue(300, () => SummonerSpells.Flash.Cast(target.ServerPosition), new CancellationToken(false));
+                return;
             }
+
+            E.Cast(target.ServerPosition);
         }
 
         public static void CastR(Obj_AI_Base target)

@@ -36,6 +36,7 @@
             {
                 new MenuBool("Q", "Use Q"),
                 new MenuBool("W", "Use W"),
+                new MenuBool("Flash", "Flash | E Flash"),
                 new MenuBool("E", "Use E"),
                 new MenuBool("R", "Use R"),
                 new MenuBool("Killable", "R | ONLY If Killable")
