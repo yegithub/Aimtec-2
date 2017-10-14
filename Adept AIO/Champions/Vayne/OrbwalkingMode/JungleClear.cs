@@ -16,9 +16,9 @@ namespace Adept_AIO.Champions.Vayne.OrbwalkingMode
                 return;
             }
 
-            if (SpellManager.Q.Ready && MenuConfig.JungleClear["Q"].Value != 1)
+            if (SpellManager.Q.Ready && MenuConfig.JungleClear["Q4"].Value != 1)
             {
-                SpellManager.CastQ(mob, MenuConfig.JungleClear["Mode"].Value);
+                SpellManager.CastQ(mob, MenuConfig.JungleClear["Mode4"].Value);
             }
 
             if (SpellManager.E.Ready && MenuConfig.JungleClear["E"].Enabled)
@@ -35,9 +35,9 @@ namespace Adept_AIO.Champions.Vayne.OrbwalkingMode
                 return;
             }
 
-            if (SpellManager.Q.Ready && MenuConfig.JungleClear["Q"].Value == 1)
+            if (SpellManager.Q.Ready && MenuConfig.JungleClear["Q4"].Value == 1)
             {
-                SpellManager.CastQ(mob, MenuConfig.JungleClear["Mode"].Value);
+                SpellManager.CastQ(mob, MenuConfig.JungleClear["Mode4"].Value);
             }
         }
     }

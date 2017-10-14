@@ -38,8 +38,8 @@ namespace Adept_AIO.Champions.Vayne.Core
 
             Combo = new Menu("Combo", "Combo")
             {
-                new MenuList("Q", "Q Mode", new[] {"After Auto", "Engage"}, 0),
-                new MenuList("Mode", "Q To:", new[] {"Cursor", "Side"}, 1),
+                new MenuList("Q1", "Q Mode", new[] {"After Auto", "Engage"}, 0),
+                new MenuList("Mode1", "Q To:", new[] {"Cursor", "Side"}, 1),
                 new MenuBool("ToE", "Force Q To E Pos"),
                 new MenuBool("W", "Focus Targets With W Stacks"),
                 new MenuBool("E", "Use E"),
@@ -56,8 +56,8 @@ namespace Adept_AIO.Champions.Vayne.Core
 
             Harass = new Menu("Harass", "Harass")
             {
-                new MenuList("Q", "Q Mode", new[] {"After Auto", "Engage"}, 0),
-                new MenuList("Mode", "Q To:", new[] {"Cursor", "Side"}, 1),
+                new MenuList("Q2", "Q Mode", new[] {"After Auto", "Engage"}, 0),
+                new MenuList("Mode2", "Q To:", new[] {"Cursor", "Side"}, 1),
                 new MenuBool("E", "Use E"),
                 new MenuSeperator("Whitelist")
             };
@@ -70,14 +70,14 @@ namespace Adept_AIO.Champions.Vayne.Core
             LaneClear = new Menu("LaneClear", "Lane")
             {
                 new MenuBool("TurretFarm", "Smart Under Turret Farm"),
-                new MenuList("Q", "Q Mode", new[] {"After Auto", "Engage"}, 0),
-                new MenuList("QMode", "Q To:", new[] {"Cursor", "Side"}, 0),
+                new MenuList("Q3", "Q Mode", new[] {"After Auto", "Engage"}, 0),
+                new MenuList("QMode3", "Q To:", new[] {"Cursor", "Side"}, 0),
             };
 
             JungleClear = new Menu("Jungle", "Jungle")
             {
-                new MenuList("Q", "Q Mode", new[] {"After Auto", "Engage"}, 0),
-                new MenuList("Mode", "Q To:", new[] {"Cursor", "Side"}, 0),
+                new MenuList("Q4", "Q Mode", new[] {"After Auto", "Engage"}, 0),
+                new MenuList("Mode4", "Q To:", new[] {"Cursor", "Side"}, 0),
                 new MenuBool("E", "Use E")
             };
 

@@ -100,9 +100,15 @@ namespace Adept_AIO.Champions.Vayne.Core
                         pos = Game.CursorPos;
                         break;
                     case 1:
-                        pos = ToSide(target.ServerPosition.To2D(), 90).To3D();
+                        var toSide = ToSide(target.ServerPosition.To2D(), 90);
+                        pos = (target.ServerPosition + (target.ServerPosition - toSide.To3D()).Normalized() * Global.Player.Distance(target)).To2D().Perpendicular().To3D();
                         break;
                 }
+            }
+
+            if (target.IsValidAutoRange() && target.Distance(Global.Player) >= Global.Player.AttackRange - 10)
+            {
+                pos = target.ServerPosition;
             }
 
             QPred = pos;

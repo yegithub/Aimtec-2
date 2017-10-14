@@ -10,12 +10,12 @@ namespace Adept_AIO.Champions.Vayne.OrbwalkingMode
     {
         public static void PostAttack(object sender, PostAttackEventArgs args)
         {
-            if (!SpellManager.Q.Ready || MenuConfig.Harass["Q"].Value == 1)
+            if (!SpellManager.Q.Ready || MenuConfig.Harass["Q2"].Value == 1)
             {
                 return;
             }
 
-            SpellManager.CastQ(args.Target as Obj_AI_Base, MenuConfig.Harass["Mode"].Value);
+            SpellManager.CastQ(args.Target as Obj_AI_Base, MenuConfig.Harass["Mode2"].Value);
         }
 
         public static void OnUpdate()
@@ -26,9 +26,9 @@ namespace Adept_AIO.Champions.Vayne.OrbwalkingMode
                 return;
             }
 
-            if (SpellManager.Q.Ready && MenuConfig.Harass["Q"].Value == 1)
+            if (SpellManager.Q.Ready && MenuConfig.Harass["Q2"].Value == 1)
             {
-                SpellManager.CastQ(target, MenuConfig.Harass["Mode"].Value);
+                SpellManager.CastQ(target, MenuConfig.Harass["Mode2"].Value);
             }
 
             if (SpellManager.E.Ready && MenuConfig.Harass["E"].Enabled && MenuConfig.Harass[target.ChampionName].Enabled)
