@@ -81,9 +81,9 @@ namespace Adept_AIO.Champions.Azir.Core
                 new MenuBool("E", "Use E"),
             };
 
-            Drawings = new Menu("Drawings", "Drawings")
+            Drawings = new Menu("DrawManager", "DrawManager")
             {
-                new MenuSlider("Segments", "Segments", 100, 100, 200).SetToolTip("Smoothness of the circles"),
+                new MenuSlider("Segments", "Segments", 100, 10, 150).SetToolTip("Smoothness of the circles"),
                 new MenuBool("Dmg", "Damage"),
                 new MenuBool("Soldiers", "Draw Soldiers"),
                 new MenuBool("Q", "Draw Q Range"),

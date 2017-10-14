@@ -63,9 +63,9 @@ namespace Adept_AIO.Champions.Rengar.Core
                 new MenuBool("E", "Use E"),
             };
 
-            Drawings = new Menu("Drawings", "Drawings")
+            Drawings = new Menu("DrawManager", "DrawManager")
             {
-                new MenuSlider("Segments", "Segments", 100, 100, 200).SetToolTip("Smoothness of the circles"),
+                new MenuSlider("Segments", "Segments", 100, 10, 150).SetToolTip("Smoothness of the circles"),
                 new MenuBool("Dmg", "Damage"),
                 new MenuBool("Q", "Draw Q Range", false),
                 new MenuBool("W", "Draw W Range", false),

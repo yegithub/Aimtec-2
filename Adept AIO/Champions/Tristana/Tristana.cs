@@ -31,7 +31,9 @@ namespace Adept_AIO.Champions.Tristana
 
             Game.OnUpdate += manager.OnUpdate;
             Game.OnUpdate += killsteal.OnUpdate;
+
             Global.Orbwalker.PostAttack += manager.OnPostAttack;
+            Global.Orbwalker.PreAttack += manager.OnPreAttack;
 
             Render.OnRender += drawManager.OnRender;
             Render.OnPresent += drawManager.OnPresent;

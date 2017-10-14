@@ -98,9 +98,9 @@ namespace Adept_AIO.Champions.Vayne.Core
                 new MenuBool("E", "Anti Gapcloser | E")
             };
 
-            Drawings = new Menu("Drawings", "Drawings")
+            Drawings = new Menu("DrawManager", "DrawManager")
             {
-                new MenuSlider("Segments", "Segments", 60, 30, 300).SetToolTip("Smoothness of the circles"),
+                new MenuSlider("Segments", "Segments", 100, 10, 150).SetToolTip("Smoothness of the circles"),
                 new MenuBool("Dmg", "Damage"),
                 new MenuBool("Q", "Draw Q Range"),
                 new MenuBool("Pred", "Draw E Prediction")

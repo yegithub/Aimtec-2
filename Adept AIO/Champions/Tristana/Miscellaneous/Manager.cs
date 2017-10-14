@@ -1,5 +1,7 @@
-﻿using Adept_AIO.Champions.Tristana.OrbwalkingEvents;
+﻿using System.Linq;
+using Adept_AIO.Champions.Tristana.OrbwalkingEvents;
 using Adept_AIO.SDK.Unit_Extensions;
+using Aimtec.SDK.Extensions;
 using Aimtec.SDK.Orbwalking;
 
 namespace Adept_AIO.Champions.Tristana.Miscellaneous
@@ -27,6 +29,15 @@ namespace Adept_AIO.Champions.Tristana.Miscellaneous
                     _jungleClear.OnPostAttack(args.Target);
                     _laneClear.OnPostAttack();
                     break;
+            }
+        }
+
+        public void OnPreAttack(object sender, PreAttackEventArgs args)
+        {
+            var enemy = GameObjects.EnemyHeroes.FirstOrDefault(x => x.IsValidTarget() && x.HasBuff("TristanaECharge"));
+            if (enemy != null && enemy.IsValidAutoRange())
+            {
+                args.Target = enemy;
             }
         }
 

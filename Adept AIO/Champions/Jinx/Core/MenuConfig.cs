@@ -68,9 +68,9 @@ namespace Adept_AIO.Champions.Jinx.Core
                 new MenuBool("W", "Use W")
             };
 
-            Drawings = new Menu("Drawings", "Drawings")
+            Drawings = new Menu("DrawManager", "DrawManager")
             {
-                new MenuSlider("Segments", "Segments", 100, 100, 200).SetToolTip("Smoothness of the circles"),
+                new MenuSlider("Segments", "Segments", 100, 10, 150).SetToolTip("Smoothness of the circles"),
                 new MenuBool("Dmg", "Damage"),
                 new MenuBool("R", "R Auto Range"),
                 new MenuBool("W", "W Range")

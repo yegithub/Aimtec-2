@@ -92,21 +92,21 @@ namespace Adept_AIO.SDK.Delegates
 
             Game.OnUpdate += OnUpdate;
          
-            Obj_AI_Base.OnProcessAutoAttack += OnProcessAutoAttack;
+            //Obj_AI_Base.OnProcessAutoAttack += OnProcessAutoAttack;
             Obj_AI_Base.OnProcessSpellCast += OnProcessSpellCast;
-            Obj_AI_Base.OnNewPath += OnNewPath;
+            //Obj_AI_Base.OnNewPath += OnNewPath;
         }
 
         private static void OnProcessAutoAttack(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
         {
-            if (sender == null || !sender.IsHero|| !sender.IsEnemy || !sender.IsValidTarget())
-            {
-                return;
-            }
-
-            if (string.IsNullOrEmpty(args.SpellData.Name) 
-            ||  args.Target == null 
-            || !args.Target.IsMe 
+            if (sender == null
+            || Gapclosers == null
+            || !sender.IsHero
+            || !sender.IsEnemy
+            || !sender.IsValidTarget()
+            || string.IsNullOrEmpty(args.SpellData.Name)
+            || args.Target == null
+            || !args.Target.IsMe
             || !Menu[sender.UnitSkinName][sender.UnitSkinName + ".Melee"].Enabled)
             {
                 return;
@@ -132,7 +132,7 @@ namespace Adept_AIO.SDK.Delegates
 
         private static void OnNewPath(Obj_AI_Base sender, Obj_AI_BaseNewPathEventArgs args)
         {
-            if (sender == null || sender.Type != GameObjectType.obj_AI_Hero || !sender.IsEnemy || Gapclosers == null)
+            if (sender == null || !sender.IsHero || !sender.IsEnemy || Gapclosers == null || !args.IsDash)
             {
                 return;
             }
@@ -150,11 +150,6 @@ namespace Adept_AIO.SDK.Delegates
                 Gapclosers.Add(sender.NetworkId, new GapcloserArgs());
             }
 
-            if (!args.IsDash)
-            {
-                return;
-            }
-
             var gapclosers = Gapclosers[sender.NetworkId];
            
             gapclosers.Unit = (Obj_AI_Hero) sender;
@@ -166,14 +161,14 @@ namespace Adept_AIO.SDK.Delegates
             gapclosers.StartTick     = Game.TickCount;
             gapclosers.EndTick       = (int) (gapclosers.EndPosition.DistanceSqr(gapclosers.StartPosition) / args.Speed * args.Speed * 1000) + gapclosers.StartTick;
             gapclosers.DurationTick  = gapclosers.EndTick - gapclosers.StartTick;
-            gapclosers.HaveShield    = HaveShiledBuff(sender);
+            gapclosers.HaveShield    = GotShield(sender);
         }
 
         private static void OnUpdate()
         {
-            if (Gapclosers.Values.Any(x => Game.TickCount - x.StartTick > 700 + Game.Ping))
+            foreach (var gapcloser in Gapclosers.Where(x => Game.TickCount - x.Value.StartTick > 1200 + Game.Ping))
             {
-                Gapclosers.Clear();
+                Gapclosers.Remove(gapcloser.Key);
             }
 
             if (OnGapcloser == null || !Menu["Enabled"].Enabled)
@@ -222,8 +217,9 @@ namespace Adept_AIO.SDK.Delegates
         private static void OnProcessSpellCast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
         {
             if (sender == null
-            || !sender.IsValid 
-            ||  sender.Type != GameObjectType.obj_AI_Hero 
+            || Gapclosers == null
+            || !sender.IsValidTarget()
+            || !sender.IsHero
             || !sender.IsEnemy
             ||  string.IsNullOrEmpty(args.SpellData.Name) 
             ||  args.SpellData.Name.ToLower().Contains("attack") || args.SpellData.Name.ToLower().Contains("crit"))
@@ -250,13 +246,13 @@ namespace Adept_AIO.SDK.Delegates
 
             gapclosers.SpellName = args.SpellData.Name;
             gapclosers.StartTick = Game.TickCount;
-            gapclosers.HaveShield = HaveShiledBuff(sender);
+            gapclosers.HaveShield = GotShield(sender);
 
             gapclosers.StartPosition = args.Start;
             gapclosers.EndPosition = args.End;
         }
 
-        private static bool HaveShiledBuff(Obj_AI_Base target)
+        private static bool GotShield(Obj_AI_Base target)
         {
             if (target == null || target.IsDead || target.Health <= 0 || !target.IsValidTarget())
             {

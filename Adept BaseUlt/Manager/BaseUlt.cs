@@ -243,8 +243,7 @@ namespace Adept_BaseUlt.Manager
                 80,
                 16, false, Color.LightSeaGreen);
 
-            var temp = TravelTime(GetFountainPos(_target)) / 100 +
-                       60; //Todo: I'm noob and don't know how to make this work properly. 
+            var temp = TravelTime(GetFountainPos(_target)) / 100 + 55; 
 
             Render.Line(xpos + 5 + temp,
                 80,

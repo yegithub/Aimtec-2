@@ -95,9 +95,9 @@ namespace Adept_AIO.Champions.Yasuo.Core
                 new MenuBool("LasthitQ3", "Lasthit With Tornado (Q3)")
             };
 
-            Drawings = new Menu("Drawings", "Drawings")
+            Drawings = new Menu("DrawManager", "DrawManager")
             {
-                new MenuSlider("Segments", "Segments", 100, 100, 200).SetToolTip("Smoothness of the circles"),
+                new MenuSlider("Segments", "Segments", 100, 10, 150).SetToolTip("Smoothness of the circles"),
                 new MenuBool("Dmg", "Damage"),
                 new MenuBool("R", "Draw R Range"),
                 new MenuBool("Path", "Draw Minion Path"),

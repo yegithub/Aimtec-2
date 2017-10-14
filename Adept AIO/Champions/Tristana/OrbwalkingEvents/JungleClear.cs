@@ -29,10 +29,9 @@ namespace Adept_AIO.Champions.Tristana.OrbwalkingEvents
 
         public void OnUpdate()
         {
-            // todo: See if this works as intended. 
-            var mob = GameObjects.Jungle.Where(x => x.IsValidTarget(_spellConfig.FullRange)).OrderBy(x => x.GetJungleType()).FirstOrDefault();
+            var mob = GameObjects.Jungle.Where(x => x.IsValidTarget(_spellConfig.FullRange)).OrderByDescending(x => x.GetJungleType()).FirstOrDefault();
 
-            if (mob == null || Global.Orbwalker.IsWindingUp || _menuConfig.JungleClear["Avoid"].Enabled && Global.Player.Level == 1)
+            if (mob == null || _menuConfig.JungleClear["Avoid"].Enabled && Global.Player.Level == 1)
             {
                 return;
             }

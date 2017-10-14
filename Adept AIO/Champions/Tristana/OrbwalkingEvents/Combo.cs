@@ -21,7 +21,7 @@ namespace Adept_AIO.Champions.Tristana.OrbwalkingEvents
         {
             var target = Global.TargetSelector.GetTarget(_spellConfig.FullRange);
 
-            if (target == null || Global.Orbwalker.IsWindingUp)
+            if (target == null)
             {
                 return;
             }

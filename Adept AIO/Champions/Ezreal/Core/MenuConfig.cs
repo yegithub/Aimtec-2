@@ -74,7 +74,7 @@ namespace Adept_AIO.Champions.Ezreal.Core
 
             Drawings = new Menu("DrawManager", "DrawManager")
             {
-                new MenuSlider("Segments", "Segments", 100, 100, 200).SetToolTip("Smoothness of the circles"),
+                new MenuSlider("Segments", "Segments", 100, 10, 150).SetToolTip("Smoothness of the circles"),
                 new MenuBool("Dmg", "Damage"),
                 new MenuBool("Q", "Draw Q Range"),
                 new MenuBool("R", "Draw R Range")

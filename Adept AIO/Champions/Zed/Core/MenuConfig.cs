@@ -100,9 +100,9 @@ namespace Adept_AIO.Champions.Zed.Core
                 new MenuBool("W", "Anti-Gapclose with W")
             };
 
-            Drawings = new Menu("Drawings", "Drawings")
+            Drawings = new Menu("DrawManager", "DrawManager")
             {
-                new MenuSlider("Segments", "Segments", 100, 100, 200).SetToolTip("Smoothness of the circles"),
+                new MenuSlider("Segments", "Segments", 100, 10, 150).SetToolTip("Smoothness of the circles"),
                 new MenuBool("Dmg", "Damage"),
                 new MenuBool("Range", "Draw Engage Range"),
                 new MenuBool("Q", "Draw Q Range"),

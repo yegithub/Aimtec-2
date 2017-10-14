@@ -253,8 +253,8 @@ namespace Adept_AIO.Champions.LeeSin
             ksE.OnValueChanged += (sender, args) => killsteal.EEnabled = args.GetNewValue<MenuBool>().Value;
             ksR.OnValueChanged += (sender, args) => killsteal.REnabled = args.GetNewValue<MenuBool>().Value;
 
-            var drawMenu = new Menu("Draw", "Drawings");
-            var drawSegments = new MenuSlider("Segments", "Segments", 100, 100, 200).SetToolTip("Smoothness of the circles");
+            var drawMenu = new Menu("Draw", "DrawManager");
+            var drawSegments = new MenuSlider("Segments", "Segments", 100, 10, 150).SetToolTip("Smoothness of the circles");
             var drawPosition = new MenuBool("Position", "Insec Position");
             var drawQ = new MenuBool("Q", "Q Range");
 

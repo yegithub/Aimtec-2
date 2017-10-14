@@ -67,9 +67,9 @@ namespace Adept_AIO.Champions.Kayn.Core
                 new MenuBool("R", "[R]")
             };
 
-            Drawings = new Menu("Drawings", "Drawings")
+            Drawings = new Menu("DrawManager", "DrawManager")
             {
-                new MenuSlider("Segments", "Segments", 100, 100, 200).SetToolTip("Smoothness of the circles"),
+                new MenuSlider("Segments", "Segments", 100, 10, 150).SetToolTip("Smoothness of the circles"),
                 new MenuBool("Dmg", "Damage"),
                 new MenuBool("W", "[W] Range"),
                 new MenuBool("R", "[R] Range")

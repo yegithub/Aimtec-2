@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using Adept_AIO.Champions.Vayne.Core;
 using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec;
 using Aimtec.SDK.Extensions;
 using Aimtec.SDK.Orbwalking;
 

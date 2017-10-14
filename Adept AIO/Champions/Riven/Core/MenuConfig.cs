@@ -106,9 +106,9 @@ namespace Adept_AIO.Champions.Riven.Core
                 new MenuBool("Interrupt", "Dodge Certain Spells"),
             };
 
-            Drawings = new Menu("Drawings", "Drawings")
+            Drawings = new Menu("DrawManager", "DrawManager")
             {
-                new MenuSlider("Segments", "Segments", 100, 100, 200).SetToolTip("Smoothness of the circles"),
+                new MenuSlider("Segments", "Segments", 100, 10, 150).SetToolTip("Smoothness of the circles"),
                 new MenuBool("Dmg", "Damage"),
                 new MenuBool("Mouse", "Mouse Helper").SetToolTip("Shows where to put mouse to properly Q AA chase the target"),
                 new MenuBool("Target", "Draw Line At Target"),

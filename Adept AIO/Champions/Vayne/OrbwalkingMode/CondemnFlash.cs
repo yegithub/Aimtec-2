@@ -2,7 +2,6 @@
 using Adept_AIO.SDK.Geometry_Related;
 using Adept_AIO.SDK.Unit_Extensions;
 using Adept_AIO.SDK.Usables;
-using Aimtec;
 using Aimtec.SDK.Extensions;
 
 namespace Adept_AIO.Champions.Vayne.OrbwalkingMode

@@ -59,9 +59,9 @@ namespace Adept_AIO.Champions.Irelia.Core
                 new MenuBool("R", "R")
             };
 
-            Drawings = new Menu("Drawings", "Drawings")
+            Drawings = new Menu("DrawManager", "DrawManager")
             {
-                new MenuSlider("Segments", "Segments", 100, 100, 200).SetToolTip("Smoothness of the circles"),
+                new MenuSlider("Segments", "Segments", 100, 10, 150).SetToolTip("Smoothness of the circles"),
                 new MenuBool("Dmg", "Damage"),
                 new MenuBool("Engage", "Draw Q Search Range"),
                 new MenuBool("Q", "Q Range"),

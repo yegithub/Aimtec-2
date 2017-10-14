@@ -1,7 +1,5 @@
 ﻿using System.Linq;
-using System.Runtime.Serialization.Formatters;
 using Adept_AIO.Champions.Vayne.Core;
-using Adept_AIO.SDK.Generic;
 using Adept_AIO.SDK.Unit_Extensions;
 using Aimtec;
 using Aimtec.SDK.Damage;

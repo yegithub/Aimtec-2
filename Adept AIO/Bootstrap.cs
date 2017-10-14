@@ -1,5 +1,6 @@
 ﻿using Adept_AIO.Champions.Azir;
 using Adept_AIO.Champions.Ezreal;
+using Adept_AIO.Champions.Gragas;
 using Adept_AIO.Champions.Vayne;
 using Adept_AIO.Champions.Zed;
 using Adept_AIO.SDK.Generic;
@@ -28,7 +29,7 @@ namespace Adept_AIO
             GameEvents.GameStart += GameEvents_GameStart;
         }
 
-        private static readonly string[] Valid = { "Ezreal", "Azir", "Riven", "Irelia", "Jax", "Rengar", "Yasuo", "Kayn", "LeeSin", "Jinx", "Tristana", "Zed", "Vayne" };
+        private static readonly string[] Valid = { "Gragas", "Ezreal", "Azir", "Riven", "Irelia", "Jax", "Rengar", "Yasuo", "Kayn", "LeeSin", "Jinx", "Tristana", "Zed", "Vayne" };
 
         private static void GameEvents_GameStart()
         {
@@ -44,6 +45,9 @@ namespace Adept_AIO
 
             switch (Global.Player.ChampionName)
             {
+                case "Gragas":
+                    Gragas.Init();
+                    break;
                 case "Ezreal":
                     Ezreal.Init();
                     break;
