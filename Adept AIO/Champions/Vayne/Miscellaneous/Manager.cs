@@ -43,7 +43,7 @@ namespace Adept_AIO.Champions.Vayne.Miscellaneous
                         args.Target = target;
                     }
                     break;
-                case OrbwalkingMode.Laneclear:
+                case OrbwalkingMode.Laneclear when Global.Player.IsUnderAllyTurret():
                     LaneClear.PreAttack(sender, args);
                     break;
             }

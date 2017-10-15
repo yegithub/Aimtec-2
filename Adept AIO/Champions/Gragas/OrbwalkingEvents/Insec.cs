@@ -3,7 +3,6 @@
     using Core;
     using SDK.Unit_Extensions;
     using Aimtec.SDK.Events;
-    using Aimtec.SDK.Extensions;
 
     class Insec
     {

@@ -14,8 +14,7 @@ namespace Adept_AIO.Champions.Vayne.OrbwalkingMode
     {
         private static Obj_AI_Minion _turretTarget;
         private static Obj_AI_Base _turret;
-        private static double _turretDamage;
-      
+
         public static void PostAttack(object sender, PostAttackEventArgs args)
         {
             if (!SpellManager.Q.Ready || MenuConfig.LaneClear["Q3"].Value == 1)
@@ -35,21 +34,27 @@ namespace Adept_AIO.Champions.Vayne.OrbwalkingMode
         {
             if (MenuConfig.LaneClear["TurretFarm"].Enabled)
             {
-                if (_turretTarget != null && _turret != null)
+                if (_turretTarget != null && _turret != null && _turretTarget.IsUnderAllyTurret() && _turretTarget.Health < Global.Player.GetAutoAttackDamage(_turretTarget) && _turretTarget.IsValidAutoRange() && _turretTarget.NetworkId != args.Target.NetworkId)
                 {
-                    if (_turretTarget.Health < Global.Player.GetAutoAttackDamage(_turretTarget) && _turretTarget.IsValidAutoRange())
+                    DebugConsole.Write("Minion Correction", ConsoleColor.Green);
+                    args.Target = _turretTarget;
+                }
+
+                if (_turret != null)
+                {
+                    var t = args.Target as Obj_AI_Base;
+                    if (t != null && t.IsUnderAllyTurret())
                     {
-                        args.Target = _turretTarget;
-                    }
-                    else
-                    {
-                        var t = args.Target as Obj_AI_Base;
-                        if (t != null && !t.Name.ToLower().Contains("cannon"))
+                        if (t.Health <= _turret.GetAutoAttackDamage(t) * 2 + Global.Player.GetAutoAttackDamage(t) && t.Health - _turret.GetAutoAttackDamage(t) * 2 > 0)
                         {
-                            if (t.Health - _turret.GetAutoAttackDamage(t) * 2 > Global.Player.GetAutoAttackDamage(t) || t.Health - _turret.GetAutoAttackDamage(t) >= Global.Player.GetAutoAttackDamage(t))
-                            {
-                                args.Cancel = true;
-                            }
+                            DebugConsole.Write("[TURRET FARM] Just prevented auto.", ConsoleColor.Yellow);
+                            args.Cancel = true;
+                        }
+
+                        if (t.Health <= _turret.GetAutoAttackDamage(t) + Global.Player.GetAutoAttackDamage(t) && t.Health - _turret.GetAutoAttackDamage(t) > 0)
+                        {
+                            DebugConsole.Write("[TURRET FARM] Just prevented auto.", ConsoleColor.Yellow);
+                            args.Cancel = true;
                         }
                     }
                 }
@@ -85,7 +90,11 @@ namespace Adept_AIO.Champions.Vayne.OrbwalkingMode
             {
                 _turret = sender;
                 _turretTarget = args.Target as Obj_AI_Minion;
-                _turretDamage = args.Sender.GetAutoAttackDamage(_turretTarget);
+            }
+            else
+            {
+                _turret = null;
+                _turretTarget = null;
             }
         }
     }

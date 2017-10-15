@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Adept_AIO.Champions.Gragas
+﻿namespace Adept_AIO.Champions.Gragas
 {
     using Core;
     using Drawings;

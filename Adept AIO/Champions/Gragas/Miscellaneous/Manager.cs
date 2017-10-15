@@ -1,6 +1,4 @@
-﻿using Adept_AIO.Champions.Gragas.Core;
-
-namespace Adept_AIO.Champions.Gragas.Miscellaneous
+﻿namespace Adept_AIO.Champions.Gragas.Miscellaneous
 {
     using OrbwalkingEvents;
     using SDK.Unit_Extensions;

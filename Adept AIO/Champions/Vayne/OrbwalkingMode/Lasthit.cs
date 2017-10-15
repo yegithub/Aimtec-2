@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Adept_AIO.Champions.Vayne.Core;
 using Adept_AIO.SDK.Unit_Extensions;
+using Aimtec;
 using Aimtec.SDK.Damage;
 using Aimtec.SDK.Extensions;
 using Aimtec.SDK.Orbwalking;
@@ -22,7 +23,12 @@ namespace Adept_AIO.Champions.Vayne.OrbwalkingMode
                 return;
             }
 
-            SpellManager.CastQ(minion);
+            if (GameObjects.EnemyMinions.Count(x => x.Health < 
+            Global.Player.GetAutoAttackDamage(x) + Global.Player.GetSpellDamage(x, SpellSlot.Q)
+            && x.Distance(Global.Player) <= Global.Player.AttackRange) >= 2)
+            {
+                SpellManager.CastQ(minion);
+            }
         }
     }
 }

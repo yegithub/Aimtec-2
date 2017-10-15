@@ -1,6 +1,4 @@
 ﻿using System.Threading;
-using Adept_AIO.SDK.Generic;
-using Aimtec.SDK.Events;
 using Aimtec.SDK.Util;
 
 namespace Adept_AIO.Champions.Gragas.Core
