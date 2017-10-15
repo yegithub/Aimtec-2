@@ -52,8 +52,9 @@
             else if (!Global.Player.IsDashing())
             {
                 var rect = GetQRectangle(target);
-               
-                if (GameObjects.EnemyMinions.Count(x => x.IsValidTarget() && rect.IsInside(x.ServerPosition.To2D())) >= minHit)
+
+                if (GameObjects.EnemyMinions.Count(x => x.IsValidTarget() && rect.IsInside(x.ServerPosition.To2D())) >=
+                    minHit)
                 {
                     Q.CastOnUnit(target);
                 }
@@ -104,7 +105,10 @@
 
         public static void CastR(Obj_AI_Base target)
         {
-            if (GameObjects.EnemyMinions.Count(x => x.IsValidTarget() && GetRRectangle(x).IsInside(x.ServerPosition.To2D())) <= 2 && Game.TickCount - R.LastCastAttemptT >= 10000)
+            if (GameObjects.EnemyMinions.Count(x =>
+                    x.IsValidTarget() && GetRRectangle(x).IsInside(x.ServerPosition.To2D())) <=
+                2 &&
+                Game.TickCount - R.LastCastAttemptT >= 10000)
             {
                 R.Cast(target);
             }

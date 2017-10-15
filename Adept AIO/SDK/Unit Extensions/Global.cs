@@ -14,7 +14,7 @@
         public static Obj_AI_Hero Player = ObjectManager.GetLocalPlayer();
         public static DamageIndicator DamageIndicator;
 
-        public static void Init()
+        public Global()
         {
             Orbwalker = new Orbwalker();
             TargetSelector = Aimtec.SDK.TargetSelector.TargetSelector.Implementation;

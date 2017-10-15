@@ -1,9 +1,7 @@
 ﻿namespace Adept_AIO.Champions.Lucian.Miscellaneous
 {
-    using Aimtec;
     using Aimtec.SDK.Extensions;
     using Aimtec.SDK.Orbwalking;
-    using Aimtec.SDK.Util;
     using OrbwalkingEvents;
     using SDK.Unit_Extensions;
 
@@ -17,7 +15,7 @@
             {
                 return;
             }
-          
+
             switch (Global.Orbwalker.Mode)
             {
                 case OrbwalkingMode.Combo:

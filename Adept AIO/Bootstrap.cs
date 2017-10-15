@@ -14,6 +14,7 @@
     using Champions.Rengar;
     using Champions.Riven;
     using Champions.Tristana;
+    using Champions.Twitch;
     using Champions.Vayne;
     using Champions.Yasuo;
     using Champions.Zed;
@@ -25,6 +26,7 @@
     {
         private static readonly string[] Valid =
         {
+            "Twitch",
             "Lucian",
             "Gragas",
             "Ezreal",
@@ -51,13 +53,16 @@
                 return;
             }
 
-            SummonerSpells.Init();
+            new SummonerSpells();
             GameObjects.Init();
-            Global.Init();
-            GetRandom.Init();
+            new Global();
+            new GetRandom();
 
             switch (Global.Player.ChampionName)
             {
+                case "Twitch":
+                    new Twitch();
+                    break;
                 case "Lucian":
                     new Lucian();
                     break;

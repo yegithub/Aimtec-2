@@ -2,11 +2,9 @@
 {
     using System.Linq;
     using Aimtec;
-    using Aimtec.SDK.Events;
     using Aimtec.SDK.Extensions;
     using Aimtec.SDK.Orbwalking;
     using Core;
-    using SDK.Generic;
     using SDK.Unit_Extensions;
 
     class Combo
@@ -36,7 +34,6 @@
             {
                 if (Global.Player.HasBuff("LucianR") && target.IsValidAutoRange() && SpellManager.E.Ready)
                 {
-                    DebugConsole.Write("?????");
                     SpellManager.R.Cast();
                 }
 

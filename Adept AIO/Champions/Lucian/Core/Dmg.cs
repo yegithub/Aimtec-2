@@ -25,9 +25,14 @@
                 dmg += Global.Player.GetSpellDamage(target, SpellSlot.Q) + dmg;
             }
 
+            if (SpellManager.W.Ready)
+            {
+                dmg += Global.Player.GetSpellDamage(target, SpellSlot.W) + dmg;
+            }
+
             if (SpellManager.E.Ready)
             {
-                dmg += Global.Player.GetSpellDamage(target, SpellSlot.E);
+                dmg += Global.Player.GetSpellDamage(target, SpellSlot.E) + dmg;
             }
 
             if (SpellManager.R.Ready)

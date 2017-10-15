@@ -175,6 +175,16 @@
     <Compile Include="Champions\Tristana\OrbwalkingEvents\Harass.cs" />
     <Compile Include="Champions\Tristana\OrbwalkingEvents\JungleClear.cs" />
     <Compile Include="Champions\Tristana\OrbwalkingEvents\LaneClear.cs" />
+    <Compile Include="Champions\Twitch\Core\Dmg.cs" />
+    <Compile Include="Champions\Twitch\Core\MenuConfig.cs" />
+    <Compile Include="Champions\Twitch\Core\SpellManager.cs" />
+    <Compile Include="Champions\Twitch\Drawings\DrawManager.cs" />
+    <Compile Include="Champions\Twitch\Miscellaneous\Manager.cs" />
+    <Compile Include="Champions\Twitch\OrbwalkingEvents\Combo.cs" />
+    <Compile Include="Champions\Twitch\OrbwalkingEvents\Harass.cs" />
+    <Compile Include="Champions\Twitch\OrbwalkingEvents\JungleClear.cs" />
+    <Compile Include="Champions\Twitch\OrbwalkingEvents\LaneClear.cs" />
+    <Compile Include="Champions\Twitch\Twitch.cs" />
     <Compile Include="Champions\Vayne\Core\Dmg.cs" />
     <Compile Include="Champions\Vayne\Core\MenuConfig.cs" />
     <Compile Include="Champions\Vayne\Core\SpellManager.cs" />

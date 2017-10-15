@@ -9,9 +9,7 @@
     {
         public static Spell Flash, Ignite, Smite, Exhaust;
 
-        public static bool IsValid(Spell summonerSpell) => summonerSpell != null && summonerSpell.Ready;
-
-        public static void Init()
+        public SummonerSpells()
         {
             var spellbookName1 = Global.Player.SpellBook.GetSpell(SpellSlot.Summoner1).Name.ToLower();
             var spellbookName2 = Global.Player.SpellBook.GetSpell(SpellSlot.Summoner2).Name.ToLower();
@@ -48,6 +46,8 @@
                     break;
             }
         }
+
+        public static bool IsValid(Spell summonerSpell) => summonerSpell != null && summonerSpell.Ready;
 
         public static int IgniteDamage(Obj_AI_Base target) =>
             (int) (50 + 20 * Global.Player.Level - target.HPRegenRate / 5 * 3);
