@@ -11,7 +11,11 @@
     {
         public static void PostAttack(object sender, PostAttackEventArgs args)
         {
-            var target = args.Target as Obj_AI_Base;
+            var target = GameObjects.Jungle.FirstOrDefault(x => x.IsValidTarget() && x.MaxHealth > 20);
+            if (target == null)
+            {
+                return;
+            }
 
             if (SpellManager.E.Ready && MenuConfig.JungleClear["E4"].Value == 0)
             {

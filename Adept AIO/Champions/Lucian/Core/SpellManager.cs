@@ -32,7 +32,7 @@
 
         public static Geometry.Rectangle GetQRectangle(Obj_AI_Base target) => new Geometry.Rectangle(
             Global.Player.ServerPosition.To2D(),
-            Global.Player.ServerPosition.Extend(target.ServerPosition, Q.Range).To2D(),
+            Global.Player.ServerPosition.Extend(target.ServerPosition, ExtendedRange).To2D(),
             Q.Width);
 
         public static Geometry.Rectangle GetRRectangle(Obj_AI_Base target)
@@ -52,10 +52,10 @@
             else if (!Global.Player.IsDashing())
             {
                 var rect = GetQRectangle(target);
-                var m = GameObjects.Minions.FirstOrDefault(x => rect.IsInside(x.ServerPosition.To2D()));
-                if (GameObjects.EnemyMinions.Count(x => rect.IsInside(x.ServerPosition.To2D())) >= minHit)
+               
+                if (GameObjects.EnemyMinions.Count(x => x.IsValidTarget() && rect.IsInside(x.ServerPosition.To2D())) >= minHit)
                 {
-                    Q.CastOnUnit(m);
+                    Q.CastOnUnit(target);
                 }
             }
         }
