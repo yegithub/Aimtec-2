@@ -22,7 +22,7 @@
             Q.SetSkillshot(0.25f, 65, float.MaxValue, false, SkillshotType.Line);
 
             W = new Spell(SpellSlot.W, 900);
-            W.SetSkillshot(0.30f, 80, 1600, false, SkillshotType.Line);
+            W.SetSkillshot(0.30f, 80, 1600, false, SkillshotType.Line, false, HitChance.None);
 
             E = new Spell(SpellSlot.E, 425);
 
@@ -104,9 +104,7 @@
 
         public static void CastR(Obj_AI_Base target)
         {
-            if (GameObjects.EnemyMinions.Count(x =>
-                    x.IsValidTarget() && GetRRectangle(x).IsInside(x.ServerPosition.To2D())) <=
-                2)
+            if (GameObjects.EnemyMinions.Count(x => x.IsValidTarget() && GetRRectangle(x).IsInside(x.ServerPosition.To2D())) <= 2 && Game.TickCount - R.LastCastAttemptT >= 10000)
             {
                 R.Cast(target);
             }
