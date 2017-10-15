@@ -32,7 +32,7 @@
             var target = GameObjects.EnemyHeroes.FirstOrDefault(x => x.IsValidTarget(SpellManager.ExtendedRange));
             if (target != null)
             {
-                if (Global.Player.HasBuff("LucianR") && (SpellManager.E.Ready || SpellManager.Q.Ready))
+                if (Global.Player.HasBuff("LucianR") && target.IsValidAutoRange() && (SpellManager.E.Ready || SpellManager.Q.Ready))
                 {
                     SpellManager.R.Cast();
                 }
