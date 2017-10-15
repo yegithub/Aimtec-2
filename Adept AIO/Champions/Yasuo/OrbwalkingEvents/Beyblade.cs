@@ -1,24 +1,25 @@
-﻿using System.Linq;
-using System.Threading;
-using Adept_AIO.Champions.Yasuo.Core;
-using Adept_AIO.SDK.Unit_Extensions;
-using Adept_AIO.SDK.Usables;
-using Aimtec;
-using Aimtec.SDK.Extensions;
-using Aimtec.SDK.Util;
-
-namespace Adept_AIO.Champions.Yasuo.OrbwalkingEvents
+﻿namespace Adept_AIO.Champions.Yasuo.OrbwalkingEvents
 {
-    internal class Beyblade
+    using System.Linq;
+    using System.Threading;
+    using Aimtec;
+    using Aimtec.SDK.Extensions;
+    using Aimtec.SDK.Util;
+    using Core;
+    using SDK.Unit_Extensions;
+    using SDK.Usables;
+
+    class Beyblade
     {
         public static void OnPostAttack()
         {
-            var target = GameObjects.EnemyHeroes.OrderBy(x => x.Distance(Global.Player)).FirstOrDefault(x => x.Distance(Global.Player) <= Global.Player.AttackRange + 200);
+            var target = GameObjects.EnemyHeroes.OrderBy(x => x.Distance(Global.Player)).
+                FirstOrDefault(x => x.Distance(Global.Player) <= Global.Player.AttackRange + 200);
             if (target == null)
             {
                 return;
             }
-        
+
             if (!target.HasBuff("YasuoDashWrapper"))
             {
                 SpellConfig.E.Cast(target);
@@ -26,7 +27,6 @@ namespace Adept_AIO.Champions.Yasuo.OrbwalkingEvents
                 DelayAction.Queue(Game.Ping / 2, () => SpellConfig.Q.Cast(), new CancellationToken(false));
 
                 DelayAction.Queue(Game.Ping / 2 + 30, () => SpellConfig.R.Cast(), new CancellationToken(false));
-
             }
             else if (SpellConfig.R.Ready)
             {
@@ -71,10 +71,13 @@ namespace Adept_AIO.Champions.Yasuo.OrbwalkingEvents
                             {
                                 SpellConfig.Q.Cast();
 
-                                DelayAction.Queue(Game.Ping / 2 + 30, () =>
-                                {
-                                    SummonerSpells.Flash.Cast(target.Position);
-                                }, new CancellationToken(false)); ;
+                                DelayAction.Queue(Game.Ping / 2 + 30,
+                                    () =>
+                                    {
+                                        SummonerSpells.Flash.Cast(target.Position);
+                                    },
+                                    new CancellationToken(false));
+                                ;
                             }
                         }
                         break;

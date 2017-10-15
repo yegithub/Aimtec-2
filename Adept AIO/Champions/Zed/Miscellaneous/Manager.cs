@@ -1,13 +1,13 @@
-﻿using System.Linq;
-using Adept_AIO.Champions.Zed.Core;
-using Adept_AIO.Champions.Zed.OrbwalkingEvents;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec.SDK.Extensions;
-using Aimtec.SDK.Orbwalking;
-
-namespace Adept_AIO.Champions.Zed.Miscellaneous
+﻿namespace Adept_AIO.Champions.Zed.Miscellaneous
 {
-    internal class Manager
+    using System.Linq;
+    using Aimtec.SDK.Extensions;
+    using Aimtec.SDK.Orbwalking;
+    using Core;
+    using OrbwalkingEvents;
+    using SDK.Unit_Extensions;
+
+    class Manager
     {
         public static void OnUpdate()
         {

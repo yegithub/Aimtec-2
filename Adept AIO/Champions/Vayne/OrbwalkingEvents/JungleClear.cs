@@ -1,12 +1,12 @@
-﻿using System.Linq;
-using Adept_AIO.Champions.Vayne.Core;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec.SDK.Extensions;
-using Aimtec.SDK.Orbwalking;
-
-namespace Adept_AIO.Champions.Vayne.OrbwalkingMode
+﻿namespace Adept_AIO.Champions.Vayne.OrbwalkingEvents
 {
-    internal class JungleClear
+    using System.Linq;
+    using Aimtec.SDK.Extensions;
+    using Aimtec.SDK.Orbwalking;
+    using Core;
+    using SDK.Unit_Extensions;
+
+    class JungleClear
     {
         public static void PostAttack(object sender, PostAttackEventArgs args)
         {
@@ -29,7 +29,8 @@ namespace Adept_AIO.Champions.Vayne.OrbwalkingMode
 
         public static void OnUpdate()
         {
-            var mob = GameObjects.Jungle.FirstOrDefault(x => x.Distance(Global.Player) <= SpellManager.Q.Range + Global.Player.AttackRange);
+            var mob = GameObjects.Jungle.FirstOrDefault(x =>
+                x.Distance(Global.Player) <= SpellManager.Q.Range + Global.Player.AttackRange);
             if (mob == null)
             {
                 return;

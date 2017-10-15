@@ -1,15 +1,14 @@
-﻿using Aimtec;
-
-namespace Adept_AIO.Champions.Vayne.Miscellaneous
+﻿namespace Adept_AIO.Champions.Vayne.Miscellaneous
 {
     using System.Linq;
-    using Core;
-    using OrbwalkingMode;
-    using SDK.Unit_Extensions;
+    using Aimtec;
     using Aimtec.SDK.Extensions;
     using Aimtec.SDK.Orbwalking;
+    using Core;
+    using OrbwalkingEvents;
+    using SDK.Unit_Extensions;
 
-    internal class Manager
+    class Manager
     {
         public static void PostAttack(object sender, PostAttackEventArgs args)
         {
@@ -28,7 +27,6 @@ namespace Adept_AIO.Champions.Vayne.Miscellaneous
                 case OrbwalkingMode.Lasthit:
                     Lasthit.PostAttack(sender, args);
                     break;
-
             }
         }
 
@@ -37,7 +35,8 @@ namespace Adept_AIO.Champions.Vayne.Miscellaneous
             switch (Global.Orbwalker.Mode)
             {
                 case OrbwalkingMode.Combo when MenuConfig.Combo["W"].Enabled:
-                    var target = GameObjects.EnemyHeroes.FirstOrDefault(x => x.GetBuffCount("vaynesilvereddebuff") == 2);
+                    var target =
+                        GameObjects.EnemyHeroes.FirstOrDefault(x => x.GetBuffCount("vaynesilvereddebuff") == 2);
                     if (target != null && target.IsValidAutoRange())
                     {
                         args.Target = target;

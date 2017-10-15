@@ -1,12 +1,12 @@
-﻿using Adept_AIO.Champions.Jax.Core;
-using Adept_AIO.Champions.Jax.Miscellaneous;
-using Adept_AIO.SDK.Unit_Extensions;
-using Adept_AIO.SDK.Usables;
-using Aimtec;
-
-namespace Adept_AIO.Champions.Jax.OrbwalkingEvents
+﻿namespace Adept_AIO.Champions.Jax.OrbwalkingEvents
 {
-    internal class Harass
+    using Aimtec;
+    using Core;
+    using Miscellaneous;
+    using SDK.Unit_Extensions;
+    using SDK.Usables;
+
+    class Harass
     {
         public static void OnPostAttack()
         {
@@ -32,7 +32,10 @@ namespace Adept_AIO.Champions.Jax.OrbwalkingEvents
             {
                 SpellManager.CastE(target);
             }
-            else if (SpellConfig.Q.Ready && MenuConfig.Harass["Q"].Enabled && Game.TickCount - SpellConfig.E.LastCastAttemptT >= 1800 || SpellConfig.E.LastCastAttemptT <= 0)
+            else if (SpellConfig.Q.Ready &&
+                     MenuConfig.Harass["Q"].Enabled &&
+                     Game.TickCount - SpellConfig.E.LastCastAttemptT >= 1800 ||
+                     SpellConfig.E.LastCastAttemptT <= 0)
             {
                 SpellConfig.Q.CastOnUnit(target);
             }

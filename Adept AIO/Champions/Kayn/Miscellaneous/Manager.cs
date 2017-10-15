@@ -1,10 +1,10 @@
-﻿using Adept_AIO.Champions.Kayn.OrbwalkingEvents;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec.SDK.Orbwalking;
-
-namespace Adept_AIO.Champions.Kayn.Miscellaneous
+﻿namespace Adept_AIO.Champions.Kayn.Miscellaneous
 {
-    internal class Manager
+    using Aimtec.SDK.Orbwalking;
+    using OrbwalkingEvents;
+    using SDK.Unit_Extensions;
+
+    class Manager
     {
         public static void PostAttack(object sender, PostAttackEventArgs args)
         {

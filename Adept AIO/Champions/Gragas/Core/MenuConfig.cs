@@ -1,14 +1,14 @@
 ﻿namespace Adept_AIO.Champions.Gragas.Core
 {
     using System.Collections.Generic;
-    using OrbwalkingEvents;
-    using SDK.Delegates;
-    using SDK.Menu_Extension;
-    using SDK.Unit_Extensions;
     using Aimtec.SDK.Menu;
     using Aimtec.SDK.Menu.Components;
     using Aimtec.SDK.Orbwalking;
     using Aimtec.SDK.Util;
+    using OrbwalkingEvents;
+    using SDK.Delegates;
+    using SDK.Menu_Extension;
+    using SDK.Unit_Extensions;
 
     class MenuConfig
     {
@@ -20,7 +20,10 @@
             mainMenu.Attach();
 
             Global.Orbwalker.Attach(mainMenu);
-            Gragas.InsecOrbwalkerMode = new OrbwalkerMode("Insec", KeyCode.T, () => Global.TargetSelector.GetSelectedTarget(), Insec.OnKeyPressed);
+            Gragas.InsecOrbwalkerMode = new OrbwalkerMode("Insec",
+                KeyCode.T,
+                () => Global.TargetSelector.GetSelectedTarget(),
+                Insec.OnKeyPressed);
             Global.Orbwalker.AddMode(Gragas.InsecOrbwalkerMode);
 
             Gapcloser.Attach(mainMenu, "Anti Gapcloser");
@@ -28,7 +31,7 @@
             InsecMenu = new Menu("Insec", "Insec")
             {
                 new MenuBool("Flash", "Flash | E Flash"),
-              //  new MenuSliderBool("Auto", "Auto Insec If X Hit", true, 3, 2, 5),
+                //  new MenuSliderBool("Auto", "Auto Insec If X Hit", true, 3, 2, 5),
                 new MenuBool("Q", "Use Q Before R")
             };
 
@@ -92,7 +95,10 @@
                 Automatic,
                 Drawings,
                 MenuShortcut.Credits
-            }) mainMenu.Add(menu);
+            })
+            {
+                mainMenu.Add(menu);
+            }
         }
     }
 }

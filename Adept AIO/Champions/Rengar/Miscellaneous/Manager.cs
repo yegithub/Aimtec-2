@@ -1,10 +1,10 @@
-﻿using Adept_AIO.Champions.Rengar.OrbwalkingEvents;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec.SDK.Orbwalking;
-
-namespace Adept_AIO.Champions.Rengar.Miscellaneous
+﻿namespace Adept_AIO.Champions.Rengar.Miscellaneous
 {
-    internal class Manager
+    using Aimtec.SDK.Orbwalking;
+    using OrbwalkingEvents;
+    using SDK.Unit_Extensions;
+
+    class Manager
     {
         public static void PostAttack(object sender, PostAttackEventArgs args)
         {
@@ -13,7 +13,7 @@ namespace Adept_AIO.Champions.Rengar.Miscellaneous
                 case OrbwalkingMode.Combo:
                     Combo.OnPostAttack();
                     break;
-                    case OrbwalkingMode.Laneclear:
+                case OrbwalkingMode.Laneclear:
                     LaneClear.OnPostAttack();
                     JungleClear.OnPostAttack();
                     break;

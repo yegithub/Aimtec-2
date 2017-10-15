@@ -1,14 +1,14 @@
-﻿using System.Threading;
-using Adept_AIO.Champions.Kayn.Core;
-using Adept_AIO.SDK.Unit_Extensions;
-using Adept_AIO.SDK.Usables;
-using Aimtec;
-using Aimtec.SDK.Extensions;
-using Aimtec.SDK.Util;
-
-namespace Adept_AIO.Champions.Kayn.OrbwalkingEvents
+﻿namespace Adept_AIO.Champions.Kayn.OrbwalkingEvents
 {
-    internal class Combo
+    using System.Threading;
+    using Aimtec;
+    using Aimtec.SDK.Extensions;
+    using Aimtec.SDK.Util;
+    using Core;
+    using SDK.Unit_Extensions;
+    using SDK.Usables;
+
+    class Combo
     {
         public static void OnPostAttack(AttackableUnit target)
         {
@@ -55,19 +55,24 @@ namespace Adept_AIO.Champions.Kayn.OrbwalkingEvents
                 if (target.IsValidTarget(SpellConfig.W.Range))
                 {
                     Global.Player.SpellBook.CastSpell(SpellSlot.Q, target.ServerPosition);
-                    DelayAction.Queue(500, ()=> Items.CastTiamat(), new CancellationToken(false));
+                    DelayAction.Queue(500, () => Items.CastTiamat(), new CancellationToken(false));
                 }
-                else if (SpellConfig.R.Ready && MenuConfig.Combo["Beyblade"].Enabled && SummonerSpells.IsValid(SummonerSpells.Flash) && target.Distance(Global.Player) > SpellConfig.Q.Range && Dmg.Damage(target) * 1.5f >= target.Health)
+                else if (SpellConfig.R.Ready &&
+                         MenuConfig.Combo["Beyblade"].Enabled &&
+                         SummonerSpells.IsValid(SummonerSpells.Flash) &&
+                         target.Distance(Global.Player) > SpellConfig.Q.Range &&
+                         Dmg.Damage(target) * 1.5f >= target.Health)
                 {
                     SummonerSpells.Flash.Cast(target.ServerPosition);
                     Global.Player.SpellBook.CastSpell(SpellSlot.Q, target.ServerPosition);
                 }
             }
 
-            if (SpellConfig.R.Ready && MenuConfig.Combo["R"].Enabled && (MenuConfig.Combo["R"].Value >=
-                Global.Player.HealthPercent() ||
-                MenuConfig.Combo["R"].Value >= target.HealthPercent() ||
-                Dmg.Damage(target) * 1.5 > target.Health))
+            if (SpellConfig.R.Ready &&
+                MenuConfig.Combo["R"].Enabled &&
+                (MenuConfig.Combo["R"].Value >= Global.Player.HealthPercent() ||
+                 MenuConfig.Combo["R"].Value >= target.HealthPercent() ||
+                 Dmg.Damage(target) * 1.5 > target.Health))
             {
                 if (MenuConfig.Whitelist[target.ChampionName].Enabled)
                 {

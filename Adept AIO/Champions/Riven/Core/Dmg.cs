@@ -1,13 +1,13 @@
-﻿using Adept_AIO.SDK.Unit_Extensions;
-using Adept_AIO.SDK.Usables;
-using Aimtec;
-using Aimtec.SDK.Damage;
-using Aimtec.SDK.Damage.JSON;
-
-namespace Adept_AIO.Champions.Riven.Core
+﻿namespace Adept_AIO.Champions.Riven.Core
 {
-    internal class Dmg
-    {   
+    using Aimtec;
+    using Aimtec.SDK.Damage;
+    using Aimtec.SDK.Damage.JSON;
+    using SDK.Unit_Extensions;
+    using SDK.Usables;
+
+    class Dmg
+    {
         public static double Damage(Obj_AI_Base target)
         {
             if (target == null)

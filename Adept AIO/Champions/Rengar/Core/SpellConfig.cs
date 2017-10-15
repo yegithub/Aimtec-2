@@ -1,17 +1,17 @@
-﻿using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec;
-using Aimtec.SDK.Extensions;
-using Aimtec.SDK.Prediction.Skillshots;
-using Spell = Aimtec.SDK.Spell;
-
-namespace Adept_AIO.Champions.Rengar.Core
+﻿namespace Adept_AIO.Champions.Rengar.Core
 {
-    internal class SpellConfig
+    using Aimtec;
+    using Aimtec.SDK.Extensions;
+    using Aimtec.SDK.Prediction.Skillshots;
+    using SDK.Unit_Extensions;
+    using Spell = Aimtec.SDK.Spell;
+
+    class SpellConfig
     {
         public static Spell Q, W, E, R;
 
         /// <summary>
-        /// Instances the spells
+        ///     Instances the spells
         /// </summary>
         public static void Load()
         {

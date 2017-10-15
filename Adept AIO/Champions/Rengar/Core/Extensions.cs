@@ -1,10 +1,10 @@
-﻿using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec;
-using Aimtec.SDK.Extensions;
-
-namespace Adept_AIO.Champions.Rengar.Core
+﻿namespace Adept_AIO.Champions.Rengar.Core
 {
-    internal class Extensions
+    using Aimtec;
+    using Aimtec.SDK.Extensions;
+    using SDK.Unit_Extensions;
+
+    class Extensions
     {
         public static Obj_AI_Hero AssassinTarget = null;
 
@@ -13,18 +13,15 @@ namespace Adept_AIO.Champions.Rengar.Core
             var me = Global.Player;
             return (me.HasBuffOfType(BuffType.Blind) ||
                     me.HasBuffOfType(BuffType.Charm) ||
-                    me.HasBuffOfType(BuffType.Fear)  ||
+                    me.HasBuffOfType(BuffType.Fear) ||
                     me.HasBuffOfType(BuffType.Knockback) ||
                     me.HasBuffOfType(BuffType.Silence) ||
-                    me.HasBuffOfType(BuffType.Stun)    ||
-                    me.HasBuffOfType(BuffType.Taunt))  &&
+                    me.HasBuffOfType(BuffType.Stun) ||
+                    me.HasBuffOfType(BuffType.Taunt)) &&
                    !me.HasBuff("sorakapacify");
         }
 
-        public static int Ferocity()
-        {
-            return (int) Global.Player.Mana;
-        }
+        public static int Ferocity() => (int) Global.Player.Mana;
 
         public static float ShieldPercent()
         {

@@ -1,10 +1,10 @@
 ﻿namespace Adept_AIO.Champions.Gragas
 {
+    using Aimtec;
+    using Aimtec.SDK.Orbwalking;
     using Core;
     using Drawings;
     using Miscellaneous;
-    using Aimtec;
-    using Aimtec.SDK.Orbwalking;
 
     class Gragas
     {
@@ -17,7 +17,7 @@
 
             Obj_AI_Base.OnProcessSpellCast += SpellManager.OnProcessSpellCast;
             GameObject.OnDestroy += SpellManager.OnDestroy;
-           
+
             Game.OnUpdate += Manager.OnUpdate;
             Game.OnUpdate += Automatic.OnUpdate;
 

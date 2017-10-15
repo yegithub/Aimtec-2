@@ -1,13 +1,13 @@
-﻿using Adept_AIO.Champions.Jinx.Core;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec.SDK.Extensions;
-
-namespace Adept_AIO.Champions.Jinx.OrbwalkingEvents
+﻿namespace Adept_AIO.Champions.Jinx.OrbwalkingEvents
 {
-    internal class Harass
+    using Aimtec.SDK.Extensions;
+    using Core;
+    using SDK.Unit_Extensions;
+
+    class Harass
     {
-        private readonly SpellConfig _spellConfig;
         private readonly MenuConfig _menuConfig;
+        private readonly SpellConfig _spellConfig;
 
         public Harass(SpellConfig spellConfig, MenuConfig menuConfig)
         {
@@ -19,7 +19,7 @@ namespace Adept_AIO.Champions.Jinx.OrbwalkingEvents
         {
             var target = Global.TargetSelector.GetTarget(_spellConfig.W.Range);
 
-            if (target == null || Global.Orbwalker.IsWindingUp)
+            if (target == null)
             {
                 return;
             }

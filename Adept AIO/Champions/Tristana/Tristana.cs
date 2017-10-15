@@ -1,21 +1,21 @@
-﻿using Adept_AIO.Champions.Tristana.Core;
-using Adept_AIO.Champions.Tristana.Drawings;
-using Adept_AIO.Champions.Tristana.Miscellaneous;
-using Adept_AIO.Champions.Tristana.OrbwalkingEvents;
-using Adept_AIO.SDK.Delegates;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec;
-
-namespace Adept_AIO.Champions.Tristana
+﻿namespace Adept_AIO.Champions.Tristana
 {
-    internal class Tristana
+    using Aimtec;
+    using Core;
+    using Drawings;
+    using Miscellaneous;
+    using OrbwalkingEvents;
+    using SDK.Delegates;
+    using SDK.Unit_Extensions;
+
+    class Tristana
     {
         public void Init()
         {
             var menuConfig = new MenuConfig();
-          
+
             var spellConfig = new SpellConfig();
-           
+
             var dmg = new Dmg(spellConfig);
 
             var combo = new Combo(spellConfig, menuConfig, dmg);
@@ -27,7 +27,7 @@ namespace Adept_AIO.Champions.Tristana
             var killsteal = new Killsteal(menuConfig, spellConfig);
             var drawManager = new DrawManager(menuConfig, dmg, spellConfig);
             var gapcloser = new AntiGapcloser(spellConfig);
-            
+
 
             Game.OnUpdate += manager.OnUpdate;
             Game.OnUpdate += killsteal.OnUpdate;

@@ -1,12 +1,12 @@
-﻿using System.Drawing;
-using System.Linq;
-using Adept_AIO.Champions.Ezreal.Core;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec;
-
-namespace Adept_AIO.Champions.Ezreal.Drawings
+﻿namespace Adept_AIO.Champions.Ezreal.Drawings
 {
-    internal class DrawManager
+    using System.Drawing;
+    using System.Linq;
+    using Aimtec;
+    using Core;
+    using SDK.Unit_Extensions;
+
+    class DrawManager
     {
         public static void OnPresent()
         {
@@ -15,12 +15,13 @@ namespace Adept_AIO.Champions.Ezreal.Drawings
                 return;
             }
 
-            foreach (var target in GameObjects.EnemyHeroes.Where(x => !x.IsDead && x.IsFloatingHealthBarActive && x.IsVisible))
+            foreach (var target in GameObjects.EnemyHeroes.Where(x =>
+                !x.IsDead && x.IsFloatingHealthBarActive && x.IsVisible))
             {
                 var damage = Dmg.Damage(target);
 
                 Global.DamageIndicator.Unit = target;
-                Global.DamageIndicator.DrawDmg((float)damage, Color.FromArgb(153, 12, 177, 28));
+                Global.DamageIndicator.DrawDmg((float) damage, Color.FromArgb(153, 12, 177, 28));
             }
         }
 
@@ -33,12 +34,18 @@ namespace Adept_AIO.Champions.Ezreal.Drawings
 
             if (MenuConfig.Drawings["Q"].Enabled)
             {
-                Render.Circle(Global.Player.Position, SpellConfig.Q.Range, (uint)MenuConfig.Drawings["Segments"].Value, Color.Yellow);
+                Render.Circle(Global.Player.Position,
+                    SpellConfig.Q.Range,
+                    (uint) MenuConfig.Drawings["Segments"].Value,
+                    Color.Yellow);
             }
 
             if (MenuConfig.Drawings["R"].Enabled)
             {
-                Render.Circle(Global.Player.Position, MenuConfig.Killsteal["Range"].Value, (uint)MenuConfig.Drawings["Segments"].Value, Color.CadetBlue);
+                Render.Circle(Global.Player.Position,
+                    MenuConfig.Killsteal["Range"].Value,
+                    (uint) MenuConfig.Drawings["Segments"].Value,
+                    Color.CadetBlue);
             }
         }
     }

@@ -1,12 +1,12 @@
-﻿using Adept_AIO.Champions.Tristana.Core;
-using Adept_AIO.SDK.Unit_Extensions;
-
-namespace Adept_AIO.Champions.Tristana.OrbwalkingEvents
+﻿namespace Adept_AIO.Champions.Tristana.OrbwalkingEvents
 {
-    internal class Harass
+    using Core;
+    using SDK.Unit_Extensions;
+
+    class Harass
     {
-        private readonly SpellConfig _spellConfig;
         private readonly MenuConfig _menuConfig;
+        private readonly SpellConfig _spellConfig;
 
         public Harass(SpellConfig spellConfig, MenuConfig menuConfig)
         {

@@ -1,22 +1,16 @@
-﻿using System.Collections.Generic;
-using Adept_AIO.SDK.Menu_Extension;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec.SDK.Menu;
-using Aimtec.SDK.Menu.Components;
-
-namespace Adept_AIO.Champions.Kayn.Core
+﻿namespace Adept_AIO.Champions.Kayn.Core
 {
-    internal class MenuConfig
+    using System.Collections.Generic;
+    using Aimtec.SDK.Menu;
+    using Aimtec.SDK.Menu.Components;
+    using SDK.Menu_Extension;
+    using SDK.Unit_Extensions;
+
+    class MenuConfig
     {
         private static Menu _mainMenu;
 
-        public static Menu Combo,
-                           Whitelist,
-                           Harass,
-                           LaneClear,
-                           JungleClear,
-                           Killsteal,
-                           Drawings;
+        public static Menu Combo, Whitelist, Harass, LaneClear, JungleClear, Killsteal, Drawings;
 
         public static void Attach()
         {
@@ -40,11 +34,7 @@ namespace Adept_AIO.Champions.Kayn.Core
                 new MenuSliderBool("R", "Force R When Below (% HP)", true, 15, 1)
             };
 
-            Harass = new Menu("Harass", "Harass")
-            {
-                new MenuBool("Q", "Use Q"),
-                new MenuBool("W", "Use W")
-            };
+            Harass = new Menu("Harass", "Harass") {new MenuBool("Q", "Use Q"), new MenuBool("W", "Use W")};
 
             LaneClear = new Menu("LaneClear", "LaneClear")
             {
@@ -85,7 +75,10 @@ namespace Adept_AIO.Champions.Kayn.Core
                 Killsteal,
                 Drawings,
                 MenuShortcut.Credits
-            })  _mainMenu.Add(menu);
+            })
+            {
+                _mainMenu.Add(menu);
+            }
         }
     }
 }

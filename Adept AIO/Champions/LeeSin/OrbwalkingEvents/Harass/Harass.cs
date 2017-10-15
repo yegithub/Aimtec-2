@@ -1,22 +1,17 @@
-﻿using System.Linq;
-using Adept_AIO.Champions.LeeSin.Core.Spells;
-using Adept_AIO.Champions.LeeSin.Ward_Manager;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec;
-using Aimtec.SDK.Extensions;
-
-namespace Adept_AIO.Champions.LeeSin.OrbwalkingEvents.Harass
+﻿namespace Adept_AIO.Champions.LeeSin.OrbwalkingEvents.Harass
 {
-    internal class Harass : IHarass
+    using System.Linq;
+    using Aimtec;
+    using Aimtec.SDK.Extensions;
+    using Core.Spells;
+    using SDK.Unit_Extensions;
+    using Ward_Manager;
+
+    class Harass : IHarass
     {
-        public bool Q1Enabled { get; set; }
-        public bool Q2Enabled { get; set; }
-        public int Mode{ get; set; }
-        public bool EEnabled { get; set; }
-        public bool E2Enabled { get; set; }
+        private readonly ISpellConfig _spellConfig;
 
         private readonly IWardManager _wardManager;
-        private readonly ISpellConfig _spellConfig;
 
         public Harass(IWardManager wardManager, ISpellConfig spellConfig)
         {
@@ -24,17 +19,23 @@ namespace Adept_AIO.Champions.LeeSin.OrbwalkingEvents.Harass
             _spellConfig = spellConfig;
         }
 
+        public bool Q1Enabled { get; set; }
+        public bool Q2Enabled { get; set; }
+        public int Mode { get; set; }
+        public bool EEnabled { get; set; }
+        public bool E2Enabled { get; set; }
+
         public void OnPostAttack(AttackableUnit target)
         {
             if (target == null || !target.IsHero)
             {
                 return;
             }
-            if (_spellConfig.E.Ready && E2Enabled && !_spellConfig.IsFirst(_spellConfig.E))
+            if (_spellConfig.E.Ready && this.E2Enabled && !_spellConfig.IsFirst(_spellConfig.E))
             {
                 _spellConfig.E.Cast();
             }
-            else if (_spellConfig.W.Ready && Mode == 1)
+            else if (_spellConfig.W.Ready && this.Mode == 1)
             {
                 _spellConfig.W.CastOnUnit(Global.Player);
             }
@@ -48,9 +49,9 @@ namespace Adept_AIO.Champions.LeeSin.OrbwalkingEvents.Harass
                 return;
             }
 
-            if (_spellConfig.Q.Ready && Q1Enabled)
+            if (_spellConfig.Q.Ready && this.Q1Enabled)
             {
-                if (_spellConfig.IsQ2() && Q2Enabled || !_spellConfig.IsQ2())
+                if (_spellConfig.IsQ2() && this.Q2Enabled || !_spellConfig.IsQ2())
                 {
                     _spellConfig.Q.Cast(target);
                 }
@@ -58,13 +59,17 @@ namespace Adept_AIO.Champions.LeeSin.OrbwalkingEvents.Harass
 
             if (_spellConfig.E.Ready)
             {
-                if (_spellConfig.IsFirst(_spellConfig.E) && EEnabled && target.IsValidTarget(_spellConfig.E.Range))
+                if (_spellConfig.IsFirst(_spellConfig.E) && this.EEnabled && target.IsValidTarget(_spellConfig.E.Range))
                 {
                     _spellConfig.E.Cast(target);
                 }
             }
 
-            if (_spellConfig.W.Ready && _spellConfig.IsFirst(_spellConfig.W) && !_spellConfig.E.Ready && !_spellConfig.Q.Ready && Mode == 0)
+            if (_spellConfig.W.Ready &&
+                _spellConfig.IsFirst(_spellConfig.W) &&
+                !_spellConfig.E.Ready &&
+                !_spellConfig.Q.Ready &&
+                this.Mode == 0)
             {
                 var turret = GameObjects.AllyTurrets.OrderBy(x => x.Distance(Global.Player)).FirstOrDefault();
                 if (turret != null)

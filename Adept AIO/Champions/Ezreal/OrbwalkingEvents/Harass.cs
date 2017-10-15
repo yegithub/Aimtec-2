@@ -1,11 +1,11 @@
-﻿using System.Linq;
-using Adept_AIO.Champions.Ezreal.Core;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec.SDK.Extensions;
-
-namespace Adept_AIO.Champions.Ezreal.OrbwalkingEvents
+﻿namespace Adept_AIO.Champions.Ezreal.OrbwalkingEvents
 {
-    internal class Harass
+    using System.Linq;
+    using Aimtec.SDK.Extensions;
+    using Core;
+    using SDK.Unit_Extensions;
+
+    class Harass
     {
         public static void OnUpdate()
         {
@@ -37,7 +37,11 @@ namespace Adept_AIO.Champions.Ezreal.OrbwalkingEvents
                 }
             }
 
-            if (SpellConfig.E.Ready && MenuConfig.Harass["E"].Enabled && Global.Player.ManaPercent() >= 50 && target.IsValidTarget(SpellConfig.E.Range) && Dmg.Damage(target) >= target.Health)
+            if (SpellConfig.E.Ready &&
+                MenuConfig.Harass["E"].Enabled &&
+                Global.Player.ManaPercent() >= 50 &&
+                target.IsValidTarget(SpellConfig.E.Range) &&
+                Dmg.Damage(target) >= target.Health)
             {
                 SpellConfig.E.Cast(target);
             }

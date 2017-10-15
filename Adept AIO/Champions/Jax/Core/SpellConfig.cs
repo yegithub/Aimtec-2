@@ -1,16 +1,16 @@
-﻿using Aimtec;
-using Spell = Aimtec.SDK.Spell;
-
-namespace Adept_AIO.Champions.Jax.Core
+﻿namespace Adept_AIO.Champions.Jax.Core
 {
-    internal class SpellConfig
+    using Aimtec;
+    using Spell = Aimtec.SDK.Spell;
+
+    class SpellConfig
     {
         public static Spell Q, W, E, R;
 
         public static bool SecondE = false;
 
         /// <summary>
-        /// Instances the spells
+        ///     Instances the spells
         /// </summary>
         public static void Load()
         {

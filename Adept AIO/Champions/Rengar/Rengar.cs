@@ -1,12 +1,12 @@
-﻿using Adept_AIO.Champions.Rengar.Core;
-using Adept_AIO.Champions.Rengar.Drawings;
-using Adept_AIO.Champions.Rengar.Miscellaneous;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec;
-
-namespace Adept_AIO.Champions.Rengar
+﻿namespace Adept_AIO.Champions.Rengar
 {
-    internal class Rengar
+    using Aimtec;
+    using Core;
+    using Drawings;
+    using Miscellaneous;
+    using SDK.Unit_Extensions;
+
+    class Rengar
     {
         public static void Init()
         {

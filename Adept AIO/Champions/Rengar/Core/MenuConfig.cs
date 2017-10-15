@@ -1,22 +1,17 @@
-﻿using System.Collections.Generic;
-using Adept_AIO.SDK.Menu_Extension;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec.SDK.Menu;
-using Aimtec.SDK.Menu.Components;
-using GameObjects = Aimtec.SDK.Util.Cache.GameObjects;
-
-namespace Adept_AIO.Champions.Rengar.Core
+﻿namespace Adept_AIO.Champions.Rengar.Core
 {
-    internal class MenuConfig
+    using System.Collections.Generic;
+    using Aimtec.SDK.Menu;
+    using Aimtec.SDK.Menu.Components;
+    using SDK.Menu_Extension;
+    using SDK.Unit_Extensions;
+    using GameObjects = Aimtec.SDK.Util.Cache.GameObjects;
+
+    class MenuConfig
     {
         private static Menu _mainMenu;
 
-        public static Menu Combo,
-                           AssassinManager,
-                           LaneClear,
-                           JungleClear,
-                           Killsteal,
-                           Drawings;
+        public static Menu Combo, AssassinManager, LaneClear, JungleClear, Killsteal, Drawings;
 
         public static void Attach()
         {
@@ -36,7 +31,7 @@ namespace Adept_AIO.Champions.Rengar.Core
                 new MenuBool("Q", "Allow Empowered Q"),
                 new MenuBool("W", "Use W To Stack"),
                 new MenuBool("E", "Allow Empowered E"),
-                new MenuList("Mode", "Empowered W: ", new []{"Deal Damage", "Against Hard CC"}, 1),
+                new MenuList("Mode", "Empowered W: ", new[] {"Deal Damage", "Against Hard CC"}, 1),
                 new MenuSlider("Health", "Force W When Below (% HP)", 10)
             };
 
@@ -60,7 +55,7 @@ namespace Adept_AIO.Champions.Rengar.Core
             {
                 new MenuBool("Q", "Use Q"),
                 new MenuBool("W", "Use W"),
-                new MenuBool("E", "Use E"),
+                new MenuBool("E", "Use E")
             };
 
             Drawings = new Menu("DrawManager", "DrawManager")
@@ -82,7 +77,9 @@ namespace Adept_AIO.Champions.Rengar.Core
                 Drawings,
                 MenuShortcut.Credits
             })
-            _mainMenu.Add(menu);
+            {
+                _mainMenu.Add(menu);
+            }
         }
     }
 }

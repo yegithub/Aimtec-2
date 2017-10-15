@@ -1,14 +1,14 @@
-﻿using System.Collections.Generic;
-using Adept_AIO.Champions.Zed.Core;
-using Adept_AIO.Champions.Zed.Drawings;
-using Adept_AIO.Champions.Zed.Miscellaneous;
-using Adept_AIO.Champions.Zed.OrbwalkingEvents;
-using Adept_AIO.SDK.Delegates;
-using Aimtec;
-
-namespace Adept_AIO.Champions.Zed
+﻿namespace Adept_AIO.Champions.Zed
 {
-    internal class Zed
+    using System.Collections.Generic;
+    using Aimtec;
+    using Core;
+    using Drawings;
+    using Miscellaneous;
+    using OrbwalkingEvents;
+    using SDK.Delegates;
+
+    class Zed
     {
         public static void Init()
         {

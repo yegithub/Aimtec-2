@@ -1,10 +1,10 @@
-﻿using Adept_AIO.SDK.Geometry_Related;
-using Aimtec;
-using Aimtec.SDK.Orbwalking;
-
-namespace Adept_AIO.Champions.Azir.Core
+﻿namespace Adept_AIO.Champions.Azir.Core
 {
-    internal class AzirHelper
+    using Aimtec;
+    using Aimtec.SDK.Orbwalking;
+    using SDK.Geometry_Related;
+
+    class AzirHelper
     {
         public static OrbwalkerMode JumpMode, InsecMode;
         public static Geometry.Rectangle Rect;

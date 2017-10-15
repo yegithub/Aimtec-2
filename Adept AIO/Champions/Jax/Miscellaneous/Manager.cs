@@ -1,24 +1,24 @@
-﻿using Adept_AIO.Champions.Jax.Core;
-using Adept_AIO.Champions.Jax.OrbwalkingEvents;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec;
-using Aimtec.SDK.Orbwalking;
-
-namespace Adept_AIO.Champions.Jax.Miscellaneous
+﻿namespace Adept_AIO.Champions.Jax.Miscellaneous
 {
-    internal class Manager
+    using Aimtec;
+    using Aimtec.SDK.Orbwalking;
+    using Core;
+    using OrbwalkingEvents;
+    using SDK.Unit_Extensions;
+
+    class Manager
     {
         public static void PostAttack(object sender, PostAttackEventArgs args)
         {
             switch (Global.Orbwalker.Mode)
             {
-                    case OrbwalkingMode.Combo:
+                case OrbwalkingMode.Combo:
                     Combo.OnPostAttack();
                     break;
-                    case OrbwalkingMode.Mixed:
+                case OrbwalkingMode.Mixed:
                     Harass.OnPostAttack();
                     break;
-                    case OrbwalkingMode.Laneclear:
+                case OrbwalkingMode.Laneclear:
                     Clear.OnPostAttack();
                     break;
             }
@@ -35,16 +35,16 @@ namespace Adept_AIO.Champions.Jax.Miscellaneous
             {
                 SpellConfig.E.LastCastAttemptT = 0;
             }
-          
+
             switch (Global.Orbwalker.Mode)
             {
-                    case OrbwalkingMode.Combo:
+                case OrbwalkingMode.Combo:
                     Combo.OnUpdate();
                     break;
                 case OrbwalkingMode.Mixed:
                     Harass.OnUpdate();
                     break;
-                    case OrbwalkingMode.Laneclear:
+                case OrbwalkingMode.Laneclear:
                     Clear.OnUpdate();
                     break;
             }

@@ -1,16 +1,16 @@
-﻿using System.Drawing;
-using System.Linq;
-using Adept_AIO.Champions.Yasuo.Core;
-using Adept_AIO.SDK.Geometry_Related;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec;
-using Aimtec.SDK.Events;
-using Aimtec.SDK.Extensions;
-using Aimtec.SDK.Orbwalking;
-
-namespace Adept_AIO.Champions.Yasuo.Drawings
+﻿namespace Adept_AIO.Champions.Yasuo.Drawings
 {
-    internal class DrawManager
+    using System.Drawing;
+    using System.Linq;
+    using Aimtec;
+    using Aimtec.SDK.Events;
+    using Aimtec.SDK.Extensions;
+    using Aimtec.SDK.Orbwalking;
+    using Core;
+    using SDK.Geometry_Related;
+    using SDK.Unit_Extensions;
+
+    class DrawManager
     {
         public static void OnPresent()
         {
@@ -19,12 +19,13 @@ namespace Adept_AIO.Champions.Yasuo.Drawings
                 return;
             }
 
-            foreach (var target in GameObjects.EnemyHeroes.Where(x => !x.IsDead && x.IsFloatingHealthBarActive && x.IsVisible))
+            foreach (var target in GameObjects.EnemyHeroes.Where(x =>
+                !x.IsDead && x.IsFloatingHealthBarActive && x.IsVisible))
             {
                 var damage = Dmg.Damage(target);
 
                 Global.DamageIndicator.Unit = target;
-                Global.DamageIndicator.DrawDmg((float)damage, Color.FromArgb(153, 12, 177, 28));
+                Global.DamageIndicator.DrawDmg((float) damage, Color.FromArgb(153, 12, 177, 28));
             }
         }
 
@@ -43,19 +44,29 @@ namespace Adept_AIO.Champions.Yasuo.Drawings
 
             if (SpellConfig.R.Ready && MenuConfig.Drawings["R"].Enabled)
             {
-                Render.Circle(Global.Player.Position, SpellConfig.R.Range, (uint)MenuConfig.Drawings["Segments"].Value, Color.Cyan);
+                Render.Circle(Global.Player.Position,
+                    SpellConfig.R.Range,
+                    (uint) MenuConfig.Drawings["Segments"].Value,
+                    Color.Cyan);
             }
 
-            if (MenuConfig.Drawings["Range"].Enabled && MenuConfig.Combo["Dash"].Value == 0 && Global.Orbwalker.Mode != OrbwalkingMode.None)
+            if (MenuConfig.Drawings["Range"].Enabled &&
+                MenuConfig.Combo["Dash"].Value == 0 &&
+                Global.Orbwalker.Mode != OrbwalkingMode.None)
             {
-                Render.Circle(Game.CursorPos, MenuConfig.Combo["Range"].Value,
-                    (uint)MenuConfig.Drawings["Segments"].Value, Color.White);
+                Render.Circle(Game.CursorPos,
+                    MenuConfig.Combo["Range"].Value,
+                    (uint) MenuConfig.Drawings["Segments"].Value,
+                    Color.White);
             }
 
             if (MenuConfig.Drawings["Debug"].Enabled)
             {
                 Render.WorldToScreen(Global.Player.Position, out var temp);
-                Render.Text("Q Mode: " + Extension.CurrentMode + " | Range: " + SpellConfig.Q.Range, new Vector2(temp.X - 55, temp.Y + 40), RenderTextFlags.Center, Color.Cyan);
+                Render.Text("Q Mode: " + Extension.CurrentMode + " | Range: " + SpellConfig.Q.Range,
+                    new Vector2(temp.X - 55, temp.Y + 40),
+                    RenderTextFlags.Center,
+                    Color.Cyan);
             }
 
             if (SpellConfig.E.Ready && MenuConfig.Drawings["Path"].Enabled)

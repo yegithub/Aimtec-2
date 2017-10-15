@@ -1,17 +1,17 @@
-﻿using Aimtec;
-using Aimtec.SDK.Prediction.Skillshots;
-using Spell = Aimtec.SDK.Spell;
-
-namespace Adept_AIO.Champions.Riven.Core
+﻿namespace Adept_AIO.Champions.Riven.Core
 {
-    internal class SpellConfig
+    using Aimtec;
+    using Aimtec.SDK.Prediction.Skillshots;
+    using Spell = Aimtec.SDK.Spell;
+
+    class SpellConfig
     {
         public static Spell Q, W, E, R, R2;
-     
+
         public static void Load()
         {
             Q = new Spell(SpellSlot.Q, 275);
-           
+
             W = new Spell(SpellSlot.W, 200);
             W.SetSkillshot(0.25f, 800, 1500, false, SkillshotType.Circle);
 

@@ -1,13 +1,13 @@
-﻿using System.Drawing;
-using System.Linq;
-using Adept_AIO.Champions.Gragas.Core;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec;
-using Aimtec.SDK.Extensions;
-using Aimtec.SDK.Orbwalking;
-
-namespace Adept_AIO.Champions.Gragas.Drawings
+﻿namespace Adept_AIO.Champions.Gragas.Drawings
 {
+    using System.Drawing;
+    using System.Linq;
+    using Aimtec;
+    using Aimtec.SDK.Extensions;
+    using Aimtec.SDK.Orbwalking;
+    using Core;
+    using SDK.Unit_Extensions;
+
     class DrawManager
     {
         public static void OnPresent()
@@ -17,12 +17,13 @@ namespace Adept_AIO.Champions.Gragas.Drawings
                 return;
             }
 
-            foreach (var target in GameObjects.EnemyHeroes.Where(x => !x.IsDead && x.IsFloatingHealthBarActive && x.IsVisible))
+            foreach (var target in GameObjects.EnemyHeroes.Where(x =>
+                !x.IsDead && x.IsFloatingHealthBarActive && x.IsVisible))
             {
                 var damage = Dmg.Damage(target);
 
                 Global.DamageIndicator.Unit = target;
-                Global.DamageIndicator.DrawDmg((float)damage, Color.FromArgb(153, 12, 177, 28));
+                Global.DamageIndicator.DrawDmg((float) damage, Color.FromArgb(153, 12, 177, 28));
             }
         }
 
@@ -35,15 +36,23 @@ namespace Adept_AIO.Champions.Gragas.Drawings
 
             if (MenuConfig.Drawings["Q"].Enabled && SpellManager.Q.Ready)
             {
-                Render.Circle(Global.Player.Position, SpellManager.Q.Range, (uint) MenuConfig.Drawings["Segments"].Value, Color.Cyan);
+                Render.Circle(Global.Player.Position,
+                    SpellManager.Q.Range,
+                    (uint) MenuConfig.Drawings["Segments"].Value,
+                    Color.Cyan);
             }
 
             if (MenuConfig.Drawings["R"].Enabled && SpellManager.R.Ready)
             {
-                Render.Circle(Global.Player.Position, SpellManager.R.Range, (uint)MenuConfig.Drawings["Segments"].Value, Color.Crimson);
+                Render.Circle(Global.Player.Position,
+                    SpellManager.R.Range,
+                    (uint) MenuConfig.Drawings["Segments"].Value,
+                    Color.Crimson);
             }
 
-            if (!MenuConfig.Drawings["Debug"].Enabled || !SpellManager.R.Ready || !Gragas.InsecOrbwalkerMode.Active && Global.Orbwalker.Mode != OrbwalkingMode.Combo)
+            if (!MenuConfig.Drawings["Debug"].Enabled ||
+                !SpellManager.R.Ready ||
+                !Gragas.InsecOrbwalkerMode.Active && Global.Orbwalker.Mode != OrbwalkingMode.Combo)
             {
                 return;
             }
@@ -66,11 +75,11 @@ namespace Adept_AIO.Champions.Gragas.Drawings
             if (Gragas.InsecOrbwalkerMode.Active)
             {
                 Render.Line(targetPos, qPos, Color.Orange);
-                Render.Circle(qPos3D, 30, (uint)MenuConfig.Drawings["Segments"].Value, Color.Crimson);
+                Render.Circle(qPos3D, 30, (uint) MenuConfig.Drawings["Segments"].Value, Color.Crimson);
             }
-                    
-            Render.Circle(insec3D, 30, (uint)MenuConfig.Drawings["Segments"].Value, Color.Crimson);
-            Render.Circle(insec3D, 50, (uint)MenuConfig.Drawings["Segments"].Value, Color.Orange);
+
+            Render.Circle(insec3D, 30, (uint) MenuConfig.Drawings["Segments"].Value, Color.Crimson);
+            Render.Circle(insec3D, 50, (uint) MenuConfig.Drawings["Segments"].Value, Color.Orange);
         }
     }
 }

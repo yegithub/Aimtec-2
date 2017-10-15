@@ -1,11 +1,11 @@
-﻿using System.Linq;
-using Adept_AIO.Champions.Ezreal.Core;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec.SDK.Extensions;
-
-namespace Adept_AIO.Champions.Ezreal.OrbwalkingEvents
+﻿namespace Adept_AIO.Champions.Ezreal.OrbwalkingEvents
 {
-    internal class JungleClear
+    using System.Linq;
+    using Aimtec.SDK.Extensions;
+    using Core;
+    using SDK.Unit_Extensions;
+
+    class JungleClear
     {
         public static void OnUpdate()
         {
@@ -13,7 +13,8 @@ namespace Adept_AIO.Champions.Ezreal.OrbwalkingEvents
             {
                 if (MenuConfig.Jungle["QS"].Enabled)
                 {
-                    var smallMob = GameObjects.JungleSmall.FirstOrDefault(x => x.IsValidTarget(SpellConfig.Q.Range) && x.MaxHealth >= 10);
+                    var smallMob = GameObjects.JungleSmall.FirstOrDefault(x =>
+                        x.IsValidTarget(SpellConfig.Q.Range) && x.MaxHealth >= 10);
                     if (smallMob != null)
                     {
                         SpellConfig.Q.Cast(smallMob);
@@ -22,13 +23,15 @@ namespace Adept_AIO.Champions.Ezreal.OrbwalkingEvents
 
                 if (MenuConfig.Jungle["Q"].Enabled)
                 {
-                    var largeMob = GameObjects.JungleLarge.FirstOrDefault(x => x.IsValidTarget(SpellConfig.Q.Range) && x.MaxHealth >= 10);
+                    var largeMob = GameObjects.JungleLarge.FirstOrDefault(x =>
+                        x.IsValidTarget(SpellConfig.Q.Range) && x.MaxHealth >= 10);
                     if (largeMob != null)
                     {
                         SpellConfig.Q.Cast(largeMob);
                     }
 
-                    var legendaryMob = GameObjects.JungleLegendary.FirstOrDefault(x => x.IsValidTarget(SpellConfig.Q.Range) && x.MaxHealth >= 10);
+                    var legendaryMob = GameObjects.JungleLegendary.FirstOrDefault(x =>
+                        x.IsValidTarget(SpellConfig.Q.Range) && x.MaxHealth >= 10);
                     if (legendaryMob != null)
                     {
                         SpellConfig.Q.Cast(legendaryMob);
@@ -36,7 +39,9 @@ namespace Adept_AIO.Champions.Ezreal.OrbwalkingEvents
                 }
             }
 
-            if (SpellConfig.W.Ready && MenuConfig.Jungle["W"].Enabled && Global.Player.ManaPercent() >= MenuConfig.Jungle["W"].Value)
+            if (SpellConfig.W.Ready &&
+                MenuConfig.Jungle["W"].Enabled &&
+                Global.Player.ManaPercent() >= MenuConfig.Jungle["W"].Value)
             {
                 var ally = GameObjects.AllyHeroes.FirstOrDefault(x => x.IsValidTarget(SpellConfig.W.Range - 100));
                 if (ally != null)

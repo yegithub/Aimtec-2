@@ -1,33 +1,30 @@
-﻿using System;
-using System.Linq;
-using Adept_AIO.Champions.LeeSin.Core.Spells;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec;
-using Aimtec.SDK.Extensions;
-
-namespace Adept_AIO.Champions.LeeSin.Core.Insec_Manager
+﻿namespace Adept_AIO.Champions.LeeSin.Core.Insec_Manager
 {
-    internal class InsecManager : IInsecManager
+    using System;
+    using System.Linq;
+    using Aimtec;
+    using Aimtec.SDK.Extensions;
+    using SDK.Unit_Extensions;
+    using Spells;
+
+    class InsecManager : IInsecManager
     {
+        private readonly ISpellConfig _spellConfig;
+
+        public InsecManager(ISpellConfig spellConfig) { _spellConfig = spellConfig; }
+
         public int InsecKickValue { get; set; }
         public int InsecPositionValue { get; set; }
 
-        private readonly ISpellConfig _spellConfig;
-
-        public InsecManager(ISpellConfig spellConfig)
-        {
-            _spellConfig = spellConfig;
-        }
-
-        public float DistanceBehindTarget(Obj_AI_Base target = null)
-        {
-            return Math.Min((Global.Player.BoundingRadius + (target == null ? 65 : target.BoundingRadius) + 50) * 1.25f, _spellConfig.R.Range);
-        }
+        public float DistanceBehindTarget(Obj_AI_Base target = null) => Math.Min(
+            (Global.Player.BoundingRadius + (target == null ? 65 : target.BoundingRadius) + 50) * 1.25f,
+            _spellConfig.R.Range);
 
         public Vector3 InsecPosition(Obj_AI_Base target)
         {
-            var pos = target.ServerPosition + (target.ServerPosition - GetTargetEndPosition()).Normalized() * DistanceBehindTarget(target);
-            
+            var pos = target.ServerPosition +
+                      (target.ServerPosition - GetTargetEndPosition()).Normalized() * DistanceBehindTarget(target);
+
             return NavMesh.WorldToCell(pos).Flags.HasFlag(NavCellFlags.Wall) ? Vector3.Zero : pos;
         }
 
@@ -38,14 +35,17 @@ namespace Adept_AIO.Champions.LeeSin.Core.Insec_Manager
                 return Vector3.Zero;
             }
 
-            var secondEnemy = GameObjects.EnemyHeroes.FirstOrDefault(x => x.NetworkId != target.NetworkId && x.Distance(target) <= _spellConfig.R2.Range + 100);
-          
+            var secondEnemy = GameObjects.EnemyHeroes.FirstOrDefault(x =>
+                x.NetworkId != target.NetworkId && x.Distance(target) <= _spellConfig.R2.Range + 100);
+
             if (secondEnemy == null)
             {
                 return Vector3.Zero;
             }
-       
-            return secondEnemy.ServerPosition.Extend(secondEnemy.ServerPosition + (secondEnemy.ServerPosition - target.ServerPosition).Normalized(), DistanceBehindTarget());
+
+            return secondEnemy.ServerPosition.Extend(
+                secondEnemy.ServerPosition + (secondEnemy.ServerPosition - target.ServerPosition).Normalized(),
+                DistanceBehindTarget());
         }
 
         public Vector3 GetTargetEndPosition()
@@ -53,11 +53,11 @@ namespace Adept_AIO.Champions.LeeSin.Core.Insec_Manager
             var ally = GameObjects.AllyHeroes.FirstOrDefault(x => x.Distance(Global.Player) <= 2000);
             var turret = GameObjects.AllyTurrets.OrderBy(x => x.Distance(Global.Player)).FirstOrDefault();
 
-            switch (InsecPositionValue)
+            switch (this.InsecPositionValue)
             {
                 case 0:
                     if (turret != null)
-                    {   
+                    {
                         Temp.IsAlly = false;
                         return turret.ServerPosition;
                     }

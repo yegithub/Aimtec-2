@@ -1,16 +1,17 @@
-﻿using System.Linq;
-using Adept_AIO.Champions.Zed.Core;
-using Adept_AIO.SDK.Generic;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec.SDK.Extensions;
-
-namespace Adept_AIO.Champions.Zed.OrbwalkingEvents
+﻿namespace Adept_AIO.Champions.Zed.OrbwalkingEvents
 {
-    internal class JungleClear
+    using System.Linq;
+    using Aimtec.SDK.Extensions;
+    using Core;
+    using SDK.Generic;
+    using SDK.Unit_Extensions;
+
+    class JungleClear
     {
         public static void OnUpdate()
         {
-            var creep = GameObjects.Jungle.OrderBy(x => x.MaxHealth).FirstOrDefault(x => x.IsValidTarget(SpellManager.Q.Range) && x.MaxHealth > 15);
+            var creep = GameObjects.Jungle.OrderBy(x => x.MaxHealth).
+                FirstOrDefault(x => x.IsValidTarget(SpellManager.Q.Range) && x.MaxHealth > 15);
             if (creep == null || Maths.GetEnergyPercent() < MenuConfig.JungleClear["Energy"].Value)
             {
                 return;

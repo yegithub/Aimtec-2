@@ -1,16 +1,16 @@
-﻿using Aimtec;
-using Aimtec.SDK.Prediction.Skillshots;
-using Spell = Aimtec.SDK.Spell;
-
-namespace Adept_AIO.Champions.Irelia.Core
+﻿namespace Adept_AIO.Champions.Irelia.Core
 {
-    internal class SpellConfig
+    using Aimtec;
+    using Aimtec.SDK.Prediction.Skillshots;
+    using Spell = Aimtec.SDK.Spell;
+
+    class SpellConfig
     {
         public static Spell Q, W, E, R;
         public static int RCount = 4;
 
         /// <summary>
-        /// Instances the spells
+        ///     Instances the spells
         /// </summary>
         public static void Load()
         {

@@ -1,20 +1,16 @@
-﻿using System.Collections.Generic;
-using Adept_AIO.SDK.Menu_Extension;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec.SDK.Menu;
-using Aimtec.SDK.Menu.Components;
-
-namespace Adept_AIO.Champions.Irelia.Core
+﻿namespace Adept_AIO.Champions.Irelia.Core
 {
-    internal class MenuConfig
+    using System.Collections.Generic;
+    using Aimtec.SDK.Menu;
+    using Aimtec.SDK.Menu.Components;
+    using SDK.Menu_Extension;
+    using SDK.Unit_Extensions;
+
+    class MenuConfig
     {
         private static Menu _mainMenu;
 
-        public static Menu Combo,
-                           Harass,
-                           Clear,
-                           Killsteal,
-                           Drawings;
+        public static Menu Combo, Harass, Clear, Killsteal, Drawings;
 
         public static void Attach()
         {
@@ -25,13 +21,13 @@ namespace Adept_AIO.Champions.Irelia.Core
 
             Combo = new Menu("Combo", "Combo")
             {
-              new MenuBool("R", "R Minion To Gapclose Q"),
-              new MenuBool("Q",  "Use Q To Gapclose"),
-              new MenuBool("Killable", "Q Target If Killable"),
-              new MenuBool("Force",   "Force Q To Stun (When Getting Ganked)"),
-              new MenuSlider("Range", "Min. Range For Q", 450, 0, 650),
-              new MenuList("Mode", "Dash Mode: ", new []{"Cursor", "Player Position"}, 0),
-              new MenuBool("Turret", "Dash Turret When Killable")
+                new MenuBool("R", "R Minion To Gapclose Q"),
+                new MenuBool("Q", "Use Q To Gapclose"),
+                new MenuBool("Killable", "Q Target If Killable"),
+                new MenuBool("Force", "Force Q To Stun (When Getting Ganked)"),
+                new MenuSlider("Range", "Min. Range For Q", 450, 0, 650),
+                new MenuList("Mode", "Dash Mode: ", new[] {"Cursor", "Player Position"}, 0),
+                new MenuBool("Turret", "Dash Turret When Killable")
             };
 
             Clear = new Menu("Clear", "Clear")
@@ -68,16 +64,10 @@ namespace Adept_AIO.Champions.Irelia.Core
                 new MenuBool("R", "R Range")
             };
 
-            foreach (var menu in new List<Menu>
+            foreach (var menu in new List<Menu> {Combo, Harass, Clear, Killsteal, Drawings, MenuShortcut.Credits})
             {
-                Combo,
-                Harass,
-                Clear,
-                Killsteal,
-                Drawings,
-                MenuShortcut.Credits
-            })
-            _mainMenu.Add(menu);
+                _mainMenu.Add(menu);
+            }
         }
     }
 }

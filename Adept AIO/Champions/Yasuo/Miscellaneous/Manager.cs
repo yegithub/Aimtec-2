@@ -1,14 +1,14 @@
-﻿using System.Threading;
-using Adept_AIO.Champions.Yasuo.Core;
-using Adept_AIO.Champions.Yasuo.OrbwalkingEvents;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec;
-using Aimtec.SDK.Orbwalking;
-using Aimtec.SDK.Util;
-
-namespace Adept_AIO.Champions.Yasuo.Miscellaneous
+﻿namespace Adept_AIO.Champions.Yasuo.Miscellaneous
 {
-    internal class Manager
+    using System.Threading;
+    using Aimtec;
+    using Aimtec.SDK.Orbwalking;
+    using Aimtec.SDK.Util;
+    using Core;
+    using OrbwalkingEvents;
+    using SDK.Unit_Extensions;
+
+    class Manager
     {
         public static void PostAttack(object sender, PostAttackEventArgs args)
         {
@@ -37,7 +37,7 @@ namespace Adept_AIO.Champions.Yasuo.Miscellaneous
             }
 
             Stack.OnUpdate();
-       
+
             switch (Global.Orbwalker.Mode)
             {
                 case OrbwalkingMode.Combo:
@@ -58,20 +58,20 @@ namespace Adept_AIO.Champions.Yasuo.Miscellaneous
                     break;
             }
         }
-        
+
         public static void BuffManagerOnOnAddBuff(Obj_AI_Base sender, Buff buff)
         {
             if (sender == null)
             {
                 return;
             }
-          
+
             if (sender.IsEnemy && (buff.Type == BuffType.Knockup || buff.Type == BuffType.Knockback))
             {
                 KnockUpHelper.Sender = sender;
                 KnockUpHelper.KnockedUpTick = Game.TickCount;
-                KnockUpHelper.BuffStart = (int)buff.StartTime;
-                KnockUpHelper.BuffEnd = (int)buff.EndTime;
+                KnockUpHelper.BuffStart = (int) buff.StartTime;
+                KnockUpHelper.BuffEnd = (int) buff.EndTime;
             }
 
             if (sender.IsMe)
@@ -125,11 +125,13 @@ namespace Adept_AIO.Champions.Yasuo.Miscellaneous
                         Extension.CurrentMode = Mode.Dashing;
                         SpellConfig.SetSkill(Mode.Dashing);
 
-                        DelayAction.Queue(500, () =>
-                        {
-                            Extension.CurrentMode = Mode.Normal;
-                            SpellConfig.SetSkill(Mode.Normal);
-                        }, new CancellationToken(false));
+                        DelayAction.Queue(500,
+                            () =>
+                            {
+                                Extension.CurrentMode = Mode.Normal;
+                                SpellConfig.SetSkill(Mode.Normal);
+                            },
+                            new CancellationToken(false));
                     }
                     break;
             }

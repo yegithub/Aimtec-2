@@ -1,9 +1,9 @@
-﻿using Aimtec;
-using Aimtec.SDK.Prediction.Collision;
-using Aimtec.SDK.Prediction.Skillshots;
-
-namespace Adept_AIO.SDK.Spell_DB
+﻿namespace Adept_AIO.SDK.Spell_DB
 {
+    using Aimtec;
+    using Aimtec.SDK.Prediction.Collision;
+    using Aimtec.SDK.Prediction.Skillshots;
+
     public class SpellData
     {
         public bool AddHitbox;
@@ -24,8 +24,8 @@ namespace Adept_AIO.SDK.Spell_DB
         public int ExtraRange = -1;
         public string[] ExtraSpellNames = { };
         public bool FixedRange;
-        public bool ForceRemove = false;
         public bool FollowCaster = false;
+        public bool ForceRemove = false;
         public string FromObject = "";
         public string[] FromObjects = { };
         public int Id = -1;
@@ -41,16 +41,14 @@ namespace Adept_AIO.SDK.Spell_DB
         public float MultipleAngle;
         public int MultipleNumber = -1;
         public int RingRadius;
-        public string SourceObjectName = "";
         public SpellSlot Slot;
+        public string SourceObjectName = "";
         public string SpellName;
         public bool TakeClosestPath = false;
         public string ToggleParticleName = "";
         public SkillshotType Type;
 
-        public SpellData()
-        {
-        }
+        public SpellData() { }
 
         public SpellData(string championName,
             string spellName,
@@ -69,8 +67,8 @@ namespace Adept_AIO.SDK.Spell_DB
             Slot = slot;
             Type = type;
             Delay = delay;
-            Range = range;
-            RawRadius = radius;
+            this.Range = range;
+            this.RawRadius = radius;
             MissileSpeed = missileSpeed;
             AddHitbox = addHitbox;
             FixedRange = fixedRange;
@@ -85,16 +83,14 @@ namespace Adept_AIO.SDK.Spell_DB
 
         public int Radius
         {
-            get => !AddHitbox
-                ? RawRadius
-                : RawRadius + (int) ObjectManager.GetLocalPlayer().BoundingRadius;
-            set => RawRadius = value;
+            get => !AddHitbox ? this.RawRadius : this.RawRadius + (int) ObjectManager.GetLocalPlayer().BoundingRadius;
+            set => this.RawRadius = value;
         }
 
         public int Range
         {
-            get => RawRange + (Type == SkillshotType.Line ? 20 : 0);
-            set => RawRange = value;
+            get => this.RawRange + (Type == SkillshotType.Line ? 20 : 0);
+            set => this.RawRange = value;
         }
     }
 }

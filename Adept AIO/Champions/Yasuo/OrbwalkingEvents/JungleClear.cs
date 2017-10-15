@@ -1,12 +1,11 @@
-﻿using System.Linq;
-using Adept_AIO.Champions.Yasuo.Core;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec.SDK.Extensions;
-using GameObjects = Adept_AIO.SDK.Unit_Extensions.GameObjects;
-
-namespace Adept_AIO.Champions.Yasuo.OrbwalkingEvents
+﻿namespace Adept_AIO.Champions.Yasuo.OrbwalkingEvents
 {
-    internal class JungleClear
+    using System.Linq;
+    using Aimtec.SDK.Extensions;
+    using Core;
+    using SDK.Unit_Extensions;
+
+    class JungleClear
     {
         public static void OnPostAttack()
         {
@@ -16,7 +15,7 @@ namespace Adept_AIO.Champions.Yasuo.OrbwalkingEvents
             {
                 var qminion = GameObjects.Jungle.FirstOrDefault(x => x.Distance(Global.Player) <= SpellConfig.Q.Range);
 
-                if (qminion == null )
+                if (qminion == null)
                 {
                     return;
                 }
@@ -26,7 +25,8 @@ namespace Adept_AIO.Champions.Yasuo.OrbwalkingEvents
 
             if (SpellConfig.E.Ready && MenuConfig.JungleClear["E"].Enabled)
             {
-                var minion = GameObjects.Jungle.FirstOrDefault(x => x.Distance(Global.Player) <= SpellConfig.E.Range && !x.HasBuff("YasuoDashWrapper"));
+                var minion = GameObjects.Jungle.FirstOrDefault(x =>
+                    x.Distance(Global.Player) <= SpellConfig.E.Range && !x.HasBuff("YasuoDashWrapper"));
 
                 if (minion == null)
                 {

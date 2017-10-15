@@ -1,7 +1,7 @@
-﻿using Aimtec;
-
-namespace Adept_AIO.Champions.LeeSin.Ward_Manager
+﻿namespace Adept_AIO.Champions.LeeSin.Ward_Manager
 {
+    using Aimtec;
+
     public interface IWardTracker
     {
         bool IsAtWall { get; set; }

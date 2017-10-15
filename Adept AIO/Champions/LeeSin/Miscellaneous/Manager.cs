@@ -1,15 +1,15 @@
-﻿using System;
-using Adept_AIO.Champions.LeeSin.OrbwalkingEvents.Combo;
-using Adept_AIO.Champions.LeeSin.OrbwalkingEvents.Harass;
-using Adept_AIO.Champions.LeeSin.OrbwalkingEvents.JungleClear;
-using Adept_AIO.Champions.LeeSin.OrbwalkingEvents.LaneClear;
-using Adept_AIO.Champions.LeeSin.OrbwalkingEvents.LastHit;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec.SDK.Orbwalking;
-
-namespace Adept_AIO.Champions.LeeSin.Miscellaneous
+﻿namespace Adept_AIO.Champions.LeeSin.Miscellaneous
 {
-    internal class Manager
+    using System;
+    using Aimtec.SDK.Orbwalking;
+    using OrbwalkingEvents.Combo;
+    using OrbwalkingEvents.Harass;
+    using OrbwalkingEvents.JungleClear;
+    using OrbwalkingEvents.LaneClear;
+    using OrbwalkingEvents.LastHit;
+    using SDK.Unit_Extensions;
+
+    class Manager
     {
         private readonly ICombo _combo;
         private readonly IHarass _harass;
@@ -34,7 +34,7 @@ namespace Adept_AIO.Champions.LeeSin.Miscellaneous
                     _combo.OnPostAttack(args.Target);
                     break;
                 case OrbwalkingMode.Mixed:
-                   _harass.OnPostAttack(args.Target);
+                    _harass.OnPostAttack(args.Target);
                     break;
                 case OrbwalkingMode.Laneclear:
                     _laneClear.OnPostAttack();

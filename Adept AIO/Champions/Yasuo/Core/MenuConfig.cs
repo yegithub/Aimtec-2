@@ -1,44 +1,40 @@
-﻿using System.Collections.Generic;
-using Adept_AIO.Champions.Yasuo.OrbwalkingEvents;
-using Adept_AIO.SDK.Delegates;
-using Adept_AIO.SDK.Menu_Extension;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec.SDK.Menu;
-using Aimtec.SDK.Menu.Components;
-using Aimtec.SDK.Orbwalking;
-using Aimtec.SDK.Util;
-using GameObjects = Aimtec.SDK.Util.Cache.GameObjects;
-
-namespace Adept_AIO.Champions.Yasuo.Core
+﻿namespace Adept_AIO.Champions.Yasuo.Core
 {
-    internal class MenuConfig
+    using System.Collections.Generic;
+    using Aimtec.SDK.Menu;
+    using Aimtec.SDK.Menu.Components;
+    using Aimtec.SDK.Orbwalking;
+    using Aimtec.SDK.Util;
+    using OrbwalkingEvents;
+    using SDK.Delegates;
+    using SDK.Menu_Extension;
+    using SDK.Unit_Extensions;
+    using GameObjects = Aimtec.SDK.Util.Cache.GameObjects;
+
+    class MenuConfig
     {
-        public static Menu Combo,
-                           Whitelist,
-                           Harass,
-                           LaneClear,
-                           JungleClear,
-                           Killsteal,
-                           Misc,
-                           Drawings;
+        public static Menu Combo, Whitelist, Harass, LaneClear, JungleClear, Killsteal, Misc, Drawings;
 
         public static void Attach()
         {
             var mainMenu = new Menu(string.Empty, $"Adept AIO - {Global.Player.ChampionName}", true);
             mainMenu.Attach();
 
-            Extension.FleeMode     = new OrbwalkerMode("Flee", KeyCode.A, null, Flee.OnKeyPressed);
-            Extension.BeybladeMode = new OrbwalkerMode("Keyblade", KeyCode.T, () => Global.TargetSelector.GetSelectedTarget(), Beyblade.OnKeyPressed);
+            Extension.FleeMode = new OrbwalkerMode("Flee", KeyCode.A, null, Flee.OnKeyPressed);
+            Extension.BeybladeMode = new OrbwalkerMode("Keyblade",
+                KeyCode.T,
+                () => Global.TargetSelector.GetSelectedTarget(),
+                Beyblade.OnKeyPressed);
 
             Extension.BeybladeMode.ModeBehaviour.Invoke();
             Extension.BeybladeMode.GetTargetImplementation.Invoke();
 
             Global.Orbwalker.AddMode(Extension.FleeMode);
             Global.Orbwalker.AddMode(Extension.BeybladeMode);
-         
+
             Global.Orbwalker.Attach(mainMenu);
 
-            Whitelist= new Menu("Whitelist", "Whitelist");
+            Whitelist = new Menu("Whitelist", "Whitelist");
             foreach (var hero in GameObjects.EnemyHeroes)
             {
                 Whitelist.Add(new MenuBool(hero.ChampionName, "Use R Against: " + hero.ChampionName));
@@ -51,17 +47,13 @@ namespace Adept_AIO.Champions.Yasuo.Core
                 new MenuSlider("Count", "Use R If X Airbourne", 2, 0, 5),
                 new MenuBool("Flash", "Use Flash (Beyblade)").SetToolTip("Will try to E-Q -> Flash. AKA Beyblade"),
                 new MenuBool("Turret", "Avoid Using E Under Turret"),
-                new MenuList("Dash", "Dash Mode: ", new []{"Cursor", "From Player"}, 0),
+                new MenuList("Dash", "Dash Mode: ", new[] {"Cursor", "From Player"}, 0),
                 new MenuSlider("Range", "Mouse Dash Range: ", 650, 1, 1000),
                 new MenuSlider("MRange", "Search Range For Behind Minions", 180, 100, 240)
             };
-            
+
             // Todo: Add Check and go: EQ AA -> E Out 
-            Harass = new Menu("Harass", "Harass")
-            {
-                new MenuBool("Q", "Use Q3"),
-                new MenuBool("E", "Use E")
-            };
+            Harass = new Menu("Harass", "Harass") {new MenuBool("Q", "Use Q3"), new MenuBool("E", "Use E")};
 
             LaneClear = new Menu("LaneClear", "LaneClear")
             {
@@ -69,14 +61,14 @@ namespace Adept_AIO.Champions.Yasuo.Core
                 new MenuBool("Turret", "Don't Clear Under Turret"),
                 new MenuBool("Q3", "Use Q3"),
                 new MenuBool("EAA", "Only E After AA"),
-                new MenuList("Mode", "E Mode: ", new []{"Disabled", "Lasthit", "Fast Clear"}, 1)
+                new MenuList("Mode", "E Mode: ", new[] {"Disabled", "Lasthit", "Fast Clear"}, 1)
             };
 
             JungleClear = new Menu("JungleClear", "JungleClear")
             {
                 new MenuBool("Q3", "Allow Q3 Usage"),
-                new MenuBool("Q",  "Allow Q1 Usage"),
-                new MenuBool("E",  "Allow E  Usage")
+                new MenuBool("Q", "Allow Q1 Usage"),
+                new MenuBool("E", "Allow E  Usage")
             };
 
             Killsteal = new Menu("Killsteal", "Killsteal")
@@ -119,7 +111,9 @@ namespace Adept_AIO.Champions.Yasuo.Core
                 Drawings,
                 MenuShortcut.Credits
             })
-            mainMenu.Add(menu);
+            {
+                mainMenu.Add(menu);
+            }
         }
     }
 }

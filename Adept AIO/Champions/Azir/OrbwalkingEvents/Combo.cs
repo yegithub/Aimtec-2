@@ -1,13 +1,13 @@
-﻿using System.Linq;
-using Adept_AIO.Champions.Azir.Core;
-using Adept_AIO.SDK.Geometry_Related;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec;
-using Aimtec.SDK.Extensions;
-
-namespace Adept_AIO.Champions.Azir.OrbwalkingEvents
+﻿namespace Adept_AIO.Champions.Azir.OrbwalkingEvents
 {
-    internal class Combo
+    using System.Linq;
+    using Aimtec;
+    using Aimtec.SDK.Extensions;
+    using Core;
+    using SDK.Geometry_Related;
+    using SDK.Unit_Extensions;
+
+    class Combo
     {
         public static void OnUpdate()
         {
@@ -23,7 +23,9 @@ namespace Adept_AIO.Champions.Azir.OrbwalkingEvents
             {
                 foreach (var soldier in SoldierManager.Soldiers)
                 {
-                    var rect = new Geometry.Rectangle(Global.Player.ServerPosition.To2D(), soldier.ServerPosition.To2D(), SpellConfig.E.Width);
+                    var rect = new Geometry.Rectangle(Global.Player.ServerPosition.To2D(),
+                        soldier.ServerPosition.To2D(),
+                        SpellConfig.E.Width);
                     var count = GameObjects.EnemyHeroes.Count(x => rect.IsInside(x.ServerPosition.To2D()));
 
                     if (count >= 2)
@@ -61,17 +63,24 @@ namespace Adept_AIO.Champions.Azir.OrbwalkingEvents
                 {
                     SpellConfig.W.Cast(Global.Player.ServerPosition.Extend(target.ServerPosition, SpellConfig.W.Range));
                 }
-                else if(dist < SpellConfig.W.Range)
+                else if (dist < SpellConfig.W.Range)
                 {
                     SpellConfig.W.Cast(target);
                 }
             }
 
-            if (SpellConfig.R.Ready && MenuConfig.Combo["R"].Enabled && target.HealthPercent() <= 40 && dist < SpellConfig.R.Range)
+            if (SpellConfig.R.Ready &&
+                MenuConfig.Combo["R"].Enabled &&
+                target.HealthPercent() <= 40 &&
+                dist < SpellConfig.R.Range)
             {
-                AzirHelper.Rect = new Geometry.Rectangle(target.ServerPosition.To2D(), Global.Player.ServerPosition.Extend(target.ServerPosition, -SpellConfig.R.Width / 2f).To2D(), SpellConfig.R.Width / 2f);
-                if(AzirHelper.Rect.IsInside(target.ServerPosition.To2D()))
-                SpellConfig.R.Cast(target);
+                AzirHelper.Rect = new Geometry.Rectangle(target.ServerPosition.To2D(),
+                    Global.Player.ServerPosition.Extend(target.ServerPosition, -SpellConfig.R.Width / 2f).To2D(),
+                    SpellConfig.R.Width / 2f);
+                if (AzirHelper.Rect.IsInside(target.ServerPosition.To2D()))
+                {
+                    SpellConfig.R.Cast(target);
+                }
             }
         }
     }

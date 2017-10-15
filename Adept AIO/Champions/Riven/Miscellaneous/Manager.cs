@@ -1,15 +1,15 @@
-﻿using System;
-using Adept_AIO.Champions.Riven.Core;
-using Adept_AIO.Champions.Riven.OrbwalkingEvents;
-using Adept_AIO.Champions.Riven.OrbwalkingEvents.Combo;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec;
-using Aimtec.SDK.Extensions;
-using Aimtec.SDK.Orbwalking;
-
-namespace Adept_AIO.Champions.Riven.Miscellaneous
+﻿namespace Adept_AIO.Champions.Riven.Miscellaneous
 {
-    internal class Manager
+    using System;
+    using Aimtec;
+    using Aimtec.SDK.Extensions;
+    using Aimtec.SDK.Orbwalking;
+    using Core;
+    using OrbwalkingEvents;
+    using OrbwalkingEvents.Combo;
+    using SDK.Unit_Extensions;
+
+    class Manager
     {
         public static void OnUpdate()
         {
@@ -37,11 +37,14 @@ namespace Adept_AIO.Champions.Riven.Miscellaneous
                         break;
                 }
 
-                if (!SpellConfig.Q.Ready || Extensions.CurrentQCount == 1 || !MenuConfig.Miscellaneous["Active"].Enabled 
-                    || Global.Player.HasBuff("Recall")
-                    || Global.Orbwalker.Mode == OrbwalkingMode.Laneclear || Global.Orbwalker.Mode == OrbwalkingMode.Lasthit
-                    || Game.TickCount - Extensions.LastQCastAttempt < 3580 + Game.Ping / 2
-                    || Game.TickCount - Extensions.LastQCastAttempt > 3700 + Game.Ping / 2)
+                if (!SpellConfig.Q.Ready ||
+                    Extensions.CurrentQCount == 1 ||
+                    !MenuConfig.Miscellaneous["Active"].Enabled ||
+                    Global.Player.HasBuff("Recall") ||
+                    Global.Orbwalker.Mode == OrbwalkingMode.Laneclear ||
+                    Global.Orbwalker.Mode == OrbwalkingMode.Lasthit ||
+                    Game.TickCount - Extensions.LastQCastAttempt < 3580 + Game.Ping / 2 ||
+                    Game.TickCount - Extensions.LastQCastAttempt > 3700 + Game.Ping / 2)
                 {
                     return;
                 }
@@ -57,7 +60,7 @@ namespace Adept_AIO.Champions.Riven.Miscellaneous
 
         public static void OnPostAttack(object sender, PostAttackEventArgs args)
         {
-            if (Game.TickCount - Extensions.LastQCastAttempt <= 340) 
+            if (Game.TickCount - Extensions.LastQCastAttempt <= 340)
             {
                 return;
             }

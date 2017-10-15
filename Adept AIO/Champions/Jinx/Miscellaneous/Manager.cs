@@ -1,15 +1,15 @@
-﻿using Adept_AIO.Champions.Jinx.OrbwalkingEvents;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec.SDK.Orbwalking;
-
-namespace Adept_AIO.Champions.Jinx.Miscellaneous
+﻿namespace Adept_AIO.Champions.Jinx.Miscellaneous
 {
-    internal class Manager
+    using Aimtec.SDK.Orbwalking;
+    using OrbwalkingEvents;
+    using SDK.Unit_Extensions;
+
+    class Manager
     {
         private readonly Combo _combo;
         private readonly Harass _harass;
-        private readonly LaneClear _laneClear;
         private readonly JungleClear _jungleClear;
+        private readonly LaneClear _laneClear;
 
         public Manager(Combo combo, Harass harass, LaneClear laneClear, JungleClear jungleClear)
         {
@@ -21,7 +21,7 @@ namespace Adept_AIO.Champions.Jinx.Miscellaneous
 
         public void OnUpdate()
         {
-            if (Global.Player.IsDead)
+            if (Global.Player.IsDead || Global.Orbwalker.IsWindingUp)
             {
                 return;
             }
@@ -34,7 +34,7 @@ namespace Adept_AIO.Champions.Jinx.Miscellaneous
                 case OrbwalkingMode.Mixed:
                     _harass.OnUpdate();
                     break;
-                    case OrbwalkingMode.Laneclear:
+                case OrbwalkingMode.Laneclear:
                     _laneClear.OnUpdate();
                     _jungleClear.OnUpdate();
                     break;

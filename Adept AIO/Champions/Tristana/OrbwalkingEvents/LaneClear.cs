@@ -1,16 +1,16 @@
-﻿using System.Linq;
-using Adept_AIO.Champions.Tristana.Core;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec;
-using Aimtec.SDK.Damage;
-using Aimtec.SDK.Extensions;
-
-namespace Adept_AIO.Champions.Tristana.OrbwalkingEvents
+﻿namespace Adept_AIO.Champions.Tristana.OrbwalkingEvents
 {
-    internal class LaneClear
+    using System.Linq;
+    using Aimtec;
+    using Aimtec.SDK.Damage;
+    using Aimtec.SDK.Extensions;
+    using Core;
+    using SDK.Unit_Extensions;
+
+    class LaneClear
     {
-        private readonly SpellConfig _spellConfig;
         private readonly MenuConfig _menuConfig;
+        private readonly SpellConfig _spellConfig;
 
         public LaneClear(SpellConfig spellConfig, MenuConfig menuConfig)
         {
@@ -20,12 +20,15 @@ namespace Adept_AIO.Champions.Tristana.OrbwalkingEvents
 
         public void OnPostAttack()
         {
-            if (!_spellConfig.Q.Ready || !_menuConfig.LaneClear["Q"].Enabled || _menuConfig.LaneClear["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(2500) > 0)
+            if (!_spellConfig.Q.Ready ||
+                !_menuConfig.LaneClear["Q"].Enabled ||
+                _menuConfig.LaneClear["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(2500) > 0)
             {
                 return;
             }
 
-            var minions = GameObjects.EnemyMinions.Count(x => x.Health > Global.Player.GetAutoAttackDamage(x) && x.IsValid);
+            var minions =
+                GameObjects.EnemyMinions.Count(x => x.Health > Global.Player.GetAutoAttackDamage(x) && x.IsValid);
 
             if (minions <= 3)
             {
@@ -44,7 +47,8 @@ namespace Adept_AIO.Champions.Tristana.OrbwalkingEvents
 
             if (_spellConfig.E.Ready)
             {
-                var turret = GameObjects.EnemyTurrets.FirstOrDefault(x => x.IsValid && x.Distance(Global.Player) <= _spellConfig.FullRange);
+                var turret = GameObjects.EnemyTurrets.FirstOrDefault(x =>
+                    x.IsValid && x.Distance(Global.Player) <= _spellConfig.FullRange);
 
                 if (_menuConfig.LaneClear["Turret"].Enabled && turret != null && turret.HealthPercent() >= 35)
                 {
@@ -52,9 +56,16 @@ namespace Adept_AIO.Champions.Tristana.OrbwalkingEvents
                 }
                 else
                 {
-                    var minions = GameObjects.EnemyMinions.Count(x => x.Health < Global.Player.GetSpellDamage(x, SpellSlot.E) + Global.Player.GetAutoAttackDamage(x) * 5 && x.IsValid);
-                    var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Health < Global.Player.GetSpellDamage(x, SpellSlot.E) + Global.Player.GetAutoAttackDamage(x) * 5 && x.IsValid);
-                    var cannon = GameObjects.EnemyMinions.FirstOrDefault(x => x.UnitSkinName.ToLower().Contains("cannon") && x.IsValid);
+                    var minions = GameObjects.EnemyMinions.Count(x =>
+                        x.Health <
+                        Global.Player.GetSpellDamage(x, SpellSlot.E) + Global.Player.GetAutoAttackDamage(x) * 5 &&
+                        x.IsValid);
+                    var minion = GameObjects.EnemyMinions.FirstOrDefault(x =>
+                        x.Health <
+                        Global.Player.GetSpellDamage(x, SpellSlot.E) + Global.Player.GetAutoAttackDamage(x) * 5 &&
+                        x.IsValid);
+                    var cannon = GameObjects.EnemyMinions.FirstOrDefault(x =>
+                        x.UnitSkinName.ToLower().Contains("cannon") && x.IsValid);
 
                     if (minions >= _menuConfig.LaneClear["E"].Value)
                     {

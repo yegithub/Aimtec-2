@@ -1,14 +1,14 @@
-﻿using System.Linq;
-using Adept_AIO.Champions.Irelia.Core;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec;
-using Aimtec.SDK.Damage;
-using Aimtec.SDK.Extensions;
-using GameObjects = Aimtec.SDK.Util.Cache.GameObjects;
-
-namespace Adept_AIO.Champions.Irelia.OrbwalkingEvents
+﻿namespace Adept_AIO.Champions.Irelia.OrbwalkingEvents
 {
-    internal class Harass
+    using System.Linq;
+    using Aimtec;
+    using Aimtec.SDK.Damage;
+    using Aimtec.SDK.Extensions;
+    using Core;
+    using SDK.Unit_Extensions;
+    using GameObjects = Aimtec.SDK.Util.Cache.GameObjects;
+
+    class Harass
     {
         public static void OnPostAttack(AttackableUnit target)
         {
@@ -24,7 +24,9 @@ namespace Adept_AIO.Champions.Irelia.OrbwalkingEvents
             }
             else if (MenuConfig.Harass["Safe"].Enabled && SpellConfig.Q.Ready)
             {
-                var minion = GameObjects.EnemyMinions.Where(x => x.Distance(target) > 300).OrderBy(x => -x.Distance(target)).LastOrDefault();
+                var minion = GameObjects.EnemyMinions.Where(x => x.Distance(target) > 300).
+                    OrderBy(x => -x.Distance(target)).
+                    LastOrDefault();
                 if (minion != null)
                 {
                     SpellConfig.Q.CastOnUnit(minion);
@@ -34,7 +36,9 @@ namespace Adept_AIO.Champions.Irelia.OrbwalkingEvents
 
         public static void OnUpdate()
         {
-            if (SpellConfig.Q.Ready && MenuConfig.Harass["Q"].Enabled && MenuConfig.Harass["Q"].Value <= Global.Player.ManaPercent())
+            if (SpellConfig.Q.Ready &&
+                MenuConfig.Harass["Q"].Enabled &&
+                MenuConfig.Harass["Q"].Value <= Global.Player.ManaPercent())
             {
                 var target = Global.TargetSelector.GetTarget(SpellConfig.Q.Range);
 
@@ -50,7 +54,10 @@ namespace Adept_AIO.Champions.Irelia.OrbwalkingEvents
                         return;
                     }
 
-                    var minion = GameObjects.EnemyMinions.Where(x => x.Health < Global.Player.GetSpellDamage(x, SpellSlot.Q)).OrderBy(x => x.Distance(target)).LastOrDefault();
+                    var minion = GameObjects.EnemyMinions.
+                        Where(x => x.Health < Global.Player.GetSpellDamage(x, SpellSlot.Q)).
+                        OrderBy(x => x.Distance(target)).
+                        LastOrDefault();
                     if (minion == null)
                     {
                         return;
@@ -64,7 +71,9 @@ namespace Adept_AIO.Champions.Irelia.OrbwalkingEvents
                 }
             }
 
-            if (SpellConfig.E.Ready && MenuConfig.Harass["E"].Enabled && MenuConfig.Harass["E"].Value <= Global.Player.ManaPercent())
+            if (SpellConfig.E.Ready &&
+                MenuConfig.Harass["E"].Enabled &&
+                MenuConfig.Harass["E"].Value <= Global.Player.ManaPercent())
             {
                 var target = Global.TargetSelector.GetTarget(SpellConfig.E.Range);
 

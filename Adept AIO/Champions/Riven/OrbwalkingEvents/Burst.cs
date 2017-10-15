@@ -1,17 +1,17 @@
-﻿using System;
-using System.Threading;
-using Adept_AIO.Champions.Riven.Core;
-using Adept_AIO.Champions.Riven.Miscellaneous;
-using Adept_AIO.SDK.Generic;
-using Adept_AIO.SDK.Unit_Extensions;
-using Adept_AIO.SDK.Usables;
-using Aimtec;
-using Aimtec.SDK.Extensions;
-using Aimtec.SDK.Util;
-
-namespace Adept_AIO.Champions.Riven.OrbwalkingEvents
+﻿namespace Adept_AIO.Champions.Riven.OrbwalkingEvents
 {
-    internal class Burst
+    using System;
+    using System.Threading;
+    using Aimtec;
+    using Aimtec.SDK.Extensions;
+    using Aimtec.SDK.Util;
+    using Core;
+    using Miscellaneous;
+    using SDK.Generic;
+    using SDK.Unit_Extensions;
+    using SDK.Usables;
+
+    class Burst
     {
         public static void OnProcessAutoAttack()
         {
@@ -67,9 +67,7 @@ namespace Adept_AIO.Champions.Riven.OrbwalkingEvents
                 Global.Player.SpellBook.CastSpell(SpellSlot.W);
             }
 
-            if (SpellConfig.R.Ready
-                && Enums.UltimateMode == UltimateMode.First
-                && SpellConfig.E.Ready)
+            if (SpellConfig.R.Ready && Enums.UltimateMode == UltimateMode.First && SpellConfig.E.Ready)
             {
                 SpellConfig.E.Cast(target.ServerPosition);
                 SpellConfig.R.Cast();
@@ -83,18 +81,23 @@ namespace Adept_AIO.Champions.Riven.OrbwalkingEvents
             {
                 case BurstPattern.TheShy:
 
-                    if (Extensions.AllIn && target.Distance(Global.Player) > SpellConfig.E.Range + Global.Player.AttackRange && SummonerSpells.IsValid(SummonerSpells.Flash))
+                    if (Extensions.AllIn &&
+                        target.Distance(Global.Player) > SpellConfig.E.Range + Global.Player.AttackRange &&
+                        SummonerSpells.IsValid(SummonerSpells.Flash))
                     {
-                        DelayAction.Queue(Game.Ping / 2 + 50, delegate
-                        {
-                            Global.Player.SpellBook.CastSpell(SpellSlot.W);
+                        DelayAction.Queue(Game.Ping / 2 + 50,
+                            delegate
+                            {
+                                Global.Player.SpellBook.CastSpell(SpellSlot.W);
+                            },
+                            new CancellationToken(false));
 
-                        }, new CancellationToken(false));
-
-                        DelayAction.Queue(280, delegate
-                        {
-                            SummonerSpells.Flash.Cast(target.ServerPosition);
-                        }, new CancellationToken(false));
+                        DelayAction.Queue(280,
+                            delegate
+                            {
+                                SummonerSpells.Flash.Cast(target.ServerPosition);
+                            },
+                            new CancellationToken(false));
                     }
                     break;
 
@@ -104,20 +107,27 @@ namespace Adept_AIO.Champions.Riven.OrbwalkingEvents
                     {
                         SpellConfig.R.Cast();
                     }
-                    else if (SpellConfig.E.Ready && Enums.UltimateMode == UltimateMode.Second &&
+                    else if (SpellConfig.E.Ready &&
+                             Enums.UltimateMode == UltimateMode.Second &&
                              Game.TickCount - SpellConfig.R.LastCastAttemptT >= 1100)
                     {
                         SpellConfig.E.Cast(target.ServerPosition);
                         SpellConfig.R2.Cast(target.ServerPosition);
 
-                        DelayAction.Queue(100, () => { SummonerSpells.Flash.Cast(target.ServerPosition); },
+                        DelayAction.Queue(100,
+                            () =>
+                            {
+                                SummonerSpells.Flash.Cast(target.ServerPosition);
+                            },
                             new CancellationToken(false));
 
-                        DelayAction.Queue(500, () =>
-                        {
-                            SpellConfig.W.Cast();
-                            SpellManager.CastQ(target);
-                        }, new CancellationToken(false));
+                        DelayAction.Queue(500,
+                            () =>
+                            {
+                                SpellConfig.W.Cast();
+                                SpellManager.CastQ(target);
+                            },
+                            new CancellationToken(false));
                     }
 
                     break;
@@ -136,7 +146,6 @@ namespace Adept_AIO.Champions.Riven.OrbwalkingEvents
                 case 2: return BurstPattern.Execution;
                 default: throw new ArgumentOutOfRangeException();
             }
-            
         }
     }
 }

@@ -1,29 +1,22 @@
-﻿using System.Collections.Generic;
-using Adept_AIO.Champions.Zed.OrbwalkingEvents;
-using Adept_AIO.SDK.Delegates;
-using Adept_AIO.SDK.Menu_Extension;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec.SDK.Menu;
-using Aimtec.SDK.Menu.Components;
-using Aimtec.SDK.Orbwalking;
-using Aimtec.SDK.Util;
-
-namespace Adept_AIO.Champions.Zed.Core
+﻿namespace Adept_AIO.Champions.Zed.Core
 {
-    internal class MenuConfig
+    using System.Collections.Generic;
+    using Aimtec.SDK.Menu;
+    using Aimtec.SDK.Menu.Components;
+    using Aimtec.SDK.Orbwalking;
+    using Aimtec.SDK.Util;
+    using OrbwalkingEvents;
+    using SDK.Delegates;
+    using SDK.Menu_Extension;
+    using SDK.Unit_Extensions;
+
+    class MenuConfig
     {
         public static OrbwalkerMode FleeOrbwalkerMode;
 
         private static Menu _mainMenu;
 
-        public static Menu Combo,
-                           Harass,
-                           LaneClear,
-                           JungleClear,
-                           Lasthit,
-                           Killsteal,
-                           Misc,
-                           Drawings;
+        public static Menu Combo, Harass, LaneClear, JungleClear, Lasthit, Killsteal, Misc, Drawings;
 
         public static void Attach()
         {
@@ -55,7 +48,8 @@ namespace Adept_AIO.Champions.Zed.Core
             {
                 new MenuBool("Q", "Use Q"),
                 new MenuBool("W", "Use W"),
-                new MenuSliderBool("W2", "Use W Twice | Not If >= X Enemies", true, 2, 1, 5).SetToolTip("Max Range W, will try to W AA "),
+                new MenuSliderBool("W2", "Use W Twice | Not If >= X Enemies", true, 2, 1, 5).SetToolTip(
+                    "Max Range W, will try to W AA "),
                 new MenuSlider("Health", "Don't Use W2 if % HP is Below", 30),
                 new MenuBool("E", "Use E"),
                 new MenuSlider("Energy", "Min. Energy %", 40)
@@ -85,11 +79,7 @@ namespace Adept_AIO.Champions.Zed.Core
                 new MenuSlider("Energy", "Min. Energy %", 40)
             };
 
-            Killsteal = new Menu("Killsteal", "Killsteal")
-            {
-                new MenuBool("Q", "Use Q"),
-                new MenuBool("E", "Use E")
-            };
+            Killsteal = new Menu("Killsteal", "Killsteal") {new MenuBool("Q", "Use Q"), new MenuBool("E", "Use E")};
 
             Misc = new Menu("Misc", "Miscellaneous")
             {
@@ -122,7 +112,10 @@ namespace Adept_AIO.Champions.Zed.Core
                 Misc,
                 Drawings,
                 MenuShortcut.Credits
-            }) _mainMenu.Add(menu);
+            })
+            {
+                _mainMenu.Add(menu);
+            }
         }
     }
 }

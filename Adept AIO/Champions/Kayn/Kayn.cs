@@ -1,12 +1,12 @@
-﻿using Adept_AIO.Champions.Kayn.Core;
-using Adept_AIO.Champions.Kayn.Drawings;
-using Adept_AIO.Champions.Kayn.Miscellaneous;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec;
-
-namespace Adept_AIO.Champions.Kayn
+﻿namespace Adept_AIO.Champions.Kayn
 {
-    internal class Kayn
+    using Aimtec;
+    using Core;
+    using Drawings;
+    using Miscellaneous;
+    using SDK.Unit_Extensions;
+
+    class Kayn
     {
         public static void Init()
         {

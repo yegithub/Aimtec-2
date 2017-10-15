@@ -1,8 +1,8 @@
-﻿using Aimtec;
-
-namespace Adept_AIO.Champions.LeeSin.OrbwalkingEvents.Combo
+﻿namespace Adept_AIO.Champions.LeeSin.OrbwalkingEvents.Combo
 {
-    internal interface ICombo
+    using Aimtec;
+
+    interface ICombo
     {
         void OnPostAttack(AttackableUnit target);
         void OnUpdate();

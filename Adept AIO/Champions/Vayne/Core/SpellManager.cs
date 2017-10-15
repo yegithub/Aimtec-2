@@ -1,15 +1,15 @@
-﻿using System;
-using Adept_AIO.SDK.Generic;
-using Adept_AIO.SDK.Geometry_Related;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec;
-using Aimtec.SDK.Extensions;
-using Aimtec.SDK.Prediction.Skillshots;
-using Spell = Aimtec.SDK.Spell;
-
-namespace Adept_AIO.Champions.Vayne.Core
+﻿namespace Adept_AIO.Champions.Vayne.Core
 {
-    internal class SpellManager
+    using System;
+    using Aimtec;
+    using Aimtec.SDK.Extensions;
+    using Aimtec.SDK.Prediction.Skillshots;
+    using SDK.Generic;
+    using SDK.Geometry_Related;
+    using SDK.Unit_Extensions;
+    using Spell = Aimtec.SDK.Spell;
+
+    class SpellManager
     {
         public static Vector3 DrawingPred, QPred;
 
@@ -63,7 +63,7 @@ namespace Adept_AIO.Champions.Vayne.Core
             }
 
             var rect = Rect(target);
-         
+
             if (WallExtension.IsWall(rect.Start.To3D(), rect.End.To3D()))
             {
                 E.CastOnUnit(target);
@@ -84,7 +84,7 @@ namespace Adept_AIO.Champions.Vayne.Core
             var pos = Vector3.Zero;
 
             var point = WallExtension.NearestWall(target.ServerPosition, 475);
-          
+
             if (force && E.Ready && !point.IsZero && point.Distance(Global.Player) <= Q.Range)
             {
                 point = target.ServerPosition + (target.ServerPosition - point).Normalized() * 200;
@@ -101,11 +101,12 @@ namespace Adept_AIO.Champions.Vayne.Core
                         break;
                     case 1:
 
-                        for (int i = 140; i < 360; i+= 20)
+                        for (var i = 140; i < 360; i += 20)
                         {
                             var dir = Global.Player.Orientation.To2D();
                             var angleRad = Maths.DegreeToRadian(i);
-                            var rot = (Global.Player.ServerPosition.To2D() + 300 * dir.Rotated((float) angleRad)).To3D();
+                            var rot = (Global.Player.ServerPosition.To2D() + 300 * dir.Rotated((float) angleRad)).
+                                To3D();
                             if (rot.CountEnemyHeroesInRange(400) != 0)
                             {
                                 continue;

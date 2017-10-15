@@ -1,12 +1,12 @@
-﻿using System.Linq;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec;
-using Aimtec.SDK.Events;
-using Aimtec.SDK.Extensions;
-using Aimtec.SDK.Orbwalking;
-
-namespace Adept_AIO.Champions.Yasuo.Core
+﻿namespace Adept_AIO.Champions.Yasuo.Core
 {
+    using System.Linq;
+    using Aimtec;
+    using Aimtec.SDK.Events;
+    using Aimtec.SDK.Extensions;
+    using Aimtec.SDK.Orbwalking;
+    using SDK.Unit_Extensions;
+
     public enum Mode
     {
         Normal,
@@ -15,7 +15,7 @@ namespace Adept_AIO.Champions.Yasuo.Core
         Tornado
     }
 
-    internal class Extension
+    class Extension
     {
         public static Mode CurrentMode;
         public static OrbwalkerMode FleeMode, BeybladeMode;
@@ -30,7 +30,7 @@ namespace Adept_AIO.Champions.Yasuo.Core
 
         public static bool KnockedUp(Obj_AI_Base target)
         {
-            if (!MenuConfig.Whitelist[((Obj_AI_Hero)target).ChampionName].Enabled)
+            if (!MenuConfig.Whitelist[((Obj_AI_Hero) target).ChampionName].Enabled)
             {
                 return false;
             }
@@ -47,7 +47,7 @@ namespace Adept_AIO.Champions.Yasuo.Core
             }
 
             var time = Game.TickCount - (buff.StartTime * 1000 - buff.Full);
-        
+
             return time >= timeUntilValid - Game.Ping / 2 && time <= 1200;
         }
     }
@@ -59,12 +59,12 @@ namespace Adept_AIO.Champions.Yasuo.Core
 
         public static Obj_AI_Minion GetDashableMinion(Obj_AI_Base target)
         {
-            return GameObjects.EnemyMinions.Where(x => !x.HasBuff("YasuoDashWrapper") &&
-                                                       x.IsValid &&
-                                                       x.MaxHealth > 7 &&
-                                                       x.Distance(Global.Player) <= SpellConfig.E.Range)
-                .LastOrDefault(x => DashDistance(x, target) > 0 &&
-                                    x.Distance(target) < Global.Player.Distance(target));
+            return GameObjects.EnemyMinions.
+                Where(x => !x.HasBuff("YasuoDashWrapper") &&
+                           x.IsValid &&
+                           x.MaxHealth > 7 &&
+                           x.Distance(Global.Player) <= SpellConfig.E.Range).
+                LastOrDefault(x => DashDistance(x, target) > 0 && x.Distance(target) < Global.Player.Distance(target));
         }
 
 
@@ -76,12 +76,12 @@ namespace Adept_AIO.Champions.Yasuo.Core
 
         public static Obj_AI_Minion GetClosest(Obj_AI_Base target)
         {
-            return GameObjects.EnemyMinions
-                .OrderBy(x => x.Distance(Global.Player))
-                .FirstOrDefault(x => !x.HasBuff("YasuoDashWrapper") &&
-                                     x.IsValid &&
-                                     x.MaxHealth > 10 &&
-                                     x.Distance(Global.Player.ServerPosition.Extend(target.ServerPosition, 80)) <= SpellConfig.E.Range);
+            return GameObjects.EnemyMinions.OrderBy(x => x.Distance(Global.Player)).
+                FirstOrDefault(x =>
+                    !x.HasBuff("YasuoDashWrapper") &&
+                    x.IsValid &&
+                    x.MaxHealth > 10 &&
+                    x.Distance(Global.Player.ServerPosition.Extend(target.ServerPosition, 80)) <= SpellConfig.E.Range);
         }
 
         public static Vector3 WalkBehindMinion(Obj_AI_Base target)
@@ -93,7 +93,9 @@ namespace Adept_AIO.Champions.Yasuo.Core
                 return Vector3.Zero;
             }
 
-            var position = minion.ServerPosition.Extend(minion.ServerPosition + (minion.ServerPosition - target.ServerPosition).Normalized(), 75 + minion.BoundingRadius);
+            var position = minion.ServerPosition.Extend(
+                minion.ServerPosition + (minion.ServerPosition - target.ServerPosition).Normalized(),
+                75 + minion.BoundingRadius);
 
             var isValid = position.Distance(ObjectManager.GetLocalPlayer()) > minion.BoundingRadius &&
                           position.Distance(ObjectManager.GetLocalPlayer()) < 300;
@@ -107,7 +109,9 @@ namespace Adept_AIO.Champions.Yasuo.Core
             {
                 return 0;
             }
-            return Global.Player.GetDashInfo().StartPos.Extend(minion.ServerPosition, overrideValue).Distance(target.ServerPosition);
+            return Global.Player.GetDashInfo().
+                StartPos.Extend(minion.ServerPosition, overrideValue).
+                Distance(target.ServerPosition);
         }
     }
 }

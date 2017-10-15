@@ -1,14 +1,14 @@
-﻿using System.Linq;
-using Adept_AIO.SDK.Geometry_Related;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec;
-using Aimtec.SDK.Extensions;
-using Aimtec.SDK.Prediction.Skillshots;
-using Spell = Aimtec.SDK.Spell;
-
-namespace Adept_AIO.Champions.Zed.Core
+﻿namespace Adept_AIO.Champions.Zed.Core
 {
-    internal class SpellManager
+    using System.Linq;
+    using Aimtec;
+    using Aimtec.SDK.Extensions;
+    using Aimtec.SDK.Prediction.Skillshots;
+    using SDK.Geometry_Related;
+    using SDK.Unit_Extensions;
+    using Spell = Aimtec.SDK.Spell;
+
+    class SpellManager
     {
         public static Spell Q, W, E, R;
         public static float LastR, LastW;
@@ -18,7 +18,7 @@ namespace Adept_AIO.Champions.Zed.Core
         {
             Q = new Spell(SpellSlot.Q, 900);
             Q.SetSkillshot(0.25f, 50, 1600, false, SkillshotType.Line);
-       
+
             W = new Spell(SpellSlot.W, 1300);
             W.SetSkillshot(0.75f, 75, 1750, false, SkillshotType.Line);
 
@@ -33,7 +33,7 @@ namespace Adept_AIO.Champions.Zed.Core
             {
                 return;
             }
-         
+
             switch (args.SpellSlot)
             {
                 case SpellSlot.R:
@@ -56,7 +56,7 @@ namespace Adept_AIO.Champions.Zed.Core
             {
                 W.Cast();
             }
-            else if(ShadowManager.CanCastW1() && Game.TickCount - LastW > Game.Ping + 100)
+            else if (ShadowManager.CanCastW1() && Game.TickCount - LastW > Game.Ping + 100)
             {
                 LastW = Game.TickCount;
                 W.Cast(target.ServerPosition);
@@ -118,15 +118,16 @@ namespace Adept_AIO.Champions.Zed.Core
 
                         E.Cast(target);
                     }
-                    
-                    if(minion)
+
+                    if (minion)
                     {
-                        if (GameObjects.EnemyMinions.Count(x => x.IsValidTarget(E.Range, false, false, shadow.ServerPosition)) >= minHit)
+                        if (GameObjects.EnemyMinions.Count(x =>
+                                x.IsValidTarget(E.Range, false, false, shadow.ServerPosition)) >=
+                            minHit)
                         {
                             E.Cast(target);
                         }
                     }
-                  
                 }
             }
         }

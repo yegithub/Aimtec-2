@@ -1,15 +1,14 @@
-﻿using System.Threading;
-using Aimtec.SDK.Util;
-
-namespace Adept_AIO.Champions.Gragas.Core
+﻿namespace Adept_AIO.Champions.Gragas.Core
 {
     using System.Linq;
+    using System.Threading;
+    using Aimtec;
+    using Aimtec.SDK.Extensions;
+    using Aimtec.SDK.Prediction.Skillshots;
+    using Aimtec.SDK.Util;
     using SDK.Unit_Extensions;
     using SDK.Usables;
-    using Aimtec.SDK.Extensions;
-    using SDK.Geometry_Related;
-    using Aimtec;
-    using Aimtec.SDK.Prediction.Skillshots;
+    using Geometry = SDK.Geometry_Related.Geometry;
     using Spell = Aimtec.SDK.Spell;
 
     class SpellManager
@@ -25,7 +24,7 @@ namespace Adept_AIO.Champions.Gragas.Core
         public static Geometry.Rectangle BodySlam;
 
         public static Geometry.Circle Barrel;
-        
+
         public static int QRadius = 300;
 
         public SpellManager()
@@ -41,7 +40,7 @@ namespace Adept_AIO.Champions.Gragas.Core
             R = new Spell(SpellSlot.R, 1000);
             R.SetSkillshot(0.25f, RHitboxRadius, 1600, false, SkillshotType.Circle);
         }
-      
+
         public static void OnProcessSpellCast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
         {
             if (!sender.IsMe)
@@ -69,7 +68,7 @@ namespace Adept_AIO.Champions.Gragas.Core
         {
             if (Barrel != null)
             {
-              return;
+                return;
             }
 
             if (insec)
@@ -79,8 +78,10 @@ namespace Adept_AIO.Champions.Gragas.Core
             else
             {
                 var pred = Q.GetPrediction(target);
-                if(pred.HitChance >= HitChance.High)
-                Q.Cast(target);
+                if (pred.HitChance >= HitChance.High)
+                {
+                    Q.Cast(target);
+                }
             }
         }
 
@@ -96,12 +97,16 @@ namespace Adept_AIO.Champions.Gragas.Core
 
         public static void CastE(Obj_AI_Base target, bool flash = false)
         {
-            var canFlash = flash && SummonerSpells.IsValid(SummonerSpells.Flash) && target.Distance(Global.Player) > E.Range && target.Distance(Global.Player) < E.Range + 425;
+            var canFlash = flash &&
+                           SummonerSpells.IsValid(SummonerSpells.Flash) &&
+                           target.Distance(Global.Player) > E.Range &&
+                           target.Distance(Global.Player) < E.Range + 425;
 
             var pred = E.GetPrediction(target);
             BodySlam = new Geometry.Rectangle(
                 canFlash
-                    ? Global.Player.ServerPosition.Extend(target.ServerPosition, 425 + E.Range - target.BoundingRadius).To2D()
+                    ? Global.Player.ServerPosition.Extend(target.ServerPosition, 425 + E.Range - target.BoundingRadius).
+                        To2D()
                     : Global.Player.ServerPosition.To2D(),
                 Global.Player.ServerPosition.Extend(pred.CastPosition, E.Range).To2D(),
                 EHitboxRadius);
@@ -123,7 +128,9 @@ namespace Adept_AIO.Champions.Gragas.Core
             if (canFlash)
             {
                 E.Cast(target.ServerPosition);
-                DelayAction.Queue(300, () => SummonerSpells.Flash.Cast(target.ServerPosition), new CancellationToken(false));
+                DelayAction.Queue(300,
+                    () => SummonerSpells.Flash.Cast(target.ServerPosition),
+                    new CancellationToken(false));
                 return;
             }
 

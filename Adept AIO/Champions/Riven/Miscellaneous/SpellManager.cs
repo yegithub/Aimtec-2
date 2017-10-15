@@ -1,15 +1,15 @@
-﻿using System.Linq;
-using Adept_AIO.Champions.Riven.Core;
-using Adept_AIO.SDK.Generic;
-using Adept_AIO.SDK.Unit_Extensions;
-using Adept_AIO.SDK.Usables;
-using Aimtec;
-using Aimtec.SDK.Extensions;
-using Aimtec.SDK.Util;
-
-namespace Adept_AIO.Champions.Riven.Miscellaneous
+﻿namespace Adept_AIO.Champions.Riven.Miscellaneous
 {
-    internal class SpellManager
+    using System.Linq;
+    using Aimtec;
+    using Aimtec.SDK.Extensions;
+    using Aimtec.SDK.Util;
+    using Core;
+    using SDK.Generic;
+    using SDK.Unit_Extensions;
+    using SDK.Usables;
+
+    class SpellManager
     {
         private static bool _canWq;
         private static bool _canUseQ;
@@ -20,13 +20,21 @@ namespace Adept_AIO.Champions.Riven.Miscellaneous
 
         public static float LastR;
 
+        private static readonly string[] InvulnerableSpells =
+        {
+            "FioraW",
+            "kindrednodeathbuff",
+            "Undying Rage",
+            "JudicatorIntervention"
+        };
+
         public static void OnProcessSpellCast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
         {
             if (!sender.IsMe)
             {
                 return;
             }
-          
+
             switch (args.SpellData.Name)
             {
                 case "RivenTriCleave":
@@ -42,7 +50,7 @@ namespace Adept_AIO.Champions.Riven.Miscellaneous
                 case "RivenFengShuiEngine":
                     LastR = Game.TickCount;
                     Enums.UltimateMode = UltimateMode.Second;
-                    Maths.DisableAutoAttack(200); 
+                    Maths.DisableAutoAttack(200);
                     break;
                 case "RivenIzunaBlade":
                     Enums.UltimateMode = UltimateMode.First;
@@ -54,7 +62,7 @@ namespace Adept_AIO.Champions.Riven.Miscellaneous
         {
             switch (_unit)
             {
-                case null: return; 
+                case null: return;
                 case Obj_AI_Hero _ when _unit.HasBuff("FioraW") || _unit.HasBuff("PoppyW"): return;
             }
 
@@ -109,9 +117,6 @@ namespace Adept_AIO.Champions.Riven.Miscellaneous
             _canUseW = true;
             _unit = target;
         }
-
-        private static readonly string[] InvulnerableSpells =
-            {"FioraW", "kindrednodeathbuff", "Undying Rage", "JudicatorIntervention"};
 
         public static void CastR2(Obj_AI_Base target)
         {

@@ -1,24 +1,18 @@
-﻿using System.Collections.Generic;
-using Adept_AIO.Champions.Azir.OrbwalkingEvents;
-using Adept_AIO.SDK.Delegates;
-using Adept_AIO.SDK.Menu_Extension;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec.SDK.Menu;
-using Aimtec.SDK.Menu.Components;
-using Aimtec.SDK.Orbwalking;
-using Aimtec.SDK.Util;
-
-namespace Adept_AIO.Champions.Azir.Core
+﻿namespace Adept_AIO.Champions.Azir.Core
 {
-    internal class MenuConfig
+    using System.Collections.Generic;
+    using Aimtec.SDK.Menu;
+    using Aimtec.SDK.Menu.Components;
+    using Aimtec.SDK.Orbwalking;
+    using Aimtec.SDK.Util;
+    using OrbwalkingEvents;
+    using SDK.Delegates;
+    using SDK.Menu_Extension;
+    using SDK.Unit_Extensions;
+
+    class MenuConfig
     {
-        public static Menu Combo,
-                           InsecMenu,
-                           Harass,
-                           Lane,
-                           Jungle,
-                           Killsteal,
-                           Drawings;
+        public static Menu Combo, InsecMenu, Harass, Lane, Jungle, Killsteal, Drawings;
 
         public static void Attach()
         {
@@ -56,7 +50,7 @@ namespace Adept_AIO.Champions.Azir.Core
             {
                 new MenuSliderBool("Q", "Use Q (min. Mana%)", true, 40),
                 new MenuSliderBool("W", "Use W (min. Mana%)", true, 25),
-                new MenuSliderBool("E", "Use E (min. Mana%)", false, 35),
+                new MenuSliderBool("E", "Use E (min. Mana%)", false, 35)
             };
 
             Lane = new Menu("Lane", "Lane")
@@ -66,20 +60,16 @@ namespace Adept_AIO.Champions.Azir.Core
                 new MenuSlider("QHit", "Min Hit By Q", 3, 1, 7),
                 new MenuSliderBool("W", "Use W (min Mana%)", true, 25),
                 new MenuSliderBool("E", "Use E (min Mana%)", false, 70),
-                new MenuSlider("EHit", "Min Hit By E", 4, 1, 7),
+                new MenuSlider("EHit", "Min Hit By E", 4, 1, 7)
             };
 
             Jungle = new Menu("Jungle", "Jungle")
             {
                 new MenuSliderBool("Q", "Use Q (min. Mana%)", true, 40),
-                new MenuSliderBool("W", "Use W (min. Mana%)", true, 25),
+                new MenuSliderBool("W", "Use W (min. Mana%)", true, 25)
             };
 
-            Killsteal = new Menu("Killsteal", "Killsteal")
-            {
-                new MenuBool("Q", "Use Q"),
-                new MenuBool("E", "Use E"),
-            };
+            Killsteal = new Menu("Killsteal", "Killsteal") {new MenuBool("Q", "Use Q"), new MenuBool("E", "Use E")};
 
             Drawings = new Menu("DrawManager", "DrawManager")
             {
@@ -100,7 +90,10 @@ namespace Adept_AIO.Champions.Azir.Core
                 Killsteal,
                 Drawings,
                 MenuShortcut.Credits
-            }) mainMenu.Add(menu);
+            })
+            {
+                mainMenu.Add(menu);
+            }
         }
     }
 }

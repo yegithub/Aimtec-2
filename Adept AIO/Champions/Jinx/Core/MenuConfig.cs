@@ -1,22 +1,16 @@
-﻿using System.Collections.Generic;
-using Adept_AIO.SDK.Delegates;
-using Adept_AIO.SDK.Menu_Extension;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec.SDK.Menu;
-using Aimtec.SDK.Menu.Components;
-using Aimtec.SDK.Util;
-
-namespace Adept_AIO.Champions.Jinx.Core
+﻿namespace Adept_AIO.Champions.Jinx.Core
 {
-    internal class MenuConfig
+    using System.Collections.Generic;
+    using Aimtec.SDK.Menu;
+    using Aimtec.SDK.Menu.Components;
+    using Aimtec.SDK.Util;
+    using SDK.Delegates;
+    using SDK.Menu_Extension;
+    using SDK.Unit_Extensions;
+
+    class MenuConfig
     {
-        public Menu Whitelist, 
-                    Combo,
-                    Harass,
-                    LaneClear, 
-                    JungleClear,
-                    Killsteal,
-                    Drawings;
+        public Menu Whitelist, Combo, Harass, LaneClear, JungleClear, Killsteal, Drawings;
 
         public void Attach()
         {
@@ -41,7 +35,7 @@ namespace Adept_AIO.Champions.Jinx.Core
                 new MenuBool("Count", "Use E As AoE & Close Targets"),
                 new MenuBool("Teleport", "Use E On Teleport"),
                 new MenuBool("Immovable", "Use E At Immovable Targets"),
-                new MenuKeyBind("Semi", "Semi R Key", KeyCode.T, KeybindType.Press),
+                new MenuKeyBind("Semi", "Semi R Key", KeyCode.T, KeybindType.Press)
             };
 
             Harass = new Menu("Harass", "Harass")
@@ -86,7 +80,10 @@ namespace Adept_AIO.Champions.Jinx.Core
                 Killsteal,
                 Drawings,
                 MenuShortcut.Credits
-            })  mainMenu.Add(menu);
+            })
+            {
+                mainMenu.Add(menu);
+            }
         }
     }
 }

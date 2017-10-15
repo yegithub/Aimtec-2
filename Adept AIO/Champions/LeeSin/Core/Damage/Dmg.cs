@@ -1,19 +1,16 @@
-﻿using Adept_AIO.Champions.LeeSin.Core.Spells;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec;
-using Aimtec.SDK.Damage;
-using Aimtec.SDK.Damage.JSON;
-
-namespace Adept_AIO.Champions.LeeSin.Core.Damage
+﻿namespace Adept_AIO.Champions.LeeSin.Core.Damage
 {
-    internal class Dmg : IDmg
+    using Aimtec;
+    using Aimtec.SDK.Damage;
+    using Aimtec.SDK.Damage.JSON;
+    using SDK.Unit_Extensions;
+    using Spells;
+
+    class Dmg : IDmg
     {
         private readonly ISpellConfig _spellConfig;
 
-        public Dmg(ISpellConfig spellConfig)
-        {
-            _spellConfig = spellConfig;
-        }
+        public Dmg(ISpellConfig spellConfig) { _spellConfig = spellConfig; }
 
         public double Damage(Obj_AI_Base target)
         {
@@ -37,9 +34,9 @@ namespace Adept_AIO.Champions.LeeSin.Core.Damage
                 }
                 else
                 {
-                    dmg += Global.Player.GetSpellDamage(target, SpellSlot.Q) 
-                        +  Global.Player.GetSpellDamage(target, SpellSlot.Q, DamageStage.SecondCast)
-                        +  dmg;
+                    dmg += Global.Player.GetSpellDamage(target, SpellSlot.Q) +
+                           Global.Player.GetSpellDamage(target, SpellSlot.Q, DamageStage.SecondCast) +
+                           dmg;
                 }
             }
 

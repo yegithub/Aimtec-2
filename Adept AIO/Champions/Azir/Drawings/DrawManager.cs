@@ -1,13 +1,13 @@
-﻿using System.Drawing;
-using System.Linq;
-using Adept_AIO.Champions.Azir.Core;
-using Adept_AIO.Champions.Azir.OrbwalkingEvents;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec;
-
-namespace Adept_AIO.Champions.Azir.Drawings
+﻿namespace Adept_AIO.Champions.Azir.Drawings
 {
-    internal class DrawManager
+    using System.Drawing;
+    using System.Linq;
+    using Aimtec;
+    using Core;
+    using OrbwalkingEvents;
+    using SDK.Unit_Extensions;
+
+    class DrawManager
     {
         public static void OnPresent()
         {
@@ -35,19 +35,26 @@ namespace Adept_AIO.Champions.Azir.Drawings
 
             if (MenuConfig.Drawings["Q"].Enabled)
             {
-                Render.Circle(Global.Player.Position, SpellConfig.Q.Range, (uint) MenuConfig.Drawings["Segments"].Value,
+                Render.Circle(Global.Player.Position,
+                    SpellConfig.Q.Range,
+                    (uint) MenuConfig.Drawings["Segments"].Value,
                     Color.Yellow);
             }
 
             if (MenuConfig.Drawings["R"].Enabled)
             {
-                Render.Circle(Global.Player.Position, SpellConfig.R.Range, (uint) MenuConfig.Drawings["Segments"].Value,
+                Render.Circle(Global.Player.Position,
+                    SpellConfig.R.Range,
+                    (uint) MenuConfig.Drawings["Segments"].Value,
                     Color.Red);
             }
 
             if (AzirHelper.InsecMode.Active)
             {
-                Render.Circle(Global.Player.ServerPosition, Insec.InsecRange(), (uint)MenuConfig.Drawings["Segments"].Value, Color.LightGray);
+                Render.Circle(Global.Player.ServerPosition,
+                    Insec.InsecRange(),
+                    (uint) MenuConfig.Drawings["Segments"].Value,
+                    Color.LightGray);
             }
 
             if (AzirHelper.Rect != null)
@@ -62,7 +69,9 @@ namespace Adept_AIO.Champions.Azir.Drawings
 
             foreach (var soldier in SoldierManager.Soldiers)
             {
-                Render.Circle(soldier.ServerPosition, 325, (uint) MenuConfig.Drawings["Segments"].Value,
+                Render.Circle(soldier.ServerPosition,
+                    325,
+                    (uint) MenuConfig.Drawings["Segments"].Value,
                     Color.SlateBlue);
             }
         }

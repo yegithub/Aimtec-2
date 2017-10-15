@@ -1,21 +1,15 @@
-﻿using System.Collections.Generic;
-using Adept_AIO.SDK.Delegates;
-using Adept_AIO.SDK.Menu_Extension;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec.SDK.Menu;
-using Aimtec.SDK.Menu.Components;
-
-namespace Adept_AIO.Champions.Ezreal.Core
+﻿namespace Adept_AIO.Champions.Ezreal.Core
 {
-    internal class MenuConfig
+    using System.Collections.Generic;
+    using Aimtec.SDK.Menu;
+    using Aimtec.SDK.Menu.Components;
+    using SDK.Delegates;
+    using SDK.Menu_Extension;
+    using SDK.Unit_Extensions;
+
+    class MenuConfig
     {
-        public static Menu Combo,
-                           Harass,
-                           Lane,
-                           Jungle,
-                           Killsteal,
-                           Miscellaneous,
-                           Drawings;
+        public static Menu Combo, Harass, Lane, Jungle, Killsteal, Miscellaneous, Drawings;
 
         public static void Attach()
         {
@@ -82,15 +76,18 @@ namespace Adept_AIO.Champions.Ezreal.Core
 
             foreach (var menu in new List<Menu>
             {
-               Combo,
-               Harass,
-               Lane,
-               Jungle,
-               Killsteal,
-               Drawings,
-               Miscellaneous,
-               MenuShortcut.Credits
-            }) mainMenu.Add(menu);
+                Combo,
+                Harass,
+                Lane,
+                Jungle,
+                Killsteal,
+                Drawings,
+                Miscellaneous,
+                MenuShortcut.Credits
+            })
+            {
+                mainMenu.Add(menu);
+            }
         }
     }
 }

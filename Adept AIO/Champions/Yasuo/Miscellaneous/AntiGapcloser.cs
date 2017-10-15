@@ -1,14 +1,14 @@
-﻿using System.Linq;
-using Adept_AIO.Champions.Yasuo.Core;
-using Adept_AIO.SDK.Delegates;
-using Adept_AIO.SDK.Spell_DB;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec;
-using Aimtec.SDK.Extensions;
-
-namespace Adept_AIO.Champions.Yasuo.Miscellaneous
+﻿namespace Adept_AIO.Champions.Yasuo.Miscellaneous
 {
-    internal class AntiGapcloser
+    using System.Linq;
+    using Aimtec;
+    using Aimtec.SDK.Extensions;
+    using Core;
+    using SDK.Delegates;
+    using SDK.Spell_DB;
+    using SDK.Unit_Extensions;
+
+    class AntiGapcloser
     {
         public static void OnGapcloser(Obj_AI_Hero sender, GapcloserArgs args)
         {
@@ -27,7 +27,10 @@ namespace Adept_AIO.Champions.Yasuo.Miscellaneous
                 SpellConfig.W.Cast(args.StartPosition);
             }
 
-            var minion = GameObjects.Minions.Where(x => x.Distance(Global.Player) <= SpellConfig.E.Range && !x.HasBuff("YasuoDashWrapper")).OrderBy(x => x.Distance(Game.CursorPos)).FirstOrDefault();
+            var minion = GameObjects.Minions.
+                Where(x => x.Distance(Global.Player) <= SpellConfig.E.Range && !x.HasBuff("YasuoDashWrapper")).
+                OrderBy(x => x.Distance(Game.CursorPos)).
+                FirstOrDefault();
 
             if (SpellConfig.E.Ready && minion != null)
             {

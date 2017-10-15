@@ -1,18 +1,15 @@
-﻿using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec;
-using Aimtec.SDK.Damage;
-using Aimtec.SDK.Damage.JSON;
-
-namespace Adept_AIO.Champions.Tristana.Core
+﻿namespace Adept_AIO.Champions.Tristana.Core
 {
-    internal class Dmg
+    using Aimtec;
+    using Aimtec.SDK.Damage;
+    using Aimtec.SDK.Damage.JSON;
+    using SDK.Unit_Extensions;
+
+    class Dmg
     {
         private readonly SpellConfig _spellConfig;
 
-        public Dmg(SpellConfig spellConfig)
-        {
-            _spellConfig = spellConfig;
-        }
+        public Dmg(SpellConfig spellConfig) { _spellConfig = spellConfig; }
 
         public double Damage(Obj_AI_Base target)
         {
@@ -35,7 +32,8 @@ namespace Adept_AIO.Champions.Tristana.Core
 
             if (_spellConfig.E.Ready)
             {
-                dmg += Global.Player.GetSpellDamage(target, SpellSlot.E) + Global.Player.GetSpellDamage(target, SpellSlot.E, DamageStage.Buff);
+                dmg += Global.Player.GetSpellDamage(target, SpellSlot.E) +
+                       Global.Player.GetSpellDamage(target, SpellSlot.E, DamageStage.Buff);
             }
 
             if (_spellConfig.R.Ready)

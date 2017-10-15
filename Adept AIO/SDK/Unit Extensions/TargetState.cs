@@ -1,18 +1,32 @@
-﻿using System.Linq;
-using Aimtec;
-using Aimtec.SDK.Damage;
-using Aimtec.SDK.Extensions;
-
-namespace Adept_AIO.SDK.Unit_Extensions
+﻿namespace Adept_AIO.SDK.Unit_Extensions
 {
-    internal class TargetState
-    {
-        private static readonly BuffType[] HardCc = { BuffType.Invulnerability, BuffType.Charm, BuffType.Blind, BuffType.Fear, BuffType.Knockup, BuffType.Polymorph };
+    using System.Linq;
+    using Aimtec;
+    using Aimtec.SDK.Damage;
+    using Aimtec.SDK.Extensions;
 
-        public static bool IsHardCc(Obj_AI_Hero target)
+    class TargetState
+    {
+        private static readonly BuffType[] HardCc =
         {
-            return HardCc.Select(target.HasBuffOfType).FirstOrDefault();
-        }
+            BuffType.Invulnerability,
+            BuffType.Charm,
+            BuffType.Blind,
+            BuffType.Fear,
+            BuffType.Knockup,
+            BuffType.Polymorph
+        };
+
+        private static readonly uint[] TearId =
+        {
+            ItemId.TearoftheGoddess,
+            ItemId.Manamune,
+            ItemId.ArchangelsStaff,
+            ItemId.TearoftheGoddessQuickCharge,
+            ItemId.ArchangelsStaffQuickCharge
+        };
+
+        public static bool IsHardCc(Obj_AI_Hero target) => HardCc.Select(target.HasBuffOfType).FirstOrDefault();
 
         public static Vector3 GetFountainPos(GameObject target)
         {
@@ -31,15 +45,6 @@ namespace Adept_AIO.SDK.Unit_Extensions
             return Vector3.Zero;
         }
 
-        private static readonly uint[] TearId =
-        {
-            ItemId.TearoftheGoddess, ItemId.Manamune, ItemId.ArchangelsStaff, ItemId.TearoftheGoddessQuickCharge,
-            ItemId.ArchangelsStaffQuickCharge
-        };
-
-        public static bool HasTear()
-        {
-            return TearId.Any(u => Global.Player.HasItem(u));
-        }
+        public static bool HasTear() { return TearId.Any(u => Global.Player.HasItem(u)); }
     }
 }

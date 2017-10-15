@@ -1,9 +1,9 @@
-﻿using Aimtec.SDK.Menu;
-using Aimtec.SDK.Menu.Components;
-
-namespace Adept_AIO.SDK.Menu_Extension
+﻿namespace Adept_AIO.SDK.Menu_Extension
 {
-    internal class MenuShortcut
+    using Aimtec.SDK.Menu;
+    using Aimtec.SDK.Menu.Components;
+
+    class MenuShortcut
     {
         public static Menu Credits = new Menu("Credits", "Credits")
         {

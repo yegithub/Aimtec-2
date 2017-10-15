@@ -1,10 +1,10 @@
-﻿using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec;
-using Aimtec.SDK.Damage;
-
-namespace Adept_AIO.Champions.Vayne.Core
+﻿namespace Adept_AIO.Champions.Vayne.Core
 {
-    internal class Dmg
+    using Aimtec;
+    using Aimtec.SDK.Damage;
+    using SDK.Unit_Extensions;
+
+    class Dmg
     {
         public static double Damage(Obj_AI_Base target)
         {

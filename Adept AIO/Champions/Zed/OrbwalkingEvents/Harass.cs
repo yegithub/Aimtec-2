@@ -1,12 +1,12 @@
-﻿using Adept_AIO.Champions.Zed.Core;
-using Adept_AIO.SDK.Generic;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec.SDK.Extensions;
-using Aimtec.SDK.TargetSelector;
-
-namespace Adept_AIO.Champions.Zed.OrbwalkingEvents
+﻿namespace Adept_AIO.Champions.Zed.OrbwalkingEvents
 {
-    internal class Harass
+    using Aimtec.SDK.Extensions;
+    using Aimtec.SDK.TargetSelector;
+    using Core;
+    using SDK.Generic;
+    using SDK.Unit_Extensions;
+
+    class Harass
     {
         public static void OnUpdate()
         {
@@ -28,7 +28,10 @@ namespace Adept_AIO.Champions.Zed.OrbwalkingEvents
                     SpellManager.CastW(target);
                 }
 
-                else if (ShadowManager.CanSwitchToShadow() && MenuConfig.Harass["W2"].Enabled && Global.Player.HealthPercent() >= MenuConfig.Harass["Health"].Value && !target.IsUnderEnemyTurret())
+                else if (ShadowManager.CanSwitchToShadow() &&
+                         MenuConfig.Harass["W2"].Enabled &&
+                         Global.Player.HealthPercent() >= MenuConfig.Harass["Health"].Value &&
+                         !target.IsUnderEnemyTurret())
                 {
                     SpellManager.CastW(target, true);
                 }

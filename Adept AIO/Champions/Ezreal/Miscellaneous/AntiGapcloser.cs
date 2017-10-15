@@ -1,17 +1,19 @@
-﻿using System.Linq;
-using Adept_AIO.Champions.Ezreal.Core;
-using Adept_AIO.SDK.Delegates;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec;
-using Aimtec.SDK.Extensions;
-
-namespace Adept_AIO.Champions.Ezreal.Miscellaneous
+﻿namespace Adept_AIO.Champions.Ezreal.Miscellaneous
 {
-    internal class AntiGapcloser
+    using System.Linq;
+    using Aimtec;
+    using Aimtec.SDK.Extensions;
+    using Core;
+    using SDK.Delegates;
+    using SDK.Unit_Extensions;
+
+    class AntiGapcloser
     {
         public static void OnGapcloser(Obj_AI_Hero sender, GapcloserArgs args)
         {
-            if (!sender.IsEnemy || !SpellConfig.E.Ready || args.EndPosition.Distance(Global.Player) > SpellConfig.E.Range)
+            if (!sender.IsEnemy ||
+                !SpellConfig.E.Ready ||
+                args.EndPosition.Distance(Global.Player) > SpellConfig.E.Range)
             {
                 return;
             }

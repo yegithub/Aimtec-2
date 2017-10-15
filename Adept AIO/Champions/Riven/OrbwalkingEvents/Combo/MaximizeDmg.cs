@@ -1,13 +1,13 @@
-﻿using System.Linq;
-using Adept_AIO.Champions.Riven.Core;
-using Adept_AIO.Champions.Riven.Miscellaneous;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec;
-using Aimtec.SDK.Extensions;
-
-namespace Adept_AIO.Champions.Riven.OrbwalkingEvents.Combo
+﻿namespace Adept_AIO.Champions.Riven.OrbwalkingEvents.Combo
 {
-    internal class MaximizeDmg
+    using System.Linq;
+    using Aimtec;
+    using Aimtec.SDK.Extensions;
+    using Core;
+    using Miscellaneous;
+    using SDK.Unit_Extensions;
+
+    class MaximizeDmg
     {
         public static void OnPostAttack()
         {
@@ -42,7 +42,10 @@ namespace Adept_AIO.Champions.Riven.OrbwalkingEvents.Combo
             {
                 SpellConfig.R.Cast(target);
             }
-            else if (SpellConfig.R2.Ready && Enums.UltimateMode == UltimateMode.Second && !SpellConfig.W.Ready && target.HealthPercent() <= 30)
+            else if (SpellConfig.R2.Ready &&
+                     Enums.UltimateMode == UltimateMode.Second &&
+                     !SpellConfig.W.Ready &&
+                     target.HealthPercent() <= 30)
             {
                 SpellManager.CastR2(target);
             }

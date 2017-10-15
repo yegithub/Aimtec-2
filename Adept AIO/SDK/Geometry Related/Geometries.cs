@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using Aimtec;
-using Aimtec.SDK.Extensions;
-using Aimtec.SDK.Util.ThirdParty;
-
-namespace Adept_AIO.SDK.Geometry_Related
+﻿namespace Adept_AIO.SDK.Geometry_Related
 {
-    using Path = List<IntPoint>;
-    using Paths = List<List<IntPoint>>;
+    using System;
+    using System.Collections.Generic;
+    using System.Drawing;
+    using System.Linq;
+    using Aimtec;
+    using Aimtec.SDK.Extensions;
+    using Aimtec.SDK.Util.ThirdParty;
+    using Path = System.Collections.Generic.List<Aimtec.SDK.Util.ThirdParty.IntPoint>;
+    using Paths = System.Collections.Generic.List<System.Collections.Generic.List<Aimtec.SDK.Util.ThirdParty.IntPoint>>;
 
     /// <summary>
     ///     Class that contains the geometry related methods.
@@ -19,127 +18,6 @@ namespace Adept_AIO.SDK.Geometry_Related
         #region Constants
 
         private const int CircleLineSegmentN = 22;
-
-        #endregion
-
-        #region Public Methods and Operators
-
-        public static Paths ClipPolygons(List<Polygon> polygons)
-        {
-            var subj = new Paths(polygons.Count);
-            var clip = new Paths(polygons.Count);
-            foreach (var polygon in polygons)
-            {
-                subj.Add(polygon.ToClipperPath());
-                clip.Add(polygon.ToClipperPath());
-            }
-
-            var solution = new Paths();
-            var c = new Clipper();
-            c.AddPaths(subj, PolyType.ptSubject, true);
-            c.AddPaths(clip, PolyType.ptClip, true);
-            c.Execute(ClipType.ctUnion, solution, PolyFillType.pftPositive, PolyFillType.pftEvenOdd);
-            return solution;
-        }
-
-        public static void DrawCircleOnMinimap(
-            Vector3 center,
-            float radius,
-            Color color,
-            int thickness = 1,
-            int quality = 100)
-        {
-            var pointList = new List<Vector3>();
-            for (var i = 0; i < quality; i++)
-            {
-                var angle = i * Math.PI * 2 / quality;
-                pointList.Add(
-                    new Vector3(
-                        center.X + radius * (float)Math.Cos(angle),
-                        center.Y,
-                        center.Z + radius * (float)Math.Sin(angle))
-                );
-            }
-            for (var i = 0; i < pointList.Count; i++)
-            {
-                var a = pointList[i];
-                var b = pointList[i == pointList.Count - 1 ? 0 : i + 1];
-
-                Vector2 aonScreen;
-                Vector2 bonScreen;
-
-                Render.WorldToMinimap(a, out aonScreen);
-                Render.WorldToMinimap(b, out bonScreen);
-
-                Render.Line(aonScreen, bonScreen, color);
-            }
-        }
-
-        public static bool IsInside(this Vector3 point, Polygon poly)
-        {
-            return !point.IsOutside(poly);
-        }
-
-        public static bool IsInside(this Vector2 point, Polygon poly)
-        {
-            return !point.IsOutside(poly);
-        }
-
-        public static bool IsOutside(this Vector3 point, Polygon poly)
-        {
-            var p = new IntPoint(point.X, point.Y);
-            return Clipper.PointInPolygon(p, poly.ToClipperPath()) != 1;
-        }
-
-        public static bool IsOutside(this Vector2 point, Polygon poly)
-        {
-            var p = new IntPoint(point.X, point.Y);
-            return Clipper.PointInPolygon(p, poly.ToClipperPath()) != 1;
-        }
-
-        /// <summary>
-        ///     Returns the position on the path after t milliseconds at speed speed.
-        /// </summary>
-        public static Vector2 PositionAfter(this List<Vector2> self, int t, int speed, int delay = 0)
-        {
-            var distance = Math.Max(0, t - delay) * speed / 1000;
-            for (var i = 0; i <= self.Count - 2; i++)
-            {
-                var from = self[i];
-                var to = self[i + 1];
-                var d = (int)to.Distance(from);
-                if (d > distance)
-                {
-                    return from + distance * (to - from).Normalized();
-                }
-
-                distance -= d;
-            }
-
-            return self[self.Count - 1];
-        }
-
-        public static Vector3 SwitchZy(this Vector3 v)
-        {
-            return new Vector3(v.X, v.Y, v.Z);
-        }
-
-        public static Polygon ToPolygon(this Path v)
-        {
-            var polygon = new Polygon();
-            foreach (var point in v)
-            {
-                polygon.Add(new Vector2(point.X, point.Y));
-            }
-
-            return polygon;
-        }
-
-        //Clipper
-        public static List<Polygon> ToPolygons(this Paths v)
-        {
-            return v.Select(path => path.ToPolygon()).ToList();
-        }
 
         #endregion
 
@@ -162,14 +40,6 @@ namespace Adept_AIO.SDK.Geometry_Related
 
         public class Circle
         {
-            #region Fields
-
-            public Vector2 Center;
-
-            public float Radius;
-
-            #endregion
-
             #region Constructors and Destructors
 
             public Circle(Vector2 center, float radius)
@@ -187,18 +57,25 @@ namespace Adept_AIO.SDK.Geometry_Related
                 var result = new Polygon();
                 var outRadius = overrideWidth > 0
                     ? overrideWidth
-                    : (offset + Radius) / (float)Math.Cos(2 * Math.PI / CircleLineSegmentN);
+                    : (offset + Radius) / (float) Math.Cos(2 * Math.PI / CircleLineSegmentN);
                 for (var i = 1; i <= CircleLineSegmentN; i++)
                 {
                     var angle = i * 2 * Math.PI / CircleLineSegmentN;
-                    var point = new Vector2(
-                        Center.X + outRadius * (float)Math.Cos(angle),
-                        Center.Y + outRadius * (float)Math.Sin(angle));
+                    var point = new Vector2(Center.X + outRadius * (float) Math.Cos(angle),
+                        Center.Y + outRadius * (float) Math.Sin(angle));
                     result.Add(point);
                 }
 
                 return result;
             }
+
+            #endregion
+
+            #region Fields
+
+            public Vector2 Center;
+
+            public float Radius;
 
             #endregion
         }
@@ -213,24 +90,18 @@ namespace Adept_AIO.SDK.Geometry_Related
 
             #region Public Methods and Operators
 
-            public void Add(Vector2 point)
-            {
-                Points.Add(point);
-            }
+            public void Add(Vector2 point) { Points.Add(point); }
 
             public void Draw(Color color, int width = 1)
             {
                 for (var i = 0; i <= Points.Count - 1; i++)
                 {
                     var nextIndex = Points.Count - 1 == i ? 0 : i + 1;
-                    Util.DrawLineInWorld((Vector3)Points[i], (Vector3)Points[nextIndex], width, color);
+                    Util.DrawLineInWorld((Vector3) Points[i], (Vector3) Points[nextIndex], width, color);
                 }
             }
 
-            public bool IsInside(Vector2 point)
-            {
-                return !IsOutside(point);
-            }
+            public bool IsInside(Vector2 point) => !IsOutside(point);
 
             public bool IsOutside(Vector2 point)
             {
@@ -254,6 +125,24 @@ namespace Adept_AIO.SDK.Geometry_Related
         /// </summary>
         public class Rectangle : Polygon
         {
+            #region Constructors and Destructors
+
+            /// <summary>
+            ///     Initializes a new instance of the <see cref="Rectangle" /> class.
+            /// </summary>
+            /// <param name="start">The start.</param>
+            /// <param name="end">The end.</param>
+            /// <param name="width">The width.</param>
+            public Rectangle(Vector2 start, Vector2 end, float width)
+            {
+                Start = start;
+                End = end;
+                Width = width;
+                UpdatePolygon();
+            }
+
+            #endregion
+
             #region Fields
 
             /// <summary>
@@ -273,24 +162,6 @@ namespace Adept_AIO.SDK.Geometry_Related
 
             #endregion
 
-            #region Constructors and Destructors
-
-            /// <summary>
-            ///     Initializes a new instance of the <see cref="Rectangle" /> class.
-            /// </summary>
-            /// <param name="start">The start.</param>
-            /// <param name="end">The end.</param>
-            /// <param name="width">The width.</param>
-            public Rectangle(Vector2 start, Vector2 end, float width)
-            {
-                Start = start;
-                End = end;
-                Width = width;
-                UpdatePolygon();
-            }
-
-            #endregion
-
             #region Public Methods and Operators
 
             /// <summary>
@@ -299,10 +170,7 @@ namespace Adept_AIO.SDK.Geometry_Related
             /// <value>
             ///     The direction.
             /// </value>
-            public Vector2 Direction()
-            {
-                return (End - Start).Normalized();
-            }
+            public Vector2 Direction() => (End - Start).Normalized();
 
             /// <summary>
             ///     Gets the perpendicular.
@@ -310,10 +178,7 @@ namespace Adept_AIO.SDK.Geometry_Related
             /// <value>
             ///     The perpendicular.
             /// </value>
-            public Vector2 Perpendicular()
-            {
-                return Direction().Perpendicular();
-            }
+            public Vector2 Perpendicular() => Direction().Perpendicular();
 
             /// <summary>
             ///     Updates the polygon.
@@ -323,18 +188,18 @@ namespace Adept_AIO.SDK.Geometry_Related
             public void UpdatePolygon(int offset = 0, float overrideWidth = -1)
             {
                 Points.Clear();
-                Points.Add(
-                    Start + (overrideWidth > 0 ? overrideWidth : Width + offset) * Perpendicular()
-                    - offset * Direction());
-                Points.Add(
-                    Start - (overrideWidth > 0 ? overrideWidth : Width + offset) * Perpendicular()
-                    - offset * Direction());
-                Points.Add(
-                    End - (overrideWidth > 0 ? overrideWidth : Width + offset) * Perpendicular()
-                    + offset * Direction());
-                Points.Add(
-                    End + (overrideWidth > 0 ? overrideWidth : Width + offset) * Perpendicular()
-                    + offset * Direction());
+                Points.Add(Start +
+                           (overrideWidth > 0 ? overrideWidth : Width + offset) * Perpendicular() -
+                           offset * Direction());
+                Points.Add(Start -
+                           (overrideWidth > 0 ? overrideWidth : Width + offset) * Perpendicular() -
+                           offset * Direction());
+                Points.Add(End -
+                           (overrideWidth > 0 ? overrideWidth : Width + offset) * Perpendicular() +
+                           offset * Direction());
+                Points.Add(End +
+                           (overrideWidth > 0 ? overrideWidth : Width + offset) * Perpendicular() +
+                           offset * Direction());
             }
 
             #endregion
@@ -342,16 +207,6 @@ namespace Adept_AIO.SDK.Geometry_Related
 
         public class Ring
         {
-            #region Fields
-
-            public Vector2 Center;
-
-            public float Radius;
-
-            public float RingRadius; //actually radius width.
-
-            #endregion
-
             #region Constructors and Destructors
 
             public Ring(Vector2 center, float radius, float ringRadius)
@@ -368,28 +223,35 @@ namespace Adept_AIO.SDK.Geometry_Related
             public Polygon ToPolygon(int offset = 0)
             {
                 var result = new Polygon();
-                var outRadius = (offset + Radius + RingRadius)
-                                / (float)Math.Cos(2 * Math.PI / CircleLineSegmentN);
+                var outRadius = (offset + Radius + RingRadius) / (float) Math.Cos(2 * Math.PI / CircleLineSegmentN);
                 var innerRadius = Radius - RingRadius - offset;
                 for (var i = 0; i <= CircleLineSegmentN; i++)
                 {
                     var angle = i * 2 * Math.PI / CircleLineSegmentN;
-                    var point = new Vector2(
-                        Center.X - outRadius * (float)Math.Cos(angle),
-                        Center.Y - outRadius * (float)Math.Sin(angle));
+                    var point = new Vector2(Center.X - outRadius * (float) Math.Cos(angle),
+                        Center.Y - outRadius * (float) Math.Sin(angle));
                     result.Add(point);
                 }
                 for (var i = 0; i <= CircleLineSegmentN; i++)
                 {
                     var angle = i * 2 * Math.PI / CircleLineSegmentN;
-                    var point = new Vector2(
-                        Center.X + innerRadius * (float)Math.Cos(angle),
-                        Center.Y - innerRadius * (float)Math.Sin(angle));
+                    var point = new Vector2(Center.X + innerRadius * (float) Math.Cos(angle),
+                        Center.Y - innerRadius * (float) Math.Sin(angle));
                     result.Add(point);
                 }
 
                 return result;
             }
+
+            #endregion
+
+            #region Fields
+
+            public Vector2 Center;
+
+            public float Radius;
+
+            public float RingRadius; //actually radius width.
 
             #endregion
         }
@@ -399,6 +261,28 @@ namespace Adept_AIO.SDK.Geometry_Related
         /// </summary>
         public class Sector : Polygon
         {
+            #region Constructors and Destructors
+
+            /// <summary>
+            ///     Initializes a new instance of the <see cref="Sector" /> class.
+            /// </summary>
+            /// <param name="center">The center.</param>
+            /// <param name="direction">The direction.</param>
+            /// <param name="angle">The angle.</param>
+            /// <param name="radius">The radius.</param>
+            /// <param name="quality">The quality.</param>
+            public Sector(Vector2 center, Vector2 direction, float angle, float radius, int quality = 20)
+            {
+                Center = center;
+                Direction = (direction - center).Normalized();
+                Angle = angle;
+                Radius = radius;
+                _quality = quality;
+                UpdatePolygon();
+            }
+
+            #endregion
+
             #region Fields
 
             /// <summary>
@@ -428,28 +312,6 @@ namespace Adept_AIO.SDK.Geometry_Related
 
             #endregion
 
-            #region Constructors and Destructors
-
-            /// <summary>
-            ///     Initializes a new instance of the <see cref="Sector" /> class.
-            /// </summary>
-            /// <param name="center">The center.</param>
-            /// <param name="direction">The direction.</param>
-            /// <param name="angle">The angle.</param>
-            /// <param name="radius">The radius.</param>
-            /// <param name="quality">The quality.</param>
-            public Sector(Vector2 center, Vector2 direction, float angle, float radius, int quality = 20)
-            {
-                Center = center;
-                Direction = (direction - center).Normalized();
-                Angle = angle;
-                Radius = radius;
-                this._quality = quality;
-                UpdatePolygon();
-            }
-
-            #endregion
-
             #region Public Methods and Operators
 
             /// <summary>
@@ -466,8 +328,8 @@ namespace Adept_AIO.SDK.Geometry_Related
                 var line = Vector2.Subtract(point2, point1);
                 var newline = new Vector2
                 {
-                    X = (float)(line.X * Math.Cos(angle) - line.Y * Math.Sin(angle)),
-                    Y = (float)(line.X * Math.Sin(angle) + line.Y * Math.Cos(angle))
+                    X = (float) (line.X * Math.Cos(angle) - line.Y * Math.Sin(angle)),
+                    Y = (float) (line.X * Math.Sin(angle) + line.Y * Math.Cos(angle))
                 };
                 return Vector2.Add(newline, point1);
             }
@@ -479,18 +341,122 @@ namespace Adept_AIO.SDK.Geometry_Related
             public void UpdatePolygon(int offset = 0)
             {
                 Points.Clear();
-                var outRadius = (Radius + offset) / (float)Math.Cos(2 * Math.PI / _quality);
+                var outRadius = (Radius + offset) / (float) Math.Cos(2 * Math.PI / _quality);
                 Points.Add(Center);
                 var side1 = Direction.Rotated(-Angle * 0.5f);
                 for (var i = 0; i <= _quality; i++)
                 {
                     var cDirection = side1.Rotated(i * Angle / _quality).Normalized();
-                    Points.Add(
-                        new Vector2(Center.X + outRadius * cDirection.X, Center.Y + outRadius * cDirection.Y));
+                    Points.Add(new Vector2(Center.X + outRadius * cDirection.X, Center.Y + outRadius * cDirection.Y));
                 }
             }
 
             #endregion
         }
+
+        #region Public Methods and Operators
+
+        public static Paths ClipPolygons(List<Polygon> polygons)
+        {
+            var subj = new Paths(polygons.Count);
+            var clip = new Paths(polygons.Count);
+            foreach (var polygon in polygons)
+            {
+                subj.Add(polygon.ToClipperPath());
+                clip.Add(polygon.ToClipperPath());
+            }
+
+            var solution = new Paths();
+            var c = new Clipper();
+            c.AddPaths(subj, PolyType.ptSubject, true);
+            c.AddPaths(clip, PolyType.ptClip, true);
+            c.Execute(ClipType.ctUnion, solution, PolyFillType.pftPositive, PolyFillType.pftEvenOdd);
+            return solution;
+        }
+
+        public static void DrawCircleOnMinimap(Vector3 center,
+            float radius,
+            Color color,
+            int thickness = 1,
+            int quality = 100)
+        {
+            var pointList = new List<Vector3>();
+            for (var i = 0; i < quality; i++)
+            {
+                var angle = i * Math.PI * 2 / quality;
+                pointList.Add(new Vector3(center.X + radius * (float) Math.Cos(angle),
+                    center.Y,
+                    center.Z + radius * (float) Math.Sin(angle)));
+            }
+            for (var i = 0; i < pointList.Count; i++)
+            {
+                var a = pointList[i];
+                var b = pointList[i == pointList.Count - 1 ? 0 : i + 1];
+
+                Vector2 aonScreen;
+                Vector2 bonScreen;
+
+                Render.WorldToMinimap(a, out aonScreen);
+                Render.WorldToMinimap(b, out bonScreen);
+
+                Render.Line(aonScreen, bonScreen, color);
+            }
+        }
+
+        public static bool IsInside(this Vector3 point, Polygon poly) => !point.IsOutside(poly);
+
+        public static bool IsInside(this Vector2 point, Polygon poly) => !point.IsOutside(poly);
+
+        public static bool IsOutside(this Vector3 point, Polygon poly)
+        {
+            var p = new IntPoint(point.X, point.Y);
+            return Clipper.PointInPolygon(p, poly.ToClipperPath()) != 1;
+        }
+
+        public static bool IsOutside(this Vector2 point, Polygon poly)
+        {
+            var p = new IntPoint(point.X, point.Y);
+            return Clipper.PointInPolygon(p, poly.ToClipperPath()) != 1;
+        }
+
+        /// <summary>
+        ///     Returns the position on the path after t milliseconds at speed speed.
+        /// </summary>
+        public static Vector2 PositionAfter(this List<Vector2> self, int t, int speed, int delay = 0)
+        {
+            var distance = Math.Max(0, t - delay) * speed / 1000;
+            for (var i = 0; i <= self.Count - 2; i++)
+            {
+                var from = self[i];
+                var to = self[i + 1];
+                var d = (int) to.Distance(from);
+                if (d > distance)
+                {
+                    return from + distance * (to - from).Normalized();
+                }
+
+                distance -= d;
+            }
+
+            return self[self.Count - 1];
+        }
+
+        public static Vector3 SwitchZy(this Vector3 v) => new Vector3(v.X, v.Y, v.Z);
+
+        public static Polygon ToPolygon(this Path v)
+        {
+            var polygon = new Polygon();
+            foreach (var point in v)
+            {
+                polygon.Add(new Vector2(point.X, point.Y));
+            }
+
+            return polygon;
+        }
+
+        //Clipper
+        public static List<Polygon> ToPolygons(this Paths v) { return v.Select(path => path.ToPolygon()).ToList(); }
+
+        #endregion
     }
 }

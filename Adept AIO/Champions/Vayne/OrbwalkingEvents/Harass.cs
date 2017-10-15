@@ -1,12 +1,12 @@
-﻿using Adept_AIO.Champions.Vayne.Core;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec;
-using Aimtec.SDK.Extensions;
-using Aimtec.SDK.Orbwalking;
-
-namespace Adept_AIO.Champions.Vayne.OrbwalkingMode
+﻿namespace Adept_AIO.Champions.Vayne.OrbwalkingEvents
 {
-    internal class Harass
+    using Aimtec;
+    using Aimtec.SDK.Extensions;
+    using Aimtec.SDK.Orbwalking;
+    using Core;
+    using SDK.Unit_Extensions;
+
+    class Harass
     {
         public static void PostAttack(object sender, PostAttackEventArgs args)
         {
@@ -31,7 +31,9 @@ namespace Adept_AIO.Champions.Vayne.OrbwalkingMode
                 SpellManager.CastQ(target, MenuConfig.Harass["Mode2"].Value);
             }
 
-            if (SpellManager.E.Ready && MenuConfig.Harass["E"].Enabled && MenuConfig.Harass[target.ChampionName].Enabled)
+            if (SpellManager.E.Ready &&
+                MenuConfig.Harass["E"].Enabled &&
+                MenuConfig.Harass[target.ChampionName].Enabled)
             {
                 SpellManager.CastE(target);
             }

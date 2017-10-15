@@ -1,11 +1,11 @@
-﻿using System.Linq;
-using Adept_AIO.Champions.Jinx.Core;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec.SDK.Extensions;
-
-namespace Adept_AIO.Champions.Jinx.OrbwalkingEvents
+﻿namespace Adept_AIO.Champions.Jinx.OrbwalkingEvents
 {
-    internal class JungleClear
+    using System.Linq;
+    using Aimtec.SDK.Extensions;
+    using Core;
+    using SDK.Unit_Extensions;
+
+    class JungleClear
     {
         private readonly MenuConfig _menuConfig;
         private readonly SpellConfig _spellConfig;
@@ -18,11 +18,6 @@ namespace Adept_AIO.Champions.Jinx.OrbwalkingEvents
 
         public void OnUpdate()
         {
-            if (Global.Orbwalker.IsWindingUp)
-            {
-                return;
-            }
-
             var minion = GameObjects.JungleLarge.FirstOrDefault(x => x.IsValidTarget(_spellConfig.W.Range));
             if (minion == null)
             {
@@ -31,8 +26,11 @@ namespace Adept_AIO.Champions.Jinx.OrbwalkingEvents
 
             var dist = Global.Player.Distance(minion);
 
-            if (_spellConfig.W.Ready && _menuConfig.JungleClear["W"].Enabled && _menuConfig.JungleClear["W"].Value < Global.Player.ManaPercent() &&
-                dist <= 650 && Global.Player.CountEnemyHeroesInRange(2000) == 0)
+            if (_spellConfig.W.Ready &&
+                _menuConfig.JungleClear["W"].Enabled &&
+                _menuConfig.JungleClear["W"].Value < Global.Player.ManaPercent() &&
+                dist <= 650 &&
+                Global.Player.CountEnemyHeroesInRange(2000) == 0)
             {
                 _spellConfig.W.Cast(minion);
             }
@@ -40,7 +38,7 @@ namespace Adept_AIO.Champions.Jinx.OrbwalkingEvents
             if (_spellConfig.Q.Ready && _menuConfig.JungleClear["Q"].Enabled)
             {
                 if (!_spellConfig.IsQ2 && dist > _spellConfig.DefaultAuotAttackRange ||
-                     _spellConfig.IsQ2 && dist <= _spellConfig.DefaultAuotAttackRange)
+                    _spellConfig.IsQ2 && dist <= _spellConfig.DefaultAuotAttackRange)
                 {
                     _spellConfig.Q.Cast();
                 }

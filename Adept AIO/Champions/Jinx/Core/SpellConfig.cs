@@ -1,18 +1,18 @@
-﻿using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec;
-using Aimtec.SDK.Extensions;
-using Aimtec.SDK.Prediction.Skillshots;
-using Spell = Aimtec.SDK.Spell;
-
-namespace Adept_AIO.Champions.Jinx.Core
+﻿namespace Adept_AIO.Champions.Jinx.Core
 {
-    internal class SpellConfig
+    using Aimtec;
+    using Aimtec.SDK.Extensions;
+    using Aimtec.SDK.Prediction.Skillshots;
+    using SDK.Unit_Extensions;
+    using Spell = Aimtec.SDK.Spell;
+
+    class SpellConfig
     {
+        public int DefaultAuotAttackRange = 590;
         public Spell Q, W, E, R;
 
         public bool IsQ2 => Global.Player.HasBuff("JinxQ");
         public int Q2Range => 610 + 25 * Global.Player.GetSpell(SpellSlot.Q).Level;
-        public int DefaultAuotAttackRange = 590;
 
         public void Load()
         {

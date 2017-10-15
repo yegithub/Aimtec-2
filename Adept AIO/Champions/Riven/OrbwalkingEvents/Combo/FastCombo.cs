@@ -1,19 +1,19 @@
-﻿using Adept_AIO.Champions.Riven.Core;
-using Adept_AIO.Champions.Riven.Miscellaneous;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec;
-using Aimtec.SDK.Extensions;
-
-namespace Adept_AIO.Champions.Riven.OrbwalkingEvents.Combo
+﻿namespace Adept_AIO.Champions.Riven.OrbwalkingEvents.Combo
 {
-    internal class FastCombo
+    using Aimtec;
+    using Aimtec.SDK.Extensions;
+    using Core;
+    using Miscellaneous;
+    using SDK.Unit_Extensions;
+
+    class FastCombo
     {
         public static void OnPostAttack(Obj_AI_Base target)
         {
-            if (SpellConfig.R2.Ready
-             && Enums.UltimateMode == UltimateMode.Second
-             && MenuConfig.Combo["R2"].Enabled
-             && target.HealthPercent() <= 40)
+            if (SpellConfig.R2.Ready &&
+                Enums.UltimateMode == UltimateMode.Second &&
+                MenuConfig.Combo["R2"].Enabled &&
+                target.HealthPercent() <= 40)
             {
                 SpellManager.CastR2(target);
             }
@@ -34,7 +34,6 @@ namespace Adept_AIO.Champions.Riven.OrbwalkingEvents.Combo
                     SpellManager.CastQ(target);
                 }
             }
-         
         }
 
         public static void OnUpdate(Obj_AI_Base target)

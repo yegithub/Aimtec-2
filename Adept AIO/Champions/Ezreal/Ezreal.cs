@@ -1,13 +1,12 @@
-﻿using Adept_AIO.Champions.Ezreal.Miscellaneous;
-
-namespace Adept_AIO.Champions.Ezreal
+﻿namespace Adept_AIO.Champions.Ezreal
 {
+    using Aimtec;
     using Core;
     using Drawings;
+    using Miscellaneous;
     using SDK.Delegates;
-    using Aimtec;
 
-    internal class Ezreal
+    class Ezreal
     {
         public static void Init()
         {

@@ -1,10 +1,10 @@
-﻿using Adept_AIO.Champions.Zed.Core;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec;
-
-namespace Adept_AIO.Champions.Zed.OrbwalkingEvents
+﻿namespace Adept_AIO.Champions.Zed.OrbwalkingEvents
 {
-    internal class Flee
+    using Aimtec;
+    using Core;
+    using SDK.Unit_Extensions;
+
+    class Flee
     {
         public static void OnKeyPressed()
         {

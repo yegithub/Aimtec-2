@@ -1,9 +1,9 @@
-﻿using System.Drawing;
-using Aimtec;
-
-namespace Adept_AIO.SDK.Draw_Extension
+﻿namespace Adept_AIO.SDK.Draw_Extension
 {
-    internal class DamageIndicator
+    using System.Drawing;
+    using Aimtec;
+
+    class DamageIndicator
     {
         internal static int Height => 9;
         internal static int Width => 104;
@@ -14,19 +14,16 @@ namespace Adept_AIO.SDK.Draw_Extension
         {
             get
             {
-                if (Unit != null)
+                if (this.Unit != null)
                 {
-                    return Unit.IsAlly ? new Vector2(34, 9) 
-                                       : new Vector2(10, 20);
+                    return this.Unit.IsAlly ? new Vector2(34, 9) : new Vector2(10, 20);
                 }
                 return new Vector2();
             }
         }
 
-        public Vector2 StartPosition()
-        {
-            return new Vector2(Unit.FloatingHealthBarPosition.X + Offset.X, Unit.FloatingHealthBarPosition.Y + Offset.Y);
-        }
+        public Vector2 StartPosition() => new Vector2(this.Unit.FloatingHealthBarPosition.X + this.Offset.X,
+            this.Unit.FloatingHealthBarPosition.Y + this.Offset.Y);
 
         private Vector2 EndPosition(float dmg)
         {
@@ -34,24 +31,20 @@ namespace Adept_AIO.SDK.Draw_Extension
             return new Vector2(StartPosition().X + w, StartPosition().Y);
         }
 
-        private float GetHpProc(float dmg)
-        {
-            return (Unit.Health - dmg > 0 ? Unit.Health - dmg : 0) 
-                 / Unit.MaxHealth;
-        }
+        private float GetHpProc(float dmg) =>
+            (this.Unit.Health - dmg > 0 ? this.Unit.Health - dmg : 0) / this.Unit.MaxHealth;
 
         public void DrawDmg(float dmg, Color color)
         {
             var from = EndPosition(0);
-            var to   = EndPosition(dmg);
+            var to = EndPosition(dmg);
 
-            if (from.IsZero || to.IsZero || Unit == null)
+            if (from.IsZero || to.IsZero || this.Unit == null)
             {
                 return;
             }
 
-            Render.Line(new Vector2(from.X, from.Y - 5),
-                        new Vector2(to.X, to.Y - 5), Height, false, color);
+            Render.Line(new Vector2(from.X, from.Y - 5), new Vector2(to.X, to.Y - 5), Height, false, color);
         }
     }
 }

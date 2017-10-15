@@ -1,10 +1,10 @@
-﻿using Aimtec;
-using Aimtec.SDK.Prediction.Skillshots;
-using Spell = Aimtec.SDK.Spell;
-
-namespace Adept_AIO.Champions.Ezreal.Core
+﻿namespace Adept_AIO.Champions.Ezreal.Core
 {
-    internal class SpellConfig
+    using Aimtec;
+    using Aimtec.SDK.Prediction.Skillshots;
+    using Spell = Aimtec.SDK.Spell;
+
+    class SpellConfig
     {
         public static Spell Q, W, E, R;
 
@@ -17,7 +17,7 @@ namespace Adept_AIO.Champions.Ezreal.Core
             W.SetSkillshot(0.5f, 80, 1600, false, SkillshotType.Line, false, HitChance.None);
 
             E = new Spell(SpellSlot.E, 900);
-           
+
             R = new Spell(SpellSlot.R, int.MaxValue);
             R.SetSkillshot(1, 160, 2000, false, SkillshotType.Line);
         }

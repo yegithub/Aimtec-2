@@ -1,13 +1,13 @@
-﻿using System.Linq;
-using Adept_AIO.Champions.Rengar.Core;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec;
-using Aimtec.SDK.Damage;
-using Aimtec.SDK.Extensions;
-
-namespace Adept_AIO.Champions.Rengar.OrbwalkingEvents
+﻿namespace Adept_AIO.Champions.Rengar.OrbwalkingEvents
 {
-    internal class LaneClear
+    using System.Linq;
+    using Aimtec;
+    using Aimtec.SDK.Damage;
+    using Aimtec.SDK.Extensions;
+    using Core;
+    using SDK.Unit_Extensions;
+
+    class LaneClear
     {
         public static void OnPostAttack()
         {
@@ -16,7 +16,8 @@ namespace Adept_AIO.Champions.Rengar.OrbwalkingEvents
                 return;
             }
 
-            var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsValidTarget(SpellConfig.Q.Range) && x.IsEnemy);
+            var minion =
+                GameObjects.EnemyMinions.FirstOrDefault(x => x.IsValidTarget(SpellConfig.Q.Range) && x.IsEnemy);
             if (minion == null)
             {
                 return;
@@ -39,8 +40,9 @@ namespace Adept_AIO.Champions.Rengar.OrbwalkingEvents
             {
                 return;
             }
-            
-            var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsValidTarget(SpellConfig.E.Range) && x.IsEnemy);
+
+            var minion =
+                GameObjects.EnemyMinions.FirstOrDefault(x => x.IsValidTarget(SpellConfig.E.Range) && x.IsEnemy);
             if (minion == null)
             {
                 return;
@@ -50,8 +52,8 @@ namespace Adept_AIO.Champions.Rengar.OrbwalkingEvents
 
             if (SpellConfig.Q.Ready && distance < SpellConfig.Q.Range)
             {
-                if (minion.UnitSkinName.ToLower().Contains("cannon") && minion.Health >
-                    Global.Player.GetSpellDamage(minion, SpellSlot.Q))
+                if (minion.UnitSkinName.ToLower().Contains("cannon") &&
+                    minion.Health > Global.Player.GetSpellDamage(minion, SpellSlot.Q))
                 {
                     return;
                 }

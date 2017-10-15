@@ -1,13 +1,13 @@
-﻿using Adept_AIO.Champions.LeeSin.Core.Spells;
-using Adept_AIO.Champions.LeeSin.Ward_Manager;
-using Adept_AIO.SDK.Delegates;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec;
-using Aimtec.SDK.Extensions;
-
-namespace Adept_AIO.Champions.LeeSin.Miscellaneous
+﻿namespace Adept_AIO.Champions.LeeSin.Miscellaneous
 {
-    internal class AntiGapcloser
+    using Aimtec;
+    using Aimtec.SDK.Extensions;
+    using Core.Spells;
+    using SDK.Delegates;
+    using SDK.Unit_Extensions;
+    using Ward_Manager;
+
+    class AntiGapcloser
     {
         private readonly ISpellConfig _spellConfig;
         private readonly IWardManager _wardManager;
@@ -22,12 +22,12 @@ namespace Adept_AIO.Champions.LeeSin.Miscellaneous
 
         public void OnGapcloser(Obj_AI_Hero sender, GapcloserArgs args)
         {
-            if (sender.IsMe 
-            || !sender.IsEnemy 
-            || !_spellConfig.W.Ready 
-            || !_spellConfig.IsFirst(_spellConfig.W)
-            || !_wardTracker.IsWardReady() 
-            ||  args.EndPosition.Distance(Global.Player) > 425)
+            if (sender.IsMe ||
+                !sender.IsEnemy ||
+                !_spellConfig.W.Ready ||
+                !_spellConfig.IsFirst(_spellConfig.W) ||
+                !_wardTracker.IsWardReady() ||
+                args.EndPosition.Distance(Global.Player) > 425)
             {
                 return;
             }

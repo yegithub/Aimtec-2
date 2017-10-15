@@ -1,22 +1,19 @@
-﻿using System;
-using Adept_AIO.SDK.Generic;
-using Adept_AIO.SDK.Unit_Extensions;
-using Adept_AIO.SDK.Usables;
-using Aimtec;
-using Aimtec.SDK.Extensions;
-
-namespace Adept_AIO.Champions.LeeSin.Ward_Manager
+﻿namespace Adept_AIO.Champions.LeeSin.Ward_Manager
 {
-    internal class WardManager : IWardManager
+    using System;
+    using Aimtec;
+    using Aimtec.SDK.Extensions;
+    using SDK.Generic;
+    using SDK.Unit_Extensions;
+    using SDK.Usables;
+
+    class WardManager : IWardManager
     {
-        private readonly IWardTracker _wardTracker; 
+        private readonly IWardTracker _wardTracker;
+
+        public WardManager(IWardTracker wardTracker) { _wardTracker = wardTracker; }
 
         public float LastTimeCasted { get; private set; }
-
-        public WardManager(IWardTracker wardTracker)
-        {
-            _wardTracker = wardTracker;
-        }
 
         public void WardJump(Vector3 position, int range)
         {
@@ -26,7 +23,7 @@ namespace Adept_AIO.Champions.LeeSin.Ward_Manager
             }
 
             var ward = _wardTracker.Ward();
-            
+
             if (ward == null)
             {
                 DebugConsole.Write("DEBUG: [Warning] There are no wards. Failed to continue.", ConsoleColor.Yellow);
@@ -35,7 +32,7 @@ namespace Adept_AIO.Champions.LeeSin.Ward_Manager
 
             position = Global.Player.ServerPosition.Extend(position, range);
 
-             LastTimeCasted = Game.TickCount;
+            this.LastTimeCasted = Game.TickCount;
             _wardTracker.LastWardCreated = Game.TickCount;
             _wardTracker.WardPosition = position;
 

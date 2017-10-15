@@ -1,30 +1,29 @@
-﻿using Adept_AIO.Champions.Riven.Core;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec;
-using Aimtec.SDK.Extensions;
-using Aimtec.SDK.Util;
-
-namespace Adept_AIO.Champions.Riven.Miscellaneous
+﻿namespace Adept_AIO.Champions.Riven.Miscellaneous
 {
-    internal class Animation
+    using Aimtec;
+    using Aimtec.SDK.Extensions;
+    using Aimtec.SDK.Util;
+    using Core;
+    using SDK.Unit_Extensions;
+
+    class Animation
     {
         public static void Reset()
         {
             Global.Orbwalker.AttackingEnabled = false;
 
-            DelayAction.Queue((int)GetDelay(), () =>
-            {
-                Global.Orbwalker.Move(Game.CursorPos);
-                Global.Orbwalker.AttackingEnabled = true;
-                Global.Orbwalker.ResetAutoAttackTimer();
-            });
+            DelayAction.Queue((int) GetDelay(),
+                () =>
+                {
+                    Global.Orbwalker.Move(Game.CursorPos);
+                    Global.Orbwalker.AttackingEnabled = true;
+                    Global.Orbwalker.ResetAutoAttackTimer();
+                });
         }
 
-        private static float GetDelay()
-        {
-            return (Extensions.CurrentQCount == 1 ? 480 : 380) - 3.333f * Global.Player.Level +
-                   (Global.Player.HasBuff("RivenFengShuiEngine") ? 80 : 0); 
-        }
+        private static float GetDelay() => (Extensions.CurrentQCount == 1 ? 480 : 380) -
+                                           3.333f * Global.Player.Level +
+                                           (Global.Player.HasBuff("RivenFengShuiEngine") ? 80 : 0);
 
         public static void OnPlayAnimation(Obj_AI_Base sender, Obj_AI_BasePlayAnimationEventArgs args)
         {

@@ -1,26 +1,24 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec;
-using Aimtec.SDK.Extensions;
-using Aimtec.SDK.Util;
-
-namespace Adept_AIO.Champions.Zed.Core
+﻿namespace Adept_AIO.Champions.Zed.Core
 {
-    internal class ShadowManager
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading;
+    using Aimtec;
+    using Aimtec.SDK.Extensions;
+    using Aimtec.SDK.Util;
+    using SDK.Unit_Extensions;
+
+    class ShadowManager
     {
         public static List<Obj_AI_Minion> Shadows;
 
         public static bool CanSwitchToShadow()
         {
-            return Global.Player.GetSpell(SpellSlot.W).ToggleState != 0 && Shadows.Any(x => x.Distance(Global.Player) <= 1300);
+            return Global.Player.GetSpell(SpellSlot.W).ToggleState != 0 &&
+                   Shadows.Any(x => x.Distance(Global.Player) <= 1300);
         }
 
-        public static bool CanCastW1()
-        {
-            return Global.Player.GetSpell(SpellSlot.W).ToggleState == 0;
-        }
+        public static bool CanCastW1() => Global.Player.GetSpell(SpellSlot.W).ToggleState == 0;
 
         public static bool IsShadow(Obj_AI_Minion shadow)
         {
@@ -28,25 +26,34 @@ namespace Adept_AIO.Champions.Zed.Core
             {
                 return false;
             }
-            return shadow.IsAlly && !shadow.IsDead && shadow.IsValid && shadow.UnitSkinName.ToLower().Contains("shadow");
+            return shadow.IsAlly &&
+                   !shadow.IsDead &&
+                   shadow.IsValid &&
+                   shadow.UnitSkinName.ToLower().Contains("shadow");
         }
 
         public static void OnDelete(GameObject sender)
         {
             if (Shadows.Any(x => x.NetworkId == sender.NetworkId))
+            {
                 Shadows.RemoveAll(x => x.NetworkId == sender.NetworkId);
+            }
         }
 
         public static void OnCreate(GameObject sender)
         {
             var shadow = sender as Obj_AI_Minion;
-            if (shadow == null || !IsShadow(shadow) || Game.TickCount - SpellManager.LastR > 200 && Game.TickCount - SpellManager.LastR <= 1000)
+            if (shadow == null ||
+                !IsShadow(shadow) ||
+                Game.TickCount - SpellManager.LastR > 200 && Game.TickCount - SpellManager.LastR <= 1000)
             {
                 return;
             }
 
             Shadows.Add(shadow);
-            DelayAction.Queue(5000, () => Shadows.RemoveAll(x => x.NetworkId == shadow.NetworkId), new CancellationToken(false));
+            DelayAction.Queue(5000,
+                () => Shadows.RemoveAll(x => x.NetworkId == shadow.NetworkId),
+                new CancellationToken(false));
         }
 
         public static Vector3 GetShadowNearestTo(Vector3 pos)

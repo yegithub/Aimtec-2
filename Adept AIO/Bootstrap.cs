@@ -1,35 +1,48 @@
-﻿using Adept_AIO.Champions.Azir;
-using Adept_AIO.Champions.Ezreal;
-using Adept_AIO.Champions.Gragas;
-using Adept_AIO.Champions.Vayne;
-using Adept_AIO.Champions.Zed;
-using Adept_AIO.SDK.Generic;
-using Adept_AIO.SDK.Unit_Extensions;
-
-namespace Adept_AIO
+﻿namespace Adept_AIO
 {
     using System.Linq;
-    using SDK.Usables;
     using Aimtec.SDK.Events;
-
-    using Champions.Jinx;
-    using Champions.Tristana;
-    using Champions.Kayn;
-    using Champions.LeeSin;
+    using Champions.Azir;
+    using Champions.Ezreal;
+    using Champions.Gragas;
     using Champions.Irelia;
     using Champions.Jax;
+    using Champions.Jinx;
+    using Champions.Kayn;
+    using Champions.LeeSin;
+    using Champions.Lucian;
     using Champions.Rengar;
     using Champions.Riven;
+    using Champions.Tristana;
+    using Champions.Vayne;
     using Champions.Yasuo;
+    using Champions.Zed;
+    using SDK.Generic;
+    using SDK.Unit_Extensions;
+    using SDK.Usables;
 
-    internal class Bootstrap
+    class Bootstrap
     {
-        private static void Main()
+        private static readonly string[] Valid =
         {
-            GameEvents.GameStart += GameEvents_GameStart;
-        }
+            "Lucian",
+            "Gragas",
+            "Ezreal",
+            "Azir",
+            "Riven",
+            "Irelia",
+            "Jax",
+            "Rengar",
+            "Yasuo",
+            "Kayn",
+            "LeeSin",
+            "Jinx",
+            "Tristana",
+            "Zed",
+            "Vayne"
+        };
 
-        private static readonly string[] Valid = { "Gragas", "Ezreal", "Azir", "Riven", "Irelia", "Jax", "Rengar", "Yasuo", "Kayn", "LeeSin", "Jinx", "Tristana", "Zed", "Vayne" };
+        private static void Main() { GameEvents.GameStart += GameEvents_GameStart; }
 
         private static void GameEvents_GameStart()
         {
@@ -45,6 +58,9 @@ namespace Adept_AIO
 
             switch (Global.Player.ChampionName)
             {
+                case "Lucian":
+                    new Lucian();
+                    break;
                 case "Gragas":
                     Gragas.Init();
                     break;

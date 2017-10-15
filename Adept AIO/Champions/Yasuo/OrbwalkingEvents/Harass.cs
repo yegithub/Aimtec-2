@@ -1,10 +1,10 @@
-﻿using Adept_AIO.Champions.Yasuo.Core;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec.SDK.Extensions;
-
-namespace Adept_AIO.Champions.Yasuo.OrbwalkingEvents
+﻿namespace Adept_AIO.Champions.Yasuo.OrbwalkingEvents
 {
-    internal class Harass
+    using Aimtec.SDK.Extensions;
+    using Core;
+    using SDK.Unit_Extensions;
+
+    class Harass
     {
         public static void OnUpdate()
         {

@@ -1,32 +1,30 @@
-﻿using Adept_AIO.Champions.LeeSin.Core;
-using Adept_AIO.Champions.LeeSin.Miscellaneous;
-using Adept_AIO.Champions.LeeSin.OrbwalkingEvents.Combo;
-using Adept_AIO.Champions.LeeSin.OrbwalkingEvents.Harass;
-using Adept_AIO.Champions.LeeSin.OrbwalkingEvents.Insec;
-using Adept_AIO.Champions.LeeSin.OrbwalkingEvents.JungleClear;
-using Adept_AIO.Champions.LeeSin.OrbwalkingEvents.KickFlash;
-using Adept_AIO.Champions.LeeSin.OrbwalkingEvents.LaneClear;
-using Adept_AIO.Champions.LeeSin.OrbwalkingEvents.LastHit;
-using Adept_AIO.Champions.LeeSin.OrbwalkingEvents.WardJump;
-using Adept_AIO.Champions.LeeSin.Ward_Manager;
-using Adept_AIO.SDK.Delegates;
-using Adept_AIO.SDK.Unit_Extensions;
-
-namespace Adept_AIO.Champions.LeeSin
+﻿namespace Adept_AIO.Champions.LeeSin
 {
     using System.Collections.Generic;
-   
     using Aimtec;
     using Aimtec.SDK.Menu;
     using Aimtec.SDK.Menu.Components;
     using Aimtec.SDK.Orbwalking;
     using Aimtec.SDK.Util;
-    using Drawings;
+    using Core;
     using Core.Damage;
     using Core.Insec_Manager;
     using Core.Spells;
+    using Drawings;
+    using Miscellaneous;
+    using OrbwalkingEvents.Combo;
+    using OrbwalkingEvents.Harass;
+    using OrbwalkingEvents.Insec;
+    using OrbwalkingEvents.JungleClear;
+    using OrbwalkingEvents.KickFlash;
+    using OrbwalkingEvents.LaneClear;
+    using OrbwalkingEvents.LastHit;
+    using OrbwalkingEvents.WardJump;
+    using SDK.Delegates;
+    using SDK.Unit_Extensions;
+    using Ward_Manager;
 
-    internal class LeeSin
+    class LeeSin
     {
         public void Init()
         {
@@ -43,7 +41,7 @@ namespace Adept_AIO.Champions.LeeSin
             var kickFlash = new KickFlash(spellConfig, insecManager);
 
             var combo = new Combo(wardmanager, spellConfig, wardtracker);
-           
+
             var harass = new Harass(wardmanager, spellConfig);
             var jungle = new JungleClear(wardmanager, spellConfig);
             var lane = new LaneClear(spellConfig);
@@ -53,27 +51,35 @@ namespace Adept_AIO.Champions.LeeSin
 
             var mainmenu = new Menu("main", "Adept AIO", true);
             mainmenu.Attach();
-            
-            spellConfig.InsecMode = new OrbwalkerMode("Insec", KeyCode.T, Global.TargetSelector.GetSelectedTarget, insec.OnKeyPressed);
+
+            spellConfig.InsecMode = new OrbwalkerMode("Insec",
+                KeyCode.T,
+                Global.TargetSelector.GetSelectedTarget,
+                insec.OnKeyPressed);
             spellConfig.WardjumpMode = new OrbwalkerMode("Wardjump", KeyCode.G, null, wardjump.OnKeyPressed);
             spellConfig.KickFlashMode = new OrbwalkerMode("Kick Flash", KeyCode.A, null, kickFlash.OnKeyPressed);
-            
-            spellConfig.InsecMode.MenuItem.OnValueChanged += (sender, args) => insec.Enabled = args.GetNewValue<MenuKeyBind>().Value;
-            spellConfig.WardjumpMode.MenuItem.OnValueChanged += (sender, args) => wardjump.Enabled = args.GetNewValue<MenuKeyBind>().Value;
-            spellConfig.KickFlashMode.MenuItem.OnValueChanged += (sender, args) => kickFlash.Enabled = args.GetNewValue<MenuKeyBind>().Value;
+
+            spellConfig.InsecMode.MenuItem.OnValueChanged += (sender, args) =>
+                insec.Enabled = args.GetNewValue<MenuKeyBind>().Value;
+            spellConfig.WardjumpMode.MenuItem.OnValueChanged += (sender, args) =>
+                wardjump.Enabled = args.GetNewValue<MenuKeyBind>().Value;
+            spellConfig.KickFlashMode.MenuItem.OnValueChanged += (sender, args) =>
+                kickFlash.Enabled = args.GetNewValue<MenuKeyBind>().Value;
 
             Global.Orbwalker.AddMode(spellConfig.InsecMode);
             Global.Orbwalker.AddMode(spellConfig.WardjumpMode);
             Global.Orbwalker.AddMode(spellConfig.KickFlashMode);
             Global.Orbwalker.Attach(mainmenu);
 
-            var insecMenu     = new Menu("Insec", "Insec");
-            var insecBk       = new MenuKeyBind("BK", "Bubba Kush Toggle", KeyCode.L, KeybindType.Toggle);
-            var insecF        = new MenuBool("Flash", "Enable Flash");
-            var insecObject   = new MenuBool("Object", "Use Q On Minions").SetToolTip("Uses Q to gapclose to every minion");
-            var insecQLast    = new MenuBool("Last", "Use Q After Insec").SetToolTip("Only possible if no minions near target");
+            var insecMenu = new Menu("Insec", "Insec");
+            var insecBk = new MenuKeyBind("BK", "Bubba Kush Toggle", KeyCode.L, KeybindType.Toggle);
+            var insecF = new MenuBool("Flash", "Enable Flash");
+            var insecObject =
+                new MenuBool("Object", "Use Q On Minions").SetToolTip("Uses Q to gapclose to every minion");
+            var insecQLast =
+                new MenuBool("Last", "Use Q After Insec").SetToolTip("Only possible if no minions near target");
             var insecPosition = new MenuList("Position", "Insec Position", new[] {"Ally Turret", "Ally Hero"}, 0);
-            var insecKick     = new MenuList("Kick", "Kick Type: ", new[] {"Flash R", "R Flash"}, 1);
+            var insecKick = new MenuList("Kick", "Kick Type: ", new[] {"Flash R", "R Flash"}, 1);
 
             insecMenu.Add(insecBk);
             insecMenu.Add(insecF);
@@ -95,30 +101,27 @@ namespace Adept_AIO.Champions.LeeSin
                 insec.Bk = args.GetNewValue<MenuKeyBind>().Value;
                 Temp.IsBubbaKush = args.GetNewValue<MenuKeyBind>().Value;
             };
-         
+
             insecF.OnValueChanged += (sender, args) => insec.FlashEnabled = args.GetNewValue<MenuBool>().Value;
             insecObject.OnValueChanged += (sender, args) => insec.ObjectEnabled = args.GetNewValue<MenuBool>().Value;
             insecQLast.OnValueChanged += (sender, args) => insec.QLast = args.GetNewValue<MenuBool>().Value;
-            insecPosition.OnValueChanged += (sender, args) => insecManager.InsecPositionValue = args.GetNewValue<MenuList>().Value;
-            insecKick.OnValueChanged += (sender, args) => insecManager.InsecKickValue = args.GetNewValue<MenuList>().Value;
+            insecPosition.OnValueChanged += (sender, args) =>
+                insecManager.InsecPositionValue = args.GetNewValue<MenuList>().Value;
+            insecKick.OnValueChanged += (sender, args) =>
+                insecManager.InsecKickValue = args.GetNewValue<MenuList>().Value;
 
             var comboMenu = new Menu("Combo", "Combo");
             var comboTurret = new MenuBool("Turret", "Don't Q2 Into Turret");
-            var comboQ    = new MenuBool("Q", "Use Q");
-            var comboQ2   = new MenuBool("Q2", "Use Q2");
-            var comboW    = new MenuBool("W", "Use W");
+            var comboQ = new MenuBool("Q", "Use Q");
+            var comboQ2 = new MenuBool("Q2", "Use Q2");
+            var comboW = new MenuBool("W", "Use W");
             var comboWard = new MenuBool("Ward", "Use Wards");
-            var comboE    = new MenuBool("E", "Use E");
+            var comboE = new MenuBool("E", "Use E");
 
-            foreach (var b in new List<MenuBool>
+            foreach (var b in new List<MenuBool> {comboTurret, comboQ, comboQ2, comboW, comboWard, comboE})
             {
-                comboTurret,
-                comboQ,
-                comboQ2,
-                comboW,
-                comboWard,
-                comboE
-            }) comboMenu.Add(b);
+                comboMenu.Add(b);
+            }
             mainmenu.Add(comboMenu);
 
             combo.TurretCheckEnabled = comboMenu["Turret"].Enabled;
@@ -128,7 +131,8 @@ namespace Adept_AIO.Champions.LeeSin
             combo.WardEnabled = comboMenu["Ward"].Enabled;
             combo.EEnabled = comboMenu["E"].Enabled;
 
-            comboTurret.OnValueChanged += (sender, args) => combo.TurretCheckEnabled = args.GetNewValue<MenuBool>().Value;
+            comboTurret.OnValueChanged += (sender, args) =>
+                combo.TurretCheckEnabled = args.GetNewValue<MenuBool>().Value;
             comboQ.OnValueChanged += (sender, args) => combo.Q1Enabled = args.GetNewValue<MenuBool>().Value;
             comboQ2.OnValueChanged += (sender, args) => combo.Q2Enabled = args.GetNewValue<MenuBool>().Value;
             comboW.OnValueChanged += (sender, args) => combo.WEnabled = args.GetNewValue<MenuBool>().Value;
@@ -169,15 +173,10 @@ namespace Adept_AIO.Champions.LeeSin
             var jungleW = new MenuBool("W", "W");
             var jungleE = new MenuBool("E", "E");
 
-            foreach (var b in new List<MenuBool>
+            foreach (var b in new List<MenuBool> {jungleSteal, jungleSmite, jungleBlue, jungleQ, jungleW, jungleE})
             {
-                jungleSteal,
-                jungleSmite,
-                jungleBlue,
-                jungleQ,
-                jungleW,
-                jungleE
-            }) jungleMenu.Add(b);
+                jungleMenu.Add(b);
+            }
             mainmenu.Add(jungleMenu);
 
             jungle.StealEnabled = jungleMenu["Steal"].Enabled;
@@ -200,13 +199,10 @@ namespace Adept_AIO.Champions.LeeSin
             var laneW = new MenuBool("W", "W");
             var laneE = new MenuBool("E", "E");
 
-            foreach (var b in new List<MenuBool>
+            foreach (var b in new List<MenuBool> {laneCheck, laneQ, laneW, laneE})
             {
-                laneCheck,
-                laneQ,
-                laneW,
-                laneE
-            }) laneMenu.Add(b);
+                laneMenu.Add(b);
+            }
             mainmenu.Add(laneMenu);
 
             lane.CheckEnabled = laneMenu["Check"].Enabled;
@@ -234,11 +230,10 @@ namespace Adept_AIO.Champions.LeeSin
             var ksE = new MenuBool("E", "E");
             var ksR = new MenuBool("R", "R");
 
-            foreach (var b in new List<MenuBool>
+            foreach (var b in new List<MenuBool> {ksIgnite, ksSmite, ksQ, ksE, ksR})
             {
-                ksIgnite, ksSmite, ksQ, ksE, ksR
-            })
-            ksMenu.Add(b);
+                ksMenu.Add(b);
+            }
             mainmenu.Add(ksMenu);
 
             killsteal.IgniteEnabled = ksMenu["Ignite"].Enabled;
@@ -254,7 +249,8 @@ namespace Adept_AIO.Champions.LeeSin
             ksR.OnValueChanged += (sender, args) => killsteal.REnabled = args.GetNewValue<MenuBool>().Value;
 
             var drawMenu = new Menu("Draw", "DrawManager");
-            var drawSegments = new MenuSlider("Segments", "Segments", 100, 10, 150).SetToolTip("Smoothness of the circles");
+            var drawSegments =
+                new MenuSlider("Segments", "Segments", 100, 10, 150).SetToolTip("Smoothness of the circles");
             var drawPosition = new MenuBool("Position", "Insec Position");
             var drawQ = new MenuBool("Q", "Q Range");
 
@@ -266,17 +262,19 @@ namespace Adept_AIO.Champions.LeeSin
             drawManager.QEnabled = drawMenu["Q"].Enabled;
             drawManager.SegmentsValue = drawMenu["Segments"].Value;
             drawManager.PositionEnabled = drawMenu["Position"].Enabled;
-           
-            drawSegments.OnValueChanged += (sender, args) => drawManager.SegmentsValue = args.GetNewValue<MenuSlider>().Value;
-            drawPosition.OnValueChanged += (sender, args) => drawManager.PositionEnabled = args.GetNewValue<MenuBool>().Value;
+
+            drawSegments.OnValueChanged += (sender, args) =>
+                drawManager.SegmentsValue = args.GetNewValue<MenuSlider>().Value;
+            drawPosition.OnValueChanged += (sender, args) =>
+                drawManager.PositionEnabled = args.GetNewValue<MenuBool>().Value;
             drawQ.OnValueChanged += (sender, args) => drawManager.QEnabled = args.GetNewValue<MenuBool>().Value;
-           
+
             Gapcloser.Attach(mainmenu, "Gapcloser");
             var gapcloser = new AntiGapcloser(spellConfig, wardmanager, wardtracker);
             Gapcloser.OnGapcloser += gapcloser.OnGapcloser;
 
             var manager = new Manager(combo, harass, jungle, lane, lasthit);
-          
+
             Game.OnUpdate += manager.OnUpdate;
             Game.OnUpdate += killsteal.OnUpdate;
 

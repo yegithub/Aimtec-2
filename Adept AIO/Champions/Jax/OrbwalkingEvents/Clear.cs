@@ -1,13 +1,12 @@
-﻿using System.Linq;
-using Adept_AIO.Champions.Jax.Core;
-using Adept_AIO.SDK.Unit_Extensions;
-using Adept_AIO.SDK.Usables;
-using Aimtec.SDK.Extensions;
-using GameObjects = Adept_AIO.SDK.Unit_Extensions.GameObjects;
-
-namespace Adept_AIO.Champions.Jax.OrbwalkingEvents
+﻿namespace Adept_AIO.Champions.Jax.OrbwalkingEvents
 {
-    internal class Clear
+    using System.Linq;
+    using Aimtec.SDK.Extensions;
+    using Core;
+    using SDK.Unit_Extensions;
+    using SDK.Usables;
+
+    class Clear
     {
         public static void OnPostAttack()
         {
@@ -23,7 +22,8 @@ namespace Adept_AIO.Champions.Jax.OrbwalkingEvents
                 Global.Orbwalker.ResetAutoAttackTimer();
             }
 
-            if (SpellConfig.E.Ready && MenuConfig.Clear["E"].Enabled && Global.Player.ManaPercent() >= 75 || Global.Player.HealthPercent() <= 35)
+            if (SpellConfig.E.Ready && MenuConfig.Clear["E"].Enabled && Global.Player.ManaPercent() >= 75 ||
+                Global.Player.HealthPercent() <= 35)
             {
                 SpellConfig.E.Cast();
             }
@@ -31,7 +31,9 @@ namespace Adept_AIO.Champions.Jax.OrbwalkingEvents
 
         public static void OnUpdate()
         {
-            if (MenuConfig.Clear["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(1500) > 0 || !MenuConfig.Clear["Q"].Enabled || !SpellConfig.Q.Ready)
+            if (MenuConfig.Clear["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(1500) > 0 ||
+                !MenuConfig.Clear["Q"].Enabled ||
+                !SpellConfig.Q.Ready)
             {
                 return;
             }

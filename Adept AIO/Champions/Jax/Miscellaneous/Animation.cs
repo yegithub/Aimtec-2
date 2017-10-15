@@ -1,11 +1,11 @@
-﻿using System.Threading;
-using Adept_AIO.Champions.Jax.Core;
-using Aimtec;
-using Aimtec.SDK.Util;
-
-namespace Adept_AIO.Champions.Jax.Miscellaneous
+﻿namespace Adept_AIO.Champions.Jax.Miscellaneous
 {
-    internal class Animation
+    using System.Threading;
+    using Aimtec;
+    using Aimtec.SDK.Util;
+    using Core;
+
+    class Animation
     {
         public static void OnPlayAnimation(Obj_AI_Base sender, Obj_AI_BasePlayAnimationEventArgs args)
         {
@@ -13,7 +13,7 @@ namespace Adept_AIO.Champions.Jax.Miscellaneous
             {
                 return;
             }
-        
+
             switch (args.Animation)
             {
                 case "Spell3":
@@ -21,7 +21,7 @@ namespace Adept_AIO.Champions.Jax.Miscellaneous
                     break;
                 case "Spell3b":
                     SpellConfig.SecondE = true;
-                    DelayAction.Queue(300, ()=> SpellConfig.SecondE = false, new CancellationToken(false));
+                    DelayAction.Queue(300, () => SpellConfig.SecondE = false, new CancellationToken(false));
                     break;
             }
         }

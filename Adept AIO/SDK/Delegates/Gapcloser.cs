@@ -1,58 +1,55 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Aimtec;
-using Aimtec.SDK.Extensions;
-using Aimtec.SDK.Menu;
-using Aimtec.SDK.Menu.Components;
-
-namespace Adept_AIO.SDK.Delegates
+﻿namespace Adept_AIO.SDK.Delegates
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Aimtec;
+    using Aimtec.SDK.Extensions;
+    using Aimtec.SDK.Menu;
+    using Aimtec.SDK.Menu.Components;
+
     public delegate void OnGapcloserEvent(Obj_AI_Hero sender, GapcloserArgs args);
 
     public enum SpellType
     {
-        Melee     = 0,
-        Dash      = 1,
+        Melee = 0,
+        Dash = 1,
         SkillShot = 2,
-        Targeted  = 3
+        Targeted = 3
     }
 
-    internal struct SpellData
+    struct SpellData
     {
         public string ChampionName { get; set; }
-        public string SpellName    { get; set; }
-        public SpellSlot Slot      { get; set; }
+        public string SpellName { get; set; }
+        public SpellSlot Slot { get; set; }
         public SpellType SpellType { get; set; }
     }
 
     public class GapcloserArgs
     {
-        internal Obj_AI_Hero Unit    { get; set; }
-        public SpellSlot Slot        { get; set; }
-        public string SpellName      { get; set; }
-        public SpellType Type        { get; set; }
+        internal Obj_AI_Hero Unit { get; set; }
+        public SpellSlot Slot { get; set; }
+        public string SpellName { get; set; }
+        public SpellType Type { get; set; }
         public Vector3 StartPosition { get; set; }
-        public Vector3 EndPosition   { get; set; }
-        public int StartTick         { get; set; }
-        public int EndTick           { get; set; }
-        public int DurationTick      { get; set; }
-        public bool HaveShield       { get; set; }
+        public Vector3 EndPosition { get; set; }
+        public int StartTick { get; set; }
+        public int EndTick { get; set; }
+        public int DurationTick { get; set; }
+        public bool HaveShield { get; set; }
     }
 
     public static class Gapcloser
     {
-        public static event OnGapcloserEvent OnGapcloser;
-
         public static Dictionary<int, GapcloserArgs> Gapclosers = new Dictionary<int, GapcloserArgs>();
         internal static List<SpellData> Spells = new List<SpellData>();
 
         public static Menu Menu;
 
-        static Gapcloser()
-        {
-            Initialize();
-        }
+        static Gapcloser() { Initialize(); }
+
+        public static event OnGapcloserEvent OnGapcloser;
 
         public static void Attach(Menu mainMenu, string menuName)
         {
@@ -61,10 +58,7 @@ namespace Adept_AIO.SDK.Delegates
                 return;
             }
 
-            Menu = new Menu("", menuName)
-            {
-                new MenuBool("Enabled", "Enabled"),
-            };
+            Menu = new Menu("", menuName) {new MenuBool("Enabled", "Enabled")};
 
             mainMenu.Add(Menu);
 
@@ -72,7 +66,7 @@ namespace Adept_AIO.SDK.Delegates
             {
                 var heroMenu = new Menu(enemy.ChampionName, enemy.ChampionName)
                 {
-                    new MenuBool  (enemy.ChampionName + ".Enabled", "Enabled"),
+                    new MenuBool(enemy.ChampionName + ".Enabled", "Enabled"),
                     new MenuSlider(enemy.ChampionName + ".Distance", "If Target Distance To Player <", 550, 1, 700),
                     new MenuSlider(enemy.ChampionName + ".HPercent", "When Player (HP %) < ", 100, 1)
                 };
@@ -81,7 +75,12 @@ namespace Adept_AIO.SDK.Delegates
 
                 if (enemy.IsMelee)
                 {
-                    heroMenu.Add(new MenuSliderBool(enemy.ChampionName + ".Melee", "Anti Melee Attack | Player (HP %) <", true, 40, 1, 99));
+                    heroMenu.Add(new MenuSliderBool(enemy.ChampionName + ".Melee",
+                        "Anti Melee Attack | Player (HP %) <",
+                        true,
+                        40,
+                        1,
+                        99));
                 }
 
                 foreach (var spell in Spells.Where(x => x.ChampionName == enemy.ChampionName))
@@ -91,22 +90,22 @@ namespace Adept_AIO.SDK.Delegates
             }
 
             Game.OnUpdate += OnUpdate;
-         
-          //  Obj_AI_Base.OnProcessAutoAttack += OnProcessAutoAttack;
-          //  Obj_AI_Base.OnProcessSpellCast += OnProcessSpellCast;
-          //  Obj_AI_Base.OnNewPath += OnNewPath;
+
+            //  Obj_AI_Base.OnProcessAutoAttack += OnProcessAutoAttack;
+            //  Obj_AI_Base.OnProcessSpellCast += OnProcessSpellCast;
+            //  Obj_AI_Base.OnNewPath += OnNewPath;
         }
 
         private static void OnProcessAutoAttack(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
         {
-            if (sender == null
-            || !sender.IsHero
-            || !sender.IsEnemy
-            || string.IsNullOrEmpty(args.SpellData.Name)
-            || args.Target == null
-            || !args.Target.IsMe
-            || Gapclosers[sender.NetworkId] == null
-            || !Menu[sender.UnitSkinName][sender.UnitSkinName + ".Melee"].Enabled)
+            if (sender == null ||
+                !sender.IsHero ||
+                !sender.IsEnemy ||
+                string.IsNullOrEmpty(args.SpellData.Name) ||
+                args.Target == null ||
+                !args.Target.IsMe ||
+                Gapclosers[sender.NetworkId] == null ||
+                !Menu[sender.UnitSkinName][sender.UnitSkinName + ".Melee"].Enabled)
             {
                 return;
             }
@@ -125,21 +124,28 @@ namespace Adept_AIO.SDK.Delegates
             gapclosers.SpellName = args.SpellData.Name;
 
             gapclosers.StartPosition = args.Start;
-            gapclosers.EndPosition   = args.End;
-            gapclosers.StartTick     = Game.TickCount;
+            gapclosers.EndPosition = args.End;
+            gapclosers.StartTick = Game.TickCount;
         }
 
         private static void OnNewPath(Obj_AI_Base sender, Obj_AI_BaseNewPathEventArgs args)
         {
-            if (sender == null || !sender.IsHero || !sender.IsEnemy || Gapclosers[sender.NetworkId] == null || !args.IsDash)
+            if (sender == null ||
+                !sender.IsHero ||
+                !sender.IsEnemy ||
+                Gapclosers[sender.NetworkId] == null ||
+                !args.IsDash)
             {
                 return;
             }
 
-            if (sender.UnitSkinName == "Vi"    // Vi R
-             || sender.UnitSkinName == "Sion"  // Sion R
-             || sender.UnitSkinName == "Kayn"  // Kayn R
-             || sender.UnitSkinName == "Fizz") // Fizz E
+            if (sender.UnitSkinName == "Vi" // Vi R
+                ||
+                sender.UnitSkinName == "Sion" // Sion R
+                ||
+                sender.UnitSkinName == "Kayn" // Kayn R
+                ||
+                sender.UnitSkinName == "Fizz") // Fizz E
             {
                 return;
             }
@@ -150,17 +156,19 @@ namespace Adept_AIO.SDK.Delegates
             }
 
             var gapclosers = Gapclosers[sender.NetworkId];
-           
+
             gapclosers.Unit = (Obj_AI_Hero) sender;
             gapclosers.Slot = SpellSlot.Unknown;
             gapclosers.Type = SpellType.Dash;
             gapclosers.SpellName = sender.UnitSkinName + "_Dash";
             gapclosers.StartPosition = sender.ServerPosition;
-            gapclosers.EndPosition   = args.Path.Last();
-            gapclosers.StartTick     = Game.TickCount;
-            gapclosers.EndTick       = (int) (gapclosers.EndPosition.DistanceSqr(gapclosers.StartPosition) / args.Speed * args.Speed * 1000) + gapclosers.StartTick;
-            gapclosers.DurationTick  = gapclosers.EndTick - gapclosers.StartTick;
-            gapclosers.HaveShield    = GotShield(sender);
+            gapclosers.EndPosition = args.Path.Last();
+            gapclosers.StartTick = Game.TickCount;
+            gapclosers.EndTick =
+                (int) (gapclosers.EndPosition.DistanceSqr(gapclosers.StartPosition) / args.Speed * args.Speed * 1000) +
+                gapclosers.StartTick;
+            gapclosers.DurationTick = gapclosers.EndTick - gapclosers.StartTick;
+            gapclosers.HaveShield = GotShield(sender);
         }
 
         private static void OnUpdate()
@@ -175,14 +183,19 @@ namespace Adept_AIO.SDK.Delegates
                 return;
             }
 
-            foreach (var args in Gapclosers.Where(x => x.Value.Unit.IsValidTarget() && !x.Value.Unit.IsMe && Menu[x.Value.Unit.ChampionName][x.Value.Unit.ChampionName + ".Enabled"].Enabled))
+            foreach (var args in Gapclosers.Where(x =>
+                x.Value.Unit.IsValidTarget() &&
+                !x.Value.Unit.IsMe &&
+                Menu[x.Value.Unit.ChampionName][x.Value.Unit.ChampionName + ".Enabled"].Enabled))
             {
                 switch (args.Value.Type)
                 {
                     case SpellType.SkillShot:
                         if (args.Value.Unit.ServerPosition.DistanceSqr(ObjectManager.GetLocalPlayer().ServerPosition) <=
-                            Menu[args.Value.Unit.ChampionName][args.Value.Unit.ChampionName + ".Distance"].Value * Menu[args.Value.Unit.ChampionName][args.Value.Unit.ChampionName + ".Distance"].Value &&
-                            ObjectManager.GetLocalPlayer().HealthPercent() <= Menu[args.Value.Unit.ChampionName][args.Value.Unit.ChampionName + ".HPercent"].Value)
+                            Menu[args.Value.Unit.ChampionName][args.Value.Unit.ChampionName + ".Distance"].Value *
+                            Menu[args.Value.Unit.ChampionName][args.Value.Unit.ChampionName + ".Distance"].Value &&
+                            ObjectManager.GetLocalPlayer().HealthPercent() <=
+                            Menu[args.Value.Unit.ChampionName][args.Value.Unit.ChampionName + ".HPercent"].Value)
                         {
                             OnGapcloser(args.Value.Unit, args.Value);
                         }
@@ -192,19 +205,22 @@ namespace Adept_AIO.SDK.Delegates
                             args.Value.EndPosition.DistanceSqr(ObjectManager.GetLocalPlayer().ServerPosition) <=
                             Menu[args.Value.Unit.ChampionName][args.Value.Unit.ChampionName + ".Distance"].Value *
                             Menu[args.Value.Unit.ChampionName][args.Value.Unit.ChampionName + ".Distance"].Value &&
-                            ObjectManager.GetLocalPlayer().HealthPercent() <= Menu[args.Value.Unit.ChampionName][args.Value.Unit.ChampionName + ".HPercent"].Value)
+                            ObjectManager.GetLocalPlayer().HealthPercent() <=
+                            Menu[args.Value.Unit.ChampionName][args.Value.Unit.ChampionName + ".HPercent"].Value)
                         {
                             OnGapcloser(args.Value.Unit, args.Value);
                         }
                         break;
                     case SpellType.Targeted:
-                        if (ObjectManager.GetLocalPlayer().HealthPercent() <= Menu[args.Value.Unit.ChampionName][args.Value.Unit.ChampionName + ".HPercent"].Value)
+                        if (ObjectManager.GetLocalPlayer().HealthPercent() <=
+                            Menu[args.Value.Unit.ChampionName][args.Value.Unit.ChampionName + ".HPercent"].Value)
                         {
                             OnGapcloser(args.Value.Unit, args.Value);
                         }
                         break;
                     case SpellType.Melee:
-                        if (ObjectManager.GetLocalPlayer().HealthPercent() <= Menu[args.Value.Unit.ChampionName][args.Value.Unit.ChampionName + ".Melee"].Value)
+                        if (ObjectManager.GetLocalPlayer().HealthPercent() <=
+                            Menu[args.Value.Unit.ChampionName][args.Value.Unit.ChampionName + ".Melee"].Value)
                         {
                             OnGapcloser(args.Value.Unit, args.Value);
                         }
@@ -215,18 +231,22 @@ namespace Adept_AIO.SDK.Delegates
 
         private static void OnProcessSpellCast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
         {
-            if (sender == null
-            || !sender.IsValidTarget()
-            || !sender.IsHero
-            || !sender.IsEnemy
-            ||  string.IsNullOrEmpty(args.SpellData.Name)
-            || Gapclosers[sender.NetworkId] == null
-            ||  args.SpellData.Name.ToLower().Contains("attack") || args.SpellData.Name.ToLower().Contains("crit"))
+            if (sender == null ||
+                !sender.IsValidTarget() ||
+                !sender.IsHero ||
+                !sender.IsEnemy ||
+                string.IsNullOrEmpty(args.SpellData.Name) ||
+                Gapclosers[sender.NetworkId] == null ||
+                args.SpellData.Name.ToLower().Contains("attack") ||
+                args.SpellData.Name.ToLower().Contains("crit"))
             {
                 return;
             }
 
-            if (Spells.All(x => !string.Equals(x.SpellName.ToLower(), args.SpellData.Name, StringComparison.CurrentCultureIgnoreCase)) ||
+            if (Spells.All(x =>
+                    !string.Equals(x.SpellName.ToLower(),
+                        args.SpellData.Name,
+                        StringComparison.CurrentCultureIgnoreCase)) ||
                 !Menu[sender.UnitSkinName][args.SpellData.Name.ToLower()].Enabled)
             {
                 return;
@@ -258,12 +278,12 @@ namespace Adept_AIO.SDK.Delegates
                 return false;
             }
 
-            return target.HasBuff("BlackShield") 
-                || target.HasBuff("bansheesveil")
-                || target.HasBuff("SivirE")
-                || target.HasBuff("NocturneShroudofDarkness")
-                || target.HasBuff("itemmagekillerveil")
-                || target.HasBuffOfType(BuffType.SpellShield);
+            return target.HasBuff("BlackShield") ||
+                   target.HasBuff("bansheesveil") ||
+                   target.HasBuff("SivirE") ||
+                   target.HasBuff("NocturneShroudofDarkness") ||
+                   target.HasBuff("itemmagekillerveil") ||
+                   target.HasBuffOfType(BuffType.SpellShield);
         }
 
         private static void Initialize()
@@ -556,7 +576,7 @@ namespace Adept_AIO.SDK.Delegates
                 SpellType = SpellType.Targeted
             });
 
-            Spells.Add(new SpellData()
+            Spells.Add(new SpellData
             {
                 ChampionName = "Blitzcrank",
                 Slot = SpellSlot.Q,

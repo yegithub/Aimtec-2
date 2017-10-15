@@ -1,15 +1,15 @@
-﻿using System.Linq;
-using Adept_AIO.Champions.Jax.Core;
-using Adept_AIO.Champions.Jax.Miscellaneous;
-using Adept_AIO.SDK.Unit_Extensions;
-using Adept_AIO.SDK.Usables;
-using Aimtec;
-using Aimtec.SDK.Extensions;
-using GameObjects = Aimtec.SDK.Util.Cache.GameObjects;
-
-namespace Adept_AIO.Champions.Jax.OrbwalkingEvents
+﻿namespace Adept_AIO.Champions.Jax.OrbwalkingEvents
 {
-    internal class Combo
+    using System.Linq;
+    using Aimtec;
+    using Aimtec.SDK.Extensions;
+    using Core;
+    using Miscellaneous;
+    using SDK.Unit_Extensions;
+    using SDK.Usables;
+    using GameObjects = Aimtec.SDK.Util.Cache.GameObjects;
+
+    class Combo
     {
         public static void OnPostAttack()
         {
@@ -38,27 +38,33 @@ namespace Adept_AIO.Champions.Jax.OrbwalkingEvents
                 return;
             }
 
-            if (SpellConfig.R.Ready && Global.Player.CountEnemyHeroesInRange(SpellConfig.Q.Range) >= MenuConfig.Combo["R"].Value && MenuConfig.Combo["R"].Enabled)
+            if (SpellConfig.R.Ready &&
+                Global.Player.CountEnemyHeroesInRange(SpellConfig.Q.Range) >= MenuConfig.Combo["R"].Value &&
+                MenuConfig.Combo["R"].Enabled)
             {
                 SpellConfig.R.Cast();
             }
 
-            if (SpellConfig.E.Ready && target.Distance(Global.Player) <= MenuConfig.Combo["E"].Value && MenuConfig.Combo["E"].Enabled)
+            if (SpellConfig.E.Ready &&
+                target.Distance(Global.Player) <= MenuConfig.Combo["E"].Value &&
+                MenuConfig.Combo["E"].Enabled)
             {
                 SpellManager.CastE(target);
             }
-        
-            if (MenuConfig.Combo["Jump"].Enabled && !(SpellConfig.E.Ready || Dmg.Damage(target) > target.Health * 0.75f) ||
-                MenuConfig.Combo["Delay"].Enabled && (Game.TickCount - SpellConfig.E.LastCastAttemptT < 800 || SpellConfig.E.Ready && SpellConfig.E.LastCastAttemptT == 0))
+
+            if (MenuConfig.Combo["Jump"].Enabled &&
+                !(SpellConfig.E.Ready || Dmg.Damage(target) > target.Health * 0.75f) ||
+                MenuConfig.Combo["Delay"].Enabled &&
+                (Game.TickCount - SpellConfig.E.LastCastAttemptT < 800 ||
+                 SpellConfig.E.Ready && SpellConfig.E.LastCastAttemptT == 0))
             {
-                return; 
+                return;
             }
 
             if (target.Distance(Global.Player) > SpellConfig.Q.Range)
             {
-                var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsValid &&
-                                                                          x.Distance(target) < 300 &&
-                                                                          x.Distance(target) < Global.Player.Distance(target));
+                var minion = GameObjects.EnemyMinions.FirstOrDefault(x =>
+                    x.IsValid && x.Distance(target) < 300 && x.Distance(target) < Global.Player.Distance(target));
                 if (minion != null)
                 {
                     SpellConfig.Q.CastOnUnit(minion);

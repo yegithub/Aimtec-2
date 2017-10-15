@@ -1,21 +1,22 @@
-﻿using System.Linq;
-using Adept_AIO.Champions.Irelia.Core;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec;
-using Aimtec.SDK.Damage;
-using Aimtec.SDK.Extensions;
-using Aimtec.SDK.Orbwalking;
-using GameObjects = Aimtec.SDK.Util.Cache.GameObjects;
-
-namespace Adept_AIO.Champions.Irelia.OrbwalkingEvents
+﻿namespace Adept_AIO.Champions.Irelia.OrbwalkingEvents
 {
-    internal class Combo
+    using System.Linq;
+    using Aimtec;
+    using Aimtec.SDK.Damage;
+    using Aimtec.SDK.Extensions;
+    using Aimtec.SDK.Orbwalking;
+    using Core;
+    using SDK.Unit_Extensions;
+    using GameObjects = Aimtec.SDK.Util.Cache.GameObjects;
+
+    class Combo
     {
         public static void OnPreAttack(AttackableUnit target, PreAttackEventArgs preAttackEventArgs)
         {
             if (SpellConfig.E.Ready)
             {
-                if (((Obj_AI_Base)target).HealthPercent() <= Global.Player.HealthPercent() || Dmg.Damage((Obj_AI_Base)target) * 2 > target.Health)
+                if (((Obj_AI_Base) target).HealthPercent() <= Global.Player.HealthPercent() ||
+                    Dmg.Damage((Obj_AI_Base) target) * 2 > target.Health)
                 {
                     preAttackEventArgs.Cancel = true;
                     SpellConfig.E.CastOnUnit(target);
@@ -42,32 +43,39 @@ namespace Adept_AIO.Champions.Irelia.OrbwalkingEvents
             }
 
             var ganked = MenuConfig.Combo["Force"].Enabled &&
-                         GameObjects.AllyHeroes.FirstOrDefault(x => x.SpellBook.GetSpell(SpellSlot.Summoner1).Name.ToLower().Contains("smite") ||
-                                                                    x.SpellBook.GetSpell(SpellSlot.Summoner2).Name.ToLower().Contains("smite")) != null;
+                         GameObjects.AllyHeroes.FirstOrDefault(x =>
+                             x.SpellBook.GetSpell(SpellSlot.Summoner1).Name.ToLower().Contains("smite") ||
+                             x.SpellBook.GetSpell(SpellSlot.Summoner2).Name.ToLower().Contains("smite")) !=
+                         null;
 
             if (SpellConfig.Q.Ready)
             {
                 var killable = Global.TargetSelector.GetTarget(SpellConfig.Q.Range);
-                if (killable != null && ganked || Dmg.Damage(killable)*1.2 > killable?.Health)
+                if (killable != null && ganked || Dmg.Damage(killable) * 1.2 > killable?.Health)
                 {
                     SpellConfig.Q.CastOnUnit(killable);
                 }
 
                 var longRangeTarget = Global.TargetSelector.GetTarget(SpellConfig.Q.Range * 3);
 
-                if (longRangeTarget == null || 
-                    longRangeTarget.IsUnderEnemyTurret() && MenuConfig.Combo["Turret"].Enabled && longRangeTarget.Health > Dmg.Damage(longRangeTarget))
+                if (longRangeTarget == null ||
+                    longRangeTarget.IsUnderEnemyTurret() &&
+                    MenuConfig.Combo["Turret"].Enabled &&
+                    longRangeTarget.Health > Dmg.Damage(longRangeTarget))
                 {
                     return;
                 }
 
-                var minion = GameObjects.EnemyMinions.Where(x => x.Distance(Global.Player) < SpellConfig.Q.Range &&
-                                                                 x.Distance(longRangeTarget) < Global.Player.Distance(longRangeTarget) &&
-                                                                 x.Distance(longRangeTarget) < SpellConfig.Q.Range * 3)
-                                                                 .OrderBy(x => x.Distance(longRangeTarget))
-                                                                 .FirstOrDefault();
+                var minion = GameObjects.EnemyMinions.
+                    Where(x => x.Distance(Global.Player) < SpellConfig.Q.Range &&
+                               x.Distance(longRangeTarget) < Global.Player.Distance(longRangeTarget) &&
+                               x.Distance(longRangeTarget) < SpellConfig.Q.Range * 3).
+                    OrderBy(x => x.Distance(longRangeTarget)).
+                    FirstOrDefault();
 
-                if (minion == null || MenuConfig.Combo["Mode"].Value == 0 && minion.Distance(Game.CursorPos) > MenuConfig.Combo["Range"].Value)
+                if (minion == null ||
+                    MenuConfig.Combo["Mode"].Value == 0 &&
+                    minion.Distance(Game.CursorPos) > MenuConfig.Combo["Range"].Value)
                 {
                     return;
                 }
@@ -76,11 +84,12 @@ namespace Adept_AIO.Champions.Irelia.OrbwalkingEvents
                 {
                     SpellConfig.Q.CastOnUnit(minion);
                 }
-                else if (SpellConfig.R.Ready && minion.Health >
-                    Global.Player.GetSpellDamage(minion, SpellSlot.Q) &&
-                    minion.Health < Global.Player.GetSpellDamage(minion, SpellSlot.R) +
-                    Global.Player.GetSpellDamage(minion, SpellSlot.Q) &&
-                    (killable?.Health < Dmg.Damage(killable) || killable.HealthPercent() <= 40))
+                else if (SpellConfig.R.Ready &&
+                         minion.Health > Global.Player.GetSpellDamage(minion, SpellSlot.Q) &&
+                         minion.Health <
+                         Global.Player.GetSpellDamage(minion, SpellSlot.R) +
+                         Global.Player.GetSpellDamage(minion, SpellSlot.Q) &&
+                         (killable?.Health < Dmg.Damage(killable) || killable.HealthPercent() <= 40))
                 {
                     SpellConfig.R.Cast(minion);
                 }
@@ -93,7 +102,10 @@ namespace Adept_AIO.Champions.Irelia.OrbwalkingEvents
             }
 
 
-            if (MenuConfig.Combo["Killable"].Enabled && target.Distance(Global.Player) < SpellConfig.Q.Range && target.Health < Dmg.Damage(target) && SpellConfig.Q.Ready)
+            if (MenuConfig.Combo["Killable"].Enabled &&
+                target.Distance(Global.Player) < SpellConfig.Q.Range &&
+                target.Health < Dmg.Damage(target) &&
+                SpellConfig.Q.Ready)
             {
                 SpellConfig.Q.CastOnUnit(target);
             }
@@ -115,7 +127,8 @@ namespace Adept_AIO.Champions.Irelia.OrbwalkingEvents
                 }
             }
 
-            if (SpellConfig.R.Ready && (target.Health < Dmg.Damage(target) || target.HealthPercent() <= 40 || SpellConfig.RCount < 4))
+            if (SpellConfig.R.Ready &&
+                (target.Health < Dmg.Damage(target) || target.HealthPercent() <= 40 || SpellConfig.RCount < 4))
             {
                 SpellConfig.R.Cast(target);
             }

@@ -1,13 +1,13 @@
-﻿using System.Collections.Generic;
-using Adept_AIO.Champions.Azir.Core;
-using Adept_AIO.Champions.Azir.Drawings;
-using Adept_AIO.Champions.Azir.Miscellaneous;
-using Adept_AIO.SDK.Delegates;
-using Aimtec;
-
-namespace Adept_AIO.Champions.Azir
+﻿namespace Adept_AIO.Champions.Azir
 {
-    internal class Azir
+    using System.Collections.Generic;
+    using Aimtec;
+    using Core;
+    using Drawings;
+    using Miscellaneous;
+    using SDK.Delegates;
+
+    class Azir
     {
         public static void Init()
         {

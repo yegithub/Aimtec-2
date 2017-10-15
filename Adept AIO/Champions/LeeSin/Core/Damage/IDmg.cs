@@ -1,8 +1,8 @@
-using Aimtec;
-
 namespace Adept_AIO.Champions.LeeSin.Core.Damage
 {
-    internal interface IDmg
+    using Aimtec;
+
+    interface IDmg
     {
         double Damage(Obj_AI_Base target);
     }

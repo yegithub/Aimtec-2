@@ -1,6 +1,6 @@
 ﻿namespace Adept_AIO.Champions.LeeSin.OrbwalkingEvents.LastHit
 {
-    internal interface ILasthit
+    interface ILasthit
     {
         void OnUpdate();
     }

@@ -1,8 +1,8 @@
-﻿using Aimtec;
-
-namespace Adept_AIO.Champions.LeeSin.OrbwalkingEvents.Harass
+﻿namespace Adept_AIO.Champions.LeeSin.OrbwalkingEvents.Harass
 {
-    internal interface IHarass
+    using Aimtec;
+
+    interface IHarass
     {
         void OnPostAttack(AttackableUnit target);
         void OnUpdate();

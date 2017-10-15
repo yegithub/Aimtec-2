@@ -1,11 +1,11 @@
-﻿using Adept_AIO.Champions.Vayne.Core;
-using Adept_AIO.SDK.Geometry_Related;
-using Adept_AIO.SDK.Unit_Extensions;
-using Adept_AIO.SDK.Usables;
-using Aimtec.SDK.Extensions;
-
-namespace Adept_AIO.Champions.Vayne.OrbwalkingMode
+﻿namespace Adept_AIO.Champions.Vayne.OrbwalkingEvents
 {
+    using Aimtec.SDK.Extensions;
+    using Core;
+    using SDK.Geometry_Related;
+    using SDK.Unit_Extensions;
+    using SDK.Usables;
+
     class CondemnFlash
     {
         public static void OnKeyPressed()
@@ -30,7 +30,8 @@ namespace Adept_AIO.Champions.Vayne.OrbwalkingMode
             var pos = target.ServerPosition + (target.ServerPosition - point).Normalized() * 200;
             SpellManager.DrawingPred = pos;
 
-            if (pos.Distance(Global.Player) <= SummonerSpells.Flash.Range && SummonerSpells.IsValid(SummonerSpells.Flash))
+            if (pos.Distance(Global.Player) <= SummonerSpells.Flash.Range &&
+                SummonerSpells.IsValid(SummonerSpells.Flash))
             {
                 SummonerSpells.Flash.Cast(pos);
                 SpellManager.E.CastOnUnit(target);

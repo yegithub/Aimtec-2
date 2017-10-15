@@ -1,14 +1,14 @@
-﻿using Adept_AIO.Champions.Tristana.Core;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec.SDK.Extensions;
-
-namespace Adept_AIO.Champions.Tristana.OrbwalkingEvents
+﻿namespace Adept_AIO.Champions.Tristana.OrbwalkingEvents
 {
-    internal class Combo
+    using Aimtec.SDK.Extensions;
+    using Core;
+    using SDK.Unit_Extensions;
+
+    class Combo
     {
-        private readonly SpellConfig _spellConfig;
-        private readonly MenuConfig _menuConfig;
         private readonly Dmg _dmg;
+        private readonly MenuConfig _menuConfig;
+        private readonly SpellConfig _spellConfig;
 
         public Combo(SpellConfig spellConfig, MenuConfig menuConfig, Dmg dmg)
         {
@@ -31,12 +31,12 @@ namespace Adept_AIO.Champions.Tristana.OrbwalkingEvents
                 _spellConfig.Q.Cast();
             }
 
-            if (_spellConfig.W.Ready 
-             && _menuConfig.Combo["W"].Enabled
-             && target.Health < _dmg.Damage(target) 
-             && target.Distance(Global.Player) > Global.Player.AttackRange + 100
-             && Global.Player.CountEnemyHeroesInRange(2000) <= 2 
-             && target.ServerPosition.CountAllyHeroesInRange(900) == 0)
+            if (_spellConfig.W.Ready &&
+                _menuConfig.Combo["W"].Enabled &&
+                target.Health < _dmg.Damage(target) &&
+                target.Distance(Global.Player) > Global.Player.AttackRange + 100 &&
+                Global.Player.CountEnemyHeroesInRange(2000) <= 2 &&
+                target.ServerPosition.CountAllyHeroesInRange(900) == 0)
             {
                 _spellConfig.W.Cast(target);
             }

@@ -1,8 +1,8 @@
-﻿using Aimtec;
-
-namespace Adept_AIO.Champions.LeeSin.Ward_Manager
+﻿namespace Adept_AIO.Champions.LeeSin.Ward_Manager
 {
-    internal interface IWardManager
+    using Aimtec;
+
+    interface IWardManager
     {
         void WardJump(Vector3 position, int range);
     }

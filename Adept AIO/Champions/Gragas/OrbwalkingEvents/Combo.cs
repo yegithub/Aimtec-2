@@ -1,9 +1,9 @@
-﻿using Adept_AIO.Champions.Gragas.Core;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec.SDK.Extensions;
-
-namespace Adept_AIO.Champions.Gragas.OrbwalkingEvents
+﻿namespace Adept_AIO.Champions.Gragas.OrbwalkingEvents
 {
+    using Aimtec.SDK.Extensions;
+    using Core;
+    using SDK.Unit_Extensions;
+
     class Combo
     {
         public static void OnUpdate()
@@ -14,8 +14,10 @@ namespace Adept_AIO.Champions.Gragas.OrbwalkingEvents
                 return;
             }
 
-            if (SpellManager.R.Ready && MenuConfig.Combo["R"].Enabled &&
-                (!MenuConfig.Combo["Killable"].Enabled || Dmg.Damage(target) > target.Health ||
+            if (SpellManager.R.Ready &&
+                MenuConfig.Combo["R"].Enabled &&
+                (!MenuConfig.Combo["Killable"].Enabled ||
+                 Dmg.Damage(target) > target.Health ||
                  !target.IsValidTarget(SpellManager.R.Range)))
             {
                 SpellManager.CastR(target);

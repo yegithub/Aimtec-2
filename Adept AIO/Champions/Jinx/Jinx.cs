@@ -1,13 +1,13 @@
-﻿using Adept_AIO.Champions.Jinx.Core;
-using Adept_AIO.Champions.Jinx.Drawings;
-using Adept_AIO.Champions.Jinx.Miscellaneous;
-using Adept_AIO.Champions.Jinx.OrbwalkingEvents;
-using Adept_AIO.SDK.Delegates;
-using Aimtec;
-
-namespace Adept_AIO.Champions.Jinx
+﻿namespace Adept_AIO.Champions.Jinx
 {
-    internal class Jinx
+    using Aimtec;
+    using Core;
+    using Drawings;
+    using Miscellaneous;
+    using OrbwalkingEvents;
+    using SDK.Delegates;
+
+    class Jinx
     {
         public void Init()
         {
@@ -24,17 +24,17 @@ namespace Adept_AIO.Champions.Jinx
 
             var misc = new Misc(spellConfig, menuConfig);
             var gapcloser = new AntiGapcloser(spellConfig);
-          
+
             var manager = new Manager(combo, harass, laneclear, jungleclear);
 
             var drawManager = new DrawManager(menuConfig, new Dmg(spellConfig), spellConfig);
 
             Game.OnUpdate += manager.OnUpdate;
             Game.OnUpdate += misc.OnUpdate;
-         
+
             Render.OnPresent += drawManager.OnPresent;
-            Render.OnRender  += drawManager.OnRender;
-            
+            Render.OnRender += drawManager.OnRender;
+
             Gapcloser.OnGapcloser += gapcloser.OnGapcloser;
         }
     }

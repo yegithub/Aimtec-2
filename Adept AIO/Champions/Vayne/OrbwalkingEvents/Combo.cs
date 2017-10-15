@@ -1,12 +1,12 @@
-﻿using Adept_AIO.Champions.Vayne.Core;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec;
-using Aimtec.SDK.Extensions;
-using Aimtec.SDK.Orbwalking;
-
-namespace Adept_AIO.Champions.Vayne.OrbwalkingMode
+﻿namespace Adept_AIO.Champions.Vayne.OrbwalkingEvents
 {
-    internal class Combo
+    using Aimtec;
+    using Aimtec.SDK.Extensions;
+    using Aimtec.SDK.Orbwalking;
+    using Core;
+    using SDK.Unit_Extensions;
+
+    class Combo
     {
         public static void PostAttack(object sender, PostAttackEventArgs args)
         {
@@ -15,7 +15,9 @@ namespace Adept_AIO.Champions.Vayne.OrbwalkingMode
                 return;
             }
 
-            SpellManager.CastQ(args.Target as Obj_AI_Base, MenuConfig.Combo["Mode1"].Value, MenuConfig.Combo["ToE"].Enabled);
+            SpellManager.CastQ(args.Target as Obj_AI_Base,
+                MenuConfig.Combo["Mode1"].Value,
+                MenuConfig.Combo["ToE"].Enabled);
         }
 
         public static void OnUpdate()
@@ -31,7 +33,9 @@ namespace Adept_AIO.Champions.Vayne.OrbwalkingMode
                 SpellManager.CastQ(target, MenuConfig.Combo["Mode1"].Value, MenuConfig.Combo["ToE"].Enabled);
             }
 
-            else if (SpellManager.E.Ready && MenuConfig.Combo["E"].Enabled && MenuConfig.Combo[target.ChampionName].Enabled)
+            else if (SpellManager.E.Ready &&
+                     MenuConfig.Combo["E"].Enabled &&
+                     MenuConfig.Combo[target.ChampionName].Enabled)
             {
                 SpellManager.CastE(target);
             }
@@ -43,7 +47,8 @@ namespace Adept_AIO.Champions.Vayne.OrbwalkingMode
                     return;
                 }
 
-                if (Global.Player.CountEnemyHeroesInRange(1500) >= MenuConfig.Combo["Count"].Value && target.HealthPercent() >= 25)
+                if (Global.Player.CountEnemyHeroesInRange(1500) >= MenuConfig.Combo["Count"].Value &&
+                    target.HealthPercent() >= 25)
                 {
                     SpellManager.R.Cast();
                 }

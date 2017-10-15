@@ -1,15 +1,15 @@
-﻿using Adept_AIO.Champions.Rengar.Core;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec.SDK.Extensions;
-
-namespace Adept_AIO.Champions.Rengar.OrbwalkingEvents
+﻿namespace Adept_AIO.Champions.Rengar.OrbwalkingEvents
 {
-    internal class Combo
+    using Aimtec.SDK.Extensions;
+    using Core;
+    using SDK.Unit_Extensions;
+
+    class Combo
     {
         public static void OnPostAttack()
         {
             var target = Global.TargetSelector.GetTarget(SpellConfig.Q.Range);
-            if (target == null || !target.IsValid) 
+            if (target == null || !target.IsValid)
             {
                 return;
             }
@@ -35,7 +35,7 @@ namespace Adept_AIO.Champions.Rengar.OrbwalkingEvents
             }
 
             var assassin = Global.TargetSelector.GetSelectedTarget();
-            
+
             if (Global.Player.HasBuff("RengarR"))
             {
                 if (MenuConfig.AssassinManager[target.ChampionName].Enabled || assassin != null && assassin.IsValid)
@@ -43,7 +43,7 @@ namespace Adept_AIO.Champions.Rengar.OrbwalkingEvents
                     Extensions.AssassinTarget = target;
                 }
             }
-            
+
             var distance = target.Distance(Global.Player);
 
             if (SpellConfig.E.Ready && distance < SpellConfig.E.Range)
@@ -88,7 +88,7 @@ namespace Adept_AIO.Champions.Rengar.OrbwalkingEvents
                         return;
                     }
 
-                    SpellConfig.CastW(target);  
+                    SpellConfig.CastW(target);
                 }
             }
         }

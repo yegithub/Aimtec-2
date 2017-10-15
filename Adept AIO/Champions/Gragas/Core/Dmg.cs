@@ -1,9 +1,9 @@
-﻿using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec;
-using Aimtec.SDK.Damage;
-
-namespace Adept_AIO.Champions.Gragas.Core
+﻿namespace Adept_AIO.Champions.Gragas.Core
 {
+    using Aimtec;
+    using Aimtec.SDK.Damage;
+    using SDK.Unit_Extensions;
+
     class Dmg
     {
         public static double Damage(Obj_AI_Hero target)

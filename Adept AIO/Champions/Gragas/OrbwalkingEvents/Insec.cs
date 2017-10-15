@@ -1,8 +1,8 @@
 ﻿namespace Adept_AIO.Champions.Gragas.OrbwalkingEvents
 {
+    using Aimtec.SDK.Events;
     using Core;
     using SDK.Unit_Extensions;
-    using Aimtec.SDK.Events;
 
     class Insec
     {
@@ -19,7 +19,8 @@
                 SpellManager.CastE(target, MenuConfig.InsecMenu["Flash"].Enabled);
             }
 
-            if (SpellManager.R.Ready && !(MenuConfig.Combo["Q"].Enabled && SpellManager.Q.Ready && SpellManager.Barrel == null))
+            if (SpellManager.R.Ready &&
+                !(MenuConfig.Combo["Q"].Enabled && SpellManager.Q.Ready && SpellManager.Barrel == null))
             {
                 SpellManager.CastR(target);
             }

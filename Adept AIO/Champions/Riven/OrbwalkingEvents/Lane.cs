@@ -1,19 +1,19 @@
-﻿using System.Linq;
-using Adept_AIO.Champions.Riven.Core;
-using Adept_AIO.Champions.Riven.Miscellaneous;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec;
-using Aimtec.SDK.Damage;
-using Aimtec.SDK.Extensions;
-
-namespace Adept_AIO.Champions.Riven.OrbwalkingEvents
+﻿namespace Adept_AIO.Champions.Riven.OrbwalkingEvents
 {
-    internal class Lane
+    using System.Linq;
+    using Aimtec;
+    using Aimtec.SDK.Damage;
+    using Aimtec.SDK.Extensions;
+    using Core;
+    using Miscellaneous;
+    using SDK.Unit_Extensions;
+
+    class Lane
     {
         public static void OnProcessAutoAttack()
         {
-            var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(Global.Player) < Extensions.EngageRange &&
-                                                                      x.Health > Global.Player.GetAutoAttackDamage(x));
+            var minion = GameObjects.EnemyMinions.FirstOrDefault(x =>
+                x.Distance(Global.Player) < Extensions.EngageRange && x.Health > Global.Player.GetAutoAttackDamage(x));
 
             if (minion == null || MenuConfig.Lane["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(2000) >= 1)
             {
@@ -25,7 +25,8 @@ namespace Adept_AIO.Champions.Riven.OrbwalkingEvents
                 SpellManager.CastQ(minion);
             }
 
-            if (SpellConfig.W.Ready && MenuConfig.Lane["W"].Enabled &&
+            if (SpellConfig.W.Ready &&
+                MenuConfig.Lane["W"].Enabled &&
                 minion.Health < Global.Player.GetSpellDamage(minion, SpellSlot.W) &&
                 minion.UnitSkinName.Contains("Siege"))
             {
@@ -36,10 +37,10 @@ namespace Adept_AIO.Champions.Riven.OrbwalkingEvents
 
         public static void OnUpdate()
         {
-            var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(Global.Player) < Extensions.EngageRange);
+            var minion =
+                GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(Global.Player) < Extensions.EngageRange);
 
-            if (minion == null || MenuConfig.Lane["Check"].Enabled &&
-                Global.Player.CountEnemyHeroesInRange(1500) >= 1)
+            if (minion == null || MenuConfig.Lane["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(1500) >= 1)
             {
                 return;
             }

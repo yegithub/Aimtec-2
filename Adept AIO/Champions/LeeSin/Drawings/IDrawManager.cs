@@ -1,6 +1,6 @@
 ﻿namespace Adept_AIO.Champions.LeeSin.Drawings
 {
-    internal interface IDrawManager
+    interface IDrawManager
     {
         void OnRender();
     }

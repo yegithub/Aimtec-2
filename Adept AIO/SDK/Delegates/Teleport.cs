@@ -1,29 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using Aimtec;
-
-namespace Adept_AIO.SDK.Delegates
+﻿namespace Adept_AIO.SDK.Delegates
 {
+    using System;
+    using System.Collections.Generic;
+    using Aimtec;
+
     public static class Teleport
     {
         public delegate void TeleportHandler(Obj_AI_Base sender, TeleportEventArgs args);
 
+        internal static readonly Dictionary<int, TeleportEventArgs> TeleportDataNetId =
+            new Dictionary<int, TeleportEventArgs>();
+
+        static Teleport() { Obj_AI_Base.OnTeleport += OnUnitTeleport; }
+
         public static event TeleportHandler OnTeleport;
-
-        internal static readonly Dictionary<int, TeleportEventArgs> TeleportDataNetId = new Dictionary<int, TeleportEventArgs>();
-
-        static Teleport()
-        {
-            Obj_AI_Base.OnTeleport += OnUnitTeleport;
-        }
 
         private static void OnUnitTeleport(Obj_AI_Base sender, Obj_AI_BaseTeleportEventArgs e)
         {
-            var eventArgs = new TeleportEventArgs
-            {
-                Status = TeleportStatus.Unknown,
-                Type = TeleportType.Unknown
-            };
+            var eventArgs = new TeleportEventArgs {Status = TeleportStatus.Unknown, Type = TeleportType.Unknown};
 
             if (sender == null)
             {
@@ -41,13 +35,15 @@ namespace Adept_AIO.SDK.Delegates
                 eventArgs.Duration = GetDuration(e);
                 eventArgs.Type = GetType(e);
                 eventArgs.Start = Game.TickCount;
-                
+
                 TeleportDataNetId[sender.NetworkId] = eventArgs;
             }
             else
             {
                 eventArgs = TeleportDataNetId[sender.NetworkId];
-                eventArgs.Status = Game.TickCount - eventArgs.Start < eventArgs.Duration - 250 ? TeleportStatus.Abort : TeleportStatus.Finish;
+                eventArgs.Status = Game.TickCount - eventArgs.Start < eventArgs.Duration - 250
+                    ? TeleportStatus.Abort
+                    : TeleportStatus.Finish;
             }
 
             OnTeleport?.Invoke(sender, eventArgs);
@@ -57,16 +53,11 @@ namespace Adept_AIO.SDK.Delegates
         {
             switch (args.DisplayName)
             {
-                case "Recall":
-                    return TeleportType.Recall;
-                case "Teleport":
-                    return TeleportType.Teleport;
-                case "Gate":
-                    return TeleportType.TwistedFate;
-                case "Shen":
-                    return TeleportType.Shen;
-                default:
-                    return TeleportType.Recall;
+                case "Recall": return TeleportType.Recall;
+                case "Teleport": return TeleportType.Teleport;
+                case "Gate": return TeleportType.TwistedFate;
+                case "Shen": return TeleportType.Shen;
+                default: return TeleportType.Recall;
             }
         }
 
@@ -74,14 +65,10 @@ namespace Adept_AIO.SDK.Delegates
         {
             switch (GetType(args))
             {
-                case TeleportType.Shen:
-                    return 3000;
-                case TeleportType.Teleport:
-                    return 4500;
-                case TeleportType.TwistedFate:
-                    return 1500;
-                case TeleportType.Recall:
-                    return GetRecallDuration(args);
+                case TeleportType.Shen: return 3000;
+                case TeleportType.Teleport: return 4500;
+                case TeleportType.TwistedFate: return 1500;
+                case TeleportType.Recall: return GetRecallDuration(args);
                 default: return 3500;
             }
         }
@@ -90,18 +77,12 @@ namespace Adept_AIO.SDK.Delegates
         {
             switch (args.DisplayName.ToLower())
             {
-                case "recall":
-                    return 8000;
-                case "recallimproved":
-                    return 7000;
-                case "odinrecall":
-                    return 4500;
-                case "odinrecallimproved":
-                    return 4000;
-                case "superrecall":
-                    return 4000;
-                case "superrecallimproved":
-                    return 4000;
+                case "recall": return 8000;
+                case "recallimproved": return 7000;
+                case "odinrecall": return 4500;
+                case "odinrecallimproved": return 4000;
+                case "superrecall": return 4000;
+                case "superrecallimproved": return 4000;
                 default: return 8000;
             }
         }

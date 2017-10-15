@@ -1,12 +1,12 @@
-﻿using System.Linq;
-using Adept_AIO.Champions.Zed.Core;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec.SDK.Extensions;
-using Aimtec.SDK.TargetSelector;
-
-namespace Adept_AIO.Champions.Zed.OrbwalkingEvents
+﻿namespace Adept_AIO.Champions.Zed.OrbwalkingEvents
 {
-    internal class Combo
+    using System.Linq;
+    using Aimtec.SDK.Extensions;
+    using Aimtec.SDK.TargetSelector;
+    using Core;
+    using SDK.Unit_Extensions;
+
+    class Combo
     {
         public static void OnUpdate()
         {
@@ -16,7 +16,9 @@ namespace Adept_AIO.Champions.Zed.OrbwalkingEvents
                 return;
             }
 
-            if (SpellManager.R.Ready && target.IsValidTarget(SpellManager.R.Range) && !(MenuConfig.Combo["Killable"].Enabled && Dmg.Damage(target) < target.Health))
+            if (SpellManager.R.Ready &&
+                target.IsValidTarget(SpellManager.R.Range) &&
+                !(MenuConfig.Combo["Killable"].Enabled && Dmg.Damage(target) < target.Health))
             {
                 if (!MenuConfig.Combo[target.ChampionName].Enabled)
                 {
@@ -26,7 +28,9 @@ namespace Adept_AIO.Champions.Zed.OrbwalkingEvents
                 SpellManager.CastR(target);
             }
 
-            if (SpellManager.W.Ready && MenuConfig.Combo["W"].Enabled && target.IsValidTarget(SpellManager.WCastRange + SpellManager.R.Range))
+            if (SpellManager.W.Ready &&
+                MenuConfig.Combo["W"].Enabled &&
+                target.IsValidTarget(SpellManager.WCastRange + SpellManager.R.Range))
             {
                 if (ShadowManager.CanCastW1())
                 {
@@ -42,7 +46,9 @@ namespace Adept_AIO.Champions.Zed.OrbwalkingEvents
                         }
                     }
                 }
-                else if (ShadowManager.CanSwitchToShadow() && ShadowManager.Shadows.FirstOrDefault().Distance(target) <= Global.Player.Distance(target) && target.Distance(Global.Player) > Global.Player.AttackRange + 65)
+                else if (ShadowManager.CanSwitchToShadow() &&
+                         ShadowManager.Shadows.FirstOrDefault().Distance(target) <= Global.Player.Distance(target) &&
+                         target.Distance(Global.Player) > Global.Player.AttackRange + 65)
                 {
                     SpellManager.W.Cast();
                 }

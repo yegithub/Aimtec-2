@@ -1,16 +1,16 @@
-﻿using System;
-using System.Linq;
-using Adept_AIO.Champions.Vayne.Core;
-using Adept_AIO.SDK.Generic;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec;
-using Aimtec.SDK.Damage;
-using Aimtec.SDK.Extensions;
-using Aimtec.SDK.Orbwalking;
-
-namespace Adept_AIO.Champions.Vayne.OrbwalkingMode
+﻿namespace Adept_AIO.Champions.Vayne.OrbwalkingEvents
 {
-    internal class LaneClear
+    using System;
+    using System.Linq;
+    using Aimtec;
+    using Aimtec.SDK.Damage;
+    using Aimtec.SDK.Extensions;
+    using Aimtec.SDK.Orbwalking;
+    using Core;
+    using SDK.Generic;
+    using SDK.Unit_Extensions;
+
+    class LaneClear
     {
         private static Obj_AI_Minion _turretTarget;
         private static Obj_AI_Base _turret;
@@ -22,7 +22,12 @@ namespace Adept_AIO.Champions.Vayne.OrbwalkingMode
                 return;
             }
 
-            var minion = GameObjects.EnemyMinions.FirstOrDefault(x => args.Target.NetworkId != x.NetworkId && x.Health > 0 && x.MaxHealth > 0 && x.Health < Global.Player.GetAutoAttackDamage(x) + Global.Player.GetSpellDamage(x, SpellSlot.Q) && x.Distance(Global.Player) <= Global.Player.AttackRange + 80);
+            var minion = GameObjects.EnemyMinions.FirstOrDefault(x =>
+                args.Target.NetworkId != x.NetworkId &&
+                x.Health > 0 &&
+                x.MaxHealth > 0 &&
+                x.Health < Global.Player.GetAutoAttackDamage(x) + Global.Player.GetSpellDamage(x, SpellSlot.Q) &&
+                x.Distance(Global.Player) <= Global.Player.AttackRange + 80);
             if (minion == null)
             {
                 return;
@@ -34,7 +39,12 @@ namespace Adept_AIO.Champions.Vayne.OrbwalkingMode
         {
             if (MenuConfig.LaneClear["TurretFarm"].Enabled)
             {
-                if (_turretTarget != null && _turret != null && _turretTarget.IsUnderAllyTurret() && _turretTarget.Health < Global.Player.GetAutoAttackDamage(_turretTarget) && _turretTarget.IsValidAutoRange() && _turretTarget.NetworkId != args.Target.NetworkId)
+                if (_turretTarget != null &&
+                    _turret != null &&
+                    _turretTarget.IsUnderAllyTurret() &&
+                    _turretTarget.Health < Global.Player.GetAutoAttackDamage(_turretTarget) &&
+                    _turretTarget.IsValidAutoRange() &&
+                    _turretTarget.NetworkId != args.Target.NetworkId)
                 {
                     DebugConsole.Write("Minion Correction", ConsoleColor.Green);
                     args.Target = _turretTarget;
@@ -45,13 +55,15 @@ namespace Adept_AIO.Champions.Vayne.OrbwalkingMode
                     var t = args.Target as Obj_AI_Base;
                     if (t != null && t.IsUnderAllyTurret())
                     {
-                        if (t.Health <= _turret.GetAutoAttackDamage(t) * 2 + Global.Player.GetAutoAttackDamage(t) && t.Health - _turret.GetAutoAttackDamage(t) * 2 > 0)
+                        if (t.Health <= _turret.GetAutoAttackDamage(t) * 2 + Global.Player.GetAutoAttackDamage(t) &&
+                            t.Health - _turret.GetAutoAttackDamage(t) * 2 > 0)
                         {
                             DebugConsole.Write("[TURRET FARM] Just prevented auto.", ConsoleColor.Yellow);
                             args.Cancel = true;
                         }
 
-                        if (t.Health <= _turret.GetAutoAttackDamage(t) + Global.Player.GetAutoAttackDamage(t) && t.Health - _turret.GetAutoAttackDamage(t) > 0)
+                        if (t.Health <= _turret.GetAutoAttackDamage(t) + Global.Player.GetAutoAttackDamage(t) &&
+                            t.Health - _turret.GetAutoAttackDamage(t) > 0)
                         {
                             DebugConsole.Write("[TURRET FARM] Just prevented auto.", ConsoleColor.Yellow);
                             args.Cancel = true;
@@ -63,7 +75,10 @@ namespace Adept_AIO.Champions.Vayne.OrbwalkingMode
 
         public static void OnUpdate()
         {
-            var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(Global.Player) <= SpellManager.Q.Range + Global.Player.AttackRange && x.Health > 0 && x.MaxHealth > 0);
+            var minion = GameObjects.EnemyMinions.FirstOrDefault(x =>
+                x.Distance(Global.Player) <= SpellManager.Q.Range + Global.Player.AttackRange &&
+                x.Health > 0 &&
+                x.MaxHealth > 0);
             if (minion == null || !SpellManager.Q.Ready)
             {
                 return;
@@ -77,11 +92,11 @@ namespace Adept_AIO.Champions.Vayne.OrbwalkingMode
 
         public static void OnProcessSpellCast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
         {
-            if (sender == null
-                || args.Target == null
-                || !args.Target.IsEnemy
-                || !sender.UnitSkinName.ToLower().Contains("turret")
-                || !args.Target.Name.ToLower().Contains("minion"))
+            if (sender == null ||
+                args.Target == null ||
+                !args.Target.IsEnemy ||
+                !sender.UnitSkinName.ToLower().Contains("turret") ||
+                !args.Target.Name.ToLower().Contains("minion"))
             {
                 return;
             }

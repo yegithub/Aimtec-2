@@ -1,16 +1,16 @@
-﻿using System.Drawing;
-using System.Linq;
-using Adept_AIO.Champions.Tristana.Core;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec;
-
-namespace Adept_AIO.Champions.Tristana.Drawings
+﻿namespace Adept_AIO.Champions.Tristana.Drawings
 {
-    internal class DrawManager
+    using System.Drawing;
+    using System.Linq;
+    using Aimtec;
+    using Core;
+    using SDK.Unit_Extensions;
+
+    class DrawManager
     {
-        private readonly SpellConfig _spellConfig;
-        private readonly MenuConfig _menuConfig;
         private readonly Dmg _dmg;
+        private readonly MenuConfig _menuConfig;
+        private readonly SpellConfig _spellConfig;
 
         public DrawManager(MenuConfig menuConfig, Dmg dmg, SpellConfig spellConfig)
         {
@@ -26,12 +26,13 @@ namespace Adept_AIO.Champions.Tristana.Drawings
                 return;
             }
 
-            foreach (var target in GameObjects.EnemyHeroes.Where(x => !x.IsDead && x.IsFloatingHealthBarActive && x.IsVisible))
+            foreach (var target in GameObjects.EnemyHeroes.Where(x =>
+                !x.IsDead && x.IsFloatingHealthBarActive && x.IsVisible))
             {
                 var damage = _dmg.Damage(target);
 
                 Global.DamageIndicator.Unit = target;
-                Global.DamageIndicator.DrawDmg((float)damage, Color.FromArgb(153, 12, 177, 28));
+                Global.DamageIndicator.DrawDmg((float) damage, Color.FromArgb(153, 12, 177, 28));
             }
         }
 
@@ -44,7 +45,10 @@ namespace Adept_AIO.Champions.Tristana.Drawings
 
             if (_menuConfig.Drawings["W"].Enabled)
             {
-                Render.Circle(Global.Player.Position, _spellConfig.W.Range, (uint)_menuConfig.Drawings["Segments"].Value, Color.Gray);
+                Render.Circle(Global.Player.Position,
+                    _spellConfig.W.Range,
+                    (uint) _menuConfig.Drawings["Segments"].Value,
+                    Color.Gray);
             }
         }
     }

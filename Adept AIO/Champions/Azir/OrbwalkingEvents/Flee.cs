@@ -1,18 +1,15 @@
-﻿using System.Threading;
-using Adept_AIO.Champions.Azir.Core;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec;
-using Aimtec.SDK.Extensions;
-using Aimtec.SDK.Util;
-
-namespace Adept_AIO.Champions.Azir.OrbwalkingEvents
+﻿namespace Adept_AIO.Champions.Azir.OrbwalkingEvents
 {
-    internal class Flee
+    using System.Threading;
+    using Aimtec;
+    using Aimtec.SDK.Extensions;
+    using Aimtec.SDK.Util;
+    using Core;
+    using SDK.Unit_Extensions;
+
+    class Flee
     {
-        public static void OnKeyPressed()
-        {
-            Jump(Game.CursorPos);
-        }
+        public static void OnKeyPressed() { Jump(Game.CursorPos); }
 
         public static void Jump(Vector3 pos)
         {

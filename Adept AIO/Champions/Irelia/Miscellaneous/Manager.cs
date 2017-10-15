@@ -1,21 +1,21 @@
-﻿using Adept_AIO.Champions.Irelia.Core;
-using Adept_AIO.Champions.Irelia.OrbwalkingEvents;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec;
-using Aimtec.SDK.Orbwalking;
-
-namespace Adept_AIO.Champions.Irelia.Miscellaneous
+﻿namespace Adept_AIO.Champions.Irelia.Miscellaneous
 {
-    internal class Manager
+    using Aimtec;
+    using Aimtec.SDK.Orbwalking;
+    using Core;
+    using OrbwalkingEvents;
+    using SDK.Unit_Extensions;
+
+    class Manager
     {
         public static void OnPreAttack(object sender, PreAttackEventArgs preAttackEventArgs)
         {
             switch (Global.Orbwalker.Mode)
             {
-                    case OrbwalkingMode.Laneclear:
+                case OrbwalkingMode.Laneclear:
                     Clear.OnPreAttack(preAttackEventArgs.Target, preAttackEventArgs);
                     break;
-                    case OrbwalkingMode.Combo:
+                case OrbwalkingMode.Combo:
                     Combo.OnPreAttack(preAttackEventArgs.Target, preAttackEventArgs);
                     break;
             }
@@ -28,10 +28,10 @@ namespace Adept_AIO.Champions.Irelia.Miscellaneous
                 case OrbwalkingMode.Combo:
                     Combo.OnPostAttack(args.Target);
                     break;
-                    case OrbwalkingMode.Custom:
+                case OrbwalkingMode.Custom:
                     Harass.OnPostAttack(args.Target);
                     break;
-                    case OrbwalkingMode.Laneclear:
+                case OrbwalkingMode.Laneclear:
                     Clear.OnPostAttack(args.Target);
                     break;
             }
@@ -46,16 +46,16 @@ namespace Adept_AIO.Champions.Irelia.Miscellaneous
 
             switch (Global.Orbwalker.Mode)
             {
-                    case OrbwalkingMode.Combo:
+                case OrbwalkingMode.Combo:
                     Combo.OnUpdate();
                     break;
-                    case OrbwalkingMode.Custom:
+                case OrbwalkingMode.Custom:
                     Harass.OnUpdate();
                     break;
-                    case OrbwalkingMode.Laneclear:
+                case OrbwalkingMode.Laneclear:
                     Clear.OnUpdate();
                     break;
-                    case OrbwalkingMode.Freeze:
+                case OrbwalkingMode.Freeze:
                     Lasthit.OnUpdate();
                     break;
             }
@@ -67,12 +67,12 @@ namespace Adept_AIO.Champions.Irelia.Miscellaneous
             {
                 return;
             }
-           
+
             switch (args.SpellData.Name)
             {
                 case "IreliaTranscendentBlades":
                     SpellConfig.RCount--;
-                   
+
                     if (SpellConfig.RCount <= 0)
                     {
                         SpellConfig.RCount = 4;

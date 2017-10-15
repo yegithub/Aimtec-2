@@ -1,20 +1,15 @@
-﻿using System.Collections.Generic;
-using Adept_AIO.SDK.Delegates;
-using Adept_AIO.SDK.Menu_Extension;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec.SDK.Menu;
-using Aimtec.SDK.Menu.Components;
-
-namespace Adept_AIO.Champions.Tristana.Core
+﻿namespace Adept_AIO.Champions.Tristana.Core
 {
-    internal class MenuConfig
+    using System.Collections.Generic;
+    using Aimtec.SDK.Menu;
+    using Aimtec.SDK.Menu.Components;
+    using SDK.Delegates;
+    using SDK.Menu_Extension;
+    using SDK.Unit_Extensions;
+
+    class MenuConfig
     {
-        public Menu Combo,
-                    Harass,
-                    LaneClear,
-                    JungleClear,
-                    Killsteal,
-                    Drawings;
+        public Menu Combo, Harass, LaneClear, JungleClear, Killsteal, Drawings;
 
         public MenuConfig()
         {
@@ -88,7 +83,10 @@ namespace Adept_AIO.Champions.Tristana.Core
                 Killsteal,
                 Drawings,
                 MenuShortcut.Credits
-            }) mainMenu.Add(menu);
+            })
+            {
+                mainMenu.Add(menu);
+            }
         }
     }
 }

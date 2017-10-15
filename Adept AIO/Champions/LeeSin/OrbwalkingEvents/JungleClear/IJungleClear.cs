@@ -1,8 +1,8 @@
-using Aimtec;
-
 namespace Adept_AIO.Champions.LeeSin.OrbwalkingEvents.JungleClear
 {
-    internal interface IJungleClear
+    using Aimtec;
+
+    interface IJungleClear
     {
         void OnPostAttack(AttackableUnit mob);
 

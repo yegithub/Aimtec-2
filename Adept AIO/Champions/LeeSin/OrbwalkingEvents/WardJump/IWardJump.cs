@@ -1,8 +1,8 @@
 namespace Adept_AIO.Champions.LeeSin.OrbwalkingEvents.WardJump
 {
-    internal interface IWardJump
+    interface IWardJump
     {
-        void OnKeyPressed();
         bool Enabled { get; set; }
+        void OnKeyPressed();
     }
 }

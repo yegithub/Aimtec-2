@@ -1,24 +1,22 @@
-﻿using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec;
-using Aimtec.SDK.Extensions;
-
-namespace Adept_AIO.SDK.Geometry_Related
+﻿namespace Adept_AIO.SDK.Geometry_Related
 {
-    internal class WallExtension
-    {
-        private static bool IsWallAt(Vector3 pos)
-        {
-            return NavMesh.WorldToCell(pos).Flags.HasFlag(NavCellFlags.Wall) || NavMesh.WorldToCell(pos).Flags.HasFlag(NavCellFlags.Building);
-        }
+    using Aimtec;
+    using Aimtec.SDK.Extensions;
+    using Unit_Extensions;
 
+    class WallExtension
+    {
         public static Vector3 EndPoint = Vector3.Zero;
+
+        private static bool IsWallAt(Vector3 pos) => NavMesh.WorldToCell(pos).Flags.HasFlag(NavCellFlags.Wall) ||
+                                                     NavMesh.WorldToCell(pos).Flags.HasFlag(NavCellFlags.Building);
 
         public static Vector3 GeneratePoint(Vector3 start, Vector3 end)
         {
             for (var i = 0; i < start.Distance(end); i++)
             {
                 var newPoint = start.Extend(end, i);
-              
+
                 if (IsWallAt(newPoint))
                 {
                     EndPoint = end.Extend(start, i);
@@ -45,7 +43,7 @@ namespace Adept_AIO.SDK.Geometry_Related
 
         public static Vector3 NearestWall(Vector3 position, int range = 600)
         {
-            for (int i = 0; i < range / 2; i += 10)
+            for (var i = 0; i < range / 2; i += 10)
             {
                 var next = position + new Vector3(i, Global.Player.ServerPosition.Y, i);
                 if (IsWallAt(next))
@@ -54,7 +52,7 @@ namespace Adept_AIO.SDK.Geometry_Related
                 }
             }
 
-            for (int i = 0; i < range / 2; i += 10)
+            for (var i = 0; i < range / 2; i += 10)
             {
                 var next = position + new Vector3(-i, Global.Player.ServerPosition.Y, -i);
                 if (IsWallAt(next))
@@ -63,7 +61,7 @@ namespace Adept_AIO.SDK.Geometry_Related
                 }
             }
 
-            for (int i = 0; i < range; i += 10)
+            for (var i = 0; i < range; i += 10)
             {
                 var next = position + new Vector3(i, Global.Player.ServerPosition.Y, i);
                 if (IsWallAt(next))
@@ -72,7 +70,7 @@ namespace Adept_AIO.SDK.Geometry_Related
                 }
             }
 
-            for (int i = 0; i < range; i += 10)
+            for (var i = 0; i < range; i += 10)
             {
                 var next = position + new Vector3(-i, Global.Player.ServerPosition.Y, -i);
                 if (IsWallAt(next))

@@ -1,12 +1,12 @@
-﻿using Adept_AIO.Champions.Jax.Core;
-using Adept_AIO.Champions.Jax.Drawings;
-using Adept_AIO.Champions.Jax.Miscellaneous;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec;
-
-namespace Adept_AIO.Champions.Jax
+﻿namespace Adept_AIO.Champions.Jax
 {
-    internal class Jax
+    using Aimtec;
+    using Core;
+    using Drawings;
+    using Miscellaneous;
+    using SDK.Unit_Extensions;
+
+    class Jax
     {
         public static void Init()
         {

@@ -1,11 +1,11 @@
-﻿using Aimtec;
-
-namespace Adept_AIO.Champions.LeeSin.OrbwalkingEvents.KickFlash
+﻿namespace Adept_AIO.Champions.LeeSin.OrbwalkingEvents.KickFlash
 {
-    internal interface IKickFlash
+    using Aimtec;
+
+    interface IKickFlash
     {
+        bool Enabled { get; set; }
         void OnKeyPressed();
         void OnProcessSpellCast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args);
-        bool Enabled { get; set; }
     }
 }

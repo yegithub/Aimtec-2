@@ -1,14 +1,14 @@
-﻿using System;
-using System.Drawing;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec;
-using Aimtec.SDK.Extensions;
-
-namespace Adept_AIO.SDK.Draw_Extension
+﻿namespace Adept_AIO.SDK.Draw_Extension
 {
-    internal class RenderHelper
+    using System;
+    using System.Drawing;
+    using Aimtec;
+    using Aimtec.SDK.Extensions;
+    using Unit_Extensions;
+
+    class RenderHelper
     {
-        public static void RenderArrowFromPlayer(GameObject target) 
+        public static void RenderArrowFromPlayer(GameObject target)
         {
             if (target == null)
             {
@@ -19,8 +19,10 @@ namespace Adept_AIO.SDK.Draw_Extension
             Render.WorldToScreen(extended, out var extendedVector2);
             Render.WorldToScreen(Global.Player.Position, out var playerV2);
 
-            var arrowLine1 = extendedVector2 + (playerV2 - extendedVector2).Normalized().Rotated(40 * (float)Math.PI / 180) * 65;
-            var arrowLine2 = extendedVector2 + (playerV2 - extendedVector2).Normalized().Rotated(-40 * (float)Math.PI / 180) * 65;
+            var arrowLine1 = extendedVector2 +
+                             (playerV2 - extendedVector2).Normalized().Rotated(40 * (float) Math.PI / 180) * 65;
+            var arrowLine2 = extendedVector2 +
+                             (playerV2 - extendedVector2).Normalized().Rotated(-40 * (float) Math.PI / 180) * 65;
 
             Render.Line(extendedVector2, arrowLine1, Color.White);
             Render.Line(extendedVector2, arrowLine2, Color.White);
@@ -38,8 +40,10 @@ namespace Adept_AIO.SDK.Draw_Extension
             Render.WorldToScreen(extended, out var extendedVector2);
             Render.WorldToScreen(Global.Player.Position, out var playerV2);
 
-            var arrowLine1 = extendedVector2 + (playerV2 - extendedVector2).Normalized().Rotated(40 * (float)Math.PI / 180) * 65;
-            var arrowLine2 = extendedVector2 + (playerV2 - extendedVector2).Normalized().Rotated(-40 * (float)Math.PI / 180) * 65;
+            var arrowLine1 = extendedVector2 +
+                             (playerV2 - extendedVector2).Normalized().Rotated(40 * (float) Math.PI / 180) * 65;
+            var arrowLine2 = extendedVector2 +
+                             (playerV2 - extendedVector2).Normalized().Rotated(-40 * (float) Math.PI / 180) * 65;
 
             Render.Line(extendedVector2, arrowLine1, Color.White);
             Render.Line(extendedVector2, arrowLine2, Color.White);
@@ -57,8 +61,10 @@ namespace Adept_AIO.SDK.Draw_Extension
             Render.WorldToScreen(extended, out var extendedVector2);
             Render.WorldToScreen(start, out var startV2);
 
-            var arrowLine1 = extendedVector2 + (startV2 - extendedVector2).Normalized().Rotated( 40 * (float)Math.PI / 180) * 65;
-            var arrowLine2 = extendedVector2 + (startV2 - extendedVector2).Normalized().Rotated(-40 * (float)Math.PI / 180) * 65;
+            var arrowLine1 = extendedVector2 +
+                             (startV2 - extendedVector2).Normalized().Rotated(40 * (float) Math.PI / 180) * 65;
+            var arrowLine2 = extendedVector2 +
+                             (startV2 - extendedVector2).Normalized().Rotated(-40 * (float) Math.PI / 180) * 65;
 
             Render.Line(extendedVector2, arrowLine1, width, false, Color.White);
             Render.Line(extendedVector2, arrowLine2, width, false, Color.White);

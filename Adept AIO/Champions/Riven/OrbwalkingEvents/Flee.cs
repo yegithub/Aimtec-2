@@ -1,17 +1,16 @@
-﻿using System.Linq;
-using System.Threading;
-using Adept_AIO.Champions.Riven.Core;
-using Adept_AIO.Champions.Riven.Miscellaneous;
-using Adept_AIO.SDK.Geometry_Related;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec;
-using Aimtec.SDK.Extensions;
-using Aimtec.SDK.Util;
-using GameObjects = Adept_AIO.SDK.Unit_Extensions.GameObjects;
-
-namespace Adept_AIO.Champions.Riven.OrbwalkingEvents
+﻿namespace Adept_AIO.Champions.Riven.OrbwalkingEvents
 {
-    internal class Flee
+    using System.Linq;
+    using System.Threading;
+    using Aimtec;
+    using Aimtec.SDK.Extensions;
+    using Aimtec.SDK.Util;
+    using Core;
+    using Miscellaneous;
+    using SDK.Geometry_Related;
+    using SDK.Unit_Extensions;
+
+    class Flee
     {
         public static void OnKeyPressed()
         {
@@ -22,7 +21,9 @@ namespace Adept_AIO.Champions.Riven.OrbwalkingEvents
                     switch (Extensions.CurrentQCount)
                     {
                         case 2:
-                            DelayAction.Queue(250, () => Global.Player.SpellBook.CastSpell(SpellSlot.Q, Game.CursorPos), new CancellationToken(false));
+                            DelayAction.Queue(250,
+                                () => Global.Player.SpellBook.CastSpell(SpellSlot.Q, Game.CursorPos),
+                                new CancellationToken(false));
                             break;
                         default:
                             Global.Player.SpellBook.CastSpell(SpellSlot.Q, Game.CursorPos);
@@ -38,8 +39,13 @@ namespace Adept_AIO.Champions.Riven.OrbwalkingEvents
                 const int dashRange = 275;
                 var end = Global.Player.Position.Extend(Game.CursorPos, dashRange);
                 var wall = WallExtension.GeneratePoint(Global.Player.Position, end);
-                
-                if (wall.IsZero || wall.Distance(Global.Player) > SpellConfig.E.Range + 65 || !(Global.Player.Orientation.To2D().Perpendicular().AngleBetween(WallExtension.EndPoint.To2D() - Global.Player.ServerPosition.To2D()) < 160))
+
+                if (wall.IsZero ||
+                    wall.Distance(Global.Player) > SpellConfig.E.Range + 65 ||
+                    !(Global.Player.Orientation.To2D().
+                          Perpendicular().
+                          AngleBetween(WallExtension.EndPoint.To2D() - Global.Player.ServerPosition.To2D()) <
+                      160))
                 {
                     return;
                 }
@@ -52,7 +58,9 @@ namespace Adept_AIO.Champions.Riven.OrbwalkingEvents
                 Global.Orbwalker.Move(wall);
 
                 Global.Player.SpellBook.CastSpell(SpellSlot.E, Global.Player.ServerPosition.Extend(wall, 400));
-                DelayAction.Queue(190, () => Global.Player.SpellBook.CastSpell(SpellSlot.Q, wall), new CancellationToken(false));
+                DelayAction.Queue(190,
+                    () => Global.Player.SpellBook.CastSpell(SpellSlot.Q, wall),
+                    new CancellationToken(false));
 
                 if (distance > 40)
                 {

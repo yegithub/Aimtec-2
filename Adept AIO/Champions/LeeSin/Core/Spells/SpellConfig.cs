@@ -1,41 +1,31 @@
-﻿using System.Linq;
-using Adept_AIO.SDK.Unit_Extensions;
-using Adept_AIO.SDK.Usables;
-using Aimtec;
-using Aimtec.SDK.Extensions;
-using Aimtec.SDK.Orbwalking;
-using Aimtec.SDK.Prediction.Skillshots;
-using Spell = Aimtec.SDK.Spell;
-
-namespace Adept_AIO.Champions.LeeSin.Core.Spells
+﻿namespace Adept_AIO.Champions.LeeSin.Core.Spells
 {
-    internal class SpellConfig : ISpellConfig
+    using System.Linq;
+    using Aimtec;
+    using Aimtec.SDK.Extensions;
+    using Aimtec.SDK.Orbwalking;
+    using Aimtec.SDK.Prediction.Skillshots;
+    using SDK.Unit_Extensions;
+    using SDK.Usables;
+    using Spell = Aimtec.SDK.Spell;
+
+    class SpellConfig : ISpellConfig
     {
+        private const string PassiveName = "blindmonkpassive_cosmetic";
         public float LastQ1CastAttempt { get; set; }
 
-        public bool QAboutToEnd => Game.TickCount - LastQ1CastAttempt >= 3100 - Game.Ping / 2f;
+        public bool QAboutToEnd => Game.TickCount - this.LastQ1CastAttempt >= 3100 - Game.Ping / 2f;
 
-        public bool IsQ2()
-        {
-            return !IsFirst(Q) && Q.Ready;
-        }
+        public bool IsQ2() => !IsFirst(this.Q) && this.Q.Ready;
 
-        public bool IsFirst(Spell spell)
-        {
-            return Global.Player
-                .SpellBook.GetSpell(spell.Slot)
-                .SpellData.Name.ToLower()
-                .Contains("one");
-        }
+        public bool IsFirst(Spell spell) =>
+            Global.Player.SpellBook.GetSpell(spell.Slot).SpellData.Name.ToLower().Contains("one");
 
-        public bool HasQ2(Obj_AI_Base target)
-        {
-            return target.HasBuff("BlindMonkSonicWave");
-        }
+        public bool HasQ2(Obj_AI_Base target) => target.HasBuff("BlindMonkSonicWave");
 
         public void QSmite(Obj_AI_Base target)
         {
-            var pred = Q.GetPrediction(target);
+            var pred = this.Q.GetPrediction(target);
             var objects = pred.CollisionObjects;
 
             if (pred.HitChance != HitChance.Collision || !objects.Any())
@@ -50,7 +40,8 @@ namespace Adept_AIO.Champions.LeeSin.Core.Spells
 
             var current = objects.FirstOrDefault();
 
-            if (current == null || current.NetworkId == target.NetworkId ||
+            if (current == null ||
+                current.NetworkId == target.NetworkId ||
                 current.Health > SummonerSpells.SmiteMonsters() ||
                 current.ServerPosition.Distance(Global.Player) > SummonerSpells.Smite.Range)
             {
@@ -72,25 +63,21 @@ namespace Adept_AIO.Champions.LeeSin.Core.Spells
         public OrbwalkerMode KickFlashMode { get; set; }
 
         public int WardRange { get; } = 600;
-        private const string PassiveName = "blindmonkpassive_cosmetic";
 
-        public int PassiveStack()
-        {
-            return Global.Player.GetBuffCount(PassiveName);
-        }
+        public int PassiveStack() => Global.Player.GetBuffCount(PassiveName);
 
         public void Load()
         {
-            Q = new Spell(SpellSlot.Q, 1000);
-            Q.SetSkillshot(0.25f, 60, 1800, true, SkillshotType.Line, false, HitChance.None);
+            this.Q = new Spell(SpellSlot.Q, 1000);
+            this.Q.SetSkillshot(0.25f, 60, 1800, true, SkillshotType.Line, false, HitChance.None);
 
-            W = new Spell(SpellSlot.W, 700);
+            this.W = new Spell(SpellSlot.W, 700);
 
-            E = new Spell(SpellSlot.E, 425);
+            this.E = new Spell(SpellSlot.E, 425);
 
-            R = new Spell(SpellSlot.R, 375);
-            R2 = new Spell(SpellSlot.R, 900);
-            R2.SetSkillshot(0.25f, 80, 1500, false, SkillshotType.Line);
+            this.R = new Spell(SpellSlot.R, 375);
+            this.R2 = new Spell(SpellSlot.R, 900);
+            this.R2.SetSkillshot(0.25f, 80, 1500, false, SkillshotType.Line);
         }
 
         public void OnProcessSpellCast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
@@ -102,7 +89,7 @@ namespace Adept_AIO.Champions.LeeSin.Core.Spells
 
             if (args.SpellSlot == SpellSlot.Q && args.SpellData.Name.ToLower().Contains("one"))
             {
-                LastQ1CastAttempt = Game.TickCount;
+                this.LastQ1CastAttempt = Game.TickCount;
             }
         }
     }

@@ -1,13 +1,12 @@
-﻿using System.Linq;
-using Adept_AIO.Champions.Rengar.Core;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec.SDK.Damage;
-using Aimtec.SDK.Extensions;
-using GameObjects = Adept_AIO.SDK.Unit_Extensions.GameObjects;
-
-namespace Adept_AIO.Champions.Rengar.OrbwalkingEvents
+﻿namespace Adept_AIO.Champions.Rengar.OrbwalkingEvents
 {
-    internal class JungleClear
+    using System.Linq;
+    using Aimtec.SDK.Damage;
+    using Aimtec.SDK.Extensions;
+    using Core;
+    using SDK.Unit_Extensions;
+
+    class JungleClear
     {
         public static void OnPostAttack()
         {
@@ -40,7 +39,8 @@ namespace Adept_AIO.Champions.Rengar.OrbwalkingEvents
 
             if (SpellConfig.W.Ready && distance < SpellConfig.W.Range)
             {
-                if (Extensions.Ferocity() == 4 && (Global.Player.HealthPercent() >= 35 || !MenuConfig.JungleClear["W"].Enabled))
+                if (Extensions.Ferocity() == 4 &&
+                    (Global.Player.HealthPercent() >= 35 || !MenuConfig.JungleClear["W"].Enabled))
                 {
                     return;
                 }

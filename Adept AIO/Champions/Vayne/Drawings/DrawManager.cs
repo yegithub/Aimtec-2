@@ -1,13 +1,13 @@
-﻿using System.Drawing;
-using System.Linq;
-using Adept_AIO.Champions.Vayne.Core;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec;
-using Aimtec.SDK.Extensions;
-
-namespace Adept_AIO.Champions.Vayne.Drawings
+﻿namespace Adept_AIO.Champions.Vayne.Drawings
 {
-    internal class DrawManager
+    using System.Drawing;
+    using System.Linq;
+    using Aimtec;
+    using Aimtec.SDK.Extensions;
+    using Core;
+    using SDK.Unit_Extensions;
+
+    class DrawManager
     {
         public static void OnPresent()
         {
@@ -51,8 +51,10 @@ namespace Adept_AIO.Champions.Vayne.Drawings
 
             if (SpellManager.Q.Ready && MenuConfig.Drawings["Q"].Enabled)
             {
-                Render.Circle(Global.Player.Position, SpellManager.Q.Range,
-                    (uint) MenuConfig.Drawings["Segments"].Value, Color.Crimson);
+                Render.Circle(Global.Player.Position,
+                    SpellManager.Q.Range,
+                    (uint) MenuConfig.Drawings["Segments"].Value,
+                    Color.Crimson);
             }
         }
     }

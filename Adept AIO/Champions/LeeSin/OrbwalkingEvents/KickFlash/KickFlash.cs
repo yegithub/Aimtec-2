@@ -1,16 +1,16 @@
-﻿using Adept_AIO.Champions.LeeSin.Core.Insec_Manager;
-using Adept_AIO.Champions.LeeSin.Core.Spells;
-using Adept_AIO.SDK.Unit_Extensions;
-using Adept_AIO.SDK.Usables;
-using Aimtec;
-using Aimtec.SDK.Extensions;
-
-namespace Adept_AIO.Champions.LeeSin.OrbwalkingEvents.KickFlash
+﻿namespace Adept_AIO.Champions.LeeSin.OrbwalkingEvents.KickFlash
 {
-    internal class KickFlash : IKickFlash
+    using Aimtec;
+    using Aimtec.SDK.Extensions;
+    using Core.Insec_Manager;
+    using Core.Spells;
+    using SDK.Unit_Extensions;
+    using SDK.Usables;
+
+    class KickFlash : IKickFlash
     {
-        private readonly ISpellConfig _spellConfig;
         private readonly IInsecManager _insecManager;
+        private readonly ISpellConfig _spellConfig;
 
         public KickFlash(ISpellConfig spellConfig, IInsecManager insecManager)
         {
@@ -18,33 +18,33 @@ namespace Adept_AIO.Champions.LeeSin.OrbwalkingEvents.KickFlash
             _insecManager = insecManager;
         }
 
+        private Obj_AI_Hero Target => Global.TargetSelector.GetSelectedTarget();
+
         public void OnKeyPressed()
         {
-            if (!Enabled || 
-                Target == null || 
-                !_spellConfig.R.Ready || 
-                !Target.IsValidTarget(_spellConfig.R.Range) || 
-                SummonerSpells.Flash == null || 
+            if (!this.Enabled ||
+                this.Target == null ||
+                !_spellConfig.R.Ready ||
+                !this.Target.IsValidTarget(_spellConfig.R.Range) ||
+                SummonerSpells.Flash == null ||
                 !SummonerSpells.Flash.Ready)
             {
                 return;
             }
 
-            _spellConfig.R.CastOnUnit(Target);
+            _spellConfig.R.CastOnUnit(this.Target);
         }
 
         public void OnProcessSpellCast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
         {
-            if (sender == null || !sender.IsMe || args.SpellSlot != SpellSlot.R || !Enabled)
+            if (sender == null || !sender.IsMe || args.SpellSlot != SpellSlot.R || !this.Enabled)
             {
                 return;
             }
 
-            SummonerSpells.Flash.Cast(_insecManager.InsecPosition(Target));
+            SummonerSpells.Flash.Cast(_insecManager.InsecPosition(this.Target));
         }
 
         public bool Enabled { get; set; }
-
-        private Obj_AI_Hero Target => Global.TargetSelector.GetSelectedTarget();
     }
 }

@@ -1,14 +1,14 @@
-﻿using System.Linq;
-using Adept_AIO.Champions.Zed.Core;
-using Adept_AIO.SDK.Generic;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec;
-using Aimtec.SDK.Damage;
-using Aimtec.SDK.Extensions;
-
-namespace Adept_AIO.Champions.Zed.OrbwalkingEvents
+﻿namespace Adept_AIO.Champions.Zed.OrbwalkingEvents
 {
-    internal class LaneClear
+    using System.Linq;
+    using Aimtec;
+    using Aimtec.SDK.Damage;
+    using Aimtec.SDK.Extensions;
+    using Core;
+    using SDK.Generic;
+    using SDK.Unit_Extensions;
+
+    class LaneClear
     {
         private static Obj_AI_Minion _turretTarget;
         private static Obj_AI_Base _turret;
@@ -40,17 +40,20 @@ namespace Adept_AIO.Champions.Zed.OrbwalkingEvents
                     }
 
                     if (_turretTarget.Health < playerDamage * 2 + turretDamage &&
-                        _turretTarget.Health > turretDamage + playerDamage && Global.Orbwalker.CanAttack())
+                        _turretTarget.Health > turretDamage + playerDamage &&
+                        Global.Orbwalker.CanAttack())
                     {
                         Global.Orbwalker.Attack(_turretTarget);
                     }
 
-                    else if (SpellManager.E.Ready && _turretTarget.Health <
+                    else if (SpellManager.E.Ready &&
+                             _turretTarget.Health <
                              Global.Player.GetSpellDamage(_turretTarget, SpellSlot.E) + playerDamage)
                     {
                         SpellManager.CastE(_turretTarget);
                     }
-                    else if (SpellManager.Q.Ready && _turretTarget.Health <
+                    else if (SpellManager.Q.Ready &&
+                             _turretTarget.Health <
                              Global.Player.GetSpellDamage(_turretTarget, SpellSlot.Q) + playerDamage)
                     {
                         SpellManager.CastQ(_turretTarget);
@@ -72,7 +75,9 @@ namespace Adept_AIO.Champions.Zed.OrbwalkingEvents
 
                 if (SpellManager.W.Ready && MenuConfig.LaneClear["W"].Enabled)
                 {
-                    if (GameObjects.EnemyMinions.Count(x => x.IsValidTarget(1300)) >= 6 && Global.Player.Level >= 12 && Maths.GetEnergyPercent() >= 70)
+                    if (GameObjects.EnemyMinions.Count(x => x.IsValidTarget(1300)) >= 6 &&
+                        Global.Player.Level >= 12 &&
+                        Maths.GetEnergyPercent() >= 70)
                     {
                         if (ShadowManager.CanCastW1())
                         {
@@ -94,12 +99,12 @@ namespace Adept_AIO.Champions.Zed.OrbwalkingEvents
 
         public static void OnProcessSpellCast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
         {
-            if (sender == null 
-                || args.Target == null
-                || !sender.IsAlly
-                || !args.Target.IsEnemy
-                || !sender.UnitSkinName.ToLower().Contains("turret")
-                || !args.Target.Name.ToLower().Contains("minion"))
+            if (sender == null ||
+                args.Target == null ||
+                !sender.IsAlly ||
+                !args.Target.IsEnemy ||
+                !sender.UnitSkinName.ToLower().Contains("turret") ||
+                !args.Target.Name.ToLower().Contains("minion"))
             {
                 return;
             }

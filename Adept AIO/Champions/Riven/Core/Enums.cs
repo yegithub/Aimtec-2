@@ -25,12 +25,12 @@
     {
         MaximizeDmg,
         Normal,
-        FastCombo,
+        FastCombo
     }
 
     public enum BurstPattern
     {
         TheShy,
-        Execution, // R -> ER (1s Delay) -> Flash -> WQ
+        Execution // R -> ER (1s Delay) -> Flash -> WQ
     }
 }

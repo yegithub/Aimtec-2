@@ -1,17 +1,20 @@
-﻿using System.Linq;
-using Adept_AIO.Champions.Vayne.Core;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec;
-using Aimtec.SDK.Damage;
-using Aimtec.SDK.Extensions;
-
-namespace Adept_AIO.Champions.Vayne.Miscellaneous
+﻿namespace Adept_AIO.Champions.Vayne.Miscellaneous
 {
-    internal class Killsteal
+    using System.Linq;
+    using Aimtec;
+    using Aimtec.SDK.Damage;
+    using Aimtec.SDK.Extensions;
+    using Core;
+    using SDK.Unit_Extensions;
+
+    class Killsteal
     {
         public static void OnUpdate()
         {
-            var target = GameObjects.EnemyHeroes.FirstOrDefault(x => x.Distance(Global.Player) <= Global.Player.AttackRange + SpellManager.Q.Range && x.IsValid && !x.IsDead);
+            var target = GameObjects.EnemyHeroes.FirstOrDefault(x =>
+                x.Distance(Global.Player) <= Global.Player.AttackRange + SpellManager.Q.Range &&
+                x.IsValid &&
+                !x.IsDead);
 
             if (target == null || Global.Orbwalker.IsWindingUp)
             {
@@ -20,7 +23,9 @@ namespace Adept_AIO.Champions.Vayne.Miscellaneous
 
             if (SpellManager.Q.Ready && MenuConfig.Killsteal["Q"].Enabled)
             {
-                if (target.Health <= Global.Player.GetSpellDamage(target, SpellSlot.Q) || target.Health <= Global.Player.GetSpellDamage(target, SpellSlot.Q) + Global.Player.GetAutoAttackDamage(target))
+                if (target.Health <= Global.Player.GetSpellDamage(target, SpellSlot.Q) ||
+                    target.Health <=
+                    Global.Player.GetSpellDamage(target, SpellSlot.Q) + Global.Player.GetAutoAttackDamage(target))
                 {
                     SpellManager.CastQ(target);
                 }

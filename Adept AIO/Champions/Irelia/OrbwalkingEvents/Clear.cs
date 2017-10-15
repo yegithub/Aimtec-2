@@ -1,21 +1,23 @@
-﻿using System.Linq;
-using Adept_AIO.Champions.Irelia.Core;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec;
-using Aimtec.SDK.Damage;
-using Aimtec.SDK.Extensions;
-using Aimtec.SDK.Orbwalking;
-using GameObjects = Adept_AIO.SDK.Unit_Extensions.GameObjects;
-
-namespace Adept_AIO.Champions.Irelia.OrbwalkingEvents
+﻿namespace Adept_AIO.Champions.Irelia.OrbwalkingEvents
 {
-    internal class Clear
+    using System.Linq;
+    using Aimtec;
+    using Aimtec.SDK.Damage;
+    using Aimtec.SDK.Extensions;
+    using Aimtec.SDK.Orbwalking;
+    using Core;
+    using SDK.Unit_Extensions;
+
+    class Clear
     {
         public static void OnPreAttack(AttackableUnit target, PreAttackEventArgs preAttackEventArgs)
         {
-            if (SpellConfig.E.Ready && MenuConfig.Clear["E"].Enabled && MenuConfig.Clear["E"].Value <= Global.Player.ManaPercent())
+            if (SpellConfig.E.Ready &&
+                MenuConfig.Clear["E"].Enabled &&
+                MenuConfig.Clear["E"].Value <= Global.Player.ManaPercent())
             {
-                foreach (var mob in GameObjects.JungleLarge.Where(x => x.HealthPercent() <= Global.Player.HealthPercent()))
+                foreach (var mob in GameObjects.JungleLarge.Where(x =>
+                    x.HealthPercent() <= Global.Player.HealthPercent()))
                 {
                     preAttackEventArgs.Cancel = true;
                     SpellConfig.E.CastOnUnit(mob);
@@ -34,16 +36,17 @@ namespace Adept_AIO.Champions.Irelia.OrbwalkingEvents
 
         public static void OnUpdate()
         {
-            if (!SpellConfig.Q.Ready || 
-                !MenuConfig.Clear["Q"].Enabled || 
-                 MenuConfig.Clear["Q"].Value > Global.Player.ManaPercent() ||
-                 MenuConfig.Clear["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(2000) >= 1)
+            if (!SpellConfig.Q.Ready ||
+                !MenuConfig.Clear["Q"].Enabled ||
+                MenuConfig.Clear["Q"].Value > Global.Player.ManaPercent() ||
+                MenuConfig.Clear["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(2000) >= 1)
             {
                 return;
             }
 
-            var minion = GameObjects.EnemyMinions.LastOrDefault(x => x.Distance(Global.Player) <= SpellConfig.Q.Range &&
-                                                                     x.Health < Global.Player.GetSpellDamage(x, SpellSlot.Q));
+            var minion = GameObjects.EnemyMinions.LastOrDefault(x =>
+                x.Distance(Global.Player) <= SpellConfig.Q.Range &&
+                x.Health < Global.Player.GetSpellDamage(x, SpellSlot.Q));
 
             if (minion == null || MenuConfig.Clear["Turret"].Enabled && minion.IsUnderEnemyTurret())
             {

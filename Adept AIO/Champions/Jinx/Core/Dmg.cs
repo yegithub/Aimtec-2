@@ -1,17 +1,14 @@
-﻿using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec;
-using Aimtec.SDK.Damage;
-
-namespace Adept_AIO.Champions.Jinx.Core
+﻿namespace Adept_AIO.Champions.Jinx.Core
 {
-    internal class Dmg
+    using Aimtec;
+    using Aimtec.SDK.Damage;
+    using SDK.Unit_Extensions;
+
+    class Dmg
     {
         private readonly SpellConfig _spellConfig;
 
-        public Dmg(SpellConfig spellConfig)
-        {
-            _spellConfig = spellConfig;
-        }
+        public Dmg(SpellConfig spellConfig) { _spellConfig = spellConfig; }
 
         public double Damage(Obj_AI_Base target)
         {

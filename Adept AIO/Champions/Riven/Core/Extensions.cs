@@ -1,24 +1,18 @@
-﻿using System;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec;
-
-namespace Adept_AIO.Champions.Riven.Core
+﻿namespace Adept_AIO.Champions.Riven.Core
 {
-    internal class Extensions
+    using System;
+    using Aimtec;
+    using SDK.Unit_Extensions;
+
+    class Extensions
     {
-        public static float FlashRange()
-        {
-            switch (Enums.BurstPattern)
-            {
-                case BurstPattern.TheShy:
-                    return 650;
+        public static bool DidJustAuto;
+        public static bool AllIn;
 
-                case BurstPattern.Execution:
-                    return 750;
+        public static int CurrentQCount = 1;
+        public static int LastQCastAttempt;
 
-                default: throw new ArgumentOutOfRangeException();
-            }
-        }
+        public static Vector3 FleePos;
 
         public static int EngageRange
         {
@@ -44,18 +38,20 @@ namespace Adept_AIO.Champions.Riven.Core
                     range += SpellConfig.Q.Range;
                 }
 
-                return (int)range;
+                return (int) range;
             }
         }
 
-        public static bool DidJustAuto;
-        public static bool AllIn;
+        public static float FlashRange()
+        {
+            switch (Enums.BurstPattern)
+            {
+                case BurstPattern.TheShy: return 650;
 
-        public static int CurrentQCount = 1;
-        public static int LastQCastAttempt;
+                case BurstPattern.Execution: return 750;
 
-        public static Vector3 FleePos;
-
-        
+                default: throw new ArgumentOutOfRangeException();
+            }
+        }
     }
 }

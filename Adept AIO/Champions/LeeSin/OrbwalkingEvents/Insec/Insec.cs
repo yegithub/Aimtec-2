@@ -1,31 +1,32 @@
-﻿using System.Linq;
-using Adept_AIO.Champions.LeeSin.Core;
-using Adept_AIO.Champions.LeeSin.Core.Insec_Manager;
-using Adept_AIO.Champions.LeeSin.Core.Spells;
-using Adept_AIO.Champions.LeeSin.Ward_Manager;
-using Adept_AIO.SDK.Unit_Extensions;
-using Adept_AIO.SDK.Usables;
-using Aimtec;
-using Aimtec.SDK.Damage;
-using Aimtec.SDK.Events;
-using Aimtec.SDK.Extensions;
-
-namespace Adept_AIO.Champions.LeeSin.OrbwalkingEvents.Insec
+﻿namespace Adept_AIO.Champions.LeeSin.OrbwalkingEvents.Insec
 {
-    internal class Insec : IInsec
+    using System.Linq;
+    using Aimtec;
+    using Aimtec.SDK.Damage;
+    using Aimtec.SDK.Events;
+    using Aimtec.SDK.Extensions;
+    using Core;
+    using Core.Insec_Manager;
+    using Core.Spells;
+    using SDK.Unit_Extensions;
+    using SDK.Usables;
+    using Ward_Manager;
+
+    class Insec : IInsec
     {
-        public bool Enabled { get; set; }
-        public bool FlashEnabled { get; set; }
-        public bool Bk { get; set; }
-        public bool QLast { get; set; }
-        public bool ObjectEnabled { get; set; }
+        private readonly IInsecManager _insecManager;
+        private readonly ISpellConfig _spellConfig;
+        private readonly IWardManager _wardManager;
 
         private readonly IWardTracker _wardTracker;
-        private readonly IWardManager _wardManager;
-        private readonly ISpellConfig _spellConfig;
-        private readonly IInsecManager _insecManager;
 
-        public Insec(IWardTracker wardTracker, IWardManager wardManager, ISpellConfig spellConfig,
+        private Obj_AI_Base _lastQUnit;
+
+        private bool IsBKActive;
+
+        public Insec(IWardTracker wardTracker,
+            IWardManager wardManager,
+            ISpellConfig spellConfig,
             IInsecManager insecManager)
         {
             _wardTracker = wardTracker;
@@ -34,73 +35,45 @@ namespace Adept_AIO.Champions.LeeSin.OrbwalkingEvents.Insec
             _insecManager = insecManager;
         }
 
-        private bool FlashReady => SummonerSpells.IsValid(SummonerSpells.Flash) && FlashEnabled;
+        public bool FlashEnabled { get; set; }
+        public bool Bk { get; set; }
+        public bool QLast { get; set; }
+        public bool ObjectEnabled { get; set; }
 
-        private bool CanWardJump => _spellConfig.W.Ready && _spellConfig.IsFirst(_spellConfig.W) && _wardTracker.IsWardReady();
+        private bool FlashReady => SummonerSpells.IsValid(SummonerSpells.Flash) && this.FlashEnabled;
 
-        private bool IsBKActive;
-
-        private int InsecRange()
-        {
-            var temp = 65;
-
-            if (FlashReady)
-            {
-                temp += 425;
-            }
-
-            if (CanWardJump)
-            {
-                temp += _spellConfig.WardRange;
-            }
-          
-            return temp;
-        }
-
-        private bool InsecInRange(Vector3 source)
-        {
-            return GetInsecPosition().Distance(source) <= InsecRange();
-        }
-
-        private Vector3 GetInsecPosition()
-        {
-            if (Bk && _insecManager.BkPosition(Target) != Vector3.Zero)
-            {
-                IsBKActive = true;
-                return _insecManager.BkPosition(Target);
-            }
-            IsBKActive = false;
-            return _insecManager.InsecPosition(Target);
-        }
+        private bool CanWardJump =>
+            _spellConfig.W.Ready && _spellConfig.IsFirst(_spellConfig.W) && _wardTracker.IsWardReady();
 
         private static Obj_AI_Hero Target => Global.TargetSelector.GetSelectedTarget();
 
-        private Obj_AI_Base EnemyObject => GameObjects.EnemyMinions.OrderBy(x => x.Health).LastOrDefault(x => InsecInRange(x.ServerPosition) 
-        && !x.IsDead 
-        && x.IsValid
-        && !x.IsTurret
-        && x.NetworkId != Target.NetworkId 
-        && x.Health * 0.9 > Global.Player.GetSpellDamage(x, SpellSlot.Q)
-        && x.MaxHealth > 7
-        && Global.Player.Distance(x) <= _spellConfig.Q.Range 
-        && x.Distance(GetInsecPosition()) < Global.Player.Distance(GetInsecPosition()));
+        private Obj_AI_Base EnemyObject => GameObjects.EnemyMinions.OrderBy(x => x.Health).
+            LastOrDefault(x => InsecInRange(x.ServerPosition) &&
+                               !x.IsDead &&
+                               x.IsValid &&
+                               !x.IsTurret &&
+                               x.NetworkId != Target.NetworkId &&
+                               x.Health * 0.9 > Global.Player.GetSpellDamage(x, SpellSlot.Q) &&
+                               x.MaxHealth > 7 &&
+                               Global.Player.Distance(x) <= _spellConfig.Q.Range &&
+                               x.Distance(GetInsecPosition()) < Global.Player.Distance(GetInsecPosition()));
 
-        private Obj_AI_Base _lastQUnit;
+        public bool Enabled { get; set; }
 
         // R Flash
         public void OnProcessSpellCast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
         {
-            if (!Enabled
-             || !FlashReady
-             ||  sender == null 
-             || !sender.IsMe
-             ||  _insecManager.InsecKickValue != 1 
-             ||  CanWardJump && !_wardTracker.DidJustWard
-             ||  _wardTracker.DidJustWard
-             || Global.Player.Distance(GetInsecPosition()) <= 220
-             || Target== null
-             || args.SpellSlot != SpellSlot.R
-             || Global.Player.Distance(GetInsecPosition()) <= 80)
+            if (!this.Enabled ||
+                !this.FlashReady ||
+                sender == null ||
+                !sender.IsMe ||
+                _insecManager.InsecKickValue != 1 ||
+                this.CanWardJump && !_wardTracker.DidJustWard ||
+                _wardTracker.DidJustWard ||
+                Global.Player.Distance(GetInsecPosition()) <= 220 ||
+                Target == null ||
+                args.SpellSlot != SpellSlot.R ||
+                Global.Player.Distance(GetInsecPosition()) <= 80)
             {
                 return;
             }
@@ -110,16 +83,16 @@ namespace Adept_AIO.Champions.LeeSin.OrbwalkingEvents.Insec
 
         public void OnKeyPressed()
         {
-            if (!Enabled || !Target.IsValidTarget() || Global.Player.Level < 6)
+            if (!this.Enabled || !Target.IsValidTarget() || Global.Player.Level < 6)
             {
                 return;
             }
 
-            Temp.IsBubbaKush = Bk;
+            Temp.IsBubbaKush = this.Bk;
 
             var dist = GetInsecPosition().Distance(Global.Player);
 
-            if (_spellConfig.Q.Ready && !(CanWardJump && dist <= _spellConfig.WardRange && QLast))
+            if (_spellConfig.Q.Ready && !(this.CanWardJump && dist <= _spellConfig.WardRange && this.QLast))
             {
                 if (_spellConfig.IsQ2())
                 {
@@ -135,32 +108,32 @@ namespace Adept_AIO.Champions.LeeSin.OrbwalkingEvents.Insec
                         _spellConfig.Q.Cast(Target);
                     }
 
-                    if (!ObjectEnabled || EnemyObject == null)
+                    if (!this.ObjectEnabled || this.EnemyObject == null)
                     {
                         return;
                     }
 
-                    _lastQUnit = EnemyObject;
-                    _spellConfig.Q.Cast(EnemyObject.ServerPosition);
+                    _lastQUnit = this.EnemyObject;
+                    _spellConfig.Q.Cast(this.EnemyObject.ServerPosition);
                 }
             }
 
-            if (CanWardJump && dist <= InsecRange())
+            if (this.CanWardJump && dist <= InsecRange())
             {
                 if (dist <= _spellConfig.WardRange)
                 {
-                    _wardManager.WardJump(GetInsecPosition(), (int)dist);
+                    _wardManager.WardJump(GetInsecPosition(), (int) dist);
                 }
                 else
                 {
                     if (Game.TickCount - _spellConfig.LastQ1CastAttempt <= 900 ||
                         _lastQUnit != null && _spellConfig.IsQ2() && InsecInRange(_lastQUnit.ServerPosition) ||
-                        ObjectEnabled && _spellConfig.Q.Ready)
+                        this.ObjectEnabled && _spellConfig.Q.Ready)
                     {
                         return;
                     }
 
-                    if (!FlashReady || Game.TickCount - _spellConfig.Q.LastCastAttemptT <= 1000)
+                    if (!this.FlashReady || Game.TickCount - _spellConfig.Q.LastCastAttemptT <= 1000)
                     {
                         return;
                     }
@@ -171,11 +144,12 @@ namespace Adept_AIO.Champions.LeeSin.OrbwalkingEvents.Insec
 
             if (_spellConfig.R.Ready)
             {
-                if (dist <= 125 || FlashReady)
+                if (dist <= 125 || this.FlashReady)
                 {
                     if (IsBKActive)
                     {
-                        var enemy = GameObjects.EnemyHeroes.FirstOrDefault(x => x.IsValidTarget(_spellConfig.R.Range) && x.NetworkId != Target.NetworkId);
+                        var enemy = GameObjects.EnemyHeroes.FirstOrDefault(x =>
+                            x.IsValidTarget(_spellConfig.R.Range) && x.NetworkId != Target.NetworkId);
                         if (enemy != null)
                         {
                             _spellConfig.R.CastOnUnit(enemy);
@@ -183,18 +157,17 @@ namespace Adept_AIO.Champions.LeeSin.OrbwalkingEvents.Insec
                     }
                     else if (Target.IsValidTarget(_spellConfig.R.Range))
                     {
-                        
                         _spellConfig.R.CastOnUnit(Target);
                     }
                 }
 
-                if (_insecManager.InsecKickValue == 0
-                    && FlashReady
-                    && GetInsecPosition().Distance(Global.Player) <= 425
-                    && GetInsecPosition().Distance(Global.Player) > 220
-                    && (!CanWardJump || _wardTracker.DidJustWard))
+                if (_insecManager.InsecKickValue == 0 &&
+                    this.FlashReady &&
+                    GetInsecPosition().Distance(Global.Player) <= 425 &&
+                    GetInsecPosition().Distance(Global.Player) > 220 &&
+                    (!this.CanWardJump || _wardTracker.DidJustWard))
                 {
-                    if (Global.Player.GetDashInfo().EndPos.Distance(GetInsecPosition()) <= 215 || CanWardJump)
+                    if (Global.Player.GetDashInfo().EndPos.Distance(GetInsecPosition()) <= 215 || this.CanWardJump)
                     {
                         return;
                     }
@@ -203,6 +176,36 @@ namespace Adept_AIO.Champions.LeeSin.OrbwalkingEvents.Insec
                     _spellConfig.R.CastOnUnit(Target);
                 }
             }
+        }
+
+        private int InsecRange()
+        {
+            var temp = 65;
+
+            if (this.FlashReady)
+            {
+                temp += 425;
+            }
+
+            if (this.CanWardJump)
+            {
+                temp += _spellConfig.WardRange;
+            }
+
+            return temp;
+        }
+
+        private bool InsecInRange(Vector3 source) => GetInsecPosition().Distance(source) <= InsecRange();
+
+        private Vector3 GetInsecPosition()
+        {
+            if (this.Bk && _insecManager.BkPosition(Target) != Vector3.Zero)
+            {
+                IsBKActive = true;
+                return _insecManager.BkPosition(Target);
+            }
+            IsBKActive = false;
+            return _insecManager.InsecPosition(Target);
         }
     }
 }

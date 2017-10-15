@@ -1,15 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec;
-
-namespace Adept_AIO.SDK.Usables
+﻿namespace Adept_AIO.SDK.Usables
 {
-    internal class Items
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Aimtec;
+    using Unit_Extensions;
+
+    class Items
     {
         private static readonly string[] Tiamats = {"ItemTiamatCleave", "ItemTitanicHydraCleave", "ItemTiamatCleave"};
         public static float TiamatCastTime;
+
+        private static readonly IEnumerable<string> WardNames =
+            new List<string> {"TrinketTotemLvl1", "ItemGhostWard", "JammerDevice"};
 
         public static bool CanUseTiamat()
         {
@@ -29,7 +32,7 @@ namespace Adept_AIO.SDK.Usables
         public static void CastTiamat(bool cancelAa = true)
         {
             SpellSlot? slot = null;
-          
+
             foreach (var tiamat in Tiamats)
             {
                 if (CanUseItem(tiamat))
@@ -52,20 +55,13 @@ namespace Adept_AIO.SDK.Usables
             }
         }
 
-        private static readonly IEnumerable<string> WardNames = new List<string>
-        {
-            "TrinketTotemLvl1",
-            "ItemGhostWard",
-            "JammerDevice",
-        };
-
         public static void WardJump(Vector3 position)
         {
             foreach (var wardName in WardNames)
             {
                 if (CanUseItem(wardName))
                 {
-                    CastItem(wardName, position);  
+                    CastItem(wardName, position);
                 }
             }
         }
@@ -92,7 +88,7 @@ namespace Adept_AIO.SDK.Usables
         public static bool CanUseItem(string itemName)
         {
             var slot = GetItemSlot(itemName);
-        
+
             if (slot != SpellSlot.Unknown)
             {
                 return Global.Player.SpellBook.GetSpellState(slot) == SpellState.Ready;
@@ -102,7 +98,9 @@ namespace Adept_AIO.SDK.Usables
 
         private static SpellSlot GetItemSlot(string itemName)
         {
-            var slot = Global.Player.SpellBook.Spells.FirstOrDefault(x => !string.IsNullOrEmpty(x.Name) && string.Equals(x.Name, itemName, StringComparison.CurrentCultureIgnoreCase));
+            var slot = Global.Player.SpellBook.Spells.FirstOrDefault(x =>
+                !string.IsNullOrEmpty(x.Name) &&
+                string.Equals(x.Name, itemName, StringComparison.CurrentCultureIgnoreCase));
 
             return slot?.Slot ?? SpellSlot.Unknown;
         }

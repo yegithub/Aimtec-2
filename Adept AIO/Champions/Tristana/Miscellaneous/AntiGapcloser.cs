@@ -1,20 +1,17 @@
-﻿using Adept_AIO.Champions.Tristana.Core;
-using Adept_AIO.SDK.Delegates;
-using Adept_AIO.SDK.Spell_DB;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec;
-using Aimtec.SDK.Extensions;
-
-namespace Adept_AIO.Champions.Tristana.Miscellaneous
+﻿namespace Adept_AIO.Champions.Tristana.Miscellaneous
 {
-    internal class AntiGapcloser
+    using Aimtec;
+    using Aimtec.SDK.Extensions;
+    using Core;
+    using SDK.Delegates;
+    using SDK.Spell_DB;
+    using SDK.Unit_Extensions;
+
+    class AntiGapcloser
     {
         private readonly SpellConfig _spellConfig;
 
-        public AntiGapcloser(SpellConfig spellConfig)
-        {
-            _spellConfig = spellConfig;
-        }
+        public AntiGapcloser(SpellConfig spellConfig) { _spellConfig = spellConfig; }
 
         public void OnGapcloser(Obj_AI_Hero sender, GapcloserArgs args)
         {

@@ -1,14 +1,14 @@
-﻿using Adept_AIO.Champions.Vayne.Core;
-using Adept_AIO.Champions.Vayne.Drawings;
-using Adept_AIO.Champions.Vayne.Miscellaneous;
-using Adept_AIO.Champions.Vayne.OrbwalkingMode;
-using Adept_AIO.SDK.Delegates;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec;
-
-namespace Adept_AIO.Champions.Vayne
+﻿namespace Adept_AIO.Champions.Vayne
 {
-    internal class Vayne
+    using Aimtec;
+    using Core;
+    using Drawings;
+    using Miscellaneous;
+    using OrbwalkingEvents;
+    using SDK.Delegates;
+    using SDK.Unit_Extensions;
+
+    class Vayne
     {
         public static void Init()
         {

@@ -1,29 +1,22 @@
-﻿using System.Collections.Generic;
-using Adept_AIO.Champions.Vayne.OrbwalkingMode;
-using Adept_AIO.SDK.Delegates;
-using Adept_AIO.SDK.Menu_Extension;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec.SDK.Menu;
-using Aimtec.SDK.Menu.Components;
-using Aimtec.SDK.Orbwalking;
-using Aimtec.SDK.Util;
-
-namespace Adept_AIO.Champions.Vayne.Core
+﻿namespace Adept_AIO.Champions.Vayne.Core
 {
-    internal class MenuConfig
+    using System.Collections.Generic;
+    using Aimtec.SDK.Menu;
+    using Aimtec.SDK.Menu.Components;
+    using Aimtec.SDK.Orbwalking;
+    using Aimtec.SDK.Util;
+    using OrbwalkingEvents;
+    using SDK.Delegates;
+    using SDK.Menu_Extension;
+    using SDK.Unit_Extensions;
+
+    class MenuConfig
     {
         public static OrbwalkerMode FleeOrbwalkerMode, CondemnFlashOrbwalkerMode;
 
         private static Menu _mainMenu;
 
-        public static Menu Combo,
-                           Harass,
-                           LaneClear,
-                           JungleClear,
-                           Lasthit,
-                           Killsteal,
-                           Misc,
-                           Drawings;
+        public static Menu Combo, Harass, LaneClear, JungleClear, Lasthit, Killsteal, Misc, Drawings;
 
         public static void Attach()
         {
@@ -35,6 +28,8 @@ namespace Adept_AIO.Champions.Vayne.Core
 
             CondemnFlashOrbwalkerMode = new OrbwalkerMode("Condemn Flash", KeyCode.T, null, CondemnFlash.OnKeyPressed);
             Global.Orbwalker.AddMode(CondemnFlashOrbwalkerMode);
+
+            Gapcloser.Attach(_mainMenu, "Anti Gapcloser");
 
             Combo = new Menu("Combo", "Combo")
             {
@@ -71,7 +66,7 @@ namespace Adept_AIO.Champions.Vayne.Core
             {
                 new MenuBool("TurretFarm", "Smart Under Turret Farm"),
                 new MenuList("Q3", "Q Mode", new[] {"After Auto", "Engage"}, 0),
-                new MenuList("QMode3", "Q To:", new[] {"Cursor", "Side"}, 0),
+                new MenuList("QMode3", "Q To:", new[] {"Cursor", "Side"}, 0)
             };
 
             JungleClear = new Menu("Jungle", "Jungle")
@@ -81,16 +76,9 @@ namespace Adept_AIO.Champions.Vayne.Core
                 new MenuBool("E", "Use E")
             };
 
-            Lasthit = new Menu("Lasthit", "Lasthit")
-            {
-                new MenuBool("Q", "Use Q After AA")
-            };
+            Lasthit = new Menu("Lasthit", "Lasthit") {new MenuBool("Q", "Use Q After AA")};
 
-            Killsteal = new Menu("Killsteal", "Killsteal")
-            {
-                new MenuBool("Q", "Q -> AA"),
-                new MenuBool("E", "Use E")
-            };
+            Killsteal = new Menu("Killsteal", "Killsteal") {new MenuBool("Q", "Q -> AA"), new MenuBool("E", "Use E")};
 
             Misc = new Menu("Misc", "Miscellaneous")
             {
@@ -106,8 +94,6 @@ namespace Adept_AIO.Champions.Vayne.Core
                 new MenuBool("Pred", "Draw E Prediction")
             };
 
-            Gapcloser.Attach(_mainMenu, "Anti Gapcloser");
-
             foreach (var menu in new List<Menu>
             {
                 Combo,
@@ -119,7 +105,10 @@ namespace Adept_AIO.Champions.Vayne.Core
                 Misc,
                 Drawings,
                 MenuShortcut.Credits
-            }) _mainMenu.Add(menu);
+            })
+            {
+                _mainMenu.Add(menu);
+            }
         }
     }
 }

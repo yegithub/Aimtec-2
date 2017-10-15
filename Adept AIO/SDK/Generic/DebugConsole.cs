@@ -1,10 +1,12 @@
-﻿using System;
-
-namespace Adept_AIO.SDK.Generic
+﻿namespace Adept_AIO.SDK.Generic
 {
-    internal class DebugConsole
+    using System;
+
+    class DebugConsole
     {
-        public static void Write(string message, ConsoleColor foregroundColor = ConsoleColor.White, ConsoleColor backgroundColor = ConsoleColor.Black)
+        public static void Write(string message,
+            ConsoleColor foregroundColor = ConsoleColor.White,
+            ConsoleColor backgroundColor = ConsoleColor.Black)
         {
             Console.BackgroundColor = backgroundColor;
             Console.ForegroundColor = foregroundColor;

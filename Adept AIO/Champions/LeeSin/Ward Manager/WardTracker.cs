@@ -1,45 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Adept_AIO.Champions.LeeSin.Core.Spells;
-using Adept_AIO.SDK.Generic;
-using Adept_AIO.SDK.Unit_Extensions;
-using Adept_AIO.SDK.Usables;
-using Aimtec;
-
-namespace Adept_AIO.Champions.LeeSin.Ward_Manager
+﻿namespace Adept_AIO.Champions.LeeSin.Ward_Manager
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Aimtec;
+    using Core.Spells;
+    using SDK.Generic;
+    using SDK.Unit_Extensions;
+    using SDK.Usables;
+
     public class WardTracker : IWardTracker
     {
         private readonly ISpellConfig _spellConfig;
 
-        public WardTracker(ISpellConfig spellConfig)
-        {
-            _spellConfig = spellConfig;
-        }
+        private readonly IEnumerable<string> _wardNames =
+            new List<string> {"TrinketTotemLvl1", "ItemGhostWard", "JammerDevice"};
 
-        public bool DidJustWard => Game.TickCount - LastWardCreated <= 800 + Game.Ping / 2f;
+        public WardTracker(ISpellConfig spellConfig) { _spellConfig = spellConfig; }
 
-        public bool IsWardReady()
-        {
-            return _wardNames.Any(Items.CanUseItem);
-        }
+        public bool DidJustWard => Game.TickCount - this.LastWardCreated <= 800 + Game.Ping / 2f;
 
-        public string Ward()
-        {
-            return _wardNames.FirstOrDefault(Items.CanUseItem);
-        }
+        public bool IsWardReady() => _wardNames.Any(Items.CanUseItem);
 
-        private readonly IEnumerable<string> _wardNames = new List<string>
-        {
-            "TrinketTotemLvl1",
-            "ItemGhostWard",
-            "JammerDevice",
-        };
+        public string Ward() => _wardNames.FirstOrDefault(Items.CanUseItem);
+
+        public bool IsAtWall { get; set; }
+
+        public float LastWardCreated { get; set; }
+
+        public string WardName { get; private set; }
+
+        public Vector3 WardPosition { get; set; }
 
         public void OnCreate(GameObject sender)
         {
-            if (DidJustWard || !_spellConfig.IsFirst(_spellConfig.W) || !IsAtWall)
+            if (this.DidJustWard || !_spellConfig.IsFirst(_spellConfig.W) || !this.IsAtWall)
             {
                 return;
             }
@@ -51,20 +46,13 @@ namespace Adept_AIO.Champions.LeeSin.Ward_Manager
                 return;
             }
 
-            LastWardCreated = Game.TickCount;
-            WardName = ward.Name;
-            WardPosition = ward.ServerPosition;
+            this.LastWardCreated = Game.TickCount;
+            this.WardName = ward.Name;
+            this.WardPosition = ward.ServerPosition;
 
             DebugConsole.Write("Located Ally Ward.", ConsoleColor.Green);
-            Global.Player.SpellBook.CastSpell(SpellSlot.W, WardPosition); // Bug: This position is unrealistic and does not work.
+            Global.Player.SpellBook.CastSpell(SpellSlot.W,
+                this.WardPosition); // Bug: This position is unrealistic and does not work.
         }
-
-        public bool IsAtWall { get; set; }
-
-        public float LastWardCreated { get; set; }
-
-        public string WardName { get; private set; }
-
-        public Vector3 WardPosition { get; set; }
     }
 }

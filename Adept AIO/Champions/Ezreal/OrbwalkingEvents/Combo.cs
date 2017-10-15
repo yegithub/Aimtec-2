@@ -1,13 +1,13 @@
-﻿using System.Linq;
-using Adept_AIO.Champions.Ezreal.Core;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec;
-using Aimtec.SDK.Damage;
-using Aimtec.SDK.Extensions;
-
-namespace Adept_AIO.Champions.Ezreal.OrbwalkingEvents
+﻿namespace Adept_AIO.Champions.Ezreal.OrbwalkingEvents
 {
-    internal class Combo
+    using System.Linq;
+    using Aimtec;
+    using Aimtec.SDK.Damage;
+    using Aimtec.SDK.Extensions;
+    using Core;
+    using SDK.Unit_Extensions;
+
+    class Combo
     {
         public static void OnUpdate()
         {
@@ -25,7 +25,8 @@ namespace Adept_AIO.Champions.Ezreal.OrbwalkingEvents
                 }
                 else if (MenuConfig.Combo["QM"].Enabled && Global.Player.GetBuffCount("") >= 5)
                 {
-                    var objects = GameObjects.Enemy.FirstOrDefault(x => x.IsValidTarget(SpellConfig.Q.Range) && x.MaxHealth >= 10);
+                    var objects = GameObjects.Enemy.FirstOrDefault(x =>
+                        x.IsValidTarget(SpellConfig.Q.Range) && x.MaxHealth >= 10);
                     if (objects != null)
                     {
                         SpellConfig.Q.Cast(objects);
@@ -50,7 +51,12 @@ namespace Adept_AIO.Champions.Ezreal.OrbwalkingEvents
                 }
             }
 
-            if (SpellConfig.E.Ready && MenuConfig.Combo["E"].Enabled && Global.Player.ManaPercent() >= 30 && target.IsValidTarget(SpellConfig.E.Range) && Global.Player.GetSpellDamage(target, SpellSlot.E) + Global.Player.GetAutoAttackDamage(target) >= target.Health)
+            if (SpellConfig.E.Ready &&
+                MenuConfig.Combo["E"].Enabled &&
+                Global.Player.ManaPercent() >= 30 &&
+                target.IsValidTarget(SpellConfig.E.Range) &&
+                Global.Player.GetSpellDamage(target, SpellSlot.E) + Global.Player.GetAutoAttackDamage(target) >=
+                target.Health)
             {
                 SpellConfig.E.Cast(target);
             }

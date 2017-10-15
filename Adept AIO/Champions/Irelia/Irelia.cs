@@ -1,12 +1,12 @@
-﻿using Adept_AIO.Champions.Irelia.Core;
-using Adept_AIO.Champions.Irelia.Drawings;
-using Adept_AIO.Champions.Irelia.Miscellaneous;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec;
-
-namespace Adept_AIO.Champions.Irelia
+﻿namespace Adept_AIO.Champions.Irelia
 {
-    internal class Irelia
+    using Aimtec;
+    using Core;
+    using Drawings;
+    using Miscellaneous;
+    using SDK.Unit_Extensions;
+
+    class Irelia
     {
         public static void Init()
         {
@@ -17,7 +17,7 @@ namespace Adept_AIO.Champions.Irelia
             Game.OnUpdate += Killsteal.OnUpdate;
             Obj_AI_Base.OnProcessSpellCast += Manager.OnProcessSpellCast;
             Global.Orbwalker.PostAttack += Manager.PostAttack;
-            Global.Orbwalker.PreAttack  += Manager.OnPreAttack;
+            Global.Orbwalker.PreAttack += Manager.OnPreAttack;
             Render.OnRender += DrawManager.OnRender;
             Render.OnPresent += DrawManager.RenderDamage;
         }

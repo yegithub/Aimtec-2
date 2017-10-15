@@ -1,10 +1,10 @@
-﻿using Adept_AIO.Champions.Ezreal.OrbwalkingEvents;
-using Adept_AIO.SDK.Unit_Extensions;
-using Aimtec.SDK.Orbwalking;
-
-namespace Adept_AIO.Champions.Ezreal.Miscellaneous
+﻿namespace Adept_AIO.Champions.Ezreal.Miscellaneous
 {
-    internal class Manager
+    using Aimtec.SDK.Orbwalking;
+    using OrbwalkingEvents;
+    using SDK.Unit_Extensions;
+
+    class Manager
     {
         public static void OnUpdate()
         {
@@ -12,7 +12,7 @@ namespace Adept_AIO.Champions.Ezreal.Miscellaneous
             {
                 return;
             }
-       
+
             Misc.OnUpdate();
 
             switch (Global.Orbwalker.Mode)
