@@ -1,5 +1,6 @@
 ﻿namespace Adept_AIO.Champions.Riven.Miscellaneous
 {
+    using System.Threading;
     using Aimtec;
     using Aimtec.SDK.Extensions;
     using Aimtec.SDK.Util;
@@ -12,18 +13,18 @@
         {
             Global.Orbwalker.AttackingEnabled = false;
 
+            var moveDelay = Global.Player.HasBuff("RivenFengShuiEngine") ? 50 : 0;
+            DelayAction.Queue(moveDelay + (Extensions.CurrentQCount == 1 ? 100 : 40), () => Global.Orbwalker.Move(Game.CursorPos), new CancellationToken(false));
+
             DelayAction.Queue((int) GetDelay(),
                 () =>
                 {
-                    Global.Orbwalker.Move(Game.CursorPos);
                     Global.Orbwalker.AttackingEnabled = true;
                     Global.Orbwalker.ResetAutoAttackTimer();
-                });
+                }, new CancellationToken(false));
         }
 
-        private static float GetDelay() => (Extensions.CurrentQCount == 1 ? 440 : 330) -
-                                           3.333f * Global.Player.Level +
-                                           (Global.Player.HasBuff("RivenFengShuiEngine") ? 80 : 0);
+        private static float GetDelay() => (Extensions.CurrentQCount == 1 ? 420 : 340) - 3.333f * Global.Player.Level;
 
         public static void OnPlayAnimation(Obj_AI_Base sender, Obj_AI_BasePlayAnimationEventArgs args)
         {
