@@ -21,7 +21,7 @@
                 });
         }
 
-        private static float GetDelay() => (Extensions.CurrentQCount == 1 ? 480 : 380) -
+        private static float GetDelay() => (Extensions.CurrentQCount == 1 ? 440 : 330) -
                                            3.333f * Global.Player.Level +
                                            (Global.Player.HasBuff("RivenFengShuiEngine") ? 80 : 0);
 
