@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using Adept_AIO.SDK.Unit_Extensions;
 using Aimtec;
 using Aimtec.SDK.Util;
@@ -7,6 +8,11 @@ namespace Adept_AIO.SDK.Generic
 {
     internal class Maths
     {
+        public static double DegreeToRadian(double angle)
+        {
+            return Math.PI * angle / 180.0;
+        }
+
         public static int Percent(double value1, double value2, int multiplier = 100)
         {
             return (int)(value2 / value1 * multiplier);

@@ -72,9 +72,10 @@ namespace Adept_AIO.Champions.Vayne.Core
 
         public static void CastQ(Obj_AI_Base target, int modeIndex = 0, bool force = true)
         {
-            var wallPos = WallExtension.NearestWall(Global.Player.ServerPosition, (int)(Q.Range / 2 + 25));
-            if (!wallPos.IsZero && modeIndex != 0 && target.Distance(wallPos) < Global.Player.Distance(target))
+            var wallPos = WallExtension.NearestWall(Global.Player.ServerPosition, 300);
+            if (!wallPos.IsZero)
             {
+                DebugConsole.Write("TO WALL", ConsoleColor.Green);
                 QPred = wallPos;
                 Q.Cast(wallPos);
                 return;
@@ -84,48 +85,47 @@ namespace Adept_AIO.Champions.Vayne.Core
 
             var point = WallExtension.NearestWall(target.ServerPosition, 475);
           
-            if (force && E.Ready && !point.IsZero)
+            if (force && E.Ready && !point.IsZero && point.Distance(Global.Player) <= Q.Range)
             {
-                point = target.ServerPosition + (target.ServerPosition - point).Normalized() * 100;
-                if (point.Distance(Global.Player) < Q.Range)
-                {
-                    pos = point;
-                }
+                point = target.ServerPosition + (target.ServerPosition - point).Normalized() * 200;
+                DebugConsole.Write("TO E POS", ConsoleColor.Green);
+                pos = point;
             }
             else
             {
                 switch (modeIndex)
                 {
                     case 0:
+                        DebugConsole.Write("TO CURSOR", ConsoleColor.Green);
                         pos = Game.CursorPos;
                         break;
                     case 1:
-                        var toSide = ToSide(target.ServerPosition.To2D(), 65).To3D();
-                        pos = toSide;
+
+                        for (int i = 140; i < 360; i+= 20)
+                        {
+                            var dir = Global.Player.Orientation.To2D();
+                            var angleRad = Maths.DegreeToRadian(i);
+                            var rot = (Global.Player.ServerPosition.To2D() + 300 * dir.Rotated((float) angleRad)).To3D();
+                            if (rot.CountEnemyHeroesInRange(400) != 0)
+                            {
+                                continue;
+                            }
+                            DebugConsole.Write("TO SIDE", ConsoleColor.Green);
+                            pos = rot;
+                        }
+
                         break;
                 }
             }
 
             if (target.Distance(Global.Player) >= Global.Player.AttackRange && !target.IsFacingUnit(Global.Player))
             {
+                DebugConsole.Write("TO TARGET", ConsoleColor.Green);
                 pos = target.ServerPosition;
             }
 
             QPred = pos;
             Q.Cast(pos);
-        }
-
-        private static Vector2 ToSide(Vector2 targetPos, double angle)
-        {
-            angle *= Math.PI / 180.0;
-            var temp = Vector2.Subtract(targetPos, Global.Player.Position.To2D());
-            var result = new Vector2(0)
-            {
-                X = (float)(temp.X * Math.Cos(angle) - temp.Y * Math.Sin(angle)) / 4,
-                Y = (float)(temp.X * Math.Sin(angle) + temp.Y * Math.Cos(angle)) / 4
-            };
-
-            return Vector2.Add(result, Global.Player.Position.To2D());
         }
     }
 }
