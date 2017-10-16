@@ -24,8 +24,7 @@
                 return;
             }
 
-            var minion = GameObjects.Minions.
-                Where(x => x.Distance(Global.Player) <= SpellConfig.E.Range && !x.HasBuff("YasuoDashWrapper")).
+            var minion = GameObjects.Minions.Where(x => x.Distance(Global.Player) <= SpellConfig.E.Range && !x.HasBuff("YasuoDashWrapper")).
                 OrderBy(x => x.Distance(Game.CursorPos)).
                 FirstOrDefault();
 
@@ -34,9 +33,7 @@
                 SpellConfig.E.CastOnUnit(minion);
             }
 
-            if (args.End.Distance(Global.Player.ServerPosition) <= 300 &&
-                SpellConfig.W.Ready &&
-                missile.CollisionObjects.Any(x => x.HasFlag(CollisionableObjects.YasuoWall)))
+            if (args.End.Distance(Global.Player.ServerPosition) <= 300 && SpellConfig.W.Ready && missile.CollisionObjects.Any(x => x.HasFlag(CollisionableObjects.YasuoWall)))
             {
                 SpellConfig.W.Cast(sender.ServerPosition);
             }

@@ -26,9 +26,7 @@
             {
                 SpellManager.CastQ(target, MenuConfig.LaneClear["Q"].Value);
             }
-            else if (SpellManager.W.Ready &&
-                     MenuConfig.LaneClear["W"].Enabled &&
-                     GameObjects.EnemyMinions.Count(x => x.IsValidTarget(1000)) >= MenuConfig.LaneClear["W"].Value)
+            else if (SpellManager.W.Ready && MenuConfig.LaneClear["W"].Enabled && GameObjects.EnemyMinions.Count(x => x.IsValidTarget(1000)) >= MenuConfig.LaneClear["W"].Value)
             {
                 SpellManager.W.Cast(target);
             }

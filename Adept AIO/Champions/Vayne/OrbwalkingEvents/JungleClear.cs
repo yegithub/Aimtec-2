@@ -29,8 +29,7 @@
 
         public static void OnUpdate()
         {
-            var mob = GameObjects.Jungle.FirstOrDefault(x =>
-                x.Distance(Global.Player) <= SpellManager.Q.Range + Global.Player.AttackRange);
+            var mob = GameObjects.Jungle.FirstOrDefault(x => x.Distance(Global.Player) <= SpellManager.Q.Range + Global.Player.AttackRange);
             if (mob == null)
             {
                 return;

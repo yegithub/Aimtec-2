@@ -22,8 +22,7 @@
                 Global.Orbwalker.ResetAutoAttackTimer();
             }
 
-            if (SpellConfig.E.Ready && MenuConfig.Clear["E"].Enabled && Global.Player.ManaPercent() >= 75 ||
-                Global.Player.HealthPercent() <= 35)
+            if (SpellConfig.E.Ready && MenuConfig.Clear["E"].Enabled && Global.Player.ManaPercent() >= 75 || Global.Player.HealthPercent() <= 35)
             {
                 SpellConfig.E.Cast();
             }
@@ -31,9 +30,7 @@
 
         public static void OnUpdate()
         {
-            if (MenuConfig.Clear["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(1500) > 0 ||
-                !MenuConfig.Clear["Q"].Enabled ||
-                !SpellConfig.Q.Ready)
+            if (MenuConfig.Clear["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(1500) > 0 || !MenuConfig.Clear["Q"].Enabled || !SpellConfig.Q.Ready)
             {
                 return;
             }

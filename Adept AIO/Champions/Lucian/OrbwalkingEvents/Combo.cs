@@ -45,11 +45,7 @@
                 {
                     SpellManager.CastQExtended(target);
                 }
-                else if (SpellManager.R.Ready &&
-                         MenuConfig.Combo["Last"].Enabled &&
-                         !SpellManager.Q.Ready &&
-                         !SpellManager.W.Ready &&
-                         !SpellManager.E.Ready)
+                else if (SpellManager.R.Ready && MenuConfig.Combo["Last"].Enabled && !SpellManager.Q.Ready && !SpellManager.W.Ready && !SpellManager.E.Ready)
                 {
                     SpellManager.CastR(target);
                 }

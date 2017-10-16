@@ -24,9 +24,7 @@
             }
             else if (MenuConfig.Harass["Safe"].Enabled && SpellConfig.Q.Ready)
             {
-                var minion = GameObjects.EnemyMinions.Where(x => x.Distance(target) > 300).
-                    OrderBy(x => -x.Distance(target)).
-                    LastOrDefault();
+                var minion = GameObjects.EnemyMinions.Where(x => x.Distance(target) > 300).OrderBy(x => -x.Distance(target)).LastOrDefault();
                 if (minion != null)
                 {
                     SpellConfig.Q.CastOnUnit(minion);
@@ -36,9 +34,7 @@
 
         public static void OnUpdate()
         {
-            if (SpellConfig.Q.Ready &&
-                MenuConfig.Harass["Q"].Enabled &&
-                MenuConfig.Harass["Q"].Value <= Global.Player.ManaPercent())
+            if (SpellConfig.Q.Ready && MenuConfig.Harass["Q"].Enabled && MenuConfig.Harass["Q"].Value <= Global.Player.ManaPercent())
             {
                 var target = Global.TargetSelector.GetTarget(SpellConfig.Q.Range);
 
@@ -54,10 +50,7 @@
                         return;
                     }
 
-                    var minion = GameObjects.EnemyMinions.
-                        Where(x => x.Health < Global.Player.GetSpellDamage(x, SpellSlot.Q)).
-                        OrderBy(x => x.Distance(target)).
-                        LastOrDefault();
+                    var minion = GameObjects.EnemyMinions.Where(x => x.Health < Global.Player.GetSpellDamage(x, SpellSlot.Q)).OrderBy(x => x.Distance(target)).LastOrDefault();
                     if (minion == null)
                     {
                         return;
@@ -71,9 +64,7 @@
                 }
             }
 
-            if (SpellConfig.E.Ready &&
-                MenuConfig.Harass["E"].Enabled &&
-                MenuConfig.Harass["E"].Value <= Global.Player.ManaPercent())
+            if (SpellConfig.E.Ready && MenuConfig.Harass["E"].Enabled && MenuConfig.Harass["E"].Value <= Global.Player.ManaPercent())
             {
                 var target = Global.TargetSelector.GetTarget(SpellConfig.E.Range);
 

@@ -55,14 +55,11 @@
             public Polygon ToPolygon(int offset = 0, float overrideWidth = -1)
             {
                 var result = new Polygon();
-                var outRadius = overrideWidth > 0
-                    ? overrideWidth
-                    : (offset + Radius) / (float) Math.Cos(2 * Math.PI / CircleLineSegmentN);
+                var outRadius = overrideWidth > 0 ? overrideWidth : (offset + Radius) / (float) Math.Cos(2 * Math.PI / CircleLineSegmentN);
                 for (var i = 1; i <= CircleLineSegmentN; i++)
                 {
                     var angle = i * 2 * Math.PI / CircleLineSegmentN;
-                    var point = new Vector2(Center.X + outRadius * (float) Math.Cos(angle),
-                        Center.Y + outRadius * (float) Math.Sin(angle));
+                    var point = new Vector2(Center.X + outRadius * (float) Math.Cos(angle), Center.Y + outRadius * (float) Math.Sin(angle));
                     result.Add(point);
                 }
 
@@ -188,18 +185,10 @@
             public void UpdatePolygon(int offset = 0, float overrideWidth = -1)
             {
                 Points.Clear();
-                Points.Add(Start +
-                           (overrideWidth > 0 ? overrideWidth : Width + offset) * Perpendicular() -
-                           offset * Direction());
-                Points.Add(Start -
-                           (overrideWidth > 0 ? overrideWidth : Width + offset) * Perpendicular() -
-                           offset * Direction());
-                Points.Add(End -
-                           (overrideWidth > 0 ? overrideWidth : Width + offset) * Perpendicular() +
-                           offset * Direction());
-                Points.Add(End +
-                           (overrideWidth > 0 ? overrideWidth : Width + offset) * Perpendicular() +
-                           offset * Direction());
+                Points.Add(Start + (overrideWidth > 0 ? overrideWidth : Width + offset) * Perpendicular() - offset * Direction());
+                Points.Add(Start - (overrideWidth > 0 ? overrideWidth : Width + offset) * Perpendicular() - offset * Direction());
+                Points.Add(End - (overrideWidth > 0 ? overrideWidth : Width + offset) * Perpendicular() + offset * Direction());
+                Points.Add(End + (overrideWidth > 0 ? overrideWidth : Width + offset) * Perpendicular() + offset * Direction());
             }
 
             #endregion
@@ -228,15 +217,13 @@
                 for (var i = 0; i <= CircleLineSegmentN; i++)
                 {
                     var angle = i * 2 * Math.PI / CircleLineSegmentN;
-                    var point = new Vector2(Center.X - outRadius * (float) Math.Cos(angle),
-                        Center.Y - outRadius * (float) Math.Sin(angle));
+                    var point = new Vector2(Center.X - outRadius * (float) Math.Cos(angle), Center.Y - outRadius * (float) Math.Sin(angle));
                     result.Add(point);
                 }
                 for (var i = 0; i <= CircleLineSegmentN; i++)
                 {
                     var angle = i * 2 * Math.PI / CircleLineSegmentN;
-                    var point = new Vector2(Center.X + innerRadius * (float) Math.Cos(angle),
-                        Center.Y - innerRadius * (float) Math.Sin(angle));
+                    var point = new Vector2(Center.X + innerRadius * (float) Math.Cos(angle), Center.Y - innerRadius * (float) Math.Sin(angle));
                     result.Add(point);
                 }
 
@@ -326,11 +313,7 @@
             {
                 var angle = !radian ? value * Math.PI / 180 : value;
                 var line = Vector2.Subtract(point2, point1);
-                var newline = new Vector2
-                {
-                    X = (float) (line.X * Math.Cos(angle) - line.Y * Math.Sin(angle)),
-                    Y = (float) (line.X * Math.Sin(angle) + line.Y * Math.Cos(angle))
-                };
+                var newline = new Vector2 {X = (float) (line.X * Math.Cos(angle) - line.Y * Math.Sin(angle)), Y = (float) (line.X * Math.Sin(angle) + line.Y * Math.Cos(angle))};
                 return Vector2.Add(newline, point1);
             }
 
@@ -374,19 +357,13 @@
             return solution;
         }
 
-        public static void DrawCircleOnMinimap(Vector3 center,
-            float radius,
-            Color color,
-            int thickness = 1,
-            int quality = 100)
+        public static void DrawCircleOnMinimap(Vector3 center, float radius, Color color, int thickness = 1, int quality = 100)
         {
             var pointList = new List<Vector3>();
             for (var i = 0; i < quality; i++)
             {
                 var angle = i * Math.PI * 2 / quality;
-                pointList.Add(new Vector3(center.X + radius * (float) Math.Cos(angle),
-                    center.Y,
-                    center.Z + radius * (float) Math.Sin(angle)));
+                pointList.Add(new Vector3(center.X + radius * (float) Math.Cos(angle), center.Y, center.Z + radius * (float) Math.Sin(angle)));
             }
             for (var i = 0; i < pointList.Count; i++)
             {

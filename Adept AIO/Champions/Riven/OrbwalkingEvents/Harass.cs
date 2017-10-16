@@ -94,11 +94,7 @@
 
                     #region SemiCombo
 
-                    if (!SpellConfig.Q.Ready &&
-                        SpellConfig.E.Ready &&
-                        Extensions.CurrentQCount == 1 &&
-                        !Global.Orbwalker.CanAttack() &&
-                        Global.Orbwalker.CanMove())
+                    if (!SpellConfig.Q.Ready && SpellConfig.E.Ready && Extensions.CurrentQCount == 1 && !Global.Orbwalker.CanAttack() && Global.Orbwalker.CanMove())
                     {
                         SpellConfig.E.Cast(antiPosition);
                         SpellConfig.W.Cast();
@@ -121,10 +117,7 @@
                         SpellManager.CastW(target);
                     }
 
-                    if (SpellConfig.Q.Ready &&
-                        SpellConfig.E.Ready &&
-                        Extensions.CurrentQCount == 3 &&
-                        !Global.Orbwalker.CanAttack())
+                    if (SpellConfig.Q.Ready && SpellConfig.E.Ready && Extensions.CurrentQCount == 3 && !Global.Orbwalker.CanAttack())
                     {
                         SpellConfig.E.Cast(antiPosition);
                         DelayAction.Queue(190, () => SpellConfig.Q.Cast(antiPosition), new CancellationToken(false));
@@ -147,10 +140,7 @@
                         SpellManager.CastW(target);
                     }
 
-                    if (SpellConfig.Q.Ready &&
-                        SpellConfig.E.Ready &&
-                        Extensions.CurrentQCount == 3 &&
-                        !Global.Orbwalker.CanAttack())
+                    if (SpellConfig.Q.Ready && SpellConfig.E.Ready && Extensions.CurrentQCount == 3 && !Global.Orbwalker.CanAttack())
                     {
                         SpellConfig.E.Cast(antiPosition);
                         DelayAction.Queue(190, () => SpellConfig.Q.Cast(target), new CancellationToken(false));
@@ -167,15 +157,11 @@
             switch (MenuConfig.Harass["Dodge"].Value)
             {
                 case 0:
-                    var turret = GameObjects.AllyTurrets.Where(x => x.IsValid).
-                        OrderBy(x => x.Distance(Global.Player)).
-                        FirstOrDefault();
+                    var turret = GameObjects.AllyTurrets.Where(x => x.IsValid).OrderBy(x => x.Distance(Global.Player)).FirstOrDefault();
                     return turret != null ? turret.ServerPosition : Game.CursorPos;
                 case 1: return Game.CursorPos;
 
-                case 2:
-                    return Global.Player.ServerPosition +
-                           (Global.Player.ServerPosition - target.ServerPosition).Normalized() * 300;
+                case 2: return Global.Player.ServerPosition + (Global.Player.ServerPosition - target.ServerPosition).Normalized() * 300;
             }
             return Vector3.Zero;
         }
@@ -201,9 +187,7 @@
                     {
                         return HarassPattern.BackToTarget;
                     }
-                    return SemiCombo.Contains(target.ChampionName)
-                        ? HarassPattern.SemiCombo
-                        : HarassPattern.AvoidTarget;
+                    return SemiCombo.Contains(target.ChampionName) ? HarassPattern.SemiCombo : HarassPattern.AvoidTarget;
 
                 case 1: return HarassPattern.SemiCombo;
                 case 2: return HarassPattern.AvoidTarget;

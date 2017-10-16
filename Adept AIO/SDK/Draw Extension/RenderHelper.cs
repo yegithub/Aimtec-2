@@ -19,10 +19,8 @@
             Render.WorldToScreen(extended, out var extendedVector2);
             Render.WorldToScreen(Global.Player.Position, out var playerV2);
 
-            var arrowLine1 = extendedVector2 +
-                             (playerV2 - extendedVector2).Normalized().Rotated(40 * (float) Math.PI / 180) * 65;
-            var arrowLine2 = extendedVector2 +
-                             (playerV2 - extendedVector2).Normalized().Rotated(-40 * (float) Math.PI / 180) * 65;
+            var arrowLine1 = extendedVector2 + (playerV2 - extendedVector2).Normalized().Rotated(40 * (float) Math.PI / 180) * 65;
+            var arrowLine2 = extendedVector2 + (playerV2 - extendedVector2).Normalized().Rotated(-40 * (float) Math.PI / 180) * 65;
 
             Render.Line(extendedVector2, arrowLine1, Color.White);
             Render.Line(extendedVector2, arrowLine2, Color.White);
@@ -40,10 +38,8 @@
             Render.WorldToScreen(extended, out var extendedVector2);
             Render.WorldToScreen(Global.Player.Position, out var playerV2);
 
-            var arrowLine1 = extendedVector2 +
-                             (playerV2 - extendedVector2).Normalized().Rotated(40 * (float) Math.PI / 180) * 65;
-            var arrowLine2 = extendedVector2 +
-                             (playerV2 - extendedVector2).Normalized().Rotated(-40 * (float) Math.PI / 180) * 65;
+            var arrowLine1 = extendedVector2 + (playerV2 - extendedVector2).Normalized().Rotated(40 * (float) Math.PI / 180) * 65;
+            var arrowLine2 = extendedVector2 + (playerV2 - extendedVector2).Normalized().Rotated(-40 * (float) Math.PI / 180) * 65;
 
             Render.Line(extendedVector2, arrowLine1, Color.White);
             Render.Line(extendedVector2, arrowLine2, Color.White);
@@ -61,10 +57,8 @@
             Render.WorldToScreen(extended, out var extendedVector2);
             Render.WorldToScreen(start, out var startV2);
 
-            var arrowLine1 = extendedVector2 +
-                             (startV2 - extendedVector2).Normalized().Rotated(40 * (float) Math.PI / 180) * 65;
-            var arrowLine2 = extendedVector2 +
-                             (startV2 - extendedVector2).Normalized().Rotated(-40 * (float) Math.PI / 180) * 65;
+            var arrowLine1 = extendedVector2 + (startV2 - extendedVector2).Normalized().Rotated(40 * (float) Math.PI / 180) * 65;
+            var arrowLine2 = extendedVector2 + (startV2 - extendedVector2).Normalized().Rotated(-40 * (float) Math.PI / 180) * 65;
 
             Render.Line(extendedVector2, arrowLine1, width, false, Color.White);
             Render.Line(extendedVector2, arrowLine2, width, false, Color.White);

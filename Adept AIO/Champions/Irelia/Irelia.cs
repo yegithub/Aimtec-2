@@ -8,7 +8,7 @@
 
     class Irelia
     {
-        public static void Init()
+        public Irelia()
         {
             MenuConfig.Attach();
             SpellConfig.Load();

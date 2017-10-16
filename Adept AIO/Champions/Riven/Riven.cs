@@ -9,7 +9,7 @@
 
     class Riven
     {
-        public static void Init()
+        public Riven()
         {
             MenuConfig.Attach();
             SpellConfig.Load();

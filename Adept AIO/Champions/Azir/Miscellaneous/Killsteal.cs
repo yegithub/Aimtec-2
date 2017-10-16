@@ -18,15 +18,11 @@
                 return;
             }
 
-            if (SpellConfig.Q.Ready &&
-                target.Health < Global.Player.GetSpellDamage(target, SpellSlot.Q) &&
-                MenuConfig.Killsteal["Q"].Enabled)
+            if (SpellConfig.Q.Ready && target.Health < Global.Player.GetSpellDamage(target, SpellSlot.Q) && MenuConfig.Killsteal["Q"].Enabled)
             {
                 SpellConfig.CastQ(target);
             }
-            else if (SpellConfig.E.Ready &&
-                     target.Health < Global.Player.GetSpellDamage(target, SpellSlot.E) &&
-                     MenuConfig.Killsteal["E"].Enabled)
+            else if (SpellConfig.E.Ready && target.Health < Global.Player.GetSpellDamage(target, SpellSlot.E) && MenuConfig.Killsteal["E"].Enabled)
             {
                 var nearest = SoldierManager.GetSoldierNearestTo(target.ServerPosition);
                 if (nearest != Vector3.Zero)

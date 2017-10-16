@@ -18,10 +18,7 @@
             {
                 return false;
             }
-            return soldier.IsAlly &&
-                   !soldier.IsDead &&
-                   soldier.IsValid &&
-                   soldier.UnitSkinName.ToLower().Contains("soldier");
+            return soldier.IsAlly && !soldier.IsDead && soldier.IsValid && soldier.UnitSkinName.ToLower().Contains("soldier");
         }
 
         public static void OnDelete(GameObject sender)
@@ -38,9 +35,7 @@
             if (soldier != null && IsSoldier(soldier) && Game.TickCount - AzirHelper.LastR >= 100)
             {
                 Soldiers.Add(soldier);
-                DelayAction.Queue(9000 - Game.Ping / 2,
-                    () => Soldiers.RemoveAll(x => x.NetworkId == soldier.NetworkId),
-                    new CancellationToken(false));
+                DelayAction.Queue(9000 - Game.Ping / 2, () => Soldiers.RemoveAll(x => x.NetworkId == soldier.NetworkId), new CancellationToken(false));
             }
         }
 
@@ -48,8 +43,7 @@
         {
             foreach (var minion in GameObjects.AllyMinions.Where(IsSoldier))
             {
-                var soldier = Soldiers.OrderBy(x => x.Distance(pos)).
-                    FirstOrDefault(x => x.NetworkId == minion.NetworkId);
+                var soldier = Soldiers.OrderBy(x => x.Distance(pos)).FirstOrDefault(x => x.NetworkId == minion.NetworkId);
                 return soldier != null ? soldier.ServerPosition : Vector3.Zero;
             }
             return Vector3.Zero;

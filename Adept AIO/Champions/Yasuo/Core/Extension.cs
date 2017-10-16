@@ -59,19 +59,14 @@
 
         public static Obj_AI_Minion GetDashableMinion(Obj_AI_Base target)
         {
-            return GameObjects.EnemyMinions.
-                Where(x => !x.HasBuff("YasuoDashWrapper") &&
-                           x.IsValid &&
-                           x.MaxHealth > 7 &&
-                           x.Distance(Global.Player) <= SpellConfig.E.Range).
+            return GameObjects.EnemyMinions.Where(x => !x.HasBuff("YasuoDashWrapper") && x.IsValid && x.MaxHealth > 7 && x.Distance(Global.Player) <= SpellConfig.E.Range).
                 LastOrDefault(x => DashDistance(x, target) > 0 && x.Distance(target) < Global.Player.Distance(target));
         }
 
 
         public static Obj_AI_Minion GetDashableMinion()
         {
-            return GameObjects.EnemyMinions.LastOrDefault(x =>
-                !x.HasBuff("YasuoDashWrapper") && x.Distance(Global.Player) <= SpellConfig.E.Range);
+            return GameObjects.EnemyMinions.LastOrDefault(x => !x.HasBuff("YasuoDashWrapper") && x.Distance(Global.Player) <= SpellConfig.E.Range);
         }
 
         public static Obj_AI_Minion GetClosest(Obj_AI_Base target)
@@ -93,12 +88,9 @@
                 return Vector3.Zero;
             }
 
-            var position = minion.ServerPosition.Extend(
-                minion.ServerPosition + (minion.ServerPosition - target.ServerPosition).Normalized(),
-                75 + minion.BoundingRadius);
+            var position = minion.ServerPosition.Extend(minion.ServerPosition + (minion.ServerPosition - target.ServerPosition).Normalized(), 75 + minion.BoundingRadius);
 
-            var isValid = position.Distance(ObjectManager.GetLocalPlayer()) > minion.BoundingRadius &&
-                          position.Distance(ObjectManager.GetLocalPlayer()) < 300;
+            var isValid = position.Distance(ObjectManager.GetLocalPlayer()) > minion.BoundingRadius && position.Distance(ObjectManager.GetLocalPlayer()) < 300;
 
             return isValid ? position : Vector3.Zero;
         }
@@ -109,9 +101,7 @@
             {
                 return 0;
             }
-            return Global.Player.GetDashInfo().
-                StartPos.Extend(minion.ServerPosition, overrideValue).
-                Distance(target.ServerPosition);
+            return Global.Player.GetDashInfo().StartPos.Extend(minion.ServerPosition, overrideValue).Distance(target.ServerPosition);
         }
     }
 }

@@ -48,8 +48,7 @@
             {
                 new MenuBool("Q", "Use Q"),
                 new MenuBool("W", "Use W"),
-                new MenuSliderBool("W2", "Use W Twice | Not If >= X Enemies", true, 2, 1, 5).SetToolTip(
-                    "Max Range W, will try to W AA "),
+                new MenuSliderBool("W2", "Use W Twice | Not If >= X Enemies", true, 2, 1, 5).SetToolTip("Max Range W, will try to W AA "),
                 new MenuSlider("Health", "Don't Use W2 if % HP is Below", 30),
                 new MenuBool("E", "Use E"),
                 new MenuSlider("Energy", "Min. Energy %", 40)
@@ -65,19 +64,9 @@
                 new MenuSlider("Energy", "Min. Energy %", 40)
             };
 
-            JungleClear = new Menu("Jungle", "JungleClear")
-            {
-                new MenuBool("Q", "Use Q"),
-                new MenuBool("E", "Use E"),
-                new MenuSlider("Energy", "Min. Energy %", 40)
-            };
+            JungleClear = new Menu("Jungle", "JungleClear") {new MenuBool("Q", "Use Q"), new MenuBool("E", "Use E"), new MenuSlider("Energy", "Min. Energy %", 40)};
 
-            Lasthit = new Menu("Lasthit", "Lasthit")
-            {
-                new MenuBool("Q", "Use Q"),
-                new MenuBool("E", "Use E"),
-                new MenuSlider("Energy", "Min. Energy %", 40)
-            };
+            Lasthit = new Menu("Lasthit", "Lasthit") {new MenuBool("Q", "Use Q"), new MenuBool("E", "Use E"), new MenuSlider("Energy", "Min. Energy %", 40)};
 
             Killsteal = new Menu("Killsteal", "Killsteal") {new MenuBool("Q", "Use Q"), new MenuBool("E", "Use E")};
 
@@ -101,18 +90,7 @@
 
             Gapcloser.Attach(_mainMenu, "Anti Gapcloser");
 
-            foreach (var menu in new List<Menu>
-            {
-                Combo,
-                Harass,
-                LaneClear,
-                JungleClear,
-                Lasthit,
-                Killsteal,
-                Misc,
-                Drawings,
-                MenuShortcut.Credits
-            })
+            foreach (var menu in new List<Menu> {Combo, Harass, LaneClear, JungleClear, Lasthit, Killsteal, Misc, Drawings, MenuShortcut.Credits})
             {
                 _mainMenu.Add(menu);
             }

@@ -23,9 +23,7 @@
             {
                 foreach (var soldier in SoldierManager.Soldiers)
                 {
-                    var rect = new Geometry.Rectangle(Global.Player.ServerPosition.To2D(),
-                        soldier.ServerPosition.To2D(),
-                        SpellConfig.E.Width);
+                    var rect = new Geometry.Rectangle(Global.Player.ServerPosition.To2D(), soldier.ServerPosition.To2D(), SpellConfig.E.Width);
                     var count = GameObjects.EnemyHeroes.Count(x => rect.IsInside(x.ServerPosition.To2D()));
 
                     if (count >= 2)
@@ -69,10 +67,7 @@
                 }
             }
 
-            if (SpellConfig.R.Ready &&
-                MenuConfig.Combo["R"].Enabled &&
-                target.HealthPercent() <= 40 &&
-                dist < SpellConfig.R.Range)
+            if (SpellConfig.R.Ready && MenuConfig.Combo["R"].Enabled && target.HealthPercent() <= 40 && dist < SpellConfig.R.Range)
             {
                 AzirHelper.Rect = new Geometry.Rectangle(target.ServerPosition.To2D(),
                     Global.Player.ServerPosition.Extend(target.ServerPosition, -SpellConfig.R.Width / 2f).To2D(),

@@ -19,8 +19,7 @@
                 SpellManager.CastE(target, MenuConfig.InsecMenu["Flash"].Enabled);
             }
 
-            if (SpellManager.R.Ready &&
-                !(MenuConfig.Combo["Q"].Enabled && SpellManager.Q.Ready && SpellManager.Barrel == null))
+            if (SpellManager.R.Ready && !(MenuConfig.Combo["Q"].Enabled && SpellManager.Q.Ready && SpellManager.Barrel == null))
             {
                 SpellManager.CastR(target);
             }

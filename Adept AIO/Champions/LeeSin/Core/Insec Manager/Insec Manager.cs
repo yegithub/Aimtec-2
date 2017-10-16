@@ -16,14 +16,12 @@
         public int InsecKickValue { get; set; }
         public int InsecPositionValue { get; set; }
 
-        public float DistanceBehindTarget(Obj_AI_Base target = null) => Math.Min(
-            (Global.Player.BoundingRadius + (target == null ? 65 : target.BoundingRadius) + 50) * 1.25f,
-            _spellConfig.R.Range);
+        public float DistanceBehindTarget(Obj_AI_Base target = null) =>
+            Math.Min((Global.Player.BoundingRadius + (target == null ? 65 : target.BoundingRadius) + 50) * 1.25f, _spellConfig.R.Range);
 
         public Vector3 InsecPosition(Obj_AI_Base target)
         {
-            var pos = target.ServerPosition +
-                      (target.ServerPosition - GetTargetEndPosition()).Normalized() * DistanceBehindTarget(target);
+            var pos = target.ServerPosition + (target.ServerPosition - GetTargetEndPosition()).Normalized() * DistanceBehindTarget(target);
 
             return NavMesh.WorldToCell(pos).Flags.HasFlag(NavCellFlags.Wall) ? Vector3.Zero : pos;
         }
@@ -35,17 +33,14 @@
                 return Vector3.Zero;
             }
 
-            var secondEnemy = GameObjects.EnemyHeroes.FirstOrDefault(x =>
-                x.NetworkId != target.NetworkId && x.Distance(target) <= _spellConfig.R2.Range + 100);
+            var secondEnemy = GameObjects.EnemyHeroes.FirstOrDefault(x => x.NetworkId != target.NetworkId && x.Distance(target) <= _spellConfig.R2.Range + 100);
 
             if (secondEnemy == null)
             {
                 return Vector3.Zero;
             }
 
-            return secondEnemy.ServerPosition.Extend(
-                secondEnemy.ServerPosition + (secondEnemy.ServerPosition - target.ServerPosition).Normalized(),
-                DistanceBehindTarget());
+            return secondEnemy.ServerPosition.Extend(secondEnemy.ServerPosition + (secondEnemy.ServerPosition - target.ServerPosition).Normalized(), DistanceBehindTarget());
         }
 
         public Vector3 GetTargetEndPosition()

@@ -1,6 +1,5 @@
 ﻿namespace Adept_AIO.Champions.Kalista.OrbwalkerEvents
 {
-    using System;
     using System.Linq;
     using Aimtec.SDK.Extensions;
     using Core;
@@ -14,7 +13,7 @@
             {
                 SpellManager.E.Cast();
             }
-          
+
             var mob = GameObjects.Jungle.FirstOrDefault(x => x.IsValidTarget(SpellManager.Q.Range));
 
             if (mob != null && MenuConfig.JungleClear["Q"].Enabled && SpellManager.Q.Ready)

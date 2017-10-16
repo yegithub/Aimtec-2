@@ -23,10 +23,7 @@
                 new MenuSliderBool("R", "Use R If X Enemies Nearby", true, 3, 0, 5)
             };
 
-            Harass = new Menu("Harass", "Harass")
-            {
-                new MenuBool("Q", "Use Q")
-            };
+            Harass = new Menu("Harass", "Harass") {new MenuBool("Q", "Use Q")};
 
             LaneClear = new Menu("LaneClear", "Lane")
             {
@@ -35,17 +32,9 @@
                 new MenuBool("E", "Use E")
             };
 
-            JungleClear = new Menu("Jungle", "Jungle")
-            {
-                new MenuBool("Q", "Use Q"),
-                new MenuBool("E", "Use E")
-            };
+            JungleClear = new Menu("Jungle", "Jungle") {new MenuBool("Q", "Use Q"), new MenuBool("E", "Use E")};
 
-            Killsteal = new Menu("Killsteal", "Killsteal")
-            {
-                new MenuBool("E", "Use E"),
-                new MenuBool("Q", "Use Q")
-            };
+            Killsteal = new Menu("Killsteal", "Killsteal") {new MenuBool("E", "Use E"), new MenuBool("Q", "Use Q")};
 
             Misc = new Menu("Misc", "Miscellaneous")
             {
@@ -61,17 +50,7 @@
                 new MenuBool("Debug", "Debug")
             };
 
-            foreach (var menu in new List<Menu>
-            {
-                Combo,
-                Harass,
-                LaneClear,
-                JungleClear,
-                Killsteal,
-                Misc,
-                Drawings,
-                MenuShortcut.Credits
-            })
+            foreach (var menu in new List<Menu> {Combo, Harass, LaneClear, JungleClear, Killsteal, Misc, Drawings, MenuShortcut.Credits})
             {
                 mainMenu.Add(menu);
             }

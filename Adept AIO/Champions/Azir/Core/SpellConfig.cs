@@ -33,9 +33,7 @@
                 }
 
                 var pred = Q.GetPrediction(target, soldier.ServerPosition);
-                Q.Cast(extend
-                    ? soldier.ServerPosition.Extend(pred.CastPosition, target.Distance(soldier) + 200)
-                    : pred.CastPosition);
+                Q.Cast(extend ? soldier.ServerPosition.Extend(pred.CastPosition, target.Distance(soldier) + 200) : pred.CastPosition);
             }
         }
 

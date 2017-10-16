@@ -12,11 +12,7 @@
     {
         public static List<Obj_AI_Minion> Shadows;
 
-        public static bool CanSwitchToShadow()
-        {
-            return Global.Player.GetSpell(SpellSlot.W).ToggleState != 0 &&
-                   Shadows.Any(x => x.Distance(Global.Player) <= 1300);
-        }
+        public static bool CanSwitchToShadow() { return Global.Player.GetSpell(SpellSlot.W).ToggleState != 0 && Shadows.Any(x => x.Distance(Global.Player) <= 1300); }
 
         public static bool CanCastW1() => Global.Player.GetSpell(SpellSlot.W).ToggleState == 0;
 
@@ -26,10 +22,7 @@
             {
                 return false;
             }
-            return shadow.IsAlly &&
-                   !shadow.IsDead &&
-                   shadow.IsValid &&
-                   shadow.UnitSkinName.ToLower().Contains("shadow");
+            return shadow.IsAlly && !shadow.IsDead && shadow.IsValid && shadow.UnitSkinName.ToLower().Contains("shadow");
         }
 
         public static void OnDelete(GameObject sender)
@@ -43,17 +36,13 @@
         public static void OnCreate(GameObject sender)
         {
             var shadow = sender as Obj_AI_Minion;
-            if (shadow == null ||
-                !IsShadow(shadow) ||
-                Game.TickCount - SpellManager.LastR > 200 && Game.TickCount - SpellManager.LastR <= 1000)
+            if (shadow == null || !IsShadow(shadow) || Game.TickCount - SpellManager.LastR > 200 && Game.TickCount - SpellManager.LastR <= 1000)
             {
                 return;
             }
 
             Shadows.Add(shadow);
-            DelayAction.Queue(5000,
-                () => Shadows.RemoveAll(x => x.NetworkId == shadow.NetworkId),
-                new CancellationToken(false));
+            DelayAction.Queue(5000, () => Shadows.RemoveAll(x => x.NetworkId == shadow.NetworkId), new CancellationToken(false));
         }
 
         public static Vector3 GetShadowNearestTo(Vector3 pos)

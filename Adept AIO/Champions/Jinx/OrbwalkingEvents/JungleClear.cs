@@ -37,8 +37,7 @@
 
             if (_spellConfig.Q.Ready && _menuConfig.JungleClear["Q"].Enabled)
             {
-                if (!_spellConfig.IsQ2 && dist > _spellConfig.DefaultAuotAttackRange ||
-                    _spellConfig.IsQ2 && dist <= _spellConfig.DefaultAuotAttackRange)
+                if (!_spellConfig.IsQ2 && dist > _spellConfig.DefaultAuotAttackRange || _spellConfig.IsQ2 && dist <= _spellConfig.DefaultAuotAttackRange)
                 {
                     _spellConfig.Q.Cast();
                 }

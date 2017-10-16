@@ -20,15 +20,12 @@
 
         public void OnPostAttack()
         {
-            if (!_spellConfig.Q.Ready ||
-                !_menuConfig.LaneClear["Q"].Enabled ||
-                _menuConfig.LaneClear["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(2500) > 0)
+            if (!_spellConfig.Q.Ready || !_menuConfig.LaneClear["Q"].Enabled || _menuConfig.LaneClear["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(2500) > 0)
             {
                 return;
             }
 
-            var minions =
-                GameObjects.EnemyMinions.Count(x => x.Health > Global.Player.GetAutoAttackDamage(x) && x.IsValid);
+            var minions = GameObjects.EnemyMinions.Count(x => x.Health > Global.Player.GetAutoAttackDamage(x) && x.IsValid);
 
             if (minions <= 3)
             {
@@ -47,8 +44,7 @@
 
             if (_spellConfig.E.Ready)
             {
-                var turret = GameObjects.EnemyTurrets.FirstOrDefault(x =>
-                    x.IsValid && x.Distance(Global.Player) <= _spellConfig.FullRange);
+                var turret = GameObjects.EnemyTurrets.FirstOrDefault(x => x.IsValid && x.Distance(Global.Player) <= _spellConfig.FullRange);
 
                 if (_menuConfig.LaneClear["Turret"].Enabled && turret != null && turret.HealthPercent() >= 35)
                 {
@@ -57,15 +53,10 @@
                 else
                 {
                     var minions = GameObjects.EnemyMinions.Count(x =>
-                        x.Health <
-                        Global.Player.GetSpellDamage(x, SpellSlot.E) + Global.Player.GetAutoAttackDamage(x) * 5 &&
-                        x.IsValid);
+                        x.Health < Global.Player.GetSpellDamage(x, SpellSlot.E) + Global.Player.GetAutoAttackDamage(x) * 5 && x.IsValid);
                     var minion = GameObjects.EnemyMinions.FirstOrDefault(x =>
-                        x.Health <
-                        Global.Player.GetSpellDamage(x, SpellSlot.E) + Global.Player.GetAutoAttackDamage(x) * 5 &&
-                        x.IsValid);
-                    var cannon = GameObjects.EnemyMinions.FirstOrDefault(x =>
-                        x.UnitSkinName.ToLower().Contains("cannon") && x.IsValid);
+                        x.Health < Global.Player.GetSpellDamage(x, SpellSlot.E) + Global.Player.GetAutoAttackDamage(x) * 5 && x.IsValid);
+                    var cannon = GameObjects.EnemyMinions.FirstOrDefault(x => x.UnitSkinName.ToLower().Contains("cannon") && x.IsValid);
 
                     if (minions >= _menuConfig.LaneClear["E"].Value)
                     {

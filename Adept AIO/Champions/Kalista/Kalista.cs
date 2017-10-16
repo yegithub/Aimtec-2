@@ -1,6 +1,5 @@
 ﻿namespace Adept_AIO.Champions.Kalista
 {
-    using System.Collections.Generic;
     using Aimtec;
     using Core;
     using Drawings;

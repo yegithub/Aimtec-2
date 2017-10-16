@@ -4,9 +4,7 @@
 
     class DebugConsole
     {
-        public static void Write(string message,
-            ConsoleColor foregroundColor = ConsoleColor.White,
-            ConsoleColor backgroundColor = ConsoleColor.Black)
+        public static void Write(string message, ConsoleColor foregroundColor = ConsoleColor.White, ConsoleColor backgroundColor = ConsoleColor.Black)
         {
             Console.BackgroundColor = backgroundColor;
             Console.ForegroundColor = foregroundColor;

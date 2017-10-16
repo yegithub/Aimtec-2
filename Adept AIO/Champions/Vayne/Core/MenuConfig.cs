@@ -81,11 +81,7 @@
 
             Killsteal = new Menu("Killsteal", "Killsteal") {new MenuBool("Q", "Q -> AA"), new MenuBool("E", "Use E")};
 
-            Misc = new Menu("Misc", "Miscellaneous")
-            {
-                new MenuBool("Q", "Anti Gapcloser | Q"),
-                new MenuBool("E", "Anti Gapcloser | E")
-            };
+            Misc = new Menu("Misc", "Miscellaneous") {new MenuBool("Q", "Anti Gapcloser | Q"), new MenuBool("E", "Anti Gapcloser | E")};
 
             Drawings = new Menu("DrawManager", "DrawManager")
             {
@@ -95,18 +91,7 @@
                 new MenuBool("Pred", "Draw E Prediction")
             };
 
-            foreach (var menu in new List<Menu>
-            {
-                Combo,
-                Harass,
-                LaneClear,
-                JungleClear,
-                Lasthit,
-                Killsteal,
-                Misc,
-                Drawings,
-                MenuShortcut.Credits
-            })
+            foreach (var menu in new List<Menu> {Combo, Harass, LaneClear, JungleClear, Lasthit, Killsteal, Misc, Drawings, MenuShortcut.Credits})
             {
                 _mainMenu.Add(menu);
             }

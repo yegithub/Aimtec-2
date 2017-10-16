@@ -8,15 +8,17 @@
 
     class Ezreal
     {
-        public static void Init()
+        public Ezreal()
         {
             MenuConfig.Attach();
             SpellConfig.Load();
 
             Game.OnUpdate += Manager.OnUpdate;
             Game.OnUpdate += Killsteal.OnUpdate;
+
             Render.OnRender += DrawManager.OnRender;
             Render.OnPresent += DrawManager.OnPresent;
+
             Gapcloser.OnGapcloser += AntiGapcloser.OnGapcloser;
         }
     }

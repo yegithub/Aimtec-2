@@ -30,17 +30,14 @@
             R.SetSkillshot(0.25f, 110f, 2500, false, SkillshotType.Line, false, HitChance.None);
         }
 
-        public static Geometry.Rectangle GetQRectangle(Obj_AI_Base target) => new Geometry.Rectangle(
-            Global.Player.ServerPosition.To2D(),
+        public static Geometry.Rectangle GetQRectangle(Obj_AI_Base target) => new Geometry.Rectangle(Global.Player.ServerPosition.To2D(),
             Global.Player.ServerPosition.Extend(target.ServerPosition, ExtendedRange).To2D(),
             Q.Width);
 
         public static Geometry.Rectangle GetRRectangle(Obj_AI_Base target)
         {
             var pred = R.GetPrediction(target).CastPosition.To2D();
-            return new Geometry.Rectangle(Global.Player.ServerPosition.To2D(),
-                Global.Player.ServerPosition.Extend(pred, R.Range).To2D(),
-                R.Width);
+            return new Geometry.Rectangle(Global.Player.ServerPosition.To2D(), Global.Player.ServerPosition.Extend(pred, R.Range).To2D(), R.Width);
         }
 
         public static void CastQ(Obj_AI_Base target, int minHit = -1)
@@ -52,7 +49,7 @@
             else if (!Global.Player.IsDashing())
             {
                 var rect = GetQRectangle(target);
-          
+
                 if (Q.GetPrediction(target).HitChance >= HitChance.High &&
                     GameObjects.EnemyMinions.Count(x => x.IsValidTarget() && rect.IsInside(x.ServerPosition.To2D())) >= minHit)
                 {
@@ -108,10 +105,7 @@
 
         public static void CastR(Obj_AI_Base target)
         {
-            if (GameObjects.EnemyMinions.Count(x =>
-                    x.IsValidTarget() && GetRRectangle(x).IsInside(x.ServerPosition.To2D())) <=
-                2 &&
-                Game.TickCount - R.LastCastAttemptT >= 10000)
+            if (GameObjects.EnemyMinions.Count(x => x.IsValidTarget() && GetRRectangle(x).IsInside(x.ServerPosition.To2D())) <= 2 && Game.TickCount - R.LastCastAttemptT >= 10000)
             {
                 R.Cast(target);
             }

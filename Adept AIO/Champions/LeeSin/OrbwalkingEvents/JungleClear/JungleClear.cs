@@ -23,27 +23,9 @@
             new Vector3(9687, 56, 3490)
         };
 
-        private readonly string[] _smiteAlways =
-        {
-            "SRU_Dragon_Air",
-            "SRU_Dragon_Fire",
-            "SRU_Dragon_Earth",
-            "SRU_Dragon_Water",
-            "SRU_Dragon_Elder",
-            "SRU_Baron",
-            "SRU_RiftHerald"
-        };
+        private readonly string[] _smiteAlways = {"SRU_Dragon_Air", "SRU_Dragon_Fire", "SRU_Dragon_Earth", "SRU_Dragon_Water", "SRU_Dragon_Elder", "SRU_Baron", "SRU_RiftHerald"};
 
-        private readonly string[] _smiteOptional =
-        {
-            "Sru_Crab",
-            "SRU_Razorbeak",
-            "SRU_Krug",
-            "SRU_Murkwolf",
-            "SRU_Gromp",
-            "SRU_Blue",
-            "SRU_Red"
-        };
+        private readonly string[] _smiteOptional = {"Sru_Crab", "SRU_Razorbeak", "SRU_Krug", "SRU_Murkwolf", "SRU_Gromp", "SRU_Blue", "SRU_Red"};
 
         private readonly ISpellConfig _spellConfig;
 
@@ -192,10 +174,7 @@
             }
 
             var mob = ObjectManager.Get<Obj_AI_Minion>().
-                FirstOrDefault(x =>
-                    x.Distance(Global.Player) < _spellConfig.Q.Range / 2 &&
-                    x.GetJungleType() != GameObjects.JungleType.Unknown &&
-                    x.MaxHealth > 7);
+                FirstOrDefault(x => x.Distance(Global.Player) < _spellConfig.Q.Range / 2 && x.GetJungleType() != GameObjects.JungleType.Unknown && x.MaxHealth > 7);
 
             if (mob == null)
             {
@@ -204,10 +183,7 @@
 
             if (_spellConfig.Q.Ready &&
                 _spellConfig.IsQ2() &&
-                (_spellConfig.QAboutToEnd ||
-                 Global.Player.GetSpellDamage(mob, SpellSlot.Q, DamageStage.SecondCast) +
-                 Global.Player.GetAutoAttackDamage(mob) >
-                 mob.Health))
+                (_spellConfig.QAboutToEnd || Global.Player.GetSpellDamage(mob, SpellSlot.Q, DamageStage.SecondCast) + Global.Player.GetAutoAttackDamage(mob) > mob.Health))
             {
                 _spellConfig.Q.CastOnUnit(mob);
             }
@@ -217,9 +193,7 @@
                 return;
             }
 
-            if (_spellConfig.Q.Ready &&
-                _spellConfig.IsQ2() &&
-                mob.Health < Global.Player.GetSpellDamage(mob, SpellSlot.Q, DamageStage.SecondCast))
+            if (_spellConfig.Q.Ready && _spellConfig.IsQ2() && mob.Health < Global.Player.GetSpellDamage(mob, SpellSlot.Q, DamageStage.SecondCast))
             {
                 Global.Player.SpellBook.CastSpell(SpellSlot.Q);
             }
@@ -234,14 +208,11 @@
         {
             var smiteAbleMob = ObjectManager.Get<Obj_AI_Minion>().FirstOrDefault(x => x.Distance(Global.Player) < 1300);
 
-            if (smiteAbleMob != null &&
-                (_smiteAlways.Contains(smiteAbleMob.UnitSkinName) ||
-                 _smiteOptional.Contains(smiteAbleMob.UnitSkinName)))
+            if (smiteAbleMob != null && (_smiteAlways.Contains(smiteAbleMob.UnitSkinName) || _smiteOptional.Contains(smiteAbleMob.UnitSkinName)))
             {
                 if (smiteAbleMob.Health < StealDamage(smiteAbleMob))
                 {
-                    if (_smiteOptional.Contains(smiteAbleMob.UnitSkinName) &&
-                        Global.Player.HealthPercent() >= (SummonerSpells.Ammo("Smite") <= 1 ? 40 : 50) ||
+                    if (_smiteOptional.Contains(smiteAbleMob.UnitSkinName) && Global.Player.HealthPercent() >= (SummonerSpells.Ammo("Smite") <= 1 ? 40 : 50) ||
                         smiteAbleMob.UnitSkinName.ToLower().Contains("blue") && !this.BlueEnabled)
                     {
                         return;
@@ -266,10 +237,7 @@
                 return;
             }
 
-            if (_q2Time > 0 &&
-                Game.TickCount - _q2Time <= 1500 &&
-                SummonerSpells.IsValid(SummonerSpells.Smite) &&
-                StealDamage(mob) > mob.Health)
+            if (_q2Time > 0 && Game.TickCount - _q2Time <= 1500 && SummonerSpells.IsValid(SummonerSpells.Smite) && StealDamage(mob) > mob.Health)
             {
                 if (_spellConfig.W.Ready && _spellConfig.IsFirst(_spellConfig.W) && Global.Player.Distance(mob) <= 500)
                 {
@@ -278,21 +246,14 @@
                 }
             }
 
-            if (mob.Position.CountAllyHeroesInRange(700) <= 1 &&
-                _spellConfig.Q.Ready &&
-                _spellConfig.IsQ2() &&
-                StealDamage(mob) > mob.Health)
+            if (mob.Position.CountAllyHeroesInRange(700) <= 1 && _spellConfig.Q.Ready && _spellConfig.IsQ2() && StealDamage(mob) > mob.Health)
             {
                 _spellConfig.Q.Cast();
                 _q2Time = Game.TickCount;
             }
         }
 
-        private double StealDamage(Obj_AI_Base mob) => SummonerSpells.SmiteMonsters() +
-                                                       (_spellConfig.IsQ2()
-                                                           ? Global.Player.GetSpellDamage(mob,
-                                                               SpellSlot.Q,
-                                                               DamageStage.SecondCast)
-                                                           : 0);
+        private double StealDamage(Obj_AI_Base mob) =>
+            SummonerSpells.SmiteMonsters() + (_spellConfig.IsQ2() ? Global.Player.GetSpellDamage(mob, SpellSlot.Q, DamageStage.SecondCast) : 0);
     }
 }

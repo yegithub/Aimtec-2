@@ -22,10 +22,7 @@
             mainMenu.Attach();
 
             FleeMode = new OrbwalkerMode("Flee", KeyCode.A, null, Flee.OnKeyPressed);
-            BurstMode = new OrbwalkerMode("Burst",
-                KeyCode.T,
-                () => Global.TargetSelector.GetSelectedTarget(),
-                Burst.OnUpdate);
+            BurstMode = new OrbwalkerMode("Burst", KeyCode.T, () => Global.TargetSelector.GetSelectedTarget(), Burst.OnUpdate);
 
             BurstMode.ModeBehaviour.Invoke();
             BurstMode.GetTargetImplementation.Invoke();
@@ -85,13 +82,7 @@
                 new MenuBool("E", "E")
             };
 
-            Killsteal = new Menu("Killsteal", "Killsteal")
-            {
-                new MenuBool("Ignite", "Ignite"),
-                new MenuBool("Q", "Q"),
-                new MenuBool("W", "W"),
-                new MenuBool("R2", "R2")
-            };
+            Killsteal = new Menu("Killsteal", "Killsteal") {new MenuBool("Ignite", "Ignite"), new MenuBool("Q", "Q"), new MenuBool("W", "W"), new MenuBool("R2", "R2")};
 
             Miscellaneous = new Menu("Miscellaneous", "Miscellaneous")
             {
@@ -105,26 +96,14 @@
             {
                 new MenuSlider("Segments", "Segments", 100, 10, 150).SetToolTip("Smoothness of the circles"),
                 new MenuBool("Dmg", "Damage"),
-                new MenuBool("Mouse", "Mouse Helper").SetToolTip(
-                    "Shows where to put mouse to properly Q AA chase the target"),
+                new MenuBool("Mouse", "Mouse Helper").SetToolTip("Shows where to put mouse to properly Q AA chase the target"),
                 new MenuBool("Target", "Draw Line At Target"),
                 new MenuBool("Engage", "Engage Range"),
                 new MenuBool("R2", "R2 Range", false),
                 new MenuBool("Pattern", "Current Pattern")
             };
 
-            foreach (var menu in new List<Menu>
-            {
-                Combo,
-                BurstMenu,
-                Harass,
-                Lane,
-                Jungle,
-                Killsteal,
-                Drawings,
-                Miscellaneous,
-                MenuShortcut.Credits
-            })
+            foreach (var menu in new List<Menu> {Combo, BurstMenu, Harass, Lane, Jungle, Killsteal, Drawings, Miscellaneous, MenuShortcut.Credits})
             {
                 mainMenu.Add(menu);
             }

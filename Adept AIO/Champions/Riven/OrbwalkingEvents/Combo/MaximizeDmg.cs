@@ -42,10 +42,7 @@
             {
                 SpellConfig.R.Cast(target);
             }
-            else if (SpellConfig.R2.Ready &&
-                     Enums.UltimateMode == UltimateMode.Second &&
-                     !SpellConfig.W.Ready &&
-                     target.HealthPercent() <= 30)
+            else if (SpellConfig.R2.Ready && Enums.UltimateMode == UltimateMode.Second && !SpellConfig.W.Ready && target.HealthPercent() <= 30)
             {
                 SpellManager.CastR2(target);
             }

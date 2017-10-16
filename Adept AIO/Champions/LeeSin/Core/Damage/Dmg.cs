@@ -34,9 +34,7 @@
                 }
                 else
                 {
-                    dmg += Global.Player.GetSpellDamage(target, SpellSlot.Q) +
-                           Global.Player.GetSpellDamage(target, SpellSlot.Q, DamageStage.SecondCast) +
-                           dmg;
+                    dmg += Global.Player.GetSpellDamage(target, SpellSlot.Q) + Global.Player.GetSpellDamage(target, SpellSlot.Q, DamageStage.SecondCast) + dmg;
                 }
             }
 

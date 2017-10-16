@@ -9,7 +9,7 @@
 
     class Azir
     {
-        public static void Init()
+        public Azir()
         {
             MenuConfig.Attach();
             SpellConfig.Load();

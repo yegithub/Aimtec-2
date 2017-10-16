@@ -28,9 +28,7 @@
             {
                 var target = Global.Orbwalker.GetOrbwalkingTarget();
 
-                return (int) (target == null
-                    ? Global.Player.AttackRange
-                    : Global.Player.GetFullAttackRange(target) + 65);
+                return (int) (target == null ? Global.Player.AttackRange : Global.Player.GetFullAttackRange(target) + 65);
             }
         }
     }

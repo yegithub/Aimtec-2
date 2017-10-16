@@ -22,8 +22,7 @@
             }
         }
 
-        public Vector2 StartPosition() => new Vector2(this.Unit.FloatingHealthBarPosition.X + this.Offset.X,
-            this.Unit.FloatingHealthBarPosition.Y + this.Offset.Y);
+        public Vector2 StartPosition() => new Vector2(this.Unit.FloatingHealthBarPosition.X + this.Offset.X, this.Unit.FloatingHealthBarPosition.Y + this.Offset.Y);
 
         private Vector2 EndPosition(float dmg)
         {
@@ -31,8 +30,7 @@
             return new Vector2(StartPosition().X + w, StartPosition().Y);
         }
 
-        private float GetHpProc(float dmg) =>
-            (this.Unit.Health - dmg > 0 ? this.Unit.Health - dmg : 0) / this.Unit.MaxHealth;
+        private float GetHpProc(float dmg) => (this.Unit.Health - dmg > 0 ? this.Unit.Health - dmg : 0) / this.Unit.MaxHealth;
 
         public void DrawDmg(float dmg, Color color)
         {

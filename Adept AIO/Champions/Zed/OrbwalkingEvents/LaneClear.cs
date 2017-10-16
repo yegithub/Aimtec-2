@@ -15,8 +15,7 @@
 
         public static void OnUpdate()
         {
-            if (MenuConfig.LaneClear["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(2000) > 0 ||
-                Maths.GetEnergyPercent() < MenuConfig.LaneClear["Energy"].Value)
+            if (MenuConfig.LaneClear["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(2000) > 0 || Maths.GetEnergyPercent() < MenuConfig.LaneClear["Energy"].Value)
             {
                 return;
             }
@@ -39,22 +38,16 @@
                         return;
                     }
 
-                    if (_turretTarget.Health < playerDamage * 2 + turretDamage &&
-                        _turretTarget.Health > turretDamage + playerDamage &&
-                        Global.Orbwalker.CanAttack())
+                    if (_turretTarget.Health < playerDamage * 2 + turretDamage && _turretTarget.Health > turretDamage + playerDamage && Global.Orbwalker.CanAttack())
                     {
                         Global.Orbwalker.Attack(_turretTarget);
                     }
 
-                    else if (SpellManager.E.Ready &&
-                             _turretTarget.Health <
-                             Global.Player.GetSpellDamage(_turretTarget, SpellSlot.E) + playerDamage)
+                    else if (SpellManager.E.Ready && _turretTarget.Health < Global.Player.GetSpellDamage(_turretTarget, SpellSlot.E) + playerDamage)
                     {
                         SpellManager.CastE(_turretTarget);
                     }
-                    else if (SpellManager.Q.Ready &&
-                             _turretTarget.Health <
-                             Global.Player.GetSpellDamage(_turretTarget, SpellSlot.Q) + playerDamage)
+                    else if (SpellManager.Q.Ready && _turretTarget.Health < Global.Player.GetSpellDamage(_turretTarget, SpellSlot.Q) + playerDamage)
                     {
                         SpellManager.CastQ(_turretTarget);
                     }
@@ -75,9 +68,7 @@
 
                 if (SpellManager.W.Ready && MenuConfig.LaneClear["W"].Enabled)
                 {
-                    if (GameObjects.EnemyMinions.Count(x => x.IsValidTarget(1300)) >= 6 &&
-                        Global.Player.Level >= 12 &&
-                        Maths.GetEnergyPercent() >= 70)
+                    if (GameObjects.EnemyMinions.Count(x => x.IsValidTarget(1300)) >= 6 && Global.Player.Level >= 12 && Maths.GetEnergyPercent() >= 70)
                     {
                         if (ShadowManager.CanCastW1())
                         {

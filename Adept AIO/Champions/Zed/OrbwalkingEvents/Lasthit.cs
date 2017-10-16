@@ -18,16 +18,12 @@
                 return;
             }
 
-            if (SpellManager.Q.Ready &&
-                MenuConfig.Lasthit["Q"].Enabled &&
-                creep.Health < Global.Player.GetSpellDamage(creep, SpellSlot.Q))
+            if (SpellManager.Q.Ready && MenuConfig.Lasthit["Q"].Enabled && creep.Health < Global.Player.GetSpellDamage(creep, SpellSlot.Q))
             {
                 SpellManager.CastQ(creep);
             }
 
-            if (SpellManager.E.Ready &&
-                MenuConfig.Lasthit["E"].Enabled &&
-                creep.Health < Global.Player.GetSpellDamage(creep, SpellSlot.E))
+            if (SpellManager.E.Ready && MenuConfig.Lasthit["E"].Enabled && creep.Health < Global.Player.GetSpellDamage(creep, SpellSlot.E))
             {
                 SpellManager.CastE(creep);
             }

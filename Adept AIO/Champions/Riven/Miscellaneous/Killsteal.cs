@@ -12,8 +12,7 @@
     {
         public static void OnUpdate()
         {
-            var target = GameObjects.EnemyHeroes.FirstOrDefault(x =>
-                x.Distance(Global.Player) <= SpellConfig.R2.Range && x.IsValid && !x.IsDead);
+            var target = GameObjects.EnemyHeroes.FirstOrDefault(x => x.Distance(Global.Player) <= SpellConfig.R2.Range && x.IsValid && !x.IsDead);
 
             if (target == null)
             {
@@ -23,9 +22,7 @@
             if (SpellConfig.R2.Ready && Enums.UltimateMode == UltimateMode.Second && MenuConfig.Killsteal["R2"].Enabled)
             {
                 var killable = target.Health <= Global.Player.GetSpellDamage(target, SpellSlot.R) ||
-                               target.Health <=
-                               Global.Player.GetSpellDamage(target, SpellSlot.R) +
-                               Global.Player.GetAutoAttackDamage(target) &&
+                               target.Health <= Global.Player.GetSpellDamage(target, SpellSlot.R) + Global.Player.GetAutoAttackDamage(target) &&
                                target.Distance(Global.Player) <= Global.Player.AttackRange + 65;
 
                 if (killable)
@@ -48,9 +45,7 @@
                 SpellManager.CastQ(target);
             }
 
-            if (MenuConfig.Killsteal["Ignite"].Enabled &&
-                SummonerSpells.IsValid(SummonerSpells.Ignite) &&
-                target.Health < SummonerSpells.IgniteDamage(target))
+            if (MenuConfig.Killsteal["Ignite"].Enabled && SummonerSpells.IsValid(SummonerSpells.Ignite) && target.Health < SummonerSpells.IgniteDamage(target))
             {
                 SummonerSpells.Ignite.CastOnUnit(target);
             }

@@ -11,23 +11,18 @@
     {
         public static void OnUpdate()
         {
-            var target = GameObjects.EnemyHeroes.OrderBy(x => x.Health).
-                FirstOrDefault(x => x.Distance(Global.Player) < 1300);
+            var target = GameObjects.EnemyHeroes.OrderBy(x => x.Health).FirstOrDefault(x => x.Distance(Global.Player) < 1300);
 
             if (target == null || !target.IsValidTarget())
             {
                 return;
             }
 
-            if (SpellManager.Q.Ready &&
-                target.Health < Global.Player.GetSpellDamage(target, SpellSlot.Q) &&
-                MenuConfig.Killsteal["Q"].Enabled)
+            if (SpellManager.Q.Ready && target.Health < Global.Player.GetSpellDamage(target, SpellSlot.Q) && MenuConfig.Killsteal["Q"].Enabled)
             {
                 SpellManager.CastQ(target);
             }
-            else if (SpellManager.E.Ready &&
-                     target.Health < Global.Player.GetSpellDamage(target, SpellSlot.E) &&
-                     MenuConfig.Killsteal["E"].Enabled)
+            else if (SpellManager.E.Ready && target.Health < Global.Player.GetSpellDamage(target, SpellSlot.E) && MenuConfig.Killsteal["E"].Enabled)
             {
                 SpellManager.CastE(target);
             }

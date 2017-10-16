@@ -20,10 +20,7 @@
             mainMenu.Attach();
 
             Global.Orbwalker.Attach(mainMenu);
-            Gragas.InsecOrbwalkerMode = new OrbwalkerMode("Insec",
-                KeyCode.T,
-                () => Global.TargetSelector.GetSelectedTarget(),
-                Insec.OnKeyPressed);
+            Gragas.InsecOrbwalkerMode = new OrbwalkerMode("Insec", KeyCode.T, () => Global.TargetSelector.GetSelectedTarget(), Insec.OnKeyPressed);
             Global.Orbwalker.AddMode(Gragas.InsecOrbwalkerMode);
 
             Gapcloser.Attach(mainMenu, "Anti Gapcloser");
@@ -45,12 +42,7 @@
                 new MenuBool("Killable", "R | ONLY If Killable")
             };
 
-            Harass = new Menu("Harass", "Harass")
-            {
-                new MenuBool("Q", "Use Q"),
-                new MenuBool("W", "Use W"),
-                new MenuBool("E", "Use E")
-            };
+            Harass = new Menu("Harass", "Harass") {new MenuBool("Q", "Use Q"), new MenuBool("W", "Use W"), new MenuBool("E", "Use E")};
 
             Lane = new Menu("Lane", "LaneClear")
             {
@@ -62,19 +54,9 @@
                 new MenuSlider("EMana", "E | Minimum Mana %", 40)
             };
 
-            Jungle = new Menu("Jungle", "Jungle")
-            {
-                new MenuBool("Q", "Use Q"),
-                new MenuBool("W", "Use W"),
-                new MenuBool("E", "Use E")
-            };
+            Jungle = new Menu("Jungle", "Jungle") {new MenuBool("Q", "Use Q"), new MenuBool("W", "Use W"), new MenuBool("E", "Use E")};
 
-            Automatic = new Menu("Auto", "Automatic")
-            {
-                new MenuBool("Q", "Auto Q (Smart)"),
-                new MenuBool("E", "Killsteal E"),
-                new MenuBool("Disengage", "R | Disengage", false)
-            };
+            Automatic = new Menu("Auto", "Automatic") {new MenuBool("Q", "Auto Q (Smart)"), new MenuBool("E", "Killsteal E"), new MenuBool("Disengage", "R | Disengage", false)};
 
             Drawings = new Menu("DrawManager", "DrawManager")
             {
@@ -85,17 +67,7 @@
                 new MenuBool("Debug", "Debug DrawManager")
             };
 
-            foreach (var menu in new List<Menu>
-            {
-                InsecMenu,
-                Combo,
-                Harass,
-                Lane,
-                Jungle,
-                Automatic,
-                Drawings,
-                MenuShortcut.Credits
-            })
+            foreach (var menu in new List<Menu> {InsecMenu, Combo, Harass, Lane, Jungle, Automatic, Drawings, MenuShortcut.Credits})
             {
                 mainMenu.Add(menu);
             }

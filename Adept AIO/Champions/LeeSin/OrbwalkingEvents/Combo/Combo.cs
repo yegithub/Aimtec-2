@@ -125,8 +125,7 @@
                 this.WardEnabled &&
                 distance > (_spellConfig.Q.Ready ? 1000 : _spellConfig.WardRange))
             {
-                if (Game.TickCount - _spellConfig.Q.LastCastAttemptT <= 3000 ||
-                    target.Position.CountEnemyHeroesInRange(2000) > 1)
+                if (Game.TickCount - _spellConfig.Q.LastCastAttemptT <= 3000 || target.Position.CountEnemyHeroesInRange(2000) > 1)
                 {
                     return;
                 }

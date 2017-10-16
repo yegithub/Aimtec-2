@@ -17,8 +17,7 @@
 
             if (SpellManager.Q.Ready && MenuConfig.Misc["Q"].Enabled)
             {
-                var pos = Global.Player.ServerPosition +
-                          (Global.Player.ServerPosition - args.EndPosition).Normalized() * SpellManager.Q.Range;
+                var pos = Global.Player.ServerPosition + (Global.Player.ServerPosition - args.EndPosition).Normalized() * SpellManager.Q.Range;
                 SpellManager.Q.Cast(pos);
             }
 

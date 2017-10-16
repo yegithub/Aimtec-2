@@ -22,8 +22,7 @@
         public void OnPostAttack()
         {
             var minion = GameObjects.EnemyMinions.FirstOrDefault(x =>
-                x.Distance(Global.Player) < Global.Player.AttackRange + x.BoundingRadius &&
-                x.Health > Global.Player.GetAutoAttackDamage(x));
+                x.Distance(Global.Player) < Global.Player.AttackRange + x.BoundingRadius && x.Health > Global.Player.GetAutoAttackDamage(x));
 
             if (minion == null || this.CheckEnabled && Global.Player.CountEnemyHeroesInRange(2000) >= 1)
             {
@@ -50,16 +49,13 @@
 
         public void OnUpdate()
         {
-            if (_spellConfig.Q.Ready && this.Q1Enabled ||
-                Global.Orbwalker.IsWindingUp ||
-                this.CheckEnabled && Global.Player.CountEnemyHeroesInRange(2000) >= 1)
+            if (_spellConfig.Q.Ready && this.Q1Enabled || Global.Orbwalker.IsWindingUp || this.CheckEnabled && Global.Player.CountEnemyHeroesInRange(2000) >= 1)
             {
                 return;
             }
 
             var minion = GameObjects.EnemyMinions.FirstOrDefault(x =>
-                x.Distance(Global.Player) <
-                (Global.Player.IsUnderEnemyTurret() ? _spellConfig.Q.Range : _spellConfig.Q.Range / 2f));
+                x.Distance(Global.Player) < (Global.Player.IsUnderEnemyTurret() ? _spellConfig.Q.Range : _spellConfig.Q.Range / 2f));
 
             if (minion == null)
             {

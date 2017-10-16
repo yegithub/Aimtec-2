@@ -13,20 +13,16 @@
         {
             var insecPos = InsecPosition(target);
             var finalPos = GetTargetEndPosition();
-            var qPos = insecPos +
-                       (insecPos - finalPos).Normalized() *
-                       -(SpellManager.KnockBackRange + DistanceBehindTarget(target));
+            var qPos = insecPos + (insecPos - finalPos).Normalized() * -(SpellManager.KnockBackRange + DistanceBehindTarget(target));
             return qPos;
         }
 
-        private static float DistanceBehindTarget(GameObject target = null) => Math.Min(
-            (Global.Player.BoundingRadius + (target == null ? 65 : target.BoundingRadius) + 50) * 1.25f,
-            SpellManager.R.Range);
+        private static float DistanceBehindTarget(GameObject target = null) =>
+            Math.Min((Global.Player.BoundingRadius + (target == null ? 65 : target.BoundingRadius) + 50) * 1.25f, SpellManager.R.Range);
 
         public static Vector3 InsecPosition(Obj_AI_Base target)
         {
-            var pos = target.ServerPosition +
-                      (target.ServerPosition - GetTargetEndPosition()).Normalized() * DistanceBehindTarget(target);
+            var pos = target.ServerPosition + (target.ServerPosition - GetTargetEndPosition()).Normalized() * DistanceBehindTarget(target);
 
             return NavMesh.WorldToCell(pos).Flags.HasFlag(NavCellFlags.Wall) ? Vector3.Zero : pos;
         }

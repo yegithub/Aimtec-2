@@ -28,8 +28,7 @@
 
             if (SpellConfig.Q.Ready)
             {
-                var enemyHero = GameObjects.EnemyHeroes.OrderBy(x => x.Health).
-                    FirstOrDefault(x => x.IsValidTarget(SpellConfig.Q.Range));
+                var enemyHero = GameObjects.EnemyHeroes.OrderBy(x => x.Health).FirstOrDefault(x => x.IsValidTarget(SpellConfig.Q.Range));
                 if (enemyHero != null)
                 {
                     SpellConfig.Q.Cast(enemyHero);
@@ -45,8 +44,7 @@
             if (minion != null && target.Distance(Global.Player) > Global.Player.AttackRange + 65)
             {
                 if (MenuConfig.Combo["Turret"].Enabled && minion.ServerPosition.PointUnderEnemyTurret() ||
-                    MenuConfig.Combo["Dash"].Value == 0 &&
-                    minion.Distance(Game.CursorPos) > MenuConfig.Combo["Range"].Value)
+                    MenuConfig.Combo["Dash"].Value == 0 && minion.Distance(Game.CursorPos) > MenuConfig.Combo["Range"].Value)
                 {
                     return;
                 }
@@ -74,8 +72,7 @@
             var m2 = MinionHelper.GetClosest(target);
             var positionBehindMinion = MinionHelper.WalkBehindMinion(target);
 
-            if (!positionBehindMinion.IsZero &&
-                positionBehindMinion.Distance(Global.Player) <= MenuConfig.Combo["MRange"].Value)
+            if (!positionBehindMinion.IsZero && positionBehindMinion.Distance(Global.Player) <= MenuConfig.Combo["MRange"].Value)
             {
                 MinionHelper.ExtendedMinion = positionBehindMinion;
                 MinionHelper.ExtendedTarget = target.ServerPosition;
@@ -112,8 +109,7 @@
                 else if (minion != null && targetDist > Global.Player.AttackRange + 65)
                 {
                     if (MenuConfig.Combo["Turret"].Enabled && minion.ServerPosition.PointUnderEnemyTurret() ||
-                        MenuConfig.Combo["Dash"].Value == 0 &&
-                        minion.Distance(Game.CursorPos) > MenuConfig.Combo["Range"].Value)
+                        MenuConfig.Combo["Dash"].Value == 0 && minion.Distance(Game.CursorPos) > MenuConfig.Combo["Range"].Value)
                     {
                         return;
                     }
@@ -131,19 +127,15 @@
                         if (MenuConfig.Combo["Flash"].Enabled &&
                             dashDistance < 470 &&
                             dashDistance > 220 &&
-                            (Dmg.Damage(target) * 1.25 > target.Health ||
-                             target.ServerPosition.CountEnemyHeroesInRange(220) >= 2))
+                            (Dmg.Damage(target) * 1.25 > target.Health || target.ServerPosition.CountEnemyHeroesInRange(220) >= 2))
                         {
                             SpellConfig.Q.Cast();
-                            DelayAction.Queue(Game.Ping / 2 + 30,
-                                () => SummonerSpells.Flash.Cast(target.Position),
-                                new CancellationToken(false));
+                            DelayAction.Queue(Game.Ping / 2 + 30, () => SummonerSpells.Flash.Cast(target.Position), new CancellationToken(false));
                         }
                         else
                         {
                             var circle = new Geometry.Circle(Global.Player.GetDashInfo().EndPos, 220);
-                            var count = GameObjects.EnemyHeroes.Count(x =>
-                                x.IsValidTarget() && x.Distance(circle.Center.To3D()) <= circle.Radius);
+                            var count = GameObjects.EnemyHeroes.Count(x => x.IsValidTarget() && x.Distance(circle.Center.To3D()) <= circle.Radius);
 
                             if (count != 0)
                             {
@@ -154,12 +146,9 @@
                     default:
                         if (!Global.Player.IsDashing() &&
                             target.IsValidSpellTarget(SpellConfig.Q.Range) &&
-                            !(SpellConfig.E.Ready &&
-                              !target.HasBuff("YasuoDashWrapper") &&
-                              Extension.CurrentMode == Mode.Tornado))
+                            !(SpellConfig.E.Ready && !target.HasBuff("YasuoDashWrapper") && Extension.CurrentMode == Mode.Tornado))
                         {
-                            var enemyHero = GameObjects.EnemyHeroes.OrderBy(x => x.Health).
-                                FirstOrDefault(x => x.IsValidTarget(SpellConfig.Q.Range));
+                            var enemyHero = GameObjects.EnemyHeroes.OrderBy(x => x.Health).FirstOrDefault(x => x.IsValidTarget(SpellConfig.Q.Range));
                             if (enemyHero != null)
                             {
                                 SpellConfig.Q.Cast(enemyHero);
@@ -171,8 +160,7 @@
 
             if (SpellConfig.R.Ready && KnockUpHelper.KnockedUp(target) && KnockUpHelper.IsItTimeToUlt(target))
             {
-                var airbourneTargets = GameObjects.EnemyHeroes.Where(x =>
-                    KnockUpHelper.KnockedUp(x) && x.Distance(Global.Player) <= SpellConfig.R.Range);
+                var airbourneTargets = GameObjects.EnemyHeroes.Where(x => KnockUpHelper.KnockedUp(x) && x.Distance(Global.Player) <= SpellConfig.R.Range);
                 var targetCount = (airbourneTargets as Obj_AI_Hero[] ?? airbourneTargets.ToArray()).Length;
 
                 if (targetCount >= MenuConfig.Combo["Count"].Value || targetDist > 350)

@@ -55,15 +55,13 @@
                     var t = args.Target as Obj_AI_Base;
                     if (t != null && t.IsUnderAllyTurret())
                     {
-                        if (t.Health <= _turret.GetAutoAttackDamage(t) * 2 + Global.Player.GetAutoAttackDamage(t) &&
-                            t.Health - _turret.GetAutoAttackDamage(t) * 2 > 0)
+                        if (t.Health <= _turret.GetAutoAttackDamage(t) * 2 + Global.Player.GetAutoAttackDamage(t) && t.Health - _turret.GetAutoAttackDamage(t) * 2 > 0)
                         {
                             DebugConsole.Write("[TURRET FARM] Just prevented auto.", ConsoleColor.Yellow);
                             args.Cancel = true;
                         }
 
-                        if (t.Health <= _turret.GetAutoAttackDamage(t) + Global.Player.GetAutoAttackDamage(t) &&
-                            t.Health - _turret.GetAutoAttackDamage(t) > 0)
+                        if (t.Health <= _turret.GetAutoAttackDamage(t) + Global.Player.GetAutoAttackDamage(t) && t.Health - _turret.GetAutoAttackDamage(t) > 0)
                         {
                             DebugConsole.Write("[TURRET FARM] Just prevented auto.", ConsoleColor.Yellow);
                             args.Cancel = true;
@@ -76,9 +74,7 @@
         public static void OnUpdate()
         {
             var minion = GameObjects.EnemyMinions.FirstOrDefault(x =>
-                x.Distance(Global.Player) <= SpellManager.Q.Range + Global.Player.AttackRange &&
-                x.Health > 0 &&
-                x.MaxHealth > 0);
+                x.Distance(Global.Player) <= SpellManager.Q.Range + Global.Player.AttackRange && x.Health > 0 && x.MaxHealth > 0);
             if (minion == null || !SpellManager.Q.Ready)
             {
                 return;

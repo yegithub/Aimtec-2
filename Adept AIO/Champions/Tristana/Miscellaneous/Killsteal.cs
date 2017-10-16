@@ -20,16 +20,13 @@
 
         public void OnUpdate()
         {
-            var target =
-                GameObjects.EnemyHeroes.FirstOrDefault(x => x.Distance(Global.Player) < _spellConfig.FullRange + 65);
+            var target = GameObjects.EnemyHeroes.FirstOrDefault(x => x.Distance(Global.Player) < _spellConfig.FullRange + 65);
             if (target == null || !target.IsValid || target.IsDead)
             {
                 return;
             }
 
-            if (_spellConfig.E.Ready &&
-                target.Health < Global.Player.GetSpellDamage(target, SpellSlot.E) &&
-                _menuConfig.Killsteal["E"].Enabled)
+            if (_spellConfig.E.Ready && target.Health < Global.Player.GetSpellDamage(target, SpellSlot.E) && _menuConfig.Killsteal["E"].Enabled)
             {
                 _spellConfig.E.CastOnUnit(target);
             }
@@ -37,8 +34,7 @@
             {
                 if (target.Health <
                     Global.Player.GetAutoAttackDamage(target) +
-                    (Global.Player.GetSpellDamage(target, SpellSlot.R) +
-                     (target.HasBuff("TristanaECharge") ? Global.Player.GetSpellDamage(target, SpellSlot.E) : 0)))
+                    (Global.Player.GetSpellDamage(target, SpellSlot.R) + (target.HasBuff("TristanaECharge") ? Global.Player.GetSpellDamage(target, SpellSlot.E) : 0)))
                 {
                     _spellConfig.R.CastOnUnit(target);
                     Global.Orbwalker.ForceTarget(target);

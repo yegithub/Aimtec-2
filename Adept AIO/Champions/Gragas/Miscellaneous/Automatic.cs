@@ -27,16 +27,12 @@
                     SpellManager.Q.Cast();
                 }
 
-                if (MenuConfig.Automatic["E"].Enabled &&
-                    SpellManager.E.Ready &&
-                    target.Health < Global.Player.GetSpellDamage(target, SpellSlot.E))
+                if (MenuConfig.Automatic["E"].Enabled && SpellManager.E.Ready && target.Health < Global.Player.GetSpellDamage(target, SpellSlot.E))
                 {
                     SpellManager.CastE(target);
                 }
 
-                if (MenuConfig.Automatic["Disengage"].Enabled &&
-                    SpellManager.R.Ready &&
-                    target.CountEnemyHeroesInRange(SpellManager.RHitboxRadius) >= 5)
+                if (MenuConfig.Automatic["Disengage"].Enabled && SpellManager.R.Ready && target.CountEnemyHeroesInRange(SpellManager.RHitboxRadius) >= 5)
                 {
                     SpellManager.CastR(target);
                 }

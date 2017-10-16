@@ -424,11 +424,7 @@ namespace Adept_AIO.SDK.Unit_Extensions
         /// <param name="object">The Compare GameObject</param>
         /// <returns>Whether the <see cref="GameObject" />s are identical.</returns>
         public static bool Compare(this GameObject gameObject, GameObject @object) =>
-            gameObject != null &&
-            gameObject.IsValid &&
-            @object != null &&
-            @object.IsValid &&
-            gameObject.NetworkId == @object.NetworkId;
+            gameObject != null && gameObject.IsValid && @object != null && @object.IsValid && gameObject.NetworkId == @object.NetworkId;
 
         /// <summary>
         ///     The get operation from the GameObjects stack.
@@ -500,11 +496,9 @@ namespace Adept_AIO.SDK.Unit_Extensions
             Player = Player;
 
             HeroesList.AddRange(ObjectManager.Get<Obj_AI_Hero>());
-            MinionsList.AddRange(ObjectManager.Get<Obj_AI_Minion>().
-                Where(o => o.Team != GameObjectTeam.Neutral && !o.Name.Contains("ward")));
+            MinionsList.AddRange(ObjectManager.Get<Obj_AI_Minion>().Where(o => o.Team != GameObjectTeam.Neutral && !o.Name.Contains("ward")));
             TurretsList.AddRange(ObjectManager.Get<Obj_AI_Turret>());
-            JungleList.AddRange(ObjectManager.Get<Obj_AI_Minion>().
-                Where(o => o.Team == GameObjectTeam.Neutral && o.Name != "WardCorpse" && o.Name != "Barrel"));
+            JungleList.AddRange(ObjectManager.Get<Obj_AI_Minion>().Where(o => o.Team == GameObjectTeam.Neutral && o.Name != "WardCorpse" && o.Name != "Barrel"));
             WardsList.AddRange(ObjectManager.Get<Obj_AI_Minion>().Where(o => o.Name.Contains("ward")));
 
             GameObjectsList.AddRange(ObjectManager.Get<GameObject>());

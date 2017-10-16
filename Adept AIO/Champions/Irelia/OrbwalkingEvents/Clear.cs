@@ -12,12 +12,9 @@
     {
         public static void OnPreAttack(AttackableUnit target, PreAttackEventArgs preAttackEventArgs)
         {
-            if (SpellConfig.E.Ready &&
-                MenuConfig.Clear["E"].Enabled &&
-                MenuConfig.Clear["E"].Value <= Global.Player.ManaPercent())
+            if (SpellConfig.E.Ready && MenuConfig.Clear["E"].Enabled && MenuConfig.Clear["E"].Value <= Global.Player.ManaPercent())
             {
-                foreach (var mob in GameObjects.JungleLarge.Where(x =>
-                    x.HealthPercent() <= Global.Player.HealthPercent()))
+                foreach (var mob in GameObjects.JungleLarge.Where(x => x.HealthPercent() <= Global.Player.HealthPercent()))
                 {
                     preAttackEventArgs.Cancel = true;
                     SpellConfig.E.CastOnUnit(mob);
@@ -44,9 +41,7 @@
                 return;
             }
 
-            var minion = GameObjects.EnemyMinions.LastOrDefault(x =>
-                x.Distance(Global.Player) <= SpellConfig.Q.Range &&
-                x.Health < Global.Player.GetSpellDamage(x, SpellSlot.Q));
+            var minion = GameObjects.EnemyMinions.LastOrDefault(x => x.Distance(Global.Player) <= SpellConfig.Q.Range && x.Health < Global.Player.GetSpellDamage(x, SpellSlot.Q));
 
             if (minion == null || MenuConfig.Clear["Turret"].Enabled && minion.IsUnderEnemyTurret())
             {

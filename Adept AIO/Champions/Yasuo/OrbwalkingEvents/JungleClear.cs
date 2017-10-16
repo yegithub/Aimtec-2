@@ -25,8 +25,7 @@
 
             if (SpellConfig.E.Ready && MenuConfig.JungleClear["E"].Enabled)
             {
-                var minion = GameObjects.Jungle.FirstOrDefault(x =>
-                    x.Distance(Global.Player) <= SpellConfig.E.Range && !x.HasBuff("YasuoDashWrapper"));
+                var minion = GameObjects.Jungle.FirstOrDefault(x => x.Distance(Global.Player) <= SpellConfig.E.Range && !x.HasBuff("YasuoDashWrapper"));
 
                 if (minion == null)
                 {

@@ -17,8 +17,7 @@
                 return;
             }
 
-            foreach (var target in GameObjects.EnemyHeroes.Where(x =>
-                !x.IsDead && x.IsFloatingHealthBarActive && x.IsVisible))
+            foreach (var target in GameObjects.EnemyHeroes.Where(x => !x.IsDead && x.IsFloatingHealthBarActive && x.IsVisible))
             {
                 var damage = Dmg.Damage(target);
 
@@ -36,23 +35,15 @@
 
             if (MenuConfig.Drawings["Q"].Enabled && SpellManager.Q.Ready)
             {
-                Render.Circle(Global.Player.Position,
-                    SpellManager.Q.Range,
-                    (uint) MenuConfig.Drawings["Segments"].Value,
-                    Color.Cyan);
+                Render.Circle(Global.Player.Position, SpellManager.Q.Range, (uint) MenuConfig.Drawings["Segments"].Value, Color.Cyan);
             }
 
             if (MenuConfig.Drawings["R"].Enabled && SpellManager.R.Ready)
             {
-                Render.Circle(Global.Player.Position,
-                    SpellManager.R.Range,
-                    (uint) MenuConfig.Drawings["Segments"].Value,
-                    Color.Crimson);
+                Render.Circle(Global.Player.Position, SpellManager.R.Range, (uint) MenuConfig.Drawings["Segments"].Value, Color.Crimson);
             }
 
-            if (!MenuConfig.Drawings["Debug"].Enabled ||
-                !SpellManager.R.Ready ||
-                !Gragas.InsecOrbwalkerMode.Active && Global.Orbwalker.Mode != OrbwalkingMode.Combo)
+            if (!MenuConfig.Drawings["Debug"].Enabled || !SpellManager.R.Ready || !Gragas.InsecOrbwalkerMode.Active && Global.Orbwalker.Mode != OrbwalkingMode.Combo)
             {
                 return;
             }
@@ -66,8 +57,7 @@
             var insec3D = InsecManager.InsecPosition(target);
             var qPos3D = InsecManager.QInsecPos(target);
 
-            if (!Render.WorldToScreen(qPos3D, out var qPos) ||
-                !Render.WorldToScreen(target.ServerPosition, out var targetPos))
+            if (!Render.WorldToScreen(qPos3D, out var qPos) || !Render.WorldToScreen(target.ServerPosition, out var targetPos))
             {
                 return;
             }

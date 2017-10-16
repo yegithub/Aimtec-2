@@ -32,8 +32,7 @@
             var pos = target.ServerPosition + (target.ServerPosition - point).Normalized() * 200;
             SpellManager.DrawingPred = pos;
 
-            if (pos.Distance(Global.Player) <= SummonerSpells.Flash.Range &&
-                SummonerSpells.IsValid(SummonerSpells.Flash))
+            if (pos.Distance(Global.Player) <= SummonerSpells.Flash.Range && SummonerSpells.IsValid(SummonerSpells.Flash))
             {
                 SpellManager.E.CastOnUnit(target);
                 DelayAction.Queue(100, () => SummonerSpells.Flash.Cast(pos), new CancellationToken(false));

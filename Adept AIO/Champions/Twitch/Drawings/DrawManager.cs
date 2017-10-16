@@ -17,8 +17,7 @@
                 return;
             }
 
-            foreach (var target in GameObjects.EnemyHeroes.Where(x =>
-                !x.IsDead && x.IsFloatingHealthBarActive && x.IsVisible))
+            foreach (var target in GameObjects.EnemyHeroes.Where(x => !x.IsDead && x.IsFloatingHealthBarActive && x.IsVisible))
             {
                 var damage = Dmg.EDmg(target);
 
@@ -50,12 +49,8 @@
             {
                 if (MenuConfig.Drawings["World"].Enabled)
                 {
-                    var time = Global.Player.MoveSpeed *
-                               (Math.Max(0, Global.Player.GetBuff("TwitchHideInShadows").EndTime) - Game.ClockTime);
-                    Render.Circle(Global.Player.Position,
-                        time,
-                        (uint) MenuConfig.Drawings["Segments"].Value,
-                        Color.Cyan);
+                    var time = Global.Player.MoveSpeed * (Math.Max(0, Global.Player.GetBuff("TwitchHideInShadows").EndTime) - Game.ClockTime);
+                    Render.Circle(Global.Player.Position, time, (uint) MenuConfig.Drawings["Segments"].Value, Color.Cyan);
                 }
             }
         }

@@ -26,7 +26,7 @@
 
     class LeeSin
     {
-        public void Init()
+        public LeeSin()
         {
             var spellConfig = new SpellConfig();
             spellConfig.Load();
@@ -52,19 +52,13 @@
             var mainmenu = new Menu("main", "Adept AIO", true);
             mainmenu.Attach();
 
-            spellConfig.InsecMode = new OrbwalkerMode("Insec",
-                KeyCode.T,
-                Global.TargetSelector.GetSelectedTarget,
-                insec.OnKeyPressed);
+            spellConfig.InsecMode = new OrbwalkerMode("Insec", KeyCode.T, Global.TargetSelector.GetSelectedTarget, insec.OnKeyPressed);
             spellConfig.WardjumpMode = new OrbwalkerMode("Wardjump", KeyCode.G, null, wardjump.OnKeyPressed);
             spellConfig.KickFlashMode = new OrbwalkerMode("Kick Flash", KeyCode.A, null, kickFlash.OnKeyPressed);
 
-            spellConfig.InsecMode.MenuItem.OnValueChanged += (sender, args) =>
-                insec.Enabled = args.GetNewValue<MenuKeyBind>().Value;
-            spellConfig.WardjumpMode.MenuItem.OnValueChanged += (sender, args) =>
-                wardjump.Enabled = args.GetNewValue<MenuKeyBind>().Value;
-            spellConfig.KickFlashMode.MenuItem.OnValueChanged += (sender, args) =>
-                kickFlash.Enabled = args.GetNewValue<MenuKeyBind>().Value;
+            spellConfig.InsecMode.MenuItem.OnValueChanged += (sender, args) => insec.Enabled = args.GetNewValue<MenuKeyBind>().Value;
+            spellConfig.WardjumpMode.MenuItem.OnValueChanged += (sender, args) => wardjump.Enabled = args.GetNewValue<MenuKeyBind>().Value;
+            spellConfig.KickFlashMode.MenuItem.OnValueChanged += (sender, args) => kickFlash.Enabled = args.GetNewValue<MenuKeyBind>().Value;
 
             Global.Orbwalker.AddMode(spellConfig.InsecMode);
             Global.Orbwalker.AddMode(spellConfig.WardjumpMode);
@@ -74,10 +68,8 @@
             var insecMenu = new Menu("Insec", "Insec");
             var insecBk = new MenuKeyBind("BK", "Bubba Kush Toggle", KeyCode.L, KeybindType.Toggle);
             var insecF = new MenuBool("Flash", "Enable Flash");
-            var insecObject =
-                new MenuBool("Object", "Use Q On Minions").SetToolTip("Uses Q to gapclose to every minion");
-            var insecQLast =
-                new MenuBool("Last", "Use Q After Insec").SetToolTip("Only possible if no minions near target");
+            var insecObject = new MenuBool("Object", "Use Q On Minions").SetToolTip("Uses Q to gapclose to every minion");
+            var insecQLast = new MenuBool("Last", "Use Q After Insec").SetToolTip("Only possible if no minions near target");
             var insecPosition = new MenuList("Position", "Insec Position", new[] {"Ally Turret", "Ally Hero"}, 0);
             var insecKick = new MenuList("Kick", "Kick Type: ", new[] {"Flash R", "R Flash"}, 1);
 
@@ -105,10 +97,8 @@
             insecF.OnValueChanged += (sender, args) => insec.FlashEnabled = args.GetNewValue<MenuBool>().Value;
             insecObject.OnValueChanged += (sender, args) => insec.ObjectEnabled = args.GetNewValue<MenuBool>().Value;
             insecQLast.OnValueChanged += (sender, args) => insec.QLast = args.GetNewValue<MenuBool>().Value;
-            insecPosition.OnValueChanged += (sender, args) =>
-                insecManager.InsecPositionValue = args.GetNewValue<MenuList>().Value;
-            insecKick.OnValueChanged += (sender, args) =>
-                insecManager.InsecKickValue = args.GetNewValue<MenuList>().Value;
+            insecPosition.OnValueChanged += (sender, args) => insecManager.InsecPositionValue = args.GetNewValue<MenuList>().Value;
+            insecKick.OnValueChanged += (sender, args) => insecManager.InsecKickValue = args.GetNewValue<MenuList>().Value;
 
             var comboMenu = new Menu("Combo", "Combo");
             var comboTurret = new MenuBool("Turret", "Don't Q2 Into Turret");
@@ -131,8 +121,7 @@
             combo.WardEnabled = comboMenu["Ward"].Enabled;
             combo.EEnabled = comboMenu["E"].Enabled;
 
-            comboTurret.OnValueChanged += (sender, args) =>
-                combo.TurretCheckEnabled = args.GetNewValue<MenuBool>().Value;
+            comboTurret.OnValueChanged += (sender, args) => combo.TurretCheckEnabled = args.GetNewValue<MenuBool>().Value;
             comboQ.OnValueChanged += (sender, args) => combo.Q1Enabled = args.GetNewValue<MenuBool>().Value;
             comboQ2.OnValueChanged += (sender, args) => combo.Q2Enabled = args.GetNewValue<MenuBool>().Value;
             comboW.OnValueChanged += (sender, args) => combo.WEnabled = args.GetNewValue<MenuBool>().Value;
@@ -249,8 +238,7 @@
             ksR.OnValueChanged += (sender, args) => killsteal.REnabled = args.GetNewValue<MenuBool>().Value;
 
             var drawMenu = new Menu("Draw", "DrawManager");
-            var drawSegments =
-                new MenuSlider("Segments", "Segments", 100, 10, 150).SetToolTip("Smoothness of the circles");
+            var drawSegments = new MenuSlider("Segments", "Segments", 100, 10, 150).SetToolTip("Smoothness of the circles");
             var drawPosition = new MenuBool("Position", "Insec Position");
             var drawQ = new MenuBool("Q", "Q Range");
 
@@ -263,10 +251,8 @@
             drawManager.SegmentsValue = drawMenu["Segments"].Value;
             drawManager.PositionEnabled = drawMenu["Position"].Enabled;
 
-            drawSegments.OnValueChanged += (sender, args) =>
-                drawManager.SegmentsValue = args.GetNewValue<MenuSlider>().Value;
-            drawPosition.OnValueChanged += (sender, args) =>
-                drawManager.PositionEnabled = args.GetNewValue<MenuBool>().Value;
+            drawSegments.OnValueChanged += (sender, args) => drawManager.SegmentsValue = args.GetNewValue<MenuSlider>().Value;
+            drawPosition.OnValueChanged += (sender, args) => drawManager.PositionEnabled = args.GetNewValue<MenuBool>().Value;
             drawQ.OnValueChanged += (sender, args) => drawManager.QEnabled = args.GetNewValue<MenuBool>().Value;
 
             Gapcloser.Attach(mainmenu, "Gapcloser");

@@ -65,11 +65,7 @@
                 }
             }
 
-            if (_spellConfig.W.Ready &&
-                _spellConfig.IsFirst(_spellConfig.W) &&
-                !_spellConfig.E.Ready &&
-                !_spellConfig.Q.Ready &&
-                this.Mode == 0)
+            if (_spellConfig.W.Ready && _spellConfig.IsFirst(_spellConfig.W) && !_spellConfig.E.Ready && !_spellConfig.Q.Ready && this.Mode == 0)
             {
                 var turret = GameObjects.AllyTurrets.OrderBy(x => x.Distance(Global.Player)).FirstOrDefault();
                 if (turret != null)

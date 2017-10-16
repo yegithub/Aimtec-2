@@ -10,8 +10,7 @@
     {
         public static double DegreeToRadian(double angle) => Math.PI * angle / 180.0;
 
-        public static int Percent(double value1, double value2, int multiplier = 100) =>
-            (int) (value2 / value1 * multiplier);
+        public static int Percent(double value1, double value2, int multiplier = 100) => (int) (value2 / value1 * multiplier);
 
         public static void DisableAutoAttack(int duration = 500)
         {

@@ -25,8 +25,7 @@
                 }
                 else if (MenuConfig.Combo["QM"].Enabled && Global.Player.GetBuffCount("") >= 5)
                 {
-                    var objects = GameObjects.Enemy.FirstOrDefault(x =>
-                        x.IsValidTarget(SpellConfig.Q.Range) && x.MaxHealth >= 10);
+                    var objects = GameObjects.Enemy.FirstOrDefault(x => x.IsValidTarget(SpellConfig.Q.Range) && x.MaxHealth >= 10);
                     if (objects != null)
                     {
                         SpellConfig.Q.Cast(objects);
@@ -55,8 +54,7 @@
                 MenuConfig.Combo["E"].Enabled &&
                 Global.Player.ManaPercent() >= 30 &&
                 target.IsValidTarget(SpellConfig.E.Range) &&
-                Global.Player.GetSpellDamage(target, SpellSlot.E) + Global.Player.GetAutoAttackDamage(target) >=
-                target.Health)
+                Global.Player.GetSpellDamage(target, SpellSlot.E) + Global.Player.GetAutoAttackDamage(target) >= target.Health)
             {
                 SpellConfig.E.Cast(target);
             }

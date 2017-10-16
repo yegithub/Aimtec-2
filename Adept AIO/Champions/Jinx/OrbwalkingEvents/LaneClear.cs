@@ -28,13 +28,9 @@
 
             var dist = Global.Player.Distance(minion);
 
-            if (_spellConfig.W.Ready &&
-                _menuConfig.LaneClear["W"].Enabled &&
-                Global.Player.CountEnemyHeroesInRange(2000) == 0)
+            if (_spellConfig.W.Ready && _menuConfig.LaneClear["W"].Enabled && Global.Player.CountEnemyHeroesInRange(2000) == 0)
             {
-                if (dist > 800 &&
-                    minion.Health < Global.Player.GetSpellDamage(minion, SpellSlot.W) &&
-                    minion.UnitSkinName.ToLower().Contains("cannon"))
+                if (dist > 800 && minion.Health < Global.Player.GetSpellDamage(minion, SpellSlot.W) && minion.UnitSkinName.ToLower().Contains("cannon"))
                 {
                     _spellConfig.W.Cast(minion);
                 }
@@ -45,9 +41,7 @@
                 if (!_spellConfig.IsQ2 &&
                     dist > _spellConfig.DefaultAuotAttackRange &&
                     dist <= _spellConfig.Q2Range &&
-                    GameObjects.EnemyMinions.Count(x =>
-                        x.IsValidTarget(_spellConfig.Q2Range) && x.Health < Global.Player.GetAutoAttackDamage(x) * 2) >=
-                    3 ||
+                    GameObjects.EnemyMinions.Count(x => x.IsValidTarget(_spellConfig.Q2Range) && x.Health < Global.Player.GetAutoAttackDamage(x) * 2) >= 3 ||
                     _spellConfig.IsQ2 && dist <= _spellConfig.DefaultAuotAttackRange)
                 {
                     _spellConfig.Q.Cast();

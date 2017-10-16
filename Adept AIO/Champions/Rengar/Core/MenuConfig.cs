@@ -51,12 +51,7 @@
                 new MenuSlider("Health", "Force W When Below (% HP)", 10)
             };
 
-            Killsteal = new Menu("Killsteal", "Killsteal")
-            {
-                new MenuBool("Q", "Use Q"),
-                new MenuBool("W", "Use W"),
-                new MenuBool("E", "Use E")
-            };
+            Killsteal = new Menu("Killsteal", "Killsteal") {new MenuBool("Q", "Use Q"), new MenuBool("W", "Use W"), new MenuBool("E", "Use E")};
 
             Drawings = new Menu("DrawManager", "DrawManager")
             {
@@ -67,16 +62,7 @@
                 new MenuBool("E", "Draw E Range")
             };
 
-            foreach (var menu in new List<Menu>
-            {
-                AssassinManager,
-                Combo,
-                LaneClear,
-                JungleClear,
-                Killsteal,
-                Drawings,
-                MenuShortcut.Credits
-            })
+            foreach (var menu in new List<Menu> {AssassinManager, Combo, LaneClear, JungleClear, Killsteal, Drawings, MenuShortcut.Credits})
             {
                 _mainMenu.Add(menu);
             }

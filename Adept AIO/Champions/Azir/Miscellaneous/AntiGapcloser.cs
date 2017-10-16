@@ -16,9 +16,7 @@
                 return;
             }
             var soldier = SoldierManager.Soldiers.OrderBy(x => x.Distance(Game.CursorPos)).FirstOrDefault();
-            if (SpellConfig.E.Ready &&
-                soldier != null &&
-                soldier.Distance(Global.Player) - soldier.BoundingRadius < SpellConfig.E.Range)
+            if (SpellConfig.E.Ready && soldier != null && soldier.Distance(Global.Player) - soldier.BoundingRadius < SpellConfig.E.Range)
             {
                 SpellConfig.E.CastOnUnit(soldier);
             }

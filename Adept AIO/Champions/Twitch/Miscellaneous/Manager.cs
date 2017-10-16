@@ -18,8 +18,7 @@
 
             if (MenuConfig.Killsteal["E"].Enabled && SpellManager.E.Ready)
             {
-                var t = GameObjects.EnemyHeroes.FirstOrDefault(x =>
-                    x.Health <= Dmg.EDmg(x) && x.IsValidTarget(SpellManager.E.Range));
+                var t = GameObjects.EnemyHeroes.FirstOrDefault(x => x.Health <= Dmg.EDmg(x) && x.IsValidTarget(SpellManager.E.Range));
                 if (t != null)
                 {
                     SpellManager.CastE(t);

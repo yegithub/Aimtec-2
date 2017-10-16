@@ -1,6 +1,5 @@
 ﻿namespace Adept_AIO.Champions.Kalista.Drawings
 {
-    using System;
     using System.Drawing;
     using System.Linq;
     using Aimtec;
@@ -17,13 +16,12 @@
                 return;
             }
 
-            foreach (var target in GameObjects.EnemyHeroes.Where(x =>
-                !x.IsDead && x.IsFloatingHealthBarActive && x.IsVisible))
+            foreach (var target in GameObjects.EnemyHeroes.Where(x => !x.IsDead && x.IsFloatingHealthBarActive && x.IsVisible))
             {
                 var damage = Dmg.EDmg(target);
 
                 Global.DamageIndicator.Unit = target;
-                Global.DamageIndicator.DrawDmg((float)damage, Color.FromArgb(153, 12, 177, 28));
+                Global.DamageIndicator.DrawDmg((float) damage, Color.FromArgb(153, 12, 177, 28));
             }
         }
 

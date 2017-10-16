@@ -13,8 +13,7 @@
     {
         public static void OnPostAttack()
         {
-            var target = GameObjects.EnemyHeroes.OrderBy(x => x.Distance(Global.Player)).
-                FirstOrDefault(x => x.Distance(Global.Player) <= Global.Player.AttackRange + 200);
+            var target = GameObjects.EnemyHeroes.OrderBy(x => x.Distance(Global.Player)).FirstOrDefault(x => x.Distance(Global.Player) <= Global.Player.AttackRange + 200);
             if (target == null)
             {
                 return;

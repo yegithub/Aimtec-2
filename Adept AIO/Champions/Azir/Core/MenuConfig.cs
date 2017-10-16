@@ -63,11 +63,7 @@
                 new MenuSlider("EHit", "Min Hit By E", 4, 1, 7)
             };
 
-            Jungle = new Menu("Jungle", "Jungle")
-            {
-                new MenuSliderBool("Q", "Use Q (min. Mana%)", true, 40),
-                new MenuSliderBool("W", "Use W (min. Mana%)", true, 25)
-            };
+            Jungle = new Menu("Jungle", "Jungle") {new MenuSliderBool("Q", "Use Q (min. Mana%)", true, 40), new MenuSliderBool("W", "Use W (min. Mana%)", true, 25)};
 
             Killsteal = new Menu("Killsteal", "Killsteal") {new MenuBool("Q", "Use Q"), new MenuBool("E", "Use E")};
 
@@ -80,17 +76,7 @@
                 new MenuBool("R", "Draw R Range")
             };
 
-            foreach (var menu in new List<Menu>
-            {
-                InsecMenu,
-                Combo,
-                Harass,
-                Lane,
-                Jungle,
-                Killsteal,
-                Drawings,
-                MenuShortcut.Credits
-            })
+            foreach (var menu in new List<Menu> {InsecMenu, Combo, Harass, Lane, Jungle, Killsteal, Drawings, MenuShortcut.Credits})
             {
                 mainMenu.Add(menu);
             }

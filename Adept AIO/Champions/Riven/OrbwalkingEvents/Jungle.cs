@@ -12,9 +12,7 @@
     {
         public static void OnProcessAutoAttack(Obj_AI_Minion mob)
         {
-            if (mob == null ||
-                mob.MaxHealth <= 7 ||
-                MenuConfig.Jungle["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(1500) >= 1)
+            if (mob == null || mob.MaxHealth <= 7 || MenuConfig.Jungle["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(1500) >= 1)
             {
                 return;
             }
@@ -24,10 +22,7 @@
                 SpellManager.CastQ(mob);
             }
 
-            if (MenuConfig.Jungle["W"].Enabled &&
-                SpellConfig.W.Ready &&
-                Extensions.CurrentQCount <= 1 &&
-                !SpellConfig.Q.Ready)
+            if (MenuConfig.Jungle["W"].Enabled && SpellConfig.W.Ready && Extensions.CurrentQCount <= 1 && !SpellConfig.Q.Ready)
             {
                 SpellManager.CastW(mob);
             }
@@ -42,8 +37,7 @@
         {
             if (SpellConfig.E.Ready && MenuConfig.Jungle["E"].Enabled && Global.Player.Level > 4)
             {
-                var mob = GameObjects.Jungle.FirstOrDefault(x =>
-                    x.IsValidTarget() && x.MaxHealth > 10 && x.Distance(Global.Player) <= Extensions.EngageRange);
+                var mob = GameObjects.Jungle.FirstOrDefault(x => x.IsValidTarget() && x.MaxHealth > 10 && x.Distance(Global.Player) <= Extensions.EngageRange);
                 if (mob != null)
                 {
                     SpellConfig.E.Cast(mob.ServerPosition);
@@ -52,9 +46,7 @@
 
             if (SpellConfig.Q.Ready)
             {
-                var legendary =
-                    GameObjects.JungleLegendary.FirstOrDefault(x =>
-                        x.Health < Global.Player.GetSpellDamage(x, SpellSlot.Q));
+                var legendary = GameObjects.JungleLegendary.FirstOrDefault(x => x.Health < Global.Player.GetSpellDamage(x, SpellSlot.Q));
                 if (legendary == null)
                 {
                     return;

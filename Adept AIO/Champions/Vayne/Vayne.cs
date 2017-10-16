@@ -10,7 +10,7 @@
 
     class Vayne
     {
-        public static void Init()
+        public Vayne()
         {
             MenuConfig.Attach();
             SpellManager.Load();

@@ -12,8 +12,7 @@
     {
         public static void OnUpdate()
         {
-            var target = GameObjects.EnemyHeroes.FirstOrDefault(x =>
-                x.Distance(Global.Player) < SpellConfig.R.Range && x.HealthPercent() <= 40);
+            var target = GameObjects.EnemyHeroes.FirstOrDefault(x => x.Distance(Global.Player) < SpellConfig.R.Range && x.HealthPercent() <= 40);
 
             if (target == null || !target.IsValidTarget())
             {
@@ -35,16 +34,13 @@
                 SpellConfig.W.Cast(target);
             }
             else if (SpellConfig.R.Ready &&
-                     target.Health <
-                     Global.Player.GetSpellDamage(target, SpellSlot.R) + Global.Player.GetAutoAttackDamage(target) &&
+                     target.Health < Global.Player.GetSpellDamage(target, SpellSlot.R) + Global.Player.GetAutoAttackDamage(target) &&
                      target.IsValidTarget(SpellConfig.R.Range) &&
                      MenuConfig.Killsteal["R"].Enabled)
             {
                 SpellConfig.R.CastOnUnit(target);
             }
-            else if (MenuConfig.Killsteal["Ignite"].Enabled &&
-                     SummonerSpells.IsValid(SummonerSpells.Ignite) &&
-                     target.Health < SummonerSpells.IgniteDamage(target))
+            else if (MenuConfig.Killsteal["Ignite"].Enabled && SummonerSpells.IsValid(SummonerSpells.Ignite) && target.Health < SummonerSpells.IgniteDamage(target))
             {
                 SummonerSpells.Ignite.Cast(target);
             }

@@ -10,10 +10,7 @@
     {
         public static void OnPostAttack(Obj_AI_Base target)
         {
-            if (SpellConfig.R2.Ready &&
-                Enums.UltimateMode == UltimateMode.Second &&
-                MenuConfig.Combo["R2"].Enabled &&
-                target.HealthPercent() <= 40)
+            if (SpellConfig.R2.Ready && Enums.UltimateMode == UltimateMode.Second && MenuConfig.Combo["R2"].Enabled && target.HealthPercent() <= 40)
             {
                 SpellManager.CastR2(target);
             }

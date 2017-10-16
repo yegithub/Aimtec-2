@@ -44,9 +44,7 @@
 
                     _lastAa = Game.TickCount;
                     Global.Player.IssueOrder(OrderType.AttackUnit, enemy);
-                    DelayAction.Queue(250,
-                        () => Global.Player.IssueOrder(OrderType.MoveTo, Game.CursorPos),
-                        new CancellationToken(false));
+                    DelayAction.Queue(250, () => Global.Player.IssueOrder(OrderType.MoveTo, Game.CursorPos), new CancellationToken(false));
                 }
 
                 SpellConfig.R.Width = 133 * (3 + Global.Player.GetSpell(SpellSlot.R).Level);

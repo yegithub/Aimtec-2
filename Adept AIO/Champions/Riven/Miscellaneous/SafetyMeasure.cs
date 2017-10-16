@@ -39,14 +39,7 @@
             "TeemoQ"
         };
 
-        private static readonly string[] InterrupterSpell =
-        {
-            "RenektonPreExecute",
-            "TalonCutthroat",
-            "XenZhaoThrust3",
-            "KatarinaRTrigger",
-            "KatarinaE"
-        };
+        private static readonly string[] InterrupterSpell = {"RenektonPreExecute", "TalonCutthroat", "XenZhaoThrust3", "KatarinaRTrigger", "KatarinaE"};
 
         public static void OnProcessSpellCast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
         {
@@ -55,16 +48,12 @@
                 return;
             }
 
-            if (SpellConfig.E.Ready &&
-                (TargetedSpells.Contains(args.SpellData.Name) || DamageSpells.Contains(args.SpellData.Name)) &&
-                args.Target.IsMe)
+            if (SpellConfig.E.Ready && (TargetedSpells.Contains(args.SpellData.Name) || DamageSpells.Contains(args.SpellData.Name)) && args.Target.IsMe)
             {
                 SpellConfig.E.Cast(Game.CursorPos);
             }
 
-            if (SpellConfig.W.Ready &&
-                sender.IsValidTarget(SpellConfig.W.Range) &&
-                InterrupterSpell.Contains(args.SpellData.Name))
+            if (SpellConfig.W.Ready && sender.IsValidTarget(SpellConfig.W.Range) && InterrupterSpell.Contains(args.SpellData.Name))
             {
                 SpellConfig.W.Cast();
             }

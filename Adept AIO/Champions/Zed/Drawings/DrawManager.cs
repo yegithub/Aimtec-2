@@ -18,8 +18,7 @@
                 return;
             }
 
-            foreach (var target in GameObjects.EnemyHeroes.Where(x =>
-                !x.IsDead && x.IsFloatingHealthBarActive && x.IsVisible))
+            foreach (var target in GameObjects.EnemyHeroes.Where(x => !x.IsDead && x.IsFloatingHealthBarActive && x.IsVisible))
             {
                 var damage = Dmg.Damage(target);
 
@@ -47,9 +46,7 @@
 
                     var pred = SpellManager.Q.GetPrediction(enemy, shadow.ServerPosition, shadow.ServerPosition);
                     var extended = shadow.ServerPosition.Extend(pred.CastPosition, SpellManager.Q.Range);
-                    var rect = new Geometry.Rectangle(shadow.ServerPosition.To2D(),
-                        extended.To2D(),
-                        SpellManager.Q.Width);
+                    var rect = new Geometry.Rectangle(shadow.ServerPosition.To2D(), extended.To2D(), SpellManager.Q.Width);
                     rect.Draw(Color.Crimson);
 
                     Render.WorldToScreen(shadow.ServerPosition, out var shadow2D);
@@ -61,18 +58,14 @@
             if (MenuConfig.Drawings["Range"].Enabled)
             {
                 Render.Circle(Global.Player.Position,
-                    SpellManager.WCastRange +
-                    (Global.Orbwalker.Mode == OrbwalkingMode.Combo ? SpellManager.R.Range : Global.Player.AttackRange),
+                    SpellManager.WCastRange + (Global.Orbwalker.Mode == OrbwalkingMode.Combo ? SpellManager.R.Range : Global.Player.AttackRange),
                     (uint) MenuConfig.Drawings["Segments"].Value,
                     Color.Crimson);
             }
 
             if (SpellManager.Q.Ready && MenuConfig.Drawings["Q"].Enabled)
             {
-                Render.Circle(Global.Player.Position,
-                    SpellManager.Q.Range,
-                    (uint) MenuConfig.Drawings["Segments"].Value,
-                    Color.Cyan);
+                Render.Circle(Global.Player.Position, SpellManager.Q.Range, (uint) MenuConfig.Drawings["Segments"].Value, Color.Cyan);
             }
         }
     }

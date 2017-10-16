@@ -1,6 +1,5 @@
 ﻿namespace Adept_AIO.SDK.Geometry_Related
 {
-    using System;
     using Aimtec;
     using Aimtec.SDK.Extensions;
     using Generic;
@@ -10,8 +9,7 @@
     {
         public static Vector3 EndPoint = Vector3.Zero;
 
-        private static bool IsWallAt(Vector3 pos) => NavMesh.WorldToCell(pos).Flags.HasFlag(NavCellFlags.Wall) ||
-                                                     NavMesh.WorldToCell(pos).Flags.HasFlag(NavCellFlags.Building);
+        private static bool IsWallAt(Vector3 pos) => NavMesh.WorldToCell(pos).Flags.HasFlag(NavCellFlags.Wall) || NavMesh.WorldToCell(pos).Flags.HasFlag(NavCellFlags.Building);
 
         public static Vector3 GeneratePoint(Vector3 start, Vector3 end)
         {
@@ -49,7 +47,7 @@
             {
                 var dir = target.Orientation.To2D();
                 var angleRad = Maths.DegreeToRadian(i);
-                var rot = (target.ServerPosition.To2D() + 300 * dir.Rotated((float)angleRad)).To3D();
+                var rot = (target.ServerPosition.To2D() + 300 * dir.Rotated((float) angleRad)).To3D();
 
                 if (!IsWallAt(rot))
                 {
@@ -68,13 +66,13 @@
             {
                 var dir = Global.Player.Orientation.To2D();
                 var angleRad = Maths.DegreeToRadian(i);
-                var rot = (position.To2D() + 300 * dir.Rotated((float)angleRad)).To3D();
+                var rot = (position.To2D() + 300 * dir.Rotated((float) angleRad)).To3D();
 
                 if (!IsWallAt(rot))
                 {
                     continue;
                 }
-              
+
                 return rot;
             }
 

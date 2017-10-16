@@ -10,7 +10,7 @@
 
     class Tristana
     {
-        public void Init()
+        public Tristana()
         {
             var menuConfig = new MenuConfig();
 

@@ -28,12 +28,7 @@
                 new MenuBool("Check", "Check For Enemy Turrets")
             };
 
-            Harass = new Menu("Harass", "Harass")
-            {
-                new MenuBool("Q", "Use Q"),
-                new MenuBool("W", "Use W"),
-                new MenuBool("E", "E", false)
-            };
+            Harass = new Menu("Harass", "Harass") {new MenuBool("Q", "Use Q"), new MenuBool("W", "Use W"), new MenuBool("E", "E", false)};
 
             Clear = new Menu("Clear", "Clear")
             {

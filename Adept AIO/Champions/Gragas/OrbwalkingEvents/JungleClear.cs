@@ -9,8 +9,7 @@
     {
         public static void OnUpdate()
         {
-            var mob = GameObjects.Jungle.OrderByDescending(x => x.GetJungleType()).
-                FirstOrDefault(x => x.Distance(Global.Player) <= 500);
+            var mob = GameObjects.Jungle.OrderByDescending(x => x.GetJungleType()).FirstOrDefault(x => x.Distance(Global.Player) <= 500);
             if (mob == null)
             {
                 return;

@@ -10,7 +10,7 @@
 
     class Yasuo
     {
-        public static void Init()
+        public Yasuo()
         {
             MenuConfig.Attach();
             SpellConfig.Load();

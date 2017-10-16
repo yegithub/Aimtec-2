@@ -16,20 +16,15 @@
             var target = Global.TargetSelector.GetSelectedTarget();
 
             if (target != null &&
-                (AzirHelper.InsecMode.Active ||
-                 MenuConfig.InsecMenu["Auto"].Enabled &&
-                 MenuConfig.InsecMenu["Auto"].Value <= target.CountEnemyHeroesInRange(500)))
+                (AzirHelper.InsecMode.Active || MenuConfig.InsecMenu["Auto"].Enabled && MenuConfig.InsecMenu["Auto"].Value <= target.CountEnemyHeroesInRange(500)))
             {
                 var dist = Global.Player.Distance(target);
-                var allyT = GameObjects.AllyTurrets.OrderBy(x => x.Distance(Global.Player)).
-                    FirstOrDefault(x => x.IsValid && !x.IsDead).
-                    ServerPosition;
+                var allyT = GameObjects.AllyTurrets.OrderBy(x => x.Distance(Global.Player)).FirstOrDefault(x => x.IsValid && !x.IsDead).ServerPosition;
 
                 var targetPos = target.ServerPosition;
                 var soldierPos = SoldierManager.GetSoldierNearestTo(target.ServerPosition);
 
-                var targetExtend =
-                    Global.Player.ServerPosition.Extend(allyT, SpellConfig.R.Range - target.BoundingRadius - 30);
+                var targetExtend = Global.Player.ServerPosition.Extend(allyT, SpellConfig.R.Range - target.BoundingRadius - 30);
 
                 AzirHelper.Rect = new Geometry.Rectangle(targetExtend.To2D(),
                     Global.Player.ServerPosition.Extend(allyT, -SpellConfig.R.Width / 2f).To2D(),

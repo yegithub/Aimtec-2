@@ -24,10 +24,7 @@
 
         private bool IsBKActive;
 
-        public Insec(IWardTracker wardTracker,
-            IWardManager wardManager,
-            ISpellConfig spellConfig,
-            IInsecManager insecManager)
+        public Insec(IWardTracker wardTracker, IWardManager wardManager, ISpellConfig spellConfig, IInsecManager insecManager)
         {
             _wardTracker = wardTracker;
             _wardManager = wardManager;
@@ -42,21 +39,21 @@
 
         private bool FlashReady => SummonerSpells.IsValid(SummonerSpells.Flash) && this.FlashEnabled;
 
-        private bool CanWardJump =>
-            _spellConfig.W.Ready && _spellConfig.IsFirst(_spellConfig.W) && _wardTracker.IsWardReady();
+        private bool CanWardJump => _spellConfig.W.Ready && _spellConfig.IsFirst(_spellConfig.W) && _wardTracker.IsWardReady();
 
         private static Obj_AI_Hero Target => Global.TargetSelector.GetSelectedTarget();
 
         private Obj_AI_Base EnemyObject => GameObjects.EnemyMinions.OrderBy(x => x.Health).
-            LastOrDefault(x => InsecInRange(x.ServerPosition) &&
-                               !x.IsDead &&
-                               x.IsValid &&
-                               !x.IsTurret &&
-                               x.NetworkId != Target.NetworkId &&
-                               x.Health * 0.9 > Global.Player.GetSpellDamage(x, SpellSlot.Q) &&
-                               x.MaxHealth > 7 &&
-                               Global.Player.Distance(x) <= _spellConfig.Q.Range &&
-                               x.Distance(GetInsecPosition()) < Global.Player.Distance(GetInsecPosition()));
+            LastOrDefault(x =>
+                InsecInRange(x.ServerPosition) &&
+                !x.IsDead &&
+                x.IsValid &&
+                !x.IsTurret &&
+                x.NetworkId != Target.NetworkId &&
+                x.Health * 0.9 > Global.Player.GetSpellDamage(x, SpellSlot.Q) &&
+                x.MaxHealth > 7 &&
+                Global.Player.Distance(x) <= _spellConfig.Q.Range &&
+                x.Distance(GetInsecPosition()) < Global.Player.Distance(GetInsecPosition()));
 
         public bool Enabled { get; set; }
 
@@ -148,8 +145,7 @@
                 {
                     if (IsBKActive)
                     {
-                        var enemy = GameObjects.EnemyHeroes.FirstOrDefault(x =>
-                            x.IsValidTarget(_spellConfig.R.Range) && x.NetworkId != Target.NetworkId);
+                        var enemy = GameObjects.EnemyHeroes.FirstOrDefault(x => x.IsValidTarget(_spellConfig.R.Range) && x.NetworkId != Target.NetworkId);
                         if (enemy != null)
                         {
                             _spellConfig.R.CastOnUnit(enemy);

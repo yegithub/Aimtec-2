@@ -12,8 +12,7 @@
     {
         public static void OnProcessAutoAttack()
         {
-            var minion = GameObjects.EnemyMinions.FirstOrDefault(x =>
-                x.Distance(Global.Player) < Extensions.EngageRange && x.Health > Global.Player.GetAutoAttackDamage(x));
+            var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(Global.Player) < Extensions.EngageRange && x.Health > Global.Player.GetAutoAttackDamage(x));
 
             if (minion == null || MenuConfig.Lane["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(2000) >= 1)
             {
@@ -25,10 +24,7 @@
                 SpellManager.CastQ(minion);
             }
 
-            if (SpellConfig.W.Ready &&
-                MenuConfig.Lane["W"].Enabled &&
-                minion.Health < Global.Player.GetSpellDamage(minion, SpellSlot.W) &&
-                minion.UnitSkinName.Contains("Siege"))
+            if (SpellConfig.W.Ready && MenuConfig.Lane["W"].Enabled && minion.Health < Global.Player.GetSpellDamage(minion, SpellSlot.W) && minion.UnitSkinName.Contains("Siege"))
             {
                 SpellManager.CastW(minion);
             }
@@ -37,8 +33,7 @@
 
         public static void OnUpdate()
         {
-            var minion =
-                GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(Global.Player) < Extensions.EngageRange);
+            var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(Global.Player) < Extensions.EngageRange);
 
             if (minion == null || MenuConfig.Lane["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(1500) >= 1)
             {

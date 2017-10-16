@@ -19,10 +19,7 @@
 
         public void OnPostAttack(AttackableUnit target)
         {
-            if (!_spellConfig.Q.Ready ||
-                !_menuConfig.JungleClear["Q"].Enabled ||
-                target == null ||
-                _menuConfig.JungleClear["Avoid"].Enabled && Global.Player.Level == 1)
+            if (!_spellConfig.Q.Ready || !_menuConfig.JungleClear["Q"].Enabled || target == null || _menuConfig.JungleClear["Avoid"].Enabled && Global.Player.Level == 1)
             {
                 return;
             }
@@ -32,9 +29,7 @@
 
         public void OnUpdate()
         {
-            var mob = GameObjects.Jungle.Where(x => x.IsValidTarget(_spellConfig.FullRange)).
-                OrderByDescending(x => x.GetJungleType()).
-                FirstOrDefault();
+            var mob = GameObjects.Jungle.Where(x => x.IsValidTarget(_spellConfig.FullRange)).OrderByDescending(x => x.GetJungleType()).FirstOrDefault();
 
             if (mob == null || _menuConfig.JungleClear["Avoid"].Enabled && Global.Player.Level == 1)
             {

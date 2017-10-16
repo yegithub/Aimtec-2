@@ -38,29 +38,13 @@
                 new MenuKeyBind("Semi", "Semi R Key", KeyCode.T, KeybindType.Press)
             };
 
-            Harass = new Menu("Harass", "Harass")
-            {
-                new MenuBool("Q", "Automatic Q"),
-                new MenuSliderBool("W", "Use W If Distance <", true, 1300, 0, 1500)
-            };
+            Harass = new Menu("Harass", "Harass") {new MenuBool("Q", "Automatic Q"), new MenuSliderBool("W", "Use W If Distance <", true, 1300, 0, 1500)};
 
-            LaneClear = new Menu("LaneClear", "LaneClear")
-            {
-                new MenuBool("Q", "Automatic Q"),
-                new MenuBool("W", "Use W At Big Minions", false)
-            };
+            LaneClear = new Menu("LaneClear", "LaneClear") {new MenuBool("Q", "Automatic Q"), new MenuBool("W", "Use W At Big Minions", false)};
 
-            JungleClear = new Menu("JungleClear", "JungleClear")
-            {
-                new MenuBool("Q", "Automatic Q"),
-                new MenuSliderBool("W", "Use W (Min. Mana %)", true, 65)
-            };
+            JungleClear = new Menu("JungleClear", "JungleClear") {new MenuBool("Q", "Automatic Q"), new MenuSliderBool("W", "Use W (Min. Mana %)", true, 65)};
 
-            Killsteal = new Menu("Killsteal", "Killsteal")
-            {
-                new MenuSliderBool("Range", "[R] Maximum Range", true, 1500, 500, 5000),
-                new MenuBool("W", "Use W")
-            };
+            Killsteal = new Menu("Killsteal", "Killsteal") {new MenuSliderBool("Range", "[R] Maximum Range", true, 1500, 500, 5000), new MenuBool("W", "Use W")};
 
             Drawings = new Menu("DrawManager", "DrawManager")
             {
@@ -70,17 +54,7 @@
                 new MenuBool("W", "W Range")
             };
 
-            foreach (var menu in new List<Menu>
-            {
-                Whitelist,
-                Combo,
-                Harass,
-                LaneClear,
-                JungleClear,
-                Killsteal,
-                Drawings,
-                MenuShortcut.Credits
-            })
+            foreach (var menu in new List<Menu> {Whitelist, Combo, Harass, LaneClear, JungleClear, Killsteal, Drawings, MenuShortcut.Credits})
             {
                 mainMenu.Add(menu);
             }

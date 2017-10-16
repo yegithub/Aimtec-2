@@ -16,9 +16,7 @@
 
             if (SpellManager.R.Ready &&
                 MenuConfig.Combo["R"].Enabled &&
-                (!MenuConfig.Combo["Killable"].Enabled ||
-                 Dmg.Damage(target) > target.Health ||
-                 !target.IsValidTarget(SpellManager.R.Range)))
+                (!MenuConfig.Combo["Killable"].Enabled || Dmg.Damage(target) > target.Health || !target.IsValidTarget(SpellManager.R.Range)))
             {
                 SpellManager.CastR(target);
             }

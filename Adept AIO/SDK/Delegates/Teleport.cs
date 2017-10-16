@@ -8,8 +8,7 @@
     {
         public delegate void TeleportHandler(Obj_AI_Base sender, TeleportEventArgs args);
 
-        internal static readonly Dictionary<int, TeleportEventArgs> TeleportDataNetId =
-            new Dictionary<int, TeleportEventArgs>();
+        internal static readonly Dictionary<int, TeleportEventArgs> TeleportDataNetId = new Dictionary<int, TeleportEventArgs>();
 
         static Teleport() { Obj_AI_Base.OnTeleport += OnUnitTeleport; }
 
@@ -41,9 +40,7 @@
             else
             {
                 eventArgs = TeleportDataNetId[sender.NetworkId];
-                eventArgs.Status = Game.TickCount - eventArgs.Start < eventArgs.Duration - 250
-                    ? TeleportStatus.Abort
-                    : TeleportStatus.Finish;
+                eventArgs.Status = Game.TickCount - eventArgs.Start < eventArgs.Duration - 250 ? TeleportStatus.Abort : TeleportStatus.Finish;
             }
 
             OnTeleport?.Invoke(sender, eventArgs);

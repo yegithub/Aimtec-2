@@ -64,12 +64,8 @@
                 Render.WorldToScreen(bkEndPos, out var bkEndPosV2);
                 Render.WorldToScreen(bkPos, out var bkPosV2);
 
-                var arrowLine1 = bkEndPosV2 +
-                                 (bkPosV2 - bkEndPosV2).Normalized().Rotated(40 * (float) Math.PI / 180) *
-                                 target.BoundingRadius;
-                var arrowLine2 = bkEndPosV2 +
-                                 (bkPosV2 - bkEndPosV2).Normalized().Rotated(-40 * (float) Math.PI / 180) *
-                                 target.BoundingRadius;
+                var arrowLine1 = bkEndPosV2 + (bkPosV2 - bkEndPosV2).Normalized().Rotated(40 * (float) Math.PI / 180) * target.BoundingRadius;
+                var arrowLine2 = bkEndPosV2 + (bkPosV2 - bkEndPosV2).Normalized().Rotated(-40 * (float) Math.PI / 180) * target.BoundingRadius;
 
                 Render.Line(bkEndPosV2, arrowLine1, Color.White);
                 Render.Line(bkEndPosV2, arrowLine2, Color.White);
@@ -85,12 +81,8 @@
                 Render.WorldToScreen(targetEndPos, out var endPosV2);
                 Render.WorldToScreen(insecPos, out var startPosV2);
 
-                var arrowLine1 = endPosV2 +
-                                 (startPosV2 - endPosV2).Normalized().Rotated(40 * (float) Math.PI / 180) *
-                                 target.BoundingRadius;
-                var arrowLine2 = endPosV2 +
-                                 (startPosV2 - endPosV2).Normalized().Rotated(-40 * (float) Math.PI / 180) *
-                                 target.BoundingRadius;
+                var arrowLine1 = endPosV2 + (startPosV2 - endPosV2).Normalized().Rotated(40 * (float) Math.PI / 180) * target.BoundingRadius;
+                var arrowLine2 = endPosV2 + (startPosV2 - endPosV2).Normalized().Rotated(-40 * (float) Math.PI / 180) * target.BoundingRadius;
 
                 Render.Line(endPosV2, arrowLine1, Color.White);
                 Render.Line(endPosV2, arrowLine2, Color.White);

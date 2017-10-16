@@ -31,9 +31,7 @@
                 SpellManager.CastQ(target, MenuConfig.Harass["Mode2"].Value);
             }
 
-            if (SpellManager.E.Ready &&
-                MenuConfig.Harass["E"].Enabled &&
-                MenuConfig.Harass[target.ChampionName].Enabled)
+            if (SpellManager.E.Ready && MenuConfig.Harass["E"].Enabled && MenuConfig.Harass[target.ChampionName].Enabled)
             {
                 SpellManager.CastE(target);
             }

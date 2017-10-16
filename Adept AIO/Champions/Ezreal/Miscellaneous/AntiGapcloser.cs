@@ -11,9 +11,7 @@
     {
         public static void OnGapcloser(Obj_AI_Hero sender, GapcloserArgs args)
         {
-            if (!sender.IsEnemy ||
-                !SpellConfig.E.Ready ||
-                args.EndPosition.Distance(Global.Player) > SpellConfig.E.Range)
+            if (!sender.IsEnemy || !SpellConfig.E.Ready || args.EndPosition.Distance(Global.Player) > SpellConfig.E.Range)
             {
                 return;
             }

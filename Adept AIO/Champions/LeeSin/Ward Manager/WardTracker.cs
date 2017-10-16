@@ -13,8 +13,7 @@
     {
         private readonly ISpellConfig _spellConfig;
 
-        private readonly IEnumerable<string> _wardNames =
-            new List<string> {"TrinketTotemLvl1", "ItemGhostWard", "JammerDevice"};
+        private readonly IEnumerable<string> _wardNames = new List<string> {"TrinketTotemLvl1", "ItemGhostWard", "JammerDevice"};
 
         public WardTracker(ISpellConfig spellConfig) { _spellConfig = spellConfig; }
 
@@ -51,8 +50,7 @@
             this.WardPosition = ward.ServerPosition;
 
             DebugConsole.Write("Located Ally Ward.", ConsoleColor.Green);
-            Global.Player.SpellBook.CastSpell(SpellSlot.W,
-                this.WardPosition); // Bug: This position is unrealistic and does not work.
+            Global.Player.SpellBook.CastSpell(SpellSlot.W, this.WardPosition); // Bug: This position is unrealistic and does not work.
         }
     }
 }

@@ -53,13 +53,7 @@
                 new MenuBool("W", "Use W")
             };
 
-            Killsteal = new Menu("Killsteal", "Killsteal")
-            {
-                new MenuBool("Q", "Use Q"),
-                new MenuBool("W", "Use W"),
-                new MenuBool("E", "Use E (AA)"),
-                new MenuBool("R", "Use R")
-            };
+            Killsteal = new Menu("Killsteal", "Killsteal") {new MenuBool("Q", "Use Q"), new MenuBool("W", "Use W"), new MenuBool("E", "Use E (AA)"), new MenuBool("R", "Use R")};
 
             Drawings = new Menu("Drawings", "Drawings")
             {
@@ -70,16 +64,7 @@
                 new MenuBool("Debug", "Debug")
             };
 
-            foreach (var menu in new List<Menu>
-            {
-                Combo,
-                Harass,
-                LaneClear,
-                JungleClear,
-                Killsteal,
-                Drawings,
-                MenuShortcut.Credits
-            })
+            foreach (var menu in new List<Menu> {Combo, Harass, LaneClear, JungleClear, Killsteal, Drawings, MenuShortcut.Credits})
             {
                 mainMenu.Add(menu);
             }

@@ -1,8 +1,5 @@
 ﻿namespace Adept_AIO.Champions.Kalista.OrbwalkerEvents
 {
-    using System;
-    using System.Linq;
-    using Aimtec;
     using Aimtec.SDK.Extensions;
     using Core;
     using SDK.Unit_Extensions;

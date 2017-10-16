@@ -16,8 +16,7 @@
                 return;
             }
 
-            foreach (var target in GameObjects.EnemyHeroes.Where(x =>
-                !x.IsDead && x.IsFloatingHealthBarActive && x.IsVisible))
+            foreach (var target in GameObjects.EnemyHeroes.Where(x => !x.IsDead && x.IsFloatingHealthBarActive && x.IsVisible))
             {
                 var damage = Dmg.Damage(target);
 
@@ -57,18 +56,12 @@
             {
                 if (MenuConfig.Drawings["Q"].Enabled)
                 {
-                    Render.Circle(Global.Player.Position,
-                        SpellManager.Q.Range,
-                        (uint) MenuConfig.Drawings["Segments"].Value,
-                        Color.Cyan);
+                    Render.Circle(Global.Player.Position, SpellManager.Q.Range, (uint) MenuConfig.Drawings["Segments"].Value, Color.Cyan);
                 }
 
                 if (MenuConfig.Drawings["Extended"].Enabled)
                 {
-                    Render.Circle(Global.Player.Position,
-                        SpellManager.Q.Range + 400,
-                        (uint) MenuConfig.Drawings["Segments"].Value,
-                        Color.Crimson);
+                    Render.Circle(Global.Player.Position, SpellManager.Q.Range + 400, (uint) MenuConfig.Drawings["Segments"].Value, Color.Crimson);
                 }
             }
         }

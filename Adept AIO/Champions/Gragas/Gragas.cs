@@ -10,7 +10,7 @@
     {
         public static OrbwalkerMode InsecOrbwalkerMode;
 
-        public static void Init()
+        public Gragas()
         {
             new SpellManager();
             new MenuConfig();

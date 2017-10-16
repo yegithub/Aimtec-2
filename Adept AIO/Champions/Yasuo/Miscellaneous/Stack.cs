@@ -21,15 +21,13 @@
                 return;
             }
 
-            var enemy = GameObjects.EnemyHeroes.FirstOrDefault(x =>
-                x.IsValidTarget() && x.Distance(Global.Player) <= 425);
+            var enemy = GameObjects.EnemyHeroes.FirstOrDefault(x => x.IsValidTarget() && x.Distance(Global.Player) <= 425);
             if (enemy != null)
             {
                 SpellConfig.Q.Cast(enemy);
             }
 
-            var mob = GameObjects.EnemyMinions.FirstOrDefault(x =>
-                x.IsValidTarget() && x.Distance(Global.Player) <= 425);
+            var mob = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsValidTarget() && x.Distance(Global.Player) <= 425);
             if (mob == null)
             {
                 return;

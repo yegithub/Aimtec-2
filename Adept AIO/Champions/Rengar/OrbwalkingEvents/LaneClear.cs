@@ -16,8 +16,7 @@
                 return;
             }
 
-            var minion =
-                GameObjects.EnemyMinions.FirstOrDefault(x => x.IsValidTarget(SpellConfig.Q.Range) && x.IsEnemy);
+            var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsValidTarget(SpellConfig.Q.Range) && x.IsEnemy);
             if (minion == null)
             {
                 return;
@@ -41,8 +40,7 @@
                 return;
             }
 
-            var minion =
-                GameObjects.EnemyMinions.FirstOrDefault(x => x.IsValidTarget(SpellConfig.E.Range) && x.IsEnemy);
+            var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsValidTarget(SpellConfig.E.Range) && x.IsEnemy);
             if (minion == null)
             {
                 return;
@@ -52,8 +50,7 @@
 
             if (SpellConfig.Q.Ready && distance < SpellConfig.Q.Range)
             {
-                if (minion.UnitSkinName.ToLower().Contains("cannon") &&
-                    minion.Health > Global.Player.GetSpellDamage(minion, SpellSlot.Q))
+                if (minion.UnitSkinName.ToLower().Contains("cannon") && minion.Health > Global.Player.GetSpellDamage(minion, SpellSlot.Q))
                 {
                     return;
                 }

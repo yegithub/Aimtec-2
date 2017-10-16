@@ -8,7 +8,7 @@
 
     class Jax
     {
-        public static void Init()
+        public Jax()
         {
             MenuConfig.Attach();
             SpellConfig.Load();

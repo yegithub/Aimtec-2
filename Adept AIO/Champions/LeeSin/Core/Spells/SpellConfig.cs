@@ -18,8 +18,7 @@
 
         public bool IsQ2() => !IsFirst(this.Q) && this.Q.Ready;
 
-        public bool IsFirst(Spell spell) =>
-            Global.Player.SpellBook.GetSpell(spell.Slot).SpellData.Name.ToLower().Contains("one");
+        public bool IsFirst(Spell spell) => Global.Player.SpellBook.GetSpell(spell.Slot).SpellData.Name.ToLower().Contains("one");
 
         public bool HasQ2(Obj_AI_Base target) => target.HasBuff("BlindMonkSonicWave");
 

@@ -1,6 +1,5 @@
 ﻿namespace Adept_AIO.Champions.Vayne.OrbwalkingEvents
 {
-    using System;
     using System.Linq;
     using System.Threading;
     using Aimtec;
@@ -20,9 +19,7 @@
                 return;
             }
 
-            SpellManager.CastQ(args.Target as Obj_AI_Base,
-                MenuConfig.Combo["Mode1"].Value,
-                MenuConfig.Combo["ToE"].Enabled);
+            SpellManager.CastQ(args.Target as Obj_AI_Base, MenuConfig.Combo["Mode1"].Value, MenuConfig.Combo["ToE"].Enabled);
         }
 
         public static void OnUpdate()
@@ -35,16 +32,14 @@
 
             if (MenuConfig.Combo["Flash"].Enabled && SpellManager.E.Ready && SummonerSpells.IsValid(SummonerSpells.Flash))
             {
-               
                 var allyT = GameObjects.AllyTurrets.FirstOrDefault(x => x.Distance(target) <= 700);
                 if (allyT != null)
                 {
-                   
                     var pos = target.ServerPosition + (target.ServerPosition - allyT.ServerPosition).Normalized() * 200;
                     if (pos.Distance(Global.Player) <= 425)
                     {
                         SpellManager.E.CastOnUnit(target);
-                        DelayAction.Queue(100, ()=> SummonerSpells.Flash.Cast(pos), new CancellationToken(false));
+                        DelayAction.Queue(100, () => SummonerSpells.Flash.Cast(pos), new CancellationToken(false));
                     }
                 }
             }
@@ -54,9 +49,7 @@
                 SpellManager.CastQ(target, MenuConfig.Combo["Mode1"].Value, MenuConfig.Combo["ToE"].Enabled);
             }
 
-            else if (SpellManager.E.Ready &&
-                     MenuConfig.Combo["E"].Enabled &&
-                     MenuConfig.Combo[target.ChampionName].Enabled)
+            else if (SpellManager.E.Ready && MenuConfig.Combo["E"].Enabled && MenuConfig.Combo[target.ChampionName].Enabled)
             {
                 SpellManager.CastE(target);
             }
@@ -68,8 +61,7 @@
                     return;
                 }
 
-                if (Global.Player.CountEnemyHeroesInRange(1500) >= MenuConfig.Combo["Count"].Value &&
-                    target.HealthPercent() >= 25)
+                if (Global.Player.CountEnemyHeroesInRange(1500) >= MenuConfig.Combo["Count"].Value && target.HealthPercent() >= 25)
                 {
                     SpellManager.R.Cast();
                 }

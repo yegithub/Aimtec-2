@@ -32,8 +32,7 @@
 
             if (_spellConfig.E.Ready)
             {
-                dmg += Global.Player.GetSpellDamage(target, SpellSlot.E) +
-                       Global.Player.GetSpellDamage(target, SpellSlot.E, DamageStage.Buff);
+                dmg += Global.Player.GetSpellDamage(target, SpellSlot.E) + Global.Player.GetSpellDamage(target, SpellSlot.E, DamageStage.Buff);
             }
 
             if (_spellConfig.R.Ready)

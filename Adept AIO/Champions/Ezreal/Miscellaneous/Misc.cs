@@ -27,8 +27,7 @@
                 Global.Player.ManaPercent() >= MenuConfig.Miscellaneous["Stack"].Value &&
                 TargetState.HasTear())
             {
-                var objects =
-                    GameObjects.Enemy.FirstOrDefault(x => x.IsValidTarget(SpellConfig.Q.Range) && x.MaxHealth >= 10);
+                var objects = GameObjects.Enemy.FirstOrDefault(x => x.IsValidTarget(SpellConfig.Q.Range) && x.MaxHealth >= 10);
 
                 if (MenuConfig.Miscellaneous["TH"].Enabled)
                 {

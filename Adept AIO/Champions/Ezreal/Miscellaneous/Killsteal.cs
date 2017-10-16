@@ -20,9 +20,7 @@
                 return;
             }
 
-            if (MenuConfig.Killsteal["AA"].Enabled &&
-                target.IsValidAutoRange() &&
-                target.Health < Global.Player.GetAutoAttackDamage(target))
+            if (MenuConfig.Killsteal["AA"].Enabled && target.IsValidAutoRange() && target.Health < Global.Player.GetAutoAttackDamage(target))
             {
                 Global.Orbwalker.ForceTarget(target);
             }
@@ -59,9 +57,7 @@
                      MenuConfig.Killsteal["Range"].Enabled &&
                      target.Distance(Global.Player) > Global.Player.AttackRange + 275)
             {
-                var rectangle = new Geometry.Rectangle(Global.Player.ServerPosition.To2D(),
-                    target.ServerPosition.To2D(),
-                    SpellConfig.R.Width);
+                var rectangle = new Geometry.Rectangle(Global.Player.ServerPosition.To2D(), target.ServerPosition.To2D(), SpellConfig.R.Width);
                 if (GameObjects.EnemyHeroes.Count(x => rectangle.IsInside(x.ServerPosition.To2D())) >= 2 &&
                     target.Health > Global.Player.GetSpellDamage(target, SpellSlot.R, DamageStage.AreaOfEffect))
                 {

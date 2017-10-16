@@ -15,8 +15,7 @@
         {
             if (SpellConfig.E.Ready)
             {
-                if (((Obj_AI_Base) target).HealthPercent() <= Global.Player.HealthPercent() ||
-                    Dmg.Damage((Obj_AI_Base) target) * 2 > target.Health)
+                if (((Obj_AI_Base) target).HealthPercent() <= Global.Player.HealthPercent() || Dmg.Damage((Obj_AI_Base) target) * 2 > target.Health)
                 {
                     preAttackEventArgs.Cancel = true;
                     SpellConfig.E.CastOnUnit(target);
@@ -58,10 +57,7 @@
 
                 var longRangeTarget = Global.TargetSelector.GetTarget(SpellConfig.Q.Range * 3);
 
-                if (longRangeTarget == null ||
-                    longRangeTarget.IsUnderEnemyTurret() &&
-                    MenuConfig.Combo["Turret"].Enabled &&
-                    longRangeTarget.Health > Dmg.Damage(longRangeTarget))
+                if (longRangeTarget == null || longRangeTarget.IsUnderEnemyTurret() && MenuConfig.Combo["Turret"].Enabled && longRangeTarget.Health > Dmg.Damage(longRangeTarget))
                 {
                     return;
                 }
@@ -73,9 +69,7 @@
                     OrderBy(x => x.Distance(longRangeTarget)).
                     FirstOrDefault();
 
-                if (minion == null ||
-                    MenuConfig.Combo["Mode"].Value == 0 &&
-                    minion.Distance(Game.CursorPos) > MenuConfig.Combo["Range"].Value)
+                if (minion == null || MenuConfig.Combo["Mode"].Value == 0 && minion.Distance(Game.CursorPos) > MenuConfig.Combo["Range"].Value)
                 {
                     return;
                 }
@@ -86,9 +80,7 @@
                 }
                 else if (SpellConfig.R.Ready &&
                          minion.Health > Global.Player.GetSpellDamage(minion, SpellSlot.Q) &&
-                         minion.Health <
-                         Global.Player.GetSpellDamage(minion, SpellSlot.R) +
-                         Global.Player.GetSpellDamage(minion, SpellSlot.Q) &&
+                         minion.Health < Global.Player.GetSpellDamage(minion, SpellSlot.R) + Global.Player.GetSpellDamage(minion, SpellSlot.Q) &&
                          (killable?.Health < Dmg.Damage(killable) || killable.HealthPercent() <= 40))
                 {
                     SpellConfig.R.Cast(minion);
@@ -102,10 +94,7 @@
             }
 
 
-            if (MenuConfig.Combo["Killable"].Enabled &&
-                target.Distance(Global.Player) < SpellConfig.Q.Range &&
-                target.Health < Dmg.Damage(target) &&
-                SpellConfig.Q.Ready)
+            if (MenuConfig.Combo["Killable"].Enabled && target.Distance(Global.Player) < SpellConfig.Q.Range && target.Health < Dmg.Damage(target) && SpellConfig.Q.Ready)
             {
                 SpellConfig.Q.CastOnUnit(target);
             }
@@ -127,8 +116,7 @@
                 }
             }
 
-            if (SpellConfig.R.Ready &&
-                (target.Health < Dmg.Damage(target) || target.HealthPercent() <= 40 || SpellConfig.RCount < 4))
+            if (SpellConfig.R.Ready && (target.Health < Dmg.Damage(target) || target.HealthPercent() <= 40 || SpellConfig.RCount < 4))
             {
                 SpellConfig.R.Cast(target);
             }

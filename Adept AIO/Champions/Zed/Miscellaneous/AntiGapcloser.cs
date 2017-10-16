@@ -31,8 +31,7 @@
 
             else if (SpellManager.R.Ready)
             {
-                var enemy = GameObjects.EnemyHeroes.OrderBy(x => x.Health).
-                    FirstOrDefault(x => x.IsValidTarget(SpellManager.R.Range));
+                var enemy = GameObjects.EnemyHeroes.OrderBy(x => x.Health).FirstOrDefault(x => x.IsValidTarget(SpellManager.R.Range));
                 if (enemy == null)
                 {
                     return;

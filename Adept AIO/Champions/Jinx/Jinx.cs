@@ -9,7 +9,7 @@
 
     class Jinx
     {
-        public void Init()
+        public Jinx()
         {
             var spellConfig = new SpellConfig();
             spellConfig.Load();

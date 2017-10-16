@@ -16,8 +16,7 @@
                 return;
             }
 
-            foreach (var target in GameObjects.EnemyHeroes.Where(x =>
-                !x.IsDead && x.IsFloatingHealthBarActive && x.IsVisible))
+            foreach (var target in GameObjects.EnemyHeroes.Where(x => !x.IsDead && x.IsFloatingHealthBarActive && x.IsVisible))
             {
                 var damage = Dmg.Damage(target);
 
@@ -35,26 +34,17 @@
 
             if (MenuConfig.Drawings["Q"].Enabled)
             {
-                Render.Circle(Global.Player.Position,
-                    SpellConfig.Q.Range,
-                    (uint) MenuConfig.Drawings["Segments"].Value,
-                    Color.Yellow);
+                Render.Circle(Global.Player.Position, SpellConfig.Q.Range, (uint) MenuConfig.Drawings["Segments"].Value, Color.Yellow);
             }
 
             if (MenuConfig.Drawings["R"].Enabled)
             {
-                Render.Circle(Global.Player.Position,
-                    SpellConfig.R.Range,
-                    (uint) MenuConfig.Drawings["Segments"].Value,
-                    Color.Red);
+                Render.Circle(Global.Player.Position, SpellConfig.R.Range, (uint) MenuConfig.Drawings["Segments"].Value, Color.Red);
             }
 
             if (AzirHelper.InsecMode.Active)
             {
-                Render.Circle(Global.Player.ServerPosition,
-                    Insec.InsecRange(),
-                    (uint) MenuConfig.Drawings["Segments"].Value,
-                    Color.LightGray);
+                Render.Circle(Global.Player.ServerPosition, Insec.InsecRange(), (uint) MenuConfig.Drawings["Segments"].Value, Color.LightGray);
             }
 
             if (AzirHelper.Rect != null)
@@ -69,10 +59,7 @@
 
             foreach (var soldier in SoldierManager.Soldiers)
             {
-                Render.Circle(soldier.ServerPosition,
-                    325,
-                    (uint) MenuConfig.Drawings["Segments"].Value,
-                    Color.SlateBlue);
+                Render.Circle(soldier.ServerPosition, 325, (uint) MenuConfig.Drawings["Segments"].Value, Color.SlateBlue);
             }
         }
     }

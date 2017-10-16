@@ -21,7 +21,8 @@
                 {
                     Global.Orbwalker.AttackingEnabled = true;
                     Global.Orbwalker.ResetAutoAttackTimer();
-                }, new CancellationToken(false));
+                },
+                new CancellationToken(false));
         }
 
         private static float GetDelay() => (Extensions.CurrentQCount == 1 ? 420 : 340) - 3.333f * Global.Player.Level;

@@ -10,7 +10,7 @@
 
     class Zed
     {
-        public static void Init()
+        public Zed()
         {
             MenuConfig.Attach();
             SpellManager.Load();

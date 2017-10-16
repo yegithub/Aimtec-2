@@ -121,9 +121,7 @@
 
                     if (minion)
                     {
-                        if (GameObjects.EnemyMinions.Count(x =>
-                                x.IsValidTarget(E.Range, false, false, shadow.ServerPosition)) >=
-                            minHit)
+                        if (GameObjects.EnemyMinions.Count(x => x.IsValidTarget(E.Range, false, false, shadow.ServerPosition)) >= minHit)
                         {
                             E.Cast(target);
                         }

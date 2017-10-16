@@ -8,7 +8,7 @@
 
     class Rengar
     {
-        public static void Init()
+        public Rengar()
         {
             MenuConfig.Attach();
             SpellConfig.Load();

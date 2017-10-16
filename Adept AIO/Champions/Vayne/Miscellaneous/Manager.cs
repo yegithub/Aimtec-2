@@ -35,8 +35,7 @@
             switch (Global.Orbwalker.Mode)
             {
                 case OrbwalkingMode.Combo when MenuConfig.Combo["W"].Enabled:
-                    var target =
-                        GameObjects.EnemyHeroes.FirstOrDefault(x => x.GetBuffCount("vaynesilvereddebuff") == 2);
+                    var target = GameObjects.EnemyHeroes.FirstOrDefault(x => x.GetBuffCount("vaynesilvereddebuff") == 2);
                     if (target != null && target.IsValidAutoRange())
                     {
                         args.Target = target;

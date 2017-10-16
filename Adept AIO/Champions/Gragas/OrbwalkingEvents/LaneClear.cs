@@ -15,12 +15,9 @@
                 return;
             }
 
-            if (SpellManager.Q.Ready &&
-                MenuConfig.Lane["Q"].Enabled &&
-                Global.Player.ManaPercent() > MenuConfig.Lane["QMana"].Value)
+            if (SpellManager.Q.Ready && MenuConfig.Lane["Q"].Enabled && Global.Player.ManaPercent() > MenuConfig.Lane["QMana"].Value)
             {
-                if (GameObjects.Minions.Count(x => x.Distance(minion) <= SpellManager.QRadius) >=
-                    MenuConfig.Lane["Q"].Value)
+                if (GameObjects.Minions.Count(x => x.Distance(minion) <= SpellManager.QRadius) >= MenuConfig.Lane["Q"].Value)
                 {
                     SpellManager.CastQ(minion);
                 }
@@ -36,8 +33,7 @@
 
             if (SpellManager.E.Ready && MenuConfig.Combo["E"].Enabled)
             {
-                if (GameObjects.Minions.Count(x => x.Distance(Global.Player) <= SpellManager.EHitboxRadius) >=
-                    MenuConfig.Lane["E"].Value)
+                if (GameObjects.Minions.Count(x => x.Distance(Global.Player) <= SpellManager.EHitboxRadius) >= MenuConfig.Lane["E"].Value)
                 {
                     SpellManager.CastE(minion);
                 }

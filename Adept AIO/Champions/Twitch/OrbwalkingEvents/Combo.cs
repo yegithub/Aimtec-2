@@ -20,9 +20,7 @@
                 SpellManager.Q.Cast();
             }
 
-            if (SpellManager.W.Ready &&
-                MenuConfig.Combo["W"].Enabled &&
-                !(MenuConfig.Combo["W2"].Enabled && SpellManager.HasUltBuff()))
+            if (SpellManager.W.Ready && MenuConfig.Combo["W"].Enabled && !(MenuConfig.Combo["W2"].Enabled && SpellManager.HasUltBuff()))
             {
                 SpellManager.W.Cast(target);
             }

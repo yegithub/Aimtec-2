@@ -15,8 +15,7 @@
                 return;
             }
 
-            foreach (var target in GameObjects.EnemyHeroes.Where(x =>
-                !x.IsDead && x.IsFloatingHealthBarActive && x.IsVisible))
+            foreach (var target in GameObjects.EnemyHeroes.Where(x => !x.IsDead && x.IsFloatingHealthBarActive && x.IsVisible))
             {
                 var damage = Dmg.Damage(target);
 
@@ -32,9 +31,7 @@
                 return;
             }
 
-            if (MenuConfig.Drawings["E"].Enabled &&
-                SpellConfig.E.LastCastAttemptT > 0 &&
-                Game.TickCount - SpellConfig.E.LastCastAttemptT < 2000)
+            if (MenuConfig.Drawings["E"].Enabled && SpellConfig.E.LastCastAttemptT > 0 && Game.TickCount - SpellConfig.E.LastCastAttemptT < 2000)
             {
                 Render.WorldToScreen(Global.Player.Position, out var screen);
                 Render.Text("Time Until Q: " + (Game.TickCount - SpellConfig.E.LastCastAttemptT) + " / 2000",
@@ -45,10 +42,7 @@
 
             if (MenuConfig.Drawings["Q"].Enabled && SpellConfig.Q.Ready)
             {
-                Render.Circle(Global.Player.Position,
-                    SpellConfig.Q.Range,
-                    (uint) MenuConfig.Drawings["Segments"].Value,
-                    Color.Cyan);
+                Render.Circle(Global.Player.Position, SpellConfig.Q.Range, (uint) MenuConfig.Drawings["Segments"].Value, Color.Cyan);
             }
         }
     }

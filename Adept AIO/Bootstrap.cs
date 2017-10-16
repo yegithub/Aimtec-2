@@ -72,49 +72,46 @@
                     new Lucian();
                     break;
                 case "Gragas":
-                    Gragas.Init();
+                    new Gragas();
                     break;
                 case "Ezreal":
-                    Ezreal.Init();
+                    new Ezreal();
                     break;
                 case "Azir":
-                    Azir.Init();
+                    new Azir();
                     break;
                 case "Irelia":
-                    Irelia.Init();
+                    new Irelia();
                     break;
                 case "Jax":
-                    Jax.Init();
+                    new Jax();
                     break;
                 case "Jinx":
-                    var jinx = new Jinx();
-                    jinx.Init();
+                    new Jinx();
                     break;
                 case "Kayn":
-                    Kayn.Init();
+                    new Kayn();
                     break;
                 case "LeeSin":
-                    var lee = new LeeSin();
-                    lee.Init();
+                    new LeeSin();
                     break;
                 case "Rengar":
-                    Rengar.Init();
+                    new Rengar();
                     break;
                 case "Riven":
-                    Riven.Init();
+                    new Riven();
                     break;
                 case "Tristana":
-                    var tristana = new Tristana();
-                    tristana.Init();
+                    new Tristana();
                     break;
                 case "Yasuo":
-                    Yasuo.Init();
+                    new Yasuo();
                     break;
                 case "Zed":
-                    Zed.Init();
+                    new Zed();
                     break;
                 case "Vayne":
-                    Vayne.Init();
+                    new Vayne();
                     break;
             }
         }

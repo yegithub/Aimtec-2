@@ -20,8 +20,7 @@
 
             if (SoldierManager.Soldiers != null && SoldierManager.Soldiers.Any())
             {
-                dmg += (SoldierManager.Soldiers.Count + Global.Player.GetSpell(SpellSlot.W).Ammo) *
-                       Global.Player.GetSpellDamage(target, SpellSlot.W);
+                dmg += (SoldierManager.Soldiers.Count + Global.Player.GetSpell(SpellSlot.W).Ammo) * Global.Player.GetSpellDamage(target, SpellSlot.W);
             }
 
             if (SpellConfig.E.Ready)

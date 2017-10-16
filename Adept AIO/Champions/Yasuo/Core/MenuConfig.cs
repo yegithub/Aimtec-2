@@ -21,10 +21,7 @@
             mainMenu.Attach();
 
             Extension.FleeMode = new OrbwalkerMode("Flee", KeyCode.A, null, Flee.OnKeyPressed);
-            Extension.BeybladeMode = new OrbwalkerMode("Keyblade",
-                KeyCode.T,
-                () => Global.TargetSelector.GetSelectedTarget(),
-                Beyblade.OnKeyPressed);
+            Extension.BeybladeMode = new OrbwalkerMode("Keyblade", KeyCode.T, () => Global.TargetSelector.GetSelectedTarget(), Beyblade.OnKeyPressed);
 
             Extension.BeybladeMode.ModeBehaviour.Invoke();
             Extension.BeybladeMode.GetTargetImplementation.Invoke();
@@ -64,20 +61,9 @@
                 new MenuList("Mode", "E Mode: ", new[] {"Disabled", "Lasthit", "Fast Clear"}, 1)
             };
 
-            JungleClear = new Menu("JungleClear", "JungleClear")
-            {
-                new MenuBool("Q3", "Allow Q3 Usage"),
-                new MenuBool("Q", "Allow Q1 Usage"),
-                new MenuBool("E", "Allow E  Usage")
-            };
+            JungleClear = new Menu("JungleClear", "JungleClear") {new MenuBool("Q3", "Allow Q3 Usage"), new MenuBool("Q", "Allow Q1 Usage"), new MenuBool("E", "Allow E  Usage")};
 
-            Killsteal = new Menu("Killsteal", "Killsteal")
-            {
-                new MenuBool("Ignite", "Ignite"),
-                new MenuBool("Q", "Use Q"),
-                new MenuBool("Q3", "Use Q3"),
-                new MenuBool("E", "Use E")
-            };
+            Killsteal = new Menu("Killsteal", "Killsteal") {new MenuBool("Ignite", "Ignite"), new MenuBool("Q", "Use Q"), new MenuBool("Q3", "Use Q3"), new MenuBool("E", "Use E")};
 
             Misc = new Menu("Misc", "Miscellaneous")
             {
@@ -99,18 +85,7 @@
 
             Gapcloser.Attach(mainMenu, "Anti Gapcloser");
 
-            foreach (var menu in new List<Menu>
-            {
-                Whitelist,
-                Combo,
-                Harass,
-                LaneClear,
-                JungleClear,
-                Killsteal,
-                Misc,
-                Drawings,
-                MenuShortcut.Credits
-            })
+            foreach (var menu in new List<Menu> {Whitelist, Combo, Harass, LaneClear, JungleClear, Killsteal, Misc, Drawings, MenuShortcut.Credits})
             {
                 mainMenu.Add(menu);
             }

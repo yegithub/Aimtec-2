@@ -46,16 +46,7 @@
                 new MenuBool("Debug", "Debug")
             };
 
-            foreach (var menu in new List<Menu>
-            {
-                Combo,
-                Harass,
-                LaneClear,
-                JungleClear,
-                Killsteal,
-                Drawings,
-                MenuShortcut.Credits
-            })
+            foreach (var menu in new List<Menu> {Combo, Harass, LaneClear, JungleClear, Killsteal, Drawings, MenuShortcut.Credits})
             {
                 mainMenu.Add(menu);
             }

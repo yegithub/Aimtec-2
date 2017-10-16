@@ -23,15 +23,12 @@
             R.SetSkillshot(0.25f, 70, 1750, false, SkillshotType.Line);
         }
 
-        public static bool HasUltBuff() =>
-            Global.Player.HasBuff("TwitchUlt") || Global.Player.HasBuff("TwitchFullAutomatic");
+        public static bool HasUltBuff() => Global.Player.HasBuff("TwitchUlt") || Global.Player.HasBuff("TwitchFullAutomatic");
 
         public static Geometry.Rectangle GetRectangle(Obj_AI_Base target)
         {
             var pred = R.GetPrediction(target).CastPosition.To2D();
-            return new Geometry.Rectangle(Global.Player.ServerPosition.To2D(),
-                Global.Player.ServerPosition.Extend(pred, R.Range).To2D(),
-                R.Width);
+            return new Geometry.Rectangle(Global.Player.ServerPosition.To2D(), Global.Player.ServerPosition.Extend(pred, R.Range).To2D(), R.Width);
         }
 
         public static void CastE(Obj_AI_Base target)

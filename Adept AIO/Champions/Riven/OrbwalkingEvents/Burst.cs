@@ -81,9 +81,7 @@
             {
                 case BurstPattern.TheShy:
 
-                    if (Extensions.AllIn &&
-                        target.Distance(Global.Player) > SpellConfig.E.Range + Global.Player.AttackRange &&
-                        SummonerSpells.IsValid(SummonerSpells.Flash))
+                    if (Extensions.AllIn && target.Distance(Global.Player) > SpellConfig.E.Range + Global.Player.AttackRange && SummonerSpells.IsValid(SummonerSpells.Flash))
                     {
                         DelayAction.Queue(Game.Ping / 2 + 50,
                             delegate
@@ -107,9 +105,7 @@
                     {
                         SpellConfig.R.Cast();
                     }
-                    else if (SpellConfig.E.Ready &&
-                             Enums.UltimateMode == UltimateMode.Second &&
-                             Game.TickCount - SpellConfig.R.LastCastAttemptT >= 1100)
+                    else if (SpellConfig.E.Ready && Enums.UltimateMode == UltimateMode.Second && Game.TickCount - SpellConfig.R.LastCastAttemptT >= 1100)
                     {
                         SpellConfig.E.Cast(target.ServerPosition);
                         SpellConfig.R2.Cast(target.ServerPosition);
@@ -138,10 +134,7 @@
         {
             switch (MenuConfig.BurstMenu["Mode"].Value)
             {
-                case 0:
-                    return Maths.Percent(target.Health, Dmg.Damage(target)) > 135
-                        ? BurstPattern.Execution
-                        : BurstPattern.TheShy;
+                case 0: return Maths.Percent(target.Health, Dmg.Damage(target)) > 135 ? BurstPattern.Execution : BurstPattern.TheShy;
                 case 1: return BurstPattern.TheShy;
                 case 2: return BurstPattern.Execution;
                 default: throw new ArgumentOutOfRangeException();

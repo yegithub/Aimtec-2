@@ -74,17 +74,7 @@
                 new MenuBool("R", "Draw R Range")
             };
 
-            foreach (var menu in new List<Menu>
-            {
-                Combo,
-                Harass,
-                Lane,
-                Jungle,
-                Killsteal,
-                Drawings,
-                Miscellaneous,
-                MenuShortcut.Credits
-            })
+            foreach (var menu in new List<Menu> {Combo, Harass, Lane, Jungle, Killsteal, Drawings, Miscellaneous, MenuShortcut.Credits})
             {
                 mainMenu.Add(menu);
             }

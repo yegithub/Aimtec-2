@@ -16,9 +16,7 @@
                 return;
             }
 
-            if (SpellManager.R.Ready &&
-                target.IsValidTarget(SpellManager.R.Range) &&
-                !(MenuConfig.Combo["Killable"].Enabled && Dmg.Damage(target) < target.Health))
+            if (SpellManager.R.Ready && target.IsValidTarget(SpellManager.R.Range) && !(MenuConfig.Combo["Killable"].Enabled && Dmg.Damage(target) < target.Health))
             {
                 if (!MenuConfig.Combo[target.ChampionName].Enabled)
                 {
@@ -28,9 +26,7 @@
                 SpellManager.CastR(target);
             }
 
-            if (SpellManager.W.Ready &&
-                MenuConfig.Combo["W"].Enabled &&
-                target.IsValidTarget(SpellManager.WCastRange + SpellManager.R.Range))
+            if (SpellManager.W.Ready && MenuConfig.Combo["W"].Enabled && target.IsValidTarget(SpellManager.WCastRange + SpellManager.R.Range))
             {
                 if (ShadowManager.CanCastW1())
                 {
