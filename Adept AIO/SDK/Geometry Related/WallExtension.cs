@@ -78,6 +78,45 @@
                     return next;
                 }
             }
+
+            // --
+
+            for (var i = 0; i < range / 2; i += 10)
+            {
+                var next = position + new Vector3(i, Global.Player.ServerPosition.Y, -i);
+                if (IsWallAt(next))
+                {
+                    return next;
+                }
+            }
+
+            for (var i = 0; i < range / 2; i += 10)
+            {
+                var next = position + new Vector3(-i, Global.Player.ServerPosition.Y, i);
+                if (IsWallAt(next))
+                {
+                    return next;
+                }
+            }
+
+            for (var i = 0; i < range; i += 10)
+            {
+                var next = position + new Vector3(i, Global.Player.ServerPosition.Y, -i);
+                if (IsWallAt(next))
+                {
+                    return next;
+                }
+            }
+
+            for (var i = 0; i < range; i += 10)
+            {
+                var next = position + new Vector3(-i, Global.Player.ServerPosition.Y, i);
+                if (IsWallAt(next))
+                {
+                    return next;
+                }
+            }
+
             return Vector3.Zero;
         }
 

@@ -1,6 +1,8 @@
 ﻿namespace Adept_AIO.Champions.Vayne.OrbwalkingEvents
 {
+    using System.Threading;
     using Aimtec.SDK.Extensions;
+    using Aimtec.SDK.Util;
     using Core;
     using SDK.Geometry_Related;
     using SDK.Unit_Extensions;
@@ -33,8 +35,8 @@
             if (pos.Distance(Global.Player) <= SummonerSpells.Flash.Range &&
                 SummonerSpells.IsValid(SummonerSpells.Flash))
             {
-                SummonerSpells.Flash.Cast(pos);
                 SpellManager.E.CastOnUnit(target);
+                DelayAction.Queue(100, () => SummonerSpells.Flash.Cast(pos), new CancellationToken(false));
             }
         }
     }

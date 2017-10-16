@@ -11,6 +11,11 @@
     {
         public static void OnKeyPressed()
         {
+            if (Extension.CurrentMode == Mode.Dashing && SpellConfig.Q.Ready)
+            {
+                SpellConfig.Q.Cast();
+            }
+
             if (!SpellConfig.E.Ready)
             {
                 return;
@@ -19,6 +24,7 @@
             var mob = GameObjects.Jungle.OrderBy(x => x.Distance(Game.CursorPos)).
                 FirstOrDefault(x =>
                     x.Distance(Global.Player) <= SpellConfig.E.Range + 200 && !x.HasBuff("YasuoDashWrapper"));
+
             if (mob != null)
             {
                 var pos = mob.ServerPosition +

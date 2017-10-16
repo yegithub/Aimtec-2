@@ -36,6 +36,7 @@
                 new MenuList("Q1", "Q Mode", new[] {"After Auto", "Engage"}, 0),
                 new MenuList("Mode1", "Q To:", new[] {"Cursor", "Side"}, 1),
                 new MenuBool("ToE", "Force Q To E Pos"),
+                new MenuBool("Flash", "Flash E To Ally Turret"),
                 new MenuBool("W", "Focus Targets With W Stacks"),
                 new MenuBool("E", "Use E"),
                 new MenuBool("R", "Use R"),

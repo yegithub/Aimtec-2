@@ -1,10 +1,15 @@
 ﻿namespace Adept_AIO.Champions.Vayne.OrbwalkingEvents
 {
+    using System;
+    using System.Linq;
+    using System.Threading;
     using Aimtec;
     using Aimtec.SDK.Extensions;
     using Aimtec.SDK.Orbwalking;
+    using Aimtec.SDK.Util;
     using Core;
     using SDK.Unit_Extensions;
+    using SDK.Usables;
 
     class Combo
     {
@@ -26,6 +31,23 @@
             if (!target.IsValidTarget())
             {
                 return;
+            }
+
+            if (MenuConfig.Combo["Flash"].Enabled && SpellManager.E.Ready && SummonerSpells.IsValid(SummonerSpells.Flash))
+            {
+               
+                var allyT = GameObjects.AllyTurrets.FirstOrDefault(x => x.Distance(target) <= 800);
+                if (allyT != null)
+                {
+                   
+                    var pos = target.ServerPosition + (target.ServerPosition - allyT.ServerPosition).Normalized() * 200;
+                    if (pos.Distance(Global.Player) <= 425)
+                    {
+                        SpellManager.E.CastOnUnit(target);
+                        DelayAction.Queue(100, ()=> SummonerSpells.Flash.Cast(pos), new CancellationToken(false));
+                        
+                    }
+                }
             }
 
             if (SpellManager.Q.Ready && MenuConfig.Combo["Q1"].Value == 1)
