@@ -45,7 +45,7 @@
             }
 
             var pred = E.GetPrediction(target).CastPosition;
-            var endPos = pred + (pred - Global.Player.ServerPosition).Normalized() * 475;
+            var endPos = pred + (pred - Global.Player.ServerPosition).Normalized() * 430; // nerfed
             return new Geometry.Rectangle(target.ServerPosition.To2D(), endPos.To2D(), target.BoundingRadius);
         }
 
