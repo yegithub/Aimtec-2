@@ -24,19 +24,6 @@
             R = new Spell(SpellSlot.R);
         }
 
-        public static void OnProcessSpellCast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
-        {
-            if (!sender.IsMe)
-            {
-                return;
-            }
-
-            if (args.SpellSlot == SpellSlot.E)
-            {
-                Maths.DisableAutoAttack(550 + Game.Ping / 2);
-            }
-        }
-
         public static Geometry.Rectangle Rect(Obj_AI_Base target)
         {
             if (!target.IsValidTarget(E.Range))

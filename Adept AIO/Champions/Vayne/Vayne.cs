@@ -18,7 +18,6 @@
             Game.OnUpdate += Manager.OnUpdate;
             Game.OnUpdate += Killsteal.OnUpdate;
 
-            Obj_AI_Base.OnProcessSpellCast += SpellManager.OnProcessSpellCast;
             Obj_AI_Base.OnProcessSpellCast += LaneClear.OnProcessSpellCast;
             Gapcloser.OnGapcloser += AntiGapcloser.OnGapcloser;
             Global.Orbwalker.PostAttack += Manager.PostAttack;
