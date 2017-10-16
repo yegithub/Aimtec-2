@@ -72,7 +72,7 @@
 
         public static void CastQ(Obj_AI_Base target, int modeIndex = 0, bool force = true)
         {
-            var wallPos = WallExtension.NearestWall(Global.Player.ServerPosition, 300);
+            var wallPos = WallExtension.NearestWall(Global.Player.ServerPosition);
             if (!wallPos.IsZero)
             {
                 DebugConsole.Write("TO WALL", ConsoleColor.Green);
@@ -83,7 +83,7 @@
 
             var pos = Vector3.Zero;
 
-            var point = WallExtension.NearestWall(target.ServerPosition, 475);
+            var point = WallExtension.NearestWall(target.ServerPosition);
 
             if (force && E.Ready && !point.IsZero && point.Distance(Global.Player) <= Q.Range)
             {

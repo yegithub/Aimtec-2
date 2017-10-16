@@ -43,7 +43,7 @@
             return false;
         }
 
-        public static Vector3 NearestWall(Obj_AI_Base target, int range = 600)
+        public static Vector3 NearestWall(Obj_AI_Base target)
         {
             for (var i = 0; i < 360; i += 20)
             {
@@ -62,7 +62,7 @@
             return Vector3.Zero;
         }
 
-        public static Vector3 NearestWall(Vector3 position, int range = 600)
+        public static Vector3 NearestWall(Vector3 position)
         {
             for (var i = 0; i < 360; i += 20)
             {
