@@ -43,6 +43,25 @@
             return false;
         }
 
+        public static Vector3 NearestWall(Obj_AI_Base target, int range = 600)
+        {
+            for (var i = 0; i < 360; i += 20)
+            {
+                var dir = target.Orientation.To2D();
+                var angleRad = Maths.DegreeToRadian(i);
+                var rot = (target.ServerPosition.To2D() + 300 * dir.Rotated((float)angleRad)).To3D();
+
+                if (!IsWallAt(rot))
+                {
+                    continue;
+                }
+
+                return rot;
+            }
+
+            return Vector3.Zero;
+        }
+
         public static Vector3 NearestWall(Vector3 position, int range = 600)
         {
             for (var i = 0; i < 360; i += 20)
