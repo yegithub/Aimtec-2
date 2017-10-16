@@ -43,7 +43,16 @@
 
         public static Vector3 NearestWall(Vector3 position, int range = 600)
         {
-            for (var i = 0; i < range / 2; i += 10)
+            for (var i = -range / 2; i < range / 2; i += 10)
+            {
+                var next = position + new Vector3(i, Global.Player.ServerPosition.Y, i);
+                if (IsWallAt(next))
+                {
+                    return next; 
+                }
+            }
+
+            for (var i = -range; i < range; i += 10)
             {
                 var next = position + new Vector3(i, Global.Player.ServerPosition.Y, i);
                 if (IsWallAt(next))
@@ -52,36 +61,9 @@
                 }
             }
 
-            for (var i = 0; i < range / 2; i += 10)
-            {
-                var next = position + new Vector3(-i, Global.Player.ServerPosition.Y, -i);
-                if (IsWallAt(next))
-                {
-                    return next;
-                }
-            }
+            // -- 
 
-            for (var i = 0; i < range; i += 10)
-            {
-                var next = position + new Vector3(i, Global.Player.ServerPosition.Y, i);
-                if (IsWallAt(next))
-                {
-                    return next;
-                }
-            }
-
-            for (var i = 0; i < range; i += 10)
-            {
-                var next = position + new Vector3(-i, Global.Player.ServerPosition.Y, -i);
-                if (IsWallAt(next))
-                {
-                    return next;
-                }
-            }
-
-            // --
-
-            for (var i = 0; i < range / 2; i += 10)
+            for (var i = -range /2; i < range / 2; i += 10)
             {
                 var next = position + new Vector3(i, Global.Player.ServerPosition.Y, -i);
                 if (IsWallAt(next))
@@ -90,7 +72,7 @@
                 }
             }
 
-            for (var i = 0; i < range / 2; i += 10)
+            for (var i = -range / 2; i < range / 2; i += 10)
             {
                 var next = position + new Vector3(-i, Global.Player.ServerPosition.Y, i);
                 if (IsWallAt(next))
@@ -99,7 +81,7 @@
                 }
             }
 
-            for (var i = 0; i < range; i += 10)
+            for (var i = -range; i < range; i += 10)
             {
                 var next = position + new Vector3(i, Global.Player.ServerPosition.Y, -i);
                 if (IsWallAt(next))
@@ -108,7 +90,7 @@
                 }
             }
 
-            for (var i = 0; i < range; i += 10)
+            for (var i = -range; i < range; i += 10)
             {
                 var next = position + new Vector3(-i, Global.Player.ServerPosition.Y, i);
                 if (IsWallAt(next))

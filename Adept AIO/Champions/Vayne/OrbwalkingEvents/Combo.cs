@@ -36,7 +36,7 @@
             if (MenuConfig.Combo["Flash"].Enabled && SpellManager.E.Ready && SummonerSpells.IsValid(SummonerSpells.Flash))
             {
                
-                var allyT = GameObjects.AllyTurrets.FirstOrDefault(x => x.Distance(target) <= 800);
+                var allyT = GameObjects.AllyTurrets.FirstOrDefault(x => x.Distance(target) <= 700);
                 if (allyT != null)
                 {
                    
@@ -45,7 +45,6 @@
                     {
                         SpellManager.E.CastOnUnit(target);
                         DelayAction.Queue(100, ()=> SummonerSpells.Flash.Cast(pos), new CancellationToken(false));
-                        
                     }
                 }
             }
