@@ -1,4 +1,4 @@
-﻿namespace Adept_AIO.Champions.Twitch.Drawings
+﻿namespace Adept_AIO.Champions.Kalista.Drawings
 {
     using System;
     using System.Drawing;
@@ -23,7 +23,7 @@
                 var damage = Dmg.EDmg(target);
 
                 Global.DamageIndicator.Unit = target;
-                Global.DamageIndicator.DrawDmg((float) damage, Color.FromArgb(153, 12, 177, 28));
+                Global.DamageIndicator.DrawDmg((float)damage, Color.FromArgb(153, 12, 177, 28));
             }
         }
 
@@ -34,28 +34,13 @@
                 return;
             }
 
-            if (MenuConfig.Drawings["Debug"].Enabled && SpellManager.HasUltBuff())
+            if (MenuConfig.Drawings["Debug"].Enabled)
             {
                 var target = Global.Orbwalker.GetOrbwalkingTarget() as Obj_AI_Base;
 
                 if (target != null && target.IsValidTarget() && target.IsHero)
                 {
-                    var col = Global.Orbwalker.IsWindingUp ? Color.LightCoral : Color.Crimson;
-                    SpellManager.GetRectangle(target)?.Draw(col);
-                    Render.Circle(target.ServerPosition, 60, 100, col);
-                }
-            }
-
-            if (Global.Player.HasBuff("TwitchHideInShadows"))
-            {
-                if (MenuConfig.Drawings["World"].Enabled)
-                {
-                    var time = Global.Player.MoveSpeed *
-                               (Math.Max(0, Global.Player.GetBuff("TwitchHideInShadows").EndTime) - Game.ClockTime);
-                    Render.Circle(Global.Player.Position,
-                        time,
-                        (uint) MenuConfig.Drawings["Segments"].Value,
-                        Color.Cyan);
+                    SpellManager.GetRectangle(target)?.Draw(Color.LightCoral);
                 }
             }
         }

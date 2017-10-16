@@ -8,6 +8,7 @@
     using Champions.Irelia;
     using Champions.Jax;
     using Champions.Jinx;
+    using Champions.Kalista;
     using Champions.Kayn;
     using Champions.LeeSin;
     using Champions.Lucian;
@@ -26,6 +27,7 @@
     {
         private static readonly string[] Valid =
         {
+            "Kalista",
             "Twitch",
             "Lucian",
             "Gragas",
@@ -60,6 +62,9 @@
 
             switch (Global.Player.ChampionName)
             {
+                case "Kalista":
+                    new Kalista();
+                    break;
                 case "Twitch":
                     new Twitch();
                     break;

@@ -107,7 +107,7 @@
                             var angleRad = Maths.DegreeToRadian(i);
                             var rot = (Global.Player.ServerPosition.To2D() + 300 * dir.Rotated((float) angleRad)).
                                 To3D();
-                            if (rot.CountEnemyHeroesInRange(400) != 0)
+                            if (rot.CountEnemyHeroesInRange(400) != 0 || rot.PointUnderEnemyTurret())
                             {
                                 continue;
                             }

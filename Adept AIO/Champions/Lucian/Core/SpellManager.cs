@@ -52,9 +52,9 @@
             else if (!Global.Player.IsDashing())
             {
                 var rect = GetQRectangle(target);
-
-                if (GameObjects.EnemyMinions.Count(x => x.IsValidTarget() && rect.IsInside(x.ServerPosition.To2D())) >=
-                    minHit)
+          
+                if (Q.GetPrediction(target).HitChance >= HitChance.High &&
+                    GameObjects.EnemyMinions.Count(x => x.IsValidTarget() && rect.IsInside(x.ServerPosition.To2D())) >= minHit)
                 {
                     Q.CastOnUnit(target);
                 }
@@ -63,16 +63,19 @@
 
         public static void CastQExtended(Obj_AI_Base target)
         {
-            var m = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsValidTarget(ExtendedRange));
+            var rect = GetQRectangle(target);
+            var m = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsValidTarget(ExtendedRange) && rect.IsInside(x.ServerPosition.To2D()));
             if (m == null)
             {
                 return;
             }
 
-            if (GetQRectangle(target).IsInside(m.ServerPosition.To2D()))
+            if (rect == null || Q.GetPrediction(target, m.ServerPosition, m.ServerPosition).HitChance != HitChance.High)
             {
-                Q.CastOnUnit(m);
+                return;
             }
+
+            Q.CastOnUnit(m);
         }
 
         public static void CastE(Obj_AI_Base target, int modeIndex = 0)
@@ -90,7 +93,7 @@
                         var dir = Global.Player.Orientation.To2D();
                         var angleRad = Maths.DegreeToRadian(i);
                         var rot = (Global.Player.ServerPosition.To2D() + 300 * dir.Rotated((float) angleRad)).To3D();
-                        if (rot.CountEnemyHeroesInRange(400) != 0)
+                        if (rot.CountEnemyHeroesInRange(400) != 0 || rot.PointUnderEnemyTurret())
                         {
                             continue;
                         }
