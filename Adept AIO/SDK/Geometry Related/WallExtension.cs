@@ -1,7 +1,9 @@
 ﻿namespace Adept_AIO.SDK.Geometry_Related
 {
+    using System;
     using Aimtec;
     using Aimtec.SDK.Extensions;
+    using Generic;
     using Unit_Extensions;
 
     class WallExtension
@@ -43,60 +45,18 @@
 
         public static Vector3 NearestWall(Vector3 position, int range = 600)
         {
-            for (var i = -range / 2; i < range / 2; i += 10)
+            for (var i = 0; i < 360; i += 20)
             {
-                var next = position + new Vector3(i, Global.Player.ServerPosition.Y, i);
-                if (IsWallAt(next))
-                {
-                    return next; 
-                }
-            }
+                var dir = Global.Player.Orientation.To2D();
+                var angleRad = Maths.DegreeToRadian(i);
+                var rot = (position.To2D() + 300 * dir.Rotated((float)angleRad)).To3D();
 
-            for (var i = -range; i < range; i += 10)
-            {
-                var next = position + new Vector3(i, Global.Player.ServerPosition.Y, i);
-                if (IsWallAt(next))
+                if (!IsWallAt(rot))
                 {
-                    return next;
+                    continue;
                 }
-            }
-
-            // -- 
-
-            for (var i = -range /2; i < range / 2; i += 10)
-            {
-                var next = position + new Vector3(i, Global.Player.ServerPosition.Y, -i);
-                if (IsWallAt(next))
-                {
-                    return next;
-                }
-            }
-
-            for (var i = -range / 2; i < range / 2; i += 10)
-            {
-                var next = position + new Vector3(-i, Global.Player.ServerPosition.Y, i);
-                if (IsWallAt(next))
-                {
-                    return next;
-                }
-            }
-
-            for (var i = -range; i < range; i += 10)
-            {
-                var next = position + new Vector3(i, Global.Player.ServerPosition.Y, -i);
-                if (IsWallAt(next))
-                {
-                    return next;
-                }
-            }
-
-            for (var i = -range; i < range; i += 10)
-            {
-                var next = position + new Vector3(-i, Global.Player.ServerPosition.Y, i);
-                if (IsWallAt(next))
-                {
-                    return next;
-                }
+              
+                return rot;
             }
 
             return Vector3.Zero;
