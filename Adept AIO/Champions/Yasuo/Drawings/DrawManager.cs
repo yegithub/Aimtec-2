@@ -56,7 +56,7 @@
             {
                 if (SpellConfig.Q.Ready)
                 {
-                    var t = GameObjects.EnemyHeroes.FirstOrDefault(x => x.IsValidTarget());
+                    var t = GameObjects.EnemyHeroes.FirstOrDefault(x => x.IsValidTarget(2000));
                     if (t != null)
                     {
                         SpellConfig.Q3Rect(t)?.Draw(Color.Crimson);

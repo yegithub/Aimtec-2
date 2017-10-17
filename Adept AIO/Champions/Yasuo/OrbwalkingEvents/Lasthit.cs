@@ -13,8 +13,7 @@
         {
             if (SpellConfig.E.Ready && MenuConfig.Misc["LasthitE"].Enabled)
             {
-                var minion = GameObjects.EnemyMinions.FirstOrDefault(x =>
-                    !x.HasBuff("YasuoDashWrapper") && x.Health <= Global.Player.GetSpellDamage(x, SpellSlot.E) && x.Distance(Global.Player) <= SpellConfig.E.Range);
+                var minion = GameObjects.EnemyMinions.FirstOrDefault(x => MinionHelper.IsDashable(x) && x.Health <= Global.Player.GetSpellDamage(x, SpellSlot.E) );
 
                 if (minion == null)
                 {

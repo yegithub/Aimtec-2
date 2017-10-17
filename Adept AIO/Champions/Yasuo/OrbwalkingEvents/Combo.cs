@@ -113,7 +113,7 @@
                     case Mode.DashingTornado:
                         if (MenuConfig.Combo["Flash"].Enabled &&
                             dashDistance < 425 &&
-                            dashDistance > 200 &&
+                            dashDistance > 250 && targetDist > 220 &&
                             (Dmg.Damage(target) * 1.25 > target.Health || target.ServerPosition.CountEnemyHeroesInRange(220) >= 2))
                         {
                             SpellConfig.Q.Cast();

@@ -558,7 +558,7 @@ namespace Adept_AIO.SDK.Unit_Extensions
                     }
 
                     return;
-                case Obj_AI_Minion minion when minion.Type != GameObjectType.BasicLevelProp && minion.IsValid:
+                case Obj_AI_Minion minion when minion.Type != GameObjectType.BasicLevelProp && minion.Name != "Shadow" && !minion.Name.ToLower().Contains("dagger") && !minion.Name.ToLower().Contains("axe") && !minion.Name.ToLower().Contains("trap"):
                     if (minion.Team != GameObjectTeam.Neutral)
                     {
                         if (minion.Name.ToLower().Contains("ward"))
@@ -665,7 +665,7 @@ namespace Adept_AIO.SDK.Unit_Extensions
                     }
 
                     return;
-                case Obj_AI_Minion minion when minion.Type != GameObjectType.BasicLevelProp && minion.IsValid:
+                case Obj_AI_Minion minion when minion.Type != GameObjectType.BasicLevelProp && minion.Name != "Shadow" && !minion.Name.ToLower().Contains("dagger") && !minion.Name.ToLower().Contains("axe") && !minion.Name.ToLower().Contains("trap"):
                     if (minion.Team != GameObjectTeam.Neutral)
                     {
                         if (minion.Name.Contains("ward"))
