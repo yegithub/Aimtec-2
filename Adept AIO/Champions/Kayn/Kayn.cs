@@ -4,11 +4,12 @@
     using Core;
     using Drawings;
     using Miscellaneous;
+    using SDK.Generic;
     using SDK.Unit_Extensions;
 
     class Kayn
     {
-        public static void Init()
+        public Kayn()
         {
             MenuConfig.Attach();
             SpellConfig.Load();
