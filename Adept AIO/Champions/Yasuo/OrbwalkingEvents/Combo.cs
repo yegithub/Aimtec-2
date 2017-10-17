@@ -41,7 +41,7 @@
             }
 
             var minion = MinionHelper.GetDashableMinion(target);
-            if (minion != null && target.Distance(Global.Player) > Global.Player.AttackRange + 90)
+            if (minion != null && target.Distance(Global.Player) > Global.Player.AttackRange)
             {
                 if (MenuConfig.Combo["Turret"].Enabled && minion.ServerPosition.PointUnderEnemyTurret() ||
                     MenuConfig.Combo["Dash"].Value == 0 && minion.Distance(Game.CursorPos) > MenuConfig.Combo["Range"].Value)
@@ -106,7 +106,7 @@
                         SpellConfig.E.CastOnUnit(m2);
                     }
                 }
-                else if (minion != null && targetDist > Global.Player.AttackRange + 80)
+                else if (minion != null && targetDist > Global.Player.AttackRange)
                 {
                     if (MenuConfig.Combo["Turret"].Enabled && minion.ServerPosition.PointUnderEnemyTurret() ||
                         MenuConfig.Combo["Dash"].Value == 0 && minion.Distance(Game.CursorPos) > MenuConfig.Combo["Range"].Value)
