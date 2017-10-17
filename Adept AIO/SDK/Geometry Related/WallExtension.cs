@@ -9,7 +9,7 @@
     {
         public static Vector3 EndPoint = Vector3.Zero;
 
-        private static bool IsWallAt(Vector3 pos) => NavMesh.WorldToCell(pos).Flags.HasFlag(NavCellFlags.Wall) || NavMesh.WorldToCell(pos).Flags.HasFlag(NavCellFlags.Building);
+        public static bool IsWallAt(Vector3 pos) => NavMesh.WorldToCell(pos).Flags.HasFlag(NavCellFlags.Wall) || NavMesh.WorldToCell(pos).Flags.HasFlag(NavCellFlags.Building);
 
         public static Vector3 GeneratePoint(Vector3 start, Vector3 end)
         {

@@ -38,7 +38,7 @@
 
         public static Geometry.Rectangle Rect(Vector3 target)
         {
-            var endPos = target + (target - Global.Player.ServerPosition).Normalized() * 475;
+            var endPos = Global.Player.ServerPosition + (Global.Player.ServerPosition - target).Normalized() * 475;
             return new Geometry.Rectangle(target.To2D(), endPos.To2D(), 65);
         }
 
