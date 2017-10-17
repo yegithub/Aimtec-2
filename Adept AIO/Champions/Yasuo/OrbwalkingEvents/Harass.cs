@@ -29,16 +29,14 @@
                 var distance = target.Distance(Global.Player);
                 var minion = MinionHelper.GetDashableMinion(target);
 
-                if (!target.HasBuff("YasuoDashWrapper") && target.IsValidTarget(SpellConfig.E.Range))
+                if (MinionHelper.IsDashable(target))
                 {
                     SpellConfig.E.CastOnUnit(target);
                 }
-                else if (distance > SpellConfig.E.Range)
+
+                if (minion != null)
                 {
-                    if (minion != null || distance < Global.Player.AttackRange)
-                    {
-                        SpellConfig.E.CastOnUnit(minion);
-                    }
+                    SpellConfig.E.CastOnUnit(minion);
                 }
             }
         }
