@@ -66,13 +66,13 @@
                         if (t.Health <= _turret.GetAutoAttackDamage(t) * 2 + Global.Player.GetAutoAttackDamage(t) && t.Health - _turret.GetAutoAttackDamage(t) * 2 > 0)
                         {
                             DebugConsole.Write("[TURRET FARM] Just prevented auto.", ConsoleColor.Yellow);
-                            args.Cancel = true;
+                            args.Target = null;
                         }
 
                         if (t.Health <= _turret.GetAutoAttackDamage(t) + Global.Player.GetAutoAttackDamage(t) && t.Health - _turret.GetAutoAttackDamage(t) > 0)
                         {
                             DebugConsole.Write("[TURRET FARM] Just prevented auto.", ConsoleColor.Yellow);
-                            args.Cancel = true;
+                            args.Target = null;
                         }
                     }
                 }
