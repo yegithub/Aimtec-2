@@ -76,9 +76,9 @@
                            x.IsValidTarget() &&
                            x.MaxHealth > 20 &&
                            x.Distance(Global.Player) <= SpellConfig.E.Range &&
-                           DashDistance(x, target) > Global.Player.Distance(target)).
-                OrderBy(x => x.Distance(target)).
-                LastOrDefault();
+                           DashDistance(x, target) < Global.Player.Distance(target)).
+                OrderByDescending(x => x.Distance(target)).
+                FirstOrDefault();
         }
 
         public static Obj_AI_Minion GetDashableMinion()

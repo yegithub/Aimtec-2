@@ -1,5 +1,6 @@
 ﻿namespace Adept_AIO.Champions.Yasuo.Core
 {
+    using System;
     using Aimtec;
     using Aimtec.SDK.Extensions;
     using Aimtec.SDK.Prediction.Skillshots;
@@ -65,9 +66,10 @@
             if (closestToPlayer != null && MinionHelper.IsDashable(closestToPlayer) && closestToPlayer.Distance(Global.Player) <= rangeGapclose)
             {
                 Global.Orbwalker.Move(positionBehindMinion);
-
-                if (closestToPlayer.Distance(Global.Player) <= 65)
+                Console.WriteLine("Walk");
+                if (closestToPlayer.Distance(Global.Player) <= 90)
                 {
+                    Console.WriteLine("Found");
                     E.CastOnUnit(closestToPlayer);
                 }
             }
