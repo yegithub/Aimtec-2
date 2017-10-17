@@ -33,7 +33,7 @@
 
         public static void OnUpdate()
         {
-            var target = GameObjects.EnemyHeroes.FirstOrDefault(x => x.IsValidTarget(SpellManager.ExtendedRange));
+            var target = Global.TargetSelector.GetTarget(SpellManager.ExtendedRange);
             if (target != null)
             {
                 if (SpellManager.E.Ready && MenuConfig.Harass["E2"].Value == 1)

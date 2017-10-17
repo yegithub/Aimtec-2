@@ -2,6 +2,7 @@
 
 namespace Adept_AIO.SDK.Unit_Extensions
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text.RegularExpressions;
@@ -541,90 +542,85 @@ namespace Adept_AIO.SDK.Unit_Extensions
                 AttackableUnitsList.Add(attackableUnit);
             }
 
-            var hero = sender as Obj_AI_Hero;
-            if (hero != null)
+            switch (sender)
             {
-                HeroesList.Add(hero);
-                if (hero.IsEnemy)
-                {
-                    EnemyHeroesList.Add(hero);
-                    EnemyList.Add(hero);
-                }
-                else
-                {
-                    AllyHeroesList.Add(hero);
-                    AllyList.Add(hero);
-                }
-
-                return;
-            }
-
-            var minion = sender as Obj_AI_Minion;
-            if (minion != null && minion.Type != GameObjectType.BasicLevelProp && minion.IsValid)
-            {
-                if (minion.Team != GameObjectTeam.Neutral)
-                {
-                    if (minion.Name.ToLower().Contains("ward"))
+                case Obj_AI_Hero hero:
+                    HeroesList.Add(hero);
+                    if (hero.IsEnemy)
                     {
-                        WardsList.Add(minion);
-                        if (minion.IsEnemy)
-                        {
-                            EnemyWardsList.Add(minion);
-                        }
-                        else
-                        {
-                            AllyWardsList.Add(minion);
-                        }
+                        EnemyHeroesList.Add(hero);
+                        EnemyList.Add(hero);
                     }
                     else
                     {
-                        MinionsList.Add(minion);
-                        if (minion.IsEnemy)
+                        AllyHeroesList.Add(hero);
+                        AllyList.Add(hero);
+                    }
+
+                    return;
+                case Obj_AI_Minion minion when minion.Type != GameObjectType.BasicLevelProp && minion.IsValid:
+                    if (minion.Team != GameObjectTeam.Neutral)
+                    {
+                        if (minion.Name.ToLower().Contains("ward"))
                         {
-                            EnemyMinionsList.Add(minion);
-                            EnemyList.Add(minion);
+                            WardsList.Add(minion);
+                            if (minion.IsEnemy)
+                            {
+                                EnemyWardsList.Add(minion);
+                            }
+                            else
+                            {
+                                AllyWardsList.Add(minion);
+                            }
                         }
                         else
                         {
-                            AllyMinionsList.Add(minion);
-                            AllyList.Add(minion);
+                            MinionsList.Add(minion);
+                            if (minion.IsEnemy)
+                            {
+                                EnemyMinionsList.Add(minion);
+                                EnemyList.Add(minion);
+                            }
+                            else
+                            {
+                                AllyMinionsList.Add(minion);
+                                AllyList.Add(minion);
+                            }
                         }
                     }
-                }
-                else if (minion.Name != "WardCorpse" && minion.Name != "Barrel")
-                {
-                    JungleList.Add(minion);
-                    switch (minion.GetJungleType())
+                    else if (minion.Name != "WardCorpse" && minion.Name != "Barrel")
                     {
-                        case JungleType.Small:
-                            JungleSmallList.Add(minion);
-                            break;
-                        case JungleType.Large:
-                            JungleLargeList.Add(minion);
-                            break;
-                        case JungleType.Legendary:
-                            JungleLegendaryList.Add(minion);
-                            break;
+                        JungleList.Add(minion);
+                        switch (minion.GetJungleType())
+                        {
+                            case JungleType.Small:
+                                JungleSmallList.Add(minion);
+                                break;
+                            case JungleType.Large:
+                                JungleLargeList.Add(minion);
+                                break;
+                            case JungleType.Legendary:
+                                JungleLegendaryList.Add(minion);
+                                break;
+                            case JungleType.Unknown: break;
+                            default: throw new ArgumentOutOfRangeException();
+                        }
                     }
-                }
 
-                return;
-            }
-
-            var turret = sender as Obj_AI_Turret;
-            if (turret != null)
-            {
-                TurretsList.Add(turret);
-                if (turret.IsEnemy)
-                {
-                    EnemyTurretsList.Add(turret);
-                    EnemyList.Add(turret);
-                }
-                else
-                {
-                    AllyTurretsList.Add(turret);
-                    AllyList.Add(turret);
-                }
+                    return;
+                case Obj_AI_Turret turret:
+                    TurretsList.Add(turret);
+                    if (turret.IsEnemy)
+                    {
+                        EnemyTurretsList.Add(turret);
+                        EnemyList.Add(turret);
+                    }
+                    else
+                    {
+                        AllyTurretsList.Add(turret);
+                        AllyList.Add(turret);
+                    }
+                    break;
             }
         }
 
@@ -650,86 +646,84 @@ namespace Adept_AIO.SDK.Unit_Extensions
                 }
             }
 
-            var hero = sender as Obj_AI_Hero;
-            if (hero != null)
+            switch (sender)
             {
-                foreach (var heroObject in HeroesList.Where(h => h.Compare(hero)).ToList())
-                {
-                    HeroesList.Remove(heroObject);
-                    if (hero.IsEnemy)
+                case Obj_AI_Hero hero:
+                    foreach (var heroObject in HeroesList.Where(h => h.Compare(hero)).ToList())
                     {
-                        EnemyHeroesList.Remove(heroObject);
-                        EnemyList.Remove(heroObject);
+                        HeroesList.Remove(heroObject);
+                        if (hero.IsEnemy)
+                        {
+                            EnemyHeroesList.Remove(heroObject);
+                            EnemyList.Remove(heroObject);
+                        }
+                        else
+                        {
+                            AllyHeroesList.Remove(heroObject);
+                            AllyList.Remove(heroObject);
+                        }
+                    }
+
+                    return;
+                case Obj_AI_Minion minion when minion.Type != GameObjectType.BasicLevelProp && minion.IsValid:
+                    if (minion.Team != GameObjectTeam.Neutral)
+                    {
+                        if (minion.Name.Contains("ward"))
+                        {
+                            foreach (var wardObject in WardsList.Where(w => w.Compare(minion)).ToList())
+                            {
+                                WardsList.Remove(wardObject);
+                                if (minion.IsEnemy)
+                                {
+                                    EnemyWardsList.Remove(wardObject);
+                                }
+                                else
+                                {
+                                    AllyWardsList.Remove(wardObject);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            foreach (var minionObject in MinionsList.Where(m => m.Compare(minion)).ToList())
+                            {
+                                MinionsList.Remove(minionObject);
+                                if (minion.IsEnemy)
+                                {
+                                    EnemyMinionsList.Remove(minionObject);
+                                    EnemyList.Remove(minionObject);
+                                }
+                                else
+                                {
+                                    AllyMinionsList.Remove(minionObject);
+                                    AllyList.Remove(minionObject);
+                                }
+                            }
+                        }
                     }
                     else
                     {
-                        AllyHeroesList.Remove(heroObject);
-                        AllyList.Remove(heroObject);
-                    }
-                }
-
-                return;
-            }
-
-            var minion = sender as Obj_AI_Minion;
-            if (minion != null && minion.Type != GameObjectType.BasicLevelProp && minion.IsValid)
-            {
-                if (minion.Team != GameObjectTeam.Neutral)
-                {
-                    if (minion.Name.Contains("ward"))
-                    {
-                        foreach (var wardObject in WardsList.Where(w => w.Compare(minion)).ToList())
+                        foreach (var jungleObject in JungleList.Where(j => j.Compare(minion)).ToList())
                         {
-                            WardsList.Remove(wardObject);
-                            if (minion.IsEnemy)
+                            JungleList.Remove(jungleObject);
+                            switch (jungleObject.GetJungleType())
                             {
-                                EnemyWardsList.Remove(wardObject);
-                            }
-                            else
-                            {
-                                AllyWardsList.Remove(wardObject);
+                                case JungleType.Small:
+                                    JungleSmallList.Remove(jungleObject);
+                                    break;
+                                case JungleType.Large:
+                                    JungleLargeList.Remove(jungleObject);
+                                    break;
+                                case JungleType.Legendary:
+                                    JungleLegendaryList.Remove(jungleObject);
+                                    break;
+                                case JungleType.Unknown: break;
+                                default: throw new ArgumentOutOfRangeException();
                             }
                         }
                     }
-                    else
-                    {
-                        foreach (var minionObject in MinionsList.Where(m => m.Compare(minion)).ToList())
-                        {
-                            MinionsList.Remove(minionObject);
-                            if (minion.IsEnemy)
-                            {
-                                EnemyMinionsList.Remove(minionObject);
-                                EnemyList.Remove(minionObject);
-                            }
-                            else
-                            {
-                                AllyMinionsList.Remove(minionObject);
-                                AllyList.Remove(minionObject);
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    foreach (var jungleObject in JungleList.Where(j => j.Compare(minion)).ToList())
-                    {
-                        JungleList.Remove(jungleObject);
-                        switch (jungleObject.GetJungleType())
-                        {
-                            case JungleType.Small:
-                                JungleSmallList.Remove(jungleObject);
-                                break;
-                            case JungleType.Large:
-                                JungleLargeList.Remove(jungleObject);
-                                break;
-                            case JungleType.Legendary:
-                                JungleLegendaryList.Remove(jungleObject);
-                                break;
-                        }
-                    }
-                }
 
-                return;
+                    return;
             }
 
             var turret = sender as Obj_AI_Turret;

@@ -29,7 +29,7 @@
 
         public static void OnUpdate()
         {
-            var target = GameObjects.EnemyHeroes.FirstOrDefault(x => x.IsValidTarget(SpellManager.ExtendedRange));
+            var target = Global.TargetSelector.GetTarget(SpellManager.ExtendedRange);
             if (target != null)
             {
                 if (Global.Player.HasBuff("LucianR") && target.IsValidAutoRange() && SpellManager.E.Ready)

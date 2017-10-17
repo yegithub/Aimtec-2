@@ -8,12 +8,13 @@
 
     class MenuConfig
     {
-        public static Menu Combo, Harass, LaneClear, JungleClear, Killsteal, Drawings;
+        public static Menu mainMenu, Combo, Harass, LaneClear, JungleClear, Killsteal, Drawings;
 
         public MenuConfig()
         {
-            var mainMenu = new Menu(string.Empty, $"Adept AIO - {Global.Player.ChampionName}", true);
+            mainMenu = new Menu(string.Empty, $"Adept AIO - {Global.Player.ChampionName}", true);
             mainMenu.Attach();
+            mainMenu.Add(new MenuBool("Stealth", "Stealth Recall"));
             Global.Orbwalker.Attach(mainMenu);
 
             Combo = new Menu("Combo", "Combo")

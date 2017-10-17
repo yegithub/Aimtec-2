@@ -9,7 +9,7 @@
     {
         public static void OnUpdate()
         {
-            var target = GameObjects.EnemyHeroes.FirstOrDefault(x => x.IsValidTarget(SpellManager.W.Range));
+            var target = Global.TargetSelector.GetTarget(SpellManager.W.Range);
             if (target == null)
             {
                 return;
