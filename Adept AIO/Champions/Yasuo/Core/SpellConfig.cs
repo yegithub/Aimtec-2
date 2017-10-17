@@ -1,7 +1,10 @@
 ﻿namespace Adept_AIO.Champions.Yasuo.Core
 {
     using Aimtec;
+    using Aimtec.SDK.Extensions;
     using Aimtec.SDK.Prediction.Skillshots;
+    using SDK.Geometry_Related;
+    using SDK.Unit_Extensions;
     using Spell = Aimtec.SDK.Spell;
 
     class SpellConfig
@@ -34,5 +37,48 @@
                 Q.Range = 520;
             }
         }
+
+        public static void CastQ(Obj_AI_Base target)
+        {
+            var rect = Q3Rect(target);
+            if (rect == null || rect.IsOutside(target.ServerPosition.To2D()))
+            {
+                return;
+            }
+
+            Q.Cast(rect.End);
+        }
+
+        public static void CastE(Obj_AI_Base target, bool gapclose = false, int rangeGapclose = 0)
+        {
+            if (!gapclose && MinionHelper.IsDashable(target))
+            {
+                E.CastOnUnit(target);
+                return;
+            }
+
+            var minion = MinionHelper.GetDashableMinion(target);
+
+            var positionBehindMinion = MinionHelper.WalkBehindMinion(target);
+            var closestToPlayer = MinionHelper.GetClosest(target);
+
+            if (closestToPlayer != null && MinionHelper.IsDashable(closestToPlayer) && closestToPlayer.Distance(Global.Player) <= rangeGapclose)
+            {
+                Global.Orbwalker.Move(positionBehindMinion);
+
+                if (closestToPlayer.Distance(Global.Player) <= 65)
+                {
+                    E.CastOnUnit(closestToPlayer);
+                }
+            }
+            else if (minion != null && MinionHelper.IsDashable(minion))
+            {
+                E.CastOnUnit(minion);
+            }
+        }
+
+        public static Geometry.Rectangle Q3Rect(Obj_AI_Base target) => new Geometry.Rectangle(Global.Player.ServerPosition.To2D(),
+            Global.Player.ServerPosition.Extend(Q.GetPrediction(target).CastPosition, Q.Range).To2D(),
+            Q.Width);
     }
 }

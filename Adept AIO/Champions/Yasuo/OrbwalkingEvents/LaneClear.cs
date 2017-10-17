@@ -87,6 +87,7 @@
             {
                 switch (Extension.CurrentMode)
                 {
+                    case Mode.Normal:
                     case Mode.Tornado:
                         var m = GameObjects.EnemyMinions.LastOrDefault(x => x.IsValidSpellTarget(SpellConfig.Q.Range));
                         if (m == null)
@@ -94,21 +95,13 @@
                             return;
                         }
 
-                        var rect = new Geometry.Rectangle(Global.Player.ServerPosition.To2D(), m.ServerPosition.To2D(), SpellConfig.Q.Width);
+                        var rect = SpellConfig.Q3Rect(m);
                         var count = GameObjects.EnemyMinions.Count(x => rect.IsInside(x.ServerPosition.To2D()));
 
                         if (MenuConfig.LaneClear["Q3"].Enabled && count >= 2)
                         {
                             SpellConfig.Q.Cast(m);
                         }
-                        break;
-                    case Mode.Normal:
-                        var nM = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsValidSpellTarget(SpellConfig.Q.Range - 100));
-                        if (nM == null)
-                        {
-                            return;
-                        }
-                        SpellConfig.Q.Cast(nM);
                         break;
                     case Mode.DashingTornado:
                     case Mode.Dashing:

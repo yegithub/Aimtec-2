@@ -57,27 +57,36 @@
         public static Vector3 ExtendedMinion;
         public static Vector3 ExtendedTarget;
 
-        public static Obj_AI_Minion GetDashableMinion(Obj_AI_Base target)
+        public static bool IsDashable(Obj_AI_Base target) =>
+            !target.HasBuff("YasuoDashWrapper") && target.Distance(Global.Player) < SpellConfig.E.Range && target.IsValidTarget();
+
+        public static float DashDistance(Obj_AI_Minion minion, Obj_AI_Base target, int overrideValue = 475)
         {
-            return GameObjects.EnemyMinions.Where(x => !x.HasBuff("YasuoDashWrapper") && x.IsValid && x.MaxHealth > 7 && x.Distance(Global.Player) <= SpellConfig.E.Range).
-                LastOrDefault(x => DashDistance(x, target) > 0 && x.Distance(target) < Global.Player.Distance(target));
+            if (minion == null || target == null)
+            {
+                return 0;
+            }
+            return Global.Player.GetDashInfo().StartPos.Extend(minion.ServerPosition, overrideValue).Distance(target.ServerPosition);
         }
 
+        public static Obj_AI_Minion GetDashableMinion(Obj_AI_Base target)
+        {
+            return GameObjects.EnemyMinions.
+                Where(x => !x.HasBuff("YasuoDashWrapper") &&
+                           x.IsValidTarget() &&
+                           x.MaxHealth > 20 &&
+                           x.Distance(Global.Player) <= SpellConfig.E.Range &&
+                           x.Distance(target) < Global.Player.Distance(target)).
+                OrderByDescending(x => x.Distance(target)).
+                LastOrDefault();
+        }
 
         public static Obj_AI_Minion GetDashableMinion()
         {
             return GameObjects.EnemyMinions.LastOrDefault(x => !x.HasBuff("YasuoDashWrapper") && x.Distance(Global.Player) <= SpellConfig.E.Range);
         }
 
-        public static Obj_AI_Minion GetClosest(Obj_AI_Base target)
-        {
-            return GameObjects.EnemyMinions.OrderBy(x => x.Distance(Global.Player)).
-                FirstOrDefault(x =>
-                    !x.HasBuff("YasuoDashWrapper") &&
-                    x.IsValid &&
-                    x.MaxHealth > 10 &&
-                    x.Distance(Global.Player.ServerPosition.Extend(target.ServerPosition, 80)) <= SpellConfig.E.Range);
-        }
+        public static Obj_AI_Minion GetClosest(Obj_AI_Base target) { return GameObjects.EnemyMinions.OrderBy(x => x.Distance(Global.Player)).FirstOrDefault(IsDashable); }
 
         public static Vector3 WalkBehindMinion(Obj_AI_Base target)
         {
@@ -93,15 +102,6 @@
             var isValid = position.Distance(ObjectManager.GetLocalPlayer()) > minion.BoundingRadius && position.Distance(ObjectManager.GetLocalPlayer()) < 300;
 
             return isValid ? position : Vector3.Zero;
-        }
-
-        public static float DashDistance(Obj_AI_Minion minion, Obj_AI_Base target, int overrideValue = 475)
-        {
-            if (minion == null || target == null)
-            {
-                return 0;
-            }
-            return Global.Player.GetDashInfo().StartPos.Extend(minion.ServerPosition, overrideValue).Distance(target.ServerPosition);
         }
     }
 }

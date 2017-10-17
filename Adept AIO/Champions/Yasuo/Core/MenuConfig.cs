@@ -37,7 +37,7 @@
                 Whitelist.Add(new MenuBool(hero.ChampionName, "Use R Against: " + hero.ChampionName));
             }
 
-            Combo = new Menu("Combo", "Combo")
+            Combo = new Menu("YCombo", "Combo")
             {
                 new MenuBool("Walk", "Walk Behind Minion To Dash"),
                 new MenuBool("Dodge", "Windwall Targetted Spells"),
@@ -52,7 +52,7 @@
             // Todo: Add Check and go: EQ AA -> E Out 
             Harass = new Menu("Harass", "Harass") {new MenuBool("Q", "Use Q3"), new MenuBool("E", "Use E")};
 
-            LaneClear = new Menu("LaneClear", "LaneClear")
+            LaneClear = new Menu("YLane", "LaneClear")
             {
                 new MenuBool("Check", "Don't Clear When Enemies Nearby"),
                 new MenuBool("Turret", "Don't Clear Under Turret"),
@@ -61,11 +61,22 @@
                 new MenuList("Mode", "E Mode: ", new[] {"Disabled", "Lasthit", "Fast Clear"}, 1)
             };
 
-            JungleClear = new Menu("JungleClear", "JungleClear") {new MenuBool("Q3", "Allow Q3 Usage"), new MenuBool("Q", "Allow Q1 Usage"), new MenuBool("E", "Allow E  Usage")};
+            JungleClear = new Menu("YJungle", "JungleClear")
+            {
+                new MenuBool("Q3", "Allow Q3 Usage"),
+                new MenuBool("Q", "Allow Q1 Usage"),
+                new MenuBool("E", "Allow E  Usage")
+            };
 
-            Killsteal = new Menu("Killsteal", "Killsteal") {new MenuBool("Ignite", "Ignite"), new MenuBool("Q", "Use Q"), new MenuBool("Q3", "Use Q3"), new MenuBool("E", "Use E")};
+            Killsteal = new Menu("YKillsteal", "Killsteal")
+            {
+                new MenuBool("Ignite", "Ignite"),
+                new MenuBool("Q", "Use Q"),
+                new MenuBool("Q3", "Use Q3"),
+                new MenuBool("E", "Use E")
+            };
 
-            Misc = new Menu("Misc", "Miscellaneous")
+            Misc = new Menu("YMisc", "Miscellaneous")
             {
                 new MenuBool("Stack", "Stack Q").SetToolTip("Wont Stack when enemy is within 900 units."),
                 new MenuBool("LasthitE", "Lasthit With E"),
@@ -73,7 +84,7 @@
                 new MenuBool("LasthitQ3", "Lasthit With Tornado (Q3)")
             };
 
-            Drawings = new Menu("DrawManager", "DrawManager")
+            Drawings = new Menu("YDrawManager", "Drawings")
             {
                 new MenuSlider("Segments", "Segments", 100, 10, 150).SetToolTip("Smoothness of the circles"),
                 new MenuBool("Dmg", "Damage"),

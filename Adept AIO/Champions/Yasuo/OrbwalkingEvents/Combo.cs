@@ -80,33 +80,20 @@
 
             var dashDistance = MinionHelper.DashDistance(minion, target);
 
-            if (SpellConfig.E.Ready)
+            if (SpellConfig.E.Ready && targetDist > Global.Player.AttackRange)
             {
-                if (targetDist <= Global.Player.AttackRange && !SpellConfig.Q.Ready)
-                {
-                    return;
-                }
-
-                if (!target.HasBuff("YasuoDashWrapper") &&
-                    targetDist <= SpellConfig.E.Range &&
-                    (targetDist > SpellConfig.E.Range - 50 && minion == null || Extension.CurrentMode == Mode.Tornado))
+                if (MinionHelper.IsDashable(target) && (Extension.CurrentMode == Mode.Tornado || targetDist > SpellConfig.E.Range - target.BoundingRadius && GameObjects.EnemyMinions.Count(MinionHelper.IsDashable) == 0))
                 {
                     SpellConfig.E.CastOnUnit(target);
                 }
 
-                if (positionBehindMinion.Distance(Global.Player) <= MenuConfig.Combo["MRange"].Value &&
-                    MenuConfig.Combo["Walk"].Enabled &&
+                if (MenuConfig.Combo["Walk"].Enabled &&
                     Global.Orbwalker.CanMove() &&
                     !(MenuConfig.Combo["Turret"].Enabled && target.IsUnderEnemyTurret()))
                 {
-                    Global.Orbwalker.Move(positionBehindMinion);
-
-                    if (positionBehindMinion.Distance(Global.Player) <= 65)
-                    {
-                        SpellConfig.E.CastOnUnit(m2);
-                    }
+                    SpellConfig.CastE(target, true, MenuConfig.Combo["MRange"].Value);
                 }
-                else if (minion != null && targetDist > Global.Player.AttackRange)
+                else if (minion != null)
                 {
                     if (MenuConfig.Combo["Turret"].Enabled && minion.ServerPosition.PointUnderEnemyTurret() ||
                         MenuConfig.Combo["Dash"].Value == 0 && minion.Distance(Game.CursorPos) > MenuConfig.Combo["Range"].Value)
@@ -125,8 +112,8 @@
                     case Mode.Dashing:
                     case Mode.DashingTornado:
                         if (MenuConfig.Combo["Flash"].Enabled &&
-                            dashDistance < 470 &&
-                            dashDistance > 220 &&
+                            dashDistance < 425 &&
+                            dashDistance > 200 &&
                             (Dmg.Damage(target) * 1.25 > target.Health || target.ServerPosition.CountEnemyHeroesInRange(220) >= 2))
                         {
                             SpellConfig.Q.Cast();
@@ -143,18 +130,7 @@
                             }
                         }
                         break;
-                    default:
-                        if (!Global.Player.IsDashing() &&
-                            target.IsValidSpellTarget(SpellConfig.Q.Range) &&
-                            !(SpellConfig.E.Ready && !target.HasBuff("YasuoDashWrapper") && Extension.CurrentMode == Mode.Tornado))
-                        {
-                            var enemyHero = GameObjects.EnemyHeroes.OrderBy(x => x.Health).FirstOrDefault(x => x.IsValidTarget(SpellConfig.Q.Range));
-                            if (enemyHero != null)
-                            {
-                                SpellConfig.Q.Cast(enemyHero);
-                            }
-                        }
-                        break;
+                    default: SpellConfig.CastQ(target); break;
                 }
             }
 

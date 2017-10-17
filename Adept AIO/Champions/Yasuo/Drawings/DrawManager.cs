@@ -38,7 +38,8 @@
             if (Global.Orbwalker.Mode != OrbwalkingMode.None && MenuConfig.Drawings["Debug"].Enabled)
             {
                 var circle = new Geometry.Circle(Global.Player.GetDashInfo().EndPos, 200);
-                Render.Circle(circle.Center.To3D(), circle.Radius, 100, Color.DarkGray);
+                Render.Circle(circle.Center.To3D(), circle.Radius, 100, Color.Yellow);
+                Render.Circle(circle.Center.To3D(), circle.Radius / 2, 100, Color.Crimson);
             }
 
             if (SpellConfig.R.Ready && MenuConfig.Drawings["R"].Enabled)
@@ -48,11 +49,20 @@
 
             if (MenuConfig.Drawings["Range"].Enabled && MenuConfig.Combo["Dash"].Value == 0 && Global.Orbwalker.Mode != OrbwalkingMode.None)
             {
-                Render.Circle(Game.CursorPos, MenuConfig.Combo["Range"].Value, (uint) MenuConfig.Drawings["Segments"].Value, Color.White);
+                Render.Circle(Game.CursorPos, MenuConfig.Combo["Range"].Value, (uint) MenuConfig.Drawings["Segments"].Value, Color.Yellow);
             }
 
             if (MenuConfig.Drawings["Debug"].Enabled)
             {
+                if (SpellConfig.Q.Ready)
+                {
+                    var t = GameObjects.EnemyHeroes.FirstOrDefault(x => x.IsValidTarget());
+                    if (t != null)
+                    {
+                        SpellConfig.Q3Rect(t)?.Draw(Color.Crimson);
+                    }
+                }
+
                 Render.WorldToScreen(Global.Player.Position, out var temp);
                 Render.Text("Q Mode: " + Extension.CurrentMode + " | Range: " + SpellConfig.Q.Range, new Vector2(temp.X - 55, temp.Y + 40), RenderTextFlags.Center, Color.Cyan);
             }
@@ -71,7 +81,8 @@
                 Render.Line(playerV2, minionV2, Color.DeepSkyBlue);
                 Render.Line(minionV2, targetV2, Color.DeepPink);
 
-                Render.Circle(MinionHelper.ExtendedMinion, 50, 300, Color.White);
+                Render.Circle(MinionHelper.ExtendedMinion, 25, 300, Color.Crimson);
+                Render.Circle(MinionHelper.ExtendedMinion, 50, 300, Color.Yellow);
             }
         }
     }

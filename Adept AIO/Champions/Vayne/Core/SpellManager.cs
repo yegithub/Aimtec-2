@@ -59,7 +59,7 @@
 
         public static void CastQ(Obj_AI_Base target, int modeIndex = 0, bool force = true)
         {
-            var wallPos = WallExtension.NearestWall(Global.Player, 200);
+            var wallPos = WallExtension.NearestWall(Global.Player, 150);
             if (!wallPos.IsZero)
             {
                 DebugConsole.Write("[DASH] TO WALL", ConsoleColor.Green);
