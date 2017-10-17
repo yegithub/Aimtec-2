@@ -23,7 +23,7 @@
                 SpellManager.CastE(target);
             }
 
-            var point = WallExtension.NearestWall(target);
+            var point = WallExtension.NearestWall(target, 475);
             if (point.IsZero)
             {
                 return;

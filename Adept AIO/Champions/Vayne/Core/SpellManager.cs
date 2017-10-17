@@ -59,10 +59,10 @@
 
         public static void CastQ(Obj_AI_Base target, int modeIndex = 0, bool force = true)
         {
-            var wallPos = WallExtension.NearestWall(Global.Player.ServerPosition);
+            var wallPos = WallExtension.NearestWall(Global.Player, 200);
             if (!wallPos.IsZero)
             {
-                DebugConsole.Write("TO WALL", ConsoleColor.Green);
+                DebugConsole.Write("[DASH] TO WALL", ConsoleColor.Green);
                 QPred = wallPos;
                 Q.Cast(wallPos);
                 return;
@@ -70,12 +70,12 @@
 
             var pos = Vector3.Zero;
 
-            var point = WallExtension.NearestWall(target.ServerPosition);
+            var point = WallExtension.NearestWall(target, 475);
 
             if (force && E.Ready && !point.IsZero && point.Distance(Global.Player) <= Q.Range)
             {
                 point = target.ServerPosition + (target.ServerPosition - point).Normalized() * 200;
-                DebugConsole.Write("TO E POS", ConsoleColor.Green);
+                DebugConsole.Write("[DASH] TO E POS", ConsoleColor.Green);
                 pos = point;
             }
             else
@@ -83,7 +83,7 @@
                 switch (modeIndex)
                 {
                     case 0:
-                        DebugConsole.Write("TO CURSOR", ConsoleColor.Green);
+                        DebugConsole.Write("[DASH] TO CURSOR", ConsoleColor.Green);
                         pos = Game.CursorPos;
                         break;
                     case 1:
@@ -97,7 +97,7 @@
                             {
                                 continue;
                             }
-                            DebugConsole.Write("TO SIDE", ConsoleColor.Green);
+                            DebugConsole.Write("[DASH] TO SIDE", ConsoleColor.Green);
                             pos = rot;
                         }
 
@@ -107,7 +107,7 @@
 
             if (target.Distance(Global.Player) >= Global.Player.AttackRange && !target.IsFacingUnit(Global.Player))
             {
-                DebugConsole.Write("TO TARGET", ConsoleColor.Green);
+                DebugConsole.Write("[DASH] FORWARD TO TARGET POSITION", ConsoleColor.Green);
                 pos = target.ServerPosition;
             }
 

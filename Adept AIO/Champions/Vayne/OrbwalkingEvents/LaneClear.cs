@@ -28,8 +28,16 @@
                 x.MaxHealth > 0 &&
                 x.Health < Global.Player.GetAutoAttackDamage(x) + Global.Player.GetSpellDamage(x, SpellSlot.Q) &&
                 x.Distance(Global.Player) <= Global.Player.AttackRange + 80);
+
             if (minion == null)
             {
+                if (MenuConfig.LaneClear["TurretFarm"].Enabled && Global.Player.IsUnderEnemyTurret())
+                {
+                    var allyT = GameObjects.AllyTurrets.FirstOrDefault(x => x.Distance(Global.Player) <= 1500);
+                    if(allyT != null)
+                    SpellManager.CastQ(allyT);
+                    return;
+                }
                 return;
             }
             SpellManager.CastQ(minion, MenuConfig.LaneClear["QMode3"].Value);

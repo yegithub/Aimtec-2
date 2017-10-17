@@ -94,7 +94,7 @@
                         {
                             continue;
                         }
-                        DebugConsole.Write("TO SIDE", ConsoleColor.Green);
+                     
                         pos = rot;
                     }
                     break;
