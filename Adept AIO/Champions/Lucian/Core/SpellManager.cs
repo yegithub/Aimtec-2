@@ -85,18 +85,7 @@
                     pos = Game.CursorPos;
                     break;
                 default:
-                    for (var i = 140; i < 360; i += 10)
-                    {
-                        var dir = Global.Player.Orientation.To2D();
-                        var angleRad = Maths.DegreeToRadian(i);
-                        var rot = (Global.Player.ServerPosition.To2D() + 300 * dir.Rotated((float) angleRad)).To3D();
-                        if (rot.CountEnemyHeroesInRange(400) != 0 || rot.PointUnderEnemyTurret())
-                        {
-                            continue;
-                        }
-                     
-                        pos = rot;
-                    }
+                    pos = DashManager.DashKite(target, E.Range);
                     break;
             }
 
@@ -105,7 +94,7 @@
 
         public static void CastR(Obj_AI_Base target)
         {
-            if (GameObjects.EnemyMinions.Count(x => x.IsValidTarget() && GetRRectangle(x).IsInside(x.ServerPosition.To2D())) <= 2 && Game.TickCount - R.LastCastAttemptT >= 10000)
+            if (GameObjects.EnemyMinions.Count(x => GetRRectangle(x).IsInside(x.ServerPosition.To2D())) <= 2 && Game.TickCount - R.LastCastAttemptT >= 5000)
             {
                 R.Cast(target);
             }

@@ -14,6 +14,11 @@
                 return;
             }
 
+            if (MenuConfig.Combo["Kite"].Enabled)
+            {
+                SpellManager.Kite(target);
+            }
+
             if (SpellManager.Q.Ready && MenuConfig.Combo["Q"].Enabled)
             {
                 SpellManager.CastQ(target);

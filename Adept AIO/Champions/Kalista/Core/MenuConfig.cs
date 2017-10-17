@@ -19,6 +19,7 @@
             Combo = new Menu("Combo", "Combo")
             {
                 new MenuBool("Minions", "Auto Attack Minions"),
+                new MenuBool("Kite", "Automatic Kiting", false),
                 new MenuBool("Q", "Use Q"),
                 new MenuSliderBool("R", "Use R If X Enemies Nearby", true, 3, 0, 5)
             };

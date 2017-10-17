@@ -86,20 +86,9 @@
                         DebugConsole.Write("[DASH] TO CURSOR", ConsoleColor.Green);
                         pos = Game.CursorPos;
                         break;
-                    case 1:
+                    case 1: 
 
-                        for (var i = 140; i < 360; i += 20)
-                        {
-                            var dir = Global.Player.Orientation.To2D();
-                            var angleRad = Maths.DegreeToRadian(i);
-                            var rot = (Global.Player.ServerPosition.To2D() + 300 * dir.Rotated((float) angleRad)).To3D();
-                            if (rot.CountEnemyHeroesInRange(400) != 0 || rot.PointUnderEnemyTurret())
-                            {
-                                continue;
-                            }
-                            DebugConsole.Write("[DASH] TO SIDE", ConsoleColor.Green);
-                            pos = rot;
-                        }
+                        pos = DashManager.DashKite(target, Q.Range);
 
                         break;
                 }
@@ -107,7 +96,7 @@
 
             if (target.Distance(Global.Player) >= Global.Player.AttackRange && !target.IsFacingUnit(Global.Player))
             {
-                DebugConsole.Write("[DASH] FORWARD TO TARGET POSITION", ConsoleColor.Green);
+                DebugConsole.Write("[DASH] FORWARD TO TARGET POSITION", ConsoleColor.Yellow);
                 pos = target.ServerPosition;
             }
 
