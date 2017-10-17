@@ -43,7 +43,7 @@
 
         public static Vector3 NearestWall(Obj_AI_Base target, int range)
         {
-            for (var i = 0; i < 360; i += 20)
+            for (var i = 0; i < 360; i += 10)
             {
                 var dir = target.Orientation.To2D();
                 var angleRad = Maths.DegreeToRadian(i);
@@ -62,7 +62,7 @@
 
         public static Vector3 NearestWall(Vector3 position, int range)
         {
-            for (var i = 0; i < 360; i += 20)
+            for (var i = 0; i < 360; i += 10)
             {
                 var dir = Global.Player.Orientation.To2D();
                 var angleRad = Maths.DegreeToRadian(i);

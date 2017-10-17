@@ -85,7 +85,7 @@
                     pos = Game.CursorPos;
                     break;
                 default:
-                    for (var i = 140; i < 360; i += 20)
+                    for (var i = 140; i < 360; i += 10)
                     {
                         var dir = Global.Player.Orientation.To2D();
                         var angleRad = Maths.DegreeToRadian(i);
