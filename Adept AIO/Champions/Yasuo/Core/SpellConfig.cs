@@ -52,14 +52,8 @@
 
         public static void CastE(Obj_AI_Base target, bool gapclose = false, int rangeGapclose = 0)
         {
-            if (!gapclose && MinionHelper.IsDashable(target))
-            {
-                E.CastOnUnit(target);
-                return;
-            }
-
-            var positionBehindMinion = MinionHelper.WalkBehindMinion(target);
             var closestToPlayer = MinionHelper.GetClosest(target);
+            var positionBehindMinion = MinionHelper.WalkBehindMinion(target, closestToPlayer);
 
             if (gapclose && !positionBehindMinion.IsZero && closestToPlayer != null && positionBehindMinion.Distance(Global.Player) <= rangeGapclose)
             {

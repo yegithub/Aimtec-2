@@ -56,8 +56,8 @@
                 return;
             }
 
+            GameObjects.Initialize();
             new SummonerSpells();
-            GameObjects.Init();
             new Global();
             new GetRandom();
 

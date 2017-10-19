@@ -49,7 +49,7 @@
             var minion = MinionHelper.GetDashableMinion(target);
 
             var m2 = MinionHelper.GetClosest(target);
-            var positionBehindMinion = MinionHelper.WalkBehindMinion(target);
+            var positionBehindMinion = MinionHelper.WalkBehindMinion(target, m2);
 
             MinionHelper.ExtendedMinion = positionBehindMinion;
             MinionHelper.ExtendedTarget = target.ServerPosition;

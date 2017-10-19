@@ -61,7 +61,7 @@
 
         public static bool IsDashable(Obj_AI_Base target)
         {
-            return !target.HasBuff("YasuoDashWrapper") && target.Distance(Global.Player) < SpellConfig.E.Range && target.IsValidTarget();
+            return !target.HasBuff("YasuoDashWrapper") && target.Distance(Global.Player) < SpellConfig.E.Range;
         }
 
         public static float DashDistance(Obj_AI_Minion minion, Obj_AI_Base target, int overrideValue = 475)
@@ -81,26 +81,21 @@
 
         public static Obj_AI_Minion GetDashableMinion(Obj_AI_Base target)
         {
-            return GameObjects.EnemyMinions.FirstOrDefault(x => !x.HasBuff("YasuoDashWrapper") && target.Distance(PositionAfter(x)) < Global.Player.Distance(target));
-        }
-
-        public static Obj_AI_Minion GetDashableMinion()
-        {
-            return GameObjects.EnemyMinions.FirstOrDefault(x => !x.HasBuff("YasuoDashWrapper") && x.Distance(Global.Player) <= SpellConfig.E.Range);
+            return GameObjects.EnemyMinions.Where(x => IsDashable(x) && target.Distance(PositionAfter(x)) < Global.Player.Distance(target))
+                .OrderBy(x => target.Distance(PositionAfter(x)))
+                .ThenBy(x => x.Distance(Global.Player)).FirstOrDefault();
         }
 
         public static Obj_AI_Minion GetClosest(Obj_AI_Base target) { return GameObjects.EnemyMinions.OrderBy(x => x.Distance(Global.Player)).FirstOrDefault(IsDashable); }
 
-        public static Vector3 WalkBehindMinion(Obj_AI_Base target)
+        public static Vector3 WalkBehindMinion(Obj_AI_Base target, Obj_AI_Base minion)
         {
-            var minion = GetClosest(target);
-
             if (target == null || minion == null || minion.IsDead)
             {
                 return Vector3.Zero;
             } 
 
-            var position = minion.ServerPosition + (minion.ServerPosition - target.ServerPosition).Normalized() * 100 + minion.BoundingRadius;
+            var position = minion.ServerPosition + (minion.ServerPosition - target.ServerPosition).Normalized() * 70 + minion.BoundingRadius;
 
             var isValid = position.Distance(ObjectManager.GetLocalPlayer()) > minion.BoundingRadius && position.Distance(ObjectManager.GetLocalPlayer()) < 300;
             if (isValid)

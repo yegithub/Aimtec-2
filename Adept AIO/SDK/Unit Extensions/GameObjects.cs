@@ -1,8 +1,5 @@
-﻿// ReSharper disable ArrangeAccessorOwnerBody
-
-namespace Adept_AIO.SDK.Unit_Extensions
+﻿namespace Adept_AIO.SDK.Unit_Extensions
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text.RegularExpressions;
@@ -13,48 +10,6 @@ namespace Adept_AIO.SDK.Unit_Extensions
     /// </summary>
     public static class GameObjects
     {
-        #region Enums
-
-        /// <summary>
-        ///     The jungle mob types.
-        /// </summary>
-        public enum JungleType
-        {
-            /// <summary>
-            ///     The unknown type.
-            /// </summary>
-            Unknown,
-
-            /// <summary>
-            ///     The small type.
-            /// </summary>
-            Small,
-
-            /// <summary>
-            ///     The large type.
-            /// </summary>
-            Large,
-
-            /// <summary>
-            ///     The legendary type.
-            /// </summary>
-            Legendary
-        }
-
-        #endregion
-
-        #region Constructors and Destructors
-
-        /// <summary>
-        ///     Initializes static members of the <see cref="GameObjects" /> class.
-        /// </summary>
-        static GameObjects()
-        {
-            Init();
-        }
-
-        #endregion
-
         #region Static Fields
 
         /// <summary>
@@ -143,22 +98,34 @@ namespace Adept_AIO.SDK.Unit_Extensions
         private static readonly List<Obj_AI_Minion> JungleSmallList = new List<Obj_AI_Minion>();
 
         /// <summary>
+        ///     The spawn points list.
+        /// </summary>
+        private static readonly List<GameObject> SpawnPointsList = new List<GameObject>();
+
+        /// <summary>
+        ///     The ally spawn points list.
+        /// </summary>
+        private static readonly List<GameObject> AllySpawnPointsList = new List<GameObject>();
+
+        /// <summary>
+        ///     The enemy spawn points list.
+        /// </summary>
+        private static readonly List<GameObject> EnemySpawnPointsList = new List<GameObject>();
+
+        /// <summary>
         ///     The large name regex list.
         /// </summary>
         private static readonly string[] LargeNameRegex =
-        {
-            "SRU_Murkwolf[0-9.]{1,}",
-            "SRU_Gromp",
-            "SRU_Blue[0-9.]{1,}",
-            "SRU_Razorbeak[0-9.]{1,}",
-            "SRU_Red[0-9.]{1,}",
-            "SRU_Krug[0-9]{1,}"
-        };
+            {
+                "SRU_Murkwolf[0-9.]{1,}", "SRU_Gromp", "SRU_Blue[0-9.]{1,}",
+                "SRU_Razorbeak[0-9.]{1,}", "SRU_Red[0-9.]{1,}",
+                "SRU_Krug[0-9]{1,}"
+            };
 
         /// <summary>
         ///     The legendary name regex list.
         /// </summary>
-        private static readonly string[] LegendaryNameRegex = {"SRU_Dragon", "SRU_Baron", "SRU_RiftHerald"};
+        private static readonly string[] LegendaryNameRegex = { "SRU_Dragon", "SRU_Baron", "SRU_RiftHerald" };
 
         /// <summary>
         ///     The minions list.
@@ -168,7 +135,7 @@ namespace Adept_AIO.SDK.Unit_Extensions
         /// <summary>
         ///     The small name regex list.
         /// </summary>
-        private static readonly string[] SmallNameRegex = {"SRU_[a-zA-Z](.*?)Mini", "Sru_Crab"};
+        private static readonly string[] SmallNameRegex = { "SRU_[a-zA-Z](.*?)Mini", "Sru_Crab" };
 
         /// <summary>
         ///     The turrets list.
@@ -180,10 +147,35 @@ namespace Adept_AIO.SDK.Unit_Extensions
         /// </summary>
         private static readonly List<Obj_AI_Minion> WardsList = new List<Obj_AI_Minion>();
 
+        #endregion
+
+        #region Enums
+
         /// <summary>
-        ///     Indicates whether the <see cref="GameObjects" /> stack was initialized and saved required instances.
+        ///     The jungle mob types.
         /// </summary>
-        private static bool _initialized;
+        public enum JungleType
+        {
+            /// <summary>
+            ///     The unknown type.
+            /// </summary>
+            Unknown,
+
+            /// <summary>
+            ///     The small type.
+            /// </summary>
+            Small,
+
+            /// <summary>
+            ///     The large type.
+            /// </summary>
+            Large,
+
+            /// <summary>
+            ///     The legendary type.
+            /// </summary>
+            Legendary
+        }
 
         #endregion
 
@@ -192,227 +184,117 @@ namespace Adept_AIO.SDK.Unit_Extensions
         /// <summary>
         ///     Gets the game objects.
         /// </summary>
-        public static IEnumerable<GameObject> AllGameObjects
-        {
-            get
-            {
-                return GameObjectsList;
-            }
-        }
+        public static IEnumerable<GameObject> AllGameObjects => GameObjectsList;
 
         /// <summary>
         ///     Gets the ally.
         /// </summary>
-        public static IEnumerable<Obj_AI_Base> Ally
-        {
-            get
-            {
-                return AllyList;
-            }
-        }
+        public static IEnumerable<Obj_AI_Base> Ally => AllyList;
 
         /// <summary>
         ///     Gets the ally heroes.
         /// </summary>
-        public static IEnumerable<Obj_AI_Hero> AllyHeroes
-        {
-            get
-            {
-                return AllyHeroesList;
-            }
-        }
+        public static IEnumerable<Obj_AI_Hero> AllyHeroes => AllyHeroesList;
 
         /// <summary>
         ///     Gets the ally minions.
         /// </summary>
-        public static IEnumerable<Obj_AI_Minion> AllyMinions
-        {
-            get
-            {
-                return AllyMinionsList;
-            }
-        }
+        public static IEnumerable<Obj_AI_Minion> AllyMinions => AllyMinionsList;
 
         /// <summary>
         ///     Gets the ally turrets.
         /// </summary>
-        public static IEnumerable<Obj_AI_Turret> AllyTurrets
-        {
-            get
-            {
-                return AllyTurretsList;
-            }
-        }
+        public static IEnumerable<Obj_AI_Turret> AllyTurrets => AllyTurretsList;
 
         /// <summary>
         ///     Gets the ally wards.
         /// </summary>
-        public static IEnumerable<Obj_AI_Minion> AllyWards
-        {
-            get
-            {
-                return AllyWardsList;
-            }
-        }
+        public static IEnumerable<Obj_AI_Minion> AllyWards => AllyWardsList;
 
         /// <summary>
         ///     Gets the attackable units.
         /// </summary>
-        public static IEnumerable<AttackableUnit> AttackableUnits
-        {
-            get
-            {
-                return AttackableUnitsList;
-            }
-        }
+        public static IEnumerable<AttackableUnit> AttackableUnits => AttackableUnitsList;
 
         /// <summary>
         ///     Gets the enemy.
         /// </summary>
-        public static IEnumerable<Obj_AI_Base> Enemy
-        {
-            get
-            {
-                return EnemyList;
-            }
-        }
+        public static IEnumerable<Obj_AI_Base> Enemy => EnemyList;
 
         /// <summary>
         ///     Gets the enemy heroes.
         /// </summary>
-        public static IEnumerable<Obj_AI_Hero> EnemyHeroes
-        {
-            get
-            {
-                return EnemyHeroesList;
-            }
-        }
+        public static IEnumerable<Obj_AI_Hero> EnemyHeroes => EnemyHeroesList;
 
         /// <summary>
         ///     Gets the enemy minions.
         /// </summary>
-        public static IEnumerable<Obj_AI_Minion> EnemyMinions
-        {
-            get
-            {
-                return EnemyMinionsList;
-            }
-        }
+        public static IEnumerable<Obj_AI_Minion> EnemyMinions => EnemyMinionsList;
 
         /// <summary>
         ///     Gets the enemy turrets.
         /// </summary>
-        public static IEnumerable<Obj_AI_Turret> EnemyTurrets
-        {
-            get
-            {
-                return EnemyTurretsList;
-            }
-        }
+        public static IEnumerable<Obj_AI_Turret> EnemyTurrets => EnemyTurretsList;
 
         /// <summary>
         ///     Gets the enemy wards.
         /// </summary>
-        public static IEnumerable<Obj_AI_Minion> EnemyWards
-        {
-            get
-            {
-                return EnemyWardsList;
-            }
-        }
+        public static IEnumerable<Obj_AI_Minion> EnemyWards => EnemyWardsList;
 
         /// <summary>
         ///     Gets the heroes.
         /// </summary>
-        public static IEnumerable<Obj_AI_Hero> Heroes
-        {
-            get
-            {
-                return HeroesList;
-            }
-        }
+        public static IEnumerable<Obj_AI_Hero> Heroes => HeroesList;
 
         /// <summary>
         ///     Gets the jungle.
         /// </summary>
-        public static IEnumerable<Obj_AI_Minion> Jungle
-        {
-            get
-            {
-                return JungleList;
-            }
-        }
+        public static IEnumerable<Obj_AI_Minion> Jungle => JungleList;
 
         /// <summary>
         ///     Gets the jungle large.
         /// </summary>
-        public static IEnumerable<Obj_AI_Minion> JungleLarge
-        {
-            get
-            {
-                return JungleLargeList;
-            }
-        }
+        public static IEnumerable<Obj_AI_Minion> JungleLarge => JungleLargeList;
 
         /// <summary>
         ///     Gets the jungle legendary.
         /// </summary>
-        public static IEnumerable<Obj_AI_Minion> JungleLegendary
-        {
-            get
-            {
-                return JungleLegendaryList;
-            }
-        }
+        public static IEnumerable<Obj_AI_Minion> JungleLegendary => JungleLegendaryList;
 
         /// <summary>
         ///     Gets the jungle small.
         /// </summary>
-        public static IEnumerable<Obj_AI_Minion> JungleSmall
-        {
-            get
-            {
-                return JungleSmallList;
-            }
-        }
+        public static IEnumerable<Obj_AI_Minion> JungleSmall => JungleSmallList;
 
         /// <summary>
         ///     Gets the minions.
         /// </summary>
-        public static IEnumerable<Obj_AI_Minion> Minions
-        {
-            get
-            {
-                return MinionsList;
-            }
-        }
-
-        /// <summary>
-        ///     Gets or sets the player.
-        /// </summary>
-        public static Obj_AI_Hero Player { get; set; }
+        public static IEnumerable<Obj_AI_Minion> Minions => MinionsList;
 
         /// <summary>
         ///     Gets the turrets.
         /// </summary>
-        public static IEnumerable<Obj_AI_Turret> Turrets
-        {
-            get
-            {
-                return TurretsList;
-            }
-        }
+        public static IEnumerable<Obj_AI_Turret> Turrets => TurretsList;
 
         /// <summary>
         ///     Gets the wards.
         /// </summary>
-        public static IEnumerable<Obj_AI_Minion> Wards
-        {
-            get
-            {
-                return WardsList;
-            }
-        }
+        public static IEnumerable<Obj_AI_Minion> Wards => WardsList;
+
+        /// <summary>
+        ///     Gets the spawn points.
+        /// </summary>
+        public static IEnumerable<GameObject> SpawnPoints => SpawnPointsList;
+
+        /// <summary>
+        ///     Gets the ally spawn points.
+        /// </summary>
+        public static IEnumerable<GameObject> AllySpawnPoints => AllySpawnPointsList;
+
+        /// <summary>
+        ///     Gets the enemy spawn points.
+        /// </summary>
+        public static IEnumerable<GameObject> EnemySpawnPoints => EnemySpawnPointsList;
 
         #endregion
 
@@ -424,8 +306,11 @@ namespace Adept_AIO.SDK.Unit_Extensions
         /// <param name="gameObject">The GameObject</param>
         /// <param name="object">The Compare GameObject</param>
         /// <returns>Whether the <see cref="GameObject" />s are identical.</returns>
-        public static bool Compare(this GameObject gameObject, GameObject @object) =>
-            gameObject != null && gameObject.IsValid && @object != null && @object.IsValid && gameObject.NetworkId == @object.NetworkId;
+        public static bool Compare(this GameObject gameObject, GameObject @object)
+        {
+            return gameObject != null && gameObject.IsValid && @object != null && @object.IsValid
+                   && gameObject.NetworkId == @object.NetworkId;
+        }
 
         /// <summary>
         ///     The get operation from the GameObjects stack.
@@ -436,7 +321,11 @@ namespace Adept_AIO.SDK.Unit_Extensions
         /// <returns>
         ///     The List containing the requested type.
         /// </returns>
-        public static IEnumerable<T> Get<T>() where T : GameObject, new() => AllGameObjects.OfType<T>();
+        public static IEnumerable<T> Get<T>()
+            where T : GameObject, new()
+        {
+            return AllGameObjects.OfType<T>();
+        }
 
         /// <summary>
         ///     Get the minion jungle type.
@@ -476,7 +365,11 @@ namespace Adept_AIO.SDK.Unit_Extensions
         /// <returns>
         ///     The List containing the requested type.
         /// </returns>
-        public static IEnumerable<T> GetNative<T>() where T : GameObject, new() => ObjectManager.Get<T>();
+        public static IEnumerable<T> GetNative<T>()
+            where T : GameObject, new()
+        {
+            return ObjectManager.Get<T>();
+        }
 
         #endregion
 
@@ -485,22 +378,14 @@ namespace Adept_AIO.SDK.Unit_Extensions
         /// <summary>
         ///     The initialize method.
         /// </summary>
-        internal static void Init()
+        internal static void Initialize()
         {
-            if (_initialized)
-            {
-                return;
-            }
-
-            _initialized = true;
-
-            Player = Player;
-
             HeroesList.AddRange(ObjectManager.Get<Obj_AI_Hero>());
             MinionsList.AddRange(ObjectManager.Get<Obj_AI_Minion>().Where(o => o.Team != GameObjectTeam.Neutral && !o.Name.Contains("ward")));
             TurretsList.AddRange(ObjectManager.Get<Obj_AI_Turret>());
-            JungleList.AddRange(ObjectManager.Get<Obj_AI_Minion>().Where(o => o.Team == GameObjectTeam.Neutral && o.Name != "WardCorpse" && o.Name != "Barrel"));
+            JungleList.AddRange(ObjectManager.Get<Obj_AI_Minion>().Where(o => o.Team == GameObjectTeam.Neutral && o.Name != "WardCorpse" && o.Name != "Barrel" && !o.Name.Contains("SRU_Plant_")));
             WardsList.AddRange(ObjectManager.Get<Obj_AI_Minion>().Where(o => o.Name.Contains("ward")));
+            SpawnPointsList.AddRange(ObjectManager.Get<GameObject>().Where(o => o.Type == GameObjectType.obj_SpawnPoint));
 
             GameObjectsList.AddRange(ObjectManager.Get<GameObject>());
             AttackableUnitsList.AddRange(ObjectManager.Get<AttackableUnit>());
@@ -513,7 +398,8 @@ namespace Adept_AIO.SDK.Unit_Extensions
             AllyHeroesList.AddRange(HeroesList.Where(o => o.IsAlly));
             AllyMinionsList.AddRange(MinionsList.Where(o => o.IsAlly));
             AllyTurretsList.AddRange(TurretsList.Where(o => o.IsAlly));
-            AllyList.AddRange(AllyHeroesList.Cast<Obj_AI_Base>().Concat(AllyMinionsList).Concat(AllyTurretsList));
+            AllyList.AddRange(
+                AllyHeroesList.Cast<Obj_AI_Base>().Concat(AllyMinionsList).Concat(AllyTurretsList));
 
             JungleSmallList.AddRange(JungleList.Where(o => o.GetJungleType() == JungleType.Small));
             JungleLargeList.AddRange(JungleList.Where(o => o.GetJungleType() == JungleType.Large));
@@ -521,6 +407,9 @@ namespace Adept_AIO.SDK.Unit_Extensions
 
             AllyWardsList.AddRange(WardsList.Where(o => o.IsAlly));
             EnemyWardsList.AddRange(WardsList.Where(o => o.IsEnemy));
+
+            AllySpawnPointsList.AddRange(SpawnPointsList.Where(o => o.IsAlly));
+            EnemySpawnPointsList.AddRange(SpawnPointsList.Where(o => o.IsEnemy));
 
             GameObject.OnCreate += OnCreate;
             GameObject.OnDestroy += OnDelete;
@@ -558,10 +447,10 @@ namespace Adept_AIO.SDK.Unit_Extensions
                     }
 
                     return;
-                case Obj_AI_Minion minion when minion.Type != GameObjectType.BasicLevelProp && minion.Name != "Shadow" && !minion.Name.ToLower().Contains("dagger") && !minion.Name.ToLower().Contains("axe") && !minion.Name.ToLower().Contains("trap"):
+                case Obj_AI_Minion minion:
                     if (minion.Team != GameObjectTeam.Neutral)
                     {
-                        if (minion.Name.ToLower().Contains("ward"))
+                        if (minion.Name.Contains("ward"))
                         {
                             WardsList.Add(minion);
                             if (minion.IsEnemy)
@@ -602,8 +491,6 @@ namespace Adept_AIO.SDK.Unit_Extensions
                             case JungleType.Legendary:
                                 JungleLegendaryList.Add(minion);
                                 break;
-                            case JungleType.Unknown: break;
-                            default: throw new ArgumentOutOfRangeException();
                         }
                     }
 
@@ -621,6 +508,21 @@ namespace Adept_AIO.SDK.Unit_Extensions
                         AllyList.Add(turret);
                     }
                     break;
+            }
+
+            var spawnPoint = sender;
+            if (spawnPoint.Type != GameObjectType.obj_SpawnPoint)
+            {
+                return;
+            }
+            SpawnPointsList.Add(spawnPoint);
+            if (spawnPoint.IsAlly)
+            {
+                AllySpawnPointsList.Add(spawnPoint);
+            }
+            else
+            {
+                EnemySpawnPointsList.Add(spawnPoint);
             }
         }
 
@@ -665,7 +567,7 @@ namespace Adept_AIO.SDK.Unit_Extensions
                     }
 
                     return;
-                case Obj_AI_Minion minion when minion.Type != GameObjectType.BasicLevelProp && minion.Name != "Shadow" && !minion.Name.ToLower().Contains("dagger") && !minion.Name.ToLower().Contains("axe") && !minion.Name.ToLower().Contains("trap"):
+                case Obj_AI_Minion minion:
                     if (minion.Team != GameObjectTeam.Neutral)
                     {
                         if (minion.Name.Contains("ward"))
@@ -717,33 +619,44 @@ namespace Adept_AIO.SDK.Unit_Extensions
                                 case JungleType.Legendary:
                                     JungleLegendaryList.Remove(jungleObject);
                                     break;
-                                case JungleType.Unknown: break;
-                                default: throw new ArgumentOutOfRangeException();
                             }
                         }
                     }
 
                     return;
+                case Obj_AI_Turret turret:
+                    foreach (var turretObject in TurretsList.Where(t => t.Compare(turret)).ToList())
+                    {
+                        TurretsList.Remove(turretObject);
+                        if (turret.IsEnemy)
+                        {
+                            EnemyTurretsList.Remove(turretObject);
+                            EnemyList.Remove(turretObject);
+                        }
+                        else
+                        {
+                            AllyTurretsList.Remove(turretObject);
+                            AllyList.Remove(turretObject);
+                        }
+                    }
+                    break;
             }
 
-            var turret = sender as Obj_AI_Turret;
-            if (turret == null)
+            var spawnPoint = sender;
+            if (spawnPoint.Type != GameObjectType.obj_SpawnPoint)
             {
                 return;
             }
-
-            foreach (var turretObject in TurretsList.Where(t => t.Compare(turret)).ToList())
+            foreach (var spawnPointObject in SpawnPointsList.Where(s => s.Compare(spawnPoint)).ToList())
             {
-                TurretsList.Remove(turretObject);
-                if (turret.IsEnemy)
+                SpawnPointsList.Remove(spawnPointObject);
+                if (spawnPoint.IsEnemy)
                 {
-                    EnemyTurretsList.Remove(turretObject);
-                    EnemyList.Remove(turretObject);
+                    EnemySpawnPointsList.Remove(spawnPointObject);
                 }
                 else
                 {
-                    AllyTurretsList.Remove(turretObject);
-                    AllyList.Remove(turretObject);
+                    AllySpawnPointsList.Remove(spawnPointObject);
                 }
             }
         }

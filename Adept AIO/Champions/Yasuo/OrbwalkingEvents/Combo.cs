@@ -69,7 +69,7 @@
             var targetDist = target.Distance(Global.Player);
             var minion = MinionHelper.GetDashableMinion(target);
 
-            var positionBehindMinion = MinionHelper.WalkBehindMinion(target);
+            var positionBehindMinion = MinionHelper.WalkBehindMinion(target, minion);
 
             if (!positionBehindMinion.IsZero && positionBehindMinion.Distance(Global.Player) <= MenuConfig.Combo["MRange"].Value)
             {
