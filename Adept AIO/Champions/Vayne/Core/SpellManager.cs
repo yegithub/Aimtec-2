@@ -32,7 +32,7 @@
             }
 
             var pred = E.GetPrediction(target).CastPosition;
-            var endPos = pred + (pred - Global.Player.ServerPosition).Normalized() * 430; // nerfed
+            var endPos = target.ServerPosition + (target.ServerPosition - Global.Player.ServerPosition).Normalized() * 475; // nerfed
             return new Geometry.Rectangle(target.ServerPosition.To2D(), endPos.To2D(), target.BoundingRadius);
         }
 
@@ -94,7 +94,7 @@
                 }
             }
 
-            if (target.Distance(Global.Player) >= Global.Player.AttackRange && !target.IsFacingUnit(Global.Player))
+            if (target.Distance(Global.Player) >= Global.Player.AttackRange && Global.Player.CountEnemyHeroesInRange(2000) == 1 && !target.IsFacingUnit(Global.Player))
             {
                 DebugConsole.Write("[DASH] FORWARD TO TARGET POSITION", ConsoleColor.Yellow);
                 pos = target.ServerPosition;

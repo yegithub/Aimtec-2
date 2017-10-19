@@ -50,7 +50,6 @@
                     }
                 }
                
-
                 SpellConfig.R.Width = 133 * (3 + Global.Player.GetSpell(SpellSlot.R).Level);
 
                 Insec.OnKeyPressed();
