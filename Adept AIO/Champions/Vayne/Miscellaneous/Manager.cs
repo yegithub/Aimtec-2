@@ -41,8 +41,11 @@
                         args.Target = target;
                     }
                     break;
-                case OrbwalkingMode.Laneclear when Global.Player.IsUnderAllyTurret():
-                    LaneClear.PreAttack(sender, args);
+                case OrbwalkingMode.Laneclear when args.Target != null && args.Target.Type == GameObjectType.obj_AI_Turret:
+                    if (Global.Player.ManaPercent() >= 30 && Global.Player.CountEnemyHeroesInRange(1500) == 0)
+                    {
+                        SpellManager.CastQ(args.Target as Obj_AI_Base);
+                    }
                     break;
             }
         }

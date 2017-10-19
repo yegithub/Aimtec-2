@@ -65,7 +65,6 @@
 
             LaneClear = new Menu("LaneClear", "Lane")
             {
-                new MenuBool("TurretFarm", "Smart Under Turret Farm"),
                 new MenuList("Q3", "Q Mode", new[] {"After Auto", "Engage"}, 0),
                 new MenuList("QMode3", "Q To:", new[] {"Cursor", "Side"}, 0)
             };

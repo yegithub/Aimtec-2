@@ -43,38 +43,6 @@
             SpellManager.CastQ(minion, MenuConfig.LaneClear["QMode3"].Value);
         }
 
-        public static void PreAttack(object sender, PreAttackEventArgs args)
-        {
-            if (MenuConfig.LaneClear["TurretFarm"].Enabled)
-            {
-                if (_turretTarget != null &&
-                    _turret != null &&
-                    _turretTarget.IsUnderAllyTurret() &&
-                    _turretTarget.Health < Global.Player.GetAutoAttackDamage(_turretTarget) &&
-                    _turretTarget.IsValidAutoRange() &&
-                    _turretTarget.NetworkId != args.Target.NetworkId)
-                {
-                    DebugConsole.Write("Minion Correction", ConsoleColor.Green);
-                    args.Target = _turretTarget;
-                }
-
-                if (_turret != null)
-                {
-                    var t = args.Target as Obj_AI_Base;
-                    if (t != null && t.IsUnderAllyTurret())
-                    {
-                        if (t.Health <= _turret.GetAutoAttackDamage(t) * 2 + Global.Player.GetAutoAttackDamage(t) && t.Health - _turret.GetAutoAttackDamage(t) * 2 > 0 ||
-                            t.Health <= _turret.GetAutoAttackDamage(t) + Global.Player.GetAutoAttackDamage(t) && t.Health - _turret.GetAutoAttackDamage(t) > 0)
-                        {
-                            //DebugConsole.Write("[TURRET FARM] Just prevented auto.", ConsoleColor.Yellow);
-                            //args.Cancel = true;
-                            //args.Target = null;
-                        }
-                    }
-                }
-            }
-        }
-
         public static void OnUpdate()
         {
             var minion = GameObjects.EnemyMinions.FirstOrDefault(x =>
@@ -87,29 +55,6 @@
             if (MenuConfig.LaneClear["Q3"].Value == 1 && minion.Health < Global.Player.GetAutoAttackDamage(minion))
             {
                 SpellManager.CastQ(minion, MenuConfig.LaneClear["QMode3"].Value);
-            }
-        }
-
-        public static void OnProcessSpellCast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
-        {
-            if (sender == null ||
-                args.Target == null ||
-                !args.Target.IsEnemy ||
-                !sender.UnitSkinName.ToLower().Contains("turret") ||
-                !args.Target.Name.ToLower().Contains("minion"))
-            {
-                return;
-            }
-
-            if (Global.Player.Distance(args.Target) <= SpellManager.Q.Range + Global.Player.AttackRange)
-            {
-                _turret = sender;
-                _turretTarget = args.Target as Obj_AI_Minion;
-            }
-            else
-            {
-                _turret = null;
-                _turretTarget = null;
             }
         }
     }
