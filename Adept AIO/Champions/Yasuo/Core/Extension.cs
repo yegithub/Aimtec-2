@@ -86,7 +86,12 @@
                 .ThenBy(x => x.Distance(Global.Player)).FirstOrDefault();
         }
 
-        public static Obj_AI_Minion GetClosest(Obj_AI_Base target) { return GameObjects.EnemyMinions.OrderBy(x => x.Distance(Global.Player)).FirstOrDefault(IsDashable); }
+        public static Obj_AI_Minion GetClosest(Obj_AI_Base target)
+        {
+            return GameObjects.EnemyMinions.Where(x => IsDashable(x) && target.Distance(PositionAfter(x)) < Global.Player.Distance(target))
+                .OrderBy(x => x.Distance(Global.Player))
+                .FirstOrDefault(IsDashable); 
+        }
 
         public static Vector3 WalkBehindMinion(Obj_AI_Base target, Obj_AI_Base minion)
         {
