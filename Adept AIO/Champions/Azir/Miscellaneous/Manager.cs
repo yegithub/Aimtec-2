@@ -24,28 +24,32 @@
                     return;
                 }
 
-                foreach (var soldier in SoldierManager.Soldiers)
+                if (Global.Orbwalker.Mode == OrbwalkingMode.None)
                 {
-                    if (soldier.Distance(Global.Player) > 660)
+                    foreach (var soldier in SoldierManager.Soldiers)
                     {
-                        continue;
-                    }
+                        if (soldier.Distance(Global.Player) > 660)
+                        {
+                            continue;
+                        }
 
-                    var enemy = GameObjects.Enemy.FirstOrDefault(x =>
-                        x.Distance(soldier) <= 250 + x.BoundingRadius &&
-                        !x.IsDead &&
-                        x.MaxHealth > 10 &&
-                        soldier.Distance(Global.Player) <= SpellConfig.Q.Range + 65 &&
-                        soldier.Distance(Global.Player) > Global.Player.AttackRange);
-                    if (enemy == null || Game.TickCount - _lastAa <= 1000)
-                    {
-                        continue;
-                    }
+                        var enemy = GameObjects.Enemy.FirstOrDefault(x =>
+                            x.Distance(soldier) <= 250 + x.BoundingRadius &&
+                            !x.IsDead &&
+                            x.MaxHealth > 10 &&
+                            soldier.Distance(Global.Player) <= SpellConfig.Q.Range + 65 &&
+                            soldier.Distance(Global.Player) > Global.Player.AttackRange);
+                        if (enemy == null || Game.TickCount - _lastAa <= 1000)
+                        {
+                            continue;
+                        }
 
-                    _lastAa = Game.TickCount;
-                    Global.Player.IssueOrder(OrderType.AttackUnit, enemy);
-                    DelayAction.Queue(250, () => Global.Player.IssueOrder(OrderType.MoveTo, Game.CursorPos), new CancellationToken(false));
+                        _lastAa = Game.TickCount;
+                        Global.Player.IssueOrder(OrderType.AttackUnit, enemy);
+                        DelayAction.Queue(250, () => Global.Player.IssueOrder(OrderType.MoveTo, Game.CursorPos), new CancellationToken(false));
+                    }
                 }
+               
 
                 SpellConfig.R.Width = 133 * (3 + Global.Player.GetSpell(SpellSlot.R).Level);
 
