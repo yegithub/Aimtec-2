@@ -58,24 +58,27 @@
                 return;
             }
 
-            var minion = MinionHelper.GetDashableMinion(target);
-
             var positionBehindMinion = MinionHelper.WalkBehindMinion(target);
             var closestToPlayer = MinionHelper.GetClosest(target);
 
-            if (closestToPlayer != null && MinionHelper.IsDashable(closestToPlayer) && closestToPlayer.Distance(Global.Player) <= rangeGapclose)
+            if (gapclose && !positionBehindMinion.IsZero && closestToPlayer != null && positionBehindMinion.Distance(Global.Player) <= rangeGapclose)
             {
                 Global.Orbwalker.Move(positionBehindMinion);
-                Console.WriteLine("Walk");
-                if (closestToPlayer.Distance(Global.Player) <= 90)
+             
+                if (positionBehindMinion.Distance(Global.Player) > 65)
                 {
-                    Console.WriteLine("Found");
-                    E.CastOnUnit(closestToPlayer);
+                    return;
                 }
+            
+                E.CastOnUnit(closestToPlayer);
             }
-            else if (minion != null && MinionHelper.IsDashable(minion))
+            else
             {
-                E.CastOnUnit(minion);
+                var minion = MinionHelper.GetDashableMinion(target);
+                if (minion != null)
+                {
+                    E.CastOnUnit(minion);
+                }
             }
         }
 

@@ -28,7 +28,7 @@
 
             if (SpellConfig.Q.Ready)
             {
-                var enemyHero = GameObjects.EnemyHeroes.OrderBy(x => x.Health).FirstOrDefault(x => x.IsValidTarget(SpellConfig.Q.Range));
+                var enemyHero = GameObjects.EnemyHeroes.FirstOrDefault(x => x.IsValidTarget(SpellConfig.Q.Range));
                 if (enemyHero != null)
                 {
                     SpellConfig.Q.Cast(enemyHero);
@@ -54,7 +54,7 @@
                      target.Distance(Global.Player) <= SpellConfig.E.Range &&
                      target.Distance(Global.Player) > SpellConfig.E.Range - target.BoundingRadius)
             {
-                SpellConfig.E.CastOnUnit(target);
+                SpellConfig.CastE(target);
             }
         }
 
@@ -100,7 +100,7 @@
                         return;
                     }
 
-                    SpellConfig.E.CastOnUnit(minion);
+                    SpellConfig.CastE(minion);
                 }
             }
 

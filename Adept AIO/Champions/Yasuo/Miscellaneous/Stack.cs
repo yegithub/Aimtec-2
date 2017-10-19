@@ -21,7 +21,7 @@
                 return;
             }
 
-            var enemy = GameObjects.EnemyHeroes.FirstOrDefault(x => x.IsValidTarget() && x.Distance(Global.Player) <= 425);
+            var enemy = GameObjects.EnemyHeroes.FirstOrDefault(x => x.IsValidTarget() && x.Distance(Global.Player) <= 425 && !x.Name.ToLower().Contains("ward"));
             if (enemy != null)
             {
                 SpellConfig.Q.Cast(enemy);
