@@ -23,7 +23,7 @@
                     return;
                 }
 
-                SpellManager.CastE(t);
+                SpellManager.E.CastOnUnit(t);
             }
         }
     }

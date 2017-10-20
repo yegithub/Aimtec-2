@@ -10,12 +10,12 @@
     {
         public static void PostAttack(object sender, PostAttackEventArgs args)
         {
-            if (!SpellManager.Q.Ready || MenuConfig.Harass["Q2"].Value == 1)
+            if (!SpellManager.Q.Ready || MenuConfig.Harass["Q"].Value == 1)
             {
                 return;
             }
 
-            SpellManager.CastQ(args.Target as Obj_AI_Base, MenuConfig.Harass["Mode2"].Value);
+            SpellManager.CastQ(args.Target as Obj_AI_Base, MenuConfig.Harass["Mode"].Value);
         }
 
         public static void OnUpdate()
@@ -26,9 +26,9 @@
                 return;
             }
 
-            if (SpellManager.Q.Ready && MenuConfig.Harass["Q2"].Value == 1)
+            if (SpellManager.Q.Ready && MenuConfig.Harass["Q"].Value == 1)
             {
-                SpellManager.CastQ(target, MenuConfig.Harass["Mode2"].Value);
+                SpellManager.CastQ(target, MenuConfig.Harass["Mode"].Value);
             }
 
             if (SpellManager.E.Ready && MenuConfig.Harass["E"].Enabled && MenuConfig.Harass[target.ChampionName].Enabled)

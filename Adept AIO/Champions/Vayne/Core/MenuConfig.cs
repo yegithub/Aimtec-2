@@ -31,10 +31,10 @@
 
             Gapcloser.Attach(_mainMenu, "Anti Gapcloser");
 
-            Combo = new Menu("Combo", "Combo")
+            Combo = new Menu("VayneCombo", "Combo")
             {
-                new MenuList("Q1", "Q Mode", new[] {"After Auto", "Engage"}, 0),
-                new MenuList("Mode1", "Q To:", new[] {"Cursor", "Side"}, 1),
+                new MenuList("Q", "Q Mode", new[] {"After Auto", "Engage"}, 0),
+                new MenuList("Mode", "Q To:", new[] {"Cursor", "Side"}, 1),
                 new MenuBool("ToE", "Force Q To E Pos"),
                 new MenuBool("Flash", "Flash E To Ally Turret"),
                 new MenuBool("W", "Focus Targets With W Stacks"),
@@ -50,10 +50,10 @@
                 Combo.Add(new MenuBool(enemy.ChampionName, $"Use E On: {enemy.ChampionName}"));
             }
 
-            Harass = new Menu("Harass", "Harass")
+            Harass = new Menu("VayneHarass", "Harass")
             {
-                new MenuList("Q2", "Q Mode", new[] {"After Auto", "Engage"}, 0),
-                new MenuList("Mode2", "Q To:", new[] {"Cursor", "Side"}, 1),
+                new MenuList("Q", "Q Mode", new[] {"After Auto", "Engage"}, 0),
+                new MenuList("Mode", "Q To:", new[] {"Cursor", "Side"}, 1),
                 new MenuBool("E", "Use E"),
                 new MenuSeperator("Whitelist")
             };
@@ -63,26 +63,26 @@
                 Harass.Add(new MenuBool(enemy.ChampionName, $"Use E On: {enemy.ChampionName}"));
             }
 
-            LaneClear = new Menu("LaneClear", "Lane")
+            LaneClear = new Menu("VayneLaneClear", "Lane")
             {
-                new MenuList("Q3", "Q Mode", new[] {"After Auto", "Engage"}, 0),
-                new MenuList("QMode3", "Q To:", new[] {"Cursor", "Side"}, 0)
+                new MenuList("Q", "Q Mode", new[] {"After Auto", "Engage"}, 0),
+                new MenuList("QMode", "Q To:", new[] {"Cursor", "Side"}, 0)
             };
 
-            JungleClear = new Menu("Jungle", "Jungle")
+            JungleClear = new Menu("VayneJungle", "Jungle")
             {
-                new MenuList("Q4", "Q Mode", new[] {"After Auto", "Engage"}, 0),
-                new MenuList("Mode4", "Q To:", new[] {"Cursor", "Side"}, 0),
+                new MenuList("Q", "Q Mode", new[] {"After Auto", "Engage"}, 0),
+                new MenuList("Mode", "Q To:", new[] {"Cursor", "Side"}, 0),
                 new MenuBool("E", "Use E")
             };
 
-            Lasthit = new Menu("Lasthit", "Lasthit") {new MenuBool("Q", "Use Q After AA")};
+            Lasthit = new Menu("VayneLasthit", "Lasthit") {new MenuBool("Q", "Use Q After AA")};
 
-            Killsteal = new Menu("Killsteal", "Killsteal") {new MenuBool("Q", "Q -> AA"), new MenuBool("E", "Use E")};
+            Killsteal = new Menu("VayneKillsteal", "Killsteal") {new MenuBool("Q", "Q -> AA"), new MenuBool("E", "Use E")};
 
-            Misc = new Menu("Misc", "Miscellaneous") {new MenuBool("Q", "Anti Gapcloser | Q"), new MenuBool("E", "Anti Gapcloser | E")};
+            Misc = new Menu("VayneMisc", "Miscellaneous") {new MenuBool("Q", "Anti Gapcloser | Q"), new MenuBool("E", "Anti Gapcloser | E")};
 
-            Drawings = new Menu("DrawManager", "DrawManager")
+            Drawings = new Menu("VayneDrawManager", "DrawManager")
             {
                 new MenuSlider("Segments", "Segments", 100, 10, 150).SetToolTip("Smoothness of the circles"),
                 new MenuBool("Dmg", "Damage"),

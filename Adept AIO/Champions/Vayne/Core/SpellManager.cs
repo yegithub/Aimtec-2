@@ -71,10 +71,10 @@
             var pos = Vector3.Zero;
 
             var point = WallExtension.NearestWall(target, 475);
+            point = target.ServerPosition + (target.ServerPosition - point).Normalized() * 100;
 
             if (force && E.Ready && !point.IsZero && point.Distance(Global.Player) <= Q.Range)
             {
-                point = target.ServerPosition + (target.ServerPosition - point).Normalized() * 200;
                 DebugConsole.Write("[DASH] TO E POS", ConsoleColor.Green);
                 pos = point;
             }

@@ -16,9 +16,9 @@
                 return;
             }
 
-            if (SpellManager.Q.Ready && MenuConfig.JungleClear["Q4"].Value != 1)
+            if (SpellManager.Q.Ready && MenuConfig.JungleClear["Q"].Value != 1)
             {
-                SpellManager.CastQ(mob, MenuConfig.JungleClear["Mode4"].Value);
+                SpellManager.CastQ(mob, MenuConfig.JungleClear["Mode"].Value);
             }
 
             if (SpellManager.E.Ready && MenuConfig.JungleClear["E"].Enabled)
@@ -35,9 +35,9 @@
                 return;
             }
 
-            if (SpellManager.Q.Ready && MenuConfig.JungleClear["Q4"].Value == 1)
+            if (SpellManager.Q.Ready && MenuConfig.JungleClear["Q"].Value == 1)
             {
-                SpellManager.CastQ(mob, MenuConfig.JungleClear["Mode4"].Value);
+                SpellManager.CastQ(mob, MenuConfig.JungleClear["Mode"].Value);
             }
         }
     }

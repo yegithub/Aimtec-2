@@ -52,9 +52,9 @@
                 return;
             }
 
-            if (MenuConfig.LaneClear["Q3"].Value == 1 && minion.Health < Global.Player.GetAutoAttackDamage(minion))
+            if (MenuConfig.LaneClear["Q"].Value == 1 && minion.Health < Global.Player.GetAutoAttackDamage(minion))
             {
-                SpellManager.CastQ(minion, MenuConfig.LaneClear["QMode3"].Value);
+                SpellManager.CastQ(minion, MenuConfig.LaneClear["QMode"].Value);
             }
         }
     }
