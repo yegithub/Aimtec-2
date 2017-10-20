@@ -11,7 +11,7 @@
 
     class SpellManager
     {
-        public static Vector3 DrawingPred, QPred;
+        public static Vector3 DrawingPred;
 
         public static Spell Q, W, E, R;
 
@@ -32,13 +32,13 @@
             }
 
             var pred = E.GetPrediction(target).CastPosition;
-            var endPos = target.ServerPosition + (target.ServerPosition - Global.Player.ServerPosition).Normalized() * 475; // nerfed
+            var endPos = target.ServerPosition + (target.ServerPosition - Global.Player.ServerPosition).Normalized() * 430; // nerfed
             return new Geometry.Rectangle(target.ServerPosition.To2D(), endPos.To2D(), target.BoundingRadius);
         }
 
         public static Geometry.Rectangle Rect(Vector3 target)
         {
-            var endPos = Global.Player.ServerPosition + (Global.Player.ServerPosition - target).Normalized() * 475;
+            var endPos = Global.Player.ServerPosition + (Global.Player.ServerPosition - target).Normalized() * 430;
             return new Geometry.Rectangle(target.To2D(), endPos.To2D(), 65);
         }
 
@@ -63,7 +63,6 @@
             if (!wallPos.IsZero)
             {
                 DebugConsole.Write("[DASH] TO WALL", ConsoleColor.Green);
-                QPred = wallPos;
                 Q.Cast(wallPos);
                 return;
             }
@@ -100,7 +99,6 @@
                 pos = target.ServerPosition;
             }
 
-            QPred = pos;
             Q.Cast(pos);
         }
     }

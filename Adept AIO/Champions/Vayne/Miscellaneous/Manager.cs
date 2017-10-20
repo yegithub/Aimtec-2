@@ -71,7 +71,6 @@
                     break;
                 case OrbwalkingMode.None:
                     SpellManager.DrawingPred = Vector3.Zero;
-                    SpellManager.QPred = Vector3.Zero;
                     break;
             }
         }

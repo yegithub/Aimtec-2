@@ -17,18 +17,13 @@
                 return;
             }
 
-            var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.NetworkId != args.Target.NetworkId && x.Health < Global.Player.GetAutoAttackDamage(x) && x.Distance(Global.Player) <= SpellManager.Q.Range);
+            var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Health < Global.Player.GetAutoAttackDamage(x) && x.Distance(Global.Player) <= SpellManager.Q.Range);
             if (minion == null)
             {
                 return;
             }
 
-            if (GameObjects.EnemyMinions.Count(x =>
-                    x.Health < Global.Player.GetAutoAttackDamage(x) + Global.Player.GetSpellDamage(x, SpellSlot.Q) && x.Distance(Global.Player) <= Global.Player.AttackRange) >=
-                2)
-            {
-                SpellManager.CastQ(minion);
-            }
+            SpellManager.CastQ(minion);
         }
     }
 }
