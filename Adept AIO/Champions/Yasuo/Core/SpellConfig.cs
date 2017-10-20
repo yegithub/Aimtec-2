@@ -27,6 +27,8 @@
 
         public static void SetSkill(Mode mode)
         {
+            Extension.CurrentMode = mode;
+
             if (mode == Mode.Tornado)
             {
                 Q.SetSkillshot(0.25f, 90, 1200, false, SkillshotType.Line, false, HitChance.None);

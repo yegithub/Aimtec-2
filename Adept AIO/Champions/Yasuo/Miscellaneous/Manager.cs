@@ -82,7 +82,6 @@
                 switch (buff.Name)
                 {
                     case "YasuoQ3W":
-                        Extension.CurrentMode = Mode.Tornado;
                         SpellConfig.SetSkill(Mode.Tornado);
                         break;
                 }
@@ -101,7 +100,6 @@
                 switch (buff.Name)
                 {
                     case "YasuoQ3W":
-                        Extension.CurrentMode = Mode.Normal;
                         SpellConfig.SetSkill(Mode.Normal);
                         break;
                 }
@@ -120,18 +118,15 @@
                 case "Spell3":
                     if (Extension.CurrentMode == Mode.Tornado)
                     {
-                        Extension.CurrentMode = Mode.DashingTornado;
                         SpellConfig.SetSkill(Mode.DashingTornado);
                     }
                     else
                     {
-                        Extension.CurrentMode = Mode.Dashing;
                         SpellConfig.SetSkill(Mode.Dashing);
 
-                        DelayAction.Queue(500,
+                        DelayAction.Queue(1000,
                             () =>
                             {
-                                Extension.CurrentMode = Mode.Normal;
                                 SpellConfig.SetSkill(Mode.Normal);
                             },
                             new CancellationToken(false));

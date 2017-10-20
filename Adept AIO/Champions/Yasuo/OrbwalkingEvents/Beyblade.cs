@@ -70,7 +70,7 @@
                             {
                                 SpellConfig.Q.Cast();
 
-                                DelayAction.Queue(Game.Ping / 2 + 30,
+                                DelayAction.Queue(Game.Ping / 2 + 80,
                                     () =>
                                     {
                                         SummonerSpells.Flash.Cast(target.Position);

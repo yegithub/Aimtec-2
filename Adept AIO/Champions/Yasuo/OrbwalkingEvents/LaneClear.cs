@@ -1,11 +1,13 @@
 ﻿namespace Adept_AIO.Champions.Yasuo.OrbwalkingEvents
 {
+    using System;
     using System.Linq;
     using Aimtec;
     using Aimtec.SDK.Damage;
     using Aimtec.SDK.Events;
     using Aimtec.SDK.Extensions;
     using Core;
+    using SDK.Generic;
     using SDK.Geometry_Related;
     using SDK.Unit_Extensions;
 
@@ -16,6 +18,17 @@
             if (MenuConfig.LaneClear["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(2000) != 0)
             {
                 return;
+            }
+
+            if (SpellConfig.Q.Ready && Extension.CurrentMode == Mode.Normal)
+            {
+                var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsValidTarget(SpellConfig.Q.Range));
+                if (minion == null)
+                {
+                    return;
+                }
+
+                SpellConfig.Q.Cast(minion);
             }
 
             if (SpellConfig.E.Ready && MenuConfig.LaneClear["EAA"].Enabled)
@@ -39,24 +52,14 @@
                         break;
                 }
             }
-
-            if (SpellConfig.Q.Ready && Extension.CurrentMode == Mode.Normal)
-            {
-                var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(Global.Player) <= SpellConfig.Q.Range && x.IsValidTarget());
-                if (minion == null)
-                {
-                    return;
-                }
-
-                SpellConfig.Q.Cast(minion);
-            }
         }
 
         public static void OnUpdate()
         {
             if (SpellConfig.E.Ready && !MenuConfig.LaneClear["EAA"].Enabled)
             {
-                var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsValidTarget() && x.Distance(Global.Player) <= SpellConfig.E.Range && !x.HasBuff("YasuoDashWrapper"));
+                var minion = GameObjects.EnemyMinions.FirstOrDefault(x =>
+                    x.IsValidTarget() && x.Distance(Global.Player) <= SpellConfig.E.Range && !x.HasBuff("YasuoDashWrapper"));
 
                 if (!SpellConfig.E.Ready ||
                     minion == null ||
@@ -88,34 +91,48 @@
                 switch (Extension.CurrentMode)
                 {
                     case Mode.Normal:
-                    case Mode.Tornado:
-                        var m = GameObjects.EnemyMinions.LastOrDefault(x => x.IsValidSpellTarget(SpellConfig.Q.Range));
-                        if (m == null)
                         {
-                            return;
-                        }
-
-                        var rect = SpellConfig.Q3Rect(m);
-                        var count = GameObjects.EnemyMinions.Count(x => rect.IsInside(x.ServerPosition.To2D()));
-
-                        if (MenuConfig.LaneClear["Q3"].Enabled && count >= 2)
-                        {
+                            var m = GameObjects.EnemyMinions.LastOrDefault(x => x.IsValidSpellTarget(SpellConfig.Q.Range));
+                            if (m == null || Global.Player.IsDashing())
+                            {
+                                return;
+                            }
+                            
                             SpellConfig.Q.Cast(m);
                         }
                         break;
+                    case Mode.Tornado:
+                        {
+                            var m = GameObjects.EnemyMinions.LastOrDefault(x => x.IsValidSpellTarget(SpellConfig.Q.Range));
+                            if (m == null || Global.Player.IsDashing())
+                            {
+                                return;
+                            }
+
+                            var rect = SpellConfig.Q3Rect(m);
+                            var count = GameObjects.EnemyMinions.Count(x => rect.IsInside(x.ServerPosition.To2D()));
+
+                            if (MenuConfig.LaneClear["Q3"].Enabled && count >= 3)
+                            {
+                                SpellConfig.Q.Cast(m);
+                            }
+                        }
+
+                        break;
                     case Mode.DashingTornado:
                     case Mode.Dashing:
-                        var dashM = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsValidSpellTarget(SpellConfig.Q.Range));
-                        if (dashM == null || !dashM.IsValidTarget())
+                        var dashM = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(Global.Player.GetDashInfo().EndPos) <= 220);
+                        if (dashM == null)
                         {
                             return;
                         }
 
                         var circle = new Geometry.Circle(Global.Player.GetDashInfo().EndPos, 220);
-                        var circleCount = GameObjects.EnemyMinions.Count(x => circle.Center.Distance(x.ServerPosition) <= circle.Radius);
+                        var circleCount = GameObjects.EnemyMinions.Count(x => !x.IsDead && x.IsValidTarget() && circle.Center.Distance(x.ServerPosition) <= circle.Radius);
 
-                        if (circleCount >= 1)
+                        if (circleCount >= 3)
                         {
+                            Console.WriteLine($"COUNT: {circleCount}");
                             SpellConfig.Q.Cast(dashM);
                         }
                         break;

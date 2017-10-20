@@ -3,6 +3,7 @@
     using System.Linq;
     using Aimtec;
     using Aimtec.SDK.Extensions;
+    using Aimtec.SDK.Prediction.Health;
     using Core;
     using SDK.Geometry_Related;
     using SDK.Unit_Extensions;
@@ -39,7 +40,7 @@
                 {
                     return;
                 }
-
+                
                 if (pos.Distance(Global.Player) <= mob.BoundingRadius + Global.Player.BoundingRadius + 43)
                 {
                     SpellConfig.E.CastOnUnit(mob);
@@ -47,7 +48,7 @@
             }
             else
             {
-                var minion = GameObjects.EnemyMinions.Where(x => x.Distance(Global.Player) <= SpellConfig.E.Range && !x.HasBuff("YasuoDashWrapper")).
+                var minion = GameObjects.EnemyMinions.Where(MinionHelper.IsDashable).
                     OrderBy(x => x.Distance(Game.CursorPos)).
                     FirstOrDefault();
 
