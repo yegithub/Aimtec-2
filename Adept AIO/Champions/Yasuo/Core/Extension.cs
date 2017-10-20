@@ -81,7 +81,7 @@
 
         public static Obj_AI_Minion GetDashableMinion(Obj_AI_Base target)
         {
-            return GameObjects.EnemyMinions.Where(x => IsDashable(x) && target.Distance(PositionAfter(x)) < Global.Player.Distance(target))
+            return GameObjects.EnemyMinions.Where(x => IsDashable(x) && !x.Name.ToLower().Contains("ward") && target.Distance(PositionAfter(x)) < Global.Player.Distance(target))
                 .OrderBy(x => target.Distance(PositionAfter(x)))
                 .ThenBy(x => x.Distance(Global.Player)).FirstOrDefault();
         }

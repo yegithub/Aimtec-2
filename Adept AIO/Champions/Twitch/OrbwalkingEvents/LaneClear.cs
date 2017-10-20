@@ -16,7 +16,7 @@
             }
 
             if (SpellManager.E.Ready &&
-                GameObjects.EnemyMinions.Count(x => x.IsValidTarget() && Dmg.EDmg(x) > x.Health) >= MenuConfig.LaneClear["E"].Value &&
+                GameObjects.EnemyMinions.Count(x => x.IsValidTarget(SpellManager.E.Range) && Dmg.EDmg(x) > x.Health) >= MenuConfig.LaneClear["E"].Value &&
                 MenuConfig.LaneClear["E"].Enabled)
             {
                 SpellManager.E.Cast();
@@ -27,7 +27,7 @@
                 foreach (var minion in GameObjects.EnemyMinions.Where(x => x.IsValidTarget(SpellManager.W.Range)))
                 {
                     var cirlce = new Geometry.Circle(minion.ServerPosition.To2D(), SpellManager.W.Range);
-                    if (GameObjects.EnemyMinions.Count(x => x.Distance(cirlce.Center) <= cirlce.Radius) >= MenuConfig.LaneClear["W"].Value)
+                    if (GameObjects.EnemyMinions.Count(x => x.IsValidTarget(SpellManager.W.Range) && x.Distance(cirlce.Center) <= cirlce.Radius) >= MenuConfig.LaneClear["W"].Value)
                     {
                         SpellManager.W.Cast(minion);
                     }
