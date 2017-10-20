@@ -79,7 +79,7 @@
             return Vector3.Zero;
         }
 
-        public static float GetWallWidth(Vector3 start, Vector3 direction, int maxWallWidth = 275)
+        public static float GetWallWidth(Vector3 start, Vector3 direction, float maxWallWidth = 275)
         {
             var thickness = 0f;
 

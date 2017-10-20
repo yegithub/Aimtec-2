@@ -31,8 +31,8 @@
             }
 
             if (MenuConfig.Combo["Flash"].Enabled && SpellManager.E.Ready && SummonerSpells.IsValid(SummonerSpells.Flash))
-            {
-                var allyT = GameObjects.AllyTurrets.FirstOrDefault(x => x.Distance(target) <= 700);
+            {   
+                var allyT = GameObjects.AllyTurrets.FirstOrDefault(x => x.Distance(target) <= 900);
                 if (allyT != null)
                 {
                     var pos = target.ServerPosition + (target.ServerPosition - allyT.ServerPosition).Normalized() * 200;

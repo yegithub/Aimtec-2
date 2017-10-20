@@ -1,7 +1,6 @@
 ﻿namespace Adept_AIO.Champions.Vayne.OrbwalkingEvents
 {
     using System.Linq;
-    using Aimtec;
     using Aimtec.SDK.Damage;
     using Aimtec.SDK.Extensions;
     using Aimtec.SDK.Orbwalking;

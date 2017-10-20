@@ -31,15 +31,20 @@
                 return null;
             }
 
-            var pred = E.GetPrediction(target).CastPosition;
-            var endPos = target.ServerPosition + (target.ServerPosition - Global.Player.ServerPosition).Normalized() * 430; // nerfed
+            var endPos = target.ServerPosition + (target.ServerPosition - Global.Player.ServerPosition).Normalized() * 475;
             return new Geometry.Rectangle(target.ServerPosition.To2D(), endPos.To2D(), target.BoundingRadius);
         }
 
-        public static Geometry.Rectangle Rect(Vector3 target)
+        public static Geometry.Rectangle PredRect(Obj_AI_Base target)
         {
-            var endPos = Global.Player.ServerPosition + (Global.Player.ServerPosition - target).Normalized() * 430;
-            return new Geometry.Rectangle(target.To2D(), endPos.To2D(), 65);
+            if (!target.IsValidTarget(E.Range))
+            {
+                return null;
+            }
+
+            var pred = E.GetPrediction(target).CastPosition;
+            var endPos = pred + (pred - Global.Player.ServerPosition).Normalized() * 475;
+            return new Geometry.Rectangle(target.ServerPosition.To2D(), endPos.To2D(), target.BoundingRadius);
         }
 
         public static void CastE(Obj_AI_Base target)
@@ -50,8 +55,9 @@
             }
 
             var rect = Rect(target);
+            var predRect = PredRect(target);
 
-            if (WallExtension.IsWall(rect.Start.To3D(), rect.End.To3D()))
+            if (WallExtension.IsWall(rect.Start.To3D(), rect.End.To3D()) && WallExtension.IsWall(predRect.Start.To3D(), predRect.End.To3D()))
             {
                 E.CastOnUnit(target);
             }
@@ -59,7 +65,7 @@
 
         public static void CastQ(Obj_AI_Base target, int modeIndex = 0, bool force = true)
         {
-            var wallPos = WallExtension.NearestWall(Global.Player, 150);
+            var wallPos = WallExtension.NearestWall(Global.Player, 130);
             if (!wallPos.IsZero)
             {
                 DebugConsole.Write("[DASH] TO WALL", ConsoleColor.Green);

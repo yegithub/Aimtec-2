@@ -35,9 +35,10 @@
             if (SpellManager.E.Ready && MenuConfig.Drawings["Pred"].Enabled)
             {
                 var target = Global.Orbwalker.GetOrbwalkingTarget() as Obj_AI_Base;
-                if (target != null && target.IsValidTarget() && target.IsHero && SpellManager.Rect(target) != null)
+                if (target != null && target.IsValidTarget() && target.IsHero)
                 {
-                    SpellManager.Rect(target).Draw(Color.Crimson);
+                    SpellManager.PredRect(target)?.Draw(Color.Cyan);
+                    SpellManager.Rect(target)?.Draw(Color.Crimson);
                 }
 
                 if (!SpellManager.DrawingPred.IsZero)

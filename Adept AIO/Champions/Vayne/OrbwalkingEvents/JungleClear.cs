@@ -1,5 +1,6 @@
 ﻿namespace Adept_AIO.Champions.Vayne.OrbwalkingEvents
 {
+    using System;
     using System.Linq;
     using Aimtec.SDK.Extensions;
     using Aimtec.SDK.Orbwalking;
@@ -10,8 +11,8 @@
     {
         public static void PostAttack(object sender, PostAttackEventArgs args)
         {
-            var mob = GameObjects.JungleLarge.FirstOrDefault(x => x.MaxHealth > 20);
-            if (mob == null || !mob.IsValidTarget())
+            var mob = GameObjects.JungleLarge.FirstOrDefault(x => x.MaxHealth > 20 && x.IsValidAutoRange());
+            if (mob == null)
             {
                 return;
             }
@@ -23,7 +24,7 @@
 
             if (SpellManager.E.Ready && MenuConfig.JungleClear["E"].Enabled)
             {
-                SpellManager.CastE(mob);
+                SpellManager.E.CastOnUnit(mob);
             }
         }
 
@@ -34,6 +35,7 @@
             {
                 return;
             }
+          
 
             if (SpellManager.Q.Ready && MenuConfig.JungleClear["Q"].Value == 1)
             {

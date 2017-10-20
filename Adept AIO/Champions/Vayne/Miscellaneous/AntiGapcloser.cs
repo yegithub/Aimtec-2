@@ -10,7 +10,7 @@
     {
         public static void OnGapcloser(Obj_AI_Hero sender, GapcloserArgs args)
         {
-            if (!sender.IsEnemy || args.EndPosition.Distance(Global.Player) > SpellManager.E.Range)
+            if (!sender.IsEnemy || args.EndPosition.Distance(Global.Player) > 150)
             {
                 return;
             }
