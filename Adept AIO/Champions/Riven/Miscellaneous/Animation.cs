@@ -14,7 +14,7 @@
         {
             Global.Orbwalker.AttackingEnabled = false;
 
-            var moveDelay = Global.Player.HasBuff("RivenFengShuiEngine") ? 70 : 0;
+            var moveDelay = Global.Player.HasBuff("RivenFengShuiEngine") ? 100 : 0;
             DelayAction.Queue(moveDelay + (Extensions.CurrentQCount == 1 ? 70 : 30), () => Global.Orbwalker.Move(Game.CursorPos), new CancellationToken(false));
 
             DelayAction.Queue((int)GetDelay(),

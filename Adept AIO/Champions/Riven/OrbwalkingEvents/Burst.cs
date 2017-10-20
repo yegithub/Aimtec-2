@@ -90,7 +90,7 @@
                             },
                             new CancellationToken(false));
 
-                        DelayAction.Queue(280,
+                        DelayAction.Queue(150,
                             delegate
                             {
                                 SummonerSpells.Flash.Cast(target.ServerPosition);
