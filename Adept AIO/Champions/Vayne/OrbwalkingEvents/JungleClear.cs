@@ -24,7 +24,7 @@
 
             if (SpellManager.E.Ready && MenuConfig.JungleClear["E"].Enabled)
             {
-                SpellManager.E.CastOnUnit(mob);
+                SpellManager.CastE(mob);
             }
         }
 
