@@ -34,7 +34,7 @@
 
         public static void OnUpdate()
         {
-            if (MenuConfig.LaneClear["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(1500) != 0)
+            if (MenuConfig.LaneClear["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(1500) != 0 || MenuConfig.LaneClear["Mana"].Value > Global.Player.ManaPercent())
             {
                 return;
             }

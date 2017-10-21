@@ -15,12 +15,12 @@
                 return;
             }
 
-            if (SpellManager.Q.Ready && MenuConfig.Combo["Q"].Enabled)
+            if (SpellManager.Q.Ready && MenuConfig.Combo["Q"].Enabled && target.IsValidAutoRange())
             {
                 SpellManager.Q.Cast();
             }
 
-            if (SpellManager.W.Ready && MenuConfig.Combo["W"].Enabled && !(MenuConfig.Combo["W2"].Enabled && SpellManager.HasUltBuff()))
+            if (SpellManager.W.Ready && Global.Player.ManaPercent() >= 25 && MenuConfig.Combo["W"].Enabled && !(MenuConfig.Combo["W2"].Enabled && SpellManager.HasUltBuff()))
             {
                 SpellManager.W.Cast(target);
             }

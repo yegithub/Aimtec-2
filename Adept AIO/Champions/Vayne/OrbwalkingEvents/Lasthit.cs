@@ -12,7 +12,7 @@
     {
         public static void PostAttack(object sender, PostAttackEventArgs args)
         {
-            if (!SpellManager.Q.Ready || !MenuConfig.Lasthit["Q"].Enabled)
+            if (!SpellManager.Q.Ready || !MenuConfig.Lasthit["Q"].Enabled || Global.Player.ManaPercent() <= 20)
             {
                 return;
             }

@@ -36,13 +36,14 @@
                 new MenuBool("W", "Use W")
             };
 
-            LaneClear = new Menu("LaneClear", "Lane")
+            LaneClear = new Menu("LucianLaneClear", "Lane")
             {
                 new MenuBool("Check", "Dont' Clear When Enemies Nearby"),
                 new MenuList("E3", "E Mode", new[] {"After Auto", "Engage"}, 0),
                 new MenuList("Mode3", "E To:", new[] {"Cursor", "Side"}, 1),
                 new MenuSliderBool("Q", "Min. Q Hit", true, 3, 1, 7),
-                new MenuSliderBool("W", "Min. Minions Nearby To W", true, 3, 1, 7)
+                new MenuSliderBool("W", "Min. Minions Nearby To W", true, 3, 1, 7),
+                new MenuSlider("Mana", "Min. Mana %", 40)
             };
 
             JungleClear = new Menu("Jungle", "Jungle")

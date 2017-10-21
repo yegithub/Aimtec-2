@@ -10,7 +10,7 @@
     {
         public static void OnUpdate()
         {
-            if (MenuConfig.LaneClear["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(1500) != 0)
+            if (MenuConfig.LaneClear["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(1500) != 0 || Global.Player.ManaPercent() <= 30)
             {
                 return;
             }
@@ -24,14 +24,9 @@
 
             if (MenuConfig.LaneClear["W"].Enabled && SpellManager.W.Ready)
             {
-                foreach (var minion in GameObjects.EnemyMinions.Where(x => x.IsValidTarget(SpellManager.W.Range)))
-                {
-                    var cirlce = new Geometry.Circle(minion.ServerPosition.To2D(), SpellManager.W.Range);
-                    if (GameObjects.EnemyMinions.Count(x => x.IsValidTarget(SpellManager.W.Range) && x.Distance(cirlce.Center) <= cirlce.Radius) >= MenuConfig.LaneClear["W"].Value)
-                    {
-                        SpellManager.W.Cast(minion);
-                    }
-                }
+                var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsValidTarget(SpellManager.W.Range));
+                if(minion != null)
+                SpellManager.W.Cast(minion, true, MenuConfig.LaneClear["W"].Value);
             }
         }
     }
