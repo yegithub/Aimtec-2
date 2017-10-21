@@ -10,9 +10,11 @@
 
     class Jungle
     {
-        public static void OnProcessAutoAttack(Obj_AI_Minion mob)
+        public static void OnProcessAutoAttack()
         {
-            if (mob == null || mob.MaxHealth <= 7 || MenuConfig.Jungle["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(1500) >= 1)
+            var mob = GameObjects.Jungle.FirstOrDefault(x => x.IsValidTarget(SpellConfig.E.Range));
+
+            if (mob == null || mob.MaxHealth < 20 || MenuConfig.Jungle["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(1500) >= 1)
             {
                 return;
             }

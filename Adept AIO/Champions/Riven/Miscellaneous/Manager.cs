@@ -85,7 +85,7 @@
                         if (args.Target.IsMinion)
                         {
                             Lane.OnProcessAutoAttack();
-                            Jungle.OnProcessAutoAttack(args.Target as Obj_AI_Minion);
+                            Jungle.OnProcessAutoAttack();
                         }
                         else if ((args.Target as Obj_AI_Base).IsBuilding() && SpellConfig.Q.Ready)
                         {
