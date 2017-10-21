@@ -26,8 +26,8 @@
 
         public static void OnUpdate()
         {
-            var target = Global.TargetSelector.GetTarget(1000);
-            if (!target.IsValidTarget())
+            var target = Global.TargetSelector.GetTarget(SpellManager.E.Range);
+            if (target == null || !target.IsValidTarget())
             {
                 return;
             }

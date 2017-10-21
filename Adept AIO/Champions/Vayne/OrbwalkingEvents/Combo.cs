@@ -30,8 +30,8 @@
 
         public static void OnUpdate()
         {
-            var target = Global.TargetSelector.GetTarget(1000);
-            if (!target.IsValidTarget())
+            var target = Global.TargetSelector.GetTarget(SpellManager.Q.Range + Global.Player.AttackRange);
+            if (target == null || !target.IsValidTarget())
             {
                 return;
             }
