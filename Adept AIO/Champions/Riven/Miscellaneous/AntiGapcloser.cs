@@ -21,7 +21,7 @@
                 SpellConfig.E.Cast(pos);
             }
 
-            if (SpellConfig.W.Ready && sender.IsValidTarget(SpellConfig.W.Range))
+            if (SpellConfig.W.Ready && sender.IsValidTarget(SpellConfig.W.Range + 75))
             {
                 SpellManager.CastW(sender);
             }

@@ -114,7 +114,7 @@
 
         public static void CastR2(Obj_AI_Base target)
         {
-            if (target.ValidActiveBuffs().Any(buff => InvulnerableSpells.Contains(buff.Name)))
+            if (InvulnerableSpells.Any(target.HasBuff))
             {
                 return;
             }
