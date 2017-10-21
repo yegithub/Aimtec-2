@@ -20,13 +20,13 @@
             var minion = GameObjects.EnemyMinions.FirstOrDefault(x => 
                 x.Health < Global.Player.GetAutoAttackDamage(x) + Global.Player.GetSpellDamage(x, SpellSlot.Q) &&
                 x.Health > Global.Player.GetAutoAttackDamage(x) &&
-                x.Distance(Global.Player) <= Global.Player.AttackRange + 80);
+                x.IsValidAutoRange());
 
             if (minion == null)
             {
                return;
             }
-            SpellManager.CastQ(minion, MenuConfig.LaneClear["QMode"].Value);
+            SpellManager.Q.Cast(Game.CursorPos);
         }
 
         public static void OnUpdate()

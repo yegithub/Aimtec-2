@@ -3,6 +3,7 @@
     using System.Linq;
     using Aimtec;
     using Aimtec.SDK.Damage;
+    using Aimtec.SDK.Damage.JSON;
     using Aimtec.SDK.Extensions;
     using Core;
     using SDK.Unit_Extensions;
@@ -11,9 +12,9 @@
     {
         public static void OnUpdate()
         {
-            var target = GameObjects.EnemyHeroes.FirstOrDefault(x => x.Distance(Global.Player) <= Global.Player.AttackRange + SpellManager.Q.Range && x.IsValid && !x.IsDead);
+            var target = GameObjects.EnemyHeroes.FirstOrDefault(x => x.IsValidTarget(SpellManager.E.Range) && !x.IsDead);
 
-            if (target == null || Global.Orbwalker.IsWindingUp)
+            if (target == null)
             {
                 return;
             }
@@ -28,7 +29,9 @@
             }
             else if (SpellManager.E.Ready && MenuConfig.Killsteal["E"].Enabled)
             {
-                if (target.Health <= Global.Player.GetSpellDamage(target, SpellSlot.E))
+                if (target.Health <= Global.Player.GetSpellDamage(target, SpellSlot.E) * 0.75
+                    || SpellManager.CanStun(target) && target.Health < Global.Player.GetSpellDamage(target, SpellSlot.E) * 0.75f
+                    + Global.Player.GetSpellDamage(target, SpellSlot.E, DamageStage.Collision))
                 {
                     SpellManager.CastE(target);
                 }

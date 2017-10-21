@@ -15,7 +15,7 @@
 
         public static Spell Q, W, E, R;
 
-        public static void Load()
+        public SpellManager()
         {
             Q = new Spell(SpellSlot.Q, 300);
             W = new Spell(SpellSlot.W);
@@ -47,6 +47,19 @@
             return new Geometry.Rectangle(target.ServerPosition.To2D(), endPos.To2D(), target.BoundingRadius);
         }
 
+        public static bool CanStun(Obj_AI_Base target)
+        {
+
+            var rect = Rect(target);
+            var predRect = PredRect(target);
+
+            if (WallExtension.IsWall(rect.Start.To3D(), rect.End.To3D()) && WallExtension.IsWall(predRect.Start.To3D(), predRect.End.To3D()))
+            {
+                return true;
+            }
+            return false;
+        }
+
         public static void CastE(Obj_AI_Base target)
         {
             if (!target.IsValidTarget(E.Range))
@@ -54,10 +67,7 @@
                 return;
             }
 
-            var rect = Rect(target);
-            var predRect = PredRect(target);
-
-            if (WallExtension.IsWall(rect.Start.To3D(), rect.End.To3D()) && WallExtension.IsWall(predRect.Start.To3D(), predRect.End.To3D()))
+            if (CanStun(target))
             {
                 E.CastOnUnit(target);
             }
@@ -91,18 +101,12 @@
                         DebugConsole.Write("[DASH] TO CURSOR", ConsoleColor.Green);
                         pos = Game.CursorPos;
                         break;
-                    case 1: 
-
+                    case 1:
+                        DebugConsole.Write("[DASH] KITING", ConsoleColor.Green);
                         pos = DashManager.DashKite(target, Q.Range);
 
                         break;
                 }
-            }
-
-            if (target.Distance(Global.Player) >= Global.Player.AttackRange && Global.Player.CountEnemyHeroesInRange(2000) == 1 && !target.IsFacingUnit(Global.Player))
-            {
-                DebugConsole.Write("[DASH] FORWARD TO TARGET POSITION", ConsoleColor.Yellow);
-                pos = target.ServerPosition;
             }
 
             Q.Cast(pos);

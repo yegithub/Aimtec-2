@@ -14,7 +14,7 @@
 
         public static void Load()
         {
-            Q = new Spell(SpellSlot.Q, 520);
+            Q = new Spell(SpellSlot.Q, 500);
             Q.SetSkillshot(0.25f, 60, 1600, false, SkillshotType.Line, false, HitChance.None);
             Extension.CurrentMode = Mode.Normal;
 
@@ -37,7 +37,7 @@
             else
             {
                 Q.SetSkillshot(0.25f, 60, 1600, false, SkillshotType.Line, false, HitChance.None);
-                Q.Range = 520;
+                Q.Range = 500;
             }
         }
 

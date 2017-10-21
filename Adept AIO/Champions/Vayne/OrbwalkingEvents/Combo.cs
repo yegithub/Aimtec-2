@@ -19,7 +19,13 @@
                 return;
             }
 
-            SpellManager.CastQ(args.Target as Obj_AI_Base, MenuConfig.Combo["Mode"].Value, MenuConfig.Combo["ToE"].Enabled);
+            var t = args.Target as Obj_AI_Base;
+            if (t == null)
+            {
+                return;
+            }
+
+            SpellManager.CastQ(t, MenuConfig.Combo["Mode"].Value, MenuConfig.Combo["ToE"].Enabled);
         }
 
         public static void OnUpdate()

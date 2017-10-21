@@ -51,7 +51,7 @@
 
             if (SpellManager.Q.Ready && MenuConfig.Drawings["Q"].Enabled)
             {
-                Render.Circle(Global.Player.Position, SpellManager.Q.Range, (uint) MenuConfig.Drawings["Segments"].Value, Color.Crimson);
+                Render.Circle(Global.Player.Position, SpellManager.Q.Range + Global.Player.AttackRange, (uint) MenuConfig.Drawings["Segments"].Value, Color.Crimson);
             }
         }
     }

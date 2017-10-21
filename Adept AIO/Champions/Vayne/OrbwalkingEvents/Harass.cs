@@ -15,7 +15,13 @@
                 return;
             }
 
-            SpellManager.CastQ(args.Target as Obj_AI_Base, MenuConfig.Harass["Mode"].Value);
+            var t = args.Target as Obj_AI_Base;
+            if (t == null || !t.IsValidAutoRange())
+            {
+                return;
+            }
+
+            SpellManager.CastQ(t, MenuConfig.Harass["Mode"].Value);
         }
 
         public static void OnUpdate()

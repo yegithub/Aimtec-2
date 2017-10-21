@@ -35,16 +35,19 @@
             switch (Global.Orbwalker.Mode)
             {
                 case OrbwalkingMode.Combo when MenuConfig.Combo["W"].Enabled:
-                    var target = GameObjects.EnemyHeroes.FirstOrDefault(x => x.GetBuffCount("vaynesilvereddebuff") == 2);
-                    if (target != null && target.IsValidAutoRange())
+                    var target = GameObjects.EnemyHeroes.FirstOrDefault(x => x.IsValidAutoRange() && x.GetBuffCount("vaynesilvereddebuff") == 2);
+                    if (target != null)
                     {
                         args.Target = target;
                     }
                     break;
-                case OrbwalkingMode.Laneclear when args.Target != null && args.Target.Type == GameObjectType.obj_AI_Turret:
+                case OrbwalkingMode.Laneclear:
                     if (Global.Player.ManaPercent() >= 30 && Global.Player.CountEnemyHeroesInRange(1500) == 0)
                     {
-                        SpellManager.CastQ(args.Target as Obj_AI_Base);
+                        var t = args.Target as Obj_AI_Base;
+
+                        if(t != null && t.Type == GameObjectType.obj_AI_Turret)
+                        SpellManager.CastQ(t);
                     }
                     break;
             }

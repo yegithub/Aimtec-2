@@ -11,8 +11,8 @@
     {
         public Vayne()
         {
-            MenuConfig.Attach();
-            SpellManager.Load();
+            new MenuConfig();
+            new SpellManager();
 
             Game.OnUpdate += Manager.OnUpdate;
             Game.OnUpdate += Killsteal.OnUpdate;

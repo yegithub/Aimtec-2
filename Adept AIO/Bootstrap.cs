@@ -43,7 +43,7 @@
             "Jinx",
             "Tristana",
             "Zed",
-           // "Vayne"
+            "Vayne"
         };
 
         private static void Main() { GameEvents.GameStart += GameEvents_GameStart; }
