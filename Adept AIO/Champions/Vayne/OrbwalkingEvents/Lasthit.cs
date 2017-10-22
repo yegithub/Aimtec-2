@@ -18,6 +18,7 @@
             }
 
             var minion = GameObjects.EnemyMinions.FirstOrDefault(x =>
+                x != Global.Orbwalker.GetOrbwalkingTarget() &&
                 x.Health < Global.Player.GetAutoAttackDamage(x) + Global.Player.GetSpellDamage(x, SpellSlot.Q) &&
                 x.Health > Global.Player.GetAutoAttackDamage(x) &&
                 x.IsValidAutoRange());

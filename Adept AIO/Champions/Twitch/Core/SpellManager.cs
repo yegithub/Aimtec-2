@@ -45,20 +45,23 @@
             {
                 R.Cast();
             }
-            else if (Global.Orbwalker.CanAttack())
+
+            if (!Global.Orbwalker.CanAttack())
             {
-                var enemy = GameObjects.Enemy.FirstOrDefault(x => x.IsTargetable && x.IsValidAutoRange());
-                var rect = GetRectangle(target);
+                return;
+            }
 
-                if (enemy == null)
-                {
-                    return;
-                }
+            var enemy = GameObjects.Enemy.FirstOrDefault(x => x.IsTargetable && x.IsValidAutoRange());
+            var rect = GetRectangle(target);
 
-                if (rect.IsInside(enemy.ServerPosition.To2D()))
-                {
-                    Global.Orbwalker.ForceTarget(enemy);
-                }
+            if (enemy == null)
+            {
+                return;
+            }
+
+            if (rect.IsInside(enemy.ServerPosition.To2D()))
+            {
+                Global.Orbwalker.ForceTarget(enemy);
             }
         }
     }
