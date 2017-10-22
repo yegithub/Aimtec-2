@@ -100,7 +100,7 @@
                 return;
             }
 
-            foreach (var target in GameObjects.EnemyHeroes.Where(x => x.IsVisible))
+            foreach (var target in GameObjects.EnemyHeroes.Where(x => x.IsVisible && x.IsFloatingHealthBarActive))
             {
                 var damage = _damage.Damage(target);
 

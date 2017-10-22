@@ -6,13 +6,24 @@
     using Aimtec;
     using Aimtec.SDK.Extensions;
     using Core;
+    using SDK.Geometry_Related;
     using SDK.Unit_Extensions;
 
     class DrawManager
     {
         public static void OnPresent()
         {
-            if (Global.Player.IsDead || !MenuConfig.Drawings["Dmg"].Enabled)
+            if (Global.Player.IsDead)
+            {
+                return;
+            }
+
+            if (!Global.Player.HasBuff("TwitchHideInShadows") && MenuConfig.Drawings["Map"].Enabled && SpellManager.Q.Ready)
+            {
+                Geometry.DrawCircleOnMinimap(Global.Player.ServerPosition, new[] { 10, 11, 12, 13, 14 }[Global.Player.SpellBook.GetSpell(SpellSlot.Q).Level - 1] * Global.Player.MoveSpeed, Color.DeepPink, 5);
+            }
+
+            if (!MenuConfig.Drawings["Dmg"].Enabled)
             {
                 return;
             }
@@ -45,13 +56,10 @@
                 }
             }
 
-            if (Global.Player.HasBuff("TwitchHideInShadows"))
+            if (Global.Player.HasBuff("TwitchHideInShadows") && MenuConfig.Drawings["World"].Enabled)
             {
-                if (MenuConfig.Drawings["World"].Enabled)
-                {
-                    var time = Global.Player.MoveSpeed * (Math.Max(0, Global.Player.GetBuff("TwitchHideInShadows").EndTime) - Game.ClockTime);
-                    Render.Circle(Global.Player.Position, time, (uint) MenuConfig.Drawings["Segments"].Value, Color.Cyan);
-                }
+                var time = Global.Player.MoveSpeed * (Math.Max(0, Global.Player.GetBuff("TwitchHideInShadows").EndTime) - Game.ClockTime);
+                Render.Circle(Global.Player.Position, time, (uint)MenuConfig.Drawings["Segments"].Value, Color.Cyan);
             }
         }
     }

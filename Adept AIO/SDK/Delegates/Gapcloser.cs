@@ -8,36 +8,36 @@
     using Aimtec.SDK.Menu;
     using Aimtec.SDK.Menu.Components;
 
-    public delegate void OnGapcloserEvent(Obj_AI_Hero sender, GapcloserArgs args);
+    public delegate void OnGapcloserEvent(Obj_AI_Hero target, GapcloserArgs args);
 
     public enum SpellType
     {
-        Melee = 0,
-        Dash = 1,
+        Melee     = 0,
+        Dash      = 1,
         SkillShot = 2,
-        Targeted = 3
+        Targeted  = 3
     }
 
     struct SpellData
     {
         public string ChampionName { get; set; }
-        public string SpellName { get; set; }
-        public SpellSlot Slot { get; set; }
+        public string SpellName    { get; set; }
+        public SpellSlot Slot      { get; set; }
         public SpellType SpellType { get; set; }
     }
 
     public class GapcloserArgs
     {
         internal Obj_AI_Hero Unit { get; set; }
-        public SpellSlot Slot { get; set; }
-        public string SpellName { get; set; }
-        public SpellType Type { get; set; }
+        public SpellSlot Slot     { get; set; }
+        public string SpellName   { get; set; }
+        public SpellType Type     { get; set; }
         public Vector3 StartPosition { get; set; }
-        public Vector3 EndPosition { get; set; }
+        public Vector3 EndPosition   { get; set; }
         public int StartTick { get; set; }
-        public int EndTick { get; set; }
+        public int EndTick   { get; set; }
         public int DurationTick { get; set; }
-        public bool HaveShield { get; set; }
+        public bool HaveShield  { get; set; }
     }
 
     public static class Gapcloser
@@ -49,222 +49,10 @@
 
         static Gapcloser() { Initialize(); }
 
+        public static int MinSearchRange { get; set; } = 550;
+        public static int MaxSearchRange { get; set; } = 700;
+        public static int DefalutHPercent { get; set; } = 100;
         public static event OnGapcloserEvent OnGapcloser;
-
-        public static void Attach(Menu mainMenu, string menuName)
-        {
-            if (ObjectManager.Get<Obj_AI_Hero>().All(x => !x.IsEnemy))
-            {
-                return;
-            }
-
-            Menu = new Menu("", menuName) {new MenuBool("Enabled", "Enabled")};
-
-            mainMenu.Add(Menu);
-
-            foreach (var enemy in ObjectManager.Get<Obj_AI_Hero>().Where(x => x.IsEnemy))
-            {
-                var heroMenu = new Menu(enemy.ChampionName, enemy.ChampionName)
-                {
-                    new MenuBool(enemy.ChampionName + ".Enabled", "Enabled"),
-                    new MenuSlider(enemy.ChampionName + ".Distance", "If Target Distance To Player <", 550, 1, 700),
-                    new MenuSlider(enemy.ChampionName + ".HPercent", "When Player (HP %) < ", 100, 1)
-                };
-
-                Menu.Add(heroMenu);
-
-                if (enemy.IsMelee)
-                {
-                    heroMenu.Add(new MenuSliderBool(enemy.ChampionName + ".Melee", "Anti Melee Attack | Player (HP %) <", true, 40, 1, 99));
-                }
-
-                foreach (var spell in Spells.Where(x => x.ChampionName == enemy.ChampionName))
-                {
-                    heroMenu.Add(new MenuBool(spell.SpellName, "Spell: " + spell.Slot + " (" + spell.SpellName + ")"));
-                }
-            }
-
-            Game.OnUpdate += OnUpdate;
-
-            //  Obj_AI_Base.OnProcessAutoAttack += OnProcessAutoAttack;
-            //  Obj_AI_Base.OnProcessSpellCast += OnProcessSpellCast;
-            //  Obj_AI_Base.OnNewPath += OnNewPath;
-        }
-
-        private static void OnProcessAutoAttack(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
-        {
-            if (sender == null ||
-                !sender.IsHero ||
-                !sender.IsEnemy ||
-                string.IsNullOrEmpty(args.SpellData.Name) ||
-                args.Target == null ||
-                !args.Target.IsMe ||
-                Gapclosers[sender.NetworkId] == null ||
-                !Menu[sender.UnitSkinName][sender.UnitSkinName + ".Melee"].Enabled)
-            {
-                return;
-            }
-
-            if (!Gapclosers.ContainsKey(sender.NetworkId))
-            {
-                Gapclosers.Add(sender.NetworkId, new GapcloserArgs());
-            }
-
-            var gapclosers = Gapclosers[sender.NetworkId];
-
-            gapclosers.Unit = (Obj_AI_Hero) sender;
-            gapclosers.Slot = SpellSlot.Unknown;
-            gapclosers.Type = SpellType.Melee;
-
-            gapclosers.SpellName = args.SpellData.Name;
-
-            gapclosers.StartPosition = args.Start;
-            gapclosers.EndPosition = args.End;
-            gapclosers.StartTick = Game.TickCount;
-        }
-
-        private static void OnNewPath(Obj_AI_Base sender, Obj_AI_BaseNewPathEventArgs args)
-        {
-            if (sender == null || !sender.IsHero || !sender.IsEnemy || Gapclosers[sender.NetworkId] == null || !args.IsDash)
-            {
-                return;
-            }
-
-            if (sender.UnitSkinName == "Vi" // Vi R
-                ||
-                sender.UnitSkinName == "Sion" // Sion R
-                ||
-                sender.UnitSkinName == "Kayn" // Kayn R
-                ||
-                sender.UnitSkinName == "Fizz") // Fizz E
-            {
-                return;
-            }
-
-            if (!Gapclosers.ContainsKey(sender.NetworkId))
-            {
-                Gapclosers.Add(sender.NetworkId, new GapcloserArgs());
-            }
-
-            var gapclosers = Gapclosers[sender.NetworkId];
-
-            gapclosers.Unit = (Obj_AI_Hero) sender;
-            gapclosers.Slot = SpellSlot.Unknown;
-            gapclosers.Type = SpellType.Dash;
-            gapclosers.SpellName = sender.UnitSkinName + "_Dash";
-            gapclosers.StartPosition = sender.ServerPosition;
-            gapclosers.EndPosition = args.Path.Last();
-            gapclosers.StartTick = Game.TickCount;
-            gapclosers.EndTick = (int) (gapclosers.EndPosition.DistanceSqr(gapclosers.StartPosition) / args.Speed * args.Speed * 1000) + gapclosers.StartTick;
-            gapclosers.DurationTick = gapclosers.EndTick - gapclosers.StartTick;
-            gapclosers.HaveShield = GotShield(sender);
-        }
-
-        private static void OnUpdate()
-        {
-            foreach (var gapcloser in Gapclosers.Where(x => Game.TickCount - x.Value.StartTick > 1200 + Game.Ping))
-            {
-                Gapclosers.Remove(gapcloser.Key);
-            }
-
-            if (OnGapcloser == null || !Menu["Enabled"].Enabled)
-            {
-                return;
-            }
-
-            foreach (var args in Gapclosers.Where(x =>
-                x.Value.Unit.IsValidTarget() && !x.Value.Unit.IsMe && Menu[x.Value.Unit.ChampionName][x.Value.Unit.ChampionName + ".Enabled"].Enabled))
-            {
-                switch (args.Value.Type)
-                {
-                    case SpellType.SkillShot:
-                        if (args.Value.Unit.ServerPosition.DistanceSqr(ObjectManager.GetLocalPlayer().ServerPosition) <=
-                            Menu[args.Value.Unit.ChampionName][args.Value.Unit.ChampionName + ".Distance"].Value *
-                            Menu[args.Value.Unit.ChampionName][args.Value.Unit.ChampionName + ".Distance"].Value &&
-                            ObjectManager.GetLocalPlayer().HealthPercent() <= Menu[args.Value.Unit.ChampionName][args.Value.Unit.ChampionName + ".HPercent"].Value)
-                        {
-                            OnGapcloser(args.Value.Unit, args.Value);
-                        }
-                        break;
-                    case SpellType.Dash:
-                        if (args.Value.Type == SpellType.Dash &&
-                            args.Value.EndPosition.DistanceSqr(ObjectManager.GetLocalPlayer().ServerPosition) <=
-                            Menu[args.Value.Unit.ChampionName][args.Value.Unit.ChampionName + ".Distance"].Value *
-                            Menu[args.Value.Unit.ChampionName][args.Value.Unit.ChampionName + ".Distance"].Value &&
-                            ObjectManager.GetLocalPlayer().HealthPercent() <= Menu[args.Value.Unit.ChampionName][args.Value.Unit.ChampionName + ".HPercent"].Value)
-                        {
-                            OnGapcloser(args.Value.Unit, args.Value);
-                        }
-                        break;
-                    case SpellType.Targeted:
-                        if (ObjectManager.GetLocalPlayer().HealthPercent() <= Menu[args.Value.Unit.ChampionName][args.Value.Unit.ChampionName + ".HPercent"].Value)
-                        {
-                            OnGapcloser(args.Value.Unit, args.Value);
-                        }
-                        break;
-                    case SpellType.Melee:
-                        if (ObjectManager.GetLocalPlayer().HealthPercent() <= Menu[args.Value.Unit.ChampionName][args.Value.Unit.ChampionName + ".Melee"].Value)
-                        {
-                            OnGapcloser(args.Value.Unit, args.Value);
-                        }
-                        break;
-                }
-            }
-        }
-
-        private static void OnProcessSpellCast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
-        {
-            if (sender == null ||
-                !sender.IsValidTarget() ||
-                !sender.IsHero ||
-                !sender.IsEnemy ||
-                string.IsNullOrEmpty(args.SpellData.Name) ||
-                Gapclosers[sender.NetworkId] == null ||
-                args.SpellData.Name.ToLower().Contains("attack") ||
-                args.SpellData.Name.ToLower().Contains("crit"))
-            {
-                return;
-            }
-
-            if (Spells.All(x => !string.Equals(x.SpellName.ToLower(), args.SpellData.Name, StringComparison.CurrentCultureIgnoreCase)) ||
-                !Menu[sender.UnitSkinName][args.SpellData.Name.ToLower()].Enabled)
-            {
-                return;
-            }
-
-            if (!Gapclosers.ContainsKey(sender.NetworkId))
-            {
-                Gapclosers.Add(sender.NetworkId, new GapcloserArgs());
-            }
-
-            var gapclosers = Gapclosers[sender.NetworkId];
-
-            gapclosers.Unit = (Obj_AI_Hero) sender;
-            gapclosers.Slot = args.SpellSlot;
-            gapclosers.Type = args.Target != null ? SpellType.Targeted : SpellType.SkillShot;
-
-            gapclosers.SpellName = args.SpellData.Name;
-            gapclosers.StartTick = Game.TickCount;
-            gapclosers.HaveShield = GotShield(sender);
-
-            gapclosers.StartPosition = args.Start;
-            gapclosers.EndPosition = args.End;
-        }
-
-        private static bool GotShield(Obj_AI_Base target)
-        {
-            if (target == null || target.IsDead || target.Health <= 0 || !target.IsValidTarget())
-            {
-                return false;
-            }
-
-            return target.HasBuff("BlackShield") ||
-                   target.HasBuff("bansheesveil") ||
-                   target.HasBuff("SivirE") ||
-                   target.HasBuff("NocturneShroudofDarkness") ||
-                   target.HasBuff("itemmagekillerveil") ||
-                   target.HasBuffOfType(BuffType.SpellShield);
-        }
 
         private static void Initialize()
         {
@@ -340,8 +128,6 @@
 
             Spells.Add(new SpellData {ChampionName = "LeeSin", Slot = SpellSlot.Q, SpellName = "blindmonkqtwo", SpellType = SpellType.Targeted});
 
-            Spells.Add(new SpellData {ChampionName = "Blitzcrank", Slot = SpellSlot.Q, SpellName = "", SpellType = SpellType.SkillShot});
-
             Spells.Add(new SpellData {ChampionName = "Leona", Slot = SpellSlot.E, SpellName = "leonazenithblade", SpellType = SpellType.SkillShot});
 
             Spells.Add(new SpellData {ChampionName = "Lucian", Slot = SpellSlot.E, SpellName = "luciane", SpellType = SpellType.SkillShot});
@@ -409,6 +195,270 @@
             Spells.Add(new SpellData {ChampionName = "Zed", Slot = SpellSlot.R, SpellName = "zedr", SpellType = SpellType.Targeted});
 
             Spells.Add(new SpellData {ChampionName = "Ziggs", Slot = SpellSlot.W, SpellName = "ziggswtoggle", SpellType = SpellType.SkillShot});
+        }
+
+        public static void Attach(Menu mainMenu, string menuName)
+        {
+            if (ObjectManager.Get<Obj_AI_Hero>().All(x => !x.IsEnemy))
+            {
+                return;
+            }
+
+            Menu = new Menu("", menuName) {new MenuBool("Enabled", "Enabled"), new MenuSeperator("Seperator1")};
+            mainMenu.Add(Menu);
+
+            foreach (var enemy in ObjectManager.Get<Obj_AI_Hero>().Where(x => x.IsEnemy))
+            {
+                var heroMenu = new Menu(enemy.ChampionName, enemy.ChampionName)
+                {
+                    new MenuBool(enemy.ChampionName + ".Enabled", "Enabled"),
+                    new MenuSlider(enemy.ChampionName + ".Distance", "If Target Distance To Player <= x", MinSearchRange, 1, MaxSearchRange),
+                    new MenuSlider(enemy.ChampionName + ".HPercent", "When Player HealthPercent <= x%", DefalutHPercent, 1, 101)
+                };
+                Menu.Add(heroMenu);
+
+                if (enemy.IsMelee)
+                {
+                    heroMenu.Add(new MenuSliderBool(enemy.ChampionName + ".Melee",
+                        "Anti Melee Attack| Player HP <= x%",
+                        true,
+                        DefalutHPercent / 2,
+                        1,
+                        99));
+                }
+
+                foreach (var spell in Spells.Where(x => x.ChampionName == enemy.ChampionName))
+                {
+                    heroMenu.Add(new MenuBool(enemy.ChampionName + "." + spell.SpellName.ToLower(),
+                        "Spell: " + spell.Slot + " (" + spell.SpellName + ")"));
+                }
+            }
+
+            Game.OnUpdate += OnUpdate;
+            //GameObject.OnCreate += OnCreate;
+            Obj_AI_Base.OnProcessAutoAttack += OnProcessAutoAttack;
+            Obj_AI_Base.OnProcessSpellCast += OnProcessSpellCast;
+            Obj_AI_Base.OnNewPath += OnNewPath;
+        }
+
+        private static void OnCreate(GameObject sender)
+        {
+            //special dash (like rengar, khazix, ziggs)
+        }
+
+        private static void OnProcessAutoAttack(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
+        {
+            if (sender == null || sender.Type != GameObjectType.obj_AI_Hero || !sender.IsEnemy || !sender.IsMelee)
+            {
+                return;
+            }
+
+            if (string.IsNullOrEmpty(args.SpellData.Name) ||
+                args.Target == null ||
+                !args.Target.IsMe ||
+                Menu[sender.UnitSkinName.ToLower()][sender.UnitSkinName.ToLower() + ".Melee"] == null ||
+                !Menu[sender.UnitSkinName.ToLower()][sender.UnitSkinName.ToLower() + ".Melee"].Enabled)
+            {
+                return;
+            }
+
+            if (!Gapclosers.ContainsKey(sender.NetworkId))
+            {
+                Gapclosers.Add(sender.NetworkId, new GapcloserArgs());
+            }
+
+            Gapclosers[sender.NetworkId].Unit = (Obj_AI_Hero) sender;
+            Gapclosers[sender.NetworkId].Slot = SpellSlot.Unknown;
+            Gapclosers[sender.NetworkId].Type = SpellType.Melee;
+            Gapclosers[sender.NetworkId].SpellName = args.SpellData.Name;
+            Gapclosers[sender.NetworkId].StartPosition = args.Start;
+            Gapclosers[sender.NetworkId].EndPosition = args.End;
+            Gapclosers[sender.NetworkId].StartTick = Game.TickCount;
+        }
+
+        private static void OnNewPath(Obj_AI_Base sender, Obj_AI_BaseNewPathEventArgs args)
+        {
+            if (sender == null || sender.Type != GameObjectType.obj_AI_Hero || !sender.IsEnemy)
+            {
+                return;
+            }
+
+            if (sender.UnitSkinName == "Vi" || sender.UnitSkinName == "Sion" || sender.UnitSkinName == "Kayn" || sender.UnitSkinName == "Fizz")
+            {
+                // Vi R
+                // Sion R
+                // Kayn R
+                // Fizz E
+                return;
+            }
+
+            if (!Gapclosers.ContainsKey(sender.NetworkId))
+            {
+                Gapclosers.Add(sender.NetworkId, new GapcloserArgs());
+            }
+
+            if (args.IsDash)
+            {
+                Gapclosers[sender.NetworkId].Unit = (Obj_AI_Hero) sender;
+                Gapclosers[sender.NetworkId].Slot = SpellSlot.Unknown;
+                Gapclosers[sender.NetworkId].Type = SpellType.Dash;
+                Gapclosers[sender.NetworkId].SpellName = sender.UnitSkinName + "_Dash";
+                Gapclosers[sender.NetworkId].StartPosition = sender.ServerPosition;
+                Gapclosers[sender.NetworkId].EndPosition = args.Path.Last();
+                Gapclosers[sender.NetworkId].StartTick = Game.TickCount;
+                Gapclosers[sender.NetworkId].EndTick =
+                    (int) (Gapclosers[sender.NetworkId].EndPosition.DistanceSqr(Gapclosers[sender.NetworkId].StartPosition) / args.Speed * args.Speed * 1000) +
+                    Gapclosers[sender.NetworkId].StartTick;
+                Gapclosers[sender.NetworkId].DurationTick = Gapclosers[sender.NetworkId].EndTick - Gapclosers[sender.NetworkId].StartTick;
+                Gapclosers[sender.NetworkId].HaveShield = HaveShiledBuff(sender);
+            }
+        }
+
+        private static void OnUpdate()
+        {
+            if (Gapclosers.Values.Any(x => Game.TickCount - x.StartTick > 900 + Game.Ping))
+            {
+                Gapclosers.Clear();
+            }
+
+            if (OnGapcloser == null || Menu["Enabled"] == null || !Menu["Enabled"].Enabled)
+            {
+                return;
+            }
+
+            foreach (var args in Gapclosers.Where(x =>
+                x.Value.Unit.IsValidTarget() &&
+                Menu[x.Value.Unit.ChampionName] != null &&
+                Menu[x.Value.Unit.ChampionName][x.Value.Unit.ChampionName + ".Enabled"].
+                   
+                    Enabled))
+            {
+                if (args.Value.Type == SpellType.SkillShot)
+                {
+                    if (args.Value.Unit.ServerPosition.DistanceSqr(ObjectManager.GetLocalPlayer().ServerPosition) <=
+                        Menu[args.Value.Unit.ChampionName][args.Value.Unit.ChampionName + ".Distance"].
+                            
+                            Value *
+                        Menu[args.Value.Unit.ChampionName][args.Value.Unit.ChampionName + ".Distance"].
+                            
+                            Value)
+                    {
+                        if (ObjectManager.GetLocalPlayer().HealthPercent() <=
+                            Menu[args.Value.Unit.ChampionName][args.Value.Unit.ChampionName + ".HPercent"].
+                                
+                                Value)
+                        {
+                            OnGapcloser(args.Value.Unit, args.Value);
+                        }
+                    }
+                }
+                else if (args.Value.Type == SpellType.Dash)
+                {
+                    if (args.Value.Type == SpellType.Dash &&
+                        args.Value.EndPosition.DistanceSqr(ObjectManager.GetLocalPlayer().ServerPosition) <=
+                        Menu[args.Value.Unit.ChampionName][args.Value.Unit.ChampionName + ".Distance"].
+                            
+                            Value *
+                        Menu[args.Value.Unit.ChampionName][args.Value.Unit.ChampionName + ".Distance"].
+                            
+                            Value)
+                    {
+                        if (ObjectManager.GetLocalPlayer().HealthPercent() <=
+                            Menu[args.Value.Unit.ChampionName][args.Value.Unit.ChampionName + ".HPercent"].
+                                
+                                Value)
+                        {
+                            OnGapcloser(args.Value.Unit, args.Value);
+                        }
+                    }
+                }
+                else if (args.Value.Type == SpellType.Targeted)
+                {
+                    if (ObjectManager.GetLocalPlayer().HealthPercent() <=
+                        Menu[args.Value.Unit.ChampionName][args.Value.Unit.ChampionName + ".HPercent"].
+                            
+                            Value)
+                    {
+                        OnGapcloser(args.Value.Unit, args.Value);
+                    }
+                }
+                else if (args.Value.Type == SpellType.Melee)
+                {
+                    if (ObjectManager.GetLocalPlayer().HealthPercent() <=
+                        Menu[args.Value.Unit.ChampionName][args.Value.Unit.ChampionName + ".Melee"].
+                            As<MenuSliderBool>().
+                            Value)
+                    {
+                        OnGapcloser(args.Value.Unit, args.Value);
+                    }
+                }
+            }
+        }
+
+        private static void OnProcessSpellCast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
+        {
+            if (sender == null ||
+                !sender.IsValid ||
+                sender.Type != GameObjectType.obj_AI_Hero ||
+                !sender.IsEnemy ||
+                string.IsNullOrEmpty(args.SpellData.Name) ||
+                args.SpellData.Name.ToLower().Contains("attack") ||
+                args.SpellData.Name.ToLower().Contains("crit"))
+            {
+                return;
+            }
+
+            if (Spells.All(x => !string.Equals(x.SpellName, args.SpellData.Name, StringComparison.CurrentCultureIgnoreCase)) ||
+                !Menu[sender.UnitSkinName.ToLower()][sender.UnitSkinName.ToLower() + "." + args.SpellData.Name.ToLower()].
+                   
+                    Enabled)
+            {
+                return;
+            }
+
+            if (!Gapclosers.ContainsKey(sender.NetworkId))
+            {
+                Gapclosers.Add(sender.NetworkId, new GapcloserArgs());
+            }
+
+            Gapclosers[sender.NetworkId].Unit = (Obj_AI_Hero) sender;
+            Gapclosers[sender.NetworkId].Slot = args.SpellSlot;
+            Gapclosers[sender.NetworkId].Type = args.Target != null ? SpellType.Targeted : SpellType.SkillShot;
+            Gapclosers[sender.NetworkId].SpellName = args.SpellData.Name;
+            Gapclosers[sender.NetworkId].StartPosition = args.Start;
+            Gapclosers[sender.NetworkId].EndPosition = args.End;
+            Gapclosers[sender.NetworkId].StartTick = Game.TickCount;
+            Gapclosers[sender.NetworkId].HaveShield = HaveShiledBuff(sender);
+        }
+
+        private static bool HaveShiledBuff(Obj_AI_Base target)
+        {
+            if (target == null || target.IsDead || !target.IsValidTarget())
+            {
+                return false;
+            }
+
+            if (target.HasBuff("BlackShield"))
+            {
+                return true;
+            }
+
+            if (target.HasBuff("bansheesveil"))
+            {
+                return true;
+            }
+
+            if (target.HasBuff("SivirE"))
+            {
+                return true;
+            }
+
+            if (target.HasBuff("NocturneShroudofDarkness"))
+            {
+                return true;
+            }
+
+            return target.HasBuff("itemmagekillerveil") || target.HasBuffOfType(BuffType.SpellShield);
         }
     }
 }

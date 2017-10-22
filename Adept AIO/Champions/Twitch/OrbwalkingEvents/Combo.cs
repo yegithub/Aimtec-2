@@ -27,7 +27,7 @@
                 SpellManager.W.Cast(target);
             }
 
-            if (SpellManager.R.Ready && MenuConfig.Combo["R"].Enabled)
+            if (MenuConfig.Combo["R"].Enabled)
             {
                 if (Global.Player.CountEnemyHeroesInRange(1500) < MenuConfig.Combo["R2"].Value)
                 {

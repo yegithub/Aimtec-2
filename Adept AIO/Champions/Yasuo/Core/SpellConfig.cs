@@ -53,6 +53,14 @@
 
         public static void CastE(Obj_AI_Base target, bool gapclose = false, int rangeGapclose = 0)
         {
+            if (target.Name.ToLower().Contains("soldier") ||
+                target.Name.ToLower().Contains("shadow") ||
+                target.Name.ToLower().Contains("dagger") ||
+                target.Name.ToLower().Contains("axe"))
+            {
+                return;
+            }
+
             var closestToPlayer = MinionHelper.GetClosest(target);
             var positionBehindMinion = MinionHelper.WalkBehindMinion(target, closestToPlayer);
 

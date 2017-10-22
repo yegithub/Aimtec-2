@@ -44,6 +44,7 @@
                 new MenuSlider("Segments", "Segments", 100, 10, 150).SetToolTip("Smoothness of the circles"),
                 new MenuBool("Dmg", "Damage"),
                 new MenuBool("World", "Draw Q Time (WORLD)"),
+                new MenuBool("Map", "Draw Q Time (MAP)"),
                 new MenuBool("Debug", "Debug")
             };
 

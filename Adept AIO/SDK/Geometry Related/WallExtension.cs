@@ -1,8 +1,11 @@
 ﻿namespace Adept_AIO.SDK.Geometry_Related
 {
+    using System.Linq;
     using Aimtec;
     using Aimtec.SDK.Extensions;
+    using Aimtec.SDK.Prediction.Health;
     using Generic;
+    using Unit_Extensions;
 
     class WallExtension
     {
