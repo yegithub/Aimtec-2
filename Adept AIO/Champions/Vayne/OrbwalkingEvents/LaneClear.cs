@@ -12,7 +12,7 @@
     {
         public static void PostAttack(object sender, PostAttackEventArgs args)
         {
-            if (!SpellManager.Q.Ready || MenuConfig.LaneClear["Q"].Value == 1 || Global.Player.ManaPercent() <= 20)
+            if (!SpellManager.Q.Ready || MenuConfig.LaneClear["Q"].Value == 1 || Global.Player.ManaPercent() <= 35)
             {
                 return;
             }
@@ -32,8 +32,8 @@
         public static void OnUpdate()
         {
             var minion = GameObjects.EnemyMinions.FirstOrDefault(x =>
-                x.Distance(Global.Player) <= SpellManager.Q.Range + Global.Player.AttackRange && x.Health > 0 && x.MaxHealth > 0);
-            if (minion == null || !SpellManager.Q.Ready || Global.Player.ManaPercent() <= 20)
+                x.IsValidTarget(SpellManager.Q.Range + Global.Player.AttackRange) && x.MaxHealth > 30);
+            if (minion == null || !SpellManager.Q.Ready || Global.Player.ManaPercent() <= 35)
             {
                 return;
             }

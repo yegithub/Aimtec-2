@@ -14,22 +14,20 @@
     {
         public static OrbwalkerMode FleeOrbwalkerMode, CondemnFlashOrbwalkerMode;
 
-        private static Menu _mainMenu;
-
         public static Menu Combo, Harass, LaneClear, JungleClear, Lasthit, Killsteal, Misc, Drawings;
 
         public MenuConfig()
         {
-            _mainMenu = new Menu(string.Empty, $"Adept AIO - {Global.Player.ChampionName}", true);
-            _mainMenu.Attach();
-            Global.Orbwalker.Attach(_mainMenu);
+            var mainMenu = new Menu(string.Empty, $"Adept AIO - {Global.Player.ChampionName}", true);
+            mainMenu.Attach();
+            Global.Orbwalker.Attach(mainMenu);
             FleeOrbwalkerMode = new OrbwalkerMode("Flee", KeyCode.A, null, Flee.OnKeyPressed);
             Global.Orbwalker.AddMode(FleeOrbwalkerMode);
 
             CondemnFlashOrbwalkerMode = new OrbwalkerMode("Condemn Flash", KeyCode.T, null, CondemnFlash.OnKeyPressed);
             Global.Orbwalker.AddMode(CondemnFlashOrbwalkerMode);
 
-            Gapcloser.Attach(_mainMenu, "Anti Gapcloser");
+            Gapcloser.Attach(mainMenu, "Anti Gapcloser");
 
             Combo = new Menu("VayneCombo", "Combo")
             {
@@ -92,7 +90,7 @@
 
             foreach (var menu in new List<Menu> {Combo, Harass, LaneClear, JungleClear, Lasthit, Killsteal, Misc, Drawings, MenuShortcut.Credits})
             {
-                _mainMenu.Add(menu);
+                mainMenu.Add(menu);
             }
         }
     }
