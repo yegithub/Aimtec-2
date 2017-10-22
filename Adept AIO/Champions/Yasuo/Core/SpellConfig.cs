@@ -42,6 +42,14 @@
 
         public static void CastQ(Obj_AI_Base target)
         {
+            if (target.UnitSkinName.ToLower().Contains("soldier") ||
+                target.UnitSkinName.ToLower().Contains("shadow") ||
+                target.UnitSkinName.ToLower().Contains("dagger") ||
+                target.UnitSkinName.ToLower().Contains("axe"))
+            {
+                return;
+            }
+
             var rect = Q3Rect(target);
             if (rect == null || rect.IsOutside(target.ServerPosition.To2D()))
             {
