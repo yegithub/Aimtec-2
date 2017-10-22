@@ -49,7 +49,13 @@
                 new MenuSliderBool("W", "[W] (Min. Mana %", true, 25, 1)
             };
 
-            Killsteal = new Menu("Killsteal", "Killsteal") {new MenuBool("Ignite", "Ignite"), new MenuBool("Q", "[Q]"), new MenuBool("W", "[W]"), new MenuBool("R", "[R]")};
+            Killsteal = new Menu("Killsteal", "Killsteal")
+            {
+                new MenuBool("Ignite", "Ignite"),
+                new MenuBool("Q", "[Q]"),
+                new MenuBool("W", "[W]"),
+                new MenuBool("R", "[R]")
+            };
 
             Drawings = new Menu("DrawManager", "DrawManager")
             {

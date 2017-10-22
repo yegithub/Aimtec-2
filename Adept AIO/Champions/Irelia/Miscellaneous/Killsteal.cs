@@ -19,7 +19,9 @@
             }
 
             if (SpellConfig.Q.Ready && target.Health < Dmg.Damage(target) ||
-                target.Health < Global.Player.GetSpellDamage(target, SpellSlot.Q) && target.Distance(Global.Player) < SpellConfig.Q.Range && MenuConfig.Killsteal["Q"].Enabled)
+                target.Health < Global.Player.GetSpellDamage(target, SpellSlot.Q) &&
+                target.Distance(Global.Player) < SpellConfig.Q.Range &&
+                MenuConfig.Killsteal["Q"].Enabled)
             {
                 SpellConfig.Q.CastOnUnit(target);
             }

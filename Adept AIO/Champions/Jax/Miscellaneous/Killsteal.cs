@@ -16,7 +16,8 @@
                 return;
             }
 
-            var target = GameObjects.EnemyHeroes.FirstOrDefault(x => x.Distance(Global.Player) < SpellConfig.Q.Range && x.Health < Global.Player.GetSpellDamage(x, SpellSlot.Q));
+            var target = GameObjects.EnemyHeroes.FirstOrDefault(x =>
+                x.Distance(Global.Player) < SpellConfig.Q.Range && x.Health < Global.Player.GetSpellDamage(x, SpellSlot.Q));
 
             if (target == null || !target.IsValidTarget())
             {

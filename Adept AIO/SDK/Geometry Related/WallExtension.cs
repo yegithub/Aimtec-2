@@ -3,13 +3,15 @@
     using Aimtec;
     using Aimtec.SDK.Extensions;
     using Generic;
-    using Unit_Extensions;
 
     class WallExtension
     {
         public static Vector3 EndPoint = Vector3.Zero;
 
-        public static bool IsWallAt(Vector3 pos) => NavMesh.WorldToCell(pos).Flags.HasFlag(NavCellFlags.Wall) || NavMesh.WorldToCell(pos).Flags.HasFlag(NavCellFlags.Building);
+        public static bool IsWallAt(Vector3 pos)
+        {
+            return NavMesh.WorldToCell(pos).Flags.HasFlag(NavCellFlags.Wall) || NavMesh.WorldToCell(pos).Flags.HasFlag(NavCellFlags.Building);
+        }
 
         public static Vector3 GeneratePoint(Vector3 start, Vector3 end)
         {
@@ -43,30 +45,11 @@
 
         public static Vector3 NearestWall(Obj_AI_Base target, int range)
         {
-            for (var i = 0; i < 360; i += 10)
+            for (var i = 0; i < 360; i += 15)
             {
                 var dir = target.Orientation.To2D();
                 var angleRad = Maths.DegreeToRadian(i);
                 var rot = (target.ServerPosition.To2D() + range * dir.Rotated((float) angleRad)).To3D();
-
-                if (!IsWallAt(rot))
-                {
-                    continue;
-                }
-
-                return rot;
-            }
-
-            return Vector3.Zero;
-        }
-
-        public static Vector3 NearestWall(Vector3 position, int range)
-        {
-            for (var i = 0; i < 360; i += 10)
-            {
-                var dir = Global.Player.Orientation.To2D();
-                var angleRad = Maths.DegreeToRadian(i);
-                var rot = (position.To2D() + range * dir.Rotated((float) angleRad)).To3D();
 
                 if (!IsWallAt(rot))
                 {

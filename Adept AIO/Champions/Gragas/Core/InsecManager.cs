@@ -17,8 +17,10 @@
             return qPos;
         }
 
-        private static float DistanceBehindTarget(GameObject target = null) =>
-            Math.Min((Global.Player.BoundingRadius + (target == null ? 65 : target.BoundingRadius) + 50) * 1.25f, SpellManager.R.Range);
+        private static float DistanceBehindTarget(GameObject target = null)
+        {
+            return Math.Min((Global.Player.BoundingRadius + (target == null ? 65 : target.BoundingRadius) + 50) * 1.25f, SpellManager.R.Range);
+        }
 
         public static Vector3 InsecPosition(Obj_AI_Base target)
         {

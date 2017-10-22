@@ -3,7 +3,6 @@
     using System.Linq;
     using Aimtec.SDK.Extensions;
     using Core;
-    using SDK.Geometry_Related;
     using SDK.Unit_Extensions;
 
     class LaneClear
@@ -25,8 +24,10 @@
             if (MenuConfig.LaneClear["W"].Enabled && SpellManager.W.Ready)
             {
                 var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsValidTarget(SpellManager.W.Range));
-                if(minion != null)
-                SpellManager.W.Cast(minion, true, MenuConfig.LaneClear["W"].Value);
+                if (minion != null)
+                {
+                    SpellManager.W.Cast(minion, true, MenuConfig.LaneClear["W"].Value);
+                }
             }
         }
     }

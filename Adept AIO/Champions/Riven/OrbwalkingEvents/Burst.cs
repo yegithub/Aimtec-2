@@ -81,7 +81,9 @@
             {
                 case BurstPattern.TheShy:
 
-                    if (Extensions.AllIn && target.Distance(Global.Player) > SpellConfig.E.Range + Global.Player.AttackRange && SummonerSpells.IsValid(SummonerSpells.Flash))
+                    if (Extensions.AllIn &&
+                        target.Distance(Global.Player) > SpellConfig.E.Range + Global.Player.AttackRange &&
+                        SummonerSpells.IsValid(SummonerSpells.Flash))
                     {
                         DelayAction.Queue(Game.Ping / 2 + 50,
                             delegate

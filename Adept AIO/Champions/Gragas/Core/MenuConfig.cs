@@ -56,7 +56,12 @@
 
             Jungle = new Menu("Jungle", "Jungle") {new MenuBool("Q", "Use Q"), new MenuBool("W", "Use W"), new MenuBool("E", "Use E")};
 
-            Automatic = new Menu("Auto", "Automatic") {new MenuBool("Q", "Auto Q (Smart)"), new MenuBool("E", "Killsteal E"), new MenuBool("Disengage", "R | Disengage", false)};
+            Automatic = new Menu("Auto", "Automatic")
+            {
+                new MenuBool("Q", "Auto Q (Smart)"),
+                new MenuBool("E", "Killsteal E"),
+                new MenuBool("Disengage", "R | Disengage", false)
+            };
 
             Drawings = new Menu("DrawManager", "DrawManager")
             {

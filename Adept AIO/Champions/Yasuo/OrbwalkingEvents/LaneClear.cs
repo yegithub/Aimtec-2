@@ -7,7 +7,6 @@
     using Aimtec.SDK.Events;
     using Aimtec.SDK.Extensions;
     using Core;
-    using SDK.Generic;
     using SDK.Geometry_Related;
     using SDK.Unit_Extensions;
 
@@ -91,32 +90,32 @@
                 switch (Extension.CurrentMode)
                 {
                     case Mode.Normal:
+                    {
+                        var m = GameObjects.EnemyMinions.LastOrDefault(x => x.IsValidSpellTarget(SpellConfig.Q.Range));
+                        if (m == null || Global.Player.IsDashing())
                         {
-                            var m = GameObjects.EnemyMinions.LastOrDefault(x => x.IsValidSpellTarget(SpellConfig.Q.Range));
-                            if (m == null || Global.Player.IsDashing())
-                            {
-                                return;
-                            }
-                            
-                            SpellConfig.Q.Cast(m);
+                            return;
                         }
+
+                        SpellConfig.Q.Cast(m);
+                    }
                         break;
                     case Mode.Tornado:
+                    {
+                        var m = GameObjects.EnemyMinions.LastOrDefault(x => x.IsValidSpellTarget(SpellConfig.Q.Range));
+                        if (m == null || Global.Player.IsDashing())
                         {
-                            var m = GameObjects.EnemyMinions.LastOrDefault(x => x.IsValidSpellTarget(SpellConfig.Q.Range));
-                            if (m == null || Global.Player.IsDashing())
-                            {
-                                return;
-                            }
-
-                            var rect = SpellConfig.Q3Rect(m);
-                            var count = GameObjects.EnemyMinions.Count(x => rect.IsInside(x.ServerPosition.To2D()));
-
-                            if (MenuConfig.LaneClear["Q3"].Enabled && count >= 3)
-                            {
-                                SpellConfig.Q.Cast(m);
-                            }
+                            return;
                         }
+
+                        var rect = SpellConfig.Q3Rect(m);
+                        var count = GameObjects.EnemyMinions.Count(x => rect.IsInside(x.ServerPosition.To2D()));
+
+                        if (MenuConfig.LaneClear["Q3"].Enabled && count >= 3)
+                        {
+                            SpellConfig.Q.Cast(m);
+                        }
+                    }
 
                         break;
                     case Mode.DashingTornado:
@@ -128,7 +127,8 @@
                         }
 
                         var circle = new Geometry.Circle(Global.Player.GetDashInfo().EndPos, 220);
-                        var circleCount = GameObjects.EnemyMinions.Count(x => !x.IsDead && x.IsValidTarget() && circle.Center.Distance(x.ServerPosition) <= circle.Radius);
+                        var circleCount =
+                            GameObjects.EnemyMinions.Count(x => !x.IsDead && x.IsValidTarget() && circle.Center.Distance(x.ServerPosition) <= circle.Radius);
 
                         if (circleCount >= 3)
                         {

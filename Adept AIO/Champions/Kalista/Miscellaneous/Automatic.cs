@@ -18,7 +18,8 @@
 
             if (SpellManager.E.Ready && MenuConfig.Misc["E"].Enabled && GameObjects.EnemyHeroes.Count(x => x.HasBuff("kalistaexpungemarker")) >= 1)
             {
-                var m = GameObjects.EnemyMinions.FirstOrDefault(x => x.HasBuff("kalistaexpungemarker") && x.Health < Dmg.EDmg(x) && x.IsValidTarget(SpellManager.E.Range));
+                var m = GameObjects.EnemyMinions.FirstOrDefault(x =>
+                    x.HasBuff("kalistaexpungemarker") && x.Health < Dmg.EDmg(x) && x.IsValidTarget(SpellManager.E.Range));
                 if (m != null)
                 {
                     SpellManager.E.Cast();

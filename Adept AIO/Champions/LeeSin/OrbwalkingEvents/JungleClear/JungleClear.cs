@@ -23,7 +23,16 @@
             new Vector3(9687, 56, 3490)
         };
 
-        private readonly string[] _smiteAlways = {"SRU_Dragon_Air", "SRU_Dragon_Fire", "SRU_Dragon_Earth", "SRU_Dragon_Water", "SRU_Dragon_Elder", "SRU_Baron", "SRU_RiftHerald"};
+        private readonly string[] _smiteAlways =
+        {
+            "SRU_Dragon_Air",
+            "SRU_Dragon_Fire",
+            "SRU_Dragon_Earth",
+            "SRU_Dragon_Water",
+            "SRU_Dragon_Elder",
+            "SRU_Baron",
+            "SRU_RiftHerald"
+        };
 
         private readonly string[] _smiteOptional = {"Sru_Crab", "SRU_Razorbeak", "SRU_Krug", "SRU_Murkwolf", "SRU_Gromp", "SRU_Blue", "SRU_Red"};
 
@@ -183,7 +192,8 @@
 
             if (_spellConfig.Q.Ready &&
                 _spellConfig.IsQ2() &&
-                (_spellConfig.QAboutToEnd || Global.Player.GetSpellDamage(mob, SpellSlot.Q, DamageStage.SecondCast) + Global.Player.GetAutoAttackDamage(mob) > mob.Health))
+                (_spellConfig.QAboutToEnd ||
+                 Global.Player.GetSpellDamage(mob, SpellSlot.Q, DamageStage.SecondCast) + Global.Player.GetAutoAttackDamage(mob) > mob.Health))
             {
                 _spellConfig.Q.CastOnUnit(mob);
             }
@@ -253,7 +263,9 @@
             }
         }
 
-        private double StealDamage(Obj_AI_Base mob) =>
-            SummonerSpells.SmiteMonsters() + (_spellConfig.IsQ2() ? Global.Player.GetSpellDamage(mob, SpellSlot.Q, DamageStage.SecondCast) : 0);
+        private double StealDamage(Obj_AI_Base mob)
+        {
+            return SummonerSpells.SmiteMonsters() + (_spellConfig.IsQ2() ? Global.Player.GetSpellDamage(mob, SpellSlot.Q, DamageStage.SecondCast) : 0);
+        }
     }
 }

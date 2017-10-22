@@ -26,7 +26,9 @@
             {
                 SpellManager.CastQ(target, MenuConfig.LaneClear["Q"].Value);
             }
-            else if (SpellManager.W.Ready && MenuConfig.LaneClear["W"].Enabled && GameObjects.EnemyMinions.Count(x => x.IsValidTarget(1000)) >= MenuConfig.LaneClear["W"].Value)
+            else if (SpellManager.W.Ready &&
+                     MenuConfig.LaneClear["W"].Enabled &&
+                     GameObjects.EnemyMinions.Count(x => x.IsValidTarget(1000)) >= MenuConfig.LaneClear["W"].Value)
             {
                 SpellManager.W.Cast(target);
             }
@@ -34,7 +36,8 @@
 
         public static void OnUpdate()
         {
-            if (MenuConfig.LaneClear["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(1500) != 0 || MenuConfig.LaneClear["Mana"].Value > Global.Player.ManaPercent())
+            if (MenuConfig.LaneClear["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(1500) != 0 ||
+                MenuConfig.LaneClear["Mana"].Value > Global.Player.ManaPercent())
             {
                 return;
             }

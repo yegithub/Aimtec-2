@@ -48,11 +48,17 @@
             {
                 _spellConfig.Q.Cast(target);
             }
-            else if (_spellConfig.E.Ready && target.Health < Global.Player.GetSpellDamage(target, SpellSlot.E) && target.IsValidTarget(_spellConfig.E.Range) && this.EEnabled)
+            else if (_spellConfig.E.Ready &&
+                     target.Health < Global.Player.GetSpellDamage(target, SpellSlot.E) &&
+                     target.IsValidTarget(_spellConfig.E.Range) &&
+                     this.EEnabled)
             {
                 _spellConfig.E.Cast();
             }
-            else if (_spellConfig.R.Ready && target.Health < Global.Player.GetSpellDamage(target, SpellSlot.R) && target.IsValidTarget(_spellConfig.R.Range) && this.REnabled)
+            else if (_spellConfig.R.Ready &&
+                     target.Health < Global.Player.GetSpellDamage(target, SpellSlot.R) &&
+                     target.IsValidTarget(_spellConfig.R.Range) &&
+                     this.REnabled)
             {
                 _spellConfig.R.CastOnUnit(target);
             }

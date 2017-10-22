@@ -81,14 +81,14 @@
 
             if (SpellConfig.E.Ready && targetDist > Global.Player.AttackRange)
             {
-                if (MinionHelper.IsDashable(target) && (Extension.CurrentMode == Mode.Tornado || targetDist > SpellConfig.E.Range - target.BoundingRadius && GameObjects.EnemyMinions.Count(MinionHelper.IsDashable) == 0))
+                if (MinionHelper.IsDashable(target) &&
+                    (Extension.CurrentMode == Mode.Tornado ||
+                     targetDist > SpellConfig.E.Range - target.BoundingRadius && GameObjects.EnemyMinions.Count(MinionHelper.IsDashable) == 0))
                 {
                     SpellConfig.E.CastOnUnit(target);
                 }
 
-                if (MenuConfig.Combo["Walk"].Enabled &&
-                    Global.Orbwalker.CanMove() &&
-                    !(MenuConfig.Combo["Turret"].Enabled && target.IsUnderEnemyTurret()))
+                if (MenuConfig.Combo["Walk"].Enabled && Global.Orbwalker.CanMove() && !(MenuConfig.Combo["Turret"].Enabled && target.IsUnderEnemyTurret()))
                 {
                     SpellConfig.CastE(target, true, MenuConfig.Combo["MRange"].Value);
                 }
@@ -112,7 +112,8 @@
                     case Mode.DashingTornado:
                         if (MenuConfig.Combo["Flash"].Enabled &&
                             dashDistance < 425 &&
-                            dashDistance > 250 && targetDist > 220 &&
+                            dashDistance > 250 &&
+                            targetDist > 220 &&
                             (Dmg.Damage(target) * 1.25 > target.Health || target.ServerPosition.CountEnemyHeroesInRange(220) >= 2))
                         {
                             SpellConfig.Q.Cast();
@@ -129,7 +130,9 @@
                             }
                         }
                         break;
-                    default: SpellConfig.CastQ(target); break;
+                    default:
+                        SpellConfig.CastQ(target);
+                        break;
                 }
             }
 

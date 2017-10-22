@@ -49,7 +49,7 @@
                         DelayAction.Queue(300, () => Global.Player.IssueOrder(OrderType.MoveTo, Game.CursorPos), new CancellationToken(false));
                     }
                 }
-               
+
                 SpellConfig.R.Width = 133 * (3 + Global.Player.GetSpell(SpellSlot.R).Level);
 
                 Insec.OnKeyPressed();

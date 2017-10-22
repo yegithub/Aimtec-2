@@ -21,7 +21,7 @@
                    !me.HasBuff("sorakapacify");
         }
 
-        public static int Ferocity() => (int) Global.Player.Mana;
+        public static int Ferocity() { return (int) Global.Player.Mana; }
 
         public static float ShieldPercent()
         {

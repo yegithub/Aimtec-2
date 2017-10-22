@@ -15,7 +15,8 @@
 
         public static void OnUpdate()
         {
-            if (MenuConfig.LaneClear["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(2000) > 0 || Maths.GetEnergyPercent() < MenuConfig.LaneClear["Energy"].Value)
+            if (MenuConfig.LaneClear["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(2000) > 0 ||
+                Maths.GetEnergyPercent() < MenuConfig.LaneClear["Energy"].Value)
             {
                 return;
             }

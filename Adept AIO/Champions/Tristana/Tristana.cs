@@ -28,7 +28,6 @@
             var drawManager = new DrawManager(menuConfig, dmg, spellConfig);
             var gapcloser = new AntiGapcloser(spellConfig);
 
-
             Game.OnUpdate += manager.OnUpdate;
             Game.OnUpdate += killsteal.OnUpdate;
 

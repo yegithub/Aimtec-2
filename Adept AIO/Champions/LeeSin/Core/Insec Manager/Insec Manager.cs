@@ -16,8 +16,10 @@
         public int InsecKickValue { get; set; }
         public int InsecPositionValue { get; set; }
 
-        public float DistanceBehindTarget(Obj_AI_Base target = null) =>
-            Math.Min((Global.Player.BoundingRadius + (target == null ? 65 : target.BoundingRadius) + 50) * 1.25f, _spellConfig.R.Range);
+        public float DistanceBehindTarget(Obj_AI_Base target = null)
+        {
+            return Math.Min((Global.Player.BoundingRadius + (target == null ? 65 : target.BoundingRadius) + 50) * 1.25f, _spellConfig.R.Range);
+        }
 
         public Vector3 InsecPosition(Obj_AI_Base target)
         {
@@ -40,7 +42,8 @@
                 return Vector3.Zero;
             }
 
-            return secondEnemy.ServerPosition.Extend(secondEnemy.ServerPosition + (secondEnemy.ServerPosition - target.ServerPosition).Normalized(), DistanceBehindTarget());
+            return secondEnemy.ServerPosition.Extend(secondEnemy.ServerPosition + (secondEnemy.ServerPosition - target.ServerPosition).Normalized(),
+                DistanceBehindTarget());
         }
 
         public Vector3 GetTargetEndPosition()

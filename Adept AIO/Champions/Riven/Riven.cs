@@ -1,6 +1,5 @@
 ﻿namespace Adept_AIO.Champions.Riven
 {
-    using System;
     using Aimtec;
     using Core;
     using Drawings;

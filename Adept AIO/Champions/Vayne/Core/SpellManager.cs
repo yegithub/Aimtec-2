@@ -49,7 +49,6 @@
 
         public static bool CanStun(Obj_AI_Base target)
         {
-
             var rect = Rect(target);
             var predRect = PredRect(target);
 
@@ -83,33 +82,33 @@
                 return;
             }
 
-            var pos = Vector3.Zero;
+            var point = WallExtension.NearestWall(target, 475);           
 
-            var point = WallExtension.NearestWall(target, 475);
-            point = target.ServerPosition + (target.ServerPosition - point).Normalized() * 100;
+            if (force && E.Ready && !point.IsZero)
+            {
+                point = target.ServerPosition + (target.ServerPosition - point).Normalized() * 100;
 
-            if (force && E.Ready && !point.IsZero && point.Distance(Global.Player) <= Q.Range)
-            {
-                DebugConsole.Write("[DASH] TO E POS", ConsoleColor.Green);
-                pos = point;
-            }
-            else
-            {
-                switch (modeIndex)
+                if (point.Distance(Global.Player) <= Q.Range)
                 {
-                    case 0:
-                        DebugConsole.Write("[DASH] TO CURSOR", ConsoleColor.Green);
-                        pos = Game.CursorPos;
-                        break;
-                    case 1:
-                        DebugConsole.Write("[DASH] KITING", ConsoleColor.Green);
-                        pos = DashManager.DashKite(target, Q.Range);
-
-                        break;
+                    DebugConsole.Write("[DASH] TO E POS", ConsoleColor.Green);
+                    Q.Cast(point);
                 }
             }
 
-            Q.Cast(pos);
+            switch (modeIndex)
+            {
+                case 0:
+                    DebugConsole.Write("[DASH] TO CURSOR", ConsoleColor.Green);
+                    Q.Cast(Game.CursorPos);
+                    break;
+                case 1:
+                    DebugConsole.Write("[DASH] KITING", ConsoleColor.Green);
+                    Q.Cast(DashManager.DashKite(target, Q.Range));
+                    break;
+            }
+
+
+          
         }
     }
 }

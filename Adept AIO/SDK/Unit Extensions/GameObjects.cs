@@ -10,6 +10,36 @@
     /// </summary>
     public static class GameObjects
     {
+        #region Enums
+
+        /// <summary>
+        ///     The jungle mob types.
+        /// </summary>
+        public enum JungleType
+        {
+            /// <summary>
+            ///     The unknown type.
+            /// </summary>
+            Unknown,
+
+            /// <summary>
+            ///     The small type.
+            /// </summary>
+            Small,
+
+            /// <summary>
+            ///     The large type.
+            /// </summary>
+            Large,
+
+            /// <summary>
+            ///     The legendary type.
+            /// </summary>
+            Legendary
+        }
+
+        #endregion
+
         #region Static Fields
 
         /// <summary>
@@ -116,16 +146,19 @@
         ///     The large name regex list.
         /// </summary>
         private static readonly string[] LargeNameRegex =
-            {
-                "SRU_Murkwolf[0-9.]{1,}", "SRU_Gromp", "SRU_Blue[0-9.]{1,}",
-                "SRU_Razorbeak[0-9.]{1,}", "SRU_Red[0-9.]{1,}",
-                "SRU_Krug[0-9]{1,}"
-            };
+        {
+            "SRU_Murkwolf[0-9.]{1,}",
+            "SRU_Gromp",
+            "SRU_Blue[0-9.]{1,}",
+            "SRU_Razorbeak[0-9.]{1,}",
+            "SRU_Red[0-9.]{1,}",
+            "SRU_Krug[0-9]{1,}"
+        };
 
         /// <summary>
         ///     The legendary name regex list.
         /// </summary>
-        private static readonly string[] LegendaryNameRegex = { "SRU_Dragon", "SRU_Baron", "SRU_RiftHerald" };
+        private static readonly string[] LegendaryNameRegex = {"SRU_Dragon", "SRU_Baron", "SRU_RiftHerald"};
 
         /// <summary>
         ///     The minions list.
@@ -135,7 +168,7 @@
         /// <summary>
         ///     The small name regex list.
         /// </summary>
-        private static readonly string[] SmallNameRegex = { "SRU_[a-zA-Z](.*?)Mini", "Sru_Crab" };
+        private static readonly string[] SmallNameRegex = {"SRU_[a-zA-Z](.*?)Mini", "Sru_Crab"};
 
         /// <summary>
         ///     The turrets list.
@@ -146,36 +179,6 @@
         ///     The wards list.
         /// </summary>
         private static readonly List<Obj_AI_Minion> WardsList = new List<Obj_AI_Minion>();
-
-        #endregion
-
-        #region Enums
-
-        /// <summary>
-        ///     The jungle mob types.
-        /// </summary>
-        public enum JungleType
-        {
-            /// <summary>
-            ///     The unknown type.
-            /// </summary>
-            Unknown,
-
-            /// <summary>
-            ///     The small type.
-            /// </summary>
-            Small,
-
-            /// <summary>
-            ///     The large type.
-            /// </summary>
-            Large,
-
-            /// <summary>
-            ///     The legendary type.
-            /// </summary>
-            Legendary
-        }
 
         #endregion
 
@@ -308,8 +311,7 @@
         /// <returns>Whether the <see cref="GameObject" />s are identical.</returns>
         public static bool Compare(this GameObject gameObject, GameObject @object)
         {
-            return gameObject != null && gameObject.IsValid && @object != null && @object.IsValid
-                   && gameObject.NetworkId == @object.NetworkId;
+            return gameObject != null && gameObject.IsValid && @object != null && @object.IsValid && gameObject.NetworkId == @object.NetworkId;
         }
 
         /// <summary>
@@ -321,8 +323,7 @@
         /// <returns>
         ///     The List containing the requested type.
         /// </returns>
-        public static IEnumerable<T> Get<T>()
-            where T : GameObject, new()
+        public static IEnumerable<T> Get<T>() where T : GameObject, new()
         {
             return AllGameObjects.OfType<T>();
         }
@@ -365,8 +366,7 @@
         /// <returns>
         ///     The List containing the requested type.
         /// </returns>
-        public static IEnumerable<T> GetNative<T>()
-            where T : GameObject, new()
+        public static IEnumerable<T> GetNative<T>() where T : GameObject, new()
         {
             return ObjectManager.Get<T>();
         }
@@ -383,7 +383,8 @@
             HeroesList.AddRange(ObjectManager.Get<Obj_AI_Hero>());
             MinionsList.AddRange(ObjectManager.Get<Obj_AI_Minion>().Where(o => o.Team != GameObjectTeam.Neutral && !o.Name.Contains("ward")));
             TurretsList.AddRange(ObjectManager.Get<Obj_AI_Turret>());
-            JungleList.AddRange(ObjectManager.Get<Obj_AI_Minion>().Where(o => o.Team == GameObjectTeam.Neutral && o.Name != "WardCorpse" && o.Name != "Barrel" && !o.Name.Contains("SRU_Plant_")));
+            JungleList.AddRange(ObjectManager.Get<Obj_AI_Minion>().
+                Where(o => o.Team == GameObjectTeam.Neutral && o.Name != "WardCorpse" && o.Name != "Barrel" && !o.Name.Contains("SRU_Plant_")));
             WardsList.AddRange(ObjectManager.Get<Obj_AI_Minion>().Where(o => o.Name.Contains("ward")));
             SpawnPointsList.AddRange(ObjectManager.Get<GameObject>().Where(o => o.Type == GameObjectType.obj_SpawnPoint));
 
@@ -398,8 +399,7 @@
             AllyHeroesList.AddRange(HeroesList.Where(o => o.IsAlly));
             AllyMinionsList.AddRange(MinionsList.Where(o => o.IsAlly));
             AllyTurretsList.AddRange(TurretsList.Where(o => o.IsAlly));
-            AllyList.AddRange(
-                AllyHeroesList.Cast<Obj_AI_Base>().Concat(AllyMinionsList).Concat(AllyTurretsList));
+            AllyList.AddRange(AllyHeroesList.Cast<Obj_AI_Base>().Concat(AllyMinionsList).Concat(AllyTurretsList));
 
             JungleSmallList.AddRange(JungleList.Where(o => o.GetJungleType() == JungleType.Small));
             JungleLargeList.AddRange(JungleList.Where(o => o.GetJungleType() == JungleType.Large));

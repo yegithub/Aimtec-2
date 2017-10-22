@@ -1,12 +1,10 @@
 ﻿namespace Adept_AIO.Champions.Lucian.Core
 {
-    using System;
     using System.Linq;
     using Aimtec;
     using Aimtec.SDK.Events;
     using Aimtec.SDK.Extensions;
     using Aimtec.SDK.Prediction.Skillshots;
-    using SDK.Generic;
     using SDK.Geometry_Related;
     using SDK.Unit_Extensions;
     using Spell = Aimtec.SDK.Spell;
@@ -30,9 +28,10 @@
             R.SetSkillshot(0.25f, 110f, 2500, false, SkillshotType.Line, false, HitChance.None);
         }
 
-        public static Geometry.Rectangle GetQRectangle(Obj_AI_Base target) => new Geometry.Rectangle(Global.Player.ServerPosition.To2D(),
-            Global.Player.ServerPosition.Extend(target.ServerPosition, ExtendedRange).To2D(),
-            Q.Width);
+        public static Geometry.Rectangle GetQRectangle(Obj_AI_Base target)
+        {
+            return new Geometry.Rectangle(Global.Player.ServerPosition.To2D(), Global.Player.ServerPosition.Extend(target.ServerPosition, ExtendedRange).To2D(), Q.Width);
+        }
 
         public static Geometry.Rectangle GetRRectangle(Obj_AI_Base target)
         {

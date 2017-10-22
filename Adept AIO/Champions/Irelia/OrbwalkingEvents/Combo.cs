@@ -57,7 +57,8 @@
 
                 var longRangeTarget = Global.TargetSelector.GetTarget(SpellConfig.Q.Range * 3);
 
-                if (longRangeTarget == null || longRangeTarget.IsUnderEnemyTurret() && MenuConfig.Combo["Turret"].Enabled && longRangeTarget.Health > Dmg.Damage(longRangeTarget))
+                if (longRangeTarget == null ||
+                    longRangeTarget.IsUnderEnemyTurret() && MenuConfig.Combo["Turret"].Enabled && longRangeTarget.Health > Dmg.Damage(longRangeTarget))
                 {
                     return;
                 }
@@ -92,7 +93,6 @@
             {
                 return;
             }
-
 
             if (MenuConfig.Combo["Killable"].Enabled && target.Distance(Global.Player) < SpellConfig.Q.Range && target.Health < Dmg.Damage(target) && SpellConfig.Q.Ready)
             {

@@ -1,6 +1,5 @@
 ﻿namespace Adept_AIO.Champions.Twitch.OrbwalkingEvents
 {
-    using System.Linq;
     using Aimtec.SDK.Extensions;
     using Core;
     using SDK.Unit_Extensions;
@@ -20,7 +19,10 @@
                 SpellManager.Q.Cast();
             }
 
-            if (SpellManager.W.Ready && Global.Player.ManaPercent() >= 25 && MenuConfig.Combo["W"].Enabled && !(MenuConfig.Combo["W2"].Enabled && SpellManager.HasUltBuff()))
+            if (SpellManager.W.Ready &&
+                Global.Player.ManaPercent() >= 25 &&
+                MenuConfig.Combo["W"].Enabled &&
+                !(MenuConfig.Combo["W2"].Enabled && SpellManager.HasUltBuff()))
             {
                 SpellManager.W.Cast(target);
             }

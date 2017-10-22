@@ -82,7 +82,13 @@
                 new MenuBool("E", "E")
             };
 
-            Killsteal = new Menu("RivenKillsteal", "Killsteal") {new MenuBool("Ignite", "Ignite"), new MenuBool("Q", "Q"), new MenuBool("W", "W"), new MenuBool("R2", "R2")};
+            Killsteal = new Menu("RivenKillsteal", "Killsteal")
+            {
+                new MenuBool("Ignite", "Ignite"),
+                new MenuBool("Q", "Q"),
+                new MenuBool("W", "W"),
+                new MenuBool("R2", "R2")
+            };
 
             Miscellaneous = new Menu("RivenMiscellaneous", "Miscellaneous")
             {

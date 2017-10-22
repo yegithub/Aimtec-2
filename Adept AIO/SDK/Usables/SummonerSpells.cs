@@ -47,9 +47,9 @@
             }
         }
 
-        public static bool IsValid(Spell summonerSpell) => summonerSpell != null && summonerSpell.Ready;
+        public static bool IsValid(Spell summonerSpell) { return summonerSpell != null && summonerSpell.Ready; }
 
-        public static int IgniteDamage(Obj_AI_Base target) => (int) (50 + 20 * Global.Player.Level - target.HPRegenRate / 5 * 3);
+        public static int IgniteDamage(Obj_AI_Base target) { return (int) (50 + 20 * Global.Player.Level - target.HPRegenRate / 5 * 3); }
 
         public static int SmiteMonsters()
         {

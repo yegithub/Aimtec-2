@@ -13,7 +13,7 @@
         {
             if (SpellConfig.E.Ready && MenuConfig.Misc["LasthitE"].Enabled)
             {
-                var minion = GameObjects.EnemyMinions.FirstOrDefault(x => MinionHelper.IsDashable(x) && x.Health <= Global.Player.GetSpellDamage(x, SpellSlot.E) );
+                var minion = GameObjects.EnemyMinions.FirstOrDefault(x => MinionHelper.IsDashable(x) && x.Health <= Global.Player.GetSpellDamage(x, SpellSlot.E));
 
                 if (minion == null)
                 {
@@ -24,7 +24,8 @@
             }
 
             if (SpellConfig.Q.Ready &&
-                (MenuConfig.Misc["LasthitQ"].Enabled && Extension.CurrentMode == Mode.Normal || MenuConfig.Misc["LasthitQ3"].Enabled && Extension.CurrentMode == Mode.Tornado))
+                (MenuConfig.Misc["LasthitQ"].Enabled && Extension.CurrentMode == Mode.Normal ||
+                 MenuConfig.Misc["LasthitQ3"].Enabled && Extension.CurrentMode == Mode.Tornado))
             {
                 var minion = GameObjects.EnemyMinions.FirstOrDefault(x =>
                     x.Health <= Global.Player.GetSpellDamage(x, SpellSlot.Q) && x.Distance(Global.Player) <= SpellConfig.Q.Range - 100);

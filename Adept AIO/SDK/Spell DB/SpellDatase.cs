@@ -714,7 +714,6 @@
                 CollisionObjects = new[] {CollisionableObjects.YasuoWall}
             });
 
-
             Spells.Add(new SpellData
             {
                 ChampionName = "Cassiopeia",
@@ -997,7 +996,6 @@
                 CanBeRemoved = true,
                 CollisionObjects = new[] {CollisionableObjects.YasuoWall}
             });
-
 
             Spells.Add(new SpellData
             {
@@ -2773,7 +2771,6 @@
 
             #endregion Maokai
 
-
             #region Morgana
 
             Spells.Add(new SpellData
@@ -2796,7 +2793,6 @@
             });
 
             #endregion Morgana
-
 
             #region Nami
 
@@ -4760,7 +4756,8 @@
 
         public static SpellData GetBySpeed(string championName, int speed, int id = -1)
         {
-            return Spells.FirstOrDefault(spellData => spellData.ChampionName == championName && spellData.MissileSpeed == speed && (spellData.Id == -1 || id == spellData.Id));
+            return Spells.FirstOrDefault(spellData =>
+                spellData.ChampionName == championName && spellData.MissileSpeed == speed && (spellData.Id == -1 || id == spellData.Id));
         }
     }
 }

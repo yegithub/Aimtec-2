@@ -98,7 +98,7 @@
                 }
             }
 
-            public bool IsInside(Vector2 point) => !IsOutside(point);
+            public bool IsInside(Vector2 point) { return !IsOutside(point); }
 
             public bool IsOutside(Vector2 point)
             {
@@ -167,7 +167,10 @@
             /// <value>
             ///     The direction.
             /// </value>
-            public Vector2 Direction() => (End - Start).Normalized();
+            public Vector2 Direction()
+            {
+                return (End - Start).Normalized();
+            }
 
             /// <summary>
             ///     Gets the perpendicular.
@@ -175,7 +178,10 @@
             /// <value>
             ///     The perpendicular.
             /// </value>
-            public Vector2 Perpendicular() => Direction().Perpendicular();
+            public Vector2 Perpendicular()
+            {
+                return Direction().Perpendicular();
+            }
 
             /// <summary>
             ///     Updates the polygon.
@@ -313,7 +319,11 @@
             {
                 var angle = !radian ? value * Math.PI / 180 : value;
                 var line = Vector2.Subtract(point2, point1);
-                var newline = new Vector2 {X = (float) (line.X * Math.Cos(angle) - line.Y * Math.Sin(angle)), Y = (float) (line.X * Math.Sin(angle) + line.Y * Math.Cos(angle))};
+                var newline = new Vector2
+                {
+                    X = (float) (line.X * Math.Cos(angle) - line.Y * Math.Sin(angle)),
+                    Y = (float) (line.X * Math.Sin(angle) + line.Y * Math.Cos(angle))
+                };
                 return Vector2.Add(newline, point1);
             }
 
@@ -380,9 +390,9 @@
             }
         }
 
-        public static bool IsInside(this Vector3 point, Polygon poly) => !point.IsOutside(poly);
+        public static bool IsInside(this Vector3 point, Polygon poly) { return !point.IsOutside(poly); }
 
-        public static bool IsInside(this Vector2 point, Polygon poly) => !point.IsOutside(poly);
+        public static bool IsInside(this Vector2 point, Polygon poly) { return !point.IsOutside(poly); }
 
         public static bool IsOutside(this Vector3 point, Polygon poly)
         {
@@ -418,7 +428,7 @@
             return self[self.Count - 1];
         }
 
-        public static Vector3 SwitchZy(this Vector3 v) => new Vector3(v.X, v.Y, v.Z);
+        public static Vector3 SwitchZy(this Vector3 v) { return new Vector3(v.X, v.Y, v.Z); }
 
         public static Polygon ToPolygon(this Path v)
         {

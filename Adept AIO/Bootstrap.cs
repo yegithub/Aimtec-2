@@ -50,7 +50,6 @@
 
         private static void GameEvents_GameStart()
         {
-           
             if (Valid.All(x => Global.Player.ChampionName != x))
             {
                 return;

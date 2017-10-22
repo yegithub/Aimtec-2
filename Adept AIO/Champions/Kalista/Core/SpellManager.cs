@@ -1,13 +1,11 @@
 ﻿namespace Adept_AIO.Champions.Kalista.Core
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Aimtec;
     using Aimtec.SDK.Damage;
     using Aimtec.SDK.Extensions;
     using Aimtec.SDK.Prediction.Skillshots;
-    using SDK.Generic;
     using SDK.Geometry_Related;
     using SDK.Unit_Extensions;
     using Spell = Aimtec.SDK.Spell;
@@ -15,6 +13,16 @@
     class SpellManager
     {
         public static Spell Q, W, E, R;
+
+        private static readonly List<Vector3> Locations = new List<Vector3>
+        {
+            new Vector3(9827.56f, -71.2406f, 4426.136f),
+            new Vector3(4951.126f, -71.2406f, 10394.05f),
+            new Vector3(10998.14f, 51.72351f, 6954.169f),
+            new Vector3(7082.083f, 56.2041f, 10838.25f),
+            new Vector3(3804.958f, 52.11121f, 7875.456f),
+            new Vector3(7811.249f, 53.81299f, 4034.486f)
+        };
 
         public SpellManager()
         {
@@ -72,15 +80,5 @@
                 W.Cast(loc);
             }
         }
-
-        private static readonly List<Vector3> Locations = new List<Vector3>
-        {
-            new Vector3(9827.56f, -71.2406f, 4426.136f),
-            new Vector3(4951.126f, -71.2406f, 10394.05f),
-            new Vector3(10998.14f, 51.72351f, 6954.169f),
-            new Vector3(7082.083f, 56.2041f, 10838.25f),
-            new Vector3(3804.958f, 52.11121f, 7875.456f),
-            new Vector3(7811.249f, 53.81299f, 4034.486f)
-        };
     }
 }

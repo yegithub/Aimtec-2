@@ -16,11 +16,11 @@
 
         public bool QAboutToEnd => Game.TickCount - this.LastQ1CastAttempt >= 3100 - Game.Ping / 2f;
 
-        public bool IsQ2() => !IsFirst(this.Q) && this.Q.Ready;
+        public bool IsQ2() { return !IsFirst(this.Q) && this.Q.Ready; }
 
-        public bool IsFirst(Spell spell) => Global.Player.SpellBook.GetSpell(spell.Slot).SpellData.Name.ToLower().Contains("one");
+        public bool IsFirst(Spell spell) { return Global.Player.SpellBook.GetSpell(spell.Slot).SpellData.Name.ToLower().Contains("one"); }
 
-        public bool HasQ2(Obj_AI_Base target) => target.HasBuff("BlindMonkSonicWave");
+        public bool HasQ2(Obj_AI_Base target) { return target.HasBuff("BlindMonkSonicWave"); }
 
         public void QSmite(Obj_AI_Base target)
         {
@@ -63,7 +63,7 @@
 
         public int WardRange { get; } = 600;
 
-        public int PassiveStack() => Global.Player.GetBuffCount(PassiveName);
+        public int PassiveStack() { return Global.Player.GetBuffCount(PassiveName); }
 
         public void Load()
         {

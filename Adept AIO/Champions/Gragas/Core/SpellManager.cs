@@ -97,7 +97,10 @@
 
         public static void CastE(Obj_AI_Base target, bool flash = false)
         {
-            var canFlash = flash && SummonerSpells.IsValid(SummonerSpells.Flash) && target.Distance(Global.Player) > E.Range && target.Distance(Global.Player) < E.Range + 425;
+            var canFlash = flash &&
+                           SummonerSpells.IsValid(SummonerSpells.Flash) &&
+                           target.Distance(Global.Player) > E.Range &&
+                           target.Distance(Global.Player) < E.Range + 425;
 
             var pred = E.GetPrediction(target);
             BodySlam = new Geometry.Rectangle(
@@ -111,11 +114,12 @@
             }
 
             if (GameObjects.EnemyMinions.Any(x =>
-                BodySlam.IsInside(x.ServerPosition.To2D()) && x.Distance(BodySlam.Start) <= target.Distance(BodySlam.Start) && x.Distance(target) >= Global.Player.BoundingRadius))
+                BodySlam.IsInside(x.ServerPosition.To2D()) &&
+                x.Distance(BodySlam.Start) <= target.Distance(BodySlam.Start) &&
+                x.Distance(target) >= Global.Player.BoundingRadius))
             {
                 return;
             }
-
 
             if (canFlash)
             {

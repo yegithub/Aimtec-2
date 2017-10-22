@@ -1,7 +1,5 @@
 ﻿namespace Adept_AIO.Champions.Vayne.OrbwalkingEvents
 {
-    using Aimtec;
-    using Aimtec.SDK.Extensions;
     using Aimtec.SDK.Orbwalking;
     using Core;
     using SDK.Unit_Extensions;
@@ -15,8 +13,8 @@
                 return;
             }
 
-            var t = args.Target as Obj_AI_Base;
-            if (t == null || !t.IsValidAutoRange())
+            var t = Global.TargetSelector.GetTarget(SpellManager.Q.Range + Global.Player.AttackRange);
+            if (t == null)
             {
                 return;
             }
@@ -27,7 +25,7 @@
         public static void OnUpdate()
         {
             var target = Global.TargetSelector.GetTarget(SpellManager.E.Range);
-            if (target == null || !target.IsValidTarget())
+            if (target == null)
             {
                 return;
             }

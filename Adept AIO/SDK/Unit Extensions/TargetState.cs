@@ -18,7 +18,7 @@
             ItemId.ArchangelsStaffQuickCharge
         };
 
-        public static bool IsHardCc(Obj_AI_Hero target) => HardCc.Select(target.HasBuffOfType).FirstOrDefault();
+        public static bool IsHardCc(Obj_AI_Hero target) { return HardCc.Select(target.HasBuffOfType).FirstOrDefault(); }
 
         public static Vector3 GetFountainPos(GameObject target)
         {

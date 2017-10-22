@@ -40,7 +40,10 @@
                 }
             }
 
-            if (_spellConfig.W.Ready && _menuConfig.Combo["W"].Enabled && dist <= _menuConfig.Combo["W"].Value && target.Distance(Global.Player) > Global.Player.AttackRange + 200)
+            if (_spellConfig.W.Ready &&
+                _menuConfig.Combo["W"].Enabled &&
+                dist <= _menuConfig.Combo["W"].Value &&
+                target.Distance(Global.Player) > Global.Player.AttackRange + 200)
             {
                 _spellConfig.W.Cast(target);
             }

@@ -76,11 +76,11 @@
                 new MenuBool("E", "Use E")
             };
 
-            Lasthit = new Menu("VayneLasthit", "Lasthit") { new MenuBool("Q", "Use Q After AA") };
+            Lasthit = new Menu("VayneLasthit", "Lasthit") {new MenuBool("Q", "Use Q After AA")};
 
-            Killsteal = new Menu("VayneKillsteal", "Killsteal") { new MenuBool("Q", "Q -> AA"), new MenuBool("E", "Use E") };
+            Killsteal = new Menu("VayneKillsteal", "Killsteal") {new MenuBool("Q", "Q -> AA"), new MenuBool("E", "Use E")};
 
-            Misc = new Menu("VayneMisc", "Miscellaneous") { new MenuBool("Q", "Anti Gapcloser | Q"), new MenuBool("E", "Anti Gapcloser | E") };
+            Misc = new Menu("VayneMisc", "Miscellaneous") {new MenuBool("Q", "Anti Gapcloser | Q"), new MenuBool("E", "Anti Gapcloser | E")};
 
             Drawings = new Menu("VayneDrawManager", "DrawManager")
             {
@@ -90,7 +90,7 @@
                 new MenuBool("Pred", "Draw E Prediction")
             };
 
-            foreach (var menu in new List<Menu> { Combo, Harass, LaneClear, JungleClear, Lasthit, Killsteal, Misc, Drawings, MenuShortcut.Credits })
+            foreach (var menu in new List<Menu> {Combo, Harass, LaneClear, JungleClear, Lasthit, Killsteal, Misc, Drawings, MenuShortcut.Credits})
             {
                 _mainMenu.Add(menu);
             }

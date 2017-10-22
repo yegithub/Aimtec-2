@@ -1,6 +1,5 @@
 ﻿namespace Adept_AIO.Champions.Twitch
 {
-    using System;
     using Aimtec;
     using Core;
     using Drawings;
@@ -17,7 +16,7 @@
 
             Render.OnPresent += DrawManager.OnPresent;
             Render.OnRender += DrawManager.OnRender;
-           
+
             Game.OnUpdate += Manager.OnUpdate;
         }
 

@@ -19,9 +19,9 @@
 
         public bool DidJustWard => Game.TickCount - this.LastWardCreated <= 800 + Game.Ping / 2f;
 
-        public bool IsWardReady() => _wardNames.Any(Items.CanUseItem);
+        public bool IsWardReady() { return _wardNames.Any(Items.CanUseItem); }
 
-        public string Ward() => _wardNames.FirstOrDefault(Items.CanUseItem);
+        public string Ward() { return _wardNames.FirstOrDefault(Items.CanUseItem); }
 
         public bool IsAtWall { get; set; }
 

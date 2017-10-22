@@ -1,6 +1,5 @@
 ﻿namespace Adept_AIO.Champions.Yasuo.Core
 {
-    using System;
     using Aimtec;
     using Aimtec.SDK.Extensions;
     using Aimtec.SDK.Prediction.Skillshots;
@@ -60,12 +59,12 @@
             if (gapclose && !positionBehindMinion.IsZero && closestToPlayer != null && positionBehindMinion.Distance(Global.Player) <= rangeGapclose)
             {
                 Global.Orbwalker.Move(positionBehindMinion);
-             
+
                 if (positionBehindMinion.Distance(Global.Player) > 65)
                 {
                     return;
                 }
-            
+
                 E.CastOnUnit(closestToPlayer);
             }
             else
@@ -78,8 +77,11 @@
             }
         }
 
-        public static Geometry.Rectangle Q3Rect(Obj_AI_Base target) => new Geometry.Rectangle(Global.Player.ServerPosition.To2D(),
-            Global.Player.ServerPosition.Extend(Q.GetPrediction(target).CastPosition, Q.Range).To2D(),
-            Q.Width);
+        public static Geometry.Rectangle Q3Rect(Obj_AI_Base target)
+        {
+            return new Geometry.Rectangle(Global.Player.ServerPosition.To2D(),
+                Global.Player.ServerPosition.Extend(Q.GetPrediction(target).CastPosition, Q.Range).To2D(),
+                Q.Width);
+        }
     }
 }

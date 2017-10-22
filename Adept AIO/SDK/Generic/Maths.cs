@@ -8,9 +8,9 @@
 
     class Maths
     {
-        public static double DegreeToRadian(double angle) => Math.PI * angle / 180.0;
+        public static double DegreeToRadian(double angle) { return Math.PI * angle / 180.0; }
 
-        public static int Percent(double value1, double value2, int multiplier = 100) => (int) (value2 / value1 * multiplier);
+        public static int Percent(double value1, double value2, int multiplier = 100) { return (int) (value2 / value1 * multiplier); }
 
         public static void DisableAutoAttack(int duration = 500)
         {
@@ -42,6 +42,6 @@
             return (Global.Player.Mana - total) / Global.Player.MaxMana * 100;
         }
 
-        public static float GetEnergyPercent() => Global.Player.Mana / Global.Player.MaxMana * 100;
+        public static float GetEnergyPercent() { return Global.Player.Mana / Global.Player.MaxMana * 100; }
     }
 }

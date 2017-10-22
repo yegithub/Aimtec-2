@@ -20,7 +20,7 @@
             Gapcloser.OnGapcloser += AntiGapcloser.OnGapcloser;
             Global.Orbwalker.PostAttack += Manager.PostAttack;
             Global.Orbwalker.PreAttack += Manager.PreAttack;
-         
+
             Render.OnPresent += DrawManager.OnPresent;
             Render.OnRender += DrawManager.OnRender;
         }

@@ -48,7 +48,12 @@
                 new MenuBool("Turret", "Use E At Turret")
             };
 
-            JungleClear = new Menu("JungleClear", "JungleClear") {new MenuBool("Avoid", "Don't Use Anything At Lvl 1"), new MenuBool("Q", "Use Q"), new MenuBool("E", "Use E")};
+            JungleClear = new Menu("JungleClear", "JungleClear")
+            {
+                new MenuBool("Avoid", "Don't Use Anything At Lvl 1"),
+                new MenuBool("Q", "Use Q"),
+                new MenuBool("E", "Use E")
+            };
 
             Killsteal = new Menu("Killsteal", "Killsteal") {new MenuBool("W", "Use W", false), new MenuBool("E", "Use E"), new MenuBool("R", "Use R")};
 

@@ -1,6 +1,5 @@
 ﻿namespace Adept_AIO.Champions.Twitch.OrbwalkingEvents
 {
-    using System.Linq;
     using Aimtec.SDK.Extensions;
     using Core;
     using SDK.Unit_Extensions;

@@ -17,14 +17,14 @@
                 return;
             }
 
-            var minion = GameObjects.EnemyMinions.FirstOrDefault(x => 
+            var minion = GameObjects.EnemyMinions.FirstOrDefault(x =>
                 x.Health < Global.Player.GetAutoAttackDamage(x) + Global.Player.GetSpellDamage(x, SpellSlot.Q) &&
                 x.Health > Global.Player.GetAutoAttackDamage(x) &&
                 x.IsValidAutoRange());
 
             if (minion == null)
             {
-               return;
+                return;
             }
             SpellManager.Q.Cast(Game.CursorPos);
         }

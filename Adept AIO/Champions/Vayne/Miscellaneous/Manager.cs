@@ -46,8 +46,10 @@
                     {
                         var t = args.Target as Obj_AI_Base;
 
-                        if(t != null && t.Type == GameObjectType.obj_AI_Turret)
-                        SpellManager.CastQ(t);
+                        if (t != null && t.Type == GameObjectType.obj_AI_Turret)
+                        {
+                            SpellManager.CastQ(t);
+                        }
                     }
                     break;
             }

@@ -1,14 +1,11 @@
 ﻿namespace Adept_AIO.Champions.Yasuo.Miscellaneous
 {
-    using System.Linq;
     using System.Threading;
     using Aimtec;
-    using Aimtec.SDK.Extensions;
     using Aimtec.SDK.Orbwalking;
     using Aimtec.SDK.Util;
     using Core;
     using OrbwalkingEvents;
-    using SDK.Generic;
     using SDK.Unit_Extensions;
 
     class Manager

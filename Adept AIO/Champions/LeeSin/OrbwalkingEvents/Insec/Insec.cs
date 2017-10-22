@@ -191,7 +191,7 @@
             return temp;
         }
 
-        private bool InsecInRange(Vector3 source) => GetInsecPosition().Distance(source) <= InsecRange();
+        private bool InsecInRange(Vector3 source) { return GetInsecPosition().Distance(source) <= InsecRange(); }
 
         private Vector3 GetInsecPosition()
         {

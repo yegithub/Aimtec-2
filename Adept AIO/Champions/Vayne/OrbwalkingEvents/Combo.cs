@@ -2,7 +2,6 @@
 {
     using System.Linq;
     using System.Threading;
-    using Aimtec;
     using Aimtec.SDK.Extensions;
     using Aimtec.SDK.Orbwalking;
     using Aimtec.SDK.Util;
@@ -19,7 +18,7 @@
                 return;
             }
 
-            var t = args.Target as Obj_AI_Base;
+            var t = Global.TargetSelector.GetTarget(SpellManager.Q.Range + Global.Player.AttackRange);
             if (t == null)
             {
                 return;
@@ -34,20 +33,6 @@
             if (target == null || !target.IsValidTarget())
             {
                 return;
-            }
-
-            if (MenuConfig.Combo["Flash"].Enabled && SpellManager.E.Ready && SummonerSpells.IsValid(SummonerSpells.Flash))
-            {   
-                var allyT = GameObjects.AllyTurrets.FirstOrDefault(x => x.Distance(target) <= 900);
-                if (allyT != null)
-                {
-                    var pos = target.ServerPosition + (target.ServerPosition - allyT.ServerPosition).Normalized() * 200;
-                    if (pos.Distance(Global.Player) <= 425)
-                    {
-                        SpellManager.E.CastOnUnit(target);
-                        DelayAction.Queue(100, () => SummonerSpells.Flash.Cast(pos), new CancellationToken(false));
-                    }
-                }
             }
 
             if (SpellManager.Q.Ready && MenuConfig.Combo["Q"].Value == 1)
@@ -72,6 +57,26 @@
                     SpellManager.R.Cast();
                 }
             }
+
+            if (!MenuConfig.Combo["Flash"].Enabled || !SpellManager.E.Ready || !SummonerSpells.IsValid(SummonerSpells.Flash))
+            {
+                return;
+            }
+
+            var allyT = GameObjects.AllyTurrets.FirstOrDefault(x => x.Distance(target) <= 900);
+            if (allyT == null)
+            {
+                return;
+            }
+
+            var pos = target.ServerPosition + (target.ServerPosition - allyT.ServerPosition).Normalized() * 200;
+            if (pos.Distance(Global.Player) > 425)
+            {
+                return;
+            }
+
+            SpellManager.E.CastOnUnit(target);
+            DelayAction.Queue(100, () => SummonerSpells.Flash.Cast(pos), new CancellationToken(false));
         }
     }
 }

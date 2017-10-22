@@ -33,7 +33,9 @@
                 SpellConfig.E.CastOnUnit(minion);
             }
 
-            if (args.End.Distance(Global.Player.ServerPosition) <= 300 && SpellConfig.W.Ready && missile.CollisionObjects.Any(x => x.HasFlag(CollisionableObjects.YasuoWall)))
+            if (args.End.Distance(Global.Player.ServerPosition) <= 300 &&
+                SpellConfig.W.Ready &&
+                missile.CollisionObjects.Any(x => x.HasFlag(CollisionableObjects.YasuoWall)))
             {
                 SpellConfig.W.Cast(sender.ServerPosition);
             }

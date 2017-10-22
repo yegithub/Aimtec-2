@@ -1,6 +1,5 @@
 ﻿namespace Adept_AIO.Champions.Vayne.OrbwalkingEvents
 {
-    using System;
     using System.Linq;
     using Aimtec.SDK.Extensions;
     using Aimtec.SDK.Orbwalking;
@@ -35,7 +34,6 @@
             {
                 return;
             }
-          
 
             if (SpellManager.Q.Ready && MenuConfig.JungleClear["Q"].Value == 1)
             {

@@ -165,10 +165,13 @@
                    target.Health < Dmg.Damage(target) * .75f && target.HealthPercent() <= 25;
         }
 
-        public static bool CanCastR1(Obj_AI_Base target) => MenuConfig.Combo["R"].Value != 0 &&
-                                                            SpellConfig.R.Ready &&
-                                                            !(MenuConfig.Combo["Check"].Enabled && target.HealthPercent() < MenuConfig.Combo["Check"].Value) &&
-                                                            Enums.UltimateMode == UltimateMode.First &&
-                                                            !(MenuConfig.Combo["R"].Value == 2 && Dmg.Damage(target) < target.Health);
+        public static bool CanCastR1(Obj_AI_Base target)
+        {
+            return MenuConfig.Combo["R"].Value != 0 &&
+                   SpellConfig.R.Ready &&
+                   !(MenuConfig.Combo["Check"].Enabled && target.HealthPercent() < MenuConfig.Combo["Check"].Value) &&
+                   Enums.UltimateMode == UltimateMode.First &&
+                   !(MenuConfig.Combo["R"].Value == 2 && Dmg.Damage(target) < target.Health);
+        }
     }
 }
