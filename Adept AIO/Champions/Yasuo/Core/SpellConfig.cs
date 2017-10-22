@@ -54,9 +54,9 @@
         public static void CastE(Obj_AI_Base target, bool gapclose = false, int rangeGapclose = 0)
         {
             if (target.UnitSkinName.ToLower().Contains("soldier") ||
-                target.Name.ToLower().Contains("shadow") ||
-                target.Name.ToLower().Contains("dagger") ||
-                target.Name.ToLower().Contains("axe"))
+                target.UnitSkinName.ToLower().Contains("shadow") ||
+                target.UnitSkinName.ToLower().Contains("dagger") ||
+                target.UnitSkinName.ToLower().Contains("axe"))
             {
                 return;
             }
