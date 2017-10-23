@@ -9,7 +9,7 @@
     {
         public static void OnUpdate()
         {
-            if (SpellManager.E.Ready && GameObjects.Jungle.Count(x => Dmg.EDmg(x) > x.Health) >= 1 && MenuConfig.JungleClear["E"].Enabled)
+            if (SpellManager.E.Ready && GameObjects.Jungle.Count(x => x.HasBuff("kalistaexpungemarker") && Dmg.EDmg(x) > x.Health && x.IsValidSpellTarget(SpellManager.E.Range)) >= 1 && MenuConfig.JungleClear["E"].Enabled)
             {
                 SpellManager.E.Cast();
             }
