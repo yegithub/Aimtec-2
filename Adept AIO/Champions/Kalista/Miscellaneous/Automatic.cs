@@ -28,17 +28,20 @@
 
             switch (Global.Orbwalker.Mode)
             {
-                case OrbwalkingMode.Combo when Global.Player.CountEnemyHeroesInRange(Global.Player.AttackRange) <= 0 && MenuConfig.Combo["Minions"].Enabled:
+                case OrbwalkingMode.Combo:
                     var m = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(Global.Player) <= 2000);
-                    if (m != null && Global.Orbwalker.CanAttack())
+                    if (m != null && Global.Orbwalker.CanAttack() && Global.Player.CountEnemyHeroesInRange(Global.Player.AttackRange) <= 0 && MenuConfig.Combo["Minions"].Enabled)
                     {
                         Global.Orbwalker.Attack(m);
                     }
                     break;
-                case OrbwalkingMode.Laneclear when SpellManager.E.Ready &&
-                                                   GameObjects.EnemyMinions.Count(x => x.HasBuff("kalistaexpungemarker") && Dmg.EDmg(x) > x.Health) >= 1 &&
-                                                   MenuConfig.LaneClear["E"].Enabled:
-                    SpellManager.E.Cast();
+                case OrbwalkingMode.Laneclear:
+                    if (SpellManager.E.Ready &&
+                        GameObjects.EnemyMinions.Any(x => x.HasBuff("kalistaexpungemarker") && Dmg.EDmg(x) > x.Health && x.IsValidSpellTarget(SpellManager.E.Range)) &&
+                        MenuConfig.LaneClear["E"].Enabled)
+                    {
+                        SpellManager.E.Cast();
+                    }
                     break;
             }
 
