@@ -30,7 +30,7 @@
             {
                 case OrbwalkingMode.Combo when Global.Player.CountEnemyHeroesInRange(Global.Player.AttackRange) <= 0 && MenuConfig.Combo["Minions"].Enabled:
                     var m = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(Global.Player) <= 2000);
-                    if (m != null)
+                    if (m != null && Global.Orbwalker.CanAttack())
                     {
                         Global.Orbwalker.Attack(m);
                     }

@@ -45,7 +45,7 @@
         {
             if (target.IsValidTarget(Global.Player.AttackRange + 70))
             {
-                Global.Orbwalker.Move(DashManager.DashKite(target, 200));
+                Global.Orbwalker.Move(DashManager.DashKite(target, 200, 450));
             }
         }
 
