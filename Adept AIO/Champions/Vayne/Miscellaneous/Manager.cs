@@ -27,6 +27,7 @@
                 case OrbwalkingMode.Lasthit:
                     Lasthit.PostAttack(sender, args);
                     break;
+
             }
         }
 
@@ -39,17 +40,6 @@
                     if (target != null)
                     {
                         args.Target = target;
-                    }
-                    break;
-                case OrbwalkingMode.Laneclear:
-                    if (Global.Player.ManaPercent() >= 30 && Global.Player.CountEnemyHeroesInRange(1500) == 0)
-                    {
-                        var t = args.Target as Obj_AI_Base;
-
-                        if (t != null && t.Type == GameObjectType.obj_AI_Turret)
-                        {
-                            SpellManager.CastQ(t);
-                        }
                     }
                     break;
             }

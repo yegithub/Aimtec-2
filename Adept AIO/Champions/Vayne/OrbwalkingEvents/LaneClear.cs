@@ -12,7 +12,22 @@
     {
         public static void PostAttack(object sender, PostAttackEventArgs args)
         {
-            if (!SpellManager.Q.Ready || MenuConfig.LaneClear["Q"].Value == 1 || Global.Player.ManaPercent() <= 35)
+            if (!SpellManager.Q.Ready || Global.Player.ManaPercent() <= 35)
+            {
+                return;
+            }
+
+            if (Global.Player.CountEnemyHeroesInRange(900) == 0)
+            {
+                var t = args.Target as Obj_AI_Base;
+
+                if (t != null && (t.Type == GameObjectType.obj_AI_Turret || t.Type == GameObjectType.obj_AI_Base))
+                {
+                    SpellManager.CastQ(t);
+                }
+            }
+
+            if (MenuConfig.LaneClear["Q"].Value == 1)
             {
                 return;
             }
