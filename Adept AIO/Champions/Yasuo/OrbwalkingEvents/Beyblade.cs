@@ -69,15 +69,19 @@
                         {
                             if (MenuConfig.Combo["Flash"].Enabled && SummonerSpells.IsValid(SummonerSpells.Flash))
                             {
-                                SpellConfig.Q.Cast();
+                                DelayAction.Queue(Game.Ping / 2,
+                                    () =>
+                                    {
+                                        SpellConfig.Q.Cast();
+                                    },
+                                    new CancellationToken(false));
 
-                                DelayAction.Queue(Game.Ping / 2 + 80,
+                                DelayAction.Queue(Game.Ping / 2 + 50,
                                     () =>
                                     {
                                         SummonerSpells.Flash.Cast(target.Position);
                                     },
                                     new CancellationToken(false));
-                                ;
                             }
                         }
                         break;
@@ -97,18 +101,7 @@
                     return;
                 }
 
-                if (!positionBehindMinion.IsZero && Global.Orbwalker.CanMove())
-                {
-                    Global.Orbwalker.Move(positionBehindMinion);
-                    if (positionBehindMinion.Distance(Global.Player) <= 65)
-                    {
-                        SpellConfig.E.CastOnUnit(m2);
-                    }
-                }
-                else if (minion != null)
-                {
-                    SpellConfig.E.CastOnUnit(minion);
-                }
+               SpellConfig.CastE(target);
             }
         }
     }
