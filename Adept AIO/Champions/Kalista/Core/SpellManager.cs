@@ -76,7 +76,7 @@
 
         public static void CastW()
         {
-            var loc = Locations.OrderBy(x => x.Distance(Global.Player)).FirstOrDefault(x => x.Distance(Global.Player) <= W.Range);
+            var loc = Locations.OrderBy(x => x.Distance(Global.Player)).FirstOrDefault(x => x.Distance(Global.Player) > 1300 && x.Distance(Global.Player) <= W.Range);
             if (W.Ready && Global.Player.GetSpell(SpellSlot.W).Ammo >= 2)
             {
                 W.Cast(loc);

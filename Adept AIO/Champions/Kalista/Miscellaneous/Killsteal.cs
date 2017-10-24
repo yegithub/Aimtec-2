@@ -16,7 +16,7 @@
                 return;
             }
 
-            if (MenuConfig.Killsteal["E"].Enabled && SpellManager.E.Ready)
+            if (MenuConfig.Killsteal["E"].Enabled && SpellManager.E.Ready && GameObjects.EnemyHeroes.Any(x => x.HasBuff("kalistaexpungemarker")))
             {
                 var t = GameObjects.EnemyHeroes.FirstOrDefault(x => x.Health <= Dmg.EDmg(x) && x.IsValidTarget(SpellManager.E.Range));
                 if (t != null)
@@ -28,10 +28,11 @@
             if (MenuConfig.Killsteal["Q"].Enabled && SpellManager.Q.Ready && !Global.Orbwalker.IsWindingUp)
             {
                 var t = GameObjects.EnemyHeroes.FirstOrDefault(x => x.Health < Global.Player.GetSpellDamage(x, SpellSlot.Q) && x.IsValidTarget(SpellManager.Q.Range));
-                if (t != null)
+                if (t == null)
                 {
-                    SpellManager.CastQ(t);
+                    return;
                 }
+                SpellManager.CastQ(t);
             }
         }
     }

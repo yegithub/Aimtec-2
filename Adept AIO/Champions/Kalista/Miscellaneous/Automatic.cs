@@ -16,10 +16,9 @@
                 return;
             }
 
-            if (SpellManager.E.Ready && MenuConfig.Misc["E"].Enabled && GameObjects.EnemyHeroes.Count(x => x.HasBuff("kalistaexpungemarker")) >= 1)
+            if (SpellManager.E.Ready && MenuConfig.Misc["E"].Enabled && GameObjects.EnemyHeroes.Any(x => x.HasBuff("kalistaexpungemarker")))
             {
-                var m = GameObjects.EnemyMinions.FirstOrDefault(x =>
-                    x.HasBuff("kalistaexpungemarker") && x.Health < Dmg.EDmg(x) && x.IsValidTarget(SpellManager.E.Range));
+                var m = GameObjects.EnemyMinions.FirstOrDefault(x => x.HasBuff("kalistaexpungemarker") && x.Health < Dmg.EDmg(x) && x.IsValidTarget(SpellManager.E.Range));
                 if (m != null)
                 {
                     SpellManager.E.Cast();
@@ -30,7 +29,7 @@
             {
                 case OrbwalkingMode.Combo:
                     var m = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(Global.Player) <= 2000);
-                    if (m != null && Global.Orbwalker.CanAttack() && Global.Player.CountEnemyHeroesInRange(Global.Player.AttackRange) <= 0 && MenuConfig.Combo["Minions"].Enabled)
+                    if (m != null && Global.Orbwalker.CanAttack() && Global.Player.CountEnemyHeroesInRange(Global.Player.AttackRange) <= 0 && MenuConfig.Combo["Minions"].Enabled && m.IsValidAutoRange())
                     {
                         Global.Orbwalker.Attack(m);
                     }
