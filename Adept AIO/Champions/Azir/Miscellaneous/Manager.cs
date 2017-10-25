@@ -28,11 +28,6 @@
                 {
                     foreach (var soldier in SoldierManager.Soldiers)
                     {
-                        if (soldier.Distance(Global.Player) > 660)
-                        {
-                            continue;
-                        }
-
                         var enemy = GameObjects.Enemy.FirstOrDefault(x =>
                             x.Distance(soldier) <= 250 + x.BoundingRadius &&
                             !x.IsDead &&
