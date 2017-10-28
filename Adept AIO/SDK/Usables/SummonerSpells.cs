@@ -47,9 +47,15 @@
             }
         }
 
-        public static bool IsValid(Spell summonerSpell) { return summonerSpell != null && summonerSpell.Ready; }
+        public static bool IsValid(Spell summonerSpell)
+        {
+            return summonerSpell != null && summonerSpell.Ready;
+        }
 
-        public static int IgniteDamage(Obj_AI_Base target) { return (int) (50 + 20 * Global.Player.Level - target.HPRegenRate / 5 * 3); }
+        public static int IgniteDamage(Obj_AI_Base target)
+        {
+            return (int) (50 + 20 * Global.Player.Level - target.HPRegenRate / 5 * 3);
+        }
 
         public static int SmiteMonsters()
         {
@@ -57,14 +63,40 @@
 
             var index = level / 5;
 
-            int[] damage = {370 + 20 * level, 330 + 30 * level, 240 + 40 * level, 100 + 50 * level};
+            int[] damage =
+            {
+                370 + 20 * level,
+                330 + 30 * level,
+                240 + 40 * level,
+                100 + 50 * level
+            };
 
             return damage[index];
         }
 
         public static int SmiteChampions()
         {
-            int[] dmg = {28, 36, 44, 52, 60, 68, 76, 84, 92, 100, 108, 116, 124, 132, 140, 148, 156, 166};
+            int[] dmg =
+            {
+                28,
+                36,
+                44,
+                52,
+                60,
+                68,
+                76,
+                84,
+                92,
+                100,
+                108,
+                116,
+                124,
+                132,
+                140,
+                148,
+                156,
+                166
+            };
 
             return dmg[Global.Player.Level - 1];
         }

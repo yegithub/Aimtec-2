@@ -1,10 +1,8 @@
 ﻿namespace Adept_AIO.Champions.Vayne.Core
 {
-    using System;
     using Aimtec;
     using Aimtec.SDK.Extensions;
     using Aimtec.SDK.Prediction.Skillshots;
-    using SDK.Generic;
     using SDK.Geometry_Related;
     using SDK.Unit_Extensions;
     using Spell = Aimtec.SDK.Spell;
@@ -77,12 +75,11 @@
             var wallPos = WallExtension.NearestWall(Global.Player, 130);
             if (!wallPos.IsZero)
             {
-                DebugConsole.Write("[DASH] TO WALL", ConsoleColor.Green);
                 Q.Cast(wallPos);
                 return;
             }
 
-            var point = WallExtension.NearestWall(target, 475);           
+            var point = WallExtension.NearestWall(target, 475);
 
             if (force && E.Ready && !point.IsZero)
             {
@@ -90,7 +87,6 @@
 
                 if (point.Distance(Global.Player) <= Q.Range)
                 {
-                    DebugConsole.Write("[DASH] TO E POS", ConsoleColor.Green);
                     Q.Cast(point);
                 }
             }
@@ -98,17 +94,12 @@
             switch (modeIndex)
             {
                 case 0:
-                    DebugConsole.Write("[DASH] TO CURSOR", ConsoleColor.Green);
                     Q.Cast(Game.CursorPos);
                     break;
                 case 1:
-                    DebugConsole.Write("[DASH] KITING", ConsoleColor.Green);
                     Q.Cast(DashManager.DashKite(target, Q.Range));
                     break;
             }
-
-
-          
         }
     }
 }

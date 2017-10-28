@@ -28,14 +28,14 @@
             Global.Orbwalker.AddMode(AzirHelper.JumpMode);
             Global.Orbwalker.AddMode(AzirHelper.InsecMode);
 
-            InsecMenu = new Menu("Insec", "Insec")
+            InsecMenu = new Menu("AzirInsec", "Insec")
             {
                 new MenuBool("Flash", "Flash"),
                 new MenuSlider("Range", "Q | Distance To Soldier <=", 600, 450, 800),
                 new MenuSliderBool("Auto", "Auto Insec If X Hit", true, 3, 2, 5)
             };
 
-            Combo = new Menu("Combo", "Combo")
+            Combo = new Menu("AzirCombo", "Combo")
             {
                 new MenuBool("Q", "Use Q"),
                 new MenuBool("Extend", "Extended Q"),
@@ -46,14 +46,14 @@
                 new MenuBool("R", "Use R")
             };
 
-            Harass = new Menu("Harass", "Harass")
+            Harass = new Menu("AzirHarass", "Harass")
             {
                 new MenuSliderBool("Q", "Use Q (min. Mana%)", true, 40),
                 new MenuSliderBool("W", "Use W (min. Mana%)", true, 25),
                 new MenuSliderBool("E", "Use E (min. Mana%)", false, 35)
             };
 
-            Lane = new Menu("Lane", "Lane")
+            Lane = new Menu("AzirLane", "Lane")
             {
                 new MenuBool("Check", "Safe Clear"),
                 new MenuSliderBool("Q", "Use Q (min Mana%)", true, 40),
@@ -63,11 +63,19 @@
                 new MenuSlider("EHit", "Min Hit By E", 4, 1, 7)
             };
 
-            Jungle = new Menu("Jungle", "Jungle") {new MenuSliderBool("Q", "Use Q (min. Mana%)", true, 40), new MenuSliderBool("W", "Use W (min. Mana%)", true, 25)};
+            Jungle = new Menu("AzirJungle", "Jungle")
+            {
+                new MenuSliderBool("Q", "Use Q (min. Mana%)", true, 40),
+                new MenuSliderBool("W", "Use W (min. Mana%)", true, 25)
+            };
 
-            Killsteal = new Menu("Killsteal", "Killsteal") {new MenuBool("Q", "Use Q"), new MenuBool("E", "Use E")};
+            Killsteal = new Menu("AzirKillsteal", "Killsteal")
+            {
+                new MenuBool("Q", "Use Q"),
+                new MenuBool("E", "Use E")
+            };
 
-            Drawings = new Menu("DrawManager", "DrawManager")
+            Drawings = new Menu("AzirDrawManager", "DrawManager")
             {
                 new MenuSlider("Segments", "Segments", 100, 10, 150).SetToolTip("Smoothness of the circles"),
                 new MenuBool("Dmg", "Damage"),
@@ -76,7 +84,17 @@
                 new MenuBool("R", "Draw R Range")
             };
 
-            foreach (var menu in new List<Menu> {InsecMenu, Combo, Harass, Lane, Jungle, Killsteal, Drawings, MenuShortcut.Credits})
+            foreach (var menu in new List<Menu>
+            {
+                InsecMenu,
+                Combo,
+                Harass,
+                Lane,
+                Jungle,
+                Killsteal,
+                Drawings,
+                MenuShortcut.Credits
+            })
             {
                 mainMenu.Add(menu);
             }

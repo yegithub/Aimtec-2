@@ -27,8 +27,8 @@
                 (MenuConfig.Misc["LasthitQ"].Enabled && Extension.CurrentMode == Mode.Normal ||
                  MenuConfig.Misc["LasthitQ3"].Enabled && Extension.CurrentMode == Mode.Tornado))
             {
-                var minion = GameObjects.EnemyMinions.FirstOrDefault(x =>
-                    x.Health <= Global.Player.GetSpellDamage(x, SpellSlot.Q) && x.Distance(Global.Player) <= SpellConfig.Q.Range - 100);
+                var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Health <= Global.Player.GetSpellDamage(x, SpellSlot.Q) &&
+                                                                          x.Distance(Global.Player) <= SpellConfig.Q.Range - 100);
                 if (minion == null)
                 {
                     return;

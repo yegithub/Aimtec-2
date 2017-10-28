@@ -12,9 +12,15 @@
     {
         public static List<Obj_AI_Minion> Shadows;
 
-        public static bool CanSwitchToShadow() { return Global.Player.GetSpell(SpellSlot.W).ToggleState != 0 && Shadows.Any(x => x.Distance(Global.Player) <= 1300); }
+        public static bool CanSwitchToShadow()
+        {
+            return Global.Player.GetSpell(SpellSlot.W).ToggleState != 0 && Shadows.Any(x => x.Distance(Global.Player) <= 1300);
+        }
 
-        public static bool CanCastW1() { return Global.Player.GetSpell(SpellSlot.W).ToggleState == 0; }
+        public static bool CanCastW1()
+        {
+            return Global.Player.GetSpell(SpellSlot.W).ToggleState == 0;
+        }
 
         public static bool IsShadow(Obj_AI_Minion shadow)
         {

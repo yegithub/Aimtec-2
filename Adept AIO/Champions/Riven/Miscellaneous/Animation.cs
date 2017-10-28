@@ -17,15 +17,18 @@
             DelayAction.Queue(moveDelay + (Extensions.CurrentQCount == 1 ? 70 : 30), () => Global.Orbwalker.Move(Game.CursorPos), new CancellationToken(false));
 
             DelayAction.Queue((int) GetDelay(),
-                () =>
-                {
-                    Global.Orbwalker.AttackingEnabled = true;
-                    Global.Orbwalker.ResetAutoAttackTimer();
-                },
-                new CancellationToken(false));
+                              () =>
+                              {
+                                  Global.Orbwalker.AttackingEnabled = true;
+                                  Global.Orbwalker.ResetAutoAttackTimer();
+                              },
+                              new CancellationToken(false));
         }
 
-        private static float GetDelay() { return (Extensions.CurrentQCount == 1 ? 450 : 350) - 3.333f * Global.Player.Level; }
+        private static float GetDelay()
+        {
+            return (Extensions.CurrentQCount == 1 ? 450 : 350) - 3.333f * Global.Player.Level;
+        }
 
         public static void OnPlayAnimation(Obj_AI_Base sender, Obj_AI_BasePlayAnimationEventArgs args)
         {

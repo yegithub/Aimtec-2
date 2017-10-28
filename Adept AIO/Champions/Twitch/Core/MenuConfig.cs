@@ -26,7 +26,11 @@
                 new MenuSlider("R2", "Use R If X Enemies Nearby", 3, 0, 5)
             };
 
-            Harass = new Menu("TwitchHarass", "Harass") {new MenuBool("Q", "Use Q", false), new MenuBool("W", "Use W")};
+            Harass = new Menu("TwitchHarass", "Harass")
+            {
+                new MenuBool("Q", "Use Q", false),
+                new MenuBool("W", "Use W")
+            };
 
             LaneClear = new Menu("TwitchLaneClear", "Lane")
             {
@@ -35,9 +39,16 @@
                 new MenuSliderBool("E", "Min. E Killed", true, 4, 1, 7)
             };
 
-            JungleClear = new Menu("TwitchJungle", "Jungle") {new MenuBool("E", "Use E"), new MenuBool("W", "Use W")};
+            JungleClear = new Menu("TwitchJungle", "Jungle")
+            {
+                new MenuBool("E", "Use E"),
+                new MenuBool("W", "Use W")
+            };
 
-            Killsteal = new Menu("TwitchKillsteal", "Killsteal") {new MenuBool("E", "Use E (AA)")};
+            Killsteal = new Menu("TwitchKillsteal", "Killsteal")
+            {
+                new MenuBool("E", "Use E (AA)")
+            };
 
             Drawings = new Menu("TwitchDrawings", "Drawings")
             {
@@ -48,7 +59,16 @@
                 new MenuBool("Debug", "Debug")
             };
 
-            foreach (var menu in new List<Menu> {Combo, Harass, LaneClear, JungleClear, Killsteal, Drawings, MenuShortcut.Credits})
+            foreach (var menu in new List<Menu>
+            {
+                Combo,
+                Harass,
+                LaneClear,
+                JungleClear,
+                Killsteal,
+                Drawings,
+                MenuShortcut.Credits
+            })
             {
                 mainMenu.Add(menu);
             }

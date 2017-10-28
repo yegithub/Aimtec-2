@@ -8,7 +8,10 @@
     {
         private readonly SpellConfig _spellConfig;
 
-        public Dmg(SpellConfig spellConfig) { _spellConfig = spellConfig; }
+        public Dmg(SpellConfig spellConfig)
+        {
+            _spellConfig = spellConfig;
+        }
 
         public double Damage(Obj_AI_Base target)
         {

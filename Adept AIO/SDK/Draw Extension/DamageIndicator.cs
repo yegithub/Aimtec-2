@@ -33,7 +33,10 @@
             return new Vector2(StartPosition().X + w, StartPosition().Y);
         }
 
-        private float GetHpProc(float dmg) { return (this.Unit.Health - dmg > 0 ? this.Unit.Health - dmg : 0) / this.Unit.MaxHealth; }
+        private float GetHpProc(float dmg)
+        {
+            return (this.Unit.Health - dmg > 0 ? this.Unit.Health - dmg : 0) / this.Unit.MaxHealth;
+        }
 
         public void DrawDmg(float dmg, Color color)
         {

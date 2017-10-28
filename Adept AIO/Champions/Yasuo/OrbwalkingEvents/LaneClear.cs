@@ -57,8 +57,9 @@
         {
             if (SpellConfig.E.Ready && !MenuConfig.LaneClear["EAA"].Enabled)
             {
-                var minion = GameObjects.EnemyMinions.FirstOrDefault(x =>
-                    x.IsValidTarget() && x.Distance(Global.Player) <= SpellConfig.E.Range && !x.HasBuff("YasuoDashWrapper"));
+                var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsValidTarget() &&
+                                                                          x.Distance(Global.Player) <= SpellConfig.E.Range &&
+                                                                          !x.HasBuff("YasuoDashWrapper"));
 
                 if (!SpellConfig.E.Ready ||
                     minion == null ||

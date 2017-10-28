@@ -1,6 +1,5 @@
 ﻿namespace Adept_AIO.Champions.LeeSin.Ward_Manager
 {
-    using System;
     using Aimtec;
     using Aimtec.SDK.Extensions;
     using SDK.Generic;
@@ -11,7 +10,10 @@
     {
         private readonly IWardTracker _wardTracker;
 
-        public WardManager(IWardTracker wardTracker) { _wardTracker = wardTracker; }
+        public WardManager(IWardTracker wardTracker)
+        {
+            _wardTracker = wardTracker;
+        }
 
         public float LastTimeCasted { get; private set; }
 
@@ -26,7 +28,7 @@
 
             if (ward == null)
             {
-                DebugConsole.Write("DEBUG: [Warning] There are no wards. Failed to continue.", ConsoleColor.Yellow);
+                DebugConsole.WriteLine("There are no wards. Failed to continue.", MessageState.Warn);
                 return;
             }
 

@@ -52,10 +52,12 @@
                 }
                 else
                 {
-                    var minions = GameObjects.EnemyMinions.Count(x =>
-                        x.Health < Global.Player.GetSpellDamage(x, SpellSlot.E) + Global.Player.GetAutoAttackDamage(x) * 5 && x.IsValid);
-                    var minion = GameObjects.EnemyMinions.FirstOrDefault(x =>
-                        x.Health < Global.Player.GetSpellDamage(x, SpellSlot.E) + Global.Player.GetAutoAttackDamage(x) * 5 && x.IsValid);
+                    var minions =
+                        GameObjects.EnemyMinions.Count(x => x.Health < Global.Player.GetSpellDamage(x, SpellSlot.E) + Global.Player.GetAutoAttackDamage(x) * 5 &&
+                                                            x.IsValid);
+                    var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Health <
+                                                                              Global.Player.GetSpellDamage(x, SpellSlot.E) + Global.Player.GetAutoAttackDamage(x) * 5 &&
+                                                                              x.IsValid);
                     var cannon = GameObjects.EnemyMinions.FirstOrDefault(x => x.UnitSkinName.ToLower().Contains("cannon") && x.IsValid);
 
                     if (minions >= _menuConfig.LaneClear["E"].Value)

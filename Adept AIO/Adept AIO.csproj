@@ -83,6 +83,18 @@
     <Compile Include="Champions\Ezreal\OrbwalkingEvents\Harass.cs" />
     <Compile Include="Champions\Ezreal\OrbwalkingEvents\JungleClear.cs" />
     <Compile Include="Champions\Ezreal\OrbwalkingEvents\LaneClear.cs" />
+    <Compile Include="Champions\Gnar\Core\Dmg.cs" />
+    <Compile Include="Champions\Gnar\Core\MenuConfig.cs" />
+    <Compile Include="Champions\Gnar\Core\SpellManager.cs" />
+    <Compile Include="Champions\Gnar\Drawings\DrawManager.cs" />
+    <Compile Include="Champions\Gnar\Gnar.cs" />
+    <Compile Include="Champions\Gnar\Miscellaneous\AntiGapcloser.cs" />
+    <Compile Include="Champions\Gnar\Miscellaneous\Killsteal.cs" />
+    <Compile Include="Champions\Gnar\Miscellaneous\Manager.cs" />
+    <Compile Include="Champions\Gnar\OrbwalkingEvents\Combo.cs" />
+    <Compile Include="Champions\Gnar\OrbwalkingEvents\Harass.cs" />
+    <Compile Include="Champions\Gnar\OrbwalkingEvents\JungleClear.cs" />
+    <Compile Include="Champions\Gnar\OrbwalkingEvents\LaneClear.cs" />
     <Compile Include="Champions\Gragas\Core\Dmg.cs" />
     <Compile Include="Champions\Gragas\Core\InsecManager.cs" />
     <Compile Include="Champions\Gragas\Core\MenuConfig.cs" />
@@ -315,11 +327,12 @@
     <Compile Include="SDK\Unit Extensions\Global.cs" />
     <Compile Include="SDK\Menu Extension\MenuShortcut.cs" />
     <Compile Include="SDK\Draw Extension\RenderHelper.cs" />
-    <Compile Include="SDK\Unit Extensions\TargetState.cs" />
+    <Compile Include="SDK\Unit Extensions\HeroExtension.cs" />
     <Compile Include="SDK\Geometry Related\WallExtension.cs" />
     <Compile Include="SDK\Generic\DebugConsole.cs" />
     <Compile Include="SDK\Spell DB\SpellData.cs" />
     <Compile Include="SDK\Spell DB\SpellDatase.cs" />
+    <Compile Include="SDK\Unit Extensions\MinionExtension.cs" />
     <Compile Include="SDK\Usables\Items.cs" />
     <Compile Include="SDK\Usables\SummonerSpells.cs" />
   </ItemGroup>

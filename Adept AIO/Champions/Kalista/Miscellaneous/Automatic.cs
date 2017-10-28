@@ -18,18 +18,35 @@
 
             if (SpellManager.E.Ready && MenuConfig.Misc["E"].Enabled && GameObjects.EnemyHeroes.Any(x => x.HasBuff("kalistaexpungemarker")))
             {
-                var m = GameObjects.EnemyMinions.FirstOrDefault(x => x.HasBuff("kalistaexpungemarker") && x.Health < Dmg.EDmg(x) && x.IsValidTarget(SpellManager.E.Range));
+                var m = GameObjects.EnemyMinions.FirstOrDefault(x => x.HasBuff("kalistaexpungemarker") &&
+                                                                     x.Health < Dmg.EDmg(x) &&
+                                                                     x.IsValidTarget(SpellManager.E.Range));
                 if (m != null)
                 {
                     SpellManager.E.Cast();
                 }
             }
 
+            if (SpellManager.E.Ready &&
+                GameObjects.Jungle.Count(x => x.HasBuff("kalistaexpungemarker") && Dmg.EDmg(x) > x.Health && x.IsValidSpellTarget(SpellManager.E.Range)) >= 1 &&
+                MenuConfig.JungleClear["E"].Enabled)
+            {
+                if (Global.Player.Level == 1)
+                {
+                    return;
+                }
+                SpellManager.E.Cast();
+            }
+
             switch (Global.Orbwalker.Mode)
             {
                 case OrbwalkingMode.Combo:
                     var m = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(Global.Player) <= 2000);
-                    if (m != null && Global.Orbwalker.CanAttack() && Global.Player.CountEnemyHeroesInRange(Global.Player.AttackRange) <= 0 && MenuConfig.Combo["Minions"].Enabled && m.IsValidAutoRange())
+                    if (m != null &&
+                        Global.Orbwalker.CanAttack() &&
+                        Global.Player.CountEnemyHeroesInRange(Global.Player.AttackRange) <= 0 &&
+                        MenuConfig.Combo["Minions"].Enabled &&
+                        m.IsValidAutoRange())
                     {
                         Global.Orbwalker.Attack(m);
                     }

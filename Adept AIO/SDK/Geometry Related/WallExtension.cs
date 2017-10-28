@@ -1,11 +1,8 @@
 ﻿namespace Adept_AIO.SDK.Geometry_Related
 {
-    using System.Linq;
     using Aimtec;
     using Aimtec.SDK.Extensions;
-    using Aimtec.SDK.Prediction.Health;
     using Generic;
-    using Unit_Extensions;
 
     class WallExtension
     {
@@ -46,9 +43,28 @@
             return false;
         }
 
-        public static Vector3 NearestWall(Obj_AI_Base target, int range)
+        public static Vector3 NearestWall(Obj_AI_Base target, float range)
         {
             for (var i = 0; i < 360; i += 15)
+            {
+                var dir = target.Orientation.To2D();
+                var angleRad = Maths.DegreeToRadian(i);
+                var rot = (target.ServerPosition.To2D() + range * dir.Rotated((float) angleRad)).To3D();
+
+                if (!IsWallAt(rot))
+                {
+                    continue;
+                }
+
+                return rot;
+            }
+
+            return Vector3.Zero;
+        }
+
+        public static Vector3 FurthestWall(Obj_AI_Base target, int range) // useful for Camille
+        {
+            for (var i = range; i >= 360; i -= 15)
             {
                 var dir = target.Orientation.To2D();
                 var angleRad = Maths.DegreeToRadian(i);

@@ -4,6 +4,7 @@
     using Aimtec.SDK.Events;
     using Champions.Azir;
     using Champions.Ezreal;
+    using Champions.Gnar;
     using Champions.Gragas;
     using Champions.Irelia;
     using Champions.Jax;
@@ -27,6 +28,7 @@
     {
         private static readonly string[] Valid =
         {
+            "Gnar",
             "Kalista",
             "Twitch",
             "Lucian",
@@ -46,7 +48,10 @@
             "Vayne"
         };
 
-        private static void Main() { GameEvents.GameStart += GameEvents_GameStart; }
+        private static void Main()
+        {
+            GameEvents.GameStart += GameEvents_GameStart;
+        }
 
         private static void GameEvents_GameStart()
         {
@@ -62,6 +67,9 @@
 
             switch (Global.Player.ChampionName)
             {
+                case "Gnar":
+                    new Gnar();
+                    break;
                 case "Kalista":
                     new Kalista();
                     break;

@@ -25,8 +25,9 @@
                 if (_menuConfig.Combo["Teleport"].Enabled)
                 {
                     var enemyTeleport = ObjectManager.Get<Obj_AI_Minion>().
-                        FirstOrDefault(x =>
-                            x.IsEnemy && x.Distance(Global.Player) <= _spellConfig.E.Range && x.Buffs.Any(y => y.IsActive && y.Name.ToLower().Contains("teleport")));
+                        FirstOrDefault(x => x.IsEnemy &&
+                                            x.Distance(Global.Player) <= _spellConfig.E.Range &&
+                                            x.Buffs.Any(y => y.IsActive && y.Name.ToLower().Contains("teleport")));
                     if (enemyTeleport != null)
                     {
                         _spellConfig.E.Cast(enemyTeleport.ServerPosition);
@@ -54,7 +55,7 @@
             {
                 var count = GameObjects.EnemyHeroes.Count(x => x.Distance(target) < _spellConfig.E.Range * 3);
 
-                if (_menuConfig.Combo["Count"].Enabled && count >= 2 || _menuConfig.Combo["Immovable"].Enabled && TargetState.IsHardCc(target))
+                if (_menuConfig.Combo["Count"].Enabled && count >= 2 || _menuConfig.Combo["Immovable"].Enabled && target.IsHardCc())
                 {
                     _spellConfig.E.Cast(target);
                 }

@@ -1,6 +1,5 @@
 ﻿namespace Adept_AIO.Champions.LeeSin.Ward_Manager
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Aimtec;
@@ -13,15 +12,29 @@
     {
         private readonly ISpellConfig _spellConfig;
 
-        private readonly IEnumerable<string> _wardNames = new List<string> {"TrinketTotemLvl1", "ItemGhostWard", "JammerDevice"};
+        private readonly IEnumerable<string> _wardNames = new List<string>
+        {
+            "TrinketTotemLvl1",
+            "ItemGhostWard",
+            "JammerDevice"
+        };
 
-        public WardTracker(ISpellConfig spellConfig) { _spellConfig = spellConfig; }
+        public WardTracker(ISpellConfig spellConfig)
+        {
+            _spellConfig = spellConfig;
+        }
 
         public bool DidJustWard => Game.TickCount - this.LastWardCreated <= 800 + Game.Ping / 2f;
 
-        public bool IsWardReady() { return _wardNames.Any(Items.CanUseItem); }
+        public bool IsWardReady()
+        {
+            return _wardNames.Any(Items.CanUseItem);
+        }
 
-        public string Ward() { return _wardNames.FirstOrDefault(Items.CanUseItem); }
+        public string Ward()
+        {
+            return _wardNames.FirstOrDefault(Items.CanUseItem);
+        }
 
         public bool IsAtWall { get; set; }
 
@@ -49,7 +62,7 @@
             this.WardName = ward.Name;
             this.WardPosition = ward.ServerPosition;
 
-            DebugConsole.Write("Located Ally Ward.", ConsoleColor.Green);
+            DebugConsole.WriteLine("Located Ally Ward.", MessageState.Debug);
             Global.Player.SpellBook.CastSpell(SpellSlot.W, this.WardPosition); // Bug: This position is unrealistic and does not work.
         }
     }

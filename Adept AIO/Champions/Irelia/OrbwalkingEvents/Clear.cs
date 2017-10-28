@@ -41,8 +41,8 @@
                 return;
             }
 
-            var minion = GameObjects.EnemyMinions.LastOrDefault(x =>
-                x.Distance(Global.Player) <= SpellConfig.Q.Range && x.Health < Global.Player.GetSpellDamage(x, SpellSlot.Q));
+            var minion = GameObjects.EnemyMinions.LastOrDefault(x => x.Distance(Global.Player) <= SpellConfig.Q.Range &&
+                                                                     x.Health < Global.Player.GetSpellDamage(x, SpellSlot.Q));
 
             if (minion == null || MenuConfig.Clear["Turret"].Enabled && minion.IsUnderEnemyTurret())
             {

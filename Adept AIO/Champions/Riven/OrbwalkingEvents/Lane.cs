@@ -12,8 +12,8 @@
     {
         public static void OnProcessAutoAttack()
         {
-            var minion = GameObjects.EnemyMinions.FirstOrDefault(x =>
-                x.Distance(Global.Player) < Extensions.EngageRange && x.Health > Global.Player.GetAutoAttackDamage(x));
+            var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(Global.Player) < Extensions.EngageRange &&
+                                                                      x.Health > Global.Player.GetAutoAttackDamage(x));
 
             if (minion == null || MenuConfig.Lane["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(2000) >= 1)
             {

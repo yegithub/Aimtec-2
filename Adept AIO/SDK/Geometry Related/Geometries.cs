@@ -87,7 +87,10 @@
 
             #region Public Methods and Operators
 
-            public void Add(Vector2 point) { Points.Add(point); }
+            public void Add(Vector2 point)
+            {
+                Points.Add(point);
+            }
 
             public void Draw(Color color, int width = 1)
             {
@@ -98,7 +101,10 @@
                 }
             }
 
-            public bool IsInside(Vector2 point) { return !IsOutside(point); }
+            public bool IsInside(Vector2 point)
+            {
+                return !IsOutside(point);
+            }
 
             public bool IsOutside(Vector2 point)
             {
@@ -390,9 +396,15 @@
             }
         }
 
-        public static bool IsInside(this Vector3 point, Polygon poly) { return !point.IsOutside(poly); }
+        public static bool IsInside(this Vector3 point, Polygon poly)
+        {
+            return !point.IsOutside(poly);
+        }
 
-        public static bool IsInside(this Vector2 point, Polygon poly) { return !point.IsOutside(poly); }
+        public static bool IsInside(this Vector2 point, Polygon poly)
+        {
+            return !point.IsOutside(poly);
+        }
 
         public static bool IsOutside(this Vector3 point, Polygon poly)
         {
@@ -428,7 +440,10 @@
             return self[self.Count - 1];
         }
 
-        public static Vector3 SwitchZy(this Vector3 v) { return new Vector3(v.X, v.Y, v.Z); }
+        public static Vector3 SwitchZy(this Vector3 v)
+        {
+            return new Vector3(v.X, v.Y, v.Z);
+        }
 
         public static Polygon ToPolygon(this Path v)
         {
@@ -442,7 +457,10 @@
         }
 
         //Clipper
-        public static List<Polygon> ToPolygons(this Paths v) { return v.Select(path => path.ToPolygon()).ToList(); }
+        public static List<Polygon> ToPolygons(this Paths v)
+        {
+            return v.Select(path => path.ToPolygon()).ToList();
+        }
 
         #endregion
     }

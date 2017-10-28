@@ -34,7 +34,16 @@
             "SRU_RiftHerald"
         };
 
-        private readonly string[] _smiteOptional = {"Sru_Crab", "SRU_Razorbeak", "SRU_Krug", "SRU_Murkwolf", "SRU_Gromp", "SRU_Blue", "SRU_Red"};
+        private readonly string[] _smiteOptional =
+        {
+            "Sru_Crab",
+            "SRU_Razorbeak",
+            "SRU_Krug",
+            "SRU_Murkwolf",
+            "SRU_Gromp",
+            "SRU_Blue",
+            "SRU_Red"
+        };
 
         private readonly ISpellConfig _spellConfig;
 

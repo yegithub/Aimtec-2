@@ -11,7 +11,10 @@
     {
         private readonly SpellConfig _spellConfig;
 
-        public AntiGapcloser(SpellConfig spellConfig) { _spellConfig = spellConfig; }
+        public AntiGapcloser(SpellConfig spellConfig)
+        {
+            _spellConfig = spellConfig;
+        }
 
         public void OnGapcloser(Obj_AI_Hero sender, GapcloserArgs args)
         {
@@ -28,7 +31,7 @@
 
             if (_spellConfig.W.Ready)
             {
-                _spellConfig.W.Cast(TargetState.GetFountainPos(Global.Player));
+                _spellConfig.W.Cast(Global.Player.GetFountainPos());
             }
             else if (_spellConfig.R.Ready)
             {

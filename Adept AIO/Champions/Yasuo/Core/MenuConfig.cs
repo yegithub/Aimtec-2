@@ -44,13 +44,24 @@
                 new MenuSlider("Count", "Use R If X Airbourne", 2, 0, 5),
                 new MenuBool("Flash", "Use Flash (Beyblade)").SetToolTip("Will try to E-Q -> Flash. AKA Beyblade"),
                 new MenuBool("Turret", "Avoid Using E Under Turret"),
-                new MenuList("Dash", "Dash Mode: ", new[] {"Cursor", "From Player"}, 0),
+                new MenuList("Dash",
+                             "Dash Mode: ",
+                             new[]
+                             {
+                                 "Cursor",
+                                 "From Player"
+                             },
+                             0),
                 new MenuSlider("Range", "Mouse Dash Range: ", 650, 1, 1000),
                 new MenuSlider("MRange", "Search Range For Behind Minions", 180, 100, 240)
             };
 
             // Todo: Add Check and go: EQ AA -> E Out 
-            Harass = new Menu("Harass", "Harass") {new MenuBool("Q", "Use Q3"), new MenuBool("E", "Use E")};
+            Harass = new Menu("Harass", "Harass")
+            {
+                new MenuBool("Q", "Use Q3"),
+                new MenuBool("E", "Use E")
+            };
 
             LaneClear = new Menu("YLane", "LaneClear")
             {
@@ -58,7 +69,15 @@
                 new MenuBool("Turret", "Don't Clear Under Turret"),
                 new MenuBool("Q3", "Use Q3"),
                 new MenuBool("EAA", "Only E After AA"),
-                new MenuList("Mode", "E Mode: ", new[] {"Disabled", "Lasthit", "Fast Clear"}, 1)
+                new MenuList("Mode",
+                             "E Mode: ",
+                             new[]
+                             {
+                                 "Disabled",
+                                 "Lasthit",
+                                 "Fast Clear"
+                             },
+                             1)
             };
 
             JungleClear = new Menu("YJungle", "JungleClear")
@@ -96,7 +115,18 @@
 
             Gapcloser.Attach(mainMenu, "Anti Gapcloser");
 
-            foreach (var menu in new List<Menu> {Whitelist, Combo, Harass, LaneClear, JungleClear, Killsteal, Misc, Drawings, MenuShortcut.Credits})
+            foreach (var menu in new List<Menu>
+            {
+                Whitelist,
+                Combo,
+                Harass,
+                LaneClear,
+                JungleClear,
+                Killsteal,
+                Misc,
+                Drawings,
+                MenuShortcut.Credits
+            })
             {
                 mainMenu.Add(menu);
             }

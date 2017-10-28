@@ -9,7 +9,10 @@
 
     class Flee
     {
-        public static void OnKeyPressed() { Jump(Game.CursorPos); }
+        public static void OnKeyPressed()
+        {
+            Jump(Game.CursorPos);
+        }
 
         public static void Jump(Vector3 pos)
         {

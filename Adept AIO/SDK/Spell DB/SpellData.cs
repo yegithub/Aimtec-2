@@ -51,16 +51,16 @@
         public SpellData() { }
 
         public SpellData(string championName,
-            string spellName,
-            SpellSlot slot,
-            SkillshotType type,
-            int delay,
-            int range,
-            int radius,
-            int missileSpeed,
-            bool addHitbox,
-            bool fixedRange,
-            int defaultDangerValue)
+                         string spellName,
+                         SpellSlot slot,
+                         SkillshotType type,
+                         int delay,
+                         int range,
+                         int radius,
+                         int missileSpeed,
+                         bool addHitbox,
+                         bool fixedRange,
+                         int defaultDangerValue)
         {
             ChampionName = championName;
             SpellName = spellName;

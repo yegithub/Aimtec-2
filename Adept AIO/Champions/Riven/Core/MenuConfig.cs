@@ -35,19 +35,51 @@
 
             Combo = new Menu("RivenCombo", "Combo")
             {
-                new MenuList("Mode", "Combo Mode: ", new[] {"Automatic", "Max Damage", "Fast"}, 0),
+                new MenuList("Mode",
+                             "Combo Mode: ",
+                             new[]
+                             {
+                                 "Automatic",
+                                 "Max Damage",
+                                 "Fast"
+                             },
+                             0),
                 new MenuSlider("Change", "Fast Combo When DMG% (target) >= ", 70),
-                new MenuList("Chase", "Chase Mode", new[] {"Disabled", "Q", "Q & E"}, 0),
+                new MenuList("Chase",
+                             "Chase Mode",
+                             new[]
+                             {
+                                 "Disabled",
+                                 "Q",
+                                 "Q & E"
+                             },
+                             0),
                 new MenuBool("Flash", "Flash").SetToolTip("Will flash when an target is safely killable."),
                 new MenuSliderBool("Check", "Don't Use R1 If X (% HP) <=", true, 20),
-                new MenuList("R", "R1 Mode: ", new[] {"Never", "Always", "Killable"}, 2),
+                new MenuList("R",
+                             "R1 Mode: ",
+                             new[]
+                             {
+                                 "Never",
+                                 "Always",
+                                 "Killable"
+                             },
+                             2),
                 new MenuBool("R2", "Use R2")
             };
 
             BurstMenu = new Menu("RivenBurst", "Burst")
             {
                 new MenuSeperator("Note", "Select Target To Burst"),
-                new MenuList("Mode", "Burst Mode:", new[] {"Automatic", "The Shy", "Execution"}, 0),
+                new MenuList("Mode",
+                             "Burst Mode:",
+                             new[]
+                             {
+                                 "Automatic",
+                                 "The Shy",
+                                 "Execution"
+                             },
+                             0),
                 new MenuSeperator("endmylife")
             };
             foreach (var hero in GameObjects.EnemyHeroes)
@@ -57,8 +89,25 @@
 
             Harass = new Menu("RivenHarass", "Harass")
             {
-                new MenuList("Mode", "Mode: ", new[] {"Automatic", "Semi Combo", "Q3 To Safety", "Q3 To Target"}, 0),
-                new MenuList("Dodge", "Dodge: ", new[] {"Turret", "Cursor", "Away From Target"}, 0),
+                new MenuList("Mode",
+                             "Mode: ",
+                             new[]
+                             {
+                                 "Automatic",
+                                 "Semi Combo",
+                                 "Q3 To Safety",
+                                 "Q3 To Target"
+                             },
+                             0),
+                new MenuList("Dodge",
+                             "Dodge: ",
+                             new[]
+                             {
+                                 "Turret",
+                                 "Cursor",
+                                 "Away From Target"
+                             },
+                             0),
                 new MenuSeperator("Whitelist", "Whitelist")
             };
             foreach (var hero in GameObjects.EnemyHeroes)
@@ -109,7 +158,18 @@
                 new MenuBool("Pattern", "Current Pattern")
             };
 
-            foreach (var menu in new List<Menu> {Combo, BurstMenu, Harass, Lane, Jungle, Killsteal, Drawings, Miscellaneous, MenuShortcut.Credits})
+            foreach (var menu in new List<Menu>
+            {
+                Combo,
+                BurstMenu,
+                Harass,
+                Lane,
+                Jungle,
+                Killsteal,
+                Drawings,
+                Miscellaneous,
+                MenuShortcut.Credits
+            })
             {
                 mainMenu.Add(menu);
             }

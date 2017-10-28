@@ -13,10 +13,9 @@
         {
             if (SpellConfig.Q.Ready && MenuConfig.Lane["Q"].Enabled && Global.Player.ManaPercent() >= MenuConfig.Lane["Q"].Value)
             {
-                var minion = GameObjects.EnemyMinions.FirstOrDefault(x =>
-                    x.Health < Global.Player.GetSpellDamage(x, SpellSlot.Q) &&
-                    x.IsValidTarget(SpellConfig.Q.Range) &&
-                    x.Distance(Global.Player) > Global.Player.AttackRange);
+                var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Health < Global.Player.GetSpellDamage(x, SpellSlot.Q) &&
+                                                                          x.IsValidTarget(SpellConfig.Q.Range) &&
+                                                                          x.Distance(Global.Player) > Global.Player.AttackRange);
                 if (minion == null)
                 {
                     return;

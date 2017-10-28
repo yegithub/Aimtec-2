@@ -1,10 +1,10 @@
-﻿using Adept_BaseUlt.Local_SDK;
-using Adept_BaseUlt.Manager;
-using Aimtec.SDK.Events;
-
-namespace Adept_BaseUlt
+﻿namespace Adept_BaseUlt
 {
-    internal class Program
+    using Aimtec.SDK.Events;
+    using Local_SDK;
+    using Manager;
+
+    class Program
     {
         private static void Main()
         {

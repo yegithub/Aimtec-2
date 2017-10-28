@@ -18,7 +18,10 @@
     {
         private readonly ISpellConfig _spellConfig;
 
-        public Killsteal(ISpellConfig spellConfig) { _spellConfig = spellConfig; }
+        public Killsteal(ISpellConfig spellConfig)
+        {
+            _spellConfig = spellConfig;
+        }
 
         public bool IgniteEnabled { get; set; }
         public bool SmiteEnabled { get; set; }
@@ -41,8 +44,8 @@
             }
             if (_spellConfig.Q.Ready &&
                 (_spellConfig.IsQ2()
-                    ? target.Health < Global.Player.GetSpellDamage(target, SpellSlot.Q, DamageStage.SecondCast)
-                    : target.Health < Global.Player.GetSpellDamage(target, SpellSlot.Q)) &&
+                     ? target.Health < Global.Player.GetSpellDamage(target, SpellSlot.Q, DamageStage.SecondCast)
+                     : target.Health < Global.Player.GetSpellDamage(target, SpellSlot.Q)) &&
                 target.IsValidTarget(_spellConfig.Q.Range) &&
                 this.QEnabled)
             {

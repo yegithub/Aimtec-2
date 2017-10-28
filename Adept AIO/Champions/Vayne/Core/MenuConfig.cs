@@ -31,8 +31,22 @@
 
             Combo = new Menu("VayneCombo", "Combo")
             {
-                new MenuList("Q", "Q Mode", new[] {"After Auto", "Engage"}, 0),
-                new MenuList("Mode", "Q To:", new[] {"Cursor", "Side"}, 1),
+                new MenuList("Q",
+                             "Q Mode",
+                             new[]
+                             {
+                                 "After Auto",
+                                 "Engage"
+                             },
+                             0),
+                new MenuList("Mode",
+                             "Q To:",
+                             new[]
+                             {
+                                 "Cursor",
+                                 "Side"
+                             },
+                             1),
                 new MenuBool("ToE", "Force Q To E Pos"),
                 new MenuBool("Flash", "Flash E To Ally Turret"),
                 new MenuBool("W", "Focus Targets With W Stacks"),
@@ -50,8 +64,22 @@
 
             Harass = new Menu("VayneHarass", "Harass")
             {
-                new MenuList("Q", "Q Mode", new[] {"After Auto", "Engage"}, 0),
-                new MenuList("Mode", "Q To:", new[] {"Cursor", "Side"}, 1),
+                new MenuList("Q",
+                             "Q Mode",
+                             new[]
+                             {
+                                 "After Auto",
+                                 "Engage"
+                             },
+                             0),
+                new MenuList("Mode",
+                             "Q To:",
+                             new[]
+                             {
+                                 "Cursor",
+                                 "Side"
+                             },
+                             1),
                 new MenuBool("E", "Use E"),
                 new MenuSeperator("Whitelist")
             };
@@ -63,22 +91,61 @@
 
             LaneClear = new Menu("VayneLaneClear", "Lane")
             {
-                new MenuList("Q", "Q Mode", new[] {"After Auto", "Engage"}, 0),
-                new MenuList("QMode", "Q To:", new[] {"Cursor", "Side"}, 0)
+                new MenuList("Q",
+                             "Q Mode",
+                             new[]
+                             {
+                                 "After Auto",
+                                 "Engage"
+                             },
+                             0),
+                new MenuList("QMode",
+                             "Q To:",
+                             new[]
+                             {
+                                 "Cursor",
+                                 "Side"
+                             },
+                             0)
             };
 
             JungleClear = new Menu("VayneJungle", "Jungle")
             {
-                new MenuList("Q", "Q Mode", new[] {"After Auto", "Engage"}, 0),
-                new MenuList("Mode", "Q To:", new[] {"Cursor", "Side"}, 0),
+                new MenuList("Q",
+                             "Q Mode",
+                             new[]
+                             {
+                                 "After Auto",
+                                 "Engage"
+                             },
+                             0),
+                new MenuList("Mode",
+                             "Q To:",
+                             new[]
+                             {
+                                 "Cursor",
+                                 "Side"
+                             },
+                             0),
                 new MenuBool("E", "Use E")
             };
 
-            Lasthit = new Menu("VayneLasthit", "Lasthit") {new MenuBool("Q", "Use Q After AA")};
+            Lasthit = new Menu("VayneLasthit", "Lasthit")
+            {
+                new MenuBool("Q", "Use Q After AA")
+            };
 
-            Killsteal = new Menu("VayneKillsteal", "Killsteal") {new MenuBool("Q", "Q -> AA"), new MenuBool("E", "Use E")};
+            Killsteal = new Menu("VayneKillsteal", "Killsteal")
+            {
+                new MenuBool("Q", "Q -> AA"),
+                new MenuBool("E", "Use E")
+            };
 
-            Misc = new Menu("VayneMisc", "Miscellaneous") {new MenuBool("Q", "Anti Gapcloser | Q"), new MenuBool("E", "Anti Gapcloser | E")};
+            Misc = new Menu("VayneMisc", "Miscellaneous")
+            {
+                new MenuBool("Q", "Anti Gapcloser | Q"),
+                new MenuBool("E", "Anti Gapcloser | E")
+            };
 
             Drawings = new Menu("VayneDrawManager", "DrawManager")
             {
@@ -88,7 +155,18 @@
                 new MenuBool("Pred", "Draw E Prediction")
             };
 
-            foreach (var menu in new List<Menu> {Combo, Harass, LaneClear, JungleClear, Lasthit, Killsteal, Misc, Drawings, MenuShortcut.Credits})
+            foreach (var menu in new List<Menu>
+            {
+                Combo,
+                Harass,
+                LaneClear,
+                JungleClear,
+                Lasthit,
+                Killsteal,
+                Misc,
+                Drawings,
+                MenuShortcut.Credits
+            })
             {
                 mainMenu.Add(menu);
             }

@@ -4,12 +4,42 @@
 
     class DebugConsole
     {
-        public static void Write(string message, ConsoleColor foregroundColor = ConsoleColor.White, ConsoleColor backgroundColor = ConsoleColor.Black)
+        private static MessageState _messageState;
+
+        public static void WriteLine(string message, MessageState messageState)
         {
-            Console.BackgroundColor = backgroundColor;
-            Console.ForegroundColor = foregroundColor;
-            Console.WriteLine("[" + DateTime.Now + "] " + message);
+            _messageState = messageState;
+
+            Console.ForegroundColor = GetForeGroundColor();
+            Console.WriteLine($"[{messageState}] {message}");
             Console.ResetColor();
         }
+
+        public static void Write(string message, MessageState messageState)
+        {
+            _messageState = messageState;
+
+            Console.ForegroundColor = GetForeGroundColor();
+            Console.Write($"[{messageState}] {message}");
+            Console.ResetColor();
+        }
+
+        private static ConsoleColor GetForeGroundColor()
+        {
+            switch (_messageState)
+            {
+                case MessageState.Debug: return ConsoleColor.Cyan;
+                case MessageState.Error: return ConsoleColor.Red;
+                case MessageState.Warn: return ConsoleColor.Yellow;
+                default: throw new ArgumentOutOfRangeException();
+            }
+        }
+    }
+
+    enum MessageState
+    {
+        Warn,
+        Error,
+        Debug
     }
 }

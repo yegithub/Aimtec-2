@@ -27,7 +27,6 @@
                 case OrbwalkingMode.Lasthit:
                     Lasthit.PostAttack(sender, args);
                     break;
-
             }
         }
 

@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using Aimtec;
-
-namespace Adept_BaseUlt.Local_SDK
+﻿namespace Adept_BaseUlt.Local_SDK
 {
+    using System;
+    using System.Collections.Generic;
+    using Aimtec;
+
     public static class Teleport
     {
         public delegate void TeleportHandler(Obj_AI_Base sender, TeleportEventArgs args);
-
-        public static event TeleportHandler OnTeleport;
 
         internal static readonly Dictionary<int, TeleportEventArgs> TeleportDataNetId = new Dictionary<int, TeleportEventArgs>();
 
@@ -16,6 +14,8 @@ namespace Adept_BaseUlt.Local_SDK
         {
             Obj_AI_Base.OnTeleport += OnUnitTeleport;
         }
+
+        public static event TeleportHandler OnTeleport;
 
         private static void OnUnitTeleport(Obj_AI_Base sender, Obj_AI_BaseTeleportEventArgs e)
         {
@@ -41,7 +41,7 @@ namespace Adept_BaseUlt.Local_SDK
                 eventArgs.Duration = GetDuration(e);
                 eventArgs.Type = GetType(e);
                 eventArgs.Start = Game.TickCount;
-                
+
                 TeleportDataNetId[sender.NetworkId] = eventArgs;
             }
             else
@@ -57,16 +57,11 @@ namespace Adept_BaseUlt.Local_SDK
         {
             switch (args.DisplayName)
             {
-                case "Recall":
-                    return TeleportType.Recall;
-                case "Teleport":
-                    return TeleportType.Teleport;
-                case "Gate":
-                    return TeleportType.TwistedFate;
-                case "Shen":
-                    return TeleportType.Shen;
-                default:
-                    return TeleportType.Recall;
+                case "Recall": return TeleportType.Recall;
+                case "Teleport": return TeleportType.Teleport;
+                case "Gate": return TeleportType.TwistedFate;
+                case "Shen": return TeleportType.Shen;
+                default: return TeleportType.Recall;
             }
         }
 
@@ -74,14 +69,10 @@ namespace Adept_BaseUlt.Local_SDK
         {
             switch (GetType(args))
             {
-                case TeleportType.Shen:
-                    return 3000;
-                case TeleportType.Teleport:
-                    return 4500;
-                case TeleportType.TwistedFate:
-                    return 1500;
-                case TeleportType.Recall:
-                    return GetRecallDuration(args);
+                case TeleportType.Shen: return 3000;
+                case TeleportType.Teleport: return 4500;
+                case TeleportType.TwistedFate: return 1500;
+                case TeleportType.Recall: return GetRecallDuration(args);
                 default: return 3500;
             }
         }
@@ -90,18 +81,12 @@ namespace Adept_BaseUlt.Local_SDK
         {
             switch (args.DisplayName.ToLower())
             {
-                case "recall":
-                    return 8000;
-                case "recallimproved":
-                    return 7000;
-                case "odinrecall":
-                    return 4500;
-                case "odinrecallimproved":
-                    return 4000;
-                case "superrecall":
-                    return 4000;
-                case "superrecallimproved":
-                    return 4000;
+                case "recall": return 8000;
+                case "recallimproved": return 7000;
+                case "odinrecall": return 4500;
+                case "odinrecallimproved": return 4000;
+                case "superrecall": return 4000;
+                case "superrecallimproved": return 4000;
                 default: return 8000;
             }
         }

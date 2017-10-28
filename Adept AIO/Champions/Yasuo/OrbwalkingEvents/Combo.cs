@@ -117,18 +117,18 @@
                             (Dmg.Damage(target) * 1.25 > target.Health || target.ServerPosition.CountEnemyHeroesInRange(220) >= 2))
                         {
                             DelayAction.Queue(Game.Ping / 2,
-                                () =>
-                                {
-                                    SpellConfig.Q.Cast();
-                                },
-                                new CancellationToken(false));
+                                              () =>
+                                              {
+                                                  SpellConfig.Q.Cast();
+                                              },
+                                              new CancellationToken(false));
 
                             DelayAction.Queue(Game.Ping / 2 + 50,
-                                () =>
-                                {
-                                    SummonerSpells.Flash.Cast(target.Position);
-                                },
-                                new CancellationToken(false));
+                                              () =>
+                                              {
+                                                  SummonerSpells.Flash.Cast(target.Position);
+                                              },
+                                              new CancellationToken(false));
                         }
                         else
                         {

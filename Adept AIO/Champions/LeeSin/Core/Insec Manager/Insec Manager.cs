@@ -11,7 +11,10 @@
     {
         private readonly ISpellConfig _spellConfig;
 
-        public InsecManager(ISpellConfig spellConfig) { _spellConfig = spellConfig; }
+        public InsecManager(ISpellConfig spellConfig)
+        {
+            _spellConfig = spellConfig;
+        }
 
         public int InsecKickValue { get; set; }
         public int InsecPositionValue { get; set; }
@@ -43,7 +46,7 @@
             }
 
             return secondEnemy.ServerPosition.Extend(secondEnemy.ServerPosition + (secondEnemy.ServerPosition - target.ServerPosition).Normalized(),
-                DistanceBehindTarget());
+                                                     DistanceBehindTarget());
         }
 
         public Vector3 GetTargetEndPosition()

@@ -12,7 +12,10 @@
     {
         private readonly ISpellConfig _spellConfig;
 
-        public LaneClear(ISpellConfig spellConfig) { _spellConfig = spellConfig; }
+        public LaneClear(ISpellConfig spellConfig)
+        {
+            _spellConfig = spellConfig;
+        }
 
         public bool Q1Enabled { get; set; }
         public bool WEnabled { get; set; }
@@ -21,8 +24,8 @@
 
         public void OnPostAttack()
         {
-            var minion = GameObjects.EnemyMinions.FirstOrDefault(x =>
-                x.Distance(Global.Player) < Global.Player.AttackRange + x.BoundingRadius && x.Health > Global.Player.GetAutoAttackDamage(x));
+            var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(Global.Player) < Global.Player.AttackRange + x.BoundingRadius &&
+                                                                      x.Health > Global.Player.GetAutoAttackDamage(x));
 
             if (minion == null || this.CheckEnabled && Global.Player.CountEnemyHeroesInRange(2000) >= 1)
             {
@@ -54,8 +57,8 @@
                 return;
             }
 
-            var minion = GameObjects.EnemyMinions.FirstOrDefault(x =>
-                x.Distance(Global.Player) < (Global.Player.IsUnderEnemyTurret() ? _spellConfig.Q.Range : _spellConfig.Q.Range / 2f));
+            var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(Global.Player) <
+                                                                      (Global.Player.IsUnderEnemyTurret() ? _spellConfig.Q.Range : _spellConfig.Q.Range / 2f));
 
             if (minion == null)
             {

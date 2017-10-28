@@ -122,11 +122,11 @@
                         SpellConfig.SetSkill(Mode.Dashing);
 
                         DelayAction.Queue(1000,
-                            () =>
-                            {
-                                SpellConfig.SetSkill(Mode.Normal);
-                            },
-                            new CancellationToken(false));
+                                          () =>
+                                          {
+                                              SpellConfig.SetSkill(Mode.Normal);
+                                          },
+                                          new CancellationToken(false));
                     }
                     break;
             }

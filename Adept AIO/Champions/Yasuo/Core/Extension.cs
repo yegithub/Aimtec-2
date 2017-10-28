@@ -57,7 +57,10 @@
         public static Vector3 ExtendedMinion;
         public static Vector3 ExtendedTarget;
 
-        public static bool IsDashable(Obj_AI_Base target) { return !target.HasBuff("YasuoDashWrapper") && target.Distance(Global.Player) < SpellConfig.E.Range; }
+        public static bool IsDashable(Obj_AI_Base target)
+        {
+            return !target.HasBuff("YasuoDashWrapper") && target.Distance(Global.Player) < SpellConfig.E.Range;
+        }
 
         public static float DashDistance(Obj_AI_Minion minion, Obj_AI_Base target, int overrideValue = 475)
         {
@@ -71,7 +74,7 @@
         public static Vector3 PositionAfter(Obj_AI_Base target)
         {
             return Global.Player.ServerPosition.Extend(target.ServerPosition,
-                Global.Player.Distance(target) < 410 ? SpellConfig.E.Range : Global.Player.Distance(target) + 65);
+                                                       Global.Player.Distance(target) < 410 ? SpellConfig.E.Range : Global.Player.Distance(target) + 65);
         }
 
         public static Obj_AI_Minion GetDashableMinion(Obj_AI_Base target)

@@ -23,7 +23,10 @@
             R.SetSkillshot(0.25f, 70, 1750, false, SkillshotType.Line);
         }
 
-        public static bool HasUltBuff() { return Global.Player.HasBuff("TwitchUlt") || Global.Player.HasBuff("TwitchFullAutomatic"); }
+        public static bool HasUltBuff()
+        {
+            return Global.Player.HasBuff("TwitchUlt") || Global.Player.HasBuff("TwitchFullAutomatic");
+        }
 
         public static Geometry.Rectangle GetRectangle(Obj_AI_Base target)
         {

@@ -10,7 +10,10 @@
     {
         private readonly SpellConfig _spellConfig;
 
-        public AntiGapcloser(SpellConfig spellConfig) { _spellConfig = spellConfig; }
+        public AntiGapcloser(SpellConfig spellConfig)
+        {
+            _spellConfig = spellConfig;
+        }
 
         public void OnGapcloser(Obj_AI_Hero sender, GapcloserArgs args)
         {

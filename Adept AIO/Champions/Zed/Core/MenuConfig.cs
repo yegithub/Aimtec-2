@@ -64,11 +64,25 @@
                 new MenuSlider("Energy", "Min. Energy %", 40)
             };
 
-            JungleClear = new Menu("Jungle", "JungleClear") {new MenuBool("Q", "Use Q"), new MenuBool("E", "Use E"), new MenuSlider("Energy", "Min. Energy %", 40)};
+            JungleClear = new Menu("Jungle", "JungleClear")
+            {
+                new MenuBool("Q", "Use Q"),
+                new MenuBool("E", "Use E"),
+                new MenuSlider("Energy", "Min. Energy %", 40)
+            };
 
-            Lasthit = new Menu("Lasthit", "Lasthit") {new MenuBool("Q", "Use Q"), new MenuBool("E", "Use E"), new MenuSlider("Energy", "Min. Energy %", 40)};
+            Lasthit = new Menu("Lasthit", "Lasthit")
+            {
+                new MenuBool("Q", "Use Q"),
+                new MenuBool("E", "Use E"),
+                new MenuSlider("Energy", "Min. Energy %", 40)
+            };
 
-            Killsteal = new Menu("Killsteal", "Killsteal") {new MenuBool("Q", "Use Q"), new MenuBool("E", "Use E")};
+            Killsteal = new Menu("Killsteal", "Killsteal")
+            {
+                new MenuBool("Q", "Use Q"),
+                new MenuBool("E", "Use E")
+            };
 
             Misc = new Menu("Misc", "Miscellaneous")
             {
@@ -90,7 +104,18 @@
 
             Gapcloser.Attach(_mainMenu, "Anti Gapcloser");
 
-            foreach (var menu in new List<Menu> {Combo, Harass, LaneClear, JungleClear, Lasthit, Killsteal, Misc, Drawings, MenuShortcut.Credits})
+            foreach (var menu in new List<Menu>
+            {
+                Combo,
+                Harass,
+                LaneClear,
+                JungleClear,
+                Lasthit,
+                Killsteal,
+                Misc,
+                Drawings,
+                MenuShortcut.Credits
+            })
             {
                 _mainMenu.Add(menu);
             }

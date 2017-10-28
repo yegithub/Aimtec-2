@@ -10,13 +10,20 @@
 
         internal static readonly Dictionary<int, TeleportEventArgs> TeleportDataNetId = new Dictionary<int, TeleportEventArgs>();
 
-        static Teleport() { Obj_AI_Base.OnTeleport += OnUnitTeleport; }
+        static Teleport()
+        {
+            Obj_AI_Base.OnTeleport += OnUnitTeleport;
+        }
 
         public static event TeleportHandler OnTeleport;
 
         private static void OnUnitTeleport(Obj_AI_Base sender, Obj_AI_BaseTeleportEventArgs e)
         {
-            var eventArgs = new TeleportEventArgs {Status = TeleportStatus.Unknown, Type = TeleportType.Unknown};
+            var eventArgs = new TeleportEventArgs
+            {
+                Status = TeleportStatus.Unknown,
+                Type = TeleportType.Unknown
+            };
 
             if (sender == null)
             {

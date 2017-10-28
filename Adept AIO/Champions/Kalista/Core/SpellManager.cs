@@ -57,8 +57,9 @@
             {
                 var actualCount = GameObjects.EnemyMinions.Count(x => rect.IsInside(x.ServerPosition.To2D()) && x.Health > Global.Player.GetSpellDamage(x, SpellSlot.Q));
 
-                var killableCount = GameObjects.EnemyMinions.Count(x =>
-                    x.HasBuff("kalistaexpungemarker") && rect.IsInside(x.ServerPosition.To2D()) && x.Health <= Global.Player.GetSpellDamage(x, SpellSlot.Q));
+                var killableCount = GameObjects.EnemyMinions.Count(x => x.HasBuff("kalistaexpungemarker") &&
+                                                                        rect.IsInside(x.ServerPosition.To2D()) &&
+                                                                        x.Health <= Global.Player.GetSpellDamage(x, SpellSlot.Q));
 
                 if (actualCount > killableCount)
                 {
@@ -67,8 +68,8 @@
 
                 Q.Cast(target);
             }
-            else if (GameObjects.EnemyMinions.Count(x => rect.IsInside(x.ServerPosition.To2D())) >= minHit && GameObjects.EnemyMinions.All(x => rect.IsInside(x.ServerPosition.To2D())
-            && x.Health < Global.Player.GetSpellDamage(x, SpellSlot.Q)))
+            else if (GameObjects.EnemyMinions.Count(x => rect.IsInside(x.ServerPosition.To2D())) >= minHit &&
+                     GameObjects.EnemyMinions.All(x => rect.IsInside(x.ServerPosition.To2D()) && x.Health < Global.Player.GetSpellDamage(x, SpellSlot.Q)))
             {
                 Q.Cast(target);
             }

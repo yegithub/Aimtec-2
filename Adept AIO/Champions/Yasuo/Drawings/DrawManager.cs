@@ -65,9 +65,9 @@
 
                 Render.WorldToScreen(Global.Player.Position, out var temp);
                 Render.Text("Q Mode: " + Extension.CurrentMode + " | Range: " + SpellConfig.Q.Range,
-                    new Vector2(temp.X - 55, temp.Y + 40),
-                    RenderTextFlags.Center,
-                    Color.Cyan);
+                            new Vector2(temp.X - 55, temp.Y + 40),
+                            RenderTextFlags.Center,
+                            Color.Cyan);
             }
 
             if (SpellConfig.E.Ready && MenuConfig.Drawings["Path"].Enabled)

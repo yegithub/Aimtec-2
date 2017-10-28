@@ -20,7 +20,18 @@
 
             if (!Global.Player.HasBuff("TwitchHideInShadows") && MenuConfig.Drawings["Map"].Enabled && SpellManager.Q.Ready)
             {
-                Geometry.DrawCircleOnMinimap(Global.Player.ServerPosition, new[] { 10, 11, 12, 13, 14 }[Global.Player.SpellBook.GetSpell(SpellSlot.Q).Level - 1] * Global.Player.MoveSpeed, Color.DeepPink, 5);
+                Geometry.DrawCircleOnMinimap(Global.Player.ServerPosition,
+                                             new[]
+                                             {
+                                                 10,
+                                                 11,
+                                                 12,
+                                                 13,
+                                                 14
+                                             }[Global.Player.SpellBook.GetSpell(SpellSlot.Q).Level - 1] *
+                                             Global.Player.MoveSpeed,
+                                             Color.DeepPink,
+                                             5);
             }
 
             if (!MenuConfig.Drawings["Dmg"].Enabled)
@@ -59,7 +70,7 @@
             if (Global.Player.HasBuff("TwitchHideInShadows") && MenuConfig.Drawings["World"].Enabled)
             {
                 var time = Global.Player.MoveSpeed * (Math.Max(0, Global.Player.GetBuff("TwitchHideInShadows").EndTime) - Game.ClockTime);
-                Render.Circle(Global.Player.Position, time, (uint)MenuConfig.Drawings["Segments"].Value, Color.Cyan);
+                Render.Circle(Global.Player.Position, time, (uint) MenuConfig.Drawings["Segments"].Value, Color.Cyan);
             }
         }
     }

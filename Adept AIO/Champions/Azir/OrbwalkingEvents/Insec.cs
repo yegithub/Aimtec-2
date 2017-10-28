@@ -27,8 +27,8 @@
                 var targetExtend = Global.Player.ServerPosition.Extend(allyT, SpellConfig.R.Range - target.BoundingRadius - 30);
 
                 AzirHelper.Rect = new Geometry.Rectangle(targetExtend.To2D(),
-                    Global.Player.ServerPosition.Extend(allyT, -SpellConfig.R.Width / 2f).To2D(),
-                    SpellConfig.R.Width / 2f);
+                                                         Global.Player.ServerPosition.Extend(allyT, -SpellConfig.R.Width / 2f).To2D(),
+                                                         SpellConfig.R.Width / 2f);
 
                 if (SpellConfig.Q.Ready)
                 {

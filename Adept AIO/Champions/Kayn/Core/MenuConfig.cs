@@ -34,7 +34,11 @@
                 new MenuSliderBool("R", "Force R When Below (% HP)", true, 15, 1)
             };
 
-            Harass = new Menu("Harass", "Harass") {new MenuBool("Q", "Use Q"), new MenuBool("W", "Use W")};
+            Harass = new Menu("Harass", "Harass")
+            {
+                new MenuBool("Q", "Use Q"),
+                new MenuBool("W", "Use W")
+            };
 
             LaneClear = new Menu("LaneClear", "LaneClear")
             {
@@ -65,7 +69,17 @@
                 new MenuBool("R", "[R] Range")
             };
 
-            foreach (var menu in new List<Menu> {Whitelist, Combo, Harass, LaneClear, JungleClear, Killsteal, Drawings, MenuShortcut.Credits})
+            foreach (var menu in new List<Menu>
+            {
+                Whitelist,
+                Combo,
+                Harass,
+                LaneClear,
+                JungleClear,
+                Killsteal,
+                Drawings,
+                MenuShortcut.Credits
+            })
             {
                 _mainMenu.Add(menu);
             }

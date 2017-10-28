@@ -5,7 +5,6 @@
     using Aimtec.SDK.Orbwalking;
     using Core;
     using OrbwalkingEvents;
-    using SDK.Generic;
     using SDK.Unit_Extensions;
 
     class Manager
@@ -15,11 +14,6 @@
             if (Global.Player.IsDead || Global.Orbwalker.IsWindingUp)
             {
                 return;
-            }
-
-            foreach (var gameObject in GameObjects.Minions.Where(x => x.Distance(Global.Player) <= 1000))
-            {
-                DebugConsole.Write(gameObject.Name);
             }
 
             switch (Global.Orbwalker.Mode)

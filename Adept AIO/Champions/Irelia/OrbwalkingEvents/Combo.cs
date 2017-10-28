@@ -42,9 +42,8 @@
             }
 
             var ganked = MenuConfig.Combo["Force"].Enabled &&
-                         GameObjects.AllyHeroes.FirstOrDefault(x =>
-                             x.SpellBook.GetSpell(SpellSlot.Summoner1).Name.ToLower().Contains("smite") ||
-                             x.SpellBook.GetSpell(SpellSlot.Summoner2).Name.ToLower().Contains("smite")) !=
+                         GameObjects.AllyHeroes.FirstOrDefault(x => x.SpellBook.GetSpell(SpellSlot.Summoner1).Name.ToLower().Contains("smite") ||
+                                                                    x.SpellBook.GetSpell(SpellSlot.Summoner2).Name.ToLower().Contains("smite")) !=
                          null;
 
             if (SpellConfig.Q.Ready)

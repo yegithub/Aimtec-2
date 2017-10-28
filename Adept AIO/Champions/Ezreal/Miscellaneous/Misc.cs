@@ -25,18 +25,18 @@
                 Global.Player.CountEnemyHeroesInRange(2500) == 0 &&
                 MenuConfig.Miscellaneous["Stack"].Enabled &&
                 Global.Player.ManaPercent() >= MenuConfig.Miscellaneous["Stack"].Value &&
-                TargetState.HasTear())
+                HeroExtension.HasTear())
             {
                 var objects = GameObjects.Enemy.FirstOrDefault(x => x.IsValidTarget(SpellConfig.Q.Range) && x.MaxHealth >= 10);
 
                 if (MenuConfig.Miscellaneous["TH"].Enabled)
                 {
                     DelayAction.Queue(GetRandom.Next(400, 1200),
-                        () =>
-                        {
-                            SpellConfig.Q.Cast(objects != null ? objects.ServerPosition : Game.CursorPos);
-                        },
-                        new CancellationToken(false));
+                                      () =>
+                                      {
+                                          SpellConfig.Q.Cast(objects != null ? objects.ServerPosition : Game.CursorPos);
+                                      },
+                                      new CancellationToken(false));
                 }
                 else
                 {

@@ -25,14 +25,14 @@
 
             Gapcloser.Attach(mainMenu, "Anti Gapcloser");
 
-            InsecMenu = new Menu("Insec", "Insec")
+            InsecMenu = new Menu("GragasInsec", "Insec")
             {
                 new MenuBool("Flash", "Flash | E Flash"),
                 //  new MenuSliderBool("Auto", "Auto Insec If X Hit", true, 3, 2, 5),
                 new MenuBool("Q", "Use Q Before R")
             };
 
-            Combo = new Menu("Combo", "Combo")
+            Combo = new Menu("GragasCombo", "Combo")
             {
                 new MenuBool("Q", "Use Q"),
                 new MenuBool("W", "Use W"),
@@ -42,9 +42,14 @@
                 new MenuBool("Killable", "R | ONLY If Killable")
             };
 
-            Harass = new Menu("Harass", "Harass") {new MenuBool("Q", "Use Q"), new MenuBool("W", "Use W"), new MenuBool("E", "Use E")};
+            Harass = new Menu("GragasHarass", "Harass")
+            {
+                new MenuBool("Q", "Use Q"),
+                new MenuBool("W", "Use W"),
+                new MenuBool("E", "Use E")
+            };
 
-            Lane = new Menu("Lane", "LaneClear")
+            Lane = new Menu("GragasLane", "LaneClear")
             {
                 new MenuBool("Check", "Safe Clear"),
                 new MenuSliderBool("Q", "Use Q If minimum hit", true, 4, 1, 7),
@@ -54,16 +59,21 @@
                 new MenuSlider("EMana", "E | Minimum Mana %", 40)
             };
 
-            Jungle = new Menu("Jungle", "Jungle") {new MenuBool("Q", "Use Q"), new MenuBool("W", "Use W"), new MenuBool("E", "Use E")};
+            Jungle = new Menu("GragasJungle", "Jungle")
+            {
+                new MenuBool("Q", "Use Q"),
+                new MenuBool("W", "Use W"),
+                new MenuBool("E", "Use E")
+            };
 
-            Automatic = new Menu("Auto", "Automatic")
+            Automatic = new Menu("GragasAuto", "Automatic")
             {
                 new MenuBool("Q", "Auto Q (Smart)"),
                 new MenuBool("E", "Killsteal E"),
                 new MenuBool("Disengage", "R | Disengage", false)
             };
 
-            Drawings = new Menu("DrawManager", "DrawManager")
+            Drawings = new Menu("GragasDrawManager", "DrawManager")
             {
                 new MenuSlider("Segments", "Segments", 100, 10, 150).SetToolTip("Smoothness of the circles"),
                 new MenuBool("Dmg", "Damage"),
@@ -72,7 +82,17 @@
                 new MenuBool("Debug", "Debug DrawManager")
             };
 
-            foreach (var menu in new List<Menu> {InsecMenu, Combo, Harass, Lane, Jungle, Automatic, Drawings, MenuShortcut.Credits})
+            foreach (var menu in new List<Menu>
+            {
+                InsecMenu,
+                Combo,
+                Harass,
+                Lane,
+                Jungle,
+                Automatic,
+                Drawings,
+                MenuShortcut.Credits
+            })
             {
                 mainMenu.Add(menu);
             }

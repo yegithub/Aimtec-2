@@ -1,10 +1,10 @@
-﻿using Aimtec.SDK.Menu;
-using Aimtec.SDK.Menu.Components;
-using Aimtec.SDK.Util.Cache;
-
-namespace Adept_BaseUlt.Local_SDK
+﻿namespace Adept_BaseUlt.Local_SDK
 {
-    internal class MenuConfig
+    using Aimtec.SDK.Menu;
+    using Aimtec.SDK.Menu.Components;
+    using Aimtec.SDK.Util.Cache;
+
+    class MenuConfig
     {
         public Menu Menu;
 
@@ -13,8 +13,7 @@ namespace Adept_BaseUlt.Local_SDK
             Menu = new Menu("hello", "Adept - BaseUlt", true);
             Menu.Attach();
 
-            Menu.Add(new MenuBool("RandomUlt", "Use RandomUlt").SetToolTip(
-                "Will GUESS the enemy position and ult there"));
+            Menu.Add(new MenuBool("RandomUlt", "Use RandomUlt").SetToolTip("Will GUESS the enemy position and ult there"));
 
             Menu.Add(new MenuSeperator("yes", "Whitelist"));
 

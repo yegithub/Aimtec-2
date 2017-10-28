@@ -6,8 +6,14 @@
     {
         private static Random _random;
 
-        public GetRandom() { _random = new Random(); }
+        public GetRandom()
+        {
+            _random = new Random();
+        }
 
-        public static int Next(int min, int max) { return _random.Next(min, max); }
+        public static int Next(int min, int max)
+        {
+            return _random.Next(min, max);
+        }
     }
 }

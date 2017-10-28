@@ -1,6 +1,5 @@
 ﻿namespace Adept_AIO.SDK.Geometry_Related
 {
-    using System;
     using Aimtec;
     using Aimtec.SDK.Extensions;
     using Generic;
@@ -21,7 +20,6 @@
                 {
                     continue;
                 }
-                DebugConsole.Write("[DASH] KITE", ConsoleColor.Yellow);
                 pos = rot;
             }
             return pos;

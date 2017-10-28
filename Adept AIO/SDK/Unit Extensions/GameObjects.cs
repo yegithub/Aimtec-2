@@ -4,6 +4,8 @@
     using System.Linq;
     using System.Text.RegularExpressions;
     using Aimtec;
+    using Aimtec.SDK.Extensions;
+    using Generic;
 
     /// <summary>
     ///     A static (stack) class which contains a sort-of cached versions of the important game objects.
@@ -158,7 +160,12 @@
         /// <summary>
         ///     The legendary name regex list.
         /// </summary>
-        private static readonly string[] LegendaryNameRegex = {"SRU_Dragon", "SRU_Baron", "SRU_RiftHerald"};
+        private static readonly string[] LegendaryNameRegex =
+        {
+            "SRU_Dragon",
+            "SRU_Baron",
+            "SRU_RiftHerald"
+        };
 
         /// <summary>
         ///     The minions list.
@@ -168,7 +175,11 @@
         /// <summary>
         ///     The small name regex list.
         /// </summary>
-        private static readonly string[] SmallNameRegex = {"SRU_[a-zA-Z](.*?)Mini", "Sru_Crab"};
+        private static readonly string[] SmallNameRegex =
+        {
+            "SRU_[a-zA-Z](.*?)Mini",
+            "Sru_Crab"
+        };
 
         /// <summary>
         ///     The turrets list.
@@ -303,6 +314,19 @@
 
         #region Public Methods and Operators
 
+        public static List<Obj_AI_Minion> GetMobsInRange(float range, bool includeSmall = false)
+        {
+            var current = new List<Obj_AI_Minion>();
+            current.AddRange(Jungle.Where(x => !JungleSmall.Contains(x) && x.IsValidTarget(range)));
+
+            if (includeSmall)
+            {
+                current.AddRange(Jungle.Where(x => x.IsValidTarget(range)).ToList());
+            }
+
+            return current;
+        }
+
         /// <summary>
         ///     Compares two <see cref="GameObject" /> and returns if they are identical.
         /// </summary>
@@ -375,16 +399,13 @@
 
         #region Methods
 
-        /// <summary>
-        ///     The initialize method.
-        /// </summary>
         internal static void Initialize()
         {
             HeroesList.AddRange(ObjectManager.Get<Obj_AI_Hero>());
             MinionsList.AddRange(ObjectManager.Get<Obj_AI_Minion>().Where(o => o.Team != GameObjectTeam.Neutral && !o.Name.Contains("ward")));
             TurretsList.AddRange(ObjectManager.Get<Obj_AI_Turret>());
             JungleList.AddRange(ObjectManager.Get<Obj_AI_Minion>().
-                Where(o => o.Team == GameObjectTeam.Neutral && o.Name != "WardCorpse" && o.Name != "Barrel" && !o.Name.Contains("SRU_Plant_")));
+                                    Where(o => o.Team == GameObjectTeam.Neutral && o.Name != "WardCorpse" && o.Name != "Barrel" && !o.Name.Contains("SRU_Plant_")));
             WardsList.AddRange(ObjectManager.Get<Obj_AI_Minion>().Where(o => o.Name.Contains("ward")));
             SpawnPointsList.AddRange(ObjectManager.Get<GameObject>().Where(o => o.Type == GameObjectType.obj_SpawnPoint));
 
@@ -413,20 +434,32 @@
 
             GameObject.OnCreate += OnCreate;
             GameObject.OnDestroy += OnDelete;
+
+            Game.OnUpdate += delegate
+            {
+                foreach (var enemyMinion in EnemyMinionsList.Where(x => NotViable.Contains(x.UnitSkinName.ToLower()) || NotViable.Contains(x.Name.ToLower())))
+                {
+                    DebugConsole.WriteLine($"REMOVED: (UnitSkinName) '{enemyMinion.UnitSkinName}' | (Name) '{enemyMinion.Name}' FROM GameObjects.cs", MessageState.Debug);
+                    EnemyMinionsList.Remove(enemyMinion);
+                }
+            };
         }
 
-        /// <summary>
-        ///     OnCreate event.
-        /// </summary>
-        /// <param name="sender">
-        ///     The sender
-        /// </param>
+        private static readonly string[] NotViable =
+        {
+            "shadow" + "soldier" + "dagger",
+            "axe",
+            "plant",
+            "ward",
+            "barrel",
+            "trap"
+        };
+
         private static void OnCreate(GameObject sender)
         {
             GameObjectsList.Add(sender);
 
-            var attackableUnit = sender as AttackableUnit;
-            if (attackableUnit != null)
+            if (sender is AttackableUnit attackableUnit)
             {
                 AttackableUnitsList.Add(attackableUnit);
             }
@@ -450,7 +483,7 @@
                 case Obj_AI_Minion minion:
                     if (minion.Team != GameObjectTeam.Neutral)
                     {
-                        if (minion.Name.Contains("ward"))
+                        if (minion.Name.ToLower().Contains("ward"))
                         {
                             WardsList.Add(minion);
                             if (minion.IsEnemy)
@@ -526,12 +559,6 @@
             }
         }
 
-        /// <summary>
-        ///     OnDelete event.
-        /// </summary>
-        /// <param name="sender">
-        ///     The sender
-        /// </param>
         private static void OnDelete(GameObject sender)
         {
             foreach (var gameObject in GameObjectsList.Where(o => o.Compare(sender)).ToList())
@@ -539,8 +566,7 @@
                 GameObjectsList.Remove(gameObject);
             }
 
-            var attackableUnit = sender as AttackableUnit;
-            if (attackableUnit != null)
+            if (sender is AttackableUnit attackableUnit)
             {
                 foreach (var attackableUnitObject in AttackableUnitsList.Where(a => a.Compare(attackableUnit)).ToList())
                 {
@@ -570,7 +596,7 @@
                 case Obj_AI_Minion minion:
                     if (minion.Team != GameObjectTeam.Neutral)
                     {
-                        if (minion.Name.Contains("ward"))
+                        if (minion.Name.ToLower().Contains("ward"))
                         {
                             foreach (var wardObject in WardsList.Where(w => w.Compare(minion)).ToList())
                             {
@@ -622,7 +648,6 @@
                             }
                         }
                     }
-
                     return;
                 case Obj_AI_Turret turret:
                     foreach (var turretObject in TurretsList.Where(t => t.Compare(turret)).ToList())

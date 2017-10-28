@@ -44,16 +44,15 @@
         private static Obj_AI_Hero Target => Global.TargetSelector.GetSelectedTarget();
 
         private Obj_AI_Base EnemyObject => GameObjects.EnemyMinions.OrderBy(x => x.Health).
-            LastOrDefault(x =>
-                InsecInRange(x.ServerPosition) &&
-                !x.IsDead &&
-                x.IsValid &&
-                !x.IsTurret &&
-                x.NetworkId != Target.NetworkId &&
-                x.Health * 0.9 > Global.Player.GetSpellDamage(x, SpellSlot.Q) &&
-                x.MaxHealth > 7 &&
-                Global.Player.Distance(x) <= _spellConfig.Q.Range &&
-                x.Distance(GetInsecPosition()) < Global.Player.Distance(GetInsecPosition()));
+            LastOrDefault(x => InsecInRange(x.ServerPosition) &&
+                               !x.IsDead &&
+                               x.IsValid &&
+                               !x.IsTurret &&
+                               x.NetworkId != Target.NetworkId &&
+                               x.Health * 0.9 > Global.Player.GetSpellDamage(x, SpellSlot.Q) &&
+                               x.MaxHealth > 7 &&
+                               Global.Player.Distance(x) <= _spellConfig.Q.Range &&
+                               x.Distance(GetInsecPosition()) < Global.Player.Distance(GetInsecPosition()));
 
         public bool Enabled { get; set; }
 
@@ -191,7 +190,10 @@
             return temp;
         }
 
-        private bool InsecInRange(Vector3 source) { return GetInsecPosition().Distance(source) <= InsecRange(); }
+        private bool InsecInRange(Vector3 source)
+        {
+            return GetInsecPosition().Distance(source) <= InsecRange();
+        }
 
         private Vector3 GetInsecPosition()
         {

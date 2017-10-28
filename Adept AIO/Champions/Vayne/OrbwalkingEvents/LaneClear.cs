@@ -32,11 +32,10 @@
                 return;
             }
 
-            var minion = GameObjects.EnemyMinions.FirstOrDefault(x => 
-                x != Global.Orbwalker.GetOrbwalkingTarget() &&
-                x.Health < Global.Player.GetAutoAttackDamage(x) + Global.Player.GetSpellDamage(x, SpellSlot.Q) &&
-                x.Health > Global.Player.GetAutoAttackDamage(x) &&
-                x.IsValidAutoRange());
+            var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x != Global.Orbwalker.GetOrbwalkingTarget() &&
+                                                                      x.Health < Global.Player.GetAutoAttackDamage(x) + Global.Player.GetSpellDamage(x, SpellSlot.Q) &&
+                                                                      x.Health > Global.Player.GetAutoAttackDamage(x) &&
+                                                                      x.IsValidAutoRange());
 
             if (minion == null)
             {
@@ -47,8 +46,7 @@
 
         public static void OnUpdate()
         {
-            var minion = GameObjects.EnemyMinions.FirstOrDefault(x =>
-                x.IsValidTarget(SpellManager.Q.Range + Global.Player.AttackRange) && x.MaxHealth > 30);
+            var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsValidTarget(SpellManager.Q.Range + Global.Player.AttackRange) && x.MaxHealth > 30);
             if (minion == null || !SpellManager.Q.Ready || Global.Player.ManaPercent() <= 35)
             {
                 return;

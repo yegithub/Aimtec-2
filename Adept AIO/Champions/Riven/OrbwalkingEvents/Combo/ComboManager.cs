@@ -82,7 +82,7 @@
             switch (MenuConfig.Combo["Mode"].Value)
             {
                 case 0:
-                    DebugConsole.Write(Maths.Percent(target.Health, Dmg.Damage(target)).ToString());
+
                     if (Maths.Percent(target.Health, Dmg.Damage(target)) >= MenuConfig.Combo["Change"].Value)
                     {
                         return ComboPattern.FastCombo;
