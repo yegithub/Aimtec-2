@@ -5,7 +5,7 @@
     using Aimtec.SDK.Extensions;
     using Core;
 
-    class SafetyMeasure
+    class DodgeSpell
     {
         private static readonly string[] DamageSpells =
         {

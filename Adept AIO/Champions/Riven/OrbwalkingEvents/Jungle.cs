@@ -24,7 +24,7 @@
                 SpellManager.CastQ(mob);
             }
 
-            if (MenuConfig.Jungle["W"].Enabled && SpellConfig.W.Ready && Extensions.CurrentQCount <= 1 && !SpellConfig.Q.Ready)
+            if (MenuConfig.Jungle["W"].Enabled && SpellConfig.W.Ready && !SpellConfig.Q.Ready)
             {
                 SpellManager.CastW(mob);
             }

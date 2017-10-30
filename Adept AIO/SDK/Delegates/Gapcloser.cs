@@ -797,6 +797,8 @@
         private static void OnProcessSpellCast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
         {
             if (sender == null ||
+                args.Sender == null ||
+                args.SpellData == null ||
                 !sender.IsValid ||
                 sender.Type != GameObjectType.obj_AI_Hero ||
                 !sender.IsEnemy ||

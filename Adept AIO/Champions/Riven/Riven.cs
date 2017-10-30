@@ -20,7 +20,7 @@
             Gapcloser.OnGapcloser += AntiGapcloser.OnGapcloser;
 
             Obj_AI_Base.OnProcessSpellCast += SpellManager.OnProcessSpellCast;
-            Obj_AI_Base.OnProcessSpellCast += SafetyMeasure.OnProcessSpellCast;
+            Obj_AI_Base.OnProcessSpellCast += DodgeSpell.OnProcessSpellCast;
 
             Obj_AI_Base.OnPlayAnimation += Animation.OnPlayAnimation;
 

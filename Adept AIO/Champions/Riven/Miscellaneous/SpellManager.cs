@@ -66,13 +66,13 @@
                 case Obj_AI_Hero _ when _unit.HasBuff("FioraW") || _unit.HasBuff("PoppyW"): return;
             }
 
-            if (_canWq)
+            if (_canWq && _unit.IsValidTarget(SpellConfig.W.Range))
             {
                 SpellConfig.W.Cast();
                 Global.Player.SpellBook.CastSpell(SpellSlot.Q, _unit);
             }
 
-            if (_canUseW)
+            if (_canUseW && _unit.IsValidTarget(SpellConfig.W.Range))
             {
                 _canUseW = false;
 
@@ -80,7 +80,7 @@
                 {
                     Items.CastTiamat();
                     DelayAction.Queue(300, () => SpellConfig.W.Cast(_unit));
-                }
+                }       
 
                 SpellConfig.W.Cast(_unit);
             }

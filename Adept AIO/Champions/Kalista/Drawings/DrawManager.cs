@@ -5,6 +5,7 @@
     using Aimtec;
     using Aimtec.SDK.Extensions;
     using Core;
+    using SDK.Generic;
     using SDK.Unit_Extensions;
 
     class DrawManager
@@ -22,6 +23,16 @@
 
                 Global.DamageIndicator.Unit = target;
                 Global.DamageIndicator.DrawDmg((float) damage, Color.FromArgb(153, 12, 177, 28));
+
+                if (!target.HasBuff("kalistaexpungemarker"))
+                {
+                    continue;
+                }
+                var percent = (int)(target.Health / damage);
+                var pos = target.FloatingHealthBarPosition;
+                var offset = new Vector2(100, 40);
+
+                Render.Text($"{percent}%", new Vector2(pos.X + offset.X, pos.Y + offset.Y), RenderTextFlags.Center, Color.White);
             }
         }
 

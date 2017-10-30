@@ -159,14 +159,12 @@
                 Console.WriteLine("RANDOM ULT SUCCESS");
                 CastUlt(_predictedPosition);
             }
-            else
-            {
-                _timeUntilCastingUlt = GetCastTime(GetFountainPos(_target));
 
-                if (_timeUntilCastingUlt <= Game.Ping)
-                {
-                    CastUlt(GetFountainPos(_target));
-                }
+            _timeUntilCastingUlt = GetCastTime(GetFountainPos(_target));
+
+            if (_timeUntilCastingUlt <= Game.Ping)
+            {
+                CastUlt(GetFountainPos(_target));
             }
         }
 

@@ -45,7 +45,7 @@
 
         public static Vector3 NearestWall(Obj_AI_Base target, float range)
         {
-            for (var i = 0; i < 360; i += 15)
+            for (var i = 0; i < 360; i += 40)
             {
                 var dir = target.Orientation.To2D();
                 var angleRad = Maths.DegreeToRadian(i);

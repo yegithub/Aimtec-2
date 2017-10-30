@@ -12,7 +12,7 @@
         {
             Q = new Spell(SpellSlot.Q, 275);
 
-            W = new Spell(SpellSlot.W, 200);
+            W = new Spell(SpellSlot.W, 260);
             W.SetSkillshot(0.25f, 800, 1500, false, SkillshotType.Circle);
 
             E = new Spell(SpellSlot.E, 325);

@@ -299,7 +299,7 @@
     <Compile Include="Champions\Riven\Miscellaneous\Animation.cs" />
     <Compile Include="Champions\Riven\Miscellaneous\Killsteal.cs" />
     <Compile Include="Champions\Riven\Miscellaneous\Manager.cs" />
-    <Compile Include="Champions\Riven\Miscellaneous\SafetyMeasure.cs" />
+    <Compile Include="Champions\Riven\Miscellaneous\DodgeSpell.cs" />
     <Compile Include="Champions\Riven\Miscellaneous\SpellManager.cs" />
     <Compile Include="Champions\Riven\OrbwalkingEvents\Burst.cs" />
     <Compile Include="Champions\Riven\OrbwalkingEvents\Combo\ComboManager.cs" />
