@@ -363,6 +363,11 @@
         /// </returns>
         public static JungleType GetJungleType(this Obj_AI_Minion minion)
         {
+            if (minion.UnitSkinName.Contains("Crab"))
+            {
+                return JungleType.Large;
+            }
+
             if (SmallNameRegex.Any(regex => Regex.IsMatch(minion.Name, regex)))
             {
                 return JungleType.Small;
