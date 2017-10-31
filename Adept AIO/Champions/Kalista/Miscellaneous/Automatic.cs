@@ -67,7 +67,7 @@
                     }
                     break;
             }
-            Console.WriteLine(Game.CursorPos);
+          
             if (SpellManager.R.Ready && MenuConfig.Misc["R"].Enabled)
             {
                 var soulbound = GameObjects.AllGameObjects.FirstOrDefault(x => x.Name == "Kalista_Base_P_LinkIcon.troy") as Obj_AI_Hero;
