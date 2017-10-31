@@ -44,8 +44,23 @@
                 var damage = Dmg.EDmg(target);
 
                 Global.DamageIndicator.Unit = target;
-                Global.DamageIndicator.DrawDmg((float) damage, Color.FromArgb(153, 12, 177, 28));
+                Global.DamageIndicator.DrawDmg((float)damage, Color.FromArgb(153, 12, 177, 28));
+                RenderEDamage(target, damage);
             }
+
+            foreach (var mob in GameObjects.Jungle.Where(x => !x.IsDead && x.IsVisible && x.GetJungleType() != GameObjects.JungleType.Small))
+            {
+                RenderEDamage(mob, Dmg.EDmg(mob));
+            }
+        }
+
+        private static void RenderEDamage(Obj_AI_Base target, double dmg)
+        {
+            var percent = (int)(dmg * 100 / target.Health);
+            var pos = target.FloatingHealthBarPosition;
+            var offset = new Vector2(75, 37);
+
+            Render.Text($"E DMG: {percent}%", new Vector2(pos.X + offset.X, pos.Y + offset.Y), RenderTextFlags.Center, Color.White);
         }
 
         public static void OnRender()
