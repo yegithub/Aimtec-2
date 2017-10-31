@@ -28,7 +28,7 @@
             }
 
             if (SpellManager.E.Ready &&
-                GameObjects.Jungle.Count(x => x.HasBuff("kalistaexpungemarker") && Dmg.EDmg(x) > x.Health && x.IsValidSpellTarget(SpellManager.E.Range)) >= 1 &&
+                GameObjects.Jungle.Count(x => x.HasBuff("kalistaexpungemarker") && Dmg.EDmg(x) > x.Health && x.IsValidSpellTarget(SpellManager.E.Range) && x.GetJungleType() != GameObjects.JungleType.Small) >= 1 &&
                 MenuConfig.JungleClear["E"].Enabled)
             {
                 if (Global.Player.Level == 1)
