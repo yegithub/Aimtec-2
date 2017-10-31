@@ -56,6 +56,11 @@
 
         private static void RenderEDamage(Obj_AI_Base target, double dmg)
         {
+            if (!target.HasBuff("twitchdeadlyvenom"))
+            {
+                return;
+            }
+
             var percent = (int)(dmg * 100 / target.Health);
             var pos = target.FloatingHealthBarPosition;
             var offset = new Vector2(75, 37);

@@ -25,7 +25,7 @@
 
         public static double EDmg(Obj_AI_Base target)
         {
-            if (Buffs.Any(target.HasBuff))
+            if (Buffs.Any(target.HasBuff) || !target.HasBuff("twitchdeadlyvenom"))
             {
                 return 0;
             }
