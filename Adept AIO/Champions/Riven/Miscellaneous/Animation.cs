@@ -27,7 +27,7 @@
 
         private static float GetDelay()
         {
-            return (Extensions.CurrentQCount == 1 ? 450 : 350) - 3.333f * Global.Player.Level;
+            return (Extensions.CurrentQCount == 1 ? 450 : 300) - 3.333f * Global.Player.Level;
         }
 
         public static void OnPlayAnimation(Obj_AI_Base sender, Obj_AI_BasePlayAnimationEventArgs args)

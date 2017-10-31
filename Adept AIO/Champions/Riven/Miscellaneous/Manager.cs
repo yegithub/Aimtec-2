@@ -60,7 +60,7 @@
 
         public static void OnPostAttack(object sender, PostAttackEventArgs args)
         {
-            if (Game.TickCount - Extensions.LastQCastAttempt <= 340)
+            if (Game.TickCount - Extensions.LastQCastAttempt <= 400)
             {
                 return;
             }
