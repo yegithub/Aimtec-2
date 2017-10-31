@@ -52,6 +52,7 @@
                         Global.Orbwalker.Attack(m);
                     }
                     break;
+                case OrbwalkingMode.Lasthit:
                 case OrbwalkingMode.Laneclear:
                     if (SpellManager.E.Ready &&
                         GameObjects.EnemyMinions.Any(x => x.HasBuff("kalistaexpungemarker") && Dmg.EDmg(x) > x.Health && x.IsValidSpellTarget(SpellManager.E.Range)) &&
