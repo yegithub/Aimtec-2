@@ -41,7 +41,7 @@
         
             var percent = (int)(dmg * 100 / target.Health);
             var pos = target.FloatingHealthBarPosition;
-            var offset = new Vector2(100, 40);
+            var offset = new Vector2(75, 37);
 
             Render.Text($"E DMG: {percent}%", new Vector2(pos.X + offset.X, pos.Y + offset.Y), RenderTextFlags.Center, Color.White);
         }

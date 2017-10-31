@@ -1,5 +1,6 @@
 ﻿namespace Adept_AIO.Champions.Kalista.Miscellaneous
 {
+    using System;
     using System.Linq;
     using Aimtec;
     using Aimtec.SDK.Extensions;
@@ -31,7 +32,7 @@
                 GameObjects.Jungle.Count(x => x.HasBuff("kalistaexpungemarker") && Dmg.EDmg(x) > x.Health && x.IsValidSpellTarget(SpellManager.E.Range) && x.GetJungleType() != GameObjects.JungleType.Small) >= 1 &&
                 MenuConfig.JungleClear["E"].Enabled)
             {
-                if (Global.Player.Level == 1)
+                if (Global.Player.Level == 1 && Global.Player.CountAllyHeroesInRange(2000) >= 1)
                 {
                     return;
                 }
@@ -59,8 +60,14 @@
                         SpellManager.E.Cast();
                     }
                     break;
+                case OrbwalkingMode.None:
+                    if (SpellManager.W.Ready && MenuConfig.Misc["W"].Enabled && Global.Player.CountEnemyHeroesInRange(1800) <= 0)
+                    {
+                        SpellManager.CastW();
+                    }
+                    break;
             }
-
+            Console.WriteLine(Game.CursorPos);
             if (SpellManager.R.Ready && MenuConfig.Misc["R"].Enabled)
             {
                 var soulbound = GameObjects.AllGameObjects.FirstOrDefault(x => x.Name == "Kalista_Base_P_LinkIcon.troy") as Obj_AI_Hero;
@@ -68,11 +75,6 @@
                 {
                     SpellManager.R.Cast();
                 }
-            }
-
-            if (SpellManager.W.Ready && MenuConfig.Misc["W"].Enabled && Global.Player.CountEnemyHeroesInRange(1200) <= 0)
-            {
-                SpellManager.CastW();
             }
         }
     }
