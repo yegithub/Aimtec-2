@@ -355,11 +355,6 @@
         /// </returns>
         public static JungleType GetJungleType(this Obj_AI_Minion minion)
         {
-            if (minion.UnitSkinName.Contains("Crab"))
-            {
-                return JungleType.Large;
-            }
-
             if (SmallNameRegex.Any(regex => Regex.IsMatch(minion.Name, regex)))
             {
                 return JungleType.Small;
@@ -373,6 +368,11 @@
             if (LegendaryNameRegex.Any(regex => Regex.IsMatch(minion.Name, regex)))
             {
                 return JungleType.Legendary;
+            }
+
+            if (minion.UnitSkinName.Contains("Crab"))
+            {
+                return JungleType.Large;
             }
 
             return JungleType.Unknown;
@@ -433,10 +433,32 @@
 
             Game.OnUpdate += delegate
             {
-                foreach (var enemyMinion in EnemyMinionsList.Where(x => NotViable.Contains(x.UnitSkinName.ToLower()) || NotViable.Contains(x.Name.ToLower())))
+                foreach (var enemy in ObjectManager.Get<Obj_AI_Base>().Where(x => x.Distance(Global.Player) <= 3000))
                 {
-                    DebugConsole.WriteLine($"REMOVED: (UnitSkinName) '{enemyMinion.UnitSkinName}' | (Name) '{enemyMinion.Name}' FROM GameObjects.cs", MessageState.Debug);
-                    EnemyMinionsList.Remove(enemyMinion);
+                    foreach (var s in NotViable)
+                    {
+                        if (!enemy.UnitSkinName.ToLower().Contains(s))
+                        {
+                            continue;
+                        }
+
+                        if (EnemyMinionsList.Contains(enemy))
+                        {
+                            var enemyMinion = enemy as Obj_AI_Minion;
+                            EnemyMinionsList.Remove(enemyMinion);
+                            DebugConsole.WriteLine($"Removed {enemy.UnitSkinName} From Minion List", MessageState.Debug);
+                        }
+
+                        if (JungleList.Contains(enemy))
+                        {
+                            var enemyMinion = enemy as Obj_AI_Minion;
+                            JungleList.Remove(enemyMinion);
+                            JungleLargeList.Remove(enemyMinion);
+                            JungleLegendaryList.Remove(enemyMinion);
+                            JungleSmallList.Remove(enemyMinion);
+                            DebugConsole.WriteLine($"Removed {enemy.UnitSkinName} From Jungle List", MessageState.Debug);
+                        }
+                    }
                 }
             };
         }
