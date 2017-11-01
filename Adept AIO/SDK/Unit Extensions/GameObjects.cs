@@ -452,7 +452,9 @@
 
         private static readonly string[] NotViable =
         {
-            "shadow" + "soldier" + "dagger",
+            "shadow",
+            "soldier",
+            "dagger",
             "axe",
             "plant",
             "ward",
