@@ -70,11 +70,6 @@
                     break;
             }
 
-            if (SpellManager.E.Ready && Global.HealthPrediction.GetPrediction(Global.Player, 1000 + Game.Ping / 2) <= 0)
-            {
-                SpellManager.E.Cast();
-            }
-
             if (SpellManager.R.Ready && MenuConfig.Misc["R"].Enabled)
             {
                 var soulbound = GameObjects.AllGameObjects.FirstOrDefault(x => x.Name == "Kalista_Base_P_LinkIcon.troy") as Obj_AI_Hero;

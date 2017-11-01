@@ -441,23 +441,28 @@
                         {
                             continue;
                         }
-
+                        var enemyMinion = enemy as Obj_AI_Minion;
+                        if (enemyMinion == null)
+                        {
+                            continue;
+                        }
                         if (EnemyMinionsList.Contains(enemy))
                         {
-                            var enemyMinion = enemy as Obj_AI_Minion;
+                           
                             EnemyMinionsList.Remove(enemyMinion);
                             DebugConsole.WriteLine($"Removed {enemy.UnitSkinName} From Minion List", MessageState.Debug);
                         }
 
-                        if (JungleList.Contains(enemy))
+                        if (!JungleList.Contains(enemy))
                         {
-                            var enemyMinion = enemy as Obj_AI_Minion;
-                            JungleList.Remove(enemyMinion);
-                            JungleLargeList.Remove(enemyMinion);
-                            JungleLegendaryList.Remove(enemyMinion);
-                            JungleSmallList.Remove(enemyMinion);
-                            DebugConsole.WriteLine($"Removed {enemy.UnitSkinName} From Jungle List", MessageState.Debug);
+                            continue;
                         }
+
+                        JungleList.Remove(enemyMinion);
+                        JungleLargeList.Remove(enemyMinion);
+                        JungleLegendaryList.Remove(enemyMinion);
+                        JungleSmallList.Remove(enemyMinion);
+                        DebugConsole.WriteLine($"Removed {enemy.UnitSkinName} From Jungle List", MessageState.Debug);
                     }
                 }
             };
