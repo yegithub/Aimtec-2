@@ -57,9 +57,7 @@
         {
             if (SpellConfig.E.Ready && !MenuConfig.LaneClear["EAA"].Enabled)
             {
-                var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsValidTarget() &&
-                                                                          x.Distance(Global.Player) <= SpellConfig.E.Range &&
-                                                                          !x.HasBuff("YasuoDashWrapper"));
+                var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsValidTarget() && x.Distance(Global.Player) <= SpellConfig.E.Range && !x.HasBuff("YasuoDashWrapper"));
 
                 if (!SpellConfig.E.Ready ||
                     minion == null ||
@@ -128,8 +126,7 @@
                         }
 
                         var circle = new Geometry.Circle(Global.Player.GetDashInfo().EndPos, 220);
-                        var circleCount =
-                            GameObjects.EnemyMinions.Count(x => !x.IsDead && x.IsValidTarget() && circle.Center.Distance(x.ServerPosition) <= circle.Radius);
+                        var circleCount = GameObjects.EnemyMinions.Count(x => !x.IsDead && x.IsValidTarget() && circle.Center.Distance(x.ServerPosition) <= circle.Radius);
 
                         if (circleCount >= 3)
                         {

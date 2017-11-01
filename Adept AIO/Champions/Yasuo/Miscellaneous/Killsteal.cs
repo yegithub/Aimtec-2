@@ -27,10 +27,7 @@
             {
                 SpellConfig.E.CastOnUnit(target);
             }
-            else if (SpellConfig.Q.Ready &&
-                     target.Health < Global.Player.GetSpellDamage(target, SpellSlot.Q) &&
-                     target.IsValidTarget(SpellConfig.Q.Range) &&
-                     MenuConfig.Killsteal["Q"].Enabled)
+            else if (SpellConfig.Q.Ready && target.Health < Global.Player.GetSpellDamage(target, SpellSlot.Q) && target.IsValidTarget(SpellConfig.Q.Range) && MenuConfig.Killsteal["Q"].Enabled)
             {
                 if (Extension.CurrentMode == Mode.Tornado && !MenuConfig.Killsteal["Q3"].Enabled)
                 {

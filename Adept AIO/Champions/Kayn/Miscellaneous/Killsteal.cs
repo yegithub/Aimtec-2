@@ -19,17 +19,11 @@
                 return;
             }
 
-            if (SpellConfig.Q.Ready &&
-                target.Health < Global.Player.GetSpellDamage(target, SpellSlot.Q) &&
-                target.IsValidTarget(SpellConfig.Q.Range) &&
-                MenuConfig.Killsteal["Q"].Enabled)
+            if (SpellConfig.Q.Ready && target.Health < Global.Player.GetSpellDamage(target, SpellSlot.Q) && target.IsValidTarget(SpellConfig.Q.Range) && MenuConfig.Killsteal["Q"].Enabled)
             {
                 SpellConfig.Q.Cast(target);
             }
-            else if (SpellConfig.W.Ready &&
-                     target.Health < Global.Player.GetSpellDamage(target, SpellSlot.W) &&
-                     target.IsValidTarget(SpellConfig.W.Range) &&
-                     MenuConfig.Killsteal["W"].Enabled)
+            else if (SpellConfig.W.Ready && target.Health < Global.Player.GetSpellDamage(target, SpellSlot.W) && target.IsValidTarget(SpellConfig.W.Range) && MenuConfig.Killsteal["W"].Enabled)
             {
                 SpellConfig.W.Cast(target);
             }

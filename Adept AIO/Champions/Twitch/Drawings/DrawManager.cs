@@ -20,18 +20,11 @@
 
             if (!Global.Player.HasBuff("TwitchHideInShadows") && MenuConfig.Drawings["Map"].Enabled && SpellManager.Q.Ready)
             {
-                Geometry.DrawCircleOnMinimap(Global.Player.ServerPosition,
-                                             new[]
-                                             {
-                                                 10,
-                                                 11,
-                                                 12,
-                                                 13,
-                                                 14
-                                             }[Global.Player.SpellBook.GetSpell(SpellSlot.Q).Level - 1] *
-                                             Global.Player.MoveSpeed,
-                                             Color.DeepPink,
-                                             5);
+                Geometry.DrawCircleOnMinimap(Global.Player.ServerPosition, new[]
+                                                                           {
+                                                                               10, 11, 12, 13, 14
+                                                                           }[Global.Player.SpellBook.GetSpell(SpellSlot.Q).Level - 1] *
+                                                                           Global.Player.MoveSpeed, Color.DeepPink, 5);
             }
 
             if (!MenuConfig.Drawings["Dmg"].Enabled)
@@ -44,7 +37,7 @@
                 var damage = Dmg.EDmg(target);
 
                 Global.DamageIndicator.Unit = target;
-                Global.DamageIndicator.DrawDmg((float)damage, Color.FromArgb(153, 12, 177, 28));
+                Global.DamageIndicator.DrawDmg((float) damage, Color.FromArgb(153, 12, 177, 28));
                 RenderEDamage(target, damage);
             }
 
@@ -61,7 +54,7 @@
                 return;
             }
 
-            var percent = (int)(dmg * 100 / target.Health);
+            var percent = (int) (dmg * 100 / target.Health);
             var pos = target.FloatingHealthBarPosition;
             var offset = new Vector2(75, 37);
 

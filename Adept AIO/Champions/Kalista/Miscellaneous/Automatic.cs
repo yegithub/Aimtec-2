@@ -1,6 +1,5 @@
 ﻿namespace Adept_AIO.Champions.Kalista.Miscellaneous
 {
-    using System;
     using System.Linq;
     using Aimtec;
     using Aimtec.SDK.Extensions;
@@ -19,9 +18,7 @@
 
             if (SpellManager.E.Ready && MenuConfig.Misc["E"].Enabled && GameObjects.EnemyHeroes.Any(x => x.HasBuff("kalistaexpungemarker")))
             {
-                var m = GameObjects.EnemyMinions.FirstOrDefault(x => x.HasBuff("kalistaexpungemarker") &&
-                                                                     x.Health < Dmg.EDmg(x) &&
-                                                                     x.IsValidTarget(SpellManager.E.Range));
+                var m = GameObjects.EnemyMinions.FirstOrDefault(x => x.HasBuff("kalistaexpungemarker") && x.Health < Dmg.EDmg(x) && x.IsValidTarget(SpellManager.E.Range));
                 if (m != null)
                 {
                     SpellManager.E.Cast();
@@ -29,7 +26,11 @@
             }
 
             if (SpellManager.E.Ready &&
-                GameObjects.Jungle.Count(x => x.HasBuff("kalistaexpungemarker") && Dmg.EDmg(x) > x.Health && x.IsValidSpellTarget(SpellManager.E.Range) && x.GetJungleType() != GameObjects.JungleType.Small) >= 1 &&
+                GameObjects.Jungle.Count(x => x.HasBuff("kalistaexpungemarker") &&
+                                              Dmg.EDmg(x) > x.Health &&
+                                              x.IsValidSpellTarget(SpellManager.E.Range) &&
+                                              x.GetJungleType() != GameObjects.JungleType.Small) >=
+                1 &&
                 MenuConfig.JungleClear["E"].Enabled)
             {
                 if (Global.Player.Level == 1 && Global.Player.CountAllyHeroesInRange(2000) >= 1)
@@ -68,7 +69,7 @@
                     }
                     break;
             }
-          
+
             if (SpellManager.R.Ready && MenuConfig.Misc["R"].Enabled)
             {
                 var soulbound = GameObjects.AllGameObjects.FirstOrDefault(x => x.Name == "Kalista_Base_P_LinkIcon.troy") as Obj_AI_Hero;

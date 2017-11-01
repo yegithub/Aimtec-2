@@ -22,10 +22,7 @@
 
         private static readonly string[] InvulnerableSpells =
         {
-            "FioraW",
-            "kindrednodeathbuff",
-            "Undying Rage",
-            "JudicatorIntervention"
+            "FioraW", "kindrednodeathbuff", "Undying Rage", "JudicatorIntervention"
         };
 
         public static void OnProcessSpellCast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
@@ -42,7 +39,6 @@
                     _canUseQ = false;
                     _canWq = false;
                     _serverPosition = false;
-                    Animation.Reset();
                     break;
                 case "RivenMartyr":
                     _canUseW = false;
@@ -80,7 +76,7 @@
                 {
                     Items.CastTiamat();
                     DelayAction.Queue(300, () => SpellConfig.W.Cast(_unit));
-                }       
+                }
 
                 SpellConfig.W.Cast(_unit);
             }

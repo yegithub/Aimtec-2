@@ -11,8 +11,8 @@
     {
         public Riven()
         {
-            MenuConfig.Attach();
-            SpellConfig.Load();
+            new MenuConfig();
+            new SpellConfig();
 
             Game.OnUpdate += Manager.OnUpdate;
             Game.OnUpdate += SpellManager.OnUpdate;

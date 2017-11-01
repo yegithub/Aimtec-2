@@ -1,8 +1,6 @@
 ﻿namespace Adept_AIO.Champions.Twitch
 {
-    using System;
     using Aimtec;
-    using Aimtec.SDK.Orbwalking;
     using Core;
     using Drawings;
     using Miscellaneous;

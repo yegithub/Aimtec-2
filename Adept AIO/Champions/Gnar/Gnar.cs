@@ -1,11 +1,8 @@
 ﻿namespace Adept_AIO.Champions.Gnar
 {
-    using Aimtec;
-    using Aimtec.SDK.Extensions;
     using Core;
     using Drawings;
     using Miscellaneous;
-    using SDK.Unit_Extensions;
 
     class Gnar
     {

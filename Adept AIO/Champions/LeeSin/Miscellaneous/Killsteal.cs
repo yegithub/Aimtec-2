@@ -43,25 +43,17 @@
                 SummonerSpells.Smite.CastOnUnit(target);
             }
             if (_spellConfig.Q.Ready &&
-                (_spellConfig.IsQ2()
-                     ? target.Health < Global.Player.GetSpellDamage(target, SpellSlot.Q, DamageStage.SecondCast)
-                     : target.Health < Global.Player.GetSpellDamage(target, SpellSlot.Q)) &&
+                (_spellConfig.IsQ2() ? target.Health < Global.Player.GetSpellDamage(target, SpellSlot.Q, DamageStage.SecondCast) : target.Health < Global.Player.GetSpellDamage(target, SpellSlot.Q)) &&
                 target.IsValidTarget(_spellConfig.Q.Range) &&
                 this.QEnabled)
             {
                 _spellConfig.Q.Cast(target);
             }
-            else if (_spellConfig.E.Ready &&
-                     target.Health < Global.Player.GetSpellDamage(target, SpellSlot.E) &&
-                     target.IsValidTarget(_spellConfig.E.Range) &&
-                     this.EEnabled)
+            else if (_spellConfig.E.Ready && target.Health < Global.Player.GetSpellDamage(target, SpellSlot.E) && target.IsValidTarget(_spellConfig.E.Range) && this.EEnabled)
             {
                 _spellConfig.E.Cast();
             }
-            else if (_spellConfig.R.Ready &&
-                     target.Health < Global.Player.GetSpellDamage(target, SpellSlot.R) &&
-                     target.IsValidTarget(_spellConfig.R.Range) &&
-                     this.REnabled)
+            else if (_spellConfig.R.Ready && target.Health < Global.Player.GetSpellDamage(target, SpellSlot.R) && target.IsValidTarget(_spellConfig.R.Range) && this.REnabled)
             {
                 _spellConfig.R.CastOnUnit(target);
             }

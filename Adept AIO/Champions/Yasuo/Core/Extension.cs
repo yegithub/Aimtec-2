@@ -73,14 +73,12 @@
 
         public static Vector3 PositionAfter(Obj_AI_Base target)
         {
-            return Global.Player.ServerPosition.Extend(target.ServerPosition,
-                                                       Global.Player.Distance(target) < 410 ? SpellConfig.E.Range : Global.Player.Distance(target) + 65);
+            return Global.Player.ServerPosition.Extend(target.ServerPosition, Global.Player.Distance(target) < 410 ? SpellConfig.E.Range : Global.Player.Distance(target) + 65);
         }
 
         public static Obj_AI_Minion GetDashableMinion(Obj_AI_Base target)
         {
-            return GameObjects.EnemyMinions.
-                Where(x => IsDashable(x) && !x.Name.ToLower().Contains("ward") && target.Distance(PositionAfter(x)) < Global.Player.Distance(target)).
+            return GameObjects.EnemyMinions.Where(x => IsDashable(x) && !x.Name.ToLower().Contains("ward") && target.Distance(PositionAfter(x)) < Global.Player.Distance(target)).
                 OrderBy(x => target.Distance(PositionAfter(x))).
                 ThenBy(x => x.Distance(Global.Player)).
                 FirstOrDefault();

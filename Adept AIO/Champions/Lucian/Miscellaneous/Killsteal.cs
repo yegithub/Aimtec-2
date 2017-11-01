@@ -18,32 +18,20 @@
                 return;
             }
 
-            if (SpellManager.Q.Ready &&
-                target.Health < Global.Player.GetSpellDamage(target, SpellSlot.Q) &&
-                target.IsValidTarget(SpellManager.ExtendedRange) &&
-                MenuConfig.Killsteal["Q"].Enabled)
+            if (SpellManager.Q.Ready && target.Health < Global.Player.GetSpellDamage(target, SpellSlot.Q) && target.IsValidTarget(SpellManager.ExtendedRange) && MenuConfig.Killsteal["Q"].Enabled)
             {
                 SpellManager.CastQ(target);
             }
-            else if (SpellManager.W.Ready &&
-                     target.Health < Global.Player.GetSpellDamage(target, SpellSlot.W) &&
-                     target.IsValidTarget(SpellManager.W.Range) &&
-                     MenuConfig.Killsteal["W"].Enabled)
+            else if (SpellManager.W.Ready && target.Health < Global.Player.GetSpellDamage(target, SpellSlot.W) && target.IsValidTarget(SpellManager.W.Range) && MenuConfig.Killsteal["W"].Enabled)
             {
                 SpellManager.W.Cast(target);
             }
-            else if (SpellManager.E.Ready &&
-                     target.Health < Global.Player.GetAutoAttackDamage(target) * 1.3f &&
-                     target.IsValidTarget(SpellManager.E.Range) &&
-                     MenuConfig.Killsteal["E"].Enabled)
+            else if (SpellManager.E.Ready && target.Health < Global.Player.GetAutoAttackDamage(target) * 1.3f && target.IsValidTarget(SpellManager.E.Range) && MenuConfig.Killsteal["E"].Enabled)
             {
                 SpellManager.E.Cast(target.ServerPosition);
                 Global.Orbwalker.Attack(target);
             }
-            else if (SpellManager.R.Ready &&
-                     target.Health < Global.Player.GetSpellDamage(target, SpellSlot.R) &&
-                     target.IsValidTarget(SpellManager.R.Range) &&
-                     MenuConfig.Killsteal["R"].Enabled)
+            else if (SpellManager.R.Ready && target.Health < Global.Player.GetSpellDamage(target, SpellSlot.R) && target.IsValidTarget(SpellManager.R.Range) && MenuConfig.Killsteal["R"].Enabled)
             {
                 SpellManager.CastR(target);
             }

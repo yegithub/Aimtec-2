@@ -8,7 +8,7 @@
     {
         public static Spell Q, W, E, R, R2;
 
-        public static void Load()
+        public SpellConfig()
         {
             Q = new Spell(SpellSlot.Q, 275);
 

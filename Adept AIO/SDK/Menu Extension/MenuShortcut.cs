@@ -7,8 +7,7 @@
     {
         public static Menu Credits = new Menu("Credits", "Credits")
         {
-            new MenuSeperator("WhyAreYouReadingThis", "Written by: Nechrito | Haki | Adept"),
-            new MenuSeperator("ThisStringIsUtterlyUseless", "Platform: LeageTec 2017"),
+            new MenuSeperator("WhyAreYouReadingThis", "Written by: Nechrito | Haki | Adept"), new MenuSeperator("ThisStringIsUtterlyUseless", "Platform: LeageTec 2017"),
             new MenuSeperator("pp", "Paypal: Nechrito@live.se")
         };
     }

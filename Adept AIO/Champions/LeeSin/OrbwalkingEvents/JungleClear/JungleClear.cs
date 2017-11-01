@@ -15,34 +15,17 @@
     {
         private readonly Vector3[] _positions =
         {
-            new Vector3(5740, 56, 10629),
-            new Vector3(5808, 54, 10319),
-            new Vector3(5384, 57, 11282),
-            new Vector3(9076, 53, 4446),
-            new Vector3(9058, 53, 4117),
-            new Vector3(9687, 56, 3490)
+            new Vector3(5740, 56, 10629), new Vector3(5808, 54, 10319), new Vector3(5384, 57, 11282), new Vector3(9076, 53, 4446), new Vector3(9058, 53, 4117), new Vector3(9687, 56, 3490)
         };
 
         private readonly string[] _smiteAlways =
         {
-            "SRU_Dragon_Air",
-            "SRU_Dragon_Fire",
-            "SRU_Dragon_Earth",
-            "SRU_Dragon_Water",
-            "SRU_Dragon_Elder",
-            "SRU_Baron",
-            "SRU_RiftHerald"
+            "SRU_Dragon_Air", "SRU_Dragon_Fire", "SRU_Dragon_Earth", "SRU_Dragon_Water", "SRU_Dragon_Elder", "SRU_Baron", "SRU_RiftHerald"
         };
 
         private readonly string[] _smiteOptional =
         {
-            "Sru_Crab",
-            "SRU_Razorbeak",
-            "SRU_Krug",
-            "SRU_Murkwolf",
-            "SRU_Gromp",
-            "SRU_Blue",
-            "SRU_Red"
+            "Sru_Crab", "SRU_Razorbeak", "SRU_Krug", "SRU_Murkwolf", "SRU_Gromp", "SRU_Blue", "SRU_Red"
         };
 
         private readonly ISpellConfig _spellConfig;
@@ -201,8 +184,7 @@
 
             if (_spellConfig.Q.Ready &&
                 _spellConfig.IsQ2() &&
-                (_spellConfig.QAboutToEnd ||
-                 Global.Player.GetSpellDamage(mob, SpellSlot.Q, DamageStage.SecondCast) + Global.Player.GetAutoAttackDamage(mob) > mob.Health))
+                (_spellConfig.QAboutToEnd || Global.Player.GetSpellDamage(mob, SpellSlot.Q, DamageStage.SecondCast) + Global.Player.GetAutoAttackDamage(mob) > mob.Health))
             {
                 _spellConfig.Q.CastOnUnit(mob);
             }

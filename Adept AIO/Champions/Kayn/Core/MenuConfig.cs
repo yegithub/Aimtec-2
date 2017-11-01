@@ -27,58 +27,39 @@
 
             Combo = new Menu("Combo", "Combo")
             {
-                new MenuBool("Beyblade", "Flash").SetToolTip("Q Flash AA R"),
-                new MenuBool("Q", "Use Q"),
-                new MenuBool("W", "Use W"),
-                new MenuBool("E", "Use E", false),
+                new MenuBool("Beyblade", "Flash").SetToolTip("Q Flash AA R"), new MenuBool("Q", "Use Q"), new MenuBool("W", "Use W"), new MenuBool("E", "Use E", false),
                 new MenuSliderBool("R", "Force R When Below (% HP)", true, 15, 1)
             };
 
             Harass = new Menu("Harass", "Harass")
             {
-                new MenuBool("Q", "Use Q"),
-                new MenuBool("W", "Use W")
+                new MenuBool("Q", "Use Q"), new MenuBool("W", "Use W")
             };
 
             LaneClear = new Menu("LaneClear", "LaneClear")
             {
-                new MenuBool("Check", "Dont' Clear When Enemies Nearby"),
-                new MenuSliderBool("Q", "[Q] (Min. Mana %", true, 25, 1),
-                new MenuSliderBool("W", "[W] (Min. Mana %", true, 25, 1)
+                new MenuBool("Check", "Dont' Clear When Enemies Nearby"), new MenuSliderBool("Q", "[Q] (Min. Mana %", true, 25, 1), new MenuSliderBool("W", "[W] (Min. Mana %", true, 25, 1)
             };
 
             JungleClear = new Menu("JungleClear", "JungleClear")
             {
-                new MenuSliderBool("Q", "[Q] (Min. Mana %", true, 25, 1),
-                new MenuSliderBool("W", "[W] (Min. Mana %", true, 25, 1)
+                new MenuSliderBool("Q", "[Q] (Min. Mana %", true, 25, 1), new MenuSliderBool("W", "[W] (Min. Mana %", true, 25, 1)
             };
 
             Killsteal = new Menu("Killsteal", "Killsteal")
             {
-                new MenuBool("Ignite", "Ignite"),
-                new MenuBool("Q", "[Q]"),
-                new MenuBool("W", "[W]"),
-                new MenuBool("R", "[R]")
+                new MenuBool("Ignite", "Ignite"), new MenuBool("Q", "[Q]"), new MenuBool("W", "[W]"), new MenuBool("R", "[R]")
             };
 
             Drawings = new Menu("DrawManager", "DrawManager")
             {
-                new MenuSlider("Segments", "Segments", 100, 10, 150).SetToolTip("Smoothness of the circles"),
-                new MenuBool("Dmg", "Damage"),
-                new MenuBool("W", "[W] Range"),
+                new MenuSlider("Segments", "Segments", 100, 10, 150).SetToolTip("Smoothness of the circles"), new MenuBool("Dmg", "Damage"), new MenuBool("W", "[W] Range"),
                 new MenuBool("R", "[R] Range")
             };
 
             foreach (var menu in new List<Menu>
             {
-                Whitelist,
-                Combo,
-                Harass,
-                LaneClear,
-                JungleClear,
-                Killsteal,
-                Drawings,
-                MenuShortcut.Credits
+                Whitelist, Combo, Harass, LaneClear, JungleClear, Killsteal, Drawings, MenuShortcut.Credits
             })
             {
                 _mainMenu.Add(menu);

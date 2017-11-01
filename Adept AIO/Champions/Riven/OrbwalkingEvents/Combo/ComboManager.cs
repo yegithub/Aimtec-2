@@ -104,30 +104,32 @@
                 return;
             }
 
-            if (MenuConfig.Combo["Chase"].Value != 0 && target.Distance(Global.Player) > Global.Player.AttackRange)
+            if (MenuConfig.Combo["Chase"].Value == 0 || target.Distance(Global.Player) < Global.Player.AttackRange + 65)
             {
-                switch (MenuConfig.Combo["Chase"].Value)
-                {
-                    case 1:
-                        if (target.Distance(Global.Player) <= Global.Player.AttackRange + SpellConfig.Q.Range &&
-                            Extensions.CurrentQCount == 1 &&
-                            target.Distance(Global.Player) > Global.Player.AttackRange)
-                        {
-                            SpellManager.CastQ(target, true);
-                        }
-                        break;
-                    case 2:
-                        if (target.Distance(Global.Player) <= Global.Player.AttackRange + SpellConfig.Q.Range + SpellConfig.E.Range &&
-                            target.Distance(Global.Player) > Global.Player.AttackRange + SpellConfig.Q.Range &&
-                            SpellConfig.E.Ready &&
-                            SpellConfig.Q.Ready &&
-                            Extensions.CurrentQCount == 1)
-                        {
-                            SpellConfig.E.Cast(target.ServerPosition);
-                            DelayAction.Queue(190, () => SpellManager.CastQ(target, true), new CancellationToken(false));
-                        }
-                        break;
-                }
+                return;
+            }
+
+            switch (MenuConfig.Combo["Chase"].Value)
+            {
+                case 1:
+                    if (target.Distance(Global.Player) <= Global.Player.AttackRange + SpellConfig.Q.Range &&
+                        Extensions.CurrentQCount == 1 &&
+                        target.Distance(Global.Player) > Global.Player.AttackRange)
+                    {
+                        SpellManager.CastQ(target, true);
+                    }
+                    break;
+                case 2:
+                    if (target.Distance(Global.Player) <= Global.Player.AttackRange + SpellConfig.Q.Range + SpellConfig.E.Range &&
+                        target.Distance(Global.Player) > Global.Player.AttackRange + SpellConfig.Q.Range &&
+                        SpellConfig.E.Ready &&
+                        SpellConfig.Q.Ready &&
+                        Extensions.CurrentQCount == 1)
+                    {
+                        SpellConfig.E.Cast(target.ServerPosition);
+                        DelayAction.Queue(190, () => SpellManager.CastQ(target, true), new CancellationToken(false));
+                    }
+                    break;
             }
         }
 
@@ -139,11 +141,7 @@
                 return;
             }
 
-            Extensions.AllIn = MenuConfig.Combo["Flash"].Enabled &&
-                               SummonerSpells.Flash.Ready &&
-                               CanFlashKill(target) &&
-                               target.Distance(Global.Player) > 500 &&
-                               target.Distance(Global.Player) < 720;
+            Extensions.AllIn = MenuConfig.Combo["Flash"].Enabled && SummonerSpells.Flash.Ready && CanFlashKill(target) && target.Distance(Global.Player) > 500 && target.Distance(Global.Player) < 720;
 
             if (!Extensions.AllIn)
             {

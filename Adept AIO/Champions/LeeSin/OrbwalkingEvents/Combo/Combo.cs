@@ -97,9 +97,7 @@
                 this.Q1Enabled &&
                 distance <= 550 &&
                 target.Health <=
-                Global.Player.GetSpellDamage(target, SpellSlot.R) +
-                Global.Player.GetSpellDamage(target, SpellSlot.Q) +
-                Global.Player.GetSpellDamage(target, SpellSlot.Q, DamageStage.SecondCast))
+                Global.Player.GetSpellDamage(target, SpellSlot.R) + Global.Player.GetSpellDamage(target, SpellSlot.Q) + Global.Player.GetSpellDamage(target, SpellSlot.Q, DamageStage.SecondCast))
             {
                 _spellConfig.R.CastOnUnit(target);
                 _spellConfig.Q.Cast(target);

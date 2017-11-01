@@ -97,17 +97,11 @@
 
         public static void CastE(Obj_AI_Base target, bool flash = false)
         {
-            var canFlash = flash &&
-                           SummonerSpells.IsValid(SummonerSpells.Flash) &&
-                           target.Distance(Global.Player) > E.Range &&
-                           target.Distance(Global.Player) < E.Range + 425;
+            var canFlash = flash && SummonerSpells.IsValid(SummonerSpells.Flash) && target.Distance(Global.Player) > E.Range && target.Distance(Global.Player) < E.Range + 425;
 
             var pred = E.GetPrediction(target);
-            BodySlam = new Geometry.Rectangle(canFlash
-                                                  ? Global.Player.ServerPosition.Extend(target.ServerPosition, 425 + E.Range - target.BoundingRadius).To2D()
-                                                  : Global.Player.ServerPosition.To2D(),
-                                              Global.Player.ServerPosition.Extend(pred.CastPosition, E.Range).To2D(),
-                                              EHitboxRadius);
+            BodySlam = new Geometry.Rectangle(canFlash ? Global.Player.ServerPosition.Extend(target.ServerPosition, 425 + E.Range - target.BoundingRadius).To2D() : Global.Player.ServerPosition.To2D(),
+                                              Global.Player.ServerPosition.Extend(pred.CastPosition, E.Range).To2D(), EHitboxRadius);
 
             if (BodySlam.IsOutside(target.ServerPosition.To2D()))
             {

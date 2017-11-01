@@ -14,43 +14,19 @@
         // Goes for CC heavy & (or) ranged enemies
         private static readonly string[] Dangerous =
         {
-            "Darius",
-            "Garen",
-            "Galio",
-            "Kled",
-            "Malphite",
-            "Maokai",
-            "Trundle",
-            "Swain",
-            "Tahm Kench",
-            "Ryze",
-            "Shen",
-            "Singed",
-            "Poppy",
-            "Pantheon",
-            "Nasus",
-            "Renekton",
-            "Quinn"
+            "Darius", "Garen", "Galio", "Kled", "Malphite", "Maokai", "Trundle", "Swain", "Tahm Kench", "Ryze", "Shen", "Singed", "Poppy", "Pantheon", "Nasus", "Renekton", "Quinn"
         };
 
         // Melee's who are weak with CC
         private static readonly string[] Melee =
         {
-            "Fiora",
-            "Irelia",
-            "Akali",
-            "Udyr",
-            "Rengar",
-            "Jarvan IV"
+            "Fiora", "Irelia", "Akali", "Udyr", "Rengar", "Jarvan IV"
         };
 
         // Mostly fighters
         private static readonly string[] SemiCombo =
         {
-            "Yasuo",
-            "LeeSin",
-            "XinZhao",
-            "Aatrox"
+            "Yasuo", "LeeSin", "XinZhao", "Aatrox"
         };
 
         public static void OnProcessAutoAttack()

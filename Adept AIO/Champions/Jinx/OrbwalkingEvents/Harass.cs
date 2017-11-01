@@ -28,8 +28,7 @@
 
             if (_spellConfig.Q.Ready && _menuConfig.Harass["Q"].Enabled)
             {
-                if (!_spellConfig.IsQ2 && dist > _spellConfig.DefaultAuotAttackRange && dist <= _spellConfig.Q2Range ||
-                    _spellConfig.IsQ2 && dist <= _spellConfig.DefaultAuotAttackRange)
+                if (!_spellConfig.IsQ2 && dist > _spellConfig.DefaultAuotAttackRange && dist <= _spellConfig.Q2Range || _spellConfig.IsQ2 && dist <= _spellConfig.DefaultAuotAttackRange)
                 {
                     _spellConfig.Q.Cast();
                 }

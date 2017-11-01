@@ -25,9 +25,7 @@
                 if (_menuConfig.Combo["Teleport"].Enabled)
                 {
                     var enemyTeleport = ObjectManager.Get<Obj_AI_Minion>().
-                        FirstOrDefault(x => x.IsEnemy &&
-                                            x.Distance(Global.Player) <= _spellConfig.E.Range &&
-                                            x.Buffs.Any(y => y.IsActive && y.Name.ToLower().Contains("teleport")));
+                        FirstOrDefault(x => x.IsEnemy && x.Distance(Global.Player) <= _spellConfig.E.Range && x.Buffs.Any(y => y.IsActive && y.Name.ToLower().Contains("teleport")));
                     if (enemyTeleport != null)
                     {
                         _spellConfig.E.Cast(enemyTeleport.ServerPosition);
@@ -45,8 +43,7 @@
             if (_spellConfig.R.Ready &&
                 _menuConfig.Killsteal["Range"].Enabled &&
                 _menuConfig.Whitelist[target.ChampionName].Enabled &&
-                (target.Health < Global.Player.GetSpellDamage(target, SpellSlot.R) && target.Distance(Global.Player) > Global.Player.AttackRange ||
-                 _menuConfig.Combo["Semi"].Enabled))
+                (target.Health < Global.Player.GetSpellDamage(target, SpellSlot.R) && target.Distance(Global.Player) > Global.Player.AttackRange || _menuConfig.Combo["Semi"].Enabled))
             {
                 _spellConfig.R.Cast(target);
             }

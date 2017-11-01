@@ -22,9 +22,7 @@
 
             Combo = new Menu("Combo", "Combo")
             {
-                new MenuBool("Q", "Use Q"),
-                new MenuBool("W", "Smart W Usage", false).SetToolTip("Will Try To Chain Combo with W"),
-                new MenuBool("E", "Use E"),
+                new MenuBool("Q", "Use Q"), new MenuBool("W", "Smart W Usage", false).SetToolTip("Will Try To Chain Combo with W"), new MenuBool("E", "Use E"),
                 new MenuSeperator("Whitelist", "Whitelist")
             };
 
@@ -35,9 +33,7 @@
 
             Harass = new Menu("Harass", "Harass")
             {
-                new MenuBool("Q", "Use Q"),
-                new MenuBool("E", "Use E"),
-                new MenuSeperator("Whitelist", "Whitelist")
+                new MenuBool("Q", "Use Q"), new MenuBool("E", "Use E"), new MenuSeperator("Whitelist", "Whitelist")
             };
 
             foreach (var target in GameObjects.EnemyHeroes)
@@ -47,42 +43,28 @@
 
             LaneClear = new Menu("LaneClear", "LaneClear")
             {
-                new MenuBool("Check", "Safe Clear").SetToolTip("Wont clear when enemies are nearby"),
-                new MenuBool("Q", "Use Q"),
-                new MenuSliderBool("E", "Use E If X Hit (AoE)", true, 3, 1, 7),
+                new MenuBool("Check", "Safe Clear").SetToolTip("Wont clear when enemies are nearby"), new MenuBool("Q", "Use Q"), new MenuSliderBool("E", "Use E If X Hit (AoE)", true, 3, 1, 7),
                 new MenuBool("Turret", "Use E At Turret")
             };
 
             JungleClear = new Menu("JungleClear", "JungleClear")
             {
-                new MenuBool("Avoid", "Don't Use Anything At Lvl 1"),
-                new MenuBool("Q", "Use Q"),
-                new MenuBool("E", "Use E")
+                new MenuBool("Avoid", "Don't Use Anything At Lvl 1"), new MenuBool("Q", "Use Q"), new MenuBool("E", "Use E")
             };
 
             Killsteal = new Menu("Killsteal", "Killsteal")
             {
-                new MenuBool("W", "Use W", false),
-                new MenuBool("E", "Use E"),
-                new MenuBool("R", "Use R")
+                new MenuBool("W", "Use W", false), new MenuBool("E", "Use E"), new MenuBool("R", "Use R")
             };
 
             Drawings = new Menu("DrawManager", "DrawManager")
             {
-                new MenuSlider("Segments", "Segments", 100, 10, 150).SetToolTip("Smoothness of the circles"),
-                new MenuBool("Dmg", "Damage"),
-                new MenuBool("W", "W Range")
+                new MenuSlider("Segments", "Segments", 100, 10, 150).SetToolTip("Smoothness of the circles"), new MenuBool("Dmg", "Damage"), new MenuBool("W", "W Range")
             };
 
             foreach (var menu in new List<Menu>
             {
-                Combo,
-                Harass,
-                LaneClear,
-                JungleClear,
-                Killsteal,
-                Drawings,
-                MenuShortcut.Credits
+                Combo, Harass, LaneClear, JungleClear, Killsteal, Drawings, MenuShortcut.Credits
             })
             {
                 mainMenu.Add(menu);

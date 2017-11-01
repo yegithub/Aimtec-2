@@ -34,10 +34,7 @@
             if (MenuConfig.Drawings["E"].Enabled && SpellConfig.E.LastCastAttemptT > 0 && Game.TickCount - SpellConfig.E.LastCastAttemptT < 2000)
             {
                 Render.WorldToScreen(Global.Player.Position, out var screen);
-                Render.Text("Time Until Q: " + (Game.TickCount - SpellConfig.E.LastCastAttemptT) + " / 2000",
-                            new Vector2(screen.X - 55, screen.Y + 40),
-                            RenderTextFlags.Center,
-                            Color.Cyan);
+                Render.Text("Time Until Q: " + (Game.TickCount - SpellConfig.E.LastCastAttemptT) + " / 2000", new Vector2(screen.X - 55, screen.Y + 40), RenderTextFlags.Center, Color.Cyan);
             }
 
             if (MenuConfig.Drawings["Q"].Enabled && SpellConfig.Q.Ready)

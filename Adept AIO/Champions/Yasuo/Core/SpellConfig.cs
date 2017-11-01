@@ -95,9 +95,7 @@
 
         public static Geometry.Rectangle Q3Rect(Obj_AI_Base target)
         {
-            return new Geometry.Rectangle(Global.Player.ServerPosition.To2D(),
-                                          Global.Player.ServerPosition.Extend(Q.GetPrediction(target).CastPosition, Q.Range).To2D(),
-                                          Q.Width);
+            return new Geometry.Rectangle(Global.Player.ServerPosition.To2D(), Global.Player.ServerPosition.Extend(Q.GetPrediction(target).CastPosition, Q.Range).To2D(), Q.Width);
         }
     }
 }

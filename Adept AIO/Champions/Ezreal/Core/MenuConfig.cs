@@ -21,69 +21,47 @@
 
             Combo = new Menu("EzrealCombo", "Combo")
             {
-                new MenuBool("Q", "Use Q"),
-                new MenuBool("QM", "Q Minions For AttackSpeed"),
-                new MenuSliderBool("W", "Use W At: Enemy (min. Mana%)", true, 30),
-                new MenuBool("WA", "Use W At: Ally").SetToolTip("Wont W Allies if enemies nearby"),
-                new MenuBool("E", "Use E At Killable Enemies")
+                new MenuBool("Q", "Use Q"), new MenuBool("QM", "Q Minions For AttackSpeed"), new MenuSliderBool("W", "Use W At: Enemy (min. Mana%)", true, 30),
+                new MenuBool("WA", "Use W At: Ally").SetToolTip("Wont W Allies if enemies nearby"), new MenuBool("E", "Use E At Killable Enemies")
             };
 
             Harass = new Menu("EzrealHarass", "Harass")
             {
-                new MenuBool("Q", "Use Q"),
-                new MenuSliderBool("W", "Use W (min Mana%)", true, 60),
-                new MenuBool("WA", "W Allies", false),
-                new MenuBool("E", "Use E", false)
+                new MenuBool("Q", "Use Q"), new MenuSliderBool("W", "Use W (min Mana%)", true, 60), new MenuBool("WA", "W Allies", false), new MenuBool("E", "Use E", false)
             };
 
             Lane = new Menu("EzrealLaneClear", "LaneClear")
             {
-                new MenuBool("Check", "Safe Clear").SetToolTip("Wont clear when enemies are nearby. Except for Q."),
-                new MenuSliderBool("Q", "Use Q (min Mana%)", true, 80),
+                new MenuBool("Check", "Safe Clear").SetToolTip("Wont clear when enemies are nearby. Except for Q."), new MenuSliderBool("Q", "Use Q (min Mana%)", true, 80),
                 new MenuSliderBool("W", "Use W (min Mana%)", true, 50)
             };
 
             Jungle = new Menu("EzrealJungleClear", "JungleClear")
             {
-                new MenuBool("Q", "Use Q | Big Mobs"),
-                new MenuBool("QS", "Use Q | Small Mobs"),
-                new MenuSliderBool("W", "Use W if Mana % >=", true, 75)
+                new MenuBool("Q", "Use Q | Big Mobs"), new MenuBool("QS", "Use Q | Small Mobs"), new MenuSliderBool("W", "Use W if Mana % >=", true, 75)
             };
 
             Killsteal = new Menu("EzrealKillsteal", "Killsteal")
             {
-                new MenuBool("Q", "Use Q"),
-                new MenuBool("W", "Use W"),
-                new MenuBool("E", "Use E", false),
-                new MenuSliderBool("Range", "Use R if Distance <=", true, 1500, 500, 5000),
+                new MenuBool("Q", "Use Q"), new MenuBool("W", "Use W"), new MenuBool("E", "Use E", false), new MenuSliderBool("Range", "Use R if Distance <=", true, 1500, 500, 5000),
                 new MenuBool("AA", "Autoattack")
             };
 
             Miscellaneous = new Menu("EzrealMisc", "Miscellaneous")
             {
-                new MenuSliderBool("Stack", "Stack Tear (min. Mana%)", true, 80),
-                new MenuBool("TH", "Humanize Tear Stack", false),
+                new MenuSliderBool("Stack", "Stack Tear (min. Mana%)", true, 80), new MenuBool("TH", "Humanize Tear Stack", false),
                 new MenuBool("WT", "W When Attacking Turret").SetToolTip("Wont be activated when enemies are nearby")
             };
 
             Drawings = new Menu("EzrealDrawManager", "DrawManager")
             {
-                new MenuSlider("Segments", "Segments", 100, 10, 150).SetToolTip("Smoothness of the circles"),
-                new MenuBool("Dmg", "Damage"),
-                new MenuBool("Q", "Draw Q Range"),
+                new MenuSlider("Segments", "Segments", 100, 10, 150).SetToolTip("Smoothness of the circles"), new MenuBool("Dmg", "Damage"), new MenuBool("Q", "Draw Q Range"),
                 new MenuBool("R", "Draw R Range")
             };
 
             foreach (var menu in new List<Menu>
             {
-                Combo,
-                Harass,
-                Lane,
-                Jungle,
-                Killsteal,
-                Drawings,
-                Miscellaneous,
-                MenuShortcut.Credits
+                Combo, Harass, Lane, Jungle, Killsteal, Drawings, Miscellaneous, MenuShortcut.Credits
             })
             {
                 mainMenu.Add(menu);

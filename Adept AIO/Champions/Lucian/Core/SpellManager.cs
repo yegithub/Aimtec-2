@@ -49,8 +49,7 @@
             {
                 var rect = GetQRectangle(target);
 
-                if (Q.GetPrediction(target).HitChance >= HitChance.High &&
-                    GameObjects.EnemyMinions.Count(x => x.IsValidTarget() && rect.IsInside(x.ServerPosition.To2D())) >= minHit)
+                if (Q.GetPrediction(target).HitChance >= HitChance.High && GameObjects.EnemyMinions.Count(x => x.IsValidTarget() && rect.IsInside(x.ServerPosition.To2D())) >= minHit)
                 {
                     Q.CastOnUnit(target);
                 }

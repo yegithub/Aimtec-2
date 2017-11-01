@@ -19,23 +19,17 @@
 
             if (SpellManager.Q.Ready)
             {
-                dmg += SpellManager.GnarState == GnarState.Small
-                           ? Global.Player.GetSpellDamage(target, SpellSlot.Q)
-                           : Global.Player.GetSpellDamage(target, SpellSlot.Q, DamageStage.SecondForm);
+                dmg += SpellManager.GnarState == GnarState.Small ? Global.Player.GetSpellDamage(target, SpellSlot.Q) : Global.Player.GetSpellDamage(target, SpellSlot.Q, DamageStage.SecondForm);
             }
 
             if (SpellManager.W.Ready)
             {
-                dmg += SpellManager.GnarState == GnarState.Small
-                           ? Global.Player.GetSpellDamage(target, SpellSlot.W)
-                           : Global.Player.GetSpellDamage(target, SpellSlot.W, DamageStage.SecondForm);
+                dmg += SpellManager.GnarState == GnarState.Small ? Global.Player.GetSpellDamage(target, SpellSlot.W) : Global.Player.GetSpellDamage(target, SpellSlot.W, DamageStage.SecondForm);
             }
 
             if (SpellManager.E.Ready)
             {
-                dmg += SpellManager.GnarState == GnarState.Small
-                           ? Global.Player.GetSpellDamage(target, SpellSlot.E)
-                           : Global.Player.GetSpellDamage(target, SpellSlot.E, DamageStage.SecondForm);
+                dmg += SpellManager.GnarState == GnarState.Small ? Global.Player.GetSpellDamage(target, SpellSlot.E) : Global.Player.GetSpellDamage(target, SpellSlot.E, DamageStage.SecondForm);
             }
 
             if (SpellManager.R.Ready && SpellManager.GnarState == GnarState.Mega)

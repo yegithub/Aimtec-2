@@ -103,6 +103,7 @@
                 case TeleportStatus.Abort:
                 case TeleportStatus.Finish:
                 case TeleportStatus.Unknown:
+                    if(_target != null && _target.NetworkId == sender.NetworkId)
                     Reset();
                     break;
                 case TeleportStatus.Start:

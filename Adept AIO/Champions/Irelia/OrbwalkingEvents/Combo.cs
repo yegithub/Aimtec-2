@@ -56,8 +56,7 @@
 
                 var longRangeTarget = Global.TargetSelector.GetTarget(SpellConfig.Q.Range * 3);
 
-                if (longRangeTarget == null ||
-                    longRangeTarget.IsUnderEnemyTurret() && MenuConfig.Combo["Turret"].Enabled && longRangeTarget.Health > Dmg.Damage(longRangeTarget))
+                if (longRangeTarget == null || longRangeTarget.IsUnderEnemyTurret() && MenuConfig.Combo["Turret"].Enabled && longRangeTarget.Health > Dmg.Damage(longRangeTarget))
                 {
                     return;
                 }

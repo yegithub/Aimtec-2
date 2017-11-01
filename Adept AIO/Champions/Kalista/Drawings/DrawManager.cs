@@ -5,7 +5,6 @@
     using Aimtec;
     using Aimtec.SDK.Extensions;
     using Core;
-    using SDK.Generic;
     using SDK.Unit_Extensions;
 
     class DrawManager
@@ -38,8 +37,8 @@
             {
                 return;
             }
-        
-            var percent = (int)(dmg * 100 / target.Health);
+
+            var percent = (int) (dmg * 100 / target.Health);
             var pos = target.FloatingHealthBarPosition;
             var offset = new Vector2(75, 37);
 

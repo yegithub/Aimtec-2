@@ -28,10 +28,7 @@
                     SpellManager.CastW(target);
                 }
 
-                else if (ShadowManager.CanSwitchToShadow() &&
-                         MenuConfig.Harass["W2"].Enabled &&
-                         Global.Player.HealthPercent() >= MenuConfig.Harass["Health"].Value &&
-                         !target.IsUnderEnemyTurret())
+                else if (ShadowManager.CanSwitchToShadow() && MenuConfig.Harass["W2"].Enabled && Global.Player.HealthPercent() >= MenuConfig.Harass["Health"].Value && !target.IsUnderEnemyTurret())
                 {
                     SpellManager.CastW(target, true);
                 }

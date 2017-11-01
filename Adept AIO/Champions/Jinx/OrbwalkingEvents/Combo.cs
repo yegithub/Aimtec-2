@@ -33,17 +33,13 @@
 
             if (_spellConfig.Q.Ready && _menuConfig.Combo["Q"].Enabled)
             {
-                if (!_spellConfig.IsQ2 && dist > _spellConfig.DefaultAuotAttackRange && dist <= _spellConfig.Q2Range ||
-                    _spellConfig.IsQ2 && dist <= _spellConfig.DefaultAuotAttackRange)
+                if (!_spellConfig.IsQ2 && dist > _spellConfig.DefaultAuotAttackRange && dist <= _spellConfig.Q2Range || _spellConfig.IsQ2 && dist <= _spellConfig.DefaultAuotAttackRange)
                 {
                     _spellConfig.Q.Cast();
                 }
             }
 
-            if (_spellConfig.W.Ready &&
-                _menuConfig.Combo["W"].Enabled &&
-                dist <= _menuConfig.Combo["W"].Value &&
-                target.Distance(Global.Player) > Global.Player.AttackRange + 200)
+            if (_spellConfig.W.Ready && _menuConfig.Combo["W"].Enabled && dist <= _menuConfig.Combo["W"].Value && target.Distance(Global.Player) > Global.Player.AttackRange + 200)
             {
                 _spellConfig.W.Cast(target);
             }

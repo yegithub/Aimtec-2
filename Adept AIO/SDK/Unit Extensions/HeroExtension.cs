@@ -9,21 +9,12 @@
     {
         private static readonly BuffType[] HardCc =
         {
-            BuffType.Invulnerability,
-            BuffType.Charm,
-            BuffType.Blind,
-            BuffType.Fear,
-            BuffType.Knockup,
-            BuffType.Polymorph
+            BuffType.Invulnerability, BuffType.Charm, BuffType.Blind, BuffType.Fear, BuffType.Knockup, BuffType.Polymorph
         };
 
         private static readonly uint[] TearId =
         {
-            ItemId.TearoftheGoddess,
-            ItemId.Manamune,
-            ItemId.ArchangelsStaff,
-            ItemId.TearoftheGoddessQuickCharge,
-            ItemId.ArchangelsStaffQuickCharge
+            ItemId.TearoftheGoddess, ItemId.Manamune, ItemId.ArchangelsStaff, ItemId.TearoftheGoddessQuickCharge, ItemId.ArchangelsStaffQuickCharge
         };
 
         public static bool IsAirbone(this Obj_AI_Base unit)

@@ -1,6 +1,5 @@
 ﻿namespace Adept_AIO.Champions.Gnar.Core
 {
-    using System.Linq;
     using Aimtec;
     using Aimtec.SDK.Extensions;
     using Aimtec.SDK.Prediction.Skillshots;
@@ -101,10 +100,7 @@
 
             var flashPos = wall + (wall - Global.Player.ServerPosition).Normalized() * SummonerSpells.Flash.Range;
 
-            if (SummonerSpells.IsValid(SummonerSpells.Flash) &&
-                MenuConfig.Combo["Flash"].Enabled &&
-                target.Distance(Global.Player) > 475 &&
-                wall.Distance(Global.Player) < 475 + 425)
+            if (SummonerSpells.IsValid(SummonerSpells.Flash) && MenuConfig.Combo["Flash"].Enabled && target.Distance(Global.Player) > 475 && wall.Distance(Global.Player) < 475 + 425)
             {
                 SummonerSpells.Flash.Cast(flashPos);
             }

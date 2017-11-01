@@ -21,8 +21,7 @@
         {
             var eventArgs = new TeleportEventArgs
             {
-                Status = TeleportStatus.Unknown,
-                Type = TeleportType.Unknown
+                Status = TeleportStatus.Unknown, Type = TeleportType.Unknown
             };
 
             if (sender == null)

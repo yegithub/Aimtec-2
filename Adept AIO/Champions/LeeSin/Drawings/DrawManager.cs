@@ -42,10 +42,7 @@
             }
 
             Render.WorldToScreen(Global.Player.ServerPosition, out var bkToggleV2);
-            Render.Text("Bubba Kush: " + Temp.IsBubbaKush,
-                        new Vector2(bkToggleV2.X - 40, bkToggleV2.Y + 70),
-                        RenderTextFlags.Center,
-                        Temp.IsBubbaKush ? Color.White : Color.LightSlateGray);
+            Render.Text("Bubba Kush: " + Temp.IsBubbaKush, new Vector2(bkToggleV2.X - 40, bkToggleV2.Y + 70), RenderTextFlags.Center, Temp.IsBubbaKush ? Color.White : Color.LightSlateGray);
 
             var target = Global.TargetSelector.GetSelectedTarget();
 

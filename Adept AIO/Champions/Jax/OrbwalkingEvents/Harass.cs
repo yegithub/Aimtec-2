@@ -32,8 +32,7 @@
             {
                 SpellManager.CastE(target);
             }
-            else if (SpellConfig.Q.Ready && MenuConfig.Harass["Q"].Enabled && Game.TickCount - SpellConfig.E.LastCastAttemptT >= 1800 ||
-                     SpellConfig.E.LastCastAttemptT <= 0)
+            else if (SpellConfig.Q.Ready && MenuConfig.Harass["Q"].Enabled && Game.TickCount - SpellConfig.E.LastCastAttemptT >= 1800 || SpellConfig.E.LastCastAttemptT <= 0)
             {
                 SpellConfig.Q.CastOnUnit(target);
             }

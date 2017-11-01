@@ -14,9 +14,7 @@
 
         private readonly IEnumerable<string> _wardNames = new List<string>
         {
-            "TrinketTotemLvl1",
-            "ItemGhostWard",
-            "JammerDevice"
+            "TrinketTotemLvl1", "ItemGhostWard", "JammerDevice"
         };
 
         public WardTracker(ISpellConfig spellConfig)

@@ -50,9 +50,7 @@
                         return;
                     }
 
-                    var minion = GameObjects.EnemyMinions.Where(x => x.Health < Global.Player.GetSpellDamage(x, SpellSlot.Q)).
-                        OrderBy(x => x.Distance(target)).
-                        LastOrDefault();
+                    var minion = GameObjects.EnemyMinions.Where(x => x.Health < Global.Player.GetSpellDamage(x, SpellSlot.Q)).OrderBy(x => x.Distance(target)).LastOrDefault();
                     if (minion == null)
                     {
                         return;

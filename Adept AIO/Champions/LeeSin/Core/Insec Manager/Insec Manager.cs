@@ -45,8 +45,7 @@
                 return Vector3.Zero;
             }
 
-            return secondEnemy.ServerPosition.Extend(secondEnemy.ServerPosition + (secondEnemy.ServerPosition - target.ServerPosition).Normalized(),
-                                                     DistanceBehindTarget());
+            return secondEnemy.ServerPosition.Extend(secondEnemy.ServerPosition + (secondEnemy.ServerPosition - target.ServerPosition).Normalized(), DistanceBehindTarget());
         }
 
         public Vector3 GetTargetEndPosition()

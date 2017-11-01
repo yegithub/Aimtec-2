@@ -22,12 +22,7 @@
 
         public void OnKeyPressed()
         {
-            if (!this.Enabled ||
-                this.Target == null ||
-                !_spellConfig.R.Ready ||
-                !this.Target.IsValidTarget(_spellConfig.R.Range) ||
-                SummonerSpells.Flash == null ||
-                !SummonerSpells.Flash.Ready)
+            if (!this.Enabled || this.Target == null || !_spellConfig.R.Ready || !this.Target.IsValidTarget(_spellConfig.R.Range) || SummonerSpells.Flash == null || !SummonerSpells.Flash.Ready)
             {
                 return;
             }

@@ -70,9 +70,7 @@
 
             if (SpellConfig.R.Ready &&
                 MenuConfig.Combo["R"].Enabled &&
-                (MenuConfig.Combo["R"].Value >= Global.Player.HealthPercent() ||
-                 MenuConfig.Combo["R"].Value >= target.HealthPercent() ||
-                 Dmg.Damage(target) * 1.5 > target.Health))
+                (MenuConfig.Combo["R"].Value >= Global.Player.HealthPercent() || MenuConfig.Combo["R"].Value >= target.HealthPercent() || Dmg.Damage(target) * 1.5 > target.Health))
             {
                 if (MenuConfig.Whitelist[target.ChampionName].Enabled)
                 {

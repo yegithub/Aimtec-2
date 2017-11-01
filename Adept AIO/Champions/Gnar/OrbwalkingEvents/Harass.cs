@@ -24,9 +24,7 @@
                 SpellManager.CastW(target);
             }
 
-            if (SpellManager.E.Ready &&
-                MenuConfig.Harass["E"].Enabled &&
-                !Global.Player.ServerPosition.Extend(target.ServerPosition, SpellManager.E.Range * 2).PointUnderEnemyTurret())
+            if (SpellManager.E.Ready && MenuConfig.Harass["E"].Enabled && !Global.Player.ServerPosition.Extend(target.ServerPosition, SpellManager.E.Range * 2).PointUnderEnemyTurret())
             {
                 SpellManager.CastE(target);
             }

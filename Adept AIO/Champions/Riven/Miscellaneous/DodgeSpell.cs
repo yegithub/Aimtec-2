@@ -9,43 +9,18 @@
     {
         private static readonly string[] DamageSpells =
         {
-            "MonkeyKingSpinToWin",
-            "KatarinaRTrigger",
-            "HungeringStrike",
-            "TwitchEParticle",
-            "RengarPassiveBuffDashAADummy",
-            "RengarPassiveBuffDash",
-            "BraumBasicAttackPassiveOverride",
-            "gnarwproc",
-            "hecarimrampattack",
-            "illaoiwattack",
-            "JaxEmpowerTwo",
-            "JayceThunderingBlow",
-            "RenektonSuperExecute",
-            "vaynesilvereddebuff"
+            "MonkeyKingSpinToWin", "KatarinaRTrigger", "HungeringStrike", "TwitchEParticle", "RengarPassiveBuffDashAADummy", "RengarPassiveBuffDash", "BraumBasicAttackPassiveOverride", "gnarwproc",
+            "hecarimrampattack", "illaoiwattack", "JaxEmpowerTwo", "JayceThunderingBlow", "RenektonSuperExecute", "vaynesilvereddebuff"
         };
 
         private static readonly string[] TargetedSpells =
         {
-            "MonkeyKingQAttack",
-            "FizzPiercingStrike",
-            "IreliaEquilibriumStrike",
-            "RengarQ",
-            "GarenQAttack",
-            "GarenRPreCast",
-            "PoppyPassiveAttack",
-            "viktorqbuff",
-            "FioraEAttack",
-            "TeemoQ"
+            "MonkeyKingQAttack", "FizzPiercingStrike", "IreliaEquilibriumStrike", "RengarQ", "GarenQAttack", "GarenRPreCast", "PoppyPassiveAttack", "viktorqbuff", "FioraEAttack", "TeemoQ"
         };
 
         private static readonly string[] InterrupterSpell =
         {
-            "RenektonPreExecute",
-            "TalonCutthroat",
-            "XenZhaoThrust3",
-            "KatarinaRTrigger",
-            "KatarinaE"
+            "RenektonPreExecute", "TalonCutthroat", "XenZhaoThrust3", "KatarinaRTrigger", "KatarinaE"
         };
 
         public static void OnProcessSpellCast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)

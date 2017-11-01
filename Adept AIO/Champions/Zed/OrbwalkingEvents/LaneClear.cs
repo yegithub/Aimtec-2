@@ -15,8 +15,7 @@
 
         public static void OnUpdate()
         {
-            if (MenuConfig.LaneClear["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(2000) > 0 ||
-                Maths.GetEnergyPercent() < MenuConfig.LaneClear["Energy"].Value)
+            if (MenuConfig.LaneClear["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(2000) > 0 || Maths.GetEnergyPercent() < MenuConfig.LaneClear["Energy"].Value)
             {
                 return;
             }
@@ -91,12 +90,7 @@
 
         public static void OnProcessSpellCast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
         {
-            if (sender == null ||
-                args.Target == null ||
-                !sender.IsAlly ||
-                !args.Target.IsEnemy ||
-                !sender.UnitSkinName.ToLower().Contains("turret") ||
-                !args.Target.Name.ToLower().Contains("minion"))
+            if (sender == null || args.Target == null || !sender.IsAlly || !args.Target.IsEnemy || !sender.UnitSkinName.ToLower().Contains("turret") || !args.Target.Name.ToLower().Contains("minion"))
             {
                 return;
             }
