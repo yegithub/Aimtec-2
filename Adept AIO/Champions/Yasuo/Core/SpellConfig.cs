@@ -42,14 +42,6 @@
 
         public static void CastQ(Obj_AI_Base target)
         {
-            if (target.UnitSkinName.ToLower().Contains("soldier") ||
-                target.UnitSkinName.ToLower().Contains("shadow") ||
-                target.UnitSkinName.ToLower().Contains("dagger") ||
-                target.UnitSkinName.ToLower().Contains("axe"))
-            {
-                return;
-            }
-
             var rect = Q3Rect(target);
             if (rect == null || rect.IsOutside(target.ServerPosition.To2D()))
             {
@@ -61,14 +53,6 @@
 
         public static void CastE(Obj_AI_Base target, bool gapclose = false, int rangeGapclose = 0)
         {
-            if (target.UnitSkinName.ToLower().Contains("soldier") ||
-                target.UnitSkinName.ToLower().Contains("shadow") ||
-                target.UnitSkinName.ToLower().Contains("dagger") ||
-                target.UnitSkinName.ToLower().Contains("axe"))
-            {
-                return;
-            }
-
             var closestToPlayer = MinionHelper.GetClosest(target);
             var positionBehindMinion = MinionHelper.WalkBehindMinion(target, closestToPlayer);
 
