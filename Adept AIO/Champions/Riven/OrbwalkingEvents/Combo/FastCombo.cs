@@ -2,14 +2,21 @@
 {
     using Aimtec;
     using Aimtec.SDK.Extensions;
+    using Aimtec.SDK.Orbwalking;
     using Core;
     using Miscellaneous;
     using SDK.Unit_Extensions;
 
     class FastCombo
     {
-        public static void OnPostAttack(Obj_AI_Base target)
+        public static void OnPostAttack(object sender, PostAttackEventArgs args)
         {
+            var target = Global.TargetSelector.GetTarget(Global.Player.AttackRange + 100);
+            if (target == null)
+            {
+                return;
+            }
+
             if (SpellConfig.R2.Ready && Enums.UltimateMode == UltimateMode.Second && MenuConfig.Combo["R2"].Enabled && target.HealthPercent() <= 40)
             {
                 SpellManager.CastR2(target);

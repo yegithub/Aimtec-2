@@ -76,7 +76,7 @@
                 switch (Global.Orbwalker.Mode)
                 {
                     case OrbwalkingMode.Combo:
-                        ComboManager.OnProcessAutoAttack();
+                        ComboManager.OnPostAttack(sender, args);
                         break;
                     case OrbwalkingMode.Mixed:
                         Harass.OnProcessAutoAttack();

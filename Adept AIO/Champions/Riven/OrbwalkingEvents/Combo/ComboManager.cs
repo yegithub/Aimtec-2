@@ -6,6 +6,7 @@
     using Aimtec;
     using Aimtec.SDK.Damage;
     using Aimtec.SDK.Extensions;
+    using Aimtec.SDK.Orbwalking;
     using Aimtec.SDK.Util;
     using Core;
     using Miscellaneous;
@@ -15,23 +16,18 @@
 
     class ComboManager
     {
-        public static void OnProcessAutoAttack()
+        public static void OnPostAttack(object sender, PostAttackEventArgs args)
         {
-            var target = GameObjects.EnemyHeroes.OrderBy(x => x.Distance(Global.Player)).FirstOrDefault();
-            if (target == null)
-            {
-                return;
-            }
             switch (Enums.ComboPattern)
             {
                 case ComboPattern.MaximizeDmg:
-                    MaximizeDmg.OnPostAttack();
+                    MaximizeDmg.OnPostAttack(sender, args);
                     break;
 
                 case ComboPattern.Normal: break;
 
                 case ComboPattern.FastCombo:
-                    FastCombo.OnPostAttack(target);
+                    FastCombo.OnPostAttack(sender, args);
                     break;
 
                 default: throw new ArgumentOutOfRangeException();
@@ -92,7 +88,6 @@
                 case 1: return ComboPattern.MaximizeDmg;
                 case 2: return ComboPattern.FastCombo;
             }
-
             return ComboPattern.MaximizeDmg;
         }
 

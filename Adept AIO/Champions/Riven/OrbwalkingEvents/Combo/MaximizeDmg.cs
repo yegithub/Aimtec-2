@@ -3,15 +3,16 @@
     using System.Linq;
     using Aimtec;
     using Aimtec.SDK.Extensions;
+    using Aimtec.SDK.Orbwalking;
     using Core;
     using Miscellaneous;
     using SDK.Unit_Extensions;
 
     class MaximizeDmg
     {
-        public static void OnPostAttack()
+        public static void OnPostAttack(object sender, PostAttackEventArgs args)
         {
-            var target = GameObjects.EnemyHeroes.FirstOrDefault(x => x.Distance(Global.Player) <= 600);
+            var target = Global.TargetSelector.GetTarget(Global.Player.AttackRange + 100);
             if (target == null)
             {
                 return;
