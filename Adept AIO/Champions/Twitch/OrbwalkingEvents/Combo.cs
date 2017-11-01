@@ -1,15 +1,17 @@
 ﻿namespace Adept_AIO.Champions.Twitch.OrbwalkingEvents
 {
+    using Aimtec;
     using Aimtec.SDK.Extensions;
+    using Aimtec.SDK.Orbwalking;
     using Core;
     using SDK.Unit_Extensions;
 
     class Combo
     {
-        public static void OnUpdate()
+        public static void PostAttack(object sender, PostAttackEventArgs args)
         {
-            var target = Global.TargetSelector.GetTarget(SpellManager.R.Range);
-            if (target == null)
+            var target = args.Target;
+            if (target == null || !(args.Target is Obj_AI_Hero))
             {
                 return;
             }
@@ -17,6 +19,15 @@
             if (SpellManager.Q.Ready && MenuConfig.Combo["Q"].Enabled && target.IsValidAutoRange())
             {
                 SpellManager.Q.Cast();
+            }
+        }
+
+        public static void OnUpdate()
+        {
+            var target = Global.TargetSelector.GetTarget(SpellManager.R.Range);
+            if (target == null)
+            {
+                return;
             }
 
             if (SpellManager.W.Ready &&

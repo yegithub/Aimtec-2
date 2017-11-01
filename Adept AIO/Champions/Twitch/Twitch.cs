@@ -1,9 +1,13 @@
 ﻿namespace Adept_AIO.Champions.Twitch
 {
+    using System;
     using Aimtec;
+    using Aimtec.SDK.Orbwalking;
     using Core;
     using Drawings;
     using Miscellaneous;
+    using OrbwalkingEvents;
+    using SDK.Unit_Extensions;
 
     class Twitch
     {
@@ -17,6 +21,7 @@
             Render.OnPresent += DrawManager.OnPresent;
             Render.OnRender += DrawManager.OnRender;
 
+            Global.Orbwalker.PostAttack += Combo.PostAttack;
             Game.OnUpdate += Manager.OnUpdate;
         }
 
