@@ -92,12 +92,8 @@
                 }
             }
 
-            if (_spellConfig.R.Ready &&
-                _spellConfig.Q.Ready &&
-                this.Q1Enabled &&
-                distance <= 550 &&
-                target.Health <=
-                Global.Player.GetSpellDamage(target, SpellSlot.R) + Global.Player.GetSpellDamage(target, SpellSlot.Q) + Global.Player.GetSpellDamage(target, SpellSlot.Q, DamageStage.SecondCast))
+            if (_spellConfig.R.Ready && _spellConfig.Q.Ready && this.Q1Enabled && distance <= 550 && target.Health <= Global.Player.GetSpellDamage(target, SpellSlot.R) +
+                Global.Player.GetSpellDamage(target, SpellSlot.Q) + Global.Player.GetSpellDamage(target, SpellSlot.Q, DamageStage.SecondCast))
             {
                 _spellConfig.R.CastOnUnit(target);
                 _spellConfig.Q.Cast(target);
@@ -116,11 +112,7 @@
                 }
             }
 
-            if (_spellConfig.W.Ready &&
-                _spellConfig.IsFirst(_spellConfig.W) &&
-                _wardTracker.IsWardReady() &&
-                this.WEnabled &&
-                this.WardEnabled &&
+            if (_spellConfig.W.Ready && _spellConfig.IsFirst(_spellConfig.W) && _wardTracker.IsWardReady() && this.WEnabled && this.WardEnabled &&
                 distance > (_spellConfig.Q.Ready ? 1000 : _spellConfig.WardRange))
             {
                 if (Game.TickCount - _spellConfig.Q.LastCastAttemptT <= 3000 || target.Position.CountEnemyHeroesInRange(2000) > 1)

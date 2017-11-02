@@ -68,15 +68,19 @@
                         {
                             if (MenuConfig.Combo["Flash"].Enabled && SummonerSpells.IsValid(SummonerSpells.Flash))
                             {
-                                DelayAction.Queue(Game.Ping / 2, () =>
-                                {
-                                    SpellConfig.Q.Cast();
-                                }, new CancellationToken(false));
+                                DelayAction.Queue(Game.Ping / 2,
+                                                  () =>
+                                                  {
+                                                      SpellConfig.Q.Cast();
+                                                  },
+                                                  new CancellationToken(false));
 
-                                DelayAction.Queue(Game.Ping / 2 + 50, () =>
-                                {
-                                    SummonerSpells.Flash.Cast(target.Position);
-                                }, new CancellationToken(false));
+                                DelayAction.Queue(Game.Ping / 2 + 50,
+                                                  () =>
+                                                  {
+                                                      SummonerSpells.Flash.Cast(target.Position);
+                                                  },
+                                                  new CancellationToken(false));
                             }
                         }
                         break;

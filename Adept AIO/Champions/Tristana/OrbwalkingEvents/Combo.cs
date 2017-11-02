@@ -31,12 +31,8 @@
                 _spellConfig.Q.Cast();
             }
 
-            if (_spellConfig.W.Ready &&
-                _menuConfig.Combo["W"].Enabled &&
-                target.Health < _dmg.Damage(target) &&
-                target.Distance(Global.Player) > Global.Player.AttackRange + 100 &&
-                Global.Player.CountEnemyHeroesInRange(2000) <= 2 &&
-                target.ServerPosition.CountAllyHeroesInRange(900) == 0)
+            if (_spellConfig.W.Ready && _menuConfig.Combo["W"].Enabled && target.Health < _dmg.Damage(target) && target.Distance(Global.Player) > Global.Player.AttackRange + 100 &&
+                Global.Player.CountEnemyHeroesInRange(2000) <= 2 && target.ServerPosition.CountAllyHeroesInRange(900) == 0)
             {
                 _spellConfig.W.Cast(target);
             }

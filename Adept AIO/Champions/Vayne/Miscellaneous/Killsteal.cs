@@ -29,8 +29,7 @@
             }
             else if (SpellManager.E.Ready && MenuConfig.Killsteal["E"].Enabled)
             {
-                if (target.Health <= Global.Player.GetSpellDamage(target, SpellSlot.E) * 0.75 ||
-                    SpellManager.CanStun(target) &&
+                if (target.Health <= Global.Player.GetSpellDamage(target, SpellSlot.E) * 0.75 || SpellManager.CanStun(target) &&
                     target.Health < Global.Player.GetSpellDamage(target, SpellSlot.E) * 0.75f + Global.Player.GetSpellDamage(target, SpellSlot.E, DamageStage.Collision))
                 {
                     SpellManager.CastE(target);

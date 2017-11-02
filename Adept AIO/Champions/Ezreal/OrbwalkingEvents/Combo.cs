@@ -50,10 +50,7 @@
                 }
             }
 
-            if (SpellConfig.E.Ready &&
-                MenuConfig.Combo["E"].Enabled &&
-                Global.Player.ManaPercent() >= 30 &&
-                target.IsValidTarget(SpellConfig.E.Range) &&
+            if (SpellConfig.E.Ready && MenuConfig.Combo["E"].Enabled && Global.Player.ManaPercent() >= 30 && target.IsValidTarget(SpellConfig.E.Range) &&
                 Global.Player.GetSpellDamage(target, SpellSlot.E) + Global.Player.GetAutoAttackDamage(target) >= target.Health)
             {
                 SpellConfig.E.Cast(target);

@@ -40,9 +40,7 @@
                 return;
             }
 
-            if (_spellConfig.R.Ready &&
-                _menuConfig.Killsteal["Range"].Enabled &&
-                _menuConfig.Whitelist[target.ChampionName].Enabled &&
+            if (_spellConfig.R.Ready && _menuConfig.Killsteal["Range"].Enabled && _menuConfig.Whitelist[target.ChampionName].Enabled &&
                 (target.Health < Global.Player.GetSpellDamage(target, SpellSlot.R) && target.Distance(Global.Player) > Global.Player.AttackRange || _menuConfig.Combo["Semi"].Enabled))
             {
                 _spellConfig.R.Cast(target);

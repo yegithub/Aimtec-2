@@ -27,10 +27,8 @@
             {
                 SpellConfig.W.Cast(target);
             }
-            else if (SpellConfig.R.Ready &&
-                     target.Health < Global.Player.GetSpellDamage(target, SpellSlot.R) + Global.Player.GetAutoAttackDamage(target) &&
-                     target.IsValidTarget(SpellConfig.R.Range) &&
-                     MenuConfig.Killsteal["R"].Enabled)
+            else if (SpellConfig.R.Ready && target.Health < Global.Player.GetSpellDamage(target, SpellSlot.R) + Global.Player.GetAutoAttackDamage(target) &&
+                     target.IsValidTarget(SpellConfig.R.Range) && MenuConfig.Killsteal["R"].Enabled)
             {
                 SpellConfig.R.CastOnUnit(target);
             }

@@ -14,9 +14,7 @@
                 return;
             }
 
-            if (SpellManager.E.Ready &&
-                MenuConfig.Combo["E"].Enabled &&
-                Dmg.Damage(target) * 1.2f > target.Health &&
+            if (SpellManager.E.Ready && MenuConfig.Combo["E"].Enabled && Dmg.Damage(target) * 1.2f > target.Health &&
                 !Global.Player.ServerPosition.Extend(target.ServerPosition, SpellManager.E.Range * 2).PointUnderEnemyTurret())
             {
                 SpellManager.CastE(target);

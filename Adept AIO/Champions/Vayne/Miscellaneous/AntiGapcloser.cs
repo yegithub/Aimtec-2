@@ -21,9 +21,7 @@
                 SpellManager.Q.Cast(pos);
             }
 
-            else if (SpellManager.E.Ready &&
-                     MenuConfig.Misc["E"].Enabled &&
-                     args.EndPosition.Distance(Global.Player) < args.StartPosition.Distance(Global.Player) &&
+            else if (SpellManager.E.Ready && MenuConfig.Misc["E"].Enabled && args.EndPosition.Distance(Global.Player) < args.StartPosition.Distance(Global.Player) &&
                      args.EndPosition.Distance(Global.Player) <= 150)
             {
                 SpellManager.E.CastOnUnit(sender);

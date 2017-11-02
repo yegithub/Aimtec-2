@@ -11,7 +11,16 @@
     {
         private static readonly string[] Buffs =
         {
-            "JaxCounterStrike", "FioraW", "BansheesVeil", "BlackShield", "KindredrNoDeathBuff", "malzaharpassiveshield", "NocturneShroudofDarkness", "OlafRagnarock", "UndyingRage", "SivirE"
+            "JaxCounterStrike",
+            "FioraW",
+            "BansheesVeil",
+            "BlackShield",
+            "KindredrNoDeathBuff",
+            "malzaharpassiveshield",
+            "NocturneShroudofDarkness",
+            "OlafRagnarock",
+            "UndyingRage",
+            "SivirE"
         };
 
         public static double EDmg(Obj_AI_Base target)

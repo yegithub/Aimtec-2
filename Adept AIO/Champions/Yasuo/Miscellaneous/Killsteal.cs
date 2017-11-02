@@ -19,10 +19,7 @@
                 return;
             }
 
-            if (SpellConfig.E.Ready &&
-                target.Health < Global.Player.GetSpellDamage(target, SpellSlot.E) &&
-                target.IsValidTarget(SpellConfig.E.Range) &&
-                !target.HasBuff("YasuoDashWrapper") &&
+            if (SpellConfig.E.Ready && target.Health < Global.Player.GetSpellDamage(target, SpellSlot.E) && target.IsValidTarget(SpellConfig.E.Range) && !target.HasBuff("YasuoDashWrapper") &&
                 MenuConfig.Killsteal["E"].Enabled)
             {
                 SpellConfig.E.CastOnUnit(target);

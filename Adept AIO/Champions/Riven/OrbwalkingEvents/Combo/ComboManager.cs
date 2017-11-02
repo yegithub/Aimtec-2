@@ -107,8 +107,7 @@
             switch (MenuConfig.Combo["Chase"].Value)
             {
                 case 1:
-                    if (target.Distance(Global.Player) <= Global.Player.AttackRange + SpellConfig.Q.Range &&
-                        Extensions.CurrentQCount == 1 &&
+                    if (target.Distance(Global.Player) <= Global.Player.AttackRange + SpellConfig.Q.Range && Extensions.CurrentQCount == 1 &&
                         target.Distance(Global.Player) > Global.Player.AttackRange)
                     {
                         SpellManager.CastQ(target, true);
@@ -116,10 +115,7 @@
                     break;
                 case 2:
                     if (target.Distance(Global.Player) <= Global.Player.AttackRange + SpellConfig.Q.Range + SpellConfig.E.Range &&
-                        target.Distance(Global.Player) > Global.Player.AttackRange + SpellConfig.Q.Range &&
-                        SpellConfig.E.Ready &&
-                        SpellConfig.Q.Ready &&
-                        Extensions.CurrentQCount == 1)
+                        target.Distance(Global.Player) > Global.Player.AttackRange + SpellConfig.Q.Range && SpellConfig.E.Ready && SpellConfig.Q.Ready && Extensions.CurrentQCount == 1)
                     {
                         SpellConfig.E.Cast(target.ServerPosition);
                         DelayAction.Queue(190, () => SpellManager.CastQ(target, true), new CancellationToken(false));
@@ -160,11 +156,8 @@
 
         public static bool CanCastR1(Obj_AI_Base target)
         {
-            return MenuConfig.Combo["R"].Value != 0 &&
-                   SpellConfig.R.Ready &&
-                   !(MenuConfig.Combo["Check"].Enabled && target.HealthPercent() < MenuConfig.Combo["Check"].Value) &&
-                   Enums.UltimateMode == UltimateMode.First &&
-                   !(MenuConfig.Combo["R"].Value == 2 && Dmg.Damage(target) < target.Health);
+            return MenuConfig.Combo["R"].Value != 0 && SpellConfig.R.Ready && !(MenuConfig.Combo["Check"].Enabled && target.HealthPercent() < MenuConfig.Combo["Check"].Value) &&
+                   Enums.UltimateMode == UltimateMode.First && !(MenuConfig.Combo["R"].Value == 2 && Dmg.Damage(target) < target.Health);
         }
     }
 }

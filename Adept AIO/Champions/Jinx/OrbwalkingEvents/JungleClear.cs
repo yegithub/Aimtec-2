@@ -26,10 +26,7 @@
 
             var dist = Global.Player.Distance(minion);
 
-            if (_spellConfig.W.Ready &&
-                _menuConfig.JungleClear["W"].Enabled &&
-                _menuConfig.JungleClear["W"].Value < Global.Player.ManaPercent() &&
-                dist <= 650 &&
+            if (_spellConfig.W.Ready && _menuConfig.JungleClear["W"].Enabled && _menuConfig.JungleClear["W"].Value < Global.Player.ManaPercent() && dist <= 650 &&
                 Global.Player.CountEnemyHeroesInRange(2000) == 0)
             {
                 _spellConfig.W.Cast(minion);

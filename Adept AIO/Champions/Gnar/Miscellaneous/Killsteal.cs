@@ -23,10 +23,9 @@
                 return;
             }
 
-            if (SpellManager.Q.Ready &&
-                MenuConfig.Killsteal["Q"].Enabled &&
-                target.Health <
-                (SpellManager.GnarState == GnarState.Small ? Global.Player.GetSpellDamage(target, SpellSlot.Q) : Global.Player.GetSpellDamage(target, SpellSlot.Q, DamageStage.SecondForm)))
+            if (SpellManager.Q.Ready && MenuConfig.Killsteal["Q"].Enabled && target.Health < (SpellManager.GnarState == GnarState.Small
+                                                                                                  ? Global.Player.GetSpellDamage(target, SpellSlot.Q)
+                                                                                                  : Global.Player.GetSpellDamage(target, SpellSlot.Q, DamageStage.SecondForm)))
             {
                 SpellManager.CastQ(target);
             }

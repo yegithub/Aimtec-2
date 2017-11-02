@@ -21,45 +21,37 @@
 
             Combo = new Menu("GnarCombo", "Combo")
             {
-                new MenuBool("Q", "Use Q"), new MenuBool("W", "Use W"), new MenuBool("E", "Use E (Killable)"), new MenuBool("R", "Use R (Killable)"), new MenuBool("Flash", "Flash")
+                new MenuBool("Q", "Use Q"),
+                new MenuBool("W", "Use W"),
+                new MenuBool("E", "Use E (Killable)"),
+                new MenuBool("R", "Use R (Killable)"),
+                new MenuBool("Flash", "Flash")
             };
 
-            Harass = new Menu("GnarHarass", "Harass")
-            {
-                new MenuBool("Q", "Use Q"), new MenuBool("W", "Use W"), new MenuBool("E", "Use E", false)
-            };
+            Harass = new Menu("GnarHarass", "Harass") {new MenuBool("Q", "Use Q"), new MenuBool("W", "Use W"), new MenuBool("E", "Use E", false)};
 
             LaneClear = new Menu("GnarLaneClear", "LaneClear")
             {
-                new MenuBool("Check", "Don't Clear When Enemies Nearby"), new MenuSliderBool("Q", "Use Q if hit count => ", true, 3, 1, 6),
+                new MenuBool("Check", "Don't Clear When Enemies Nearby"),
+                new MenuSliderBool("Q", "Use Q if hit count => ", true, 3, 1, 6),
                 new MenuSliderBool("W", "Use W if hit count => ", true, 3, 1, 6)
             };
 
-            JungleClear = new Menu("GnarJngl", " JungleClear")
-            {
-                new MenuBool("Q", "Use Q"), new MenuBool("W", "Use W")
-            };
+            JungleClear = new Menu("GnarJngl", " JungleClear") {new MenuBool("Q", "Use Q"), new MenuBool("W", "Use W")};
 
-            Killsteal = new Menu("GnarKS", "Killsteal")
-            {
-                new MenuBool("Q", "Use Q"), new MenuBool("W", "Use W")
-            };
+            Killsteal = new Menu("GnarKS", "Killsteal") {new MenuBool("Q", "Use Q"), new MenuBool("W", "Use W")};
 
-            Misc = new Menu("GnarMisc", "Miscellaneous")
-            {
-                new MenuSliderBool("Auto", "Auto R if hit count => ", true, 3, 1, 5)
-            };
+            Misc = new Menu("GnarMisc", "Miscellaneous") {new MenuSliderBool("Auto", "Auto R if hit count => ", true, 3, 1, 5)};
 
             Drawings = new Menu("YDrawManager", "Drawings")
             {
-                new MenuSlider("Segments", "Segments", 100, 10, 150).SetToolTip("Smoothness of the circles"), new MenuBool("Dmg", "Damage"), new MenuBool("Q", "Draw Q Range"),
+                new MenuSlider("Segments", "Segments", 100, 10, 150).SetToolTip("Smoothness of the circles"),
+                new MenuBool("Dmg", "Damage"),
+                new MenuBool("Q", "Draw Q Range"),
                 new MenuBool("Debug", "Debug")
             };
 
-            foreach (var menu in new List<Menu>
-            {
-                Combo, Harass, LaneClear, JungleClear, Killsteal, Misc, Drawings, MenuShortcut.Credits
-            })
+            foreach (var menu in new List<Menu> {Combo, Harass, LaneClear, JungleClear, Killsteal, Misc, Drawings, MenuShortcut.Credits})
             {
                 mainMenu.Add(menu);
             }

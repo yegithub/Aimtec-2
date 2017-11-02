@@ -11,14 +11,8 @@
         public static bool HardCc()
         {
             var me = Global.Player;
-            return (me.HasBuffOfType(BuffType.Blind) ||
-                    me.HasBuffOfType(BuffType.Charm) ||
-                    me.HasBuffOfType(BuffType.Fear) ||
-                    me.HasBuffOfType(BuffType.Knockback) ||
-                    me.HasBuffOfType(BuffType.Silence) ||
-                    me.HasBuffOfType(BuffType.Stun) ||
-                    me.HasBuffOfType(BuffType.Taunt)) &&
-                   !me.HasBuff("sorakapacify");
+            return (me.HasBuffOfType(BuffType.Blind) || me.HasBuffOfType(BuffType.Charm) || me.HasBuffOfType(BuffType.Fear) || me.HasBuffOfType(BuffType.Knockback) ||
+                    me.HasBuffOfType(BuffType.Silence) || me.HasBuffOfType(BuffType.Stun) || me.HasBuffOfType(BuffType.Taunt)) && !me.HasBuff("sorakapacify");
         }
 
         public static int Ferocity()

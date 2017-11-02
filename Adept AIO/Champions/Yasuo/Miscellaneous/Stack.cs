@@ -10,13 +10,8 @@
     {
         public static void OnUpdate()
         {
-            if (Global.Player.CountEnemyHeroesInRange(600) >= 1 ||
-                Global.Player.CountEnemyHeroesInRange(2000) == 0 ||
-                Global.Orbwalker.IsWindingUp ||
-                Global.Player.IsDashing() ||
-                !MenuConfig.Misc["Stack"].Enabled ||
-                !SpellConfig.Q.Ready ||
-                Extension.CurrentMode != Mode.Normal)
+            if (Global.Player.CountEnemyHeroesInRange(600) >= 1 || Global.Player.CountEnemyHeroesInRange(2000) == 0 || Global.Orbwalker.IsWindingUp || Global.Player.IsDashing() ||
+                !MenuConfig.Misc["Stack"].Enabled || !SpellConfig.Q.Ready || Extension.CurrentMode != Mode.Normal)
             {
                 return;
             }

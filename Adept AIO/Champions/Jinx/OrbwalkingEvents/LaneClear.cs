@@ -38,9 +38,7 @@
 
             if (_spellConfig.Q.Ready && _menuConfig.LaneClear["Q"].Enabled)
             {
-                if (!_spellConfig.IsQ2 &&
-                    dist > _spellConfig.DefaultAuotAttackRange &&
-                    dist <= _spellConfig.Q2Range &&
+                if (!_spellConfig.IsQ2 && dist > _spellConfig.DefaultAuotAttackRange && dist <= _spellConfig.Q2Range &&
                     GameObjects.EnemyMinions.Count(x => x.IsValidTarget(_spellConfig.Q2Range) && x.Health < Global.Player.GetAutoAttackDamage(x) * 2) >= 3 ||
                     _spellConfig.IsQ2 && dist <= _spellConfig.DefaultAuotAttackRange)
                 {

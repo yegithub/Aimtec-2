@@ -147,18 +147,12 @@
         /// <summary>
         ///     The large name regex list.
         /// </summary>
-        private static readonly string[] LargeNameRegex =
-        {
-            "SRU_Murkwolf[0-9.]{1,}", "SRU_Gromp", "SRU_Blue[0-9.]{1,}", "SRU_Razorbeak[0-9.]{1,}", "SRU_Red[0-9.]{1,}", "SRU_Krug[0-9]{1,}"
-        };
+        private static readonly string[] LargeNameRegex = {"SRU_Murkwolf[0-9.]{1,}", "SRU_Gromp", "SRU_Blue[0-9.]{1,}", "SRU_Razorbeak[0-9.]{1,}", "SRU_Red[0-9.]{1,}", "SRU_Krug[0-9]{1,}"};
 
         /// <summary>
         ///     The legendary name regex list.
         /// </summary>
-        private static readonly string[] LegendaryNameRegex =
-        {
-            "SRU_Dragon", "SRU_Baron", "SRU_RiftHerald"
-        };
+        private static readonly string[] LegendaryNameRegex = {"SRU_Dragon", "SRU_Baron", "SRU_RiftHerald"};
 
         /// <summary>
         ///     The minions list.
@@ -168,10 +162,7 @@
         /// <summary>
         ///     The small name regex list.
         /// </summary>
-        private static readonly string[] SmallNameRegex =
-        {
-            "SRU_[a-zA-Z](.*?)Mini", "Sru_Crab"
-        };
+        private static readonly string[] SmallNameRegex = {"SRU_[a-zA-Z](.*?)Mini", "Sru_Crab"};
 
         /// <summary>
         ///     The turrets list.
@@ -355,6 +346,11 @@
         /// </returns>
         public static JungleType GetJungleType(this Obj_AI_Minion minion)
         {
+            if (minion.UnitSkinName.Contains("Crab"))
+            {
+                return JungleType.Large;
+            }
+
             if (SmallNameRegex.Any(regex => Regex.IsMatch(minion.Name, regex)))
             {
                 return JungleType.Small;
@@ -368,11 +364,6 @@
             if (LegendaryNameRegex.Any(regex => Regex.IsMatch(minion.Name, regex)))
             {
                 return JungleType.Legendary;
-            }
-
-            if (minion.UnitSkinName.Contains("Crab"))
-            {
-                return JungleType.Large;
             }
 
             return JungleType.Unknown;
@@ -448,7 +439,6 @@
                         }
                         if (EnemyMinionsList.Contains(enemy))
                         {
-                           
                             EnemyMinionsList.Remove(enemyMinion);
                             DebugConsole.WriteLine($"Removed {enemy.UnitSkinName} From Minion List", MessageState.Debug);
                         }
@@ -468,10 +458,7 @@
             };
         }
 
-        private static readonly string[] NotViable =
-        {
-            "shadow", "soldier", "dagger", "axe", "plant", "ward", "barrel", "trap"
-        };
+        private static readonly string[] NotViable = {"shadow", "soldier", "dagger", "axe", "plant", "ward", "barrel", "trap"};
 
         private static void OnCreate(GameObject sender)
         {

@@ -26,12 +26,8 @@
             }
 
             if (SpellManager.E.Ready &&
-                GameObjects.Jungle.Count(x => x.HasBuff("kalistaexpungemarker") &&
-                                              Dmg.EDmg(x) > x.Health &&
-                                              x.IsValidSpellTarget(SpellManager.E.Range) &&
-                                              x.GetJungleType() != GameObjects.JungleType.Small) >=
-                1 &&
-                MenuConfig.JungleClear["E"].Enabled)
+                GameObjects.Jungle.Count(x => x.HasBuff("kalistaexpungemarker") && Dmg.EDmg(x) > x.Health && x.IsValidSpellTarget(SpellManager.E.Range) &&
+                                              x.GetJungleType() != GameObjects.JungleType.Small) >= 1 && MenuConfig.JungleClear["E"].Enabled)
             {
                 if (Global.Player.Level == 1 && Global.Player.CountAllyHeroesInRange(2000) >= 1)
                 {
@@ -44,10 +40,7 @@
             {
                 case OrbwalkingMode.Combo:
                     var m = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(Global.Player) <= 2000);
-                    if (m != null &&
-                        Global.Orbwalker.CanAttack() &&
-                        Global.Player.CountEnemyHeroesInRange(Global.Player.AttackRange) <= 0 &&
-                        MenuConfig.Combo["Minions"].Enabled &&
+                    if (m != null && Global.Orbwalker.CanAttack() && Global.Player.CountEnemyHeroesInRange(Global.Player.AttackRange) <= 0 && MenuConfig.Combo["Minions"].Enabled &&
                         m.IsValidAutoRange())
                     {
                         Global.Orbwalker.Attack(m);
@@ -55,8 +48,7 @@
                     break;
                 case OrbwalkingMode.Lasthit:
                 case OrbwalkingMode.Laneclear:
-                    if (SpellManager.E.Ready &&
-                        GameObjects.EnemyMinions.Any(x => x.HasBuff("kalistaexpungemarker") && Dmg.EDmg(x) > x.Health && x.IsValidSpellTarget(SpellManager.E.Range)) &&
+                    if (SpellManager.E.Ready && GameObjects.EnemyMinions.Any(x => x.HasBuff("kalistaexpungemarker") && Dmg.EDmg(x) > x.Health && x.IsValidSpellTarget(SpellManager.E.Range)) &&
                         MenuConfig.LaneClear["E"].Enabled)
                     {
                         SpellManager.E.Cast();

@@ -42,8 +42,7 @@
                         }
                     }
                 }
-                else if (ShadowManager.CanSwitchToShadow() &&
-                         ShadowManager.Shadows.FirstOrDefault().Distance(target) <= Global.Player.Distance(target) &&
+                else if (ShadowManager.CanSwitchToShadow() && ShadowManager.Shadows.FirstOrDefault().Distance(target) <= Global.Player.Distance(target) &&
                          target.Distance(Global.Player) > Global.Player.AttackRange + 65)
                 {
                     SpellManager.W.Cast();

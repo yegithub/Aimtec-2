@@ -33,9 +33,7 @@
 
         public static void OnUpdate()
         {
-            if (!SpellConfig.Q.Ready ||
-                !MenuConfig.Clear["Q"].Enabled ||
-                MenuConfig.Clear["Q"].Value > Global.Player.ManaPercent() ||
+            if (!SpellConfig.Q.Ready || !MenuConfig.Clear["Q"].Enabled || MenuConfig.Clear["Q"].Value > Global.Player.ManaPercent() ||
                 MenuConfig.Clear["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(2000) >= 1)
             {
                 return;

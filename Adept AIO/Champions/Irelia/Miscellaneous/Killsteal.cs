@@ -18,14 +18,12 @@
                 return;
             }
 
-            if (SpellConfig.Q.Ready && target.Health < Dmg.Damage(target) ||
-                target.Health < Global.Player.GetSpellDamage(target, SpellSlot.Q) && target.Distance(Global.Player) < SpellConfig.Q.Range && MenuConfig.Killsteal["Q"].Enabled)
+            if (SpellConfig.Q.Ready && target.Health < Dmg.Damage(target) || target.Health < Global.Player.GetSpellDamage(target, SpellSlot.Q) &&
+                target.Distance(Global.Player) < SpellConfig.Q.Range && MenuConfig.Killsteal["Q"].Enabled)
             {
                 SpellConfig.Q.CastOnUnit(target);
             }
-            else if (SpellConfig.E.Ready &&
-                     target.Health < Global.Player.GetSpellDamage(target, SpellSlot.E) &&
-                     target.Distance(Global.Player) < SpellConfig.E.Range &&
+            else if (SpellConfig.E.Ready && target.Health < Global.Player.GetSpellDamage(target, SpellSlot.E) && target.Distance(Global.Player) < SpellConfig.E.Range &&
                      MenuConfig.Killsteal["E"].Enabled)
             {
                 SpellConfig.E.CastOnUnit(target);

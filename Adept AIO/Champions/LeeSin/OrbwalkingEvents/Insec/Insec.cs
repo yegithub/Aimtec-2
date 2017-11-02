@@ -44,14 +44,8 @@
         private static Obj_AI_Hero Target => Global.TargetSelector.GetSelectedTarget();
 
         private Obj_AI_Base EnemyObject => GameObjects.EnemyMinions.OrderBy(x => x.Health).
-            LastOrDefault(x => InsecInRange(x.ServerPosition) &&
-                               !x.IsDead &&
-                               x.IsValid &&
-                               !x.IsTurret &&
-                               x.NetworkId != Target.NetworkId &&
-                               x.Health * 0.9 > Global.Player.GetSpellDamage(x, SpellSlot.Q) &&
-                               x.MaxHealth > 7 &&
-                               Global.Player.Distance(x) <= _spellConfig.Q.Range &&
+            LastOrDefault(x => InsecInRange(x.ServerPosition) && !x.IsDead && x.IsValid && !x.IsTurret && x.NetworkId != Target.NetworkId &&
+                               x.Health * 0.9 > Global.Player.GetSpellDamage(x, SpellSlot.Q) && x.MaxHealth > 7 && Global.Player.Distance(x) <= _spellConfig.Q.Range &&
                                x.Distance(GetInsecPosition()) < Global.Player.Distance(GetInsecPosition()));
 
         public bool Enabled { get; set; }
@@ -59,17 +53,8 @@
         // R Flash
         public void OnProcessSpellCast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
         {
-            if (!this.Enabled ||
-                !this.FlashReady ||
-                sender == null ||
-                !sender.IsMe ||
-                _insecManager.InsecKickValue != 1 ||
-                this.CanWardJump && !_wardTracker.DidJustWard ||
-                _wardTracker.DidJustWard ||
-                Global.Player.Distance(GetInsecPosition()) <= 220 ||
-                Target == null ||
-                args.SpellSlot != SpellSlot.R ||
-                Global.Player.Distance(GetInsecPosition()) <= 80)
+            if (!this.Enabled || !this.FlashReady || sender == null || !sender.IsMe || _insecManager.InsecKickValue != 1 || this.CanWardJump && !_wardTracker.DidJustWard || _wardTracker.DidJustWard ||
+                Global.Player.Distance(GetInsecPosition()) <= 220 || Target == null || args.SpellSlot != SpellSlot.R || Global.Player.Distance(GetInsecPosition()) <= 80)
             {
                 return;
             }
@@ -122,8 +107,7 @@
                 }
                 else
                 {
-                    if (Game.TickCount - _spellConfig.LastQ1CastAttempt <= 900 ||
-                        _lastQUnit != null && _spellConfig.IsQ2() && InsecInRange(_lastQUnit.ServerPosition) ||
+                    if (Game.TickCount - _spellConfig.LastQ1CastAttempt <= 900 || _lastQUnit != null && _spellConfig.IsQ2() && InsecInRange(_lastQUnit.ServerPosition) ||
                         this.ObjectEnabled && _spellConfig.Q.Ready)
                     {
                         return;
@@ -156,10 +140,7 @@
                     }
                 }
 
-                if (_insecManager.InsecKickValue == 0 &&
-                    this.FlashReady &&
-                    GetInsecPosition().Distance(Global.Player) <= 425 &&
-                    GetInsecPosition().Distance(Global.Player) > 220 &&
+                if (_insecManager.InsecKickValue == 0 && this.FlashReady && GetInsecPosition().Distance(Global.Player) <= 425 && GetInsecPosition().Distance(Global.Player) > 220 &&
                     (!this.CanWardJump || _wardTracker.DidJustWard))
                 {
                     if (Global.Player.GetDashInfo().EndPos.Distance(GetInsecPosition()) <= 215 || this.CanWardJump)

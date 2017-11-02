@@ -39,58 +39,53 @@
 
             Combo = new Menu("YCombo", "Combo")
             {
-                new MenuBool("Walk", "Walk Behind Minion To Dash"), new MenuBool("Dodge", "Windwall Targetted Spells"), new MenuSlider("Count", "Use R If X Airbourne", 2, 0, 5),
-                new MenuBool("Flash", "Use Flash (Beyblade)").SetToolTip("Will try to E-Q -> Flash. AKA Beyblade"), new MenuBool("Turret", "Avoid Using E Under Turret"),
-                new MenuList("Dash", "Dash Mode: ", new[]
-                {
-                    "Cursor", "From Player"
-                }, 0),
-                new MenuSlider("Range", "Mouse Dash Range: ", 650, 1, 1000), new MenuSlider("MRange", "Search Range For Behind Minions", 180, 100, 240)
+                new MenuBool("Walk", "Walk Behind Minion To Dash"),
+                new MenuBool("Dodge", "Windwall Targetted Spells"),
+                new MenuSlider("Count", "Use R If X Airbourne", 2, 0, 5),
+                new MenuBool("Flash", "Use Flash (Beyblade)").SetToolTip("Will try to E-Q -> Flash. AKA Beyblade"),
+                new MenuBool("Turret", "Avoid Using E Under Turret"),
+                new MenuList("Dash", "Dash Mode: ", new[] {"Cursor", "From Player"}, 0),
+                new MenuSlider("Range", "Mouse Dash Range: ", 650, 1, 1000),
+                new MenuSlider("MRange", "Search Range For Behind Minions", 180, 100, 240)
             };
 
             // Todo: Add Check and go: EQ AA -> E Out 
-            Harass = new Menu("Harass", "Harass")
-            {
-                new MenuBool("Q", "Use Q3"), new MenuBool("E", "Use E")
-            };
+            Harass = new Menu("Harass", "Harass") {new MenuBool("Q", "Use Q3"), new MenuBool("E", "Use E")};
 
             LaneClear = new Menu("YLane", "LaneClear")
             {
-                new MenuBool("Check", "Don't Clear When Enemies Nearby"), new MenuBool("Turret", "Don't Clear Under Turret"), new MenuBool("Q3", "Use Q3"), new MenuBool("EAA", "Only E After AA"),
-                new MenuList("Mode", "E Mode: ", new[]
-                {
-                    "Disabled", "Lasthit", "Fast Clear"
-                }, 1)
+                new MenuBool("Check", "Don't Clear When Enemies Nearby"),
+                new MenuBool("Turret", "Don't Clear Under Turret"),
+                new MenuBool("Q3", "Use Q3"),
+                new MenuBool("EAA", "Only E After AA"),
+                new MenuList("Mode", "E Mode: ", new[] {"Disabled", "Lasthit", "Fast Clear"}, 1)
             };
 
-            JungleClear = new Menu("YJungle", "JungleClear")
-            {
-                new MenuBool("Q3", "Allow Q3 Usage"), new MenuBool("Q", "Allow Q1 Usage"), new MenuBool("E", "Allow E  Usage")
-            };
+            JungleClear = new Menu("YJungle", "JungleClear") {new MenuBool("Q3", "Allow Q3 Usage"), new MenuBool("Q", "Allow Q1 Usage"), new MenuBool("E", "Allow E  Usage")};
 
-            Killsteal = new Menu("YKillsteal", "Killsteal")
-            {
-                new MenuBool("Ignite", "Ignite"), new MenuBool("Q", "Use Q"), new MenuBool("Q3", "Use Q3"), new MenuBool("E", "Use E")
-            };
+            Killsteal = new Menu("YKillsteal", "Killsteal") {new MenuBool("Ignite", "Ignite"), new MenuBool("Q", "Use Q"), new MenuBool("Q3", "Use Q3"), new MenuBool("E", "Use E")};
 
             Misc = new Menu("YMisc", "Miscellaneous")
             {
-                new MenuBool("Stack", "Stack Q").SetToolTip("Wont Stack when enemy is within 900 units."), new MenuBool("LasthitE", "Lasthit With E"), new MenuBool("LasthitQ", "Lasthit With Q"),
+                new MenuBool("Stack", "Stack Q").SetToolTip("Wont Stack when enemy is within 900 units."),
+                new MenuBool("LasthitE", "Lasthit With E"),
+                new MenuBool("LasthitQ", "Lasthit With Q"),
                 new MenuBool("LasthitQ3", "Lasthit With Tornado (Q3)")
             };
 
             Drawings = new Menu("YDrawManager", "Drawings")
             {
-                new MenuSlider("Segments", "Segments", 100, 10, 150).SetToolTip("Smoothness of the circles"), new MenuBool("Dmg", "Damage"), new MenuBool("R", "Draw R Range"),
-                new MenuBool("Path", "Draw Minion Path"), new MenuBool("Range", "Draw Minion Search Range"), new MenuBool("Debug", "Debug")
+                new MenuSlider("Segments", "Segments", 100, 10, 150).SetToolTip("Smoothness of the circles"),
+                new MenuBool("Dmg", "Damage"),
+                new MenuBool("R", "Draw R Range"),
+                new MenuBool("Path", "Draw Minion Path"),
+                new MenuBool("Range", "Draw Minion Search Range"),
+                new MenuBool("Debug", "Debug")
             };
 
             Gapcloser.Attach(mainMenu, "Anti Gapcloser");
 
-            foreach (var menu in new List<Menu>
-            {
-                Whitelist, Combo, Harass, LaneClear, JungleClear, Killsteal, Misc, Drawings, MenuShortcut.Credits
-            })
+            foreach (var menu in new List<Menu> {Whitelist, Combo, Harass, LaneClear, JungleClear, Killsteal, Misc, Drawings, MenuShortcut.Credits})
             {
                 mainMenu.Add(menu);
             }

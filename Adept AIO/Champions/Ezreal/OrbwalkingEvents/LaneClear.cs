@@ -13,8 +13,7 @@
         {
             if (SpellConfig.Q.Ready && MenuConfig.Lane["Q"].Enabled && Global.Player.ManaPercent() >= MenuConfig.Lane["Q"].Value)
             {
-                var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Health < Global.Player.GetSpellDamage(x, SpellSlot.Q) &&
-                                                                          x.IsValidTarget(SpellConfig.Q.Range) &&
+                var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Health < Global.Player.GetSpellDamage(x, SpellSlot.Q) && x.IsValidTarget(SpellConfig.Q.Range) &&
                                                                           x.Distance(Global.Player) > Global.Player.AttackRange);
                 if (minion == null)
                 {
@@ -24,9 +23,7 @@
                 SpellConfig.Q.Cast(minion);
             }
 
-            if (MenuConfig.Lane["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(2000) >= 1 ||
-                !SpellConfig.W.Ready ||
-                !MenuConfig.Lane["W"].Enabled ||
+            if (MenuConfig.Lane["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(2000) >= 1 || !SpellConfig.W.Ready || !MenuConfig.Lane["W"].Enabled ||
                 Global.Player.ManaPercent() < MenuConfig.Lane["W"].Value)
             {
                 return;

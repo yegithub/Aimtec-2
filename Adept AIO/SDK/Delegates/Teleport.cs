@@ -19,10 +19,7 @@
 
         private static void OnUnitTeleport(Obj_AI_Base sender, Obj_AI_BaseTeleportEventArgs e)
         {
-            var eventArgs = new TeleportEventArgs
-            {
-                Status = TeleportStatus.Unknown, Type = TeleportType.Unknown
-            };
+            var eventArgs = new TeleportEventArgs {Status = TeleportStatus.Unknown, Type = TeleportType.Unknown};
 
             if (sender == null)
             {

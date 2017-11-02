@@ -17,14 +17,15 @@
             var qDelay = Extensions.CurrentQCount == 3 ? 100 : 30;
             var ping = Game.Ping / 2;
 
-            DelayAction.Queue(ping + ultimateDelay + qDelay, () =>
-            Global.Orbwalker.Move(Game.CursorPos), new CancellationToken(false));
+            DelayAction.Queue(ping + ultimateDelay + qDelay, () => Global.Orbwalker.Move(Game.CursorPos), new CancellationToken(false));
 
-            DelayAction.Queue((int) GetDelay() + ping, () =>
-            {
-                Global.Orbwalker.AttackingEnabled = true;
-                Global.Orbwalker.ResetAutoAttackTimer();
-            }, new CancellationToken(false));
+            DelayAction.Queue((int) GetDelay() + ping,
+                              () =>
+                              {
+                                  Global.Orbwalker.AttackingEnabled = true;
+                                  Global.Orbwalker.ResetAutoAttackTimer();
+                              },
+                              new CancellationToken(false));
         }
 
         private static float GetDelay()

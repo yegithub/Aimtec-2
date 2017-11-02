@@ -34,9 +34,7 @@
             {
                 SpellManager.CastW(target);
             }
-            else if (SpellConfig.Q.Ready &&
-                     MenuConfig.Killsteal["Q"].Enabled &&
-                     target.Health <= Global.Player.GetSpellDamage(target, SpellSlot.Q) &&
+            else if (SpellConfig.Q.Ready && MenuConfig.Killsteal["Q"].Enabled && target.Health <= Global.Player.GetSpellDamage(target, SpellSlot.Q) &&
                      target.Distance(Global.Player) <= SpellConfig.Q.Range)
             {
                 SpellManager.CastQ(target);

@@ -34,8 +34,7 @@
             {
                 var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(Global.Player) <= SpellConfig.E.Range && !x.HasBuff("YasuoDashWrapper"));
 
-                if (minion == null ||
-                    MenuConfig.LaneClear["Turret"].Enabled && minion.IsUnderEnemyTurret() ||
+                if (minion == null || MenuConfig.LaneClear["Turret"].Enabled && minion.IsUnderEnemyTurret() ||
                     MenuConfig.LaneClear["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(2000) != 0)
                 {
                     return;
@@ -59,9 +58,7 @@
             {
                 var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsValidTarget() && x.Distance(Global.Player) <= SpellConfig.E.Range && !x.HasBuff("YasuoDashWrapper"));
 
-                if (!SpellConfig.E.Ready ||
-                    minion == null ||
-                    MenuConfig.LaneClear["Turret"].Enabled && minion.IsUnderEnemyTurret() ||
+                if (!SpellConfig.E.Ready || minion == null || MenuConfig.LaneClear["Turret"].Enabled && minion.IsUnderEnemyTurret() ||
                     MenuConfig.LaneClear["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(2000) != 0)
                 {
                     return;

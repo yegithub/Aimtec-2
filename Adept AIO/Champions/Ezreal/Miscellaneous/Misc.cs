@@ -19,22 +19,19 @@
                 return;
             }
 
-            if (SpellConfig.Q.Ready &&
-                Global.Orbwalker.Mode == OrbwalkingMode.None &&
-                Global.Player.IsMoving &&
-                Global.Player.CountEnemyHeroesInRange(2500) == 0 &&
-                MenuConfig.Miscellaneous["Stack"].Enabled &&
-                Global.Player.ManaPercent() >= MenuConfig.Miscellaneous["Stack"].Value &&
-                HeroExtension.HasTear())
+            if (SpellConfig.Q.Ready && Global.Orbwalker.Mode == OrbwalkingMode.None && Global.Player.IsMoving && Global.Player.CountEnemyHeroesInRange(2500) == 0 &&
+                MenuConfig.Miscellaneous["Stack"].Enabled && Global.Player.ManaPercent() >= MenuConfig.Miscellaneous["Stack"].Value && HeroExtension.HasTear())
             {
                 var objects = GameObjects.Enemy.FirstOrDefault(x => x.IsValidTarget(SpellConfig.Q.Range) && x.MaxHealth >= 10);
 
                 if (MenuConfig.Miscellaneous["TH"].Enabled)
                 {
-                    DelayAction.Queue(GetRandom.Next(400, 1200), () =>
-                    {
-                        SpellConfig.Q.Cast(objects != null ? objects.ServerPosition : Game.CursorPos);
-                    }, new CancellationToken(false));
+                    DelayAction.Queue(GetRandom.Next(400, 1200),
+                                      () =>
+                                      {
+                                          SpellConfig.Q.Cast(objects != null ? objects.ServerPosition : Game.CursorPos);
+                                      },
+                                      new CancellationToken(false));
                 }
                 else
                 {
@@ -42,10 +39,7 @@
                 }
             }
 
-            if (SpellConfig.W.Ready &&
-                Global.Player.CountEnemyHeroesInRange(2500) == 0 &&
-                MenuConfig.Miscellaneous["WT"].Enabled &&
-                Global.Player.ServerPosition.PointUnderEnemyTurret() &&
+            if (SpellConfig.W.Ready && Global.Player.CountEnemyHeroesInRange(2500) == 0 && MenuConfig.Miscellaneous["WT"].Enabled && Global.Player.ServerPosition.PointUnderEnemyTurret() &&
                 Global.Player.ManaPercent() >= 60)
             {
                 var ally = GameObjects.AllyHeroes.FirstOrDefault(x => x.IsValidTarget(SpellConfig.W.Range - 100));

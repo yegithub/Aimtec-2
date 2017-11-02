@@ -44,8 +44,7 @@
             }
             if (_spellConfig.Q.Ready &&
                 (_spellConfig.IsQ2() ? target.Health < Global.Player.GetSpellDamage(target, SpellSlot.Q, DamageStage.SecondCast) : target.Health < Global.Player.GetSpellDamage(target, SpellSlot.Q)) &&
-                target.IsValidTarget(_spellConfig.Q.Range) &&
-                this.QEnabled)
+                target.IsValidTarget(_spellConfig.Q.Range) && this.QEnabled)
             {
                 _spellConfig.Q.Cast(target);
             }

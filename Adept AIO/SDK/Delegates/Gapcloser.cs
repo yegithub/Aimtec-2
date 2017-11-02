@@ -59,355 +59,145 @@
 
         private static void Initialize()
         {
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Aatrox", Slot = SpellSlot.Q, SpellName = "aatroxq", SpellType = SpellType.SkillShot
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Ahri", Slot = SpellSlot.R, SpellName = "ahritumble", SpellType = SpellType.SkillShot
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Akali", Slot = SpellSlot.R, SpellName = "akalishadowdance", SpellType = SpellType.Targeted
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Alistar", Slot = SpellSlot.W, SpellName = "headbutt", SpellType = SpellType.Targeted
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Azir", Slot = SpellSlot.E, SpellName = "azire", SpellType = SpellType.SkillShot
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Caitlyn", Slot = SpellSlot.E, SpellName = "caitlynentrapment", SpellType = SpellType.SkillShot
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Camille", Slot = SpellSlot.E, SpellName = "camillee", SpellType = SpellType.SkillShot
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Camille", Slot = SpellSlot.E, SpellName = "camilleedash2", SpellType = SpellType.SkillShot
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Corki", Slot = SpellSlot.W, SpellName = "carpetbomb", SpellType = SpellType.SkillShot
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Diana", Slot = SpellSlot.R, SpellName = "dianateleport", SpellType = SpellType.Targeted
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Ekko", Slot = SpellSlot.E, SpellName = "ekkoeattack", SpellType = SpellType.Targeted
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Elise", Slot = SpellSlot.Q, SpellName = "elisespiderqcast", SpellType = SpellType.SkillShot
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Elise", Slot = SpellSlot.E, SpellName = "elisespideredescent", SpellType = SpellType.Targeted
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Ezreal", Slot = SpellSlot.E, SpellName = "ezrealarcaneshift", SpellType = SpellType.SkillShot
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Fiora", Slot = SpellSlot.Q, SpellName = "fioraq", SpellType = SpellType.SkillShot
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Fizz", Slot = SpellSlot.Q, SpellName = "fizzpiercingstrike", SpellType = SpellType.Targeted
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Galio", Slot = SpellSlot.E, SpellName = "galioe", SpellType = SpellType.SkillShot
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Gnar", Slot = SpellSlot.E, SpellName = "gnarbige", SpellType = SpellType.SkillShot
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Gnar", Slot = SpellSlot.E, SpellName = "gnare", SpellType = SpellType.SkillShot
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Gragas", Slot = SpellSlot.E, SpellName = "gragase", SpellType = SpellType.SkillShot
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Graves", Slot = SpellSlot.E, SpellName = "gravesmove", SpellType = SpellType.SkillShot
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Hecarim", Slot = SpellSlot.R, SpellName = "hecarimult", SpellType = SpellType.SkillShot
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Illaoi", Slot = SpellSlot.W, SpellName = "illaoiwattack", SpellType = SpellType.Targeted
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Irelia", Slot = SpellSlot.Q, SpellName = "ireliagatotsu", SpellType = SpellType.Targeted
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "JarvanIV", Slot = SpellSlot.Q, SpellName = "jarvanivdragonstrike", SpellType = SpellType.SkillShot
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Jax", Slot = SpellSlot.Q, SpellName = "jaxleapstrike", SpellType = SpellType.Targeted
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Jayce", Slot = SpellSlot.Q, SpellName = "jaycetotheskies", SpellType = SpellType.Targeted
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Kassadin", Slot = SpellSlot.R, SpellName = "riftwalk", SpellType = SpellType.SkillShot
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Katarina", Slot = SpellSlot.E, SpellName = "katarinae", SpellType = SpellType.Targeted
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Kayn", Slot = SpellSlot.Q, SpellName = "kaynq", SpellType = SpellType.SkillShot
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Khazix", Slot = SpellSlot.E, SpellName = "khazixe", SpellType = SpellType.SkillShot
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Khazix", Slot = SpellSlot.E, SpellName = "khazixelong", SpellType = SpellType.SkillShot
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Kindred", Slot = SpellSlot.Q, SpellName = "kindredq", SpellType = SpellType.SkillShot
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Leblanc", Slot = SpellSlot.W, SpellName = "leblancslide", SpellType = SpellType.SkillShot
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Leblanc", Slot = SpellSlot.W, SpellName = "leblancslidem", SpellType = SpellType.SkillShot
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "LeeSin", Slot = SpellSlot.Q, SpellName = "blindmonkqtwo", SpellType = SpellType.Targeted
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Leona", Slot = SpellSlot.E, SpellName = "leonazenithblade", SpellType = SpellType.SkillShot
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Lucian", Slot = SpellSlot.E, SpellName = "luciane", SpellType = SpellType.SkillShot
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Malphite", Slot = SpellSlot.R, SpellName = "ufslash", SpellType = SpellType.SkillShot
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "MasterYi", Slot = SpellSlot.Q, SpellName = "alphastrike", SpellType = SpellType.Targeted
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "MonkeyKing", Slot = SpellSlot.E, SpellName = "monkeykingnimbus", SpellType = SpellType.Targeted
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Nautilus", Slot = SpellSlot.Q, SpellName = "nautilusq", SpellType = SpellType.SkillShot
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Nidalee", Slot = SpellSlot.W, SpellName = "pounce", SpellType = SpellType.SkillShot
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Pantheon", Slot = SpellSlot.W, SpellName = "pantheon_leapbash", SpellType = SpellType.Targeted
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Poppy", Slot = SpellSlot.E, SpellName = "poppyheroiccharge", SpellType = SpellType.Targeted
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Quinn", Slot = SpellSlot.E, SpellName = "quinne", SpellType = SpellType.Targeted
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Rakan", Slot = SpellSlot.W, SpellName = "rakanw", SpellType = SpellType.SkillShot
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "RekSai", Slot = SpellSlot.E, SpellName = "reksaieburrowed", SpellType = SpellType.SkillShot
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Renekton", Slot = SpellSlot.E, SpellName = "renektonsliceanddice", SpellType = SpellType.SkillShot
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Renekton", Slot = SpellSlot.E, SpellName = "renektonpreexecute", SpellType = SpellType.SkillShot
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Renekton", Slot = SpellSlot.E, SpellName = "renektonsuperexecute", SpellType = SpellType.SkillShot
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Rengar", Slot = SpellSlot.Unknown, SpellName = "rengarpassivebuffdash", SpellType = SpellType.SkillShot
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Rengar", Slot = SpellSlot.Unknown, SpellName = "rengarpassivebuffdashaadummy", SpellType = SpellType.SkillShot
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Riven", Slot = SpellSlot.Q, SpellName = "riventricleave", SpellType = SpellType.SkillShot
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Riven", Slot = SpellSlot.E, SpellName = "rivenfeint", SpellType = SpellType.SkillShot
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Sejuani", Slot = SpellSlot.Q, SpellName = "sejuaniarcticassault", SpellType = SpellType.SkillShot
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Shen", Slot = SpellSlot.E, SpellName = "shene", SpellType = SpellType.SkillShot
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Shyvana", Slot = SpellSlot.R, SpellName = "shyvanatransformcast", SpellType = SpellType.SkillShot
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Talon", Slot = SpellSlot.Q, SpellName = "talonq", SpellType = SpellType.Targeted
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Talon", Slot = SpellSlot.E, SpellName = "taloncutthroat", SpellType = SpellType.SkillShot
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Tristana", Slot = SpellSlot.W, SpellName = "rocketjump", SpellType = SpellType.SkillShot
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Tryndamere", Slot = SpellSlot.E, SpellName = "slashcast", SpellType = SpellType.SkillShot
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Vi", Slot = SpellSlot.Q, SpellName = "viq", SpellType = SpellType.SkillShot
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Vayne", Slot = SpellSlot.Q, SpellName = "vaynetumble", SpellType = SpellType.SkillShot
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Warwick", Slot = SpellSlot.R, SpellName = "warwickr", SpellType = SpellType.SkillShot
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "XinZhao", Slot = SpellSlot.E, SpellName = "xenzhaosweep", SpellType = SpellType.Targeted
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Yasuo", Slot = SpellSlot.E, SpellName = "yasuodashwrapper", SpellType = SpellType.Targeted
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Zac", Slot = SpellSlot.E, SpellName = "zace", SpellType = SpellType.SkillShot
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Zed", Slot = SpellSlot.R, SpellName = "zedr", SpellType = SpellType.Targeted
-            });
-
-            Spells.Add(new SpellData
-            {
-                ChampionName = "Ziggs", Slot = SpellSlot.W, SpellName = "ziggswtoggle", SpellType = SpellType.SkillShot
-            });
+            Spells.Add(new SpellData {ChampionName = "Aatrox", Slot = SpellSlot.Q, SpellName = "aatroxq", SpellType = SpellType.SkillShot});
+
+            Spells.Add(new SpellData {ChampionName = "Ahri", Slot = SpellSlot.R, SpellName = "ahritumble", SpellType = SpellType.SkillShot});
+
+            Spells.Add(new SpellData {ChampionName = "Akali", Slot = SpellSlot.R, SpellName = "akalishadowdance", SpellType = SpellType.Targeted});
+
+            Spells.Add(new SpellData {ChampionName = "Alistar", Slot = SpellSlot.W, SpellName = "headbutt", SpellType = SpellType.Targeted});
+
+            Spells.Add(new SpellData {ChampionName = "Azir", Slot = SpellSlot.E, SpellName = "azire", SpellType = SpellType.SkillShot});
+
+            Spells.Add(new SpellData {ChampionName = "Caitlyn", Slot = SpellSlot.E, SpellName = "caitlynentrapment", SpellType = SpellType.SkillShot});
+
+            Spells.Add(new SpellData {ChampionName = "Camille", Slot = SpellSlot.E, SpellName = "camillee", SpellType = SpellType.SkillShot});
+
+            Spells.Add(new SpellData {ChampionName = "Camille", Slot = SpellSlot.E, SpellName = "camilleedash2", SpellType = SpellType.SkillShot});
+
+            Spells.Add(new SpellData {ChampionName = "Corki", Slot = SpellSlot.W, SpellName = "carpetbomb", SpellType = SpellType.SkillShot});
+
+            Spells.Add(new SpellData {ChampionName = "Diana", Slot = SpellSlot.R, SpellName = "dianateleport", SpellType = SpellType.Targeted});
+
+            Spells.Add(new SpellData {ChampionName = "Ekko", Slot = SpellSlot.E, SpellName = "ekkoeattack", SpellType = SpellType.Targeted});
+
+            Spells.Add(new SpellData {ChampionName = "Elise", Slot = SpellSlot.Q, SpellName = "elisespiderqcast", SpellType = SpellType.SkillShot});
+
+            Spells.Add(new SpellData {ChampionName = "Elise", Slot = SpellSlot.E, SpellName = "elisespideredescent", SpellType = SpellType.Targeted});
+
+            Spells.Add(new SpellData {ChampionName = "Ezreal", Slot = SpellSlot.E, SpellName = "ezrealarcaneshift", SpellType = SpellType.SkillShot});
+
+            Spells.Add(new SpellData {ChampionName = "Fiora", Slot = SpellSlot.Q, SpellName = "fioraq", SpellType = SpellType.SkillShot});
+
+            Spells.Add(new SpellData {ChampionName = "Fizz", Slot = SpellSlot.Q, SpellName = "fizzpiercingstrike", SpellType = SpellType.Targeted});
+
+            Spells.Add(new SpellData {ChampionName = "Galio", Slot = SpellSlot.E, SpellName = "galioe", SpellType = SpellType.SkillShot});
+
+            Spells.Add(new SpellData {ChampionName = "Gnar", Slot = SpellSlot.E, SpellName = "gnarbige", SpellType = SpellType.SkillShot});
+
+            Spells.Add(new SpellData {ChampionName = "Gnar", Slot = SpellSlot.E, SpellName = "gnare", SpellType = SpellType.SkillShot});
+
+            Spells.Add(new SpellData {ChampionName = "Gragas", Slot = SpellSlot.E, SpellName = "gragase", SpellType = SpellType.SkillShot});
+
+            Spells.Add(new SpellData {ChampionName = "Graves", Slot = SpellSlot.E, SpellName = "gravesmove", SpellType = SpellType.SkillShot});
+
+            Spells.Add(new SpellData {ChampionName = "Hecarim", Slot = SpellSlot.R, SpellName = "hecarimult", SpellType = SpellType.SkillShot});
+
+            Spells.Add(new SpellData {ChampionName = "Illaoi", Slot = SpellSlot.W, SpellName = "illaoiwattack", SpellType = SpellType.Targeted});
+
+            Spells.Add(new SpellData {ChampionName = "Irelia", Slot = SpellSlot.Q, SpellName = "ireliagatotsu", SpellType = SpellType.Targeted});
+
+            Spells.Add(new SpellData {ChampionName = "JarvanIV", Slot = SpellSlot.Q, SpellName = "jarvanivdragonstrike", SpellType = SpellType.SkillShot});
+
+            Spells.Add(new SpellData {ChampionName = "Jax", Slot = SpellSlot.Q, SpellName = "jaxleapstrike", SpellType = SpellType.Targeted});
+
+            Spells.Add(new SpellData {ChampionName = "Jayce", Slot = SpellSlot.Q, SpellName = "jaycetotheskies", SpellType = SpellType.Targeted});
+
+            Spells.Add(new SpellData {ChampionName = "Kassadin", Slot = SpellSlot.R, SpellName = "riftwalk", SpellType = SpellType.SkillShot});
+
+            Spells.Add(new SpellData {ChampionName = "Katarina", Slot = SpellSlot.E, SpellName = "katarinae", SpellType = SpellType.Targeted});
+
+            Spells.Add(new SpellData {ChampionName = "Kayn", Slot = SpellSlot.Q, SpellName = "kaynq", SpellType = SpellType.SkillShot});
+
+            Spells.Add(new SpellData {ChampionName = "Khazix", Slot = SpellSlot.E, SpellName = "khazixe", SpellType = SpellType.SkillShot});
+
+            Spells.Add(new SpellData {ChampionName = "Khazix", Slot = SpellSlot.E, SpellName = "khazixelong", SpellType = SpellType.SkillShot});
+
+            Spells.Add(new SpellData {ChampionName = "Kindred", Slot = SpellSlot.Q, SpellName = "kindredq", SpellType = SpellType.SkillShot});
+
+            Spells.Add(new SpellData {ChampionName = "Leblanc", Slot = SpellSlot.W, SpellName = "leblancslide", SpellType = SpellType.SkillShot});
+
+            Spells.Add(new SpellData {ChampionName = "Leblanc", Slot = SpellSlot.W, SpellName = "leblancslidem", SpellType = SpellType.SkillShot});
+
+            Spells.Add(new SpellData {ChampionName = "LeeSin", Slot = SpellSlot.Q, SpellName = "blindmonkqtwo", SpellType = SpellType.Targeted});
+
+            Spells.Add(new SpellData {ChampionName = "Leona", Slot = SpellSlot.E, SpellName = "leonazenithblade", SpellType = SpellType.SkillShot});
+
+            Spells.Add(new SpellData {ChampionName = "Lucian", Slot = SpellSlot.E, SpellName = "luciane", SpellType = SpellType.SkillShot});
+
+            Spells.Add(new SpellData {ChampionName = "Malphite", Slot = SpellSlot.R, SpellName = "ufslash", SpellType = SpellType.SkillShot});
+
+            Spells.Add(new SpellData {ChampionName = "MasterYi", Slot = SpellSlot.Q, SpellName = "alphastrike", SpellType = SpellType.Targeted});
+
+            Spells.Add(new SpellData {ChampionName = "MonkeyKing", Slot = SpellSlot.E, SpellName = "monkeykingnimbus", SpellType = SpellType.Targeted});
+
+            Spells.Add(new SpellData {ChampionName = "Nautilus", Slot = SpellSlot.Q, SpellName = "nautilusq", SpellType = SpellType.SkillShot});
+
+            Spells.Add(new SpellData {ChampionName = "Nidalee", Slot = SpellSlot.W, SpellName = "pounce", SpellType = SpellType.SkillShot});
+
+            Spells.Add(new SpellData {ChampionName = "Pantheon", Slot = SpellSlot.W, SpellName = "pantheon_leapbash", SpellType = SpellType.Targeted});
+
+            Spells.Add(new SpellData {ChampionName = "Poppy", Slot = SpellSlot.E, SpellName = "poppyheroiccharge", SpellType = SpellType.Targeted});
+
+            Spells.Add(new SpellData {ChampionName = "Quinn", Slot = SpellSlot.E, SpellName = "quinne", SpellType = SpellType.Targeted});
+
+            Spells.Add(new SpellData {ChampionName = "Rakan", Slot = SpellSlot.W, SpellName = "rakanw", SpellType = SpellType.SkillShot});
+
+            Spells.Add(new SpellData {ChampionName = "RekSai", Slot = SpellSlot.E, SpellName = "reksaieburrowed", SpellType = SpellType.SkillShot});
+
+            Spells.Add(new SpellData {ChampionName = "Renekton", Slot = SpellSlot.E, SpellName = "renektonsliceanddice", SpellType = SpellType.SkillShot});
+
+            Spells.Add(new SpellData {ChampionName = "Renekton", Slot = SpellSlot.E, SpellName = "renektonpreexecute", SpellType = SpellType.SkillShot});
+
+            Spells.Add(new SpellData {ChampionName = "Renekton", Slot = SpellSlot.E, SpellName = "renektonsuperexecute", SpellType = SpellType.SkillShot});
+
+            Spells.Add(new SpellData {ChampionName = "Rengar", Slot = SpellSlot.Unknown, SpellName = "rengarpassivebuffdash", SpellType = SpellType.SkillShot});
+
+            Spells.Add(new SpellData {ChampionName = "Rengar", Slot = SpellSlot.Unknown, SpellName = "rengarpassivebuffdashaadummy", SpellType = SpellType.SkillShot});
+
+            Spells.Add(new SpellData {ChampionName = "Riven", Slot = SpellSlot.Q, SpellName = "riventricleave", SpellType = SpellType.SkillShot});
+
+            Spells.Add(new SpellData {ChampionName = "Riven", Slot = SpellSlot.E, SpellName = "rivenfeint", SpellType = SpellType.SkillShot});
+
+            Spells.Add(new SpellData {ChampionName = "Sejuani", Slot = SpellSlot.Q, SpellName = "sejuaniarcticassault", SpellType = SpellType.SkillShot});
+
+            Spells.Add(new SpellData {ChampionName = "Shen", Slot = SpellSlot.E, SpellName = "shene", SpellType = SpellType.SkillShot});
+
+            Spells.Add(new SpellData {ChampionName = "Shyvana", Slot = SpellSlot.R, SpellName = "shyvanatransformcast", SpellType = SpellType.SkillShot});
+
+            Spells.Add(new SpellData {ChampionName = "Talon", Slot = SpellSlot.Q, SpellName = "talonq", SpellType = SpellType.Targeted});
+
+            Spells.Add(new SpellData {ChampionName = "Talon", Slot = SpellSlot.E, SpellName = "taloncutthroat", SpellType = SpellType.SkillShot});
+
+            Spells.Add(new SpellData {ChampionName = "Tristana", Slot = SpellSlot.W, SpellName = "rocketjump", SpellType = SpellType.SkillShot});
+
+            Spells.Add(new SpellData {ChampionName = "Tryndamere", Slot = SpellSlot.E, SpellName = "slashcast", SpellType = SpellType.SkillShot});
+
+            Spells.Add(new SpellData {ChampionName = "Vi", Slot = SpellSlot.Q, SpellName = "viq", SpellType = SpellType.SkillShot});
+
+            Spells.Add(new SpellData {ChampionName = "Vayne", Slot = SpellSlot.Q, SpellName = "vaynetumble", SpellType = SpellType.SkillShot});
+
+            Spells.Add(new SpellData {ChampionName = "Warwick", Slot = SpellSlot.R, SpellName = "warwickr", SpellType = SpellType.SkillShot});
+
+            Spells.Add(new SpellData {ChampionName = "XinZhao", Slot = SpellSlot.E, SpellName = "xenzhaosweep", SpellType = SpellType.Targeted});
+
+            Spells.Add(new SpellData {ChampionName = "Yasuo", Slot = SpellSlot.E, SpellName = "yasuodashwrapper", SpellType = SpellType.Targeted});
+
+            Spells.Add(new SpellData {ChampionName = "Zac", Slot = SpellSlot.E, SpellName = "zace", SpellType = SpellType.SkillShot});
+
+            Spells.Add(new SpellData {ChampionName = "Zed", Slot = SpellSlot.R, SpellName = "zedr", SpellType = SpellType.Targeted});
+
+            Spells.Add(new SpellData {ChampionName = "Ziggs", Slot = SpellSlot.W, SpellName = "ziggswtoggle", SpellType = SpellType.SkillShot});
         }
 
         public static void Attach(Menu mainMenu, string menuName)
@@ -417,17 +207,15 @@
                 return;
             }
 
-            Menu = new Menu("", menuName)
-            {
-                new MenuBool("Enabled", "Enabled"), new MenuSeperator("Seperator1")
-            };
+            Menu = new Menu("", menuName) {new MenuBool("Enabled", "Enabled"), new MenuSeperator("Seperator1")};
             mainMenu.Add(Menu);
 
             foreach (var enemy in ObjectManager.Get<Obj_AI_Hero>().Where(x => x.IsEnemy))
             {
                 var heroMenu = new Menu(enemy.ChampionName, enemy.ChampionName)
                 {
-                    new MenuBool(enemy.ChampionName + ".Enabled", "Enabled"), new MenuSlider(enemy.ChampionName + ".Distance", "If Target Distance To Player <= x", MinSearchRange, 1, MaxSearchRange),
+                    new MenuBool(enemy.ChampionName + ".Enabled", "Enabled"),
+                    new MenuSlider(enemy.ChampionName + ".Distance", "If Target Distance To Player <= x", MinSearchRange, 1, MaxSearchRange),
                     new MenuSlider(enemy.ChampionName + ".HPercent", "When Player HealthPercent <= x%", DefalutHPercent, 1, 101)
                 };
                 Menu.Add(heroMenu);
@@ -462,10 +250,7 @@
                 return;
             }
 
-            if (string.IsNullOrEmpty(args.SpellData.Name) ||
-                args.Target == null ||
-                !args.Target.IsMe ||
-                Menu[sender.UnitSkinName.ToLower()][sender.UnitSkinName.ToLower() + ".Melee"] == null ||
+            if (string.IsNullOrEmpty(args.SpellData.Name) || args.Target == null || !args.Target.IsMe || Menu[sender.UnitSkinName.ToLower()][sender.UnitSkinName.ToLower() + ".Melee"] == null ||
                 !Menu[sender.UnitSkinName.ToLower()][sender.UnitSkinName.ToLower() + ".Melee"].Enabled)
             {
                 return;
@@ -534,8 +319,7 @@
                 return;
             }
 
-            foreach (var args in Gapclosers.Where(x => x.Value.Unit.IsValidTarget() &&
-                                                       Menu[x.Value.Unit.ChampionName] != null &&
+            foreach (var args in Gapclosers.Where(x => x.Value.Unit.IsValidTarget() && Menu[x.Value.Unit.ChampionName] != null &&
                                                        Menu[x.Value.Unit.ChampionName][x.Value.Unit.ChampionName + ".Enabled"].Enabled))
             {
                 if (args.Value.Type == SpellType.SkillShot)
@@ -551,8 +335,7 @@
                 }
                 else if (args.Value.Type == SpellType.Dash)
                 {
-                    if (args.Value.Type == SpellType.Dash &&
-                        args.Value.EndPosition.DistanceSqr(ObjectManager.GetLocalPlayer().ServerPosition) <=
+                    if (args.Value.Type == SpellType.Dash && args.Value.EndPosition.DistanceSqr(ObjectManager.GetLocalPlayer().ServerPosition) <=
                         Menu[args.Value.Unit.ChampionName][args.Value.Unit.ChampionName + ".Distance"].Value * Menu[args.Value.Unit.ChampionName][args.Value.Unit.ChampionName + ".Distance"].Value)
                     {
                         if (ObjectManager.GetLocalPlayer().HealthPercent() <= Menu[args.Value.Unit.ChampionName][args.Value.Unit.ChampionName + ".HPercent"].Value)
@@ -580,15 +363,8 @@
 
         private static void OnProcessSpellCast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
         {
-            if (sender == null ||
-                args.Sender == null ||
-                args.SpellData == null ||
-                !sender.IsValid ||
-                sender.Type != GameObjectType.obj_AI_Hero ||
-                !sender.IsEnemy ||
-                string.IsNullOrEmpty(args.SpellData.Name) ||
-                args.SpellData.Name.ToLower().Contains("attack") ||
-                args.SpellData.Name.ToLower().Contains("crit"))
+            if (sender == null || args.Sender == null || args.SpellData == null || !sender.IsValid || sender.Type != GameObjectType.obj_AI_Hero || !sender.IsEnemy ||
+                string.IsNullOrEmpty(args.SpellData.Name) || args.SpellData.Name.ToLower().Contains("attack") || args.SpellData.Name.ToLower().Contains("crit"))
             {
                 return;
             }

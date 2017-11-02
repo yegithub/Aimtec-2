@@ -48,9 +48,7 @@
 
             var current = objects.FirstOrDefault();
 
-            if (current == null ||
-                current.NetworkId == target.NetworkId ||
-                current.Health > SummonerSpells.SmiteMonsters() ||
+            if (current == null || current.NetworkId == target.NetworkId || current.Health > SummonerSpells.SmiteMonsters() ||
                 current.ServerPosition.Distance(Global.Player) > SummonerSpells.Smite.Range)
             {
                 return;

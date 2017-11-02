@@ -101,15 +101,15 @@
 
             var pred = E.GetPrediction(target);
             BodySlam = new Geometry.Rectangle(canFlash ? Global.Player.ServerPosition.Extend(target.ServerPosition, 425 + E.Range - target.BoundingRadius).To2D() : Global.Player.ServerPosition.To2D(),
-                                              Global.Player.ServerPosition.Extend(pred.CastPosition, E.Range).To2D(), EHitboxRadius);
+                                              Global.Player.ServerPosition.Extend(pred.CastPosition, E.Range).To2D(),
+                                              EHitboxRadius);
 
             if (BodySlam.IsOutside(target.ServerPosition.To2D()))
             {
                 return;
             }
 
-            if (GameObjects.EnemyMinions.Any(x => BodySlam.IsInside(x.ServerPosition.To2D()) &&
-                                                  x.Distance(BodySlam.Start) <= target.Distance(BodySlam.Start) &&
+            if (GameObjects.EnemyMinions.Any(x => BodySlam.IsInside(x.ServerPosition.To2D()) && x.Distance(BodySlam.Start) <= target.Distance(BodySlam.Start) &&
                                                   x.Distance(target) >= Global.Player.BoundingRadius))
             {
                 return;

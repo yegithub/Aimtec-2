@@ -8,17 +8,11 @@
 
     class Items
     {
-        private static readonly string[] Tiamats =
-        {
-            "ItemTiamatCleave", "ItemTitanicHydraCleave", "ItemTiamatCleave"
-        };
+        private static readonly string[] Tiamats = {"ItemTiamatCleave", "ItemTitanicHydraCleave", "ItemTiamatCleave"};
 
         public static float TiamatCastTime;
 
-        private static readonly IEnumerable<string> WardNames = new List<string>
-        {
-            "TrinketTotemLvl1", "ItemGhostWard", "JammerDevice"
-        };
+        private static readonly IEnumerable<string> WardNames = new List<string> {"TrinketTotemLvl1", "ItemGhostWard", "JammerDevice"};
 
         public static bool CanUseTiamat()
         {

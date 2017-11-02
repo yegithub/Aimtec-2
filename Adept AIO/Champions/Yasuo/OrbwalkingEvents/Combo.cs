@@ -79,8 +79,8 @@
 
             if (SpellConfig.E.Ready && targetDist > Global.Player.AttackRange)
             {
-                if (MinionHelper.IsDashable(target) &&
-                    (Extension.CurrentMode == Mode.Tornado || targetDist > SpellConfig.E.Range - target.BoundingRadius && GameObjects.EnemyMinions.Count(MinionHelper.IsDashable) == 0))
+                if (MinionHelper.IsDashable(target) && (Extension.CurrentMode == Mode.Tornado ||
+                                                        targetDist > SpellConfig.E.Range - target.BoundingRadius && GameObjects.EnemyMinions.Count(MinionHelper.IsDashable) == 0))
                 {
                     SpellConfig.E.CastOnUnit(target);
                 }
@@ -107,21 +107,22 @@
                 {
                     case Mode.Dashing:
                     case Mode.DashingTornado:
-                        if (MenuConfig.Combo["Flash"].Enabled &&
-                            dashDistance < 425 &&
-                            dashDistance > 250 &&
-                            targetDist > 220 &&
+                        if (MenuConfig.Combo["Flash"].Enabled && dashDistance < 425 && dashDistance > 250 && targetDist > 220 &&
                             (Dmg.Damage(target) * 1.25 > target.Health || target.ServerPosition.CountEnemyHeroesInRange(220) >= 2))
                         {
-                            DelayAction.Queue(Game.Ping / 2, () =>
-                            {
-                                SpellConfig.Q.Cast();
-                            }, new CancellationToken(false));
+                            DelayAction.Queue(Game.Ping / 2,
+                                              () =>
+                                              {
+                                                  SpellConfig.Q.Cast();
+                                              },
+                                              new CancellationToken(false));
 
-                            DelayAction.Queue(Game.Ping / 2 + 50, () =>
-                            {
-                                SummonerSpells.Flash.Cast(target.Position);
-                            }, new CancellationToken(false));
+                            DelayAction.Queue(Game.Ping / 2 + 50,
+                                              () =>
+                                              {
+                                                  SummonerSpells.Flash.Cast(target.Position);
+                                              },
+                                              new CancellationToken(false));
                         }
                         else
                         {

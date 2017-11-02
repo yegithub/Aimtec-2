@@ -1,6 +1,5 @@
 ﻿namespace Adept_AIO.Champions.Riven.OrbwalkingEvents.Combo
 {
-    using System.Linq;
     using Aimtec;
     using Aimtec.SDK.Extensions;
     using Aimtec.SDK.Orbwalking;

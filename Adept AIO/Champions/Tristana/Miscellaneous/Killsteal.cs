@@ -32,17 +32,14 @@
             }
             else if (_spellConfig.R.Ready && _menuConfig.Killsteal["R"].Enabled)
             {
-                if (target.Health <
-                    Global.Player.GetAutoAttackDamage(target) +
+                if (target.Health < Global.Player.GetAutoAttackDamage(target) +
                     (Global.Player.GetSpellDamage(target, SpellSlot.R) + (target.HasBuff("TristanaECharge") ? Global.Player.GetSpellDamage(target, SpellSlot.E) : 0)))
                 {
                     _spellConfig.R.CastOnUnit(target);
                     Global.Orbwalker.ForceTarget(target);
                 }
             }
-            else if (_spellConfig.W.Ready &&
-                     target.Health < Global.Player.GetSpellDamage(target, SpellSlot.W) &&
-                     _menuConfig.Killsteal["W"].Enabled &&
+            else if (_spellConfig.W.Ready && target.Health < Global.Player.GetSpellDamage(target, SpellSlot.W) && _menuConfig.Killsteal["W"].Enabled &&
                      target.ServerPosition.CountEnemyHeroesInRange(1500) <= 2)
             {
                 _spellConfig.W.Cast(target);

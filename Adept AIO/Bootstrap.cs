@@ -28,7 +28,24 @@
     {
         private static readonly string[] Valid =
         {
-            "Gnar", "Kalista", "Twitch", "Lucian", "Gragas", "Ezreal", "Azir", "Riven", "Irelia", "Jax", "Rengar", "Yasuo", "Kayn", "LeeSin", "Jinx", "Tristana", "Zed", "Vayne"
+            "Gnar",
+            "Kalista",
+            "Twitch",
+            "Lucian",
+            "Gragas",
+            "Ezreal",
+            "Azir",
+            "Riven",
+            "Irelia",
+            "Jax",
+            "Rengar",
+            "Yasuo",
+            "Kayn",
+            "LeeSin",
+            "Jinx",
+            "Tristana",
+            "Zed",
+            "Vayne"
         };
 
         private static void Main()

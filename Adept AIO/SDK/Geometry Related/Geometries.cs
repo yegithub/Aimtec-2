@@ -325,10 +325,7 @@
             {
                 var angle = !radian ? value * Math.PI / 180 : value;
                 var line = Vector2.Subtract(point2, point1);
-                var newline = new Vector2
-                {
-                    X = (float) (line.X * Math.Cos(angle) - line.Y * Math.Sin(angle)), Y = (float) (line.X * Math.Sin(angle) + line.Y * Math.Cos(angle))
-                };
+                var newline = new Vector2 {X = (float) (line.X * Math.Cos(angle) - line.Y * Math.Sin(angle)), Y = (float) (line.X * Math.Sin(angle) + line.Y * Math.Cos(angle))};
                 return Vector2.Add(newline, point1);
             }
 

@@ -14,8 +14,7 @@
                 return;
             }
 
-            if (SpellManager.E.Ready &&
-                GameObjects.EnemyMinions.Count(x => x.IsValidTarget(SpellManager.E.Range) && Dmg.EDmg(x) > x.Health) >= MenuConfig.LaneClear["E"].Value &&
+            if (SpellManager.E.Ready && GameObjects.EnemyMinions.Count(x => x.IsValidTarget(SpellManager.E.Range) && Dmg.EDmg(x) > x.Health) >= MenuConfig.LaneClear["E"].Value &&
                 MenuConfig.LaneClear["E"].Enabled)
             {
                 SpellManager.E.Cast();
