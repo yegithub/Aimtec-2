@@ -147,7 +147,7 @@
         /// <summary>
         ///     The large name regex list.
         /// </summary>
-        private static readonly string[] LargeNameRegex = {"SRU_Murkwolf[0-9.]{1,}", "SRU_Gromp", "SRU_Blue[0-9.]{1,}", "SRU_Razorbeak[0-9.]{1,}", "SRU_Red[0-9.]{1,}", "SRU_Krug[0-9]{1,}"};
+        private static readonly string[] LargeNameRegex = {"SRU_Murkwolf[0-9.]{1,}", "Sru_Crab", "SRU_Gromp", "SRU_Blue[0-9.]{1,}", "SRU_Razorbeak[0-9.]{1,}", "SRU_Red[0-9.]{1,}", "SRU_Krug[0-9]{1,}"};
 
         /// <summary>
         ///     The legendary name regex list.
@@ -162,7 +162,7 @@
         /// <summary>
         ///     The small name regex list.
         /// </summary>
-        private static readonly string[] SmallNameRegex = {"SRU_[a-zA-Z](.*?)Mini", "Sru_Crab"};
+        private static readonly string[] SmallNameRegex = {"SRU_[a-zA-Z](.*?)Mini"};
 
         /// <summary>
         ///     The turrets list.
@@ -346,10 +346,6 @@
         /// </returns>
         public static JungleType GetJungleType(this Obj_AI_Minion minion)
         {
-            if (minion.UnitSkinName.Contains("Crab"))
-            {
-                return JungleType.Large;
-            }
 
             if (SmallNameRegex.Any(regex => Regex.IsMatch(minion.Name, regex)))
             {
