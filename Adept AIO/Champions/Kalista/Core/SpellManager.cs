@@ -65,7 +65,7 @@
                     return;
                 }
 
-                Q.Cast(target);
+                Q.Cast(Q.GetPrediction(target).CastPosition);
             }
             else if (GameObjects.EnemyMinions.Count(x => rect.IsInside(x.ServerPosition.To2D())) >= minHit &&
                      GameObjects.EnemyMinions.All(x => rect.IsInside(x.ServerPosition.To2D()) && x.Health < Global.Player.GetSpellDamage(x, SpellSlot.Q)))

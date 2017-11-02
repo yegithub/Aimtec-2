@@ -17,8 +17,6 @@
                 return;
             }
 
-            var dist = target.Distance(Global.Player);
-
             if (SpellConfig.E.Ready && MenuConfig.Combo["E"].Enabled)
             {
                 foreach (var soldier in SoldierManager.Soldiers)
@@ -42,7 +40,7 @@
                 }
             }
 
-            if (SpellConfig.Q.Ready && MenuConfig.Combo["Q"].Enabled && dist < SpellConfig.Q.Range + 200)
+            if (SpellConfig.Q.Ready && MenuConfig.Combo["Q"].Enabled && target.IsValidTarget(SpellConfig.Q.Range))
             {
                 if (SoldierManager.Soldiers.All(soldier => soldier.Distance(target) <= 200))
                 {
@@ -67,7 +65,7 @@
                 }
             }
 
-            if (SpellConfig.R.Ready && MenuConfig.Combo["R"].Enabled && target.HealthPercent() <= 40 && dist < SpellConfig.R.Range)
+            if (SpellConfig.R.Ready && MenuConfig.Combo["R"].Enabled && target.HealthPercent() <= 40 && target.IsValidTarget(SpellConfig.R.Range))
             {
                 AzirHelper.Rect = new Geometry.Rectangle(target.ServerPosition.To2D(),
                                                          Global.Player.ServerPosition.Extend(target.ServerPosition, -SpellConfig.R.Width / 2f).To2D(),

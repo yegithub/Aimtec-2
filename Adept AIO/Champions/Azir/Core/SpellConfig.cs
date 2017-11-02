@@ -11,7 +11,7 @@
 
         public static void Load()
         {
-            Q = new Spell(SpellSlot.Q, 720);
+            Q = new Spell(SpellSlot.Q, 740);
             Q.SetSkillshot(0.25f, 70, 1600, false, SkillshotType.Line, false, HitChance.VeryHigh);
 
             W = new Spell(SpellSlot.W, 500);

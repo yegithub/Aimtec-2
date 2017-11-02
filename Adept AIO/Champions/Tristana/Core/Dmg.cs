@@ -3,6 +3,7 @@
     using Aimtec;
     using Aimtec.SDK.Damage;
     using Aimtec.SDK.Damage.JSON;
+    using Aimtec.SDK.Extensions;
     using SDK.Unit_Extensions;
 
     class Dmg
@@ -28,12 +29,7 @@
                 dmg += Global.Player.GetAutoAttackDamage(target);
             }
 
-            if (_spellConfig.W.Ready)
-            {
-                dmg += Global.Player.GetSpellDamage(target, SpellSlot.W);
-            }
-
-            if (_spellConfig.E.Ready)
+            if (_spellConfig.E.Ready || target.HasBuff("TristanaECharge"))
             {
                 dmg += Global.Player.GetSpellDamage(target, SpellSlot.E) + Global.Player.GetSpellDamage(target, SpellSlot.E, DamageStage.Buff);
             }
