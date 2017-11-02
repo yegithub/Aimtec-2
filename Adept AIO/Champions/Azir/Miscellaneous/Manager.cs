@@ -24,21 +24,18 @@
                     return;
                 }
 
-                if (Global.Orbwalker.Mode == OrbwalkingMode.None)
+                foreach (var soldier in SoldierManager.Soldiers)
                 {
-                    foreach (var soldier in SoldierManager.Soldiers)
+                    var enemy = GameObjects.Enemy.FirstOrDefault(x => x.Distance(soldier) <= 250 + x.BoundingRadius && !x.IsDead && x.MaxHealth > 10 &&
+                                                                      soldier.Distance(Global.Player) <= SpellConfig.Q.Range + 65 && soldier.Distance(Global.Player) > Global.Player.AttackRange);
+                    if (enemy == null || Game.TickCount - _lastAa <= 1000)
                     {
-                        var enemy = GameObjects.Enemy.FirstOrDefault(x => x.Distance(soldier) <= 250 + x.BoundingRadius && !x.IsDead && x.MaxHealth > 10 &&
-                                                                          soldier.Distance(Global.Player) <= SpellConfig.Q.Range + 65 && soldier.Distance(Global.Player) > Global.Player.AttackRange);
-                        if (enemy == null || Game.TickCount - _lastAa <= 1000)
-                        {
-                            continue;
-                        }
-
-                        _lastAa = Game.TickCount;
-                        Global.Player.IssueOrder(OrderType.AttackUnit, enemy);
-                        DelayAction.Queue(300, () => Global.Player.IssueOrder(OrderType.MoveTo, Game.CursorPos), new CancellationToken(false));
+                        continue;
                     }
+
+                    _lastAa = Game.TickCount;
+                    Global.Player.IssueOrder(OrderType.AttackUnit, enemy);
+                    DelayAction.Queue(300, () => Global.Player.IssueOrder(OrderType.MoveTo, Game.CursorPos), new CancellationToken(false));
                 }
 
                 SpellConfig.R.Width = 133 * (3 + Global.Player.GetSpell(SpellSlot.R).Level);
