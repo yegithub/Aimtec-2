@@ -133,11 +133,11 @@
             if (path.Length > 0)
             {
                 var movePos = path[path.Length - 1].To2D();
-                posInfo = EvadeHelper.CanHeroWalkToPos(movePos, ObjectCache.myHeroCache.moveSpeed, 0, 0, false);
+                posInfo = EvadeHelper.CanHeroWalkToPos(movePos, ObjectCache.MyHeroCache.MoveSpeed, 0, 0, false);
             }
             else
             {
-                posInfo = EvadeHelper.CanHeroWalkToPos(ObjectCache.myHeroCache.serverPos2D, ObjectCache.myHeroCache.moveSpeed, 0, 0, false);
+                posInfo = EvadeHelper.CanHeroWalkToPos(ObjectCache.MyHeroCache.ServerPos2D, ObjectCache.MyHeroCache.MoveSpeed, 0, 0, false);
             }
 
             if (posInfo.posDangerCount < newPosInfo.posDangerCount)
@@ -155,11 +155,11 @@
             if (path.Length > 0)
             {
                 var movePos = path[path.Length - 1].To2D();
-                posInfo = EvadeHelper.CanHeroWalkToPos(movePos, ObjectCache.myHeroCache.moveSpeed, 0, 0, false);
+                posInfo = EvadeHelper.CanHeroWalkToPos(movePos, ObjectCache.MyHeroCache.MoveSpeed, 0, 0, false);
             }
             else
             {
-                posInfo = EvadeHelper.CanHeroWalkToPos(ObjectCache.myHeroCache.serverPos2D, ObjectCache.myHeroCache.moveSpeed, 0, 0, false);
+                posInfo = EvadeHelper.CanHeroWalkToPos(ObjectCache.MyHeroCache.ServerPos2D, ObjectCache.MyHeroCache.MoveSpeed, 0, 0, false);
             }
 
             if (posInfo.posDangerCount < newPosInfo.posDangerCount)

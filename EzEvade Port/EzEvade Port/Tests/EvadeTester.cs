@@ -418,9 +418,9 @@
                 ConsolePrinter.Print("Sending Path ClickTime: " + (EvadeUtils.TickCount - _lastRightMouseClickTime));
             }
 
-            var heroPos = ObjectCache.myHeroCache.serverPos2D;
+            var heroPos = ObjectCache.MyHeroCache.ServerPos2D;
             var pos = args.Target.Position.To2D();
-            var speed = ObjectCache.myHeroCache.moveSpeed;
+            var speed = ObjectCache.MyHeroCache.MoveSpeed;
 
             _startWalkTime = EvadeUtils.TickCount;
 
@@ -437,7 +437,7 @@
                                                                      spellPos,
                                                                      walkDir * (speed - 25),
                                                                      spell.Direction * (spell.Info.ProjectileSpeed - 200),
-                                                                     ObjectCache.myHeroCache.boundingRadius,
+                                                                     ObjectCache.MyHeroCache.BoundingRadius,
                                                                      spell.Radius,
                                                                      out var isCollision);
                 if (!isCollision)
@@ -472,11 +472,11 @@
                 var path = MyHero.Path;
                 if (path.Length > 0)
                 {
-                    var heroPos2 = EvadeHelper.GetRealHeroPos(ObjectCache.gamePing + 50);
-                    var heroPos1 = ObjectCache.myHeroCache.serverPos2D;
+                    var heroPos2 = EvadeHelper.GetRealHeroPos(ObjectCache.GamePing + 50);
+                    var heroPos1 = ObjectCache.MyHeroCache.ServerPos2D;
 
-                    Render.Circle(new Vector3(heroPos2.X, heroPos2.Y, MyHero.ServerPosition.Z), ObjectCache.myHeroCache.boundingRadius, 50, Color.Red);
-                    Render.Circle(new Vector3(MyHero.ServerPosition.X, MyHero.ServerPosition.Y, MyHero.ServerPosition.Z), ObjectCache.myHeroCache.boundingRadius, 50, Color.White);
+                    Render.Circle(new Vector3(heroPos2.X, heroPos2.Y, MyHero.ServerPosition.Z), ObjectCache.MyHeroCache.BoundingRadius, 50, Color.Red);
+                    Render.Circle(new Vector3(MyHero.ServerPosition.X, MyHero.ServerPosition.Y, MyHero.ServerPosition.Z), ObjectCache.MyHeroCache.BoundingRadius, 50, Color.White);
 
                     Render.WorldToScreen(ObjectManager.GetLocalPlayer().Position, out var heroPos);
 
@@ -488,7 +488,7 @@
 
             if (TestMenu["(DrawHeroPos)"].Enabled)
             {
-                Render.Circle(new Vector3(MyHero.ServerPosition.X, MyHero.ServerPosition.Y, MyHero.ServerPosition.Z), ObjectCache.myHeroCache.boundingRadius, 50, Color.White);
+                Render.Circle(new Vector3(MyHero.ServerPosition.X, MyHero.ServerPosition.Y, MyHero.ServerPosition.Z), ObjectCache.MyHeroCache.BoundingRadius, 50, Color.White);
             }
 
             if (TestMenu["(TestMoveTo)"].As<MenuKeyBind>().Enabled)
@@ -511,7 +511,7 @@
                 foreach (var point in tPath)
                 {
                     var point2D = point.To2D();
-                    Render.Circle(new Vector3(point.X, point.Y, point.Z), ObjectCache.myHeroCache.boundingRadius, 50, Color.Violet);
+                    Render.Circle(new Vector3(point.X, point.Y, point.Z), ObjectCache.MyHeroCache.BoundingRadius, 50, Color.Violet);
                 }
             }
 
@@ -524,9 +524,9 @@
                     var to = Game.CursorPos.To2D();
                     var dir = (to - MyHero.Position.To2D()).Normalized();
 
-                    var cpa = MathUtilsCpa.CPAPointsEx(MyHero.Position.To2D(), dir * ObjectCache.myHeroCache.moveSpeed, spell.EndPos, spell.Direction * spell.Info.ProjectileSpeed, to, spell.EndPos);
+                    var cpa = MathUtilsCpa.CPAPointsEx(MyHero.Position.To2D(), dir * ObjectCache.MyHeroCache.MoveSpeed, spell.EndPos, spell.Direction * spell.Info.ProjectileSpeed, to, spell.EndPos);
 
-                    if (cpa < ObjectCache.myHeroCache.boundingRadius + spell.Radius) { }
+                    if (cpa < ObjectCache.MyHeroCache.BoundingRadius + spell.Radius) { }
                 }
             }
 
@@ -584,7 +584,7 @@
             const int posRadius = 50;
             var radiusIndex = 0;
 
-            var heroPoint = ObjectCache.myHeroCache.serverPos2D;
+            var heroPoint = ObjectCache.MyHeroCache.ServerPos2D;
 
             while (posChecked < maxPosToCheck)
             {

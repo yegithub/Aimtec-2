@@ -118,7 +118,7 @@
         {
             checkPing = false;
 
-            if (!ObjectCache.menuCache.cache["AutoSetPingOn"].Enabled)
+            if (!ObjectCache.MenuCache.Cache["AutoSetPingOn"].Enabled)
             {
                 return;
             }
@@ -147,7 +147,7 @@
 
         private void Hero_OnNewPath(Obj_AI_Base hero, Obj_AI_BaseNewPathEventArgs args)
         {
-            if (!ObjectCache.menuCache.cache["AutoSetPingOn"].Enabled)
+            if (!ObjectCache.MenuCache.Cache["AutoSetPingOn"].Enabled)
             {
                 return;
             }
@@ -184,8 +184,8 @@
                     return;
                 }
 
-                /*SharpDX.*/
-                var myHeroPosition = new /*SharpDX.*/ Vector3(myHero.Position.X, myHero.Position.Y, myHero.Position.Z);
+                
+                var myHeroPosition = new  Vector3(myHero.Position.X, myHero.Position.Y, myHero.Position.Z);
 
                 var dir1 = (myHero.Path.Last().To2D() - myHero.Position.To2D()).Normalized();
 
@@ -199,8 +199,8 @@
                 var dir2 = (args.Path.First().To2D() - args.Path.Last().To2D()).Normalized();
                 //var pos2 = new Vector3(args.Path.First().X, args.Path.First().Y, 0);
 
-                /*SharpDX.*/
-                var argsPathFirst = new /*SharpDX.*/ Vector3(args.Path.First().X, args.Path.First().Y, args.Path.First().Z);
+                
+                var argsPathFirst = new  Vector3(args.Path.First().X, args.Path.First().Y, args.Path.First().Z);
 
                 //var ray2 = new Ray(argsPathFirst.SetZ(0), new SharpDX.Vector3(dir2.X, dir2.Y, 0));
                 var ray2startpos = new Vector3(argsPathFirst.X, argsPathFirst.Y, 0);
@@ -208,7 +208,7 @@
 
                 //Vector3 ray2 = ray2startpos.ExtendDir(ray2dir, args.Path.Length);
 
-                /*SharpDX.*/ //Vector3 intersection3;
+                 //Vector3 intersection3;
 
                 var intersection = ray2startpos.To2D().
                     Intersection(ray2startpos.To2D().ExtendDir(ray2dir.To2D(), args.Path.Length), ray1startpos.To2D(), ray1startpos.To2D().ExtendDir(ray1dir.To2D(), args.Path.Length));
@@ -247,17 +247,17 @@
 
                             if (maxExtraDelayTime == 0)
                             {
-                                maxExtraDelayTime = ObjectCache.menuCache.cache["ExtraPingBuffer"].As<MenuSlider>().Value;
+                                maxExtraDelayTime = ObjectCache.MenuCache.Cache["ExtraPingBuffer"].As<MenuSlider>().Value;
                             }
 
                             if (numExtraDelayTime % 100 == 0)
                             {
                                 pingList.Sort();
 
-                                var percentile = ObjectCache.menuCache.cache["AutoSetPercentile"].As<MenuSlider>().Value;
+                                var percentile = ObjectCache.MenuCache.Cache["AutoSetPercentile"].As<MenuSlider>().Value;
                                 var percentIndex = (int) Math.Floor(pingList.Count() * (percentile / 100f)) - 1;
                                 maxExtraDelayTime = Math.Max(pingList.ElementAt(percentIndex) - Game.Ping, 0);
-                                ObjectCache.menuCache.cache["ExtraPingBuffer"].As<MenuSlider>().Value = (int) maxExtraDelayTime; //(new MenuSlider((int)maxExtraDelayTime, 0, 200));
+                                ObjectCache.MenuCache.Cache["ExtraPingBuffer"].As<MenuSlider>().Value = (int) maxExtraDelayTime; //(new MenuSlider((int)maxExtraDelayTime, 0, 200));
 
                                 pingList.Clear();
 

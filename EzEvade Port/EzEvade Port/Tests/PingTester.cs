@@ -16,10 +16,10 @@
         private static bool lastRandomMoveCoeff;
 
         private static float sumPingTime;
-        private static float averagePingTime = ObjectCache.gamePing;
+        private static float averagePingTime = ObjectCache.GamePing;
         private static int testCount;
         private static int autoTestCount;
-        private static float maxPingTime = ObjectCache.gamePing;
+        private static float maxPingTime = ObjectCache.GamePing;
 
         private static bool autoTestPing;
 
@@ -43,7 +43,7 @@
 
         private void IssueTestMove(int recursionCount)
         {
-            var movePos = ObjectCache.myHeroCache.serverPos2D;
+            var movePos = ObjectCache.MyHeroCache.ServerPos2D;
 
             var rand = new Random();
 
@@ -68,7 +68,7 @@
 
         private void SetPing(int ping)
         {
-            ObjectCache.menuCache.cache["ExtraPingBuffer"].As<MenuSlider>().Value = ping;
+            ObjectCache.MenuCache.Cache["ExtraPingBuffer"].As<MenuSlider>().Value = ping;
         }
 
         private void Game_OnGameUpdate()
@@ -160,7 +160,7 @@
 
                         if (movePos.Distance(lastTestMoveToCommand.targetPosition) < 10)
                         {
-                            var moveTime = EvadeUtils.TickCount - lastTestMoveToCommand.timestamp - ObjectCache.gamePing;
+                            var moveTime = EvadeUtils.TickCount - lastTestMoveToCommand.timestamp - ObjectCache.GamePing;
                             Console.WriteLine("Extra Delay: " + moveTime);
                             lastTestMoveToCommand.isProcessed = true;
 

@@ -41,7 +41,7 @@
             };
 
             Evade.DrawMenu.Add(dangerMenu);
-            ObjectCache.menuCache.AddMenuToCache(Evade.DrawMenu);
+            ObjectCache.MenuCache.AddMenuToCache(Evade.DrawMenu);
             Menu.Add(Evade.DrawMenu);
         }
 
@@ -71,14 +71,14 @@
 
         private void DrawEvadeStatus()
         {
-            if (!ObjectCache.menuCache.cache["ShowStatus"].Enabled)
+            if (!ObjectCache.MenuCache.Cache["ShowStatus"].Enabled)
             {
                 return;
             }
 
             Render.WorldToScreen(ObjectManager.GetLocalPlayer().Position, out var heroPos);
 
-            if (ObjectCache.menuCache.cache["DodgeSkillShots"].Enabled)
+            if (ObjectCache.MenuCache.Cache["DodgeSkillShots"].Enabled)
             {
                 if (Evade.IsDodging)
                 {
@@ -86,13 +86,13 @@
                 }
                 else
                 {
-                    if (ObjectCache.menuCache.cache["DodgeOnlyOnComboKeyEnabled"].Enabled && !ObjectCache.menuCache.cache["DodgeComboKey"].As<MenuKeyBind>().Enabled)
+                    if (ObjectCache.MenuCache.Cache["DodgeOnlyOnComboKeyEnabled"].Enabled && !ObjectCache.MenuCache.Cache["DodgeComboKey"].As<MenuKeyBind>().Enabled)
                     {
                         Render.Text("Evade: OFF", new Vector2(heroPos.X - 10, heroPos.Y), RenderTextFlags.Center, Color.Gray);
                     }
                     else
                     {
-                        if (!ObjectCache.menuCache.cache["DontDodgeKeyEnabled"].Enabled && ObjectCache.menuCache.cache["DontDodgeKey"].As<MenuKeyBind>().Enabled)
+                        if (ObjectCache.MenuCache.Cache["DontDodgeKeyEnabled"].Enabled && ObjectCache.MenuCache.Cache["DontDodgeKey"].As<MenuKeyBind>().Enabled)
                         {
                             Render.Text("Evade: OFF", new Vector2(heroPos.X - 10, heroPos.Y), RenderTextFlags.Center, Color.Gray);
                         }
@@ -109,9 +109,9 @@
             }
             else
             {
-                if (ObjectCache.menuCache.cache["ActivateEvadeSpells"].As<MenuKeyBind>().Enabled)
+                if (ObjectCache.MenuCache.Cache["ActivateEvadeSpells"].As<MenuKeyBind>().Enabled)
                 {
-                    if (ObjectCache.menuCache.cache["DodgeOnlyOnComboKeyEnabled"].Enabled && ObjectCache.menuCache.cache["DodgeComboKey"].As<MenuKeyBind>().Enabled == false)
+                    if (ObjectCache.MenuCache.Cache["DodgeOnlyOnComboKeyEnabled"].Enabled && ObjectCache.MenuCache.Cache["DodgeComboKey"].As<MenuKeyBind>().Enabled == false)
                     {
                         Render.Text("Evade: OFF", new Vector2(heroPos.X - 10, heroPos.Y), RenderTextFlags.Center, Color.Gray);
                     }
@@ -129,7 +129,7 @@
 
         private void Render_OnPresent()
         {
-            if (ObjectCache.menuCache.cache["DrawEvadePosition"].Enabled)
+            if (ObjectCache.MenuCache.Cache["DrawEvadePosition"].Enabled)
             {
                 if (Evade.LastPosInfo != null)
                 {
@@ -141,7 +141,7 @@
 
             DrawEvadeStatus();
 
-            if (!ObjectCache.menuCache.cache["DrawSkillShots"].Enabled)
+            if (!ObjectCache.MenuCache.Cache["DrawSkillShots"].Enabled)
             {
                 return;
             }
@@ -157,8 +157,8 @@
 
                 var dangerStr = spell.GetSpellDangerString();
 
-                var spellDrawingWidth = ObjectCache.menuCache.cache["DangerLevelDrawings"][dangerStr + "Width"].As<MenuSlider>().Value;
-                var avoidRadius = ObjectCache.menuCache.cache["ExtraAvoidDistance"].As<MenuSlider>().Value;
+                var spellDrawingWidth = ObjectCache.MenuCache.Cache["DangerLevelDrawings"][dangerStr + "Width"].As<MenuSlider>().Value;
+                var avoidRadius = ObjectCache.MenuCache.Cache["ExtraAvoidDistance"].As<MenuSlider>().Value;
 
                 if (!Evade.SpellMenu[spell.Info.CharName + spell.Info.SpellName + "Settings"][spell.Info.SpellName + "DrawSpell"].Enabled)
                 {
@@ -174,7 +174,7 @@
 
                         DrawLineRectangle(spellPos, spellEndPos, (int) spell.Radius, spellDrawingWidth, !canEvade ? Color.Yellow : Color.White);
 
-                        if (ObjectCache.menuCache.cache["DrawSpellPos"].Enabled)
+                        if (ObjectCache.MenuCache.Cache["DrawSpellPos"].Enabled)
                         {
                             Render.Circle(new Vector3(spellPos.To3D().X, spellPos.To3D().Y, spell.Height), (int) spell.Radius, 50, !canEvade ? Color.Yellow : Color.White);
                         }

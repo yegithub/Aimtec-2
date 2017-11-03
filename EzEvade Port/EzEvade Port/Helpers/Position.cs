@@ -21,7 +21,7 @@
             {
                 var spell = entry.Value;
 
-                if (pos.InSkillShot(spell, ObjectCache.myHeroCache.boundingRadius + extraBuffer))
+                if (pos.InSkillShot(spell, ObjectCache.MyHeroCache.BoundingRadius + extraBuffer))
                 {
                     dangerlevel += spell.Dangerlevel;
                 }
@@ -44,16 +44,16 @@
             {
                 if (spell.Info.SpellName == "VeigarEventHorizon")
                 {
-                    return position.Distance(spell.EndPos) <= spell.Radius + radius - ObjectCache.myHeroCache.boundingRadius &&
-                           position.Distance(spell.EndPos) >= spell.Radius + radius - ObjectCache.myHeroCache.boundingRadius - 125;
+                    return position.Distance(spell.EndPos) <= spell.Radius + radius - ObjectCache.MyHeroCache.BoundingRadius &&
+                           position.Distance(spell.EndPos) >= spell.Radius + radius - ObjectCache.MyHeroCache.BoundingRadius - 125;
                 }
                 if (spell.Info.SpellName == "DariusCleave")
                 {
-                    return position.Distance(spell.EndPos) <= spell.Radius + radius - ObjectCache.myHeroCache.boundingRadius &&
-                           position.Distance(spell.EndPos) >= spell.Radius + radius - ObjectCache.myHeroCache.boundingRadius - 220;
+                    return position.Distance(spell.EndPos) <= spell.Radius + radius - ObjectCache.MyHeroCache.BoundingRadius &&
+                           position.Distance(spell.EndPos) >= spell.Radius + radius - ObjectCache.MyHeroCache.BoundingRadius - 220;
                 }
 
-                return position.Distance(spell.EndPos) <= spell.Radius + radius - ObjectCache.myHeroCache.boundingRadius;
+                return position.Distance(spell.EndPos) <= spell.Radius + radius - ObjectCache.MyHeroCache.BoundingRadius;
             }
 
             if (spell.SpellType == SpellType.Arc)
@@ -66,7 +66,7 @@
                 var spellRange = spell.StartPos.Distance(spell.EndPos);
                 var midPoint = spell.StartPos + spell.Direction * (spellRange / 2);
 
-                return position.Distance(midPoint) <= spell.Radius + radius - ObjectCache.myHeroCache.boundingRadius;
+                return position.Distance(midPoint) <= spell.Radius + radius - ObjectCache.MyHeroCache.BoundingRadius;
             }
 
             if (spell.SpellType == SpellType.Cone)
@@ -87,12 +87,12 @@
         {
             var minDist = float.MaxValue;
 
-            foreach (var entry in ObjectCache.turrets)
+            foreach (var entry in ObjectCache.Turrets)
             {
                 var turret = entry.Value;
                 if (turret == null || !turret.IsValid || turret.IsDead)
                 {
-                    DelayAction.Add(1, () => ObjectCache.turrets.Remove(entry.Key));
+                    DelayAction.Add(1, () => ObjectCache.Turrets.Remove(entry.Key));
                     continue;
                 }
 
@@ -135,7 +135,7 @@
 
                 if (spell.SpellType == SpellType.Line)
                 {
-                    if (pos.InSkillShot(spell, ObjectCache.myHeroCache.boundingRadius + extraBuffer))
+                    if (pos.InSkillShot(spell, ObjectCache.MyHeroCache.BoundingRadius + extraBuffer))
                     {
                         return true;
                     }
@@ -148,9 +148,9 @@
         {
             float posValue = 0;
 
-            if (ObjectCache.menuCache.cache["PreventDodgingNearEnemy"].Enabled)
+            if (ObjectCache.MenuCache.Cache["PreventDodgingNearEnemy"].Enabled)
             {
-                var minComfortDistance = ObjectCache.menuCache.cache["MinComfortZone"].As<MenuSlider>().Value;
+                var minComfortDistance = ObjectCache.MenuCache.Cache["MinComfortZone"].As<MenuSlider>().Value;
 
                 foreach (var hero in GameObjects.EnemyHeroes)
                 {
@@ -174,9 +174,9 @@
         {
             var posValue = pos.Distance(Game.CursorPos.To2D());
 
-            if (ObjectCache.menuCache.cache["PreventDodgingUnderTower"].Enabled)
+            if (ObjectCache.MenuCache.Cache["PreventDodgingUnderTower"].Enabled)
             {
-                var turretRange = 875 + ObjectCache.myHeroCache.boundingRadius;
+                var turretRange = 875 + ObjectCache.MyHeroCache.BoundingRadius;
                 var distanceToTurrets = pos.GetDistanceToTurrets();
 
                 if (turretRange > distanceToTurrets)
@@ -199,7 +199,7 @@
                     continue;
                 }
 
-                if (pos.InSkillShot(spell, ObjectCache.myHeroCache.boundingRadius + extraBuffer))
+                if (pos.InSkillShot(spell, ObjectCache.MyHeroCache.BoundingRadius + extraBuffer))
                 {
                     return true;
                 }
@@ -214,7 +214,7 @@
             var posChecked = 0;
             var radiusIndex = 0;
 
-            var heroPoint = ObjectCache.myHeroCache.serverPos2D;
+            var heroPoint = ObjectCache.MyHeroCache.ServerPos2D;
             var lastMovePos = Game.CursorPos.To2D();
 
             var posTable = new List<PositionInfo>();

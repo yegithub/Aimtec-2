@@ -45,7 +45,7 @@
         public static float GetSpellRadius(this Spell spell)
         {
             var radius = Evade.SpellMenu[spell.Info.CharName + spell.Info.SpellName + "Settings"][spell.Info.SpellName + "SpellRadius"].As<MenuSlider>().Value;
-            var extraRadius = ObjectCache.menuCache.cache["ExtraSpellRadius"].As<MenuSlider>().Value;
+            var extraRadius = ObjectCache.MenuCache.Cache["ExtraSpellRadius"].As<MenuSlider>().Value;
 
             if (spell.Info.HasEndExplosion && spell.SpellType == SpellType.Circular)
             {
@@ -144,7 +144,7 @@
 
             var collisionCandidates = new List<Obj_AI_Base>();
             var spellPos = spell.CurrentSpellPosition;
-            var distanceToHero = spellPos.Distance(ObjectCache.myHeroCache.serverPos2D);
+            var distanceToHero = spellPos.Distance(ObjectCache.MyHeroCache.ServerPos2D);
 
             if (spell.Info.CollisionObjects.Contains(CollisionObjectType.EnemyChampions))
             {
@@ -173,13 +173,13 @@
                 case SpellType.Line:
                     if (spell.Info.ProjectileSpeed >= float.MaxValue)
                     {
-                        return Math.Max(0, spell.EndTime - EvadeUtils.TickCount - ObjectCache.gamePing);
+                        return Math.Max(0, spell.EndTime - EvadeUtils.TickCount - ObjectCache.GamePing);
                     }
 
-                    var spellPos = spell.GetCurrentSpellPosition(true, ObjectCache.gamePing);
+                    var spellPos = spell.GetCurrentSpellPosition(true, ObjectCache.GamePing);
                     return 1000 * spellPos.Distance(pos) / spell.Info.ProjectileSpeed;
                 case SpellType.Cone:
-                case SpellType.Circular: return Math.Max(0, spell.EndTime - EvadeUtils.TickCount - ObjectCache.gamePing);
+                case SpellType.Circular: return Math.Max(0, spell.EndTime - EvadeUtils.TickCount - ObjectCache.GamePing);
             }
 
             return float.MaxValue;
@@ -197,7 +197,7 @@
             if (moveBuff != null && EvadeSpell.ShouldUseMovementBuff(spell))
             {
                 speed += speed * moveBuff.SpeedArray[ObjectManager.GetLocalPlayer().GetSpell(moveBuff.SpellKey).Level - 1] / 100;
-                delay += (moveBuff.SpellDelay > 50 ? moveBuff.SpellDelay : 0) + ObjectCache.gamePing;
+                delay += (moveBuff.SpellDelay > 50 ? moveBuff.SpellDelay : 0) + ObjectCache.GamePing;
             }
 
             switch (spell.SpellType)
@@ -233,7 +233,7 @@
 
         public static BoundingBox GetLinearSpellBoundingBox(this Spell spell)
         {
-            var myBoundingRadius = ObjectCache.myHeroCache.boundingRadius;
+            var myBoundingRadius = ObjectCache.MyHeroCache.BoundingRadius;
             var spellDir = spell.Direction;
             var pSpellDir = spell.Direction.Perpendicular();
             var spellRadius = spell.Radius;
@@ -287,7 +287,7 @@
             }
 
             if (spell.SpellObject != null && spell.SpellObject.IsValid && spell.SpellObject.IsVisible &&
-                spell.SpellObject.Position.To2D().Distance(ObjectCache.myHeroCache.serverPos2D) < spell.Info.Range + 1000)
+                spell.SpellObject.Position.To2D().Distance(ObjectCache.MyHeroCache.ServerPos2D) < spell.Info.Range + 1000)
             {
                 spellPos = spell.SpellObject.Position.To2D();
             }

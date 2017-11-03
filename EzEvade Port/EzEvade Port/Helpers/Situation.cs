@@ -40,9 +40,9 @@
 
         public static bool isNearEnemy(this Vector2 pos, float distance, bool alreadyNear = true)
         {
-            if (ObjectCache.menuCache.cache["PreventDodgingNearEnemy"].Enabled)
+            if (ObjectCache.MenuCache.Cache["PreventDodgingNearEnemy"].Enabled)
             {
-                var curDistToEnemies = ObjectCache.myHeroCache.serverPos2D.GetDistanceToChampions();
+                var curDistToEnemies = ObjectCache.MyHeroCache.ServerPos2D.GetDistanceToChampions();
                 var posDistToEnemies = pos.GetDistanceToChampions();
 
                 if (curDistToEnemies < distance)
@@ -66,19 +66,19 @@
 
         public static bool IsUnderTurret(this Vector2 pos, bool checkEnemy = true)
         {
-            if (!ObjectCache.menuCache.cache["PreventDodgingUnderTower"].Enabled)
+            if (!ObjectCache.MenuCache.Cache["PreventDodgingUnderTower"].Enabled)
             {
                 return false;
             }
 
-            var turretRange = 875 + ObjectCache.myHeroCache.boundingRadius;
+            var turretRange = 875 + ObjectCache.MyHeroCache.BoundingRadius;
 
-            foreach (var entry in ObjectCache.turrets)
+            foreach (var entry in ObjectCache.Turrets)
             {
                 var turret = entry.Value;
                 if (turret == null || !turret.IsValid || turret.IsDead)
                 {
-                    DelayAction.Add(1, () => ObjectCache.turrets.Remove(entry.Key));
+                    DelayAction.Add(1, () => ObjectCache.Turrets.Remove(entry.Key));
                     continue;
                 }
 
@@ -100,12 +100,12 @@
         public static bool ShouldDodge()
         {
             // fix
-            if (ObjectCache.menuCache.cache["DontDodgeKeyEnabled"].Enabled && ObjectCache.menuCache.cache["DontDodgeKey"].As<MenuKeyBind>().Enabled)
+            if (ObjectCache.MenuCache.Cache["DontDodgeKeyEnabled"].Enabled && ObjectCache.MenuCache.Cache["DontDodgeKey"].As<MenuKeyBind>().Enabled)
             {
                 return false;
             }
 
-            if (ObjectCache.menuCache.cache["DodgeSkillShots"].Enabled == false || CommonChecks())
+            if (ObjectCache.MenuCache.Cache["DodgeSkillShots"].Enabled == false || CommonChecks())
             {
                 return false;
             }
@@ -116,12 +116,12 @@
         public static bool ShouldUseEvadeSpell()
         {
             // fix
-            if (ObjectCache.menuCache.cache["DontDodgeKeyEnabled"].Enabled && ObjectCache.menuCache.cache["DontDodgeKey"].As<MenuKeyBind>().Enabled)
+            if (ObjectCache.MenuCache.Cache["DontDodgeKeyEnabled"].Enabled && ObjectCache.MenuCache.Cache["DontDodgeKey"].As<MenuKeyBind>().Enabled)
             {
                 return false;
             }
 
-            if (!ObjectCache.menuCache.cache["ActivateEvadeSpells"].Enabled || CommonChecks() || Evade.LastWindupTime - EvadeUtils.TickCount > 0)
+            if (!ObjectCache.MenuCache.Cache["ActivateEvadeSpells"].Enabled || CommonChecks() || Evade.LastWindupTime - EvadeUtils.TickCount > 0)
             {
                 return false;
             }
@@ -131,7 +131,7 @@
 
         public static bool CommonChecks()
         {
-            return Evade.IsChanneling || !ObjectCache.menuCache.cache["DodgeOnlyOnComboKeyEnabled"].Enabled && !ObjectCache.menuCache.cache["DodgeComboKey"].As<MenuKeyBind>().Enabled ||
+            return Evade.IsChanneling || !ObjectCache.MenuCache.Cache["DodgeOnlyOnComboKeyEnabled"].Enabled && !ObjectCache.MenuCache.Cache["DodgeComboKey"].As<MenuKeyBind>().Enabled ||
                    myHero.IsDead || myHero.IsInvulnerable || myHero.IsTargetable == false || HasSpellShield(myHero) || ChampionSpecificChecks() || myHero.IsDashing() || Evade.HasGameEnded;
         }
 

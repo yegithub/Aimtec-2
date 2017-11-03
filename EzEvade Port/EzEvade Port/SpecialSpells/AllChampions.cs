@@ -140,7 +140,7 @@
 
         private void Game_OnWndProc(WndProcEventArgs e)
         {
-            if (!ObjectCache.menuCache.cache["ClickRemove"].Enabled)
+            if (!ObjectCache.MenuCache.Cache["ClickRemove"].Enabled)
             {
                 return;
             }

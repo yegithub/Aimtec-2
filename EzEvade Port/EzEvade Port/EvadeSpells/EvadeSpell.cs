@@ -86,7 +86,7 @@
             };
 
             Evade.EvadeSpellMenu.Add(newSpellMenu);
-            ObjectCache.menuCache.AddMenuToCache(newSpellMenu);
+            ObjectCache.MenuCache.AddMenuToCache(newSpellMenu);
 
             return newSpellMenu;
         }
@@ -109,7 +109,7 @@
             }
 
             return SpellDetector.Spells.Select(entry => entry.Value).
-                Where(spell => ObjectCache.myHeroCache.serverPos2D.InSkillShot(spell, ObjectCache.myHeroCache.boundingRadius)).
+                Where(spell => ObjectCache.MyHeroCache.ServerPos2D.InSkillShot(spell, ObjectCache.MyHeroCache.BoundingRadius)).
                 Any(spell => ActivateEvadeSpell(spell, true));
         }
 
@@ -141,10 +141,10 @@
 
             var sortedEvadeSpells = EvadeSpells.OrderBy(s => s.Dangerlevel);
 
-            var extraDelayBuffer = ObjectCache.menuCache.cache["ExtraPingBuffer"].As<MenuSlider>().Value;
-            var spellActivationTime = ObjectCache.menuCache.cache["SpellActivationTime"].As<MenuSlider>().Value + ObjectCache.gamePing + extraDelayBuffer;
+            var extraDelayBuffer = ObjectCache.MenuCache.Cache["ExtraPingBuffer"].As<MenuSlider>().Value;
+            var spellActivationTime = ObjectCache.MenuCache.Cache["SpellActivationTime"].As<MenuSlider>().Value + ObjectCache.GamePing + extraDelayBuffer;
 
-            if (ObjectCache.menuCache.cache["CalculateWindupDelay"].Enabled)
+            if (ObjectCache.MenuCache.Cache["CalculateWindupDelay"].Enabled)
             {
                 var extraWindupDelay = Evade.LastWindupTime - EvadeUtils.TickCount;
                 if (extraWindupDelay > 0)
@@ -191,7 +191,7 @@
                         if (path.Length > 0)
                         {
                             var movePos = path[path.Length - 1].To2D();
-                            var posInfo = EvadeHelper.CanHeroWalkToPos(movePos, ObjectCache.myHeroCache.moveSpeed, 0, 0);
+                            var posInfo = EvadeHelper.CanHeroWalkToPos(movePos, ObjectCache.MyHeroCache.MoveSpeed, 0, 0);
 
                             if (GetSpellDangerLevel(evadeSpell) > posInfo.posDangerLevel)
                             {
@@ -201,7 +201,7 @@
                     }
                 }
 
-                if (evadeSpell.EvadeType != EvadeType.Dash && spellHitTime > evadeSpell.SpellDelay + 100 + Game.Ping + ObjectCache.menuCache.cache["ExtraPingBuffer"].As<MenuSlider>().Value)
+                if (evadeSpell.EvadeType != EvadeType.Dash && spellHitTime > evadeSpell.SpellDelay + 100 + Game.Ping + ObjectCache.MenuCache.Cache["ExtraPingBuffer"].As<MenuSlider>().Value)
                 {
                     processSpell = false;
 
@@ -264,9 +264,9 @@
                                 {
                                     if (evadeSpell.IsReversed)
                                     {
-                                        var dir = (posInfo.position - ObjectCache.myHeroCache.serverPos2D).Normalized();
-                                        var range = ObjectCache.myHeroCache.serverPos2D.Distance(posInfo.position);
-                                        var pos = ObjectCache.myHeroCache.serverPos2D - dir * range;
+                                        var dir = (posInfo.position - ObjectCache.MyHeroCache.ServerPos2D).Normalized();
+                                        var range = ObjectCache.MyHeroCache.ServerPos2D.Distance(posInfo.position);
+                                        var pos = ObjectCache.MyHeroCache.ServerPos2D - dir * range;
 
                                         posInfo.position = pos;
                                     }
@@ -296,8 +296,8 @@
                         case EvadeType.WindWall:
                             if (spell.HasProjectile() || evadeSpell.SpellName == "FioraW")
                             {
-                                var dir = (spell.StartPos - ObjectCache.myHeroCache.serverPos2D).Normalized();
-                                var pos = ObjectCache.myHeroCache.serverPos2D + dir * 100;
+                                var dir = (spell.StartPos - ObjectCache.MyHeroCache.ServerPos2D).Normalized();
+                                var pos = ObjectCache.MyHeroCache.ServerPos2D + dir * 100;
 
                                 if (processSpell)
                                 {
@@ -427,16 +427,16 @@
                 return false;
             }
 
-            if (ObjectCache.menuCache.cache["DodgeSkillShots"].As<MenuKeyBind>().Enabled)
+            if (ObjectCache.MenuCache.Cache["DodgeSkillShots"].As<MenuKeyBind>().Enabled)
             {
-                if (Evade.LastPosInfo.undodgeableSpells.Contains(spell.SpellId) && ObjectCache.myHeroCache.serverPos2D.InSkillShot(spell, ObjectCache.myHeroCache.boundingRadius))
+                if (Evade.LastPosInfo.undodgeableSpells.Contains(spell.SpellId) && ObjectCache.MyHeroCache.ServerPos2D.InSkillShot(spell, ObjectCache.MyHeroCache.BoundingRadius))
                 {
                     return true;
                 }
             }
             else
             {
-                if (ObjectCache.myHeroCache.serverPos2D.InSkillShot(spell, ObjectCache.myHeroCache.boundingRadius))
+                if (ObjectCache.MyHeroCache.ServerPos2D.InSkillShot(spell, ObjectCache.MyHeroCache.BoundingRadius))
                 {
                     return true;
                 }

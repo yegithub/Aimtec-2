@@ -53,7 +53,7 @@
             fireDummySpellMenu.Add(new MenuSlider("SpellInterval", "Spell Interval", 2500, 0, 5000));
 
             menu.Add(fireDummySpellMenu);
-            ObjectCache.menuCache.AddMenuToCache(menu);
+            ObjectCache.MenuCache.AddMenuToCache(menu);
             menu.Attach();
 
             LoadSpellDictionary();
@@ -139,7 +139,7 @@
 
                     //lastSpellFireTime = EvadeUtils.TickCount;
 
-                    if (!ObjectCache.menuCache.cache.ContainsKey(spellName + "DodgeSpell"))
+                    if (!ObjectCache.MenuCache.Cache.ContainsKey(spellName + "DodgeSpell"))
                     {
                         SpellDetector.LoadDummySpell(spellData);
                     }

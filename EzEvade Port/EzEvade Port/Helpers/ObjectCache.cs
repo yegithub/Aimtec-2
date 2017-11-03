@@ -11,18 +11,18 @@
 
     public class HeroInfo
     {
-        public float boundingRadius;
-        public Vector2 currentPosition;
+        public float BoundingRadius;
+        public Vector2 CurrentPosition;
         public bool HasPath;
-        public Obj_AI_Hero hero;
-        public float moveSpeed;
-        public Vector2 serverPos2D;
-        public Vector2 serverPos2DExtra;
-        public Vector2 serverPos2DPing;
+        public Obj_AI_Hero Hero;
+        public float MoveSpeed;
+        public Vector2 ServerPos2D;
+        public Vector2 ServerPos2DExtra;
+        public Vector2 ServerPos2DPing;
 
         public HeroInfo(Obj_AI_Hero hero)
         {
-            this.hero = hero;
+            this.Hero = hero;
             Game.OnUpdate += Game_OnGameUpdate;
         }
 
@@ -36,15 +36,15 @@
             try
             {
                 // fix
-                var extraDelayBuffer = ObjectCache.menuCache.cache["ExtraPingBuffer"].As<MenuSlider>().Value;
-                serverPos2D = hero.ServerPosition.To2D(); //CalculatedPosition.GetPosition(hero, Game.Ping);
-                serverPos2DExtra = EvadeUtils.GetGamePosition(hero, Game.Ping + extraDelayBuffer);
-                serverPos2DPing = EvadeUtils.GetGamePosition(hero, Game.Ping);
+                var extraDelayBuffer = ObjectCache.MenuCache.Cache["ExtraPingBuffer"].As<MenuSlider>().Value;
+                ServerPos2D = Hero.ServerPosition.To2D(); //CalculatedPosition.GetPosition(hero, Game.Ping);
+                ServerPos2DExtra = EvadeUtils.GetGamePosition(Hero, Game.Ping + extraDelayBuffer);
+                ServerPos2DPing = EvadeUtils.GetGamePosition(Hero, Game.Ping);
                 //CalculatedPosition.GetPosition(hero, Game.Ping + extraDelayBuffer);            
-                currentPosition = hero.Position.To2D(); //CalculatedPosition.GetPosition(hero, 0); 
-                boundingRadius = hero.BoundingRadius;
-                moveSpeed = hero.MoveSpeed;
-                HasPath = hero.HasPath;
+                CurrentPosition = Hero.Position.To2D(); //CalculatedPosition.GetPosition(hero, 0); 
+                BoundingRadius = Hero.BoundingRadius;
+                MoveSpeed = Hero.MoveSpeed;
+                HasPath = Hero.HasPath;
             }
             catch (Exception e)
             {
@@ -56,12 +56,12 @@
 
     public class MenuCache
     {
-        public Dictionary<string, MenuComponent> cache = new Dictionary<string, MenuComponent>();
-        public Menu menu;
+        public Dictionary<string, MenuComponent> Cache = new Dictionary<string, MenuComponent>();
+        public Menu Menu;
 
         public MenuCache(Menu menu)
         {
-            this.menu = menu;
+            this.Menu = menu;
 
             AddMenuToCache(menu);
         }
@@ -76,25 +76,11 @@
 
         public void AddMenuComponentToCache(MenuComponent item)
         {
-            if (item != null && !cache.ContainsKey(item.InternalName))
+            if (item != null && !Cache.ContainsKey(item.InternalName))
             {
-                cache.Add(item.InternalName, item);
+                Cache.Add(item.InternalName, item);
             }
         }
-
-        //public static List<MenuItem> ReturnAllItems(Menu menu)
-        //{
-        //    List<MenuItem> menuList = new List<MenuItem>();
-
-        //    menuList.AddRange(menu.Items);
-
-        //    foreach (var submenu in menu.Children)
-        //    {
-        //        menuList.AddRange(ReturnAllItems(submenu));
-        //    }
-
-        //    return menuList;
-        //}
 
         public static List<MenuComponent> ReturnAllItems(Menu menu)
         {
@@ -117,32 +103,28 @@
 
                 foreach (var item2 in asmenu.Children.Values)
                 {
-                    if (item2 == item)
+                    if (item2 == item || item2 == null)
                     {
                         continue;
                     }
 
-                    if (item2 != null)
-                    {
-                        Console.WriteLine(item2.InternalName);
-                        menuList.Add(item2);
-                    }
+                    Console.WriteLine(item2.InternalName);
+                    menuList.Add(item2);
                 }
             }
-            // menuList.AddRange(menu.OfType<MenuComponent>());
-
+        
             return menuList;
         }
     }
 
     public static class ObjectCache
     {
-        public static Dictionary<int, Obj_AI_Turret> turrets = new Dictionary<int, Obj_AI_Turret>();
+        public static Dictionary<int, Obj_AI_Turret> Turrets = new Dictionary<int, Obj_AI_Turret>();
 
-        public static HeroInfo myHeroCache = new HeroInfo(myHero);
-        public static MenuCache menuCache = new MenuCache(Evade.Menu);
+        public static HeroInfo MyHeroCache = new HeroInfo(ObjectManager.GetLocalPlayer());
+        public static MenuCache MenuCache = new MenuCache(Evade.Menu);
 
-        public static float gamePing;
+        public static float GamePing;
 
         static ObjectCache()
         {
@@ -150,20 +132,18 @@
             Game.OnUpdate += Game_OnGameUpdate;
         }
 
-        private static Obj_AI_Hero myHero => ObjectManager.GetLocalPlayer();
-
         private static void Game_OnGameUpdate()
         {
-            gamePing = Game.Ping;
+            GamePing = Game.Ping;
         }
 
         private static void InitializeCache()
         {
             foreach (var obj in ObjectManager.Get<Obj_AI_Turret>())
             {
-                if (!turrets.ContainsKey(obj.NetworkId))
+                if (!Turrets.ContainsKey(obj.NetworkId))
                 {
-                    turrets.Add(obj.NetworkId, obj);
+                    Turrets.Add(obj.NetworkId, obj);
                 }
             }
         }

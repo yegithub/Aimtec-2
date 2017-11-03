@@ -24,7 +24,7 @@
                 {
                     var target = args.Target as Obj_AI_Base;
 
-                    var spellDelay = (350 - ObjectCache.gamePing) / 1000;
+                    var spellDelay = (350 - ObjectCache.GamePing) / 1000;
                     var heroWalkDir = (target.ServerPosition - target.Position).Normalized();
                     var predictedHeroPos = target.Position + heroWalkDir * target.MoveSpeed * spellDelay;
 
