@@ -1,5 +1,6 @@
 ﻿namespace Adept_AIO.Champions.Zed.Core
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
@@ -42,7 +43,7 @@
         public static void OnCreate(GameObject sender)
         {
             var shadow = sender as Obj_AI_Minion;
-            if (shadow == null || !IsShadow(shadow) || Game.TickCount - SpellManager.LastR > 200 && Game.TickCount - SpellManager.LastR <= 1000)
+            if (shadow == null || !IsShadow(shadow) || Environment.TickCount - SpellManager.LastR > 200 && Environment.TickCount - SpellManager.LastR <= 1000)
             {
                 return;
             }

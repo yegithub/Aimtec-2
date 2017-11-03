@@ -1,5 +1,6 @@
 ﻿namespace Adept_AIO.Champions.Jax.Drawings
 {
+    using System;
     using System.Drawing;
     using System.Linq;
     using Aimtec;
@@ -31,10 +32,10 @@
                 return;
             }
 
-            if (MenuConfig.Drawings["E"].Enabled && SpellConfig.E.LastCastAttemptT > 0 && Game.TickCount - SpellConfig.E.LastCastAttemptT < 2000)
+            if (MenuConfig.Drawings["E"].Enabled && SpellConfig.E.LastCastAttemptT > 0 && Environment.TickCount - SpellConfig.E.LastCastAttemptT < 2000)
             {
                 Render.WorldToScreen(Global.Player.Position, out var screen);
-                Render.Text("Time Until Q: " + (Game.TickCount - SpellConfig.E.LastCastAttemptT) + " / 2000", new Vector2(screen.X - 55, screen.Y + 40), RenderTextFlags.Center, Color.Cyan);
+                Render.Text("Time Until Q: " + (Environment.TickCount - SpellConfig.E.LastCastAttemptT) + " / 2000", new Vector2(screen.X - 55, screen.Y + 40), RenderTextFlags.Center, Color.Cyan);
             }
 
             if (MenuConfig.Drawings["Q"].Enabled && SpellConfig.Q.Ready)

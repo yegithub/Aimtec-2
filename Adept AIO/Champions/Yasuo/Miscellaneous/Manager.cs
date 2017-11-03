@@ -1,5 +1,6 @@
 ﻿namespace Adept_AIO.Champions.Yasuo.Miscellaneous
 {
+    using System;
     using System.Threading;
     using Aimtec;
     using Aimtec.SDK.Orbwalking;
@@ -69,7 +70,7 @@
             if (sender.IsEnemy && (buff.Type == BuffType.Knockup || buff.Type == BuffType.Knockback))
             {
                 KnockUpHelper.Sender = sender;
-                KnockUpHelper.KnockedUpTick = Game.TickCount;
+                KnockUpHelper.KnockedUpTick = Environment.TickCount;
                 KnockUpHelper.BuffStart = (int) buff.StartTime;
                 KnockUpHelper.BuffEnd = (int) buff.EndTime;
             }

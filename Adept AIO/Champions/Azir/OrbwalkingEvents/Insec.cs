@@ -1,5 +1,6 @@
 ﻿namespace Adept_AIO.Champions.Azir.OrbwalkingEvents
 {
+    using System;
     using System.Linq;
     using Aimtec;
     using Aimtec.SDK.Events;
@@ -72,7 +73,7 @@
                 if (SummonerSpells.IsValid(SummonerSpells.Flash) && MenuConfig.InsecMenu["Flash"].Enabled && SpellConfig.R.Ready && !SpellConfig.Q.Ready && !SpellConfig.E.Ready && dist > 450 &&
                     soldierPos.Distance(target) > 450 && !Global.Player.IsDashing())
                 {
-                    if (Game.TickCount - AzirHelper.LastE <= 900 || Game.TickCount - AzirHelper.LastQ <= 900)
+                    if (Environment.TickCount - AzirHelper.LastE <= 900 || Environment.TickCount - AzirHelper.LastQ <= 900)
                     {
                         return;
                     }

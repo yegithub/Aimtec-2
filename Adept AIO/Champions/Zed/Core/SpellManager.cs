@@ -1,5 +1,6 @@
 ﻿namespace Adept_AIO.Champions.Zed.Core
 {
+    using System;
     using System.Linq;
     using Aimtec;
     using Aimtec.SDK.Extensions;
@@ -37,10 +38,10 @@
             switch (args.SpellSlot)
             {
                 case SpellSlot.R:
-                    LastR = Game.TickCount;
+                    LastR = Environment.TickCount;
                     break;
                 case SpellSlot.W:
-                    LastW = Game.TickCount;
+                    LastW = Environment.TickCount;
                     break;
             }
         }
@@ -56,9 +57,9 @@
             {
                 W.Cast();
             }
-            else if (ShadowManager.CanCastW1() && Game.TickCount - LastW > Game.Ping + 100)
+            else if (ShadowManager.CanCastW1() && Environment.TickCount - LastW > Game.Ping + 100)
             {
-                LastW = Game.TickCount;
+                LastW = Environment.TickCount;
                 W.Cast(target.ServerPosition);
             }
         }

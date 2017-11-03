@@ -187,6 +187,7 @@
     <Compile Include="Champions\Lucian\OrbwalkingEvents\LaneClear.cs" />
     <Compile Include="Champions\Riven\Core\Enums.cs" />
     <Compile Include="Champions\Riven\Miscellaneous\AntiGapcloser.cs" />
+    <Compile Include="Champions\Riven\OrbwalkingEvents\Combo\Combo2.cs" />
     <Compile Include="Champions\Riven\OrbwalkingEvents\Combo\FastCombo.cs" />
     <Compile Include="Champions\Riven\OrbwalkingEvents\Combo\MaximizeDmg.cs" />
     <Compile Include="Champions\Tristana\Core\Dmg.cs" />

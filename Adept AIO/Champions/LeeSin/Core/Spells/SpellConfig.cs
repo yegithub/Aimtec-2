@@ -1,5 +1,6 @@
 ﻿namespace Adept_AIO.Champions.LeeSin.Core.Spells
 {
+    using System;
     using System.Linq;
     using Aimtec;
     using Aimtec.SDK.Extensions;
@@ -14,7 +15,7 @@
         private const string PassiveName = "blindmonkpassive_cosmetic";
         public float LastQ1CastAttempt { get; set; }
 
-        public bool QAboutToEnd => Game.TickCount - this.LastQ1CastAttempt >= 3100 - Game.Ping / 2f;
+        public bool QAboutToEnd => Environment.TickCount - this.LastQ1CastAttempt >= 3100 - Game.Ping / 2f;
 
         public bool IsQ2()
         {
@@ -98,7 +99,7 @@
 
             if (args.SpellSlot == SpellSlot.Q && args.SpellData.Name.ToLower().Contains("one"))
             {
-                this.LastQ1CastAttempt = Game.TickCount;
+                this.LastQ1CastAttempt = Environment.TickCount;
             }
         }
     }

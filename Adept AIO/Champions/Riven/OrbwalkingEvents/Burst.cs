@@ -105,7 +105,7 @@
                     {
                         SpellConfig.R.Cast();
                     }
-                    else if (SpellConfig.E.Ready && Enums.UltimateMode == UltimateMode.Second && Game.TickCount - SpellConfig.R.LastCastAttemptT >= 1100)
+                    else if (SpellConfig.E.Ready && Enums.UltimateMode == UltimateMode.Second && Environment.TickCount - SpellConfig.R.LastCastAttemptT >= 1100)
                     {
                         SpellConfig.E.Cast(target.ServerPosition);
                         SpellConfig.R2.Cast(target.ServerPosition);

@@ -1,5 +1,6 @@
 ﻿namespace Adept_AIO.Champions.Jax.Miscellaneous
 {
+    using System;
     using Aimtec;
     using Aimtec.SDK.Orbwalking;
     using Core;
@@ -31,7 +32,7 @@
                 return;
             }
 
-            if (Game.TickCount - SpellConfig.E.LastCastAttemptT > 2000 + Game.Ping / 2)
+            if (Environment.TickCount - SpellConfig.E.LastCastAttemptT > 2000 + Game.Ping / 2)
             {
                 SpellConfig.E.LastCastAttemptT = 0;
             }

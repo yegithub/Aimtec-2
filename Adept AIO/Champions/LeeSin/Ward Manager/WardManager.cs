@@ -1,5 +1,6 @@
 ﻿namespace Adept_AIO.Champions.LeeSin.Ward_Manager
 {
+    using System;
     using Aimtec;
     using Aimtec.SDK.Extensions;
     using SDK.Generic;
@@ -19,7 +20,7 @@
 
         public void WardJump(Vector3 position, int range)
         {
-            if (Game.TickCount - _wardTracker.LastWardCreated < 500)
+            if (Environment.TickCount - _wardTracker.LastWardCreated < 500)
             {
                 return;
             }
@@ -34,8 +35,8 @@
 
             position = Global.Player.ServerPosition.Extend(position, range);
 
-            this.LastTimeCasted = Game.TickCount;
-            _wardTracker.LastWardCreated = Game.TickCount;
+            this.LastTimeCasted = Environment.TickCount;
+            _wardTracker.LastWardCreated = Environment.TickCount;
             _wardTracker.WardPosition = position;
 
             Items.CastItem(ward, position);

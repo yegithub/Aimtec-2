@@ -18,20 +18,21 @@
     {
         public static void OnPostAttack(object sender, PostAttackEventArgs args)
         {
-            switch (Enums.ComboPattern)
-            {
-                case ComboPattern.MaximizeDmg:
-                    MaximizeDmg.OnPostAttack(sender, args);
-                    break;
+            Combo2.OnPostAttack(sender, args);
+            //switch (Enums.ComboPattern)
+            //{
+            //    case ComboPattern.MaximizeDmg:
+            //        MaximizeDmg.OnPostAttack(sender, args);
+            //        break;
 
-                case ComboPattern.Normal: break;
+            //    case ComboPattern.Normal: break;
 
-                case ComboPattern.FastCombo:
-                    FastCombo.OnPostAttack(sender, args);
-                    break;
+            //    case ComboPattern.FastCombo:
+            //        FastCombo.OnPostAttack(sender, args);
+            //        break;
 
-                default: throw new ArgumentOutOfRangeException();
-            }
+            //    default: throw new ArgumentOutOfRangeException();
+            //}
         }
 
         public static void OnUpdate()
@@ -43,28 +44,28 @@
 
         private static void Manage()
         {
-            Enums.ComboPattern = Generate();
+            //Enums.ComboPattern = Generate();
 
             var target = Global.TargetSelector.GetTarget(Extensions.EngageRange);
             if (target == null)
             {
                 return;
             }
+            Combo2.OnUpdate();
+            //switch (Enums.ComboPattern)
+            //{
+            //    case ComboPattern.MaximizeDmg:
+            //        MaximizeDmg.OnUpdate(target);
+            //        break;
 
-            switch (Enums.ComboPattern)
-            {
-                case ComboPattern.MaximizeDmg:
-                    MaximizeDmg.OnUpdate(target);
-                    break;
+            //    case ComboPattern.Normal: break;
 
-                case ComboPattern.Normal: break;
+            //    case ComboPattern.FastCombo:
+            //        FastCombo.OnUpdate(target);
+            //        break;
 
-                case ComboPattern.FastCombo:
-                    FastCombo.OnUpdate(target);
-                    break;
-
-                default: throw new ArgumentOutOfRangeException();
-            }
+            //    default: throw new ArgumentOutOfRangeException();
+            //}
         }
 
         private static ComboPattern Generate()

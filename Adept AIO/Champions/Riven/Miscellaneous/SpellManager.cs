@@ -1,6 +1,8 @@
 ﻿namespace Adept_AIO.Champions.Riven.Miscellaneous
 {
+    using System;
     using System.Linq;
+    using System.Threading;
     using Aimtec;
     using Aimtec.SDK.Extensions;
     using Aimtec.SDK.Util;
@@ -32,7 +34,7 @@
             switch (args.SpellData.Name)
             {
                 case "RivenTriCleave":
-                    Extensions.LastQCastAttempt = Game.TickCount;
+                    Extensions.LastQCastAttempt = Environment.TickCount;
                     _canUseQ = false;
                     _canWq = false;
                     _serverPosition = false;
@@ -41,7 +43,7 @@
                     _canUseW = false;
                     break;
                 case "RivenFengShuiEngine":
-                    LastR = Game.TickCount;
+                    LastR = Environment.TickCount;
                     Enums.UltimateMode = UltimateMode.Second;
                     Maths.DisableAutoAttack(200);
                     break;
@@ -118,11 +120,14 @@
                 return;
             }
 
-            SpellConfig.R2.Cast(target);
-
-            if (target.IsValidTarget(Global.Player.AttackRange + 80))
+            if (target.IsValidAutoRange())
             {
                 Items.CastTiamat();
+                DelayAction.Queue(300, () => SpellConfig.R2.Cast(target), new CancellationToken(false));
+            }
+            else
+            {
+                SpellConfig.R2.Cast(target);
             }
         }
     }

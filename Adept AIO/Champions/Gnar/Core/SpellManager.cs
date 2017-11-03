@@ -1,5 +1,6 @@
 ﻿namespace Adept_AIO.Champions.Gnar.Core
 {
+    using System;
     using Aimtec;
     using Aimtec.SDK.Extensions;
     using Aimtec.SDK.Prediction.Skillshots;
@@ -41,7 +42,7 @@
                 GnarState = GnarState.Small;
             }
 
-            if (Game.TickCount - _lastCheckTick <= 1000)
+            if (Environment.TickCount - _lastCheckTick <= 1000)
             {
                 return;
             }
@@ -53,7 +54,7 @@
 
                 E = new Spell(SpellSlot.E, 475);
                 E.SetSkillshot(0.5f, 150, float.MaxValue, false, SkillshotType.Circle);
-                _lastCheckTick = Game.TickCount;
+                _lastCheckTick = Environment.TickCount;
             }
             else
             {
@@ -65,7 +66,7 @@
 
                 E = new Spell(SpellSlot.E, 475);
                 E.SetSkillshot(0.6f, 60, 1500, false, SkillshotType.Circle);
-                _lastCheckTick = Game.TickCount;
+                _lastCheckTick = Environment.TickCount;
             }
         }
 

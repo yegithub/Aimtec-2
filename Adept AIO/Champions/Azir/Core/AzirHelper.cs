@@ -1,5 +1,6 @@
 ﻿namespace Adept_AIO.Champions.Azir.Core
 {
+    using System;
     using Aimtec;
     using Aimtec.SDK.Orbwalking;
     using SDK.Geometry_Related;
@@ -21,16 +22,16 @@
             switch (args.SpellSlot)
             {
                 case SpellSlot.Q:
-                    LastQ = Game.TickCount;
+                    LastQ = Environment.TickCount;
                     break;
                 case SpellSlot.W:
-                    LastW = Game.TickCount;
+                    LastW = Environment.TickCount;
                     break;
                 case SpellSlot.E:
-                    LastE = Game.TickCount;
+                    LastE = Environment.TickCount;
                     break;
                 case SpellSlot.R:
-                    LastR = Game.TickCount;
+                    LastR = Environment.TickCount;
                     break;
             }
         }

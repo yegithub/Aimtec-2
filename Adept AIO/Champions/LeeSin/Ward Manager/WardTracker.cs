@@ -1,5 +1,6 @@
 ﻿namespace Adept_AIO.Champions.LeeSin.Ward_Manager
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Aimtec;
@@ -19,7 +20,7 @@
             _spellConfig = spellConfig;
         }
 
-        public bool DidJustWard => Game.TickCount - this.LastWardCreated <= 800 + Game.Ping / 2f;
+        public bool DidJustWard => Environment.TickCount - this.LastWardCreated <= 800 + Game.Ping / 2f;
 
         public bool IsWardReady()
         {
@@ -53,7 +54,7 @@
                 return;
             }
 
-            this.LastWardCreated = Game.TickCount;
+            this.LastWardCreated = Environment.TickCount;
             this.WardName = ward.Name;
             this.WardPosition = ward.ServerPosition;
 

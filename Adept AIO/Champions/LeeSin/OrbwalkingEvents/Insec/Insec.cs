@@ -1,5 +1,6 @@
 ﻿namespace Adept_AIO.Champions.LeeSin.OrbwalkingEvents.Insec
 {
+    using System;
     using System.Linq;
     using Aimtec;
     using Aimtec.SDK.Damage;
@@ -107,13 +108,13 @@
                 }
                 else
                 {
-                    if (Game.TickCount - _spellConfig.LastQ1CastAttempt <= 900 || _lastQUnit != null && _spellConfig.IsQ2() && InsecInRange(_lastQUnit.ServerPosition) ||
+                    if (Environment.TickCount - _spellConfig.LastQ1CastAttempt <= 900 || _lastQUnit != null && _spellConfig.IsQ2() && InsecInRange(_lastQUnit.ServerPosition) ||
                         this.ObjectEnabled && _spellConfig.Q.Ready)
                     {
                         return;
                     }
 
-                    if (!this.FlashReady || Game.TickCount - _spellConfig.Q.LastCastAttemptT <= 1000)
+                    if (!this.FlashReady || Environment.TickCount - _spellConfig.Q.LastCastAttemptT <= 1000)
                     {
                         return;
                     }

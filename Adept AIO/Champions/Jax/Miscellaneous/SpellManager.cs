@@ -1,5 +1,6 @@
 ﻿namespace Adept_AIO.Champions.Jax.Miscellaneous
 {
+    using System;
     using Aimtec;
     using Aimtec.SDK.Extensions;
     using Core;
@@ -32,7 +33,7 @@
                 return;
             }
 
-            if (Game.TickCount - SpellConfig.E.LastCastAttemptT > 1700 || _unit.Distance(Global.Player) <= SpellConfig.E.Range + _unit.BoundingRadius)
+            if (Environment.TickCount - SpellConfig.E.LastCastAttemptT > 1700 || _unit.Distance(Global.Player) <= SpellConfig.E.Range + _unit.BoundingRadius)
             {
                 SpellConfig.E.Cast(_unit);
             }

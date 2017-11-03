@@ -1,5 +1,6 @@
 ﻿namespace Adept_AIO.Champions.Jax.OrbwalkingEvents
 {
+    using System;
     using System.Linq;
     using Aimtec;
     using Aimtec.SDK.Extensions;
@@ -49,7 +50,7 @@
             }
 
             if (MenuConfig.Combo["Jump"].Enabled && !(SpellConfig.E.Ready || Dmg.Damage(target) > target.Health * 0.75f) || MenuConfig.Combo["Delay"].Enabled &&
-                (Game.TickCount - SpellConfig.E.LastCastAttemptT < 800 || SpellConfig.E.Ready && SpellConfig.E.LastCastAttemptT == 0))
+                (Environment.TickCount - SpellConfig.E.LastCastAttemptT < 800 || SpellConfig.E.Ready && SpellConfig.E.LastCastAttemptT == 0))
             {
                 return;
             }

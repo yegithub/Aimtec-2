@@ -14,7 +14,7 @@
             Global.Orbwalker.AttackingEnabled = false;
 
             var ultimateDelay = Global.Player.HasBuff("RivenFengShuiEngine") ? 100 : 50;
-            var qDelay = Extensions.CurrentQCount == 3 ? 100 : 30;
+            var qDelay = Extensions.CurrentQCount == 1 ? 140 : 30;
             var ping = Game.Ping / 2;
 
             DelayAction.Queue(ping + ultimateDelay + qDelay, () => Global.Orbwalker.Move(Game.CursorPos), new CancellationToken(false));
@@ -30,7 +30,7 @@
 
         private static float GetDelay()
         {
-            return (Extensions.CurrentQCount == 3 ? 430 : 330) - 3.333f * Global.Player.Level;
+            return (Extensions.CurrentQCount == 1 ? 460 : 330) - 3.333f * Global.Player.Level;
         }
 
         public static void OnPlayAnimation(Obj_AI_Base sender, Obj_AI_BasePlayAnimationEventArgs args)

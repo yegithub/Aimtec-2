@@ -1,5 +1,6 @@
 ﻿namespace Adept_AIO.Champions.Jax.OrbwalkingEvents
 {
+    using System;
     using Aimtec;
     using Core;
     using Miscellaneous;
@@ -32,7 +33,7 @@
             {
                 SpellManager.CastE(target);
             }
-            else if (SpellConfig.Q.Ready && MenuConfig.Harass["Q"].Enabled && Game.TickCount - SpellConfig.E.LastCastAttemptT >= 1800 || SpellConfig.E.LastCastAttemptT <= 0)
+            else if (SpellConfig.Q.Ready && MenuConfig.Harass["Q"].Enabled && Environment.TickCount - SpellConfig.E.LastCastAttemptT >= 1800 || SpellConfig.E.LastCastAttemptT <= 0)
             {
                 SpellConfig.Q.CastOnUnit(target);
             }

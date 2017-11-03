@@ -1,5 +1,6 @@
 ﻿namespace Adept_AIO.Champions.Yasuo.Core
 {
+    using System;
     using System.Linq;
     using Aimtec;
     using Aimtec.SDK.Events;
@@ -46,7 +47,7 @@
                 return false;
             }
 
-            var time = Game.TickCount - (buff.StartTime * 1000 - buff.Full);
+            var time = Environment.TickCount - (buff.StartTime * 1000 - buff.Full);
 
             return time >= timeUntilValid - Game.Ping / 2 && time <= 1200;
         }
