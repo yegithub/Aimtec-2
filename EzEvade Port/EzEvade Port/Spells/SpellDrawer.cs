@@ -8,7 +8,7 @@
     using Core;
     using Helpers;
 
-    class SpellDrawer
+    internal class SpellDrawer
     {
         public static Menu Menu;
 
@@ -22,7 +22,7 @@
 
         private static Obj_AI_Hero MyHero => ObjectManager.GetLocalPlayer();
 
-        private void Game_OnGameLoad()
+        private static void Game_OnGameLoad()
         {
             Evade.DrawMenu = new Menu("Draw", "Draw")
             {
@@ -45,13 +45,13 @@
             Menu.Add(Evade.DrawMenu);
         }
 
-        private void DrawLineRectangle(Vector2 start, Vector2 end, int radius, int width, Color color)
+        private static void DrawLineRectangle(Vector2 start, Vector2 end, int radius, int width, Color color)
         {
             var rectangle = new Geometry.Rectangle(start.To3D(), end.To3D(), radius);
             rectangle.ToPolygon().Draw(color);
         }
 
-        private void DrawLineTriangle(Vector2 start, Vector2 end, int radius, int width, Color color)
+        private static void DrawLineTriangle(Vector2 start, Vector2 end, int radius, int width, Color color)
         {
             var dir = (end - start).Normalized();
             var pDir = dir.Perpendicular();
@@ -69,7 +69,7 @@
             Render.Line(rEndPos, lEndPos, color);
         }
 
-        private void DrawEvadeStatus()
+        private static void DrawEvadeStatus()
         {
             if (!ObjectCache.MenuCache.Cache["ShowStatus"].Enabled)
             {
@@ -127,7 +127,7 @@
             }
         }
 
-        private void Render_OnPresent()
+        private static void Render_OnPresent()
         {
             if (ObjectCache.MenuCache.Cache["DrawEvadePosition"].Enabled)
             {
@@ -192,8 +192,7 @@
                                 break;
                         }
                         break;
-                    case SpellType.Cone:
-                        DrawLineTriangle(spell.StartPos, spell.EndPos, (int) spell.Radius, spellDrawingWidth, !canEvade ? Color.Yellow : Color.White);
+                    case SpellType.Cone: DrawLineTriangle(spell.StartPos, spell.EndPos, (int) spell.Radius, spellDrawingWidth, !canEvade ? Color.Yellow : Color.White);
                         break;
                 }
             }
