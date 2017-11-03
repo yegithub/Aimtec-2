@@ -48,8 +48,7 @@
                     break;
                 case OrbwalkingMode.Lasthit:
                 case OrbwalkingMode.Laneclear:
-                    if (SpellManager.E.Ready && GameObjects.EnemyMinions.Any(x => x.HasBuff("kalistaexpungemarker") && Dmg.EDmg(x) > x.Health && x.IsValidSpellTarget(SpellManager.E.Range)) &&
-                        MenuConfig.LaneClear["E"].Enabled)
+                    if (SpellManager.E.Ready && GameObjects.EnemyMinions.Any(x => x.HasBuff("kalistaexpungemarker") && x.IsValidTarget(SpellManager.E.Range) && Dmg.EDmg(x) > x.Health) && MenuConfig.LaneClear["E"].Enabled)
                     {
                         SpellManager.E.Cast();
                     }

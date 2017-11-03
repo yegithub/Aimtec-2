@@ -56,7 +56,7 @@
             {
                 var target = Global.Orbwalker.GetOrbwalkingTarget() as Obj_AI_Base;
 
-                if (target != null && target.IsValidTarget() && target.IsHero)
+                if (target != null && target.IsValidTarget(SpellManager.Q.Range + 200) && target.IsHero)
                 {
                     SpellManager.GetRectangle(target)?.Draw(Color.LightCoral);
                 }
