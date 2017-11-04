@@ -23,9 +23,12 @@
             "SivirE"
         };
 
+
+        private static readonly string[] ReviveBuffs = { "chronorevive", "zhonyasringshield", "AatroxPassiveDeath", "rebirth" };
+
         public static double EDmg(Obj_AI_Base target)
         {
-            if (Buffs.Any(target.HasBuff))
+            if (target.ValidActiveBuffs().Any(x => Buffs.Contains(x.Name)) || target.ValidActiveBuffs().Any(x => ReviveBuffs.Contains(x.Name)))
             {
                 return 0;
             }

@@ -23,12 +23,15 @@
             "SivirE"
         };
 
+        private static readonly string[] ReviveBuffs = { "chronorevive", "zhonyasringshield", "AatroxPassiveDeath", "rebirth" };
+
         public static double EDmg(Obj_AI_Base target)
         {
-            if (Buffs.Any(target.HasBuff) || !target.HasBuff("twitchdeadlyvenom"))
+            if (!target.HasBuff("twitchdeadlyvenom") || target.ValidActiveBuffs().Any(x => Buffs.Contains(x.Name)) || target.ValidActiveBuffs().Any(x => ReviveBuffs.Contains(x.Name)))
             {
                 return 0;
             }
+        
 
             return Global.Player.GetSpellDamage(target, SpellSlot.E) + Global.Player.GetSpellDamage(target, SpellSlot.E, DamageStage.Buff);
         }
