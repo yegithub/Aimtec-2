@@ -10,7 +10,7 @@
     {
         public static void OnGapcloser(Obj_AI_Hero sender, GapcloserArgs args)
         {
-            if (!sender.IsEnemy || args.EndPosition.Distance(Global.Player) > 150)
+            if (!sender.IsEnemy || sender.Distance(Global.Player) > SpellManager.E.Range)
             {
                 return;
             }
@@ -21,8 +21,7 @@
                 SpellManager.Q.Cast(pos);
             }
 
-            else if (SpellManager.E.Ready && MenuConfig.Misc["E"].Enabled && args.EndPosition.Distance(Global.Player) < args.StartPosition.Distance(Global.Player) &&
-                     args.EndPosition.Distance(Global.Player) <= 150)
+            if (SpellManager.E.Ready && MenuConfig.Misc["E"].Enabled && args.EndPosition.Distance(Global.Player) < args.StartPosition.Distance(Global.Player))
             {
                 SpellManager.E.CastOnUnit(sender);
             }

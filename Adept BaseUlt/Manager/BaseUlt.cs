@@ -68,7 +68,7 @@
 
         private static void AttatchMenu()
         {
-            Menu = new Menu("hello", $"Adept - BaseUlt | {Global.Player.ChampionName}", true);
+            Menu = new Menu("hello", $"BaseUlt | {Global.Player.ChampionName}", true);
             Menu.Attach();
 
             Menu.Add(new MenuBool("RandomUlt", "Use RandomUlt").SetToolTip("Will GUESS the enemy position and ult there"));
