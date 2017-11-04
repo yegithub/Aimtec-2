@@ -37,10 +37,12 @@
 
             SpellBook.OnCastSpell += Game_OnCastSpell;
             GameObject.OnCreate += Game_OnCreateObj;
-         
-            Evade.AutoSetPingMenu = new Menu("AutoSetPing", "AutoSetPingMenu");
-            Evade.AutoSetPingMenu.Add(new MenuBool("AutoSetPingOn", "Auto Set Ping"));
-            Evade.AutoSetPingMenu.Add(new MenuSlider("AutoSetPercentile", "Auto Set Percentile", 75));
+
+            Evade.AutoSetPingMenu = new Menu("AutoSetPing", "AutoSetPingMenu")
+            {
+                new MenuBool("AutoSetPingOn", "Auto Set Ping"),
+                new MenuSlider("AutoSetPercentile", "Auto Set Percentile", 75)
+            };
 
             mainMenu.Add(Evade.AutoSetPingMenu);
 
@@ -147,7 +149,6 @@
             if (_checkPing && _lastIssueOrderArgs.ProcessEvent && _lastIssueOrderArgs.OrderType == OrderType.MoveTo && _lastIssueOrderArgs.Target.Position.To2D().Distance(movePos) < 3 &&
                 MyHero.Path.Length == 1 && args.Path.Length == 2 && MyHero.HasPath)
             {
-           
                 RenderObjects.Add(new RenderLine(args.Path.First().To2D(), args.Path.Last().To2D(), 1000));
                 RenderObjects.Add(new RenderLine(MyHero.Position.To2D(), MyHero.Path.Last().To2D(), 1000));
 
@@ -158,17 +159,17 @@
                 {
                     return;
                 }
-                
-                var myHeroPosition = new  Vector3(MyHero.Position.X, MyHero.Position.Y, MyHero.Position.Z);
+
+                var myHeroPosition = new Vector3(MyHero.Position.X, MyHero.Position.Y, MyHero.Position.Z);
 
                 var dir1 = (MyHero.Path.Last().To2D() - MyHero.Position.To2D()).Normalized();
 
                 var ray1Startpos = new Vector3(myHeroPosition.X, myHeroPosition.Y, 0);
                 var ray1Dir = new Vector3(dir1.X, dir1.Y, 0);
-             
+
                 var dir2 = (args.Path.First().To2D() - args.Path.Last().To2D()).Normalized();
-             
-                var argsPathFirst = new  Vector3(args.Path.First().X, args.Path.First().Y, args.Path.First().Z);
+
+                var argsPathFirst = new Vector3(args.Path.First().X, args.Path.First().Y, args.Path.First().Z);
 
                 var ray2Startpos = new Vector3(argsPathFirst.X, argsPathFirst.Y, 0);
                 var ray2Dir = new Vector3(dir2.X, dir2.Y, 0);
