@@ -138,7 +138,12 @@
                 return;
             }
 
-            if (Menu["RandomUlt"].Enabled)
+            if (GetCastTime(GetFountainPos(_target)) <= Game.Ping)
+            {
+                _timeUntilCastingUlt = GetCastTime(GetFountainPos(_target));
+                CastUlt(GetFountainPos(_target));
+            }
+            else if (Menu["RandomUlt"].Enabled)
             {
                 var enemy = lastEnemyChecked.FirstOrDefault(x => x.NetworkId == _target.NetworkId);
                 if (enemy == null)
@@ -159,13 +164,6 @@
 
                 Console.WriteLine("RANDOM ULT SUCCESS");
                 CastUlt(_predictedPosition);
-            }
-
-            _timeUntilCastingUlt = GetCastTime(GetFountainPos(_target));
-
-            if (_timeUntilCastingUlt <= Game.Ping)
-            {
-                CastUlt(GetFountainPos(_target));
             }
         }
 
