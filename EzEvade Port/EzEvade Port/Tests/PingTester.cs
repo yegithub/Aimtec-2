@@ -10,36 +10,36 @@
 
     class PingTester
     {
-        public static Menu testMenu;
+        public static Menu TestMenu;
 
-        private static float lastTimerCheck = 0;
-        private static bool lastRandomMoveCoeff;
+        private static float _lastTimerCheck = 0;
+        private static bool _lastRandomMoveCoeff;
 
-        private static float sumPingTime;
-        private static float averagePingTime = ObjectCache.GamePing;
-        private static int testCount;
-        private static int autoTestCount;
-        private static float maxPingTime = ObjectCache.GamePing;
+        private static float _sumPingTime;
+        private static float _averagePingTime = ObjectCache.GamePing;
+        private static int _testCount;
+        private static int _autoTestCount;
+        private static float _maxPingTime = ObjectCache.GamePing;
 
-        private static bool autoTestPing;
+        private static bool _autoTestPing;
 
-        private static EvadeCommand lastTestMoveToCommand;
+        private static EvadeCommand _lastTestMoveToCommand;
 
         public PingTester()
         {
             Game.OnUpdate += Game_OnGameUpdate;
 
-            testMenu = new Menu("PingTest", "Ping Tester", true);
-            testMenu.Add(new MenuBool("AutoSetPing", "Auto Set Ping"));
-            testMenu.Add(new MenuBool("TestMoveTime", "Test Ping"));
-            testMenu.Add(new MenuBool("SetMaxPing", "Set Max Ping"));
-            testMenu.Add(new MenuBool("SetAvgPing", "Set Avg Ping"));
-            testMenu.Add(new MenuBool("Test20MoveTime", "Test Ping x20"));
-            testMenu.Add(new MenuBool("PrintResults", "Print Results"));
-            testMenu.Attach();
+            TestMenu = new Menu("PingTest", "Ping Tester", true);
+            TestMenu.Add(new MenuBool("AutoSetPing", "Auto Set Ping"));
+            TestMenu.Add(new MenuBool("TestMoveTime", "Test Ping"));
+            TestMenu.Add(new MenuBool("SetMaxPing", "Set Max Ping"));
+            TestMenu.Add(new MenuBool("SetAvgPing", "Set Avg Ping"));
+            TestMenu.Add(new MenuBool("Test20MoveTime", "Test Ping x20"));
+            TestMenu.Add(new MenuBool("PrintResults", "Print Results"));
+            TestMenu.Attach();
         }
 
-        private static Obj_AI_Hero myHero => ObjectManager.GetLocalPlayer();
+        private static Obj_AI_Hero MyHero => ObjectManager.GetLocalPlayer();
 
         private void IssueTestMove(int recursionCount)
         {
@@ -47,8 +47,8 @@
 
             var rand = new Random();
 
-            lastRandomMoveCoeff = !lastRandomMoveCoeff;
-            if (lastRandomMoveCoeff)
+            _lastRandomMoveCoeff = !_lastRandomMoveCoeff;
+            if (_lastRandomMoveCoeff)
             {
                 movePos.X += 65 + rand.Next(0, 20);
             }
@@ -57,8 +57,8 @@
                 movePos.X -= 65 + rand.Next(0, 20);
             }
 
-            lastTestMoveToCommand = new EvadeCommand {Order = EvadeOrderCommand.MoveTo, TargetPosition = movePos, Timestamp = Environment.TickCount, IsProcessed = false};
-            myHero.IssueOrder(OrderType.MoveTo, movePos.To3D());
+            _lastTestMoveToCommand = new EvadeCommand {Order = EvadeOrderCommand.MoveTo, TargetPosition = movePos, Timestamp = Environment.TickCount, IsProcessed = false};
+            MyHero.IssueOrder(OrderType.MoveTo, movePos.To3D());
 
             if (recursionCount > 1)
             {
@@ -73,101 +73,101 @@
 
         private void Game_OnGameUpdate()
         {
-            if (testMenu["AutoSetPing"].Enabled)
+            if (TestMenu["AutoSetPing"].Enabled)
             {
                 Console.WriteLine("Testing Ping...Please wait 10 seconds");
 
                 var testAmount = 20;
 
-                testMenu["AutoSetPing"].As<MenuBool>().Value = false;
+                TestMenu["AutoSetPing"].As<MenuBool>().Value = false;
                 IssueTestMove(testAmount);
-                autoTestCount = testCount + testAmount;
-                autoTestPing = true;
+                _autoTestCount = _testCount + testAmount;
+                _autoTestPing = true;
             }
 
-            if (testMenu["PrintResults"].Enabled)
+            if (TestMenu["PrintResults"].Enabled)
             {
-                testMenu["PrintResults"].As<MenuBool>().Value = false;
+                TestMenu["PrintResults"].As<MenuBool>().Value = false;
 
-                Console.WriteLine("Average Extra Delay: " + averagePingTime);
-                Console.WriteLine("Max Extra Delay: " + maxPingTime);
+                Console.WriteLine("Average Extra Delay: " + _averagePingTime);
+                Console.WriteLine("Max Extra Delay: " + _maxPingTime);
             }
 
-            if (autoTestPing && testCount >= autoTestCount)
+            if (_autoTestPing && _testCount >= _autoTestCount)
             {
                 Console.WriteLine("Auto Set Ping Complete");
 
-                Console.WriteLine("Average Extra Delay: " + averagePingTime);
-                Console.WriteLine("Max Extra Delay: " + maxPingTime);
+                Console.WriteLine("Average Extra Delay: " + _averagePingTime);
+                Console.WriteLine("Max Extra Delay: " + _maxPingTime);
 
-                SetPing((int) (averagePingTime + 10));
-                Console.WriteLine("Set Average extra ping + 10: " + (averagePingTime + 10));
+                SetPing((int) (_averagePingTime + 10));
+                Console.WriteLine("Set Average extra ping + 10: " + (_averagePingTime + 10));
 
-                autoTestPing = false;
+                _autoTestPing = false;
             }
 
-            if (testMenu["TestMoveTime"].Enabled)
+            if (TestMenu["TestMoveTime"].Enabled)
             {
-                testMenu["TestMoveTime"].As<MenuBool>().Value = false;
+                TestMenu["TestMoveTime"].As<MenuBool>().Value = false;
                 IssueTestMove(1);
             }
 
-            if (testMenu["Test20MoveTime"].Enabled)
+            if (TestMenu["Test20MoveTime"].Enabled)
             {
-                testMenu["Test20MoveTime"].As<MenuBool>().Value = false;
+                TestMenu["Test20MoveTime"].As<MenuBool>().Value = false;
                 IssueTestMove(20);
             }
 
-            if (testMenu["SetMaxPing"].Enabled)
+            if (TestMenu["SetMaxPing"].Enabled)
             {
-                testMenu["SetMaxPing"].As<MenuBool>().Value = false;
+                TestMenu["SetMaxPing"].As<MenuBool>().Value = false;
 
-                if (testCount < 10)
+                if (_testCount < 10)
                 {
                     Console.WriteLine("Please test 10 times before setting ping");
                 }
                 else
                 {
-                    Console.WriteLine("Set Max extra ping: " + maxPingTime);
-                    SetPing((int) maxPingTime);
+                    Console.WriteLine("Set Max extra ping: " + _maxPingTime);
+                    SetPing((int) _maxPingTime);
                 }
             }
 
-            if (testMenu["SetAvgPing"].Enabled)
+            if (TestMenu["SetAvgPing"].Enabled)
             {
-                testMenu["SetAvgPing"].As<MenuBool>().Value = false;
+                TestMenu["SetAvgPing"].As<MenuBool>().Value = false;
 
-                if (testCount < 10)
+                if (_testCount < 10)
                 {
                     Console.WriteLine("Please test 10 times before setting ping");
                 }
                 else
                 {
-                    Console.WriteLine("Set Average extra ping: " + averagePingTime);
-                    SetPing((int) averagePingTime);
+                    Console.WriteLine("Set Average extra ping: " + _averagePingTime);
+                    SetPing((int) _averagePingTime);
                 }
             }
 
-            if (myHero.HasPath)
+            if (MyHero.HasPath)
             {
-                if (lastTestMoveToCommand != null && lastTestMoveToCommand.IsProcessed == false && lastTestMoveToCommand.Order == EvadeOrderCommand.MoveTo)
+                if (_lastTestMoveToCommand != null && _lastTestMoveToCommand.IsProcessed == false && _lastTestMoveToCommand.Order == EvadeOrderCommand.MoveTo)
                 {
-                    var path = myHero.Path;
+                    var path = MyHero.Path;
 
                     if (path.Length > 0)
                     {
                         var movePos = path[path.Length - 1].To2D();
 
-                        if (movePos.Distance(lastTestMoveToCommand.TargetPosition) < 10)
+                        if (movePos.Distance(_lastTestMoveToCommand.TargetPosition) < 10)
                         {
-                            var moveTime = Environment.TickCount - lastTestMoveToCommand.Timestamp - ObjectCache.GamePing;
+                            var moveTime = Environment.TickCount - _lastTestMoveToCommand.Timestamp - ObjectCache.GamePing;
                             Console.WriteLine("Extra Delay: " + moveTime);
-                            lastTestMoveToCommand.IsProcessed = true;
+                            _lastTestMoveToCommand.IsProcessed = true;
 
-                            sumPingTime += moveTime;
-                            testCount += 1;
-                            averagePingTime = sumPingTime / testCount;
-                            maxPingTime = Math.Max(maxPingTime, moveTime);
+                            _sumPingTime += moveTime;
+                            _testCount += 1;
+                            _averagePingTime = _sumPingTime / _testCount;
+                            _maxPingTime = Math.Max(_maxPingTime, moveTime);
                         }
                     }
                 }

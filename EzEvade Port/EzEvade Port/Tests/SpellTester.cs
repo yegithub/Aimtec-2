@@ -18,44 +18,44 @@
 
     class SpellTester
     {
-        private static Obj_AI_Base test;
+        public static Menu Menu;
+        public static Menu SelectSpellMenu;
 
-        public static Menu menu;
-        public static Menu selectSpellMenu;
+        private static readonly Dictionary<string, Dictionary<string, SpellData>> SpellCache = new Dictionary<string, Dictionary<string, SpellData>>();
 
-        private static readonly Dictionary<string, Dictionary<string, SpellData>> spellCache = new Dictionary<string, Dictionary<string, SpellData>>();
+        public static Vector3 SpellStartPosition = MyHero.ServerPosition;
 
-        public static Vector3 spellStartPosition = myHero.ServerPosition;
+        public static Vector3 SpellEndPostion = MyHero.ServerPosition + (MyHero.Orientation.To2D().Perpendicular() * 500).To3D();
 
-        public static Vector3 spellEndPostion = myHero.ServerPosition + (myHero.Orientation.To2D().Perpendicular() * 500).To3D();
-
-        public static float lastSpellFireTime;
-
-        private bool added = false;
+        public static float LastSpellFireTime;
 
         public SpellTester()
         {
-            menu = new Menu("DummySpellTester", "Spell Tester", true);
+            Menu = new Menu("DummySpellTester", "Spell Tester", true);
 
-            selectSpellMenu = new Menu("SelectSpellMenu", "Select Spell");
-            menu.Add(selectSpellMenu);
+            SelectSpellMenu = new Menu("SelectSpellMenu", "Select Spell");
+            Menu.Add(SelectSpellMenu);
 
-            var setSpellPositionMenu = new Menu("SetPositionMenu", "Set Spell Position");
-            setSpellPositionMenu.Add(new MenuBool("SetDummySpellStartPosition", "Set Start Position"));
-            setSpellPositionMenu.Add(new MenuBool("SetDummySpellEndPosition", "Set End Position"));
+            var setSpellPositionMenu = new Menu("SetPositionMenu", "Set Spell Position")
+            {
+                new MenuBool("SetDummySpellStartPosition", "Set Start Position"),
+                new MenuBool("SetDummySpellEndPosition", "Set End Position")
+            };
             setSpellPositionMenu["SetDummySpellStartPosition"].OnValueChanged += OnSpellStartChange;
             setSpellPositionMenu["SetDummySpellEndPosition"].OnValueChanged += OnSpellEndChange;
 
-            menu.Add(setSpellPositionMenu);
+            Menu.Add(setSpellPositionMenu);
 
-            var fireDummySpellMenu = new Menu("FireDummySpellMenu", "Fire Dummy Spell");
-            fireDummySpellMenu.Add(new MenuKeyBind("FireDummySpell", "Fire Dummy Spell Key", KeyCode.O, KeybindType.Press));
+            var fireDummySpellMenu = new Menu("FireDummySpellMenu", "Fire Dummy Spell")
+            {
+                new MenuKeyBind("FireDummySpell", "Fire Dummy Spell Key", KeyCode.O, KeybindType.Press),
+                new MenuSlider("SpellInterval", "Spell Interval", 2500, 0, 5000)
+            };
 
-            fireDummySpellMenu.Add(new MenuSlider("SpellInterval", "Spell Interval", 2500, 0, 5000));
 
-            menu.Add(fireDummySpellMenu);
-            ObjectCache.MenuCache.AddMenuToCache(menu);
-            menu.Attach();
+            Menu.Add(fireDummySpellMenu);
+            ObjectCache.MenuCache.AddMenuToCache(Menu);
+            Menu.Attach();
 
             LoadSpellDictionary();
 
@@ -63,7 +63,7 @@
             Render.OnPresent += Render_OnPresent;
         }
 
-        private static Obj_AI_Hero myHero => ObjectManager.GetLocalPlayer();
+        private static Obj_AI_Hero MyHero => ObjectManager.GetLocalPlayer();
 
         private void Render_OnPresent()
         {
@@ -71,109 +71,95 @@
             {
                 var spellPos = spell.CurrentSpellPosition;
 
-                if (spell.HeroId == myHero.NetworkId)
+                if (spell.HeroId != MyHero.NetworkId)
                 {
-                    if (spell.SpellType == SpellType.Line)
-                    {
-                        if (Vector2.Distance(spellPos, myHero.ServerPosition.To2D()) <= myHero.BoundingRadius + spell.Radius && Environment.TickCount - spell.StartTime > spell.Info.SpellDelay &&
-                            Vector2.Distance(spell.StartPos, myHero.ServerPosition.To2D()) < spell.Info.Range)
+                    continue;
+                }
+
+                switch (spell.SpellType)
+                {
+                    case SpellType.Line:
+                        if (Vector2.Distance(spellPos, MyHero.ServerPosition.To2D()) <= MyHero.BoundingRadius + spell.Radius && Environment.TickCount - spell.StartTime > spell.Info.SpellDelay &&
+                            Vector2.Distance(spell.StartPos, MyHero.ServerPosition.To2D()) < spell.Info.Range)
                         {
                             RenderObjects.Add(new RenderCircle(spellPos, 1000, Color.Red, (int) spell.Radius, 10));
                             DelayAction.Add(1, () => SpellDetector.DeleteSpell(spell.SpellId));
                         }
                         else
                         {
-                            Render.Circle(new Vector3(spellPos.X, spellPos.Y, myHero.Position.Z), (int) spell.Radius, 50, Color.White);
+                            Render.Circle(new Vector3(spellPos.X, spellPos.Y, MyHero.Position.Z), (int) spell.Radius, 50, Color.White);
                         }
-                    }
-                    else if (spell.SpellType == SpellType.Circular)
-                    {
+                        break;
+                    case SpellType.Circular:
                         if (Environment.TickCount - spell.StartTime >= spell.EndTime - spell.StartTime)
                         {
-                            if (myHero.ServerPosition.To2D().InSkillShot(spell, myHero.BoundingRadius))
+                            if (!MyHero.ServerPosition.To2D().InSkillShot(spell, MyHero.BoundingRadius))
                             {
-                                RenderObjects.Add(new RenderCircle(spellPos, 1000, Color.Red, (int) spell.Radius));
-                                DelayAction.Add(1, () => SpellDetector.DeleteSpell(spell.SpellId));
+                                continue;
                             }
+
+                            RenderObjects.Add(new RenderCircle(spellPos, 1000, Color.Red, (int) spell.Radius));
+                            DelayAction.Add(1, () => SpellDetector.DeleteSpell(spell.SpellId));
                         }
-                    }
-                    else if (spell.SpellType == SpellType.Cone)
-                    {
+                        break;
+                    case SpellType.Cone:
                         // SPELL TESTER
                         if (Environment.TickCount - spell.StartTime >= spell.EndTime - spell.StartTime)
                         {
-                            if (myHero.ServerPosition.To2D().InSkillShot(spell, myHero.BoundingRadius))
+                            if (MyHero.ServerPosition.To2D().InSkillShot(spell, MyHero.BoundingRadius))
                             {
                                 DelayAction.Add(1, () => SpellDetector.DeleteSpell(spell.SpellId));
                             }
                         }
-                    }
+                        break;
                 }
             }
         }
 
         private void Game_OnGameUpdate()
         {
-            if (menu["FireDummySpellMenu"]["FireDummySpell"].As<MenuKeyBind>().Enabled)
+            if (!Menu["FireDummySpellMenu"]["FireDummySpell"].Enabled)
             {
-                float interval = menu["SpellInterval"].As<MenuSlider>().Value;
+                return;
+            }
 
-                if (Environment.TickCount - lastSpellFireTime > interval)
+            if (Environment.TickCount - LastSpellFireTime > Menu["SpellInterval"].As<MenuSlider>().Value)
+            {
+                var charName = SelectSpellMenu["DummySpellHero"].As<MenuList>().SelectedItem;
+                var spellName = SelectSpellMenu["DummySpellList"].As<MenuList>().SelectedItem;
+                var spellData = SpellCache[charName][spellName];
+
+                if (!ObjectCache.MenuCache.Cache.ContainsKey(spellName + "DodgeSpell"))
                 {
-                    var charName = selectSpellMenu["DummySpellHero"].As<MenuList>().SelectedItem;
-                    var spellName = selectSpellMenu["DummySpellList"].As<MenuList>().SelectedItem;
-                    var spellData = spellCache[charName][spellName];
-
-                    //if (Evade.spellMenu[charName + spellName + "Settings"][spellName + "DodgeSpell"].Enabled)
-                    //{
-                    //if (Evade.spellMenu[charName + spellName + "Settings"][spellName + "DodgeSpell"] == null)
-                    //{
-
-                    //if (!added)
-                    //{
-                    //    SpellDetector.LoadDummySpell(spellData);
-                    //    SpellDetector.CreateSpellData(myHero, spellStartPosition, spellEndPostion, spellData);
-
-                    //    added = true;
-                    //}
-                    //}
-
-                    //lastSpellFireTime = Environment.TickCount;
-
-                    if (!ObjectCache.MenuCache.Cache.ContainsKey(spellName + "DodgeSpell"))
-                    {
-                        SpellDetector.LoadDummySpell(spellData);
-                    }
-
-                    SpellDetector.CreateSpellData(myHero, spellStartPosition, spellEndPostion, spellData);
-                    lastSpellFireTime = Environment.TickCount;
+                    SpellDetector.LoadDummySpell(spellData);
                 }
+
+                SpellDetector.CreateSpellData(MyHero, SpellStartPosition, SpellEndPostion, spellData);
+                LastSpellFireTime = Environment.TickCount;
             }
         }
 
         private void OnSpellEndChange(MenuComponent sender, ValueChangedArgs e)
         {
-            // e.Process = false;
-
-            spellEndPostion = myHero.ServerPosition;
-            RenderObjects.Add(new RenderCircle(spellEndPostion.To2D(), 1000, Color.Red, 100, 20));
+            
+            SpellEndPostion = MyHero.ServerPosition;
+            RenderObjects.Add(new RenderCircle(SpellEndPostion.To2D(), 1000, Color.Red, 100, 20));
         }
 
         private void OnSpellStartChange(MenuComponent sender, ValueChangedArgs e)
         {
-            //e.Process = false;
-
-            spellStartPosition = myHero.ServerPosition;
-            RenderObjects.Add(new RenderCircle(spellStartPosition.To2D(), 1000, Color.Red, 100, 20));
+          
+            SpellStartPosition = MyHero.ServerPosition;
+            RenderObjects.Add(new RenderCircle(SpellStartPosition.To2D(), 1000, Color.Red, 100, 20));
         }
 
         private void LoadSpellDictionary()
         {
             foreach (var spell in SpellDatabase.Spells)
             {
-                if (spellCache.ContainsKey(spell.CharName))
+                if (SpellCache.ContainsKey(spell.CharName))
                 {
-                    var spellList = spellCache[spell.CharName];
+                    var spellList = SpellCache[spell.CharName];
                     if (spellList != null && !spellList.ContainsKey(spell.SpellName))
                     {
                         spellList.Add(spell.SpellName, spell);
@@ -181,8 +167,8 @@
                 }
                 else
                 {
-                    spellCache.Add(spell.CharName, new Dictionary<string, SpellData>());
-                    var spellList = spellCache[spell.CharName];
+                    SpellCache.Add(spell.CharName, new Dictionary<string, SpellData>());
+                    var spellList = SpellCache[spell.CharName];
                     if (spellList != null && !spellList.ContainsKey(spell.SpellName))
                     {
                         spellList.Add(spell.SpellName, spell);
@@ -190,28 +176,28 @@
                 }
             }
 
-            selectSpellMenu.Add(new MenuBool("DummySpellDescription", "    -- Select A Dummy Spell To Fire --    "));
+            SelectSpellMenu.Add(new MenuBool("DummySpellDescription", "    -- Select A Dummy Spell To Fire --    "));
 
-            var heroList = spellCache.Keys.ToArray();
-            selectSpellMenu.Add(new MenuList("DummySpellHero", "Hero", heroList, 0));
+            var heroList = SpellCache.Keys.ToArray();
+            SelectSpellMenu.Add(new MenuList("DummySpellHero", "Hero", heroList, 0));
 
-            var selectedHeroStr = selectSpellMenu["DummySpellHero"].As<MenuList>().SelectedItem;
-            var selectedHero = spellCache[selectedHeroStr];
+            var selectedHeroStr = SelectSpellMenu["DummySpellHero"].As<MenuList>().SelectedItem;
+            var selectedHero = SpellCache[selectedHeroStr];
             var selectedHeroList = selectedHero.Keys.ToArray();
 
-            selectSpellMenu.Add(new MenuList("DummySpellList", "Spell", selectedHeroList, 0));
+            SelectSpellMenu.Add(new MenuList("DummySpellList", "Spell", selectedHeroList, 0));
 
-            selectSpellMenu["DummySpellHero"].OnValueChanged += OnSpellHeroChange;
+            SelectSpellMenu["DummySpellHero"].OnValueChanged += OnSpellHeroChange;
         }
 
         private void OnSpellHeroChange(MenuComponent sender, ValueChangedArgs args)
         {
             //var previousHeroStr = e.GetOldValue<MenuList>().SelectedValue;
             var selectedHeroStr = args.GetNewValue<MenuList>().SelectedItem;
-            var selectedHero = spellCache[selectedHeroStr];
+            var selectedHero = SpellCache[selectedHeroStr];
             var selectedHeroList = selectedHero.Keys.ToArray();
 
-            selectSpellMenu["DummySpellList"].As<MenuList>().Items = selectedHeroList;
+            SelectSpellMenu["DummySpellList"].As<MenuList>().Items = selectedHeroList;
         }
     }
 }

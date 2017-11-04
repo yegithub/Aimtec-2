@@ -356,7 +356,7 @@
                     case EvadeType.Dash:
                     {
                         var dashPos = args.Start.To2D();
-                       
+
                         if (args.Target != null)
                         {
                             dashPos = args.Target.Position.To2D();
@@ -417,7 +417,7 @@
                     LastBlockedUserMoveTo = new EvadeCommand
                     {
                         Order = EvadeOrderCommand.MoveTo,
-                        TargetPosition = args.Position.To2D(), 
+                        TargetPosition = args.Position.To2D(),
                         Timestamp = Environment.TickCount,
                         IsProcessed = false
                     };
@@ -450,7 +450,7 @@
                         };
 
                         args.ProcessEvent = false;
-                       
+
                         if (Environment.TickCount - LastMovementBlockTime < 500 && LastMovementBlockPos.Distance(args. /*Target.*/Position) < 100)
                         {
                             return;
@@ -469,7 +469,7 @@
                     LastBlockedUserMoveTo.IsProcessed = true;
                 }
             }
-            else 
+            else
             {
                 if (IsDodging)
                 {
@@ -490,7 +490,7 @@
                                 var extraDelay = ObjectCache.MenuCache.Cache["ExtraPingBuffer"].As<MenuSlider>().Value;
                                 if (EvadeHelper.CheckMovePath(movePos, ObjectCache.GamePing + extraDelay))
                                 {
-                                    args.ProcessEvent = false; 
+                                    args.ProcessEvent = false;
                                     return;
                                 }
                             }
@@ -557,7 +557,7 @@
 
             if (IsDodging)
             {
-                SpellDetector_OnProcessDetectedSpells(); 
+                SpellDetector_OnProcessDetectedSpells();
             }
         }
 
@@ -578,14 +578,14 @@
                 {
                     if (Environment.TickCount > LastStopEvadeTime)
                     {
-                        DodgeSkillShots();    
+                        DodgeSkillShots();
                         ContinueLastBlockedCommand();
                     }
 
                     LastTickCount = Environment.TickCount;
                 }
 
-                EvadeSpell.UseEvadeSpell(); 
+                EvadeSpell.UseEvadeSpell();
                 CheckDodgeOnlyDangerous();
                 RecalculatePath();
             }
