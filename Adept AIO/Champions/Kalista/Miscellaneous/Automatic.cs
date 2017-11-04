@@ -98,19 +98,20 @@
             switch (Global.Orbwalker.Mode)
             {
                 case OrbwalkingMode.Combo:
-                {
+
                     var target = args.Target as Obj_AI_Hero;
-                    if (target != null && target.HasBuff(KalistaBuffName))
+                    if (target != null && target.HasBuff(KalistaBuffName) && target.Distance(Global.Player) >= Global.Player.AttackRange - 100)
                     {
                         var m = GameObjects.EnemyMinions.FirstOrDefault(x =>
                             x.IsValidAutoRange() && x.Health < Global.Player.GetAutoAttackDamage(x) + Global.Player.GetSpellDamage(x, SpellSlot.E));
+
                         if (m != null)
                         {
                             args.Target = m;
                             DebugConsole.WriteLine($"AUTO MINION TO SLOW TARGET", MessageState.Debug);
                         }
                     }
-                }
+
                     break;
                 case OrbwalkingMode.Laneclear:
                 case OrbwalkingMode.Lasthit:
