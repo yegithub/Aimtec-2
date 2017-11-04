@@ -1,5 +1,6 @@
 ﻿namespace EzEvade_Port.Draw
 {
+    using System;
     using System.Collections.Generic;
     using Utils;
 
@@ -29,7 +30,7 @@
         {
             foreach (var obj in Objects)
             {
-                if (obj.EndTime - EvadeUtils.TickCount > 0)
+                if (obj.EndTime - Environment.TickCount > 0)
                 {
                     obj.Draw();
                 }

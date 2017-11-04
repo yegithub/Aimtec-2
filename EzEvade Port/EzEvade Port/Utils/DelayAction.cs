@@ -19,7 +19,7 @@
         {
             for (var i = ActionList.Count - 1; i >= 0; i--)
             {
-                if (ActionList[i].Time <= EvadeUtils.TickCount)
+                if (ActionList[i].Time <= Environment.TickCount)
                 {
                     try
                     {
@@ -51,7 +51,7 @@
 
             public Action(int time, Callback callback)
             {
-                Time = time + (int) EvadeUtils.TickCount;
+                Time = time + (int) Environment.TickCount;
                 CallbackObject = callback;
             }
         }

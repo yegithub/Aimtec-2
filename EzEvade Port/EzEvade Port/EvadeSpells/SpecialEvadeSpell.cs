@@ -77,7 +77,7 @@
             var posInfo = EvadeHelper.GetBestPositionDash(evadeSpell);
             if (posInfo != null)
             {
-                EvadeCommand.MoveTo(posInfo.position);
+                EvadeCommand.MoveTo(posInfo.Position);
                 DelayAction.Add(50, () => EvadeSpell.CastEvadeSpell(() => EvadeCommand.CastSpell(evadeSpell), process));
                 return true;
             }
@@ -90,9 +90,9 @@
             if (MyHero.HasBuff("ekkoeattackbuff"))
             {
                 var posInfo = EvadeHelper.GetBestPositionTargetedDash(evadeSpell);
-                if (posInfo != null && posInfo.target != null)
+                if (posInfo != null && posInfo.Target != null)
                 {
-                    EvadeSpell.CastEvadeSpell(() => EvadeCommand.Attack(evadeSpell, posInfo.target), process);
+                    EvadeSpell.CastEvadeSpell(() => EvadeCommand.Attack(evadeSpell, posInfo.Target), process);
                     //DelayAction.Add(50, () => myHero.IssueOrder(OrderType.MoveTo, posInfo.position.To3D()));
                     return true;
                 }

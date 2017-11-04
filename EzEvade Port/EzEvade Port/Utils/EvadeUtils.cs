@@ -16,7 +16,7 @@
             AssemblyLoadTime = DateTime.Now;
         }
 
-        public static float TickCount => (int) DateTime.Now.Subtract(AssemblyLoadTime).TotalMilliseconds;
+       // public static float TickCount => (int) DateTime.Now.Subtract(AssemblyLoadTime).TotalMilliseconds;
 
         public static List<Vector2> PathToVector2(this Vector3[] path)
         {

@@ -1,5 +1,6 @@
 ﻿namespace EzEvade_Port.Draw
 {
+    using System;
     using System.Drawing;
     using Aimtec;
     using Aimtec.SDK.Extensions;
@@ -13,7 +14,7 @@
 
         public RenderText(string text, Vector2 renderPosition, float renderTime)
         {
-            StartTime = EvadeUtils.TickCount;
+            StartTime = Environment.TickCount;
             EndTime = StartTime + renderTime;
             RenderPosition = renderPosition;
 
@@ -22,7 +23,7 @@
 
         public RenderText(string text, Vector2 renderPosition, float renderTime, Color color)
         {
-            StartTime = EvadeUtils.TickCount;
+            StartTime = Environment.TickCount;
             EndTime = StartTime + renderTime;
             RenderPosition = renderPosition;
 

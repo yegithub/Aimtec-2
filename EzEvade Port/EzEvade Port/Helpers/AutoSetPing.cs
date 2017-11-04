@@ -14,28 +14,21 @@
 
     class AutoSetPing
     {
-        private static float sumExtraDelayTime;
-        private static float avgExtraDelayTime;
-        private static float numExtraDelayTime;
+        private static float _numExtraDelayTime;
 
-        private static float maxExtraDelayTime;
+        private static float _maxExtraDelayTime;
 
-        private static Obj_AI_BaseIssueOrderEventArgs lastIssueOrderArgs;
-        private static Vector2 lastMoveToServerPos;
-        private static Vector2 lastPathEndPos;
+        private static Obj_AI_BaseIssueOrderEventArgs _lastIssueOrderArgs;
+        private static Vector2 _lastMoveToServerPos;
 
-        private static SpellBookCastSpellEventArgs lastSpellCastArgs;
-        private static Vector2 lastSpellCastServerPos;
-        private static Vector2 lastSpellCastEndPos;
+        private static SpellBookCastSpellEventArgs _lastSpellCastArgs;
+        private static Vector2 _lastSpellCastServerPos;
 
-        private static float testSkillshotDelayStart;
-        private static bool testSkillshotDelayOn;
+        private static bool _checkPing = true;
 
-        private static bool checkPing = true;
+        private static readonly List<float> PingList = new List<float>();
 
-        private static readonly List<float> pingList = new List<float>();
-
-        public static Menu menu;
+        public static Menu Menu;
 
         public AutoSetPing(Menu mainMenu)
         {
@@ -44,79 +37,64 @@
 
             SpellBook.OnCastSpell += Game_OnCastSpell;
             GameObject.OnCreate += Game_OnCreateObj;
-            Obj_AI_Base.OnProcessSpellCast += Game_ProcessSpell;
-
-            //Game.OnUpdate += Game_OnUpdate;
-
-            //Render.OnPresent += Game_OnDraw;
-
+         
             Evade.AutoSetPingMenu = new Menu("AutoSetPing", "AutoSetPingMenu");
             Evade.AutoSetPingMenu.Add(new MenuBool("AutoSetPingOn", "Auto Set Ping"));
             Evade.AutoSetPingMenu.Add(new MenuSlider("AutoSetPercentile", "Auto Set Percentile", 75));
 
-            //autoSetPingMenu.Add(new MenuComponent("TestSkillshotDelay", "TestSkillshotDelay").SetValue<bool>(false));
-
             mainMenu.Add(Evade.AutoSetPingMenu);
 
-            menu = mainMenu;
+            Menu = mainMenu;
         }
 
-        public static Obj_AI_Hero myHero => ObjectManager.GetLocalPlayer();
+        public static Obj_AI_Hero MyHero => ObjectManager.GetLocalPlayer();
 
-        private void Game_ProcessSpell(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs e)
+        private static void Game_OnCastSpell(Obj_AI_Base sender, SpellBookCastSpellEventArgs e)
         {
-            if (!sender.IsMe) { }
-
-            //lastSpellCastServerPos = myHero.Position.To2D();
-        }
-
-        private void Game_OnDraw(EventArgs args)
-        {
-            Render.Circle(myHero.Position, 10, 5, Color.Red);
-            Render.Circle(myHero.ServerPosition, 10, 5, Color.Red);
-        }
-
-        private void Game_OnCastSpell(Obj_AI_Base sender, SpellBookCastSpellEventArgs e)
-        {
-            checkPing = false;
+            _checkPing = false;
 
             if (!sender.IsMe)
             {
                 return;
             }
 
-            lastSpellCastArgs = e;
+            _lastSpellCastArgs = e;
 
-            if (myHero.HasPath && myHero.Path.Count() > 0)
+            if (!MyHero.HasPath || !MyHero.Path.Any())
             {
-                lastSpellCastServerPos = EvadeUtils.GetGamePosition(myHero, Game.Ping);
-                lastSpellCastEndPos = myHero.Path.Last().To2D();
-                checkPing = true;
-
-                RenderObjects.Add(new RenderCircle(lastSpellCastServerPos, 1000, Color.Green, 10));
+                return;
             }
+
+            _lastSpellCastServerPos = EvadeUtils.GetGamePosition(MyHero, Game.Ping);
+            MyHero.Path.Last().To2D();
+            _checkPing = true;
+
+            RenderObjects.Add(new RenderCircle(_lastSpellCastServerPos, 1000, Color.Green, 10));
         }
 
-        private void Game_OnCreateObj(GameObject sender)
+        private static void Game_OnCreateObj(GameObject sender)
         {
             var missile = sender as MissileClient;
-            if (missile != null && missile.SpellCaster.IsMe)
+            if (missile == null || !missile.SpellCaster.IsMe)
             {
-                if (lastSpellCastArgs.Process)
-                {
-                    //Draw.RenderObjects.Add(new Draw.RenderPosition(lastSpellCastServerPos, 1000, System.Drawing.Color.Red, 10));
-                    RenderObjects.Add(new RenderCircle(missile.StartPosition.To2D(), 1000, Color.Red, 10));
-
-                    var distance = lastSpellCastServerPos.Distance(missile.StartPosition.To2D());
-                    var moveTime = 1000 * distance / myHero.MoveSpeed;
-                    Console.WriteLine("Extra Delay: " + moveTime);
-                }
+                return;
             }
+
+            if (!_lastSpellCastArgs.Process)
+            {
+                return;
+            }
+
+            RenderObjects.Add(new RenderCircle(missile.StartPosition.To2D(), 1000, Color.Red, 10));
+
+            var distance = _lastSpellCastServerPos.Distance(missile.StartPosition.To2D());
+            var moveTime = 1000 * distance / MyHero.MoveSpeed;
+            Console.WriteLine("Extra Delay: " + moveTime);
         }
 
-        private void Hero_OnIssueOrder(Obj_AI_Base hero, Obj_AI_BaseIssueOrderEventArgs args)
+        private static void Hero_OnIssueOrder(Obj_AI_Base hero, Obj_AI_BaseIssueOrderEventArgs args)
         {
-            checkPing = false;
+            _checkPing = false;
 
             if (!ObjectCache.MenuCache.Cache["AutoSetPingOn"].Enabled)
             {
@@ -128,24 +106,24 @@
                 return;
             }
 
-            lastIssueOrderArgs = args;
+            _lastIssueOrderArgs = args;
 
             if (args.OrderType != OrderType.MoveTo)
             {
                 return;
             }
 
-            if (!myHero.HasPath || !myHero.Path.Any())
+            if (!MyHero.HasPath || !MyHero.Path.Any())
             {
                 return;
             }
 
-            lastMoveToServerPos = myHero.ServerPosition.To2D();
-            lastPathEndPos = myHero.Path.Last().To2D();
-            checkPing = true;
+            _lastMoveToServerPos = MyHero.ServerPosition.To2D();
+            MyHero.Path.Last().To2D();
+            _checkPing = true;
         }
 
-        private void Hero_OnNewPath(Obj_AI_Base hero, Obj_AI_BaseNewPathEventArgs args)
+        private static void Hero_OnNewPath(Obj_AI_Base hero, Obj_AI_BaseNewPathEventArgs args)
         {
             if (!ObjectCache.MenuCache.Cache["AutoSetPingOn"].Enabled)
             {
@@ -166,52 +144,37 @@
 
             var movePos = path.Last().To2D();
 
-            if (checkPing && lastIssueOrderArgs.ProcessEvent && lastIssueOrderArgs.OrderType == OrderType.MoveTo && lastIssueOrderArgs.Target.Position.To2D().Distance(movePos) < 3 &&
-                myHero.Path.Count() == 1 && args.Path.Count() == 2 && myHero.HasPath)
+            if (_checkPing && _lastIssueOrderArgs.ProcessEvent && _lastIssueOrderArgs.OrderType == OrderType.MoveTo && _lastIssueOrderArgs.Target.Position.To2D().Distance(movePos) < 3 &&
+                MyHero.Path.Length == 1 && args.Path.Length == 2 && MyHero.HasPath)
             {
-                //Draw.RenderObjects.Add(new Draw.RenderPosition(myHero.Path.Last().To2D(), 1000));
-
+           
                 RenderObjects.Add(new RenderLine(args.Path.First().To2D(), args.Path.Last().To2D(), 1000));
-                RenderObjects.Add(new RenderLine(myHero.Position.To2D(), myHero.Path.Last().To2D(), 1000));
+                RenderObjects.Add(new RenderLine(MyHero.Position.To2D(), MyHero.Path.Last().To2D(), 1000));
 
-                //Draw.RenderObjects.Add(new Draw.RenderCircle(lastMoveToServerPos, 1000, System.Drawing.Color.Red, 10));
-
-                var distanceTillEnd = myHero.Path.Last().To2D().Distance(myHero.Position.To2D());
-                var moveTimeTillEnd = 1000 * distanceTillEnd / myHero.MoveSpeed;
+                var distanceTillEnd = MyHero.Path.Last().To2D().Distance(MyHero.Position.To2D());
+                var moveTimeTillEnd = 1000 * distanceTillEnd / MyHero.MoveSpeed;
 
                 if (moveTimeTillEnd < 500)
                 {
                     return;
                 }
-
                 
-                var myHeroPosition = new  Vector3(myHero.Position.X, myHero.Position.Y, myHero.Position.Z);
+                var myHeroPosition = new  Vector3(MyHero.Position.X, MyHero.Position.Y, MyHero.Position.Z);
 
-                var dir1 = (myHero.Path.Last().To2D() - myHero.Position.To2D()).Normalized();
+                var dir1 = (MyHero.Path.Last().To2D() - MyHero.Position.To2D()).Normalized();
 
-                //SharpDX.Vector2 dir1sharpdx = new SharpDX.Vector2(myHero.Position.X, myHero.Position.Y);
-
-                //var ray1 = new Ray(myHeroPosition.SetZ(0), new SharpDX.Vector3(dir1.X, dir1.Y, 0));
-                var ray1startpos = new Vector3(myHeroPosition.X, myHeroPosition.Y, 0);
-                var ray1dir = new Vector3(dir1.X, dir1.Y, 0);
-                //Vector3 ray1 = ray1startpos.ExtendDir(ray1dir, args.Path.Length);
-
+                var ray1Startpos = new Vector3(myHeroPosition.X, myHeroPosition.Y, 0);
+                var ray1Dir = new Vector3(dir1.X, dir1.Y, 0);
+             
                 var dir2 = (args.Path.First().To2D() - args.Path.Last().To2D()).Normalized();
-                //var pos2 = new Vector3(args.Path.First().X, args.Path.First().Y, 0);
-
-                
+             
                 var argsPathFirst = new  Vector3(args.Path.First().X, args.Path.First().Y, args.Path.First().Z);
 
-                //var ray2 = new Ray(argsPathFirst.SetZ(0), new SharpDX.Vector3(dir2.X, dir2.Y, 0));
-                var ray2startpos = new Vector3(argsPathFirst.X, argsPathFirst.Y, 0);
-                var ray2dir = new Vector3(dir2.X, dir2.Y, 0);
+                var ray2Startpos = new Vector3(argsPathFirst.X, argsPathFirst.Y, 0);
+                var ray2Dir = new Vector3(dir2.X, dir2.Y, 0);
 
-                //Vector3 ray2 = ray2startpos.ExtendDir(ray2dir, args.Path.Length);
-
-                 //Vector3 intersection3;
-
-                var intersection = ray2startpos.To2D().
-                    Intersection(ray2startpos.To2D().ExtendDir(ray2dir.To2D(), args.Path.Length), ray1startpos.To2D(), ray1startpos.To2D().ExtendDir(ray1dir.To2D(), args.Path.Length));
+                var intersection = ray2Startpos.To2D().
+                    Intersection(ray2Startpos.To2D().ExtendDir(ray2Dir.To2D(), args.Path.Length), ray1Startpos.To2D(), ray1Startpos.To2D().ExtendDir(ray1Dir.To2D(), args.Path.Length));
 
                 if (intersection.Intersects)
                 {
@@ -222,112 +185,50 @@
 
                     var intersectionAt = new Vector2(x, y);
 
-                    var projection = intersectionAt.ProjectOn(myHero.Path.Last().To2D(), myHero.Position.To2D());
+                    var projection = intersectionAt.ProjectOn(MyHero.Path.Last().To2D(), MyHero.Position.To2D());
 
                     if (projection.IsOnSegment && dir1.AngleBetween(dir2) > 20 && dir1.AngleBetween(dir2) < 160)
                     {
                         RenderObjects.Add(new RenderCircle(intersectionAt, 1000, Color.Red, 10));
 
-                        var distance = //args.Path.First().To2D().Distance(intersection);
-                            lastMoveToServerPos.Distance(intersectionAt);
-                        var moveTime = 1000 * distance / myHero.MoveSpeed;
-
-                        //Console.WriteLine("waa: " + distance);
+                        var distance =
+                            _lastMoveToServerPos.Distance(intersectionAt);
+                        var moveTime = 1000 * distance / MyHero.MoveSpeed;
 
                         if (moveTime < 1000)
                         {
-                            if (numExtraDelayTime > 0)
+                            if (_numExtraDelayTime > 0)
                             {
-                                sumExtraDelayTime += moveTime;
-                                avgExtraDelayTime = sumExtraDelayTime / numExtraDelayTime;
-
-                                pingList.Add(moveTime);
+                                PingList.Add(moveTime);
                             }
-                            numExtraDelayTime += 1;
+                            _numExtraDelayTime += 1;
 
-                            if (maxExtraDelayTime == 0)
+                            if (_maxExtraDelayTime == 0)
                             {
-                                maxExtraDelayTime = ObjectCache.MenuCache.Cache["ExtraPingBuffer"].As<MenuSlider>().Value;
+                                _maxExtraDelayTime = ObjectCache.MenuCache.Cache["ExtraPingBuffer"].As<MenuSlider>().Value;
                             }
 
-                            if (numExtraDelayTime % 100 == 0)
+                            if (_numExtraDelayTime % 100 == 0)
                             {
-                                pingList.Sort();
+                                PingList.Sort();
 
                                 var percentile = ObjectCache.MenuCache.Cache["AutoSetPercentile"].As<MenuSlider>().Value;
-                                var percentIndex = (int) Math.Floor(pingList.Count() * (percentile / 100f)) - 1;
-                                maxExtraDelayTime = Math.Max(pingList.ElementAt(percentIndex) - Game.Ping, 0);
-                                ObjectCache.MenuCache.Cache["ExtraPingBuffer"].As<MenuSlider>().Value = (int) maxExtraDelayTime; //(new MenuSlider((int)maxExtraDelayTime, 0, 200));
+                                var percentIndex = (int) Math.Floor(PingList.Count * (percentile / 100f)) - 1;
+                                _maxExtraDelayTime = Math.Max(PingList.ElementAt(percentIndex) - Game.Ping, 0);
+                                ObjectCache.MenuCache.Cache["ExtraPingBuffer"].As<MenuSlider>().Value = (int) _maxExtraDelayTime; //(new MenuSlider((int)maxExtraDelayTime, 0, 200));
 
-                                pingList.Clear();
+                                PingList.Clear();
 
-                                Console.WriteLine("Max Extra Delay: " + maxExtraDelayTime);
+                                Console.WriteLine("Max Extra Delay: " + _maxExtraDelayTime);
                             }
 
                             Console.WriteLine("Extra Delay: " + Math.Max(moveTime - Game.Ping, 0));
                         }
                     }
                 }
-
-                //if (ray2.Intersects(ref ray1, out intersection3))
-                //{
-                //    //var intersection = intersection3.To2D();
-
-                //    float x = intersection3.To2D().X;
-                //    float y = intersection3.To2D().Y;
-
-                //    Vector2 intersectionAT = new Vector2(x, y);
-
-                //    var projection = intersectionAT.ProjectOn(myHero.Path.Last().To2D(), myHero.Position.To2D());
-
-                //    if (projection.IsOnSegment && dir1.AngleBetween(dir2) > 20 && dir1.AngleBetween(dir2) < 160)
-                //    {
-                //        Draw.RenderObjects.Add(new Draw.RenderCircle(intersectionAT, 1000, System.Drawing.Color.Red, 10, 5));
-
-                //        var distance = //args.Path.First().To2D().Distance(intersection);
-                //            lastMoveToServerPos.Distance(intersectionAT);
-                //        float moveTime = 1000 * distance / myHero.MoveSpeed;
-
-                //        //Console.WriteLine("waa: " + distance);
-
-                //        if (moveTime < 1000)
-                //        {
-                //            if (numExtraDelayTime > 0)
-                //            {
-                //                sumExtraDelayTime += moveTime;
-                //                avgExtraDelayTime = sumExtraDelayTime / numExtraDelayTime;
-
-                //                pingList.Add(moveTime);
-                //            }
-                //            numExtraDelayTime += 1;
-
-                //            if (maxExtraDelayTime == 0)
-                //            {
-                //                maxExtraDelayTime = ObjectCache.menuCache.cache["ExtraPingBuffer"].As<MenuSlider>().Value;
-                //            }
-
-                //            if (numExtraDelayTime % 100 == 0)
-                //            {
-                //                pingList.Sort();
-
-                //                var percentile = ObjectCache.menuCache.cache["AutoSetPercentile"].As<MenuSlider>().Value;
-                //                int percentIndex = (int)Math.Floor(pingList.Count() * (percentile / 100f)) - 1;
-                //                maxExtraDelayTime = Math.Max(pingList.ElementAt(percentIndex) - Game.Ping, 0);
-                //                ObjectCache.menuCache.cache["ExtraPingBuffer"].As<MenuSlider>().Value =
-                //                    (int)maxExtraDelayTime; //(new MenuSlider((int)maxExtraDelayTime, 0, 200));
-
-                //                pingList.Clear();
-
-                //                Console.WriteLine("Max Extra Delay: " + maxExtraDelayTime);
-                //            }
-
-                //            Console.WriteLine("Extra Delay: " + Math.Max(moveTime - Game.Ping, 0));
-                //        }
-                //    }
-                //}
             }
 
-            checkPing = false;
+            _checkPing = false;
         }
     }
 }

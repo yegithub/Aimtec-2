@@ -23,14 +23,14 @@
         {
             Obj = obj;
             Name = obj.Name;
-            Timestamp = EvadeUtils.TickCount;
+            Timestamp = Environment.TickCount;
         }
 
         public ObjectTrackerInfo(GameObject obj, string name)
         {
             Obj = obj;
             Name = name;
-            Timestamp = EvadeUtils.TickCount;
+            Timestamp = Environment.TickCount;
         }
 
         public ObjectTrackerInfo(string name, Vector3 position)
@@ -39,7 +39,7 @@
             UsePosition = true;
             Position = position;
 
-            Timestamp = EvadeUtils.TickCount;
+            Timestamp = Environment.TickCount;
         }
     }
 

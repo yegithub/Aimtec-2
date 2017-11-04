@@ -1,5 +1,6 @@
 ﻿namespace EzEvade_Port.Draw
 {
+    using System;
     using System.Drawing;
     using Aimtec;
     using Aimtec.SDK.Extensions;
@@ -16,7 +17,7 @@
 
         public RenderCircle(Vector2 renderPosition, float renderTime, int radius = 65, int width = 5)
         {
-            StartTime = EvadeUtils.TickCount;
+            StartTime = Environment.TickCount;
             EndTime = StartTime + renderTime;
             RenderPosition = renderPosition;
 
@@ -26,7 +27,7 @@
 
         public RenderCircle(Vector2 renderPosition, float renderTime, Color color, int radius = 65, int width = 5)
         {
-            StartTime = EvadeUtils.TickCount;
+            StartTime = Environment.TickCount;
             EndTime = StartTime + renderTime;
             RenderPosition = renderPosition;
 

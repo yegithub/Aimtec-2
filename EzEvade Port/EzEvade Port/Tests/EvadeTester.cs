@@ -88,7 +88,7 @@
 
         private static float GetGameTimer => Game.ClockTime * 1000;
         private static float GetTickCountTimer => Environment.TickCount & int.MaxValue;
-        private static float GetWatchTimer => EvadeUtils.TickCount;
+        private static float GetWatchTimer => Environment.TickCount;
 
         private void Game_OnDoCast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
         {
@@ -104,7 +104,7 @@
         {
             if (args.Message == (uint) WindowsMessages.WM_RBUTTONDOWN)
             {
-                _lastRightMouseClickTime = EvadeUtils.TickCount;
+                _lastRightMouseClickTime = Environment.TickCount;
             }
         }
 
@@ -144,9 +144,9 @@
         private void SpellDetector_OnProcessDetectedSpells()
         {
             EvadeHelper.GetBestPositionTest();
-            _circleRenderPos = Evade.LastPosInfo.position;
+            _circleRenderPos = Evade.LastPosInfo.Position;
 
-            _lastSpellCastTime = EvadeUtils.TickCount;
+            _lastSpellCastTime = Environment.TickCount;
         }
 
         private void Game_OnDelete(GameObject sender)
@@ -163,7 +163,7 @@
 
             var range = sender.Position.To2D().Distance(_testMissile.StartPosition.To2D());
             ConsolePrinter.Print("[" + _testMissile.SpellData.Name + "]: Est.Missile range: " + range);
-            ConsolePrinter.Print("[" + _testMissile.SpellData.Name + "]: Est.Missile speed: " + 1000 * (range / (EvadeUtils.TickCount - _testMissileStartTime)));
+            ConsolePrinter.Print("[" + _testMissile.SpellData.Name + "]: Est.Missile speed: " + 1000 * (range / (Environment.TickCount - _testMissileStartTime)));
         }
 
         private void SpellMissile_OnCreate(GameObject obj)
@@ -198,7 +198,7 @@
                 return;
             }
 
-            var testMissileSpeedStartTime = EvadeUtils.TickCount;
+            var testMissileSpeedStartTime = Environment.TickCount;
             var testMissileSpeedStartPos = missile.Position.To2D();
 
             DelayAction.Add(250,
@@ -209,14 +209,14 @@
                                     return;
                                 }
 
-                                testMissileSpeedStartTime = EvadeUtils.TickCount;
+                                testMissileSpeedStartTime = Environment.TickCount;
                                 testMissileSpeedStartPos = missile.Position.To2D();
                             });
 
             _testMissile = missile;
-            _testMissileStartTime = EvadeUtils.TickCount;
+            _testMissileStartTime = Environment.TickCount;
 
-            ConsolePrinter.Print("[" + missile.SpellData.Name + "]: Est.CastTime: " + (EvadeUtils.TickCount - _lastHeroSpellCastTime));
+            ConsolePrinter.Print("[" + missile.SpellData.Name + "]: Est.CastTime: " + (Environment.TickCount - _lastHeroSpellCastTime));
             ConsolePrinter.Print("[" + missile.SpellData.Name + "]: Missile Name " + missile.SpellData.Name);
             ConsolePrinter.Print("[" + missile.SpellData.Name + "]: Missile Speed " + missile.SpellData.MissileSpeed);
             ConsolePrinter.Print("[" + missile.SpellData.Name + "]: Accel " + missile.SpellData.MissileAccel);
@@ -236,7 +236,7 @@
                                 }
 
                                 var dist = missile.Position.To2D().Distance(testMissileSpeedStartPos);
-                                ConsolePrinter.Print("[" + missile.SpellData.Name + "]: Est.Missile speed: " + 1000 * (dist / (EvadeUtils.TickCount - testMissileSpeedStartTime)));
+                                ConsolePrinter.Print("[" + missile.SpellData.Name + "]: Est.Missile speed: " + 1000 * (dist / (Environment.TickCount - testMissileSpeedStartTime)));
                             });
 
             if (missile.SpellCaster == null || missile.SpellCaster.Team == MyHero.Team || missile.SpellData.Name == null ||
@@ -268,7 +268,7 @@
 
                 if (spell.Info.IsThreeWay == false && spell.Info.IsSpecial == false)
                 {
-                    ConsolePrinter.Print("Acquired: " + (EvadeUtils.TickCount - spell.StartTime));
+                    ConsolePrinter.Print("Acquired: " + (Environment.TickCount - spell.StartTime));
                 }
             }
         }
@@ -293,7 +293,7 @@
                 RenderObjects.Add(new RenderCircle(args.End.To2D(), 500));
             }
 
-            _lastHeroSpellCastTime = EvadeUtils.TickCount;
+            _lastHeroSpellCastTime = Environment.TickCount;
 
             foreach (var entry in SpellDetector.Spells)
             {
@@ -306,13 +306,13 @@
 
                 if (spell.Info.IsThreeWay == false && spell.Info.IsSpecial == false)
                 {
-                    ConsolePrinter.Print("Time diff: " + (EvadeUtils.TickCount - spell.StartTime));
+                    ConsolePrinter.Print("Time diff: " + (Environment.TickCount - spell.StartTime));
                 }
             }
 
             if (hero.IsMe)
             {
-                _lastSpellCastTime = EvadeUtils.TickCount;
+                _lastSpellCastTime = Environment.TickCount;
             }
         }
 
@@ -321,14 +321,14 @@
             var pos2 = spell.CurrentSpellPosition;
             if (spell.SpellObject != null)
             {
-                ConsolePrinter.Print("Compare: " + pos2.Distance(pos) / (EvadeUtils.TickCount - time));
+                ConsolePrinter.Print("Compare: " + pos2.Distance(pos) / (Environment.TickCount - time));
             }
         }
 
         private void CompareSpellLocation2(Spell spell)
         {
             var pos1 = spell.CurrentSpellPosition;
-            var timeNow = EvadeUtils.TickCount;
+            var timeNow = Environment.TickCount;
 
             if (spell.SpellObject != null)
             {
@@ -342,7 +342,7 @@
         {
             if (_startWalkTime > 0)
             {
-                if (EvadeUtils.TickCount - _startWalkTime > 500 && MyHero.HasPath == false)
+                if (Environment.TickCount - _startWalkTime > 500 && MyHero.HasPath == false)
                 {
                     _startWalkTime = 0;
                 }
@@ -352,12 +352,12 @@
             {
                 if (MyHero.HasPath && _lastStopingTime > 0)
                 {
-                    ConsolePrinter.Print("WindupTime: " + (EvadeUtils.TickCount - _lastStopingTime));
+                    ConsolePrinter.Print("WindupTime: " + (Environment.TickCount - _lastStopingTime));
                     _lastStopingTime = 0;
                 }
                 else if (!MyHero.HasPath && _lastStopingTime == 0)
                 {
-                    _lastStopingTime = EvadeUtils.TickCount;
+                    _lastStopingTime = Environment.TickCount;
                 }
             }
 
@@ -387,7 +387,7 @@
                 return;
             }
 
-            ConsolePrinter.Print("Damage taken time: " + (EvadeUtils.TickCount - _lastSpellCastTime));
+            ConsolePrinter.Print("Damage taken time: " + (Environment.TickCount - _lastSpellCastTime));
         }
 
         private void Game_OnIssueOrder(Obj_AI_Base hero, Obj_AI_BaseIssueOrderEventArgs args)
@@ -415,21 +415,21 @@
 
             if (TestMenu["(EvadeTesterPing)"].Enabled)
             {
-                ConsolePrinter.Print("Sending Path ClickTime: " + (EvadeUtils.TickCount - _lastRightMouseClickTime));
+                ConsolePrinter.Print("Sending Path ClickTime: " + (Environment.TickCount - _lastRightMouseClickTime));
             }
 
             var heroPos = ObjectCache.MyHeroCache.ServerPos2D;
             var pos = args.Target.Position.To2D();
             var speed = ObjectCache.MyHeroCache.MoveSpeed;
 
-            _startWalkTime = EvadeUtils.TickCount;
+            _startWalkTime = Environment.TickCount;
 
             foreach (var entry in SpellDetector.Spells)
             {
                 var spell = entry.Value;
                 var walkDir = (pos - heroPos).Normalized();
 
-                var spellTime = EvadeUtils.TickCount - spell.StartTime - spell.Info.SpellDelay;
+                var spellTime = Environment.TickCount - spell.StartTime - spell.Info.SpellDelay;
                 var spellPos = spell.StartPos + spell.Direction * spell.Info.ProjectileSpeed * (spellTime / 1000);
                 //ConsolePrinter.Print("aaaa" + spellTime);
 
@@ -543,7 +543,7 @@
 
                 if (!target.IsTargetable)
                 {
-                    ConsolePrinter.Print("invul" + EvadeUtils.TickCount);
+                    ConsolePrinter.Print("invul" + Environment.TickCount);
                 }
 
                 var height = 20;

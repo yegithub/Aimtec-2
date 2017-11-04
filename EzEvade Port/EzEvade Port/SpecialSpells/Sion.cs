@@ -1,5 +1,6 @@
 ﻿namespace EzEvade_Port.SpecialSpells
 {
+    using System;
     using System.Linq;
     using Aimtec;
     using Aimtec.SDK.Extensions;
@@ -43,10 +44,10 @@
                 spell.Value.StartPos = hero.ServerPosition.To2D();
                 spell.Value.EndPos = endPos;
 
-                if (EvadeUtils.TickCount - spell.Value.StartTime >= 1000)
+                if (Environment.TickCount - spell.Value.StartTime >= 1000)
                 {
                     SpellDetector.CreateSpellData(hero, hero.ServerPosition, endPos.To3D(), spell.Value.Info, null, 0, false, SpellType.Line, false);
-                    spell.Value.StartTime = EvadeUtils.TickCount;
+                    spell.Value.StartTime = Environment.TickCount;
                     break;
                 }
             }

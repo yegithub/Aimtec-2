@@ -361,8 +361,8 @@
                 endTick += extraEndTick;
 
                 var newSpell = new Spell();
-                newSpell.StartTime = EvadeUtils.TickCount;
-                newSpell.EndTime = EvadeUtils.TickCount + endTick;
+                newSpell.StartTime = Environment.TickCount;
+                newSpell.EndTime = Environment.TickCount + endTick;
                 newSpell.StartPos = startPosition;
                 newSpell.EndPos = endPosition;
                 newSpell.Height = spellEndPos.Z + spellData.ExtraDrawHeight;
@@ -403,18 +403,18 @@
         {
             UpdateSpells();
 
-            if (EvadeUtils.TickCount - LastCheckSpellCollisionTime > 100)
+            if (Environment.TickCount - LastCheckSpellCollisionTime > 100)
             {
                 CheckSpellCollision();
-                LastCheckSpellCollisionTime = EvadeUtils.TickCount;
+                LastCheckSpellCollisionTime = Environment.TickCount;
             }
 
-            if (EvadeUtils.TickCount - LastCheckTime > 1)
+            if (Environment.TickCount - LastCheckTime > 1)
             {
                 //CheckCasterDead();                
                 CheckSpellEndTime();
                 AddDetectedSpells();
-                LastCheckTime = EvadeUtils.TickCount;
+                LastCheckTime = Environment.TickCount;
             }
         }
 
@@ -447,7 +447,7 @@
                     }
                 }
 
-                if (spell.EndTime + spell.Info.ExtraEndTime < EvadeUtils.TickCount || CanHeroWalkIntoSpell(spell) == false)
+                if (spell.EndTime + spell.Info.ExtraEndTime < Environment.TickCount || CanHeroWalkIntoSpell(spell) == false)
                 {
                     DelayAction.Add(1, () => DeleteSpell(entry.Key));
                 }
@@ -496,7 +496,7 @@
 
                 if (spell.SpellType == SpellType.Line)
                 {
-                    var walkRadius = ObjectCache.MyHeroCache.MoveSpeed * (spell.EndTime - EvadeUtils.TickCount) / 1000 + ObjectCache.MyHeroCache.BoundingRadius + spell.Info.Radius + extraDist + 10;
+                    var walkRadius = ObjectCache.MyHeroCache.MoveSpeed * (spell.EndTime - Environment.TickCount) / 1000 + ObjectCache.MyHeroCache.BoundingRadius + spell.Info.Radius + extraDist + 10;
                     var spellPos = spell.CurrentSpellPosition;
                     var spellEndPos = spell.GetSpellEndPosition();
 
@@ -506,7 +506,7 @@
                 }
                 if (spell.SpellType == SpellType.Circular)
                 {
-                    var walkRadius = ObjectCache.MyHeroCache.MoveSpeed * (spell.EndTime - EvadeUtils.TickCount) / 1000 + ObjectCache.MyHeroCache.BoundingRadius + spell.Info.Radius + extraDist + 10;
+                    var walkRadius = ObjectCache.MyHeroCache.MoveSpeed * (spell.EndTime - Environment.TickCount) / 1000 + ObjectCache.MyHeroCache.BoundingRadius + spell.Info.Radius + extraDist + 10;
 
                     if (heroPos.Distance(spell.EndPos) < walkRadius)
                     {
@@ -519,7 +519,7 @@
                     var midPoint = spell.StartPos + spell.Direction * (spellRange / 2);
                     var arcRadius = spell.Info.Radius * (1 + spellRange / 100);
 
-                    var walkRadius = ObjectCache.MyHeroCache.MoveSpeed * (spell.EndTime - EvadeUtils.TickCount) / 1000 + ObjectCache.MyHeroCache.BoundingRadius + arcRadius + extraDist + 10;
+                    var walkRadius = ObjectCache.MyHeroCache.MoveSpeed * (spell.EndTime - Environment.TickCount) / 1000 + ObjectCache.MyHeroCache.BoundingRadius + arcRadius + extraDist + 10;
 
                     if (heroPos.Distance(midPoint) < walkRadius)
                     {
@@ -575,7 +575,7 @@
                         continue;
                     }
 
-                    if (EvadeUtils.TickCount - spell.StartTime < ObjectCache.MenuCache.Cache["ReactionTime"].As<MenuSlider>().Value &&
+                    if (Environment.TickCount - spell.StartTime < ObjectCache.MenuCache.Cache["ReactionTime"].As<MenuSlider>().Value &&
                         !Evade.SpellMenu[spell.Info.CharName + spell.Info.SpellName + "Settings"][spell.Info.SpellName + "FastEvade"].Enabled)
                     {
                         continue;
@@ -584,7 +584,7 @@
                     var dodgeInterval = ObjectCache.MenuCache.Cache["DodgeInterval"].As<MenuSlider>().Value;
                     if (Evade.LastPosInfo != null && dodgeInterval > 0)
                     {
-                        var timeElapsed = EvadeUtils.TickCount - Evade.LastPosInfo.timestamp;
+                        var timeElapsed = Environment.TickCount - Evade.LastPosInfo.Timestamp;
 
                         if (dodgeInterval > timeElapsed && !Evade.SpellMenu[spell.Info.CharName + spell.Info.SpellName + "Settings"][spell.Info.SpellName + "FastEvade"].Enabled)
                         {

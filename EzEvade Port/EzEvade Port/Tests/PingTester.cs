@@ -57,7 +57,7 @@
                 movePos.X -= 65 + rand.Next(0, 20);
             }
 
-            lastTestMoveToCommand = new EvadeCommand {order = EvadeOrderCommand.MoveTo, targetPosition = movePos, timestamp = EvadeUtils.TickCount, isProcessed = false};
+            lastTestMoveToCommand = new EvadeCommand {Order = EvadeOrderCommand.MoveTo, TargetPosition = movePos, Timestamp = Environment.TickCount, IsProcessed = false};
             myHero.IssueOrder(OrderType.MoveTo, movePos.To3D());
 
             if (recursionCount > 1)
@@ -150,7 +150,7 @@
 
             if (myHero.HasPath)
             {
-                if (lastTestMoveToCommand != null && lastTestMoveToCommand.isProcessed == false && lastTestMoveToCommand.order == EvadeOrderCommand.MoveTo)
+                if (lastTestMoveToCommand != null && lastTestMoveToCommand.IsProcessed == false && lastTestMoveToCommand.Order == EvadeOrderCommand.MoveTo)
                 {
                     var path = myHero.Path;
 
@@ -158,11 +158,11 @@
                     {
                         var movePos = path[path.Length - 1].To2D();
 
-                        if (movePos.Distance(lastTestMoveToCommand.targetPosition) < 10)
+                        if (movePos.Distance(lastTestMoveToCommand.TargetPosition) < 10)
                         {
-                            var moveTime = EvadeUtils.TickCount - lastTestMoveToCommand.timestamp - ObjectCache.GamePing;
+                            var moveTime = Environment.TickCount - lastTestMoveToCommand.Timestamp - ObjectCache.GamePing;
                             Console.WriteLine("Extra Delay: " + moveTime);
-                            lastTestMoveToCommand.isProcessed = true;
+                            lastTestMoveToCommand.IsProcessed = true;
 
                             sumPingTime += moveTime;
                             testCount += 1;

@@ -1,5 +1,6 @@
 ﻿namespace EzEvade_Port.Draw
 {
+    using System;
     using System.Drawing;
     using Aimtec;
     using Aimtec.SDK.Extensions;
@@ -15,7 +16,7 @@
 
         public RenderLine(Vector2 start, Vector2 end, float renderTime, int radius = 65, int width = 3)
         {
-            StartTime = EvadeUtils.TickCount;
+            StartTime = Environment.TickCount;
             EndTime = StartTime + renderTime;
             Start = start;
             End = end;
@@ -25,7 +26,7 @@
 
         public RenderLine(Vector2 start, Vector2 end, float renderTime, Color color, int radius = 65, int width = 3)
         {
-            StartTime = EvadeUtils.TickCount;
+            StartTime = Environment.TickCount;
             EndTime = StartTime + renderTime;
             Start = start;
             End = end;

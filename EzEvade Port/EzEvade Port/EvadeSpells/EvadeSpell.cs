@@ -21,7 +21,7 @@
         public static List<EvadeSpellData> EvadeSpells = new List<EvadeSpellData>();
         public static List<EvadeSpellData> ItemSpells = new List<EvadeSpellData>();
 
-        public static EvadeCommand LastSpellEvadeCommand = new EvadeCommand {isProcessed = true, timestamp = EvadeUtils.TickCount};
+        public static EvadeCommand LastSpellEvadeCommand = new EvadeCommand {IsProcessed = true, Timestamp = Environment.TickCount};
 
         public static Menu Menu;
 
@@ -40,13 +40,13 @@
 
         public static void CheckDashing()
         {
-            if (!(EvadeUtils.TickCount - LastSpellEvadeCommand.timestamp < 250) || !MyHero.IsDashing() || LastSpellEvadeCommand.evadeSpellData.EvadeType != EvadeType.Dash)
+            if (!(Environment.TickCount - LastSpellEvadeCommand.Timestamp < 250) || !MyHero.IsDashing() || LastSpellEvadeCommand.EvadeSpellData.EvadeType != EvadeType.Dash)
             {
                 return;
             }
             var dashInfo = MyHero.GetDashInfo();
 
-            LastSpellEvadeCommand.targetPosition = dashInfo.EndPos;
+            LastSpellEvadeCommand.TargetPosition = dashInfo.EndPos;
         }
 
         private static void CheckForItems()
@@ -120,7 +120,7 @@
                 return;
             }
 
-            if (EvadeUtils.TickCount - LastSpellEvadeCommand.timestamp < 1000)
+            if (Environment.TickCount - LastSpellEvadeCommand.Timestamp < 1000)
             {
                 return;
             }
@@ -146,7 +146,7 @@
 
             if (ObjectCache.MenuCache.Cache["CalculateWindupDelay"].Enabled)
             {
-                var extraWindupDelay = Evade.LastWindupTime - EvadeUtils.TickCount;
+                var extraWindupDelay = Evade.LastWindupTime - Environment.TickCount;
                 if (extraWindupDelay > 0)
                 {
                     return false;
@@ -193,7 +193,7 @@
                             var movePos = path[path.Length - 1].To2D();
                             var posInfo = EvadeHelper.CanHeroWalkToPos(movePos, ObjectCache.MyHeroCache.MoveSpeed, 0, 0);
 
-                            if (GetSpellDangerLevel(evadeSpell) > posInfo.posDangerLevel)
+                            if (GetSpellDangerLevel(evadeSpell) > posInfo.PosDangerLevel)
                             {
                                 continue;
                             }
@@ -234,7 +234,7 @@
                                 {
                                     if (processSpell)
                                     {
-                                        MyHero.SpellBook.CastSpell(evadeSpell.SpellKey, posInfo.position.To3D());
+                                        MyHero.SpellBook.CastSpell(evadeSpell.SpellKey, posInfo.Position.To3D());
                                     }
                                     //CastEvadeSpell(() => EvadeCommand.CastSpell(evadeSpell, posInfo.position), processSpell);
                                     //DelayAction.Add(50, () => myHero.IssueOrder(OrderType.MoveTo, posInfo.position.To3D()));
@@ -244,11 +244,11 @@
                             else if (evadeSpell.CastType == CastType.Target)
                             {
                                 var posInfo = EvadeHelper.GetBestPositionTargetedDash(evadeSpell);
-                                if (posInfo != null && posInfo.target != null && posInfo.posDangerLevel == 0)
+                                if (posInfo != null && posInfo.Target != null && posInfo.PosDangerLevel == 0)
                                 {
                                     if (processSpell)
                                     {
-                                        MyHero.SpellBook.CastSpell(evadeSpell.SpellKey, posInfo.target);
+                                        MyHero.SpellBook.CastSpell(evadeSpell.SpellKey, posInfo.Target);
                                     }
                                     //CastEvadeSpell(() => EvadeCommand.CastSpell(evadeSpell, posInfo.target), processSpell);
                                     //DelayAction.Add(50, () => myHero.IssueOrder(OrderType.MoveTo, posInfo.position.To3D()));
@@ -264,16 +264,16 @@
                                 {
                                     if (evadeSpell.IsReversed)
                                     {
-                                        var dir = (posInfo.position - ObjectCache.MyHeroCache.ServerPos2D).Normalized();
-                                        var range = ObjectCache.MyHeroCache.ServerPos2D.Distance(posInfo.position);
+                                        var dir = (posInfo.Position - ObjectCache.MyHeroCache.ServerPos2D).Normalized();
+                                        var range = ObjectCache.MyHeroCache.ServerPos2D.Distance(posInfo.Position);
                                         var pos = ObjectCache.MyHeroCache.ServerPos2D - dir * range;
 
-                                        posInfo.position = pos;
+                                        posInfo.Position = pos;
                                     }
 
                                     if (processSpell)
                                     {
-                                        MyHero.SpellBook.CastSpell(evadeSpell.SpellKey, posInfo.position.To3D());
+                                        MyHero.SpellBook.CastSpell(evadeSpell.SpellKey, posInfo.Position.To3D());
                                     }
 
                                     return true;
@@ -282,11 +282,11 @@
                             else if (evadeSpell.CastType == CastType.Target)
                             {
                                 var posInfo = EvadeHelper.GetBestPositionTargetedDash(evadeSpell);
-                                if (posInfo != null && posInfo.target != null && posInfo.posDangerLevel == 0)
+                                if (posInfo != null && posInfo.Target != null && posInfo.PosDangerLevel == 0)
                                 {
                                     if (processSpell)
                                     {
-                                        MyHero.SpellBook.CastSpell(evadeSpell.SpellKey, posInfo.target);
+                                        MyHero.SpellBook.CastSpell(evadeSpell.SpellKey, posInfo.Target);
                                     }
 
                                     return true;
@@ -348,7 +348,7 @@
                                         MyHero.SpellBook.CastSpell(evadeSpell.SpellKey);
                                     }
                                     //CastEvadeSpell(() => myHero.SpellBook.CastSpell(evadeSpell.spellKey), processSpell);
-                                    DelayAction.Add(5, () => EvadeCommand.MoveTo(posInfo.position));
+                                    DelayAction.Add(5, () => EvadeCommand.MoveTo(posInfo.Position));
                                     return true;
                                 }
                             }
@@ -366,7 +366,7 @@
                                                 MyHero.SpellBook.CastSpell(evadeSpell.SpellKey);
                                             }
                                             //CastEvadeSpell(() => EvadeCommand.CastSpell(evadeSpell), processSpell);
-                                            DelayAction.Add(5, () => EvadeCommand.MoveTo(posInfo.position));
+                                            DelayAction.Add(5, () => EvadeCommand.MoveTo(posInfo.Position));
                                             return true;
                                         }
                                         break;
@@ -378,10 +378,10 @@
                                         {
                                             if (processSpell)
                                             {
-                                                MyHero.SpellBook.CastSpell(evadeSpell.SpellKey, posInfo.position.To3D());
+                                                MyHero.SpellBook.CastSpell(evadeSpell.SpellKey, posInfo.Position.To3D());
                                             }
                                             //CastEvadeSpell(() => EvadeCommand.CastSpell(evadeSpell, posInfo.position), processSpell);
-                                            DelayAction.Add(5, () => EvadeCommand.MoveTo(posInfo.position));
+                                            DelayAction.Add(5, () => EvadeCommand.MoveTo(posInfo.Position));
                                             return true;
                                         }
                                         break;
@@ -410,14 +410,14 @@
         {
             if (!checkSpell)
             {
-                return posInfo.isBetterMovePos();
+                return posInfo.IsBetterMovePos();
             }
-            if (posInfo.posDangerLevel == 0)
+            if (posInfo.PosDangerLevel == 0)
             {
                 return true;
             }
 
-            return posInfo.isBetterMovePos();
+            return posInfo.IsBetterMovePos();
         }
 
         private static bool ShouldActivateEvadeSpell(Spell spell)
@@ -429,7 +429,7 @@
 
             if (ObjectCache.MenuCache.Cache["DodgeSkillShots"].As<MenuKeyBind>().Enabled)
             {
-                if (Evade.LastPosInfo.undodgeableSpells.Contains(spell.SpellId) && ObjectCache.MyHeroCache.ServerPos2D.InSkillShot(spell, ObjectCache.MyHeroCache.BoundingRadius))
+                if (Evade.LastPosInfo.UndodgeableSpells.Contains(spell.SpellId) && ObjectCache.MyHeroCache.ServerPos2D.InSkillShot(spell, ObjectCache.MyHeroCache.BoundingRadius))
                 {
                     return true;
                 }

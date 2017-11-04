@@ -52,9 +52,9 @@
 
         public static PositionInfo LastPosInfo;
 
-        public static EvadeCommand LastEvadeCommand = new EvadeCommand {isProcessed = true, timestamp = EvadeUtils.TickCount};
+        public static EvadeCommand LastEvadeCommand = new EvadeCommand {IsProcessed = true, Timestamp = Environment.TickCount};
 
-        public static EvadeCommand LastBlockedUserMoveTo = new EvadeCommand {isProcessed = true, timestamp = EvadeUtils.TickCount};
+        public static EvadeCommand LastBlockedUserMoveTo = new EvadeCommand {IsProcessed = true, Timestamp = Environment.TickCount};
 
         public static float LastDodgingEndTime;
 
@@ -309,16 +309,16 @@
 
             if (SpellDetector.ChanneledSpells.TryGetValue(sData.Name, out _))
             {
-                LastStopEvadeTime = EvadeUtils.TickCount + ObjectCache.GamePing + 100;
+                LastStopEvadeTime = Environment.TickCount + ObjectCache.GamePing + 100;
             }
 
-            if (EvadeSpell.LastSpellEvadeCommand != null && EvadeSpell.LastSpellEvadeCommand.timestamp + ObjectCache.GamePing + 150 > EvadeUtils.TickCount)
+            if (EvadeSpell.LastSpellEvadeCommand != null && EvadeSpell.LastSpellEvadeCommand.Timestamp + ObjectCache.GamePing + 150 > Environment.TickCount)
             {
                 args.Process = false;
             }
 
             LastSpellCast = args.Slot;
-            LastSpellCastTime = EvadeUtils.TickCount;
+            LastSpellCastTime = Environment.TickCount;
 
             if (Situation.ShouldDodge())
             {
@@ -346,10 +346,10 @@
                         var blinkPos = args.Start.To2D();
 
                         var posInfo = EvadeHelper.CanHeroWalkToPos(blinkPos, evadeSpell.Speed, ObjectCache.GamePing, 0);
-                        if (posInfo != null && posInfo.posDangerLevel == 0)
+                        if (posInfo != null && posInfo.PosDangerLevel == 0)
                         {
-                            EvadeCommand.MoveTo(posInfo.position);
-                            LastStopEvadeTime = EvadeUtils.TickCount + ObjectCache.GamePing + evadeSpell.SpellDelay;
+                            EvadeCommand.MoveTo(posInfo.Position);
+                            LastStopEvadeTime = Environment.TickCount + ObjectCache.GamePing + evadeSpell.SpellDelay;
                         }
                         break;
                     }
@@ -369,16 +369,16 @@
                         }
 
                         var posInfo = EvadeHelper.CanHeroWalkToPos(dashPos, evadeSpell.Speed, ObjectCache.GamePing, 0);
-                        if (posInfo != null && posInfo.posDangerLevel > 0)
+                        if (posInfo != null && posInfo.PosDangerLevel > 0)
                         {
                             args.Process = false;
                             return;
                         }
 
-                        if (IsDodging || EvadeUtils.TickCount < LastDodgingEndTime + 500)
+                        if (IsDodging || Environment.TickCount < LastDodgingEndTime + 500)
                         {
                             EvadeCommand.MoveTo(Game.CursorPos.To2D());
-                            LastStopEvadeTime = EvadeUtils.TickCount + ObjectCache.GamePing + 100;
+                            LastStopEvadeTime = Environment.TickCount + ObjectCache.GamePing + 100;
                         }
                         break;
                     }
@@ -405,9 +405,9 @@
                 if (IsDodging && SpellDetector.Spells.Any())
                 {
                     var limitDelay = ObjectCache.MenuCache.Cache["TickLimiter"].As<MenuSlider>(); //Tick limiter                
-                    if (EvadeUtils.TickCount - LastTickCount < limitDelay.Value)
+                    if (Environment.TickCount - LastTickCount < limitDelay.Value)
                     {
-                        LastTickCount = EvadeUtils.TickCount;
+                        LastTickCount = Environment.TickCount;
                         args.ProcessEvent = false;
                         return;
                     }
@@ -416,21 +416,21 @@
 
                     LastBlockedUserMoveTo = new EvadeCommand
                     {
-                        order = EvadeOrderCommand.MoveTo,
-                        targetPosition = args.Position.To2D(), 
-                        timestamp = EvadeUtils.TickCount,
-                        isProcessed = false
+                        Order = EvadeOrderCommand.MoveTo,
+                        TargetPosition = args.Position.To2D(), 
+                        Timestamp = Environment.TickCount,
+                        IsProcessed = false
                     };
 
                     var posInfoTest = EvadeHelper.CanHeroWalkToPos(args.Position.To2D(), ObjectCache.MyHeroCache.MoveSpeed, 0, 0, false);
 
-                    if (posInfoTest.isDangerousPos)
+                    if (posInfoTest.IsDangerousPos)
                     {
                         args.ProcessEvent = false;
                     }
                     else
                     {
-                        LastPosInfo.position = args.Position.To2D();
+                        LastPosInfo.Position = args.Position.To2D();
                         args.ProcessEvent = true;
                     }
                 }
@@ -443,30 +443,30 @@
                     {
                         LastBlockedUserMoveTo = new EvadeCommand
                         {
-                            order = EvadeOrderCommand.MoveTo,
-                            targetPosition = args /*.Target*/.Position.To2D(),
-                            timestamp = EvadeUtils.TickCount,
-                            isProcessed = false
+                            Order = EvadeOrderCommand.MoveTo,
+                            TargetPosition = args /*.Target*/.Position.To2D(),
+                            Timestamp = Environment.TickCount,
+                            IsProcessed = false
                         };
 
                         args.ProcessEvent = false;
                        
-                        if (EvadeUtils.TickCount - LastMovementBlockTime < 500 && LastMovementBlockPos.Distance(args. /*Target.*/Position) < 100)
+                        if (Environment.TickCount - LastMovementBlockTime < 500 && LastMovementBlockPos.Distance(args. /*Target.*/Position) < 100)
                         {
                             return;
                         }
 
                         LastMovementBlockPos = args. /*Target.*/Position;
-                        LastMovementBlockTime = EvadeUtils.TickCount;
+                        LastMovementBlockTime = Environment.TickCount;
 
                         var posInfo = EvadeHelper.GetBestPositionMovementBlock(movePos);
                         if (posInfo != null)
                         {
-                            EvadeCommand.MoveTo(posInfo.position);
+                            EvadeCommand.MoveTo(posInfo.Position);
                         }
                         return;
                     }
-                    LastBlockedUserMoveTo.isProcessed = true;
+                    LastBlockedUserMoveTo.IsProcessed = true;
                 }
             }
             else 
@@ -505,7 +505,7 @@
             }
 
             LastIssueOrderGameTime = Game.ClockTime * 1000;
-            LastIssueOrderTime = EvadeUtils.TickCount;
+            LastIssueOrderTime = Environment.TickCount;
             LastIssueOrderArgs = args;
 
             switch (args.OrderType)
@@ -553,7 +553,7 @@
                 return;
             }
 
-            LastWindupTime = EvadeUtils.TickCount + castTime - Game.Ping / 2f;
+            LastWindupTime = Environment.TickCount + castTime - Game.Ping / 2f;
 
             if (IsDodging)
             {
@@ -574,15 +574,15 @@
                 }
 
                 var limitDelay = ObjectCache.MenuCache.Cache["TickLimiter"].As<MenuSlider>(); //Tick limiter                
-                if (EvadeHelper.FastEvadeMode || EvadeUtils.TickCount - LastTickCount > limitDelay.Value)
+                if (EvadeHelper.FastEvadeMode || Environment.TickCount - LastTickCount > limitDelay.Value)
                 {
-                    if (EvadeUtils.TickCount > LastStopEvadeTime)
+                    if (Environment.TickCount > LastStopEvadeTime)
                     {
                         DodgeSkillShots();    
                         ContinueLastBlockedCommand();
                     }
 
-                    LastTickCount = EvadeUtils.TickCount;
+                    LastTickCount = Environment.TickCount;
                 }
 
                 EvadeSpell.UseEvadeSpell(); 
@@ -602,7 +602,7 @@
                 return;
             }
 
-            if (LastPosInfo == null || LastPosInfo.recalculatedPath)
+            if (LastPosInfo == null || LastPosInfo.RecalculatedPath)
             {
                 return;
             }
@@ -615,18 +615,18 @@
 
             var movePos = path.Last().To2D();
 
-            if (!(movePos.Distance(LastPosInfo.position) < 5))
+            if (!(movePos.Distance(LastPosInfo.Position) < 5))
             {
                 return;
             }
 
             var posInfo = EvadeHelper.CanHeroWalkToPos(movePos, ObjectCache.MyHeroCache.MoveSpeed, 0, 0, false);
-            if (posInfo.posDangerCount <= LastPosInfo.posDangerCount)
+            if (posInfo.PosDangerCount <= LastPosInfo.PosDangerCount)
             {
                 return;
             }
 
-            LastPosInfo.recalculatedPath = true;
+            LastPosInfo.RecalculatedPath = true;
 
             if (EvadeSpell.PreferEvadeSpell())
             {
@@ -635,7 +635,7 @@
             else
             {
                 var newPosInfo = EvadeHelper.GetBestPosition();
-                if (newPosInfo.posDangerCount >= posInfo.posDangerCount)
+                if (newPosInfo.PosDangerCount >= posInfo.PosDangerCount)
                 {
                     return;
                 }
@@ -653,11 +653,11 @@
                 return;
             }
 
-            var movePos = LastBlockedUserMoveTo.targetPosition;
+            var movePos = LastBlockedUserMoveTo.TargetPosition;
             var extraDelay = ObjectCache.MenuCache.Cache["ExtraPingBuffer"].As<MenuSlider>().Value;
 
-            if (IsDodging || LastBlockedUserMoveTo.isProcessed || !(EvadeUtils.TickCount - LastEvadeCommand.timestamp > ObjectCache.GamePing + extraDelay) ||
-                !(EvadeUtils.TickCount - LastBlockedUserMoveTo.timestamp < 1500))
+            if (IsDodging || LastBlockedUserMoveTo.IsProcessed || !(Environment.TickCount - LastEvadeCommand.Timestamp > ObjectCache.GamePing + extraDelay) ||
+                !(Environment.TickCount - LastBlockedUserMoveTo.Timestamp < 1500))
             {
                 return;
             }
@@ -670,7 +670,7 @@
             }
 
             EvadeCommand.MoveTo(movePos);
-            LastBlockedUserMoveTo.isProcessed = true;
+            LastBlockedUserMoveTo.IsProcessed = true;
         }
 
         private static void CheckHeroInDanger()
@@ -681,7 +681,7 @@
             {
                 var spell = entry.Value;
 
-                if (LastPosInfo == null || !LastPosInfo.dodgeableSpells.Contains(spell.SpellId))
+                if (LastPosInfo == null || !LastPosInfo.DodgeableSpells.Contains(spell.SpellId))
                 {
                     continue;
                 }
@@ -692,7 +692,7 @@
                     break;
                 }
 
-                if (!ObjectCache.MenuCache.Cache["EnableEvadeDistance"].As<MenuBool>().Enabled || !(EvadeUtils.TickCount < LastPosInfo.endTime))
+                if (!ObjectCache.MenuCache.Cache["EnableEvadeDistance"].As<MenuBool>().Enabled || !(Environment.TickCount < LastPosInfo.EndTime))
                 {
                     continue;
                 }
@@ -703,7 +703,7 @@
 
             if (IsDodging && !playerInDanger)
             {
-                LastDodgingEndTime = EvadeUtils.TickCount;
+                LastDodgingEndTime = Environment.TickCount;
             }
 
             if (IsDodging == false && !Situation.ShouldDodge())
@@ -729,15 +729,15 @@
                     return;
                 }
 
-                var lastBestPosition = LastPosInfo.position;
+                var lastBestPosition = LastPosInfo.Position;
 
-                if (!ObjectCache.MenuCache.Cache["ClickOnlyOnce"].Enabled && MyHero.Path.Count() > 0 && LastPosInfo.position.Distance(MyHero.Path.Last().To2D()) < 5)
+                if (!ObjectCache.MenuCache.Cache["ClickOnlyOnce"].Enabled && MyHero.Path.Count() > 0 && LastPosInfo.Position.Distance(MyHero.Path.Last().To2D()) < 5)
                 {
                     return;
                 }
 
                 EvadeCommand.MoveTo(lastBestPosition);
-                LastEvadeOrderTime = EvadeUtils.TickCount;
+                LastEvadeOrderTime = Environment.TickCount;
             }
             else
             {
@@ -759,7 +759,7 @@
                 var posInfo = EvadeHelper.GetBestPositionMovementBlock(movePos);
                 if (posInfo != null)
                 {
-                    EvadeCommand.MoveTo(posInfo.position);
+                    EvadeCommand.MoveTo(posInfo.Position);
                 }
             }
         }
@@ -855,14 +855,14 @@
                     {
                         LastPosInfo = posInfo.CompareLastMovePos();
 
-                        var travelTime = ObjectCache.MyHeroCache.ServerPos2DPing.Distance(LastPosInfo.position) / MyHero.MoveSpeed;
+                        var travelTime = ObjectCache.MyHeroCache.ServerPos2DPing.Distance(LastPosInfo.Position) / MyHero.MoveSpeed;
 
-                        LastPosInfo.endTime = EvadeUtils.TickCount + travelTime * 1000 - 100;
+                        LastPosInfo.EndTime = Environment.TickCount + travelTime * 1000 - 100;
                     }
 
                     CheckHeroInDanger();
 
-                    if (EvadeUtils.TickCount > LastStopEvadeTime)
+                    if (Environment.TickCount > LastStopEvadeTime)
                     {
                         DodgeSkillShots();
                     }

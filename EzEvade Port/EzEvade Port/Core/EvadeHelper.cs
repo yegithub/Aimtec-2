@@ -35,22 +35,22 @@
 
             PositionInfo posInfo;
             posInfo = CanHeroWalkToPos(pos, ObjectCache.MyHeroCache.MoveSpeed, extraDelayBuffer + ObjectCache.GamePing, extraDist);
-            posInfo.isDangerousPos = pos.CheckDangerousPos(6);
-            posInfo.hasExtraDistance = extraEvadeDistance > 0 && pos.CheckDangerousPos(extraEvadeDistance);
-            posInfo.closestDistance = posInfo.distanceToMouse;
-            posInfo.distanceToMouse = pos.GetPositionValue();
-            posInfo.posDistToChamps = pos.GetDistanceToChampions();
-            posInfo.speed = ObjectCache.MyHeroCache.MoveSpeed;
+            posInfo.IsDangerousPos = pos.CheckDangerousPos(6);
+            posInfo.HasExtraDistance = extraEvadeDistance > 0 && pos.CheckDangerousPos(extraEvadeDistance);
+            posInfo.ClosestDistance = posInfo.DistanceToMouse;
+            posInfo.DistanceToMouse = pos.GetPositionValue();
+            posInfo.PosDistToChamps = pos.GetDistanceToChampions();
+            posInfo.Speed = ObjectCache.MyHeroCache.MoveSpeed;
 
             if (ObjectCache.MenuCache.Cache["RejectMinDistance"].As<MenuSlider>().Value > 0 &&
-                ObjectCache.MenuCache.Cache["RejectMinDistance"].As<MenuSlider>().Value > posInfo.closestDistance) //reject closestdistance
+                ObjectCache.MenuCache.Cache["RejectMinDistance"].As<MenuSlider>().Value > posInfo.ClosestDistance) //reject closestdistance
             {
-                posInfo.rejectPosition = true;
+                posInfo.RejectPosition = true;
             }
 
-            if (ObjectCache.MenuCache.Cache["MinComfortZone"].As<MenuSlider>().Value > posInfo.posDistToChamps)
+            if (ObjectCache.MenuCache.Cache["MinComfortZone"].As<MenuSlider>().Value > posInfo.PosDistToChamps)
             {
-                posInfo.hasComfortZone = false;
+                posInfo.HasComfortZone = false;
             }
 
             return posInfo;
@@ -98,7 +98,7 @@
                 }
             }
 
-            var sortedPosTable = posTable.OrderBy(p => p.isDangerousPos).ThenBy(p => p.posDangerLevel).ThenBy(p => p.posDangerCount).ThenBy(p => p.distanceToMouse);
+            var sortedPosTable = posTable.OrderBy(p => p.IsDangerousPos).ThenBy(p => p.PosDangerLevel).ThenBy(p => p.PosDangerCount).ThenBy(p => p.DistanceToMouse);
 
             return sortedPosTable;
         }
@@ -118,7 +118,7 @@
 
             if (ObjectCache.MenuCache.Cache["CalculateWindupDelay"].Enabled)
             {
-                var extraWindupDelay = Evade.LastWindupTime - EvadeUtils.TickCount;
+                var extraWindupDelay = Evade.LastWindupTime - Environment.TickCount;
                 if (extraWindupDelay > 0)
                 {
                     extraDelayBuffer += (int) extraWindupDelay;
@@ -162,30 +162,30 @@
 
             if (ObjectCache.MenuCache.Cache["EvadeMode"].As<MenuList>().SelectedItem == "Fastest")
             {
-                sortedPosTable = posTable.OrderBy(p => p.isDangerousPos).ThenByDescending(p => p.intersectionTime).ThenBy(p => p.posDangerLevel).ThenBy(p => p.posDangerCount);
+                sortedPosTable = posTable.OrderBy(p => p.IsDangerousPos).ThenByDescending(p => p.IntersectionTime).ThenBy(p => p.PosDangerLevel).ThenBy(p => p.PosDangerCount);
 
                 FastEvadeMode = true;
             }
             else if (FastEvadeMode)
             {
-                sortedPosTable = posTable.OrderBy(p => p.isDangerousPos).ThenByDescending(p => p.intersectionTime).ThenBy(p => p.posDangerLevel).ThenBy(p => p.posDangerCount);
+                sortedPosTable = posTable.OrderBy(p => p.IsDangerousPos).ThenByDescending(p => p.IntersectionTime).ThenBy(p => p.PosDangerLevel).ThenBy(p => p.PosDangerCount);
             }
             else if (ObjectCache.MenuCache.Cache["FastEvadeActivationTime"].As<MenuSlider>().Value > 0 &&
                      ObjectCache.MenuCache.Cache["FastEvadeActivationTime"].As<MenuSlider>().Value + ObjectCache.GamePing + extraDelayBuffer > lowestEvadeTime)
             {
-                sortedPosTable = posTable.OrderBy(p => p.isDangerousPos).ThenByDescending(p => p.intersectionTime).ThenBy(p => p.posDangerLevel).ThenBy(p => p.posDangerCount);
+                sortedPosTable = posTable.OrderBy(p => p.IsDangerousPos).ThenByDescending(p => p.IntersectionTime).ThenBy(p => p.PosDangerLevel).ThenBy(p => p.PosDangerCount);
 
                 FastEvadeMode = true;
             }
             else
             {
-                sortedPosTable = posTable.OrderBy(p => p.rejectPosition).ThenBy(p => p.posDangerLevel).ThenBy(p => p.posDangerCount).ThenBy(p => p.distanceToMouse);
+                sortedPosTable = posTable.OrderBy(p => p.RejectPosition).ThenBy(p => p.PosDangerLevel).ThenBy(p => p.PosDangerCount).ThenBy(p => p.DistanceToMouse);
 
-                if (sortedPosTable.First().posDangerCount != 0) //if can't dodge smoothly, dodge fast
+                if (sortedPosTable.First().PosDangerCount != 0) //if can't dodge smoothly, dodge fast
                 {
-                    var sortedPosTableFastest = posTable.OrderBy(p => p.isDangerousPos).ThenByDescending(p => p.intersectionTime).ThenBy(p => p.posDangerLevel).ThenBy(p => p.posDangerCount);
+                    var sortedPosTableFastest = posTable.OrderBy(p => p.IsDangerousPos).ThenByDescending(p => p.IntersectionTime).ThenBy(p => p.PosDangerLevel).ThenBy(p => p.PosDangerCount);
 
-                    if (sortedPosTableFastest.First().posDangerCount == 0)
+                    if (sortedPosTableFastest.First().PosDangerCount == 0)
                     {
                         sortedPosTable = sortedPosTableFastest;
                         FastEvadeMode = true;
@@ -195,14 +195,14 @@
 
             foreach (var posInfo in sortedPosTable)
             {
-                if (CheckPathCollision(MyHero, posInfo.position))
+                if (CheckPathCollision(MyHero, posInfo.Position))
                 {
                     continue;
                 }
                 if (FastEvadeMode)
                 {
-                    posInfo.position = GetExtendedSafePosition(ObjectCache.MyHeroCache.ServerPos2D, posInfo.position, extraEvadeDistance);
-                    return CanHeroWalkToPos(posInfo.position, ObjectCache.MyHeroCache.MoveSpeed, ObjectCache.GamePing, 0);
+                    posInfo.Position = GetExtendedSafePosition(ObjectCache.MyHeroCache.ServerPos2D, posInfo.Position, extraEvadeDistance);
+                    return CanHeroWalkToPos(posInfo.Position, ObjectCache.MyHeroCache.MoveSpeed, ObjectCache.GamePing, 0);
                 }
 
                 if (!PositionInfoStillValid(posInfo))
@@ -210,9 +210,9 @@
                     continue;
                 }
 
-                if (posInfo.position.CheckDangerousPos(extraEvadeDistance)) //extra evade distance, no multiple skillshots
+                if (posInfo.Position.CheckDangerousPos(extraEvadeDistance)) //extra evade distance, no multiple skillshots
                 {
-                    posInfo.position = GetExtendedSafePosition(ObjectCache.MyHeroCache.ServerPos2D, posInfo.position, extraEvadeDistance);
+                    posInfo.Position = GetExtendedSafePosition(ObjectCache.MyHeroCache.ServerPos2D, posInfo.Position, extraEvadeDistance);
                 }
 
                 return posInfo;
@@ -251,17 +251,17 @@
                     var pos = new Vector2((float) Math.Floor(heroPoint.X + curRadius * Math.Cos(cRadians)), (float) Math.Floor(heroPoint.Y + curRadius * Math.Sin(cRadians)));
 
                     var posInfo = CanHeroWalkToPos(pos, ObjectCache.MyHeroCache.MoveSpeed, extraDelayBuffer + ObjectCache.GamePing, extraDist);
-                    posInfo.isDangerousPos = pos.CheckDangerousPos(6) || CheckMovePath(pos);
-                    posInfo.distanceToMouse = pos.GetPositionValue();
-                    posInfo.hasExtraDistance = extraEvadeDistance > 0 && pos.HasExtraAvoidDistance(extraEvadeDistance);
+                    posInfo.IsDangerousPos = pos.CheckDangerousPos(6) || CheckMovePath(pos);
+                    posInfo.DistanceToMouse = pos.GetPositionValue();
+                    posInfo.HasExtraDistance = extraEvadeDistance > 0 && pos.HasExtraAvoidDistance(extraEvadeDistance);
 
                     posTable.Add(posInfo);
                 }
             }
 
-            var sortedPosTable = posTable.OrderBy(p => p.isDangerousPos).ThenBy(p => p.posDangerLevel).ThenBy(p => p.hasExtraDistance).ThenBy(p => p.distanceToMouse);
+            var sortedPosTable = posTable.OrderBy(p => p.IsDangerousPos).ThenBy(p => p.PosDangerLevel).ThenBy(p => p.HasExtraDistance).ThenBy(p => p.DistanceToMouse);
 
-            return sortedPosTable.FirstOrDefault(posInfo => CheckPathCollision(MyHero, posInfo.position) == false);
+            return sortedPosTable.FirstOrDefault(posInfo => CheckPathCollision(MyHero, posInfo.Position) == false);
         }
 
         public static PositionInfo GetBestPositionBlink()
@@ -298,21 +298,21 @@
 
                     var posInfo = new PositionInfo(pos, isDangerousPos, dist)
                     {
-                        hasExtraDistance = extraEvadeDistance > 0 && pos.CheckDangerousPos(extraEvadeDistance),
-                        posDistToChamps = pos.GetDistanceToChampions()
+                        HasExtraDistance = extraEvadeDistance > 0 && pos.CheckDangerousPos(extraEvadeDistance),
+                        PosDistToChamps = pos.GetDistanceToChampions()
                     };
 
 
-                    if (minComfortZone < posInfo.posDistToChamps)
+                    if (minComfortZone < posInfo.PosDistToChamps)
                     {
                         posTable.Add(posInfo);
                     }
                 }
             }
 
-            var sortedPosTable = posTable.OrderBy(p => p.isDangerousPos).ThenBy(p => p.hasExtraDistance).ThenBy(p => p.distanceToMouse);
+            var sortedPosTable = posTable.OrderBy(p => p.IsDangerousPos).ThenBy(p => p.HasExtraDistance).ThenBy(p => p.DistanceToMouse);
 
-            return sortedPosTable.FirstOrDefault(posInfo => CheckPointCollision(MyHero, posInfo.position) == false);
+            return sortedPosTable.FirstOrDefault(posInfo => CheckPointCollision(MyHero, posInfo.Position) == false);
         }
 
         public static PositionInfo GetBestPositionDash(EvadeSpellData spell)
@@ -353,12 +353,12 @@
                     var pos = new Vector2((float) Math.Floor(heroPoint.X + curRadius * Math.Cos(cRadians)), (float) Math.Floor(heroPoint.Y + curRadius * Math.Sin(cRadians)));
 
                     var posInfo = CanHeroWalkToPos(pos, spell.Speed, extraDelayBuffer + ObjectCache.GamePing, extraDist);
-                    posInfo.isDangerousPos = pos.CheckDangerousPos(6);
-                    posInfo.hasExtraDistance = extraEvadeDistance > 0 && pos.CheckDangerousPos(extraEvadeDistance); // ? 1 : 0;                    
-                    posInfo.distanceToMouse = pos.GetPositionValue();
-                    posInfo.spellList = spellList;
+                    posInfo.IsDangerousPos = pos.CheckDangerousPos(6);
+                    posInfo.HasExtraDistance = extraEvadeDistance > 0 && pos.CheckDangerousPos(extraEvadeDistance); // ? 1 : 0;                    
+                    posInfo.DistanceToMouse = pos.GetPositionValue();
+                    posInfo.SpellList = spellList;
 
-                    posInfo.posDistToChamps = pos.GetDistanceToChampions();
+                    posInfo.PosDistToChamps = pos.GetDistanceToChampions();
 
                     posTable.Add(posInfo);
                 }
@@ -369,9 +369,9 @@
                 }
             }
 
-            var sortedPosTable = posTable.OrderBy(p => p.isDangerousPos).ThenBy(p => p.posDangerLevel).ThenBy(p => p.posDangerCount).ThenBy(p => p.hasExtraDistance).ThenBy(p => p.distanceToMouse);
+            var sortedPosTable = posTable.OrderBy(p => p.IsDangerousPos).ThenBy(p => p.PosDangerLevel).ThenBy(p => p.PosDangerCount).ThenBy(p => p.HasExtraDistance).ThenBy(p => p.DistanceToMouse);
 
-            return sortedPosTable.Where(posInfo => CheckPathCollision(MyHero, posInfo.position) == false).FirstOrDefault(posInfo => PositionInfoStillValid(posInfo, spell.Speed));
+            return sortedPosTable.Where(posInfo => CheckPathCollision(MyHero, posInfo.Position) == false).FirstOrDefault(posInfo => PositionInfoStillValid(posInfo, spell.Speed));
         }
 
         public static PositionInfo GetBestPositionTargetedDash(EvadeSpellData spell)
@@ -465,9 +465,9 @@
                 if (spell.EvadeType == EvadeType.Dash)
                 {
                     posInfo = CanHeroWalkToPos(pos, spell.Speed, extraDelayBuffer + ObjectCache.GamePing, extraDist);
-                    posInfo.isDangerousPos = pos.CheckDangerousPos(6);
-                    posInfo.distanceToMouse = pos.GetPositionValue();
-                    posInfo.spellList = spellList;
+                    posInfo.IsDangerousPos = pos.CheckDangerousPos(6);
+                    posInfo.DistanceToMouse = pos.GetPositionValue();
+                    posInfo.SpellList = spellList;
                 }
                 else
                 {
@@ -477,23 +477,23 @@
                     posInfo = new PositionInfo(pos, isDangerousPos, dist);
                 }
 
-                posInfo.target = candidate;
+                posInfo.Target = candidate;
                 posTable.Add(posInfo);
             }
 
             if (spell.EvadeType == EvadeType.Dash)
             {
-                var sortedPosTable = posTable.OrderBy(p => p.isDangerousPos).ThenBy(p => p.posDangerLevel).ThenBy(p => p.posDangerCount).ThenBy(p => p.distanceToMouse);
+                var sortedPosTable = posTable.OrderBy(p => p.IsDangerousPos).ThenBy(p => p.PosDangerLevel).ThenBy(p => p.PosDangerCount).ThenBy(p => p.DistanceToMouse);
 
                 var first = sortedPosTable.FirstOrDefault();
-                if (first != null && Evade.LastPosInfo != null && first.isDangerousPos == false && Evade.LastPosInfo.posDangerLevel > first.posDangerLevel)
+                if (first != null && Evade.LastPosInfo != null && first.IsDangerousPos == false && Evade.LastPosInfo.PosDangerLevel > first.PosDangerLevel)
                 {
                     return first;
                 }
             }
             else
             {
-                var sortedPosTable = posTable.OrderBy(p => p.isDangerousPos).ThenBy(p => p.distanceToMouse);
+                var sortedPosTable = posTable.OrderBy(p => p.IsDangerousPos).ThenBy(p => p.DistanceToMouse);
 
                 var first = sortedPosTable.FirstOrDefault();
 
@@ -713,7 +713,7 @@
                 closestDistance = Math.Min(closestDistance, GetClosestDistanceApproach(spell, pos, speed, delay, heroPos, extraDist));
 
                 if (pos.InSkillShot(spell, ObjectCache.MyHeroCache.BoundingRadius - 8) || PredictSpellCollision(spell, pos, speed, delay, heroPos, extraDist, useServerPosition) ||
-                    spell.Info.SpellType != SpellType.Line && pos.isNearEnemy(minComfortDistance))
+                    spell.Info.SpellType != SpellType.Line && pos.IsNearEnemy(minComfortDistance))
                 {
                     posDangerLevel = Math.Max(posDangerLevel, spell.Dangerlevel);
                     posDangerCount += spell.Dangerlevel;
@@ -775,7 +775,7 @@
                 }
                 case SpellType.Line when spell.Info.ProjectileSpeed == float.MaxValue:
                 {
-                    var spellHitTime = Math.Max(0, spell.EndTime - EvadeUtils.TickCount - delay); //extraDelay
+                    var spellHitTime = Math.Max(0, spell.EndTime - Environment.TickCount - delay); //extraDelay
                     var walkRange = heroPos.Distance(pos);
                     var predictedRange = speed * (spellHitTime / 1000);
                     var tHeroPos = heroPos + walkDir * Math.Min(predictedRange, walkRange); //Hero predicted pos
@@ -786,7 +786,7 @@
                 }
                 case SpellType.Circular:
                 {
-                    var spellHitTime = Math.Max(0, spell.EndTime - EvadeUtils.TickCount - delay); //extraDelay
+                    var spellHitTime = Math.Max(0, spell.EndTime - Environment.TickCount - delay); //extraDelay
                     var walkRange = heroPos.Distance(pos);
                     var predictedRange = speed * (spellHitTime / 1000);
                     var tHeroPos = heroPos + walkDir * Math.Min(predictedRange, walkRange); //Hero predicted pos
@@ -826,7 +826,7 @@
                     var closestDist = Math.Max(0, tHeroPos.Distance(spell.EndPos) - (spell.Radius + extraDist));
                     if (spell.Info.ExtraEndTime > 0 && closestDist != 0)
                     {
-                        var remainingTime = Math.Max(0, spell.EndTime + spell.Info.ExtraEndTime - EvadeUtils.TickCount - delay);
+                        var remainingTime = Math.Max(0, spell.EndTime + spell.Info.ExtraEndTime - Environment.TickCount - delay);
                         var predictedRange2 = speed * (remainingTime / 1000);
                         var tHeroPos2 = heroPos + walkDir * Math.Min(predictedRange2, walkRange);
 
@@ -871,7 +871,7 @@
                 }
                 case SpellType.Cone:
                 {
-                    var spellHitTime = Math.Max(0, spell.EndTime - EvadeUtils.TickCount - delay); //extraDelay
+                    var spellHitTime = Math.Max(0, spell.EndTime - Environment.TickCount - delay); //extraDelay
                     var walkRange = heroPos.Distance(pos);
                     var predictedRange = speed * (spellHitTime / 1000);
                     var tHeroPos = heroPos + walkDir * Math.Min(predictedRange, walkRange); //Hero predicted pos
@@ -1079,7 +1079,7 @@
                             }
                             break;
                         case SpellType.Arc:
-                            if (@from.isLeftOfLineSegment(spell.StartPos, spell.EndPos))
+                            if (@from.IsLeftOfLineSegment(spell.StartPos, spell.EndPos))
                             {
                                 return MathUtils.CheckLineIntersection(@from, movePos, spell.StartPos, spell.EndPos);
                             }

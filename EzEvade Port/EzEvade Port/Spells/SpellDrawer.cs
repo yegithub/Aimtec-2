@@ -111,7 +111,7 @@
             {
                 if (ObjectCache.MenuCache.Cache["ActivateEvadeSpells"].As<MenuKeyBind>().Enabled)
                 {
-                    if (ObjectCache.MenuCache.Cache["DodgeOnlyOnComboKeyEnabled"].Enabled && ObjectCache.MenuCache.Cache["DodgeComboKey"].As<MenuKeyBind>().Enabled == false)
+                    if (ObjectCache.MenuCache.Cache["DodgeOnlyOnComboKeyEnabled"].Enabled && !ObjectCache.MenuCache.Cache["DodgeComboKey"].As<MenuKeyBind>().Enabled)
                     {
                         Render.Text("Evade: OFF", new Vector2(heroPos.X - 10, heroPos.Y), RenderTextFlags.Center, Color.Gray);
                     }
@@ -133,7 +133,7 @@
             {
                 if (Evade.LastPosInfo != null)
                 {
-                    var pos = Evade.LastPosInfo.position; //Evade.lastEvadeCommand.targetPosition;
+                    var pos = Evade.LastPosInfo.Position; //Evade.lastEvadeCommand.targetPosition;
                     Render.WorldToScreen(new Vector3(pos.X, pos.Y, MyHero.Position.Z), out var screenPos);
                     Render.Circle(screenPos.To3D(), 65, 10, Color.Red);
                 }
@@ -158,13 +158,13 @@
                 var dangerStr = spell.GetSpellDangerString();
 
                 var spellDrawingWidth = ObjectCache.MenuCache.Cache["DangerLevelDrawings"][dangerStr + "Width"].As<MenuSlider>().Value;
-                var avoidRadius = ObjectCache.MenuCache.Cache["ExtraAvoidDistance"].As<MenuSlider>().Value;
-
+               
                 if (!Evade.SpellMenu[spell.Info.CharName + spell.Info.SpellName + "Settings"][spell.Info.SpellName + "DrawSpell"].Enabled)
                 {
                     continue;
                 }
-                var canEvade = !(Evade.LastPosInfo != null && Evade.LastPosInfo.undodgeableSpells.Contains(spell.SpellId)) || !Evade.DevModeOn;
+
+                var canEvade = !(Evade.LastPosInfo != null && Evade.LastPosInfo.UndodgeableSpells.Contains(spell.SpellId)) || !Evade.DevModeOn;
 
                 switch (spell.SpellType)
                 {

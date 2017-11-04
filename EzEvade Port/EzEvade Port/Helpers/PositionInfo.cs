@@ -10,52 +10,52 @@
 
     public class PositionInfo
     {
-        public float closestDistance = float.MaxValue;
-        public float distanceToMouse;
-        public List<int> dodgeableSpells = new List<int>();
-        public float endTime = 0;
-        public bool hasComfortZone = true;
-        public bool hasExtraDistance = false;
-        public float intersectionTime = float.MaxValue;
-        public bool isDangerousPos;
-        public int posDangerCount;
+        public float ClosestDistance = float.MaxValue;
+        public float DistanceToMouse;
+        public List<int> DodgeableSpells = new List<int>();
+        public float EndTime = 0;
+        public bool HasComfortZone = true;
+        public bool HasExtraDistance = false;
+        public float IntersectionTime = float.MaxValue;
+        public bool IsDangerousPos;
+        public int PosDangerCount;
 
-        public int posDangerLevel;
-        public float posDistToChamps = float.MaxValue;
-        public Vector2 position;
-        public bool recalculatedPath = false;
-        public bool rejectPosition = false;
-        public float speed = 0;
-        public List<int> spellList = new List<int>();
-        public Obj_AI_Base target = null;
-        public float timestamp;
-        public List<int> undodgeableSpells = new List<int>();
+        public int PosDangerLevel;
+        public float PosDistToChamps = float.MaxValue;
+        public Vector2 Position;
+        public bool RecalculatedPath = false;
+        public bool RejectPosition = false;
+        public float Speed = 0;
+        public List<int> SpellList = new List<int>();
+        public Obj_AI_Base Target = null;
+        public float Timestamp;
+        public List<int> UndodgeableSpells = new List<int>();
 
         public PositionInfo(Vector2 position, int posDangerLevel, int posDangerCount, bool isDangerousPos, float distanceToMouse, List<int> dodgeableSpells, List<int> undodgeableSpells)
         {
-            this.position = position;
-            this.posDangerLevel = posDangerLevel;
-            this.posDangerCount = posDangerCount;
-            this.isDangerousPos = isDangerousPos;
-            this.distanceToMouse = distanceToMouse;
-            this.dodgeableSpells = dodgeableSpells;
-            this.undodgeableSpells = undodgeableSpells;
-            timestamp = EvadeUtils.TickCount;
+            this.Position = position;
+            this.PosDangerLevel = posDangerLevel;
+            this.PosDangerCount = posDangerCount;
+            this.IsDangerousPos = isDangerousPos;
+            this.DistanceToMouse = distanceToMouse;
+            this.DodgeableSpells = dodgeableSpells;
+            this.UndodgeableSpells = undodgeableSpells;
+            Timestamp = Environment.TickCount;
         }
 
         public PositionInfo(Vector2 position, bool isDangerousPos, float distanceToMouse)
         {
-            this.position = position;
-            this.isDangerousPos = isDangerousPos;
-            this.distanceToMouse = distanceToMouse;
-            timestamp = EvadeUtils.TickCount;
+            this.Position = position;
+            this.IsDangerousPos = isDangerousPos;
+            this.DistanceToMouse = distanceToMouse;
+            Timestamp = Environment.TickCount;
         }
 
-        private static Obj_AI_Hero myHero => ObjectManager.GetLocalPlayer();
+        private static Obj_AI_Hero MyHero => ObjectManager.GetLocalPlayer();
 
         public static PositionInfo SetAllDodgeable()
         {
-            return SetAllDodgeable(myHero.Position.To2D());
+            return SetAllDodgeable(MyHero.Position.To2D());
         }
 
         public static PositionInfo SetAllDodgeable(Vector2 position)
@@ -91,15 +91,15 @@
                 posDangerCount += spellDangerLevel;
             }
 
-            return new PositionInfo(myHero.Position.To2D(), posDangerLevel, posDangerCount, true, 0, dodgeableSpells, undodgeableSpells);
+            return new PositionInfo(MyHero.Position.To2D(), posDangerLevel, posDangerCount, true, 0, dodgeableSpells, undodgeableSpells);
         }
     }
 
     public static class PositionInfoExtensions
     {
-        public static Obj_AI_Hero myHero => ObjectManager.GetLocalPlayer();
+        public static Obj_AI_Hero MyHero => ObjectManager.GetLocalPlayer();
 
-        public static int GetHighestSpellID(this PositionInfo posInfo)
+        public static int GetHighestSpellId(this PositionInfo posInfo)
         {
             if (posInfo == null)
             {
@@ -108,28 +108,28 @@
 
             var highest = 0;
 
-            foreach (var spellID in posInfo.undodgeableSpells)
+            foreach (var spellId in posInfo.UndodgeableSpells)
             {
-                highest = Math.Max(highest, spellID);
+                highest = Math.Max(highest, spellId);
             }
 
-            foreach (var spellID in posInfo.dodgeableSpells)
+            foreach (var spellId in posInfo.DodgeableSpells)
             {
-                highest = Math.Max(highest, spellID);
+                highest = Math.Max(highest, spellId);
             }
 
             return highest;
         }
 
-        public static bool isSamePosInfo(this PositionInfo posInfo1, PositionInfo posInfo2)
+        public static bool IsSamePosInfo(this PositionInfo posInfo1, PositionInfo posInfo2)
         {
-            return new HashSet<int>(posInfo1.spellList).SetEquals(posInfo2.spellList);
+            return new HashSet<int>(posInfo1.SpellList).SetEquals(posInfo2.SpellList);
         }
 
-        public static bool isBetterMovePos(this PositionInfo newPosInfo)
+        public static bool IsBetterMovePos(this PositionInfo newPosInfo)
         {
             PositionInfo posInfo = null;
-            var path = myHero.Path;
+            var path = MyHero.Path;
             if (path.Length > 0)
             {
                 var movePos = path[path.Length - 1].To2D();
@@ -140,7 +140,7 @@
                 posInfo = EvadeHelper.CanHeroWalkToPos(ObjectCache.MyHeroCache.ServerPos2D, ObjectCache.MyHeroCache.MoveSpeed, 0, 0, false);
             }
 
-            if (posInfo.posDangerCount < newPosInfo.posDangerCount)
+            if (posInfo.PosDangerCount < newPosInfo.PosDangerCount)
             {
                 return false;
             }
@@ -151,7 +151,7 @@
         public static PositionInfo CompareLastMovePos(this PositionInfo newPosInfo)
         {
             PositionInfo posInfo = null;
-            var path = myHero.Path;
+            var path = MyHero.Path;
             if (path.Length > 0)
             {
                 var movePos = path[path.Length - 1].To2D();
@@ -162,7 +162,7 @@
                 posInfo = EvadeHelper.CanHeroWalkToPos(ObjectCache.MyHeroCache.ServerPos2D, ObjectCache.MyHeroCache.MoveSpeed, 0, 0, false);
             }
 
-            if (posInfo.posDangerCount < newPosInfo.posDangerCount)
+            if (posInfo.PosDangerCount < newPosInfo.PosDangerCount)
             {
                 return posInfo;
             }

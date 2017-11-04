@@ -1,5 +1,6 @@
 ﻿namespace EzEvade_Port.Helpers
 {
+    using System;
     using Aimtec;
     using Aimtec.SDK.Events;
     using Aimtec.SDK.Extensions;
@@ -9,16 +10,16 @@
 
     public static class Situation
     {
-        private static Obj_AI_Hero myHero => ObjectManager.GetLocalPlayer();
+        private static Obj_AI_Hero MyHero => ObjectManager.GetLocalPlayer();
 
         public static bool CheckTeam(this Obj_AI_Base unit)
         {
-            return unit.Team != myHero.Team || Evade.DevModeOn;
+            return unit.Team != MyHero.Team || Evade.DevModeOn;
         }
 
         public static bool CheckTeam(this GameObject unit)
         {
-            return unit.Team != myHero.Team || Evade.DevModeOn;
+            return unit.Team != MyHero.Team || Evade.DevModeOn;
         }
 
         //public static bool CheckTeam(this Obj_GeneralParticleEmitter emitter)
@@ -38,7 +39,7 @@
             return Evade.DevModeOn ? "ally" : "enemy";
         }
 
-        public static bool isNearEnemy(this Vector2 pos, float distance, bool alreadyNear = true)
+        public static bool IsNearEnemy(this Vector2 pos, float distance, bool alreadyNear = true)
         {
             if (ObjectCache.MenuCache.Cache["PreventDodgingNearEnemy"].Enabled)
             {
@@ -121,7 +122,7 @@
                 return false;
             }
 
-            if (!ObjectCache.MenuCache.Cache["ActivateEvadeSpells"].Enabled || CommonChecks() || Evade.LastWindupTime - EvadeUtils.TickCount > 0)
+            if (!ObjectCache.MenuCache.Cache["ActivateEvadeSpells"].Enabled || CommonChecks() || Evade.LastWindupTime - Environment.TickCount > 0)
             {
                 return false;
             }
@@ -132,12 +133,12 @@
         public static bool CommonChecks()
         {
             return Evade.IsChanneling || !ObjectCache.MenuCache.Cache["DodgeOnlyOnComboKeyEnabled"].Enabled && !ObjectCache.MenuCache.Cache["DodgeComboKey"].As<MenuKeyBind>().Enabled ||
-                   myHero.IsDead || myHero.IsInvulnerable || myHero.IsTargetable == false || HasSpellShield(myHero) || ChampionSpecificChecks() || myHero.IsDashing() || Evade.HasGameEnded;
+                   MyHero.IsDead || MyHero.IsInvulnerable || MyHero.IsTargetable == false || HasSpellShield(MyHero) || ChampionSpecificChecks() || MyHero.IsDashing() || Evade.HasGameEnded;
         }
 
         public static bool ChampionSpecificChecks()
         {
-            return myHero.ChampionName == "Sion" && myHero.HasBuff("SionR");
+            return MyHero.ChampionName == "Sion" && MyHero.HasBuff("SionR");
         }
 
         //from Evade by Esk0r
@@ -153,17 +154,17 @@
                 return true;
             }
 
-            if (unit.LastCastedSpellName() == "SivirE" && EvadeUtils.TickCount - Evade.LastSpellCastTime < 300)
+            if (unit.LastCastedSpellName() == "SivirE" && Environment.TickCount - Evade.LastSpellCastTime < 300)
             {
                 return true;
             }
 
-            if (unit.LastCastedSpellName() == "BlackShield" && EvadeUtils.TickCount - Evade.LastSpellCastTime < 300)
+            if (unit.LastCastedSpellName() == "BlackShield" && Environment.TickCount - Evade.LastSpellCastTime < 300)
             {
                 return true;
             }
 
-            if (unit.LastCastedSpellName() == "NocturneShit" && EvadeUtils.TickCount - Evade.LastSpellCastTime < 300)
+            if (unit.LastCastedSpellName() == "NocturneShit" && Environment.TickCount - Evade.LastSpellCastTime < 300)
             {
                 return true;
             }

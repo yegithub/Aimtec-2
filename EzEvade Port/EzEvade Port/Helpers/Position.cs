@@ -12,7 +12,7 @@
 
     public static class Position
     {
-        private static Obj_AI_Hero myHero => ObjectManager.GetLocalPlayer();
+        private static Obj_AI_Hero MyHero => ObjectManager.GetLocalPlayer();
 
         public static int CheckPosDangerLevel(this Vector2 pos, float extraBuffer)
         {
@@ -58,7 +58,7 @@
 
             if (spell.SpellType == SpellType.Arc)
             {
-                if (position.isLeftOfLineSegment(spell.StartPos, spell.EndPos))
+                if (position.IsLeftOfLineSegment(spell.StartPos, spell.EndPos))
                 {
                     return false;
                 }
@@ -71,14 +71,14 @@
 
             if (spell.SpellType == SpellType.Cone)
             {
-                return !position.isLeftOfLineSegment(spell.CnStart, spell.CnLeft) && !position.isLeftOfLineSegment(spell.CnLeft, spell.CnRight) &&
-                       !position.isLeftOfLineSegment(spell.CnRight, spell.CnStart);
+                return !position.IsLeftOfLineSegment(spell.CnStart, spell.CnLeft) && !position.IsLeftOfLineSegment(spell.CnLeft, spell.CnRight) &&
+                       !position.IsLeftOfLineSegment(spell.CnRight, spell.CnStart);
             }
 
             return false;
         }
 
-        public static bool isLeftOfLineSegment(this Vector2 pos, Vector2 start, Vector2 end)
+        public static bool IsLeftOfLineSegment(this Vector2 pos, Vector2 start, Vector2 end)
         {
             return (end.X - start.X) * (pos.Y - start.Y) - (end.Y - start.Y) * (pos.X - start.X) > 0;
         }

@@ -1,5 +1,6 @@
 ﻿namespace EzEvade_Port.Tests
 {
+    using System;
     using System.Collections.Generic;
     using System.Drawing;
     using System.Linq;
@@ -74,7 +75,7 @@
                 {
                     if (spell.SpellType == SpellType.Line)
                     {
-                        if (Vector2.Distance(spellPos, myHero.ServerPosition.To2D()) <= myHero.BoundingRadius + spell.Radius && EvadeUtils.TickCount - spell.StartTime > spell.Info.SpellDelay &&
+                        if (Vector2.Distance(spellPos, myHero.ServerPosition.To2D()) <= myHero.BoundingRadius + spell.Radius && Environment.TickCount - spell.StartTime > spell.Info.SpellDelay &&
                             Vector2.Distance(spell.StartPos, myHero.ServerPosition.To2D()) < spell.Info.Range)
                         {
                             RenderObjects.Add(new RenderCircle(spellPos, 1000, Color.Red, (int) spell.Radius, 10));
@@ -87,7 +88,7 @@
                     }
                     else if (spell.SpellType == SpellType.Circular)
                     {
-                        if (EvadeUtils.TickCount - spell.StartTime >= spell.EndTime - spell.StartTime)
+                        if (Environment.TickCount - spell.StartTime >= spell.EndTime - spell.StartTime)
                         {
                             if (myHero.ServerPosition.To2D().InSkillShot(spell, myHero.BoundingRadius))
                             {
@@ -99,7 +100,7 @@
                     else if (spell.SpellType == SpellType.Cone)
                     {
                         // SPELL TESTER
-                        if (EvadeUtils.TickCount - spell.StartTime >= spell.EndTime - spell.StartTime)
+                        if (Environment.TickCount - spell.StartTime >= spell.EndTime - spell.StartTime)
                         {
                             if (myHero.ServerPosition.To2D().InSkillShot(spell, myHero.BoundingRadius))
                             {
@@ -117,7 +118,7 @@
             {
                 float interval = menu["SpellInterval"].As<MenuSlider>().Value;
 
-                if (EvadeUtils.TickCount - lastSpellFireTime > interval)
+                if (Environment.TickCount - lastSpellFireTime > interval)
                 {
                     var charName = selectSpellMenu["DummySpellHero"].As<MenuList>().SelectedItem;
                     var spellName = selectSpellMenu["DummySpellList"].As<MenuList>().SelectedItem;
@@ -137,7 +138,7 @@
                     //}
                     //}
 
-                    //lastSpellFireTime = EvadeUtils.TickCount;
+                    //lastSpellFireTime = Environment.TickCount;
 
                     if (!ObjectCache.MenuCache.Cache.ContainsKey(spellName + "DodgeSpell"))
                     {
@@ -145,7 +146,7 @@
                     }
 
                     SpellDetector.CreateSpellData(myHero, spellStartPosition, spellEndPostion, spellData);
-                    lastSpellFireTime = EvadeUtils.TickCount;
+                    lastSpellFireTime = Environment.TickCount;
                 }
             }
         }

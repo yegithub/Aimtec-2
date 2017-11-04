@@ -1,5 +1,6 @@
 ﻿namespace EzEvade_Port.Helpers
 {
+    using System;
     using Aimtec;
     using Aimtec.SDK.Extensions;
     using Core;
@@ -16,21 +17,21 @@
 
     class EvadeCommand
     {
-        public EvadeSpellData evadeSpellData;
-        public bool isProcessed;
+        public EvadeSpellData EvadeSpellData;
+        public bool IsProcessed;
 
-        public EvadeOrderCommand order;
-        public Obj_AI_Base target;
-        public Vector2 targetPosition;
-        public float timestamp;
+        public EvadeOrderCommand Order;
+        public Obj_AI_Base Target;
+        public Vector2 TargetPosition;
+        public float Timestamp;
 
         public EvadeCommand()
         {
-            timestamp = EvadeUtils.TickCount;
-            isProcessed = false;
+            Timestamp = Environment.TickCount;
+            IsProcessed = false;
         }
 
-        private static Obj_AI_Hero myHero => ObjectManager.GetLocalPlayer();
+        private static Obj_AI_Hero MyHero => ObjectManager.GetLocalPlayer();
 
         public static void MoveTo(Vector2 movePos)
         {
@@ -40,48 +41,48 @@
                 return;
             }
 
-            Evade.LastEvadeCommand = new EvadeCommand {order = EvadeOrderCommand.MoveTo, targetPosition = movePos, timestamp = EvadeUtils.TickCount, isProcessed = false};
+            Evade.LastEvadeCommand = new EvadeCommand {Order = EvadeOrderCommand.MoveTo, TargetPosition = movePos, Timestamp = Environment.TickCount, IsProcessed = false};
 
             Evade.LastMoveToPosition = movePos;
-            Evade.LastMoveToServerPos = myHero.ServerPosition.To2D();
+            Evade.LastMoveToServerPos = MyHero.ServerPosition.To2D();
 
-            myHero.IssueOrder(OrderType.MoveTo, movePos.To3D(), false);
+            MyHero.IssueOrder(OrderType.MoveTo, movePos.To3D(), false);
         }
 
         public static void Attack(EvadeSpellData spellData, Obj_AI_Base target)
         {
-            EvadeSpell.LastSpellEvadeCommand = new EvadeCommand {order = EvadeOrderCommand.Attack, target = target, evadeSpellData = spellData, timestamp = EvadeUtils.TickCount, isProcessed = false};
+            EvadeSpell.LastSpellEvadeCommand = new EvadeCommand {Order = EvadeOrderCommand.Attack, Target = target, EvadeSpellData = spellData, Timestamp = Environment.TickCount, IsProcessed = false};
 
-            myHero.IssueOrder(OrderType.AttackUnit, target);
+            MyHero.IssueOrder(OrderType.AttackUnit, target);
         }
 
         public static void CastSpell(EvadeSpellData spellData, Obj_AI_Base target)
         {
             EvadeSpell.LastSpellEvadeCommand =
-                new EvadeCommand {order = EvadeOrderCommand.CastSpell, target = target, evadeSpellData = spellData, timestamp = EvadeUtils.TickCount, isProcessed = false};
+                new EvadeCommand {Order = EvadeOrderCommand.CastSpell, Target = target, EvadeSpellData = spellData, Timestamp = Environment.TickCount, IsProcessed = false};
 
-            myHero.SpellBook.CastSpell(spellData.SpellKey, target);
+            MyHero.SpellBook.CastSpell(spellData.SpellKey, target);
         }
 
         public static void CastSpell(EvadeSpellData spellData, Vector2 movePos)
         {
             EvadeSpell.LastSpellEvadeCommand = new EvadeCommand
             {
-                order = EvadeOrderCommand.CastSpell,
-                targetPosition = movePos,
-                evadeSpellData = spellData,
-                timestamp = EvadeUtils.TickCount,
-                isProcessed = false
+                Order = EvadeOrderCommand.CastSpell,
+                TargetPosition = movePos,
+                EvadeSpellData = spellData,
+                Timestamp = Environment.TickCount,
+                IsProcessed = false
             };
 
-            myHero.SpellBook.CastSpell(spellData.SpellKey, movePos.To3D());
+            MyHero.SpellBook.CastSpell(spellData.SpellKey, movePos.To3D());
         }
 
         public static void CastSpell(EvadeSpellData spellData)
         {
-            EvadeSpell.LastSpellEvadeCommand = new EvadeCommand {order = EvadeOrderCommand.CastSpell, evadeSpellData = spellData, timestamp = EvadeUtils.TickCount, isProcessed = false};
+            EvadeSpell.LastSpellEvadeCommand = new EvadeCommand {Order = EvadeOrderCommand.CastSpell, EvadeSpellData = spellData, Timestamp = Environment.TickCount, IsProcessed = false};
 
-            myHero.SpellBook.CastSpell(spellData.SpellKey);
+            MyHero.SpellBook.CastSpell(spellData.SpellKey);
         }
     }
 }

@@ -8,13 +8,13 @@
 
         public static void Print(string str)
         {
-            var timeDiff = EvadeUtils.TickCount - _lastPrintTime;
+            var timeDiff = Environment.TickCount - _lastPrintTime;
 
             var finalStr = "[" + timeDiff + "] " + str;
 
             Console.WriteLine(finalStr);
 
-            _lastPrintTime = EvadeUtils.TickCount;
+            _lastPrintTime = Environment.TickCount;
         }
     }
 }

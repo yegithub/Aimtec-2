@@ -173,13 +173,13 @@
                 case SpellType.Line:
                     if (spell.Info.ProjectileSpeed >= float.MaxValue)
                     {
-                        return Math.Max(0, spell.EndTime - EvadeUtils.TickCount - ObjectCache.GamePing);
+                        return Math.Max(0, spell.EndTime - Environment.TickCount - ObjectCache.GamePing);
                     }
 
                     var spellPos = spell.GetCurrentSpellPosition(true, ObjectCache.GamePing);
                     return 1000 * spellPos.Distance(pos) / spell.Info.ProjectileSpeed;
                 case SpellType.Cone:
-                case SpellType.Circular: return Math.Max(0, spell.EndTime - EvadeUtils.TickCount - ObjectCache.GamePing);
+                case SpellType.Circular: return Math.Max(0, spell.EndTime - Environment.TickCount - ObjectCache.GamePing);
             }
 
             return float.MaxValue;
@@ -269,7 +269,7 @@
 
             if (spell.SpellType == SpellType.Line || spell.SpellType == SpellType.Arc)
             {
-                var spellTime = EvadeUtils.TickCount - spell.StartTime - spell.Info.SpellDelay - Math.Max(0, spell.Info.ExtraEndTime);
+                var spellTime = Environment.TickCount - spell.StartTime - spell.Info.SpellDelay - Math.Max(0, spell.Info.ExtraEndTime);
 
                 if (spell.Info.ProjectileSpeed == float.MaxValue)
                 {
