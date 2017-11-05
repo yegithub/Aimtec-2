@@ -45,14 +45,19 @@
                         args.Target = enemy;
                     }
                     break;
-                //case OrbwalkingMode.Laneclear:
-                //case OrbwalkingMode.Lasthit:
-                //    var minion = GameObjects.EnemyMinions.OrderByDescending(x => x.Health).FirstOrDefault(x => x.IsValidAutoRange() && x.Health < Global.Player.GetAutoAttackDamage(x));
-                //    if (minion != null && minion.NetworkId != args.Target.NetworkId)
-                //    {
-                //        args.Target = minion;
-                //    }
-                //    break;
+                case OrbwalkingMode.Laneclear:
+                case OrbwalkingMode.Lasthit:
+
+                    if (GameObjects.EnemyMinions.Any(x => x.IsValidAutoRange() && x.Health < Global.Player.GetAutoAttackDamage(x)))
+                    {
+                        return;
+                    }
+                    var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsValidAutoRange() && x.HasBuff("TristanaECharge"));
+                    if (minion != null)
+                    {
+                        args.Target = minion;
+                    }
+                    break;
             }
         }
 
