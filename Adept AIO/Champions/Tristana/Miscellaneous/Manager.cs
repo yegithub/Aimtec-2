@@ -47,7 +47,7 @@
                     break;
                 case OrbwalkingMode.Laneclear:
                 case OrbwalkingMode.Lasthit:
-                    var minion = GameObjects.EnemyMinions.OrderBy(x => x.Health).FirstOrDefault(x => x.Health < Global.Player.GetAutoAttackDamage(x));
+                    var minion = GameObjects.EnemyMinions.OrderBy(x => x.Health).FirstOrDefault(x => x.IsValidAutoRange() && x.Health < Global.Player.GetAutoAttackDamage(x));
                     if (minion != null && minion.NetworkId != args.Target.NetworkId)
                     {
                         args.Target = minion;
