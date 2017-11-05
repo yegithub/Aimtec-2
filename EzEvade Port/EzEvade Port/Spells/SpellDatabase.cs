@@ -976,14 +976,14 @@ namespace EzEvade_Port.Spells
             {
                 CharName = "Galio",
                 Dangerlevel = 2,
-                MissileName = "GalioRighteousGust",
+                MissileName = "GalioEMissile",
                 Name = "Righteous Gust",
-                ProjectileSpeed = 1200,
-                Radius = 120,
-                Range = 1200,
+                ProjectileSpeed = 1400,
+                Radius = 130,
+                Range = 700,
                 SpellDelay = 250,
                 SpellKey = SpellSlot.E,
-                SpellName = "GalioRighteousGust",
+                SpellName = "GalioE",
                 SpellType = SpellType.Line
             });
 
@@ -991,14 +991,15 @@ namespace EzEvade_Port.Spells
             {
                 CharName = "Galio",
                 Dangerlevel = 2,
-                MissileName = "GalioResoluteSmite",
+                MissileName = "GalioQSuper",
                 Name = "Resolute Smite",
                 ProjectileSpeed = 1300,
                 Radius = 200,
-                Range = 900,
+                Range = 825,
                 SpellDelay = 250,
+                ExtraEndTime = 3300,
                 SpellKey = SpellSlot.Q,
-                SpellName = "GalioResoluteSmite",
+                SpellName = "GalioQ",
                 SpellType = SpellType.Circular
             });
 
@@ -1007,12 +1008,12 @@ namespace EzEvade_Port.Spells
                 CharName = "Galio",
                 Dangerlevel = 4,
                 Name = "Idol Of Durand",
-                Radius = 550,
+                Radius = 575,
                 ProjectileSpeed = 1000,
                 Range = 4000,
-                SpellDelay = 250,
+                SpellDelay = 1000,
                 SpellKey = SpellSlot.R,
-                SpellName = "GalioIdolOfDurand",
+                SpellName = "GalioR",
                 SpellType = SpellType.Circular
             });
 
@@ -1250,9 +1251,9 @@ namespace EzEvade_Port.Spells
                 Dangerlevel = 4,
                 MissileName = "GravesChargeShotFxMissile",
                 Name = "Collateral Damage (Explosion)",
-                ProjectileSpeed = 2000,
-                Radius = 100,
-                Range = 1000,
+                ProjectileSpeed = 2115,
+                Radius = 150
+                Range = 110,
                 SpellDelay = 250,
                 SpellKey = SpellSlot.R,
                 SpellName = "GravesChargeShotFxMissile",
@@ -1290,12 +1291,12 @@ namespace EzEvade_Port.Spells
             {
                 CharName = "Heimerdinger",
                 Dangerlevel = 2,
-                MissileName = "HeimerdingerWAttack2",
+                MissileName = "HeimerdingerW",
                 ExtraMissileNames = new[] {"HeimerdingerWAttack2Ult"},
                 Name = "Hextech Micro-Rockets",
                 ProjectileSpeed = 1800,
                 Radius = 70,
-                Range = 450,
+                Range = 1350,
                 SpellDelay = 250,
                 SpellKey = SpellSlot.W,
                 SpellName = "HeimerdingerW",
@@ -1703,14 +1704,14 @@ namespace EzEvade_Port.Spells
                 Name = "Soulflare (Mantra)",
                 ProjectileSpeed = 1700,
                 Radius = 80,
-                Range = 950,
+                Range = 1050,
                 SpellDelay = 250,
                 SpellKey = SpellSlot.Q,
                 SpellName = "KarmaQMissileMantra",
                 SpellType = SpellType.Line,
                 CollisionObjects = new[] {CollisionObjectType.EnemyChampions, CollisionObjectType.EnemyMinions},
-                //hasEndExplosion = true,
-                SecondaryRadius = 250
+                hasEndExplosion = true,
+                SecondaryRadius = 310
             });
 
             #endregion Karma
@@ -2573,14 +2574,14 @@ namespace EzEvade_Port.Spells
                 Dangerlevel = 2,
                 MissileName = "OrianaIzunaCommand",
                 Name = "Commnad: Attack",
-                ProjectileSpeed = 1200,
+                ProjectileSpeed = 1400,
                 Radius = 80,
                 SecondaryRadius = 145,
-                Range = 1650,
+                Range = 1500,
                 SpellDelay = 0,
                 SpellKey = SpellSlot.Q,
                 UseEndPosition = true,
-                //hasEndExplosion = true,
+                hasEndExplosion = true,
                 SpellName = "OrianaIzunaCommand",
                 SpellType = SpellType.Line,
                 IsSpecial = true
@@ -2882,44 +2883,44 @@ namespace EzEvade_Port.Spells
                 CharName = "Sejuani",
                 Dangerlevel = 3,
                 Name = "Arctic Assault",
-                ProjectileSpeed = 1600,
-                Radius = 70,
-                Range = 900,
-                SpellDelay = 0,
+                ProjectileSpeed = 1500,
+                Radius = 100,
+                Range = 800,
+                SpellDelay = 250,
                 SpellKey = SpellSlot.Q,
-                SpellName = "SejuaniArcticAssault",
-                SpellType = SpellType.Line
+                SpellName = "SejuaniQ",
+                SpellType = SpellType.Line,
             });
 
             Spells.Add(new SpellData
             {
                 CharName = "Sejuani",
                 Dangerlevel = 1,
-                ProjectileSpeed = 1000,
-                Radius = 0,
-                Range = 600,
+                ProjectileSpeed = 1250,
+                Radius = 75,
+                Range = 700,
                 SpellDelay = 250,
                 SpellKey = SpellSlot.W,
-                SpellName = "SejuaniNorthernWinds",
-                SpellType = SpellType.Line
+                SpellName = "SejuaniW",
+                SpellType = SpellType.Line,
             });
 
             Spells.Add(new SpellData
             {
                 CharName = "Sejuani",
                 Dangerlevel = 4,
-                MissileName = "SejuaniGlacialPrison",
+                MissileName = "SejuaniRMissile",
                 Name = "Glacial Prison",
                 ProjectileSpeed = 1600,
-                Radius = 110,
-                Range = 1200,
+                Radius = 120,
+                Range = 1300,
                 SpellDelay = 250,
                 HasEndExplosion = true,
                 SecondaryRadius = 350,
                 SpellKey = SpellSlot.R,
                 SpellName = "SejuaniGlacialPrisonCast",
                 ExtraSpellNames = new[] {"SejuaniGlacialPrison"},
-                SpellType = SpellType.Line
+                SpellType = SpellType.Line,
             });
 
             #endregion Sejuani
@@ -2938,7 +2939,7 @@ namespace EzEvade_Port.Spells
                 SpellDelay = 0,
                 SpellKey = SpellSlot.E,
                 SpellName = "ShenE",
-                SpellType = SpellType.Line
+                SpellType = SpellType.Line,
             });
 
             #endregion Shen
@@ -3158,14 +3159,14 @@ namespace EzEvade_Port.Spells
                 CharName = "Syndra",
                 Dangerlevel = 3,
                 Name = "Scatter the Weak",
-                MissileName = "SyndraE",
+                MissileName = "SyndraESphereMissile",
                 ProjectileSpeed = 2000,
                 Radius = 100,
                 Range = 950,
                 SpellDelay = 0f,
                 SpellKey = SpellSlot.E,
                 SpellName = "SyndraE",
-                ExtraSpellNames = new[] {"syndrae5"},
+                ExtraSpellNames = new[] {"SyndraEMissile2", "syndrae5"},
                 SpellType = SpellType.Line,
                 IsSpecial = true
             });
@@ -3472,15 +3473,15 @@ namespace EzEvade_Port.Spells
             {
                 CharName = "Urgot",
                 Dangerlevel = 2,
-                Name = "Acid Hunter",
-                ProjectileSpeed = 1600,
-                Radius = 60,
-                Range = 1000,
-                SpellDelay = 120,
+                Name = "UrgotQ",
+                ProjectileSpeed = 500,
+                Radius = 200,
+                Range = 800,
+                SpellDelay = 250,
                 SpellKey = SpellSlot.Q,
-                SpellName = "UrgotHeatseekingLineMissile",
+                SpellName = "UrgotQMissile",
                 SpellType = SpellType.Line,
-                CollisionObjects = new[] {CollisionObjectType.EnemyChampions, CollisionObjectType.EnemyMinions},
+                //CollisionObjects = new[] {CollisionObjectType.EnemyChampions, CollisionObjectType.EnemyMinions},
                 FixedRange = true
             });
 
@@ -3488,16 +3489,31 @@ namespace EzEvade_Port.Spells
             {
                 CharName = "Urgot",
                 Dangerlevel = 3,
-                MissileName = "UrgotPlasmaGrenadeBoom",
-                Name = "Noxian Corrosive Charge",
+                MissileName = "urgote",
+                Name = "UrgotE",
                 ProjectileSpeed = 1500,
-                Radius = 210,
-                Range = 1100,
+                Radius = 100,
+                Range = 600,
                 SpellDelay = 250,
                 SpellKey = SpellSlot.E,
-                SpellName = "UrgotPlasmaGrenade",
-                SpellType = SpellType.Circular
+                SpellName = "urgote",
+                SpellType = SpellType.Line,
             });
+            
+            Spells.Add(new SpellData
+            {
+                CharName = "Urgot",
+                Dangerlevel = 4,
+                MissileName = "urgotr",
+                Name = "UrgotR",
+                ProjectileSpeed = 3200,
+                Radius = 80,
+                Range = 1600,
+                SpellDelay = 283,
+                SpellKey = SpellSlot.R,
+                SpellName = "urgotr",
+                SpellType = SpellType.Line,
+            });            
 
             #endregion Urgot
 
@@ -3524,8 +3540,8 @@ namespace EzEvade_Port.Spells
                 MissileName = "varusqmissile",
                 Name = "Piercing Arrow",
                 ProjectileSpeed = 1850,
-                Radius = 70,
-                Range = 1625,
+                Radius = 75,
+                Range = 1650,
                 SpellDelay = 0,
                 SpellKey = SpellSlot.Q,
                 SpellName = "varusq",
