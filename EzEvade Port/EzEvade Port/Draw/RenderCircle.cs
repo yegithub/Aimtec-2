@@ -12,7 +12,6 @@
 
         public int Radius;
         public Vector2 RenderPosition;
-        public Vector2 RenderPositionDx;
         public int Width;
 
         public RenderCircle(Vector2 renderPosition, float renderTime, int radius = 65, int width = 5)

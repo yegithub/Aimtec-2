@@ -70,7 +70,6 @@
         {
             ObjTracker.Add(ObjTrackerId, new ObjectTrackerInfo(name, position));
 
-            var trackerId = ObjTrackerId; //store the id for deletion
             DelayAction.Add((int) timeExpires, () => ObjTracker.Remove(ObjTrackerId));
 
             ObjTrackerId += 1;

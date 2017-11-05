@@ -115,7 +115,7 @@
                     break;
                 case OrbwalkingMode.Laneclear:
                 case OrbwalkingMode.Lasthit:
-                    // TODO: ADD AUTO LANTERN, FUCK MINION BLOCK!
+                   
                     var minion = GameObjects.EnemyMinions.OrderBy(x => x.Health).FirstOrDefault(x => x.IsValidAutoRange());
                     if (minion == null || args.Target.NetworkId == minion.NetworkId || Global.Player.IsUnderAllyTurret() || Global.Player.IsUnderEnemyTurret() || args.Target.IsInhibitor)
                     {

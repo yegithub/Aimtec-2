@@ -20,7 +20,6 @@
 
     class EvadeTester
     {
-        public static Menu Menu;
         public static Menu TestMenu;
 
         private static Vector2 _circleRenderPos;

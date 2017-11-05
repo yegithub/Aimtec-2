@@ -12,7 +12,6 @@
     {
         public static Menu TestMenu;
 
-        private static float _lastTimerCheck = 0;
         private static bool _lastRandomMoveCoeff;
 
         private static float _sumPingTime;

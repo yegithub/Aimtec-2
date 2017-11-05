@@ -565,29 +565,30 @@
         {
             try
             {
+            
                 ObjectCache.MyHeroCache.UpdateInfo();
-                CheckHeroInDanger();
+                //CheckHeroInDanger();
 
-                if (IsChanneling && ChannelPosition.Distance(ObjectCache.MyHeroCache.ServerPos2D) > 50 && !MyHero.SpellBook.IsChanneling)
-                {
-                    IsChanneling = false;
-                }
+                //if (IsChanneling && ChannelPosition.Distance(ObjectCache.MyHeroCache.ServerPos2D) > 50 && !MyHero.SpellBook.IsChanneling)
+                //{
+                //    IsChanneling = false;
+                //}
 
-                var limitDelay = ObjectCache.MenuCache.Cache["TickLimiter"].As<MenuSlider>(); //Tick limiter                
-                if (EvadeHelper.FastEvadeMode || Environment.TickCount - LastTickCount > limitDelay.Value)
-                {
-                    if (Environment.TickCount > LastStopEvadeTime)
-                    {
-                        DodgeSkillShots();
-                        ContinueLastBlockedCommand();
-                    }
+                //var limitDelay = ObjectCache.MenuCache.Cache["TickLimiter"].As<MenuSlider>(); //Tick limiter                
+                //if (EvadeHelper.FastEvadeMode || Environment.TickCount - LastTickCount > limitDelay.Value)
+                //{
+                //    if (Environment.TickCount > LastStopEvadeTime)
+                //    {
+                //        DodgeSkillShots();
+                //        ContinueLastBlockedCommand();
+                //    }
 
-                    LastTickCount = Environment.TickCount;
-                }
+                //    LastTickCount = Environment.TickCount;
+                //}
 
-                EvadeSpell.UseEvadeSpell();
-                CheckDodgeOnlyDangerous();
-                RecalculatePath();
+                //EvadeSpell.UseEvadeSpell();
+                //CheckDodgeOnlyDangerous();
+                //RecalculatePath();
             }
             catch (Exception e)
             {

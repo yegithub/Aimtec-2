@@ -1,6 +1,7 @@
 ﻿namespace Adept_AIO.Champions.Tristana.Miscellaneous
 {
     using System.Linq;
+    using Aimtec.SDK.Damage;
     using Aimtec.SDK.Extensions;
     using Aimtec.SDK.Orbwalking;
     using OrbwalkingEvents;
@@ -34,10 +35,24 @@
 
         public void OnPreAttack(object sender, PreAttackEventArgs args)
         {
-            var enemy = GameObjects.EnemyHeroes.FirstOrDefault(x => x.IsValidTarget() && x.HasBuff("TristanaECharge"));
-            if (enemy != null && enemy.IsValidAutoRange())
+            switch (Global.Orbwalker.Mode)
             {
-                args.Target = enemy;
+                case OrbwalkingMode.Combo:
+                case OrbwalkingMode.Mixed:
+                    var enemy = GameObjects.EnemyHeroes.FirstOrDefault(x => x.IsValidTarget() && x.HasBuff("TristanaECharge"));
+                    if (enemy != null && enemy.IsValidAutoRange())
+                    {
+                        args.Target = enemy;
+                    }
+                    break;
+                case OrbwalkingMode.Laneclear:
+                case OrbwalkingMode.Lasthit:
+                    var minion = GameObjects.EnemyMinions.OrderBy(x => x.Health).FirstOrDefault(x => x.Health < Global.Player.GetAutoAttackDamage(x));
+                    if (minion != null && minion.NetworkId != args.Target.NetworkId)
+                    {
+                        args.Target = minion;
+                    }
+                    break;
             }
         }
 

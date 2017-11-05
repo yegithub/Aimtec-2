@@ -237,8 +237,8 @@
             var spellDir = spell.Direction;
             var pSpellDir = spell.Direction.Perpendicular();
             var spellRadius = spell.Radius;
-            var spellPos = spell.CurrentSpellPosition - spellDir * myBoundingRadius; //leave some space at back of spell
-            var endPos = spell.GetSpellEndPosition() + spellDir * myBoundingRadius; //leave some space at the front of spell
+            var spellPos = spell.CurrentSpellPosition - spellDir * myBoundingRadius;
+            var endPos = spell.GetSpellEndPosition() + spellDir * myBoundingRadius;
 
             var startRightPos = spellPos + pSpellDir * (spellRadius + myBoundingRadius);
             var endLeftPos = endPos - pSpellDir * (spellRadius + myBoundingRadius);
@@ -311,8 +311,8 @@
             var spellDir = spell.Direction;
             var pSpellDir = spell.Direction.Perpendicular();
             var spellRadius = spell.Radius;
-            var spellPos = spell.CurrentSpellPosition; // -spellDir * myBoundingRadius; //leave some space at back of spell
-            var endPos = spell.GetSpellEndPosition(); // +spellDir * myBoundingRadius; //leave some space at the front of spell
+            var spellPos = spell.CurrentSpellPosition; 
+            var endPos = spell.GetSpellEndPosition();
 
             var startRightPos = spellPos + pSpellDir * (spellRadius + myBoundingRadius);
             var startLeftPos = spellPos - pSpellDir * (spellRadius + myBoundingRadius);
@@ -338,7 +338,7 @@
             var spellDir = spell.Direction;
             var pSpellDir = spell.Direction.Perpendicular();
             var spellRadius = spell.Radius;
-            var spellPos = spell.CurrentSpellPosition - spellDir * myBoundingRadius; //leave some space at back of spell
+            var spellPos = spell.CurrentSpellPosition - spellDir * myBoundingRadius;
             var endPos = spell.GetSpellEndPosition() + spellDir * myBoundingRadius; //leave some space at the front of spell
 
             var startRightPos = spellPos + pSpellDir * (spellRadius + myBoundingRadius);

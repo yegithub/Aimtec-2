@@ -35,10 +35,9 @@
         {
             try
             {
-                // fix
-                var extraDelayBuffer = ObjectCache.MenuCache.Cache["ExtraPingBuffer"].As<MenuSlider>().Value;
+               
                 ServerPos2D = Hero.ServerPosition.To2D(); //CalculatedPosition.GetPosition(hero, Game.Ping);
-                ServerPos2DExtra = EvadeUtils.GetGamePosition(Hero, Game.Ping + extraDelayBuffer);
+                ServerPos2DExtra = EvadeUtils.GetGamePosition(Hero, Game.Ping + ObjectCache.MenuCache.Cache["ExtraPingBuffer"].Value);
                 ServerPos2DPing = EvadeUtils.GetGamePosition(Hero, Game.Ping);
                 //CalculatedPosition.GetPosition(hero, Game.Ping + extraDelayBuffer);            
                 CurrentPosition = Hero.Position.To2D(); //CalculatedPosition.GetPosition(hero, 0); 

@@ -24,7 +24,7 @@
                     var rect = new Geometry.Rectangle(Global.Player.ServerPosition.To2D(), soldier.ServerPosition.To2D(), SpellConfig.E.Width);
                     var count = GameObjects.EnemyHeroes.Count(x => rect.IsInside(x.ServerPosition.To2D()));
 
-                    if (count >= 2)
+                    if (count >= 1)
                     {
                         SpellConfig.E.Cast(soldier.ServerPosition);
                     }

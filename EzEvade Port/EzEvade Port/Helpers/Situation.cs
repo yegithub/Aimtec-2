@@ -22,13 +22,6 @@
             return unit.Team != MyHero.Team || Evade.DevModeOn;
         }
 
-        //public static bool CheckTeam(this Obj_GeneralParticleEmitter emitter)
-        //{
-        //    return emitter.Name.ToLower().Contains("red") || 
-        //          (emitter.Name.ToLower().Contains("green") || emitter.Name.ToLower().Contains("ally")) && Evade.devModeOn ||
-        //          !emitter.Name.ToLower().Contains("green") && !emitter.Name.ToLower().Contains("ally");
-        //}
-
         public static string EmitterColor()
         {
             return Evade.DevModeOn ? "green" : "red";
@@ -41,24 +34,26 @@
 
         public static bool IsNearEnemy(this Vector2 pos, float distance, bool alreadyNear = true)
         {
-            if (ObjectCache.MenuCache.Cache["PreventDodgingNearEnemy"].Enabled)
+            if (!ObjectCache.MenuCache.Cache["PreventDodgingNearEnemy"].Enabled)
             {
-                var curDistToEnemies = ObjectCache.MyHeroCache.ServerPos2D.GetDistanceToChampions();
-                var posDistToEnemies = pos.GetDistanceToChampions();
+                return false;
+            }
 
-                if (curDistToEnemies < distance)
+            var curDistToEnemies = ObjectCache.MyHeroCache.ServerPos2D.GetDistanceToChampions();
+            var posDistToEnemies = pos.GetDistanceToChampions();
+
+            if (curDistToEnemies < distance)
+            {
+                if (curDistToEnemies > posDistToEnemies)
                 {
-                    if (curDistToEnemies > posDistToEnemies)
-                    {
-                        return true;
-                    }
+                    return true;
                 }
-                else
+            }
+            else
+            {
+                if (posDistToEnemies < distance)
                 {
-                    if (posDistToEnemies < distance)
-                    {
-                        return true;
-                    }
+                    return true;
                 }
             }
 
@@ -106,12 +101,7 @@
                 return false;
             }
 
-            if (ObjectCache.MenuCache.Cache["DodgeSkillShots"].Enabled == false || CommonChecks())
-            {
-                return false;
-            }
-
-            return true;
+            return ObjectCache.MenuCache.Cache["DodgeSkillShots"].Enabled && !CommonChecks();
         }
 
         public static bool ShouldUseEvadeSpell()
@@ -122,12 +112,7 @@
                 return false;
             }
 
-            if (!ObjectCache.MenuCache.Cache["ActivateEvadeSpells"].Enabled || CommonChecks() || Evade.LastWindupTime - Environment.TickCount > 0)
-            {
-                return false;
-            }
-
-            return true;
+            return ObjectCache.MenuCache.Cache["ActivateEvadeSpells"].Enabled && !CommonChecks() && !(Evade.LastWindupTime - Environment.TickCount > 0);
         }
 
         public static bool CommonChecks()
@@ -164,12 +149,7 @@
                 return true;
             }
 
-            if (unit.LastCastedSpellName() == "NocturneShit" && Environment.TickCount - Evade.LastSpellCastTime < 300)
-            {
-                return true;
-            }
-
-            return false;
+            return unit.LastCastedSpellName() == "NocturneShit" && Environment.TickCount - Evade.LastSpellCastTime < 300;
         }
     }
 }
