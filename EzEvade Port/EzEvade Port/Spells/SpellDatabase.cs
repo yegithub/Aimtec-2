@@ -1252,7 +1252,11 @@ namespace EzEvade_Port.Spells
                 MissileName = "GravesChargeShotFxMissile",
                 Name = "Collateral Damage (Explosion)",
                 ProjectileSpeed = 2115,
+<<<<<<< HEAD
                 Radius = 150,
+=======
+                Radius = 150
+>>>>>>> 66867dcf3d6868c3abdf3fb94f6f607d87b9a34d
                 Range = 110,
                 SpellDelay = 250,
                 SpellKey = SpellSlot.R,
@@ -1292,7 +1296,11 @@ namespace EzEvade_Port.Spells
                 CharName = "Heimerdinger",
                 Dangerlevel = 2,
                 MissileName = "HeimerdingerW",
+<<<<<<< HEAD
                 ExtraMissileNames = new[] { "HeimerdingerWAttack2Ult" },
+=======
+                ExtraMissileNames = new[] {"HeimerdingerWAttack2Ult"},
+>>>>>>> 66867dcf3d6868c3abdf3fb94f6f607d87b9a34d
                 Name = "Hextech Micro-Rockets",
                 ProjectileSpeed = 1800,
                 Radius = 70,
@@ -1709,8 +1717,13 @@ namespace EzEvade_Port.Spells
                 SpellKey = SpellSlot.Q,
                 SpellName = "KarmaQMissileMantra",
                 SpellType = SpellType.Line,
+<<<<<<< HEAD
                 CollisionObjects = new[] { CollisionObjectType.EnemyChampions, CollisionObjectType.EnemyMinions },
               
+=======
+                CollisionObjects = new[] {CollisionObjectType.EnemyChampions, CollisionObjectType.EnemyMinions},
+                hasEndExplosion = true,
+>>>>>>> 66867dcf3d6868c3abdf3fb94f6f607d87b9a34d
                 SecondaryRadius = 310
             });
 
@@ -2581,7 +2594,11 @@ namespace EzEvade_Port.Spells
                 SpellDelay = 0,
                 SpellKey = SpellSlot.Q,
                 UseEndPosition = true,
+<<<<<<< HEAD
              
+=======
+                hasEndExplosion = true,
+>>>>>>> 66867dcf3d6868c3abdf3fb94f6f607d87b9a34d
                 SpellName = "OrianaIzunaCommand",
                 SpellType = SpellType.Line,
                 IsSpecial = true
@@ -2919,7 +2936,11 @@ namespace EzEvade_Port.Spells
                 SecondaryRadius = 350,
                 SpellKey = SpellSlot.R,
                 SpellName = "SejuaniGlacialPrisonCast",
+<<<<<<< HEAD
                 ExtraSpellNames = new[] { "SejuaniGlacialPrison" },
+=======
+                ExtraSpellNames = new[] {"SejuaniGlacialPrison"},
+>>>>>>> 66867dcf3d6868c3abdf3fb94f6f607d87b9a34d
                 SpellType = SpellType.Line,
             });
 
@@ -3166,7 +3187,11 @@ namespace EzEvade_Port.Spells
                 SpellDelay = 0f,
                 SpellKey = SpellSlot.E,
                 SpellName = "SyndraE",
+<<<<<<< HEAD
                 ExtraSpellNames = new[] { "SyndraEMissile2", "syndrae5" },
+=======
+                ExtraSpellNames = new[] {"SyndraEMissile2", "syndrae5"},
+>>>>>>> 66867dcf3d6868c3abdf3fb94f6f607d87b9a34d
                 SpellType = SpellType.Line,
                 IsSpecial = true
             });
@@ -3498,6 +3523,7 @@ namespace EzEvade_Port.Spells
                 SpellKey = SpellSlot.E,
                 SpellName = "urgote",
                 SpellType = SpellType.Line,
+<<<<<<< HEAD
             });
 
             Spells.Add(new SpellData
@@ -3513,7 +3539,24 @@ namespace EzEvade_Port.Spells
                 SpellKey = SpellSlot.R,
                 SpellName = "urgotr",
                 SpellType = SpellType.Line,
+=======
+>>>>>>> 66867dcf3d6868c3abdf3fb94f6f607d87b9a34d
             });
+            
+            Spells.Add(new SpellData
+            {
+                CharName = "Urgot",
+                Dangerlevel = 4,
+                MissileName = "urgotr",
+                Name = "UrgotR",
+                ProjectileSpeed = 3200,
+                Radius = 80,
+                Range = 1600,
+                SpellDelay = 283,
+                SpellKey = SpellSlot.R,
+                SpellName = "urgotr",
+                SpellType = SpellType.Line,
+            });            
 
             #endregion Urgot
 
