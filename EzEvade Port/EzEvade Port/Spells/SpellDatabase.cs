@@ -1447,12 +1447,28 @@ namespace EzEvade_Port.Spells
                 Dangerlevel = 2,
                 MissileName = "HowlingGaleSpell",
                 Name = "Howling Gale",
-                ProjectileSpeed = 900,
+                ProjectileSpeed = 1100,
                 Radius = 120,
                 Range = 1700,
                 SpellDelay = 0,
                 SpellKey = SpellSlot.Q,
                 SpellName = "HowlingGale",
+                SpellType = SpellType.Line,
+                UsePackets = true
+            });
+
+            Spells.Add(new SpellData
+            {
+                CharName = "Janna",
+                Dangerlevel = 3,
+                MissileName = "HowlingGaleSpell",
+                Name = "Howling Gale",
+                ProjectileSpeed = 1100,
+                Radius = 120,
+                Range = 1700,
+                SpellDelay = 0,
+                SpellKey = SpellSlot.Q,
+                SpellName = "HowlingGaleSpell",
                 SpellType = SpellType.Line,
                 UsePackets = true
             });

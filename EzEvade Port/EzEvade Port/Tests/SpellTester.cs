@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Drawing;
     using System.Linq;
+    using System.Threading;
     using Aimtec;
     using Aimtec.SDK.Extensions;
     using Aimtec.SDK.Menu;
@@ -13,7 +14,7 @@
     using Helpers;
     using Spells;
     using Utils;
-    using DelayAction = Utils.DelayAction;
+   // using DelayAction = Utils.DelayAction;
     using SpellData = Spells.SpellData;
 
     class SpellTester
@@ -83,7 +84,8 @@
                             Vector2.Distance(spell.StartPos, MyHero.ServerPosition.To2D()) < spell.Info.Range)
                         {
                             RenderObjects.Add(new RenderCircle(spellPos, 1000, Color.Red, (int) spell.Radius, 10));
-                            DelayAction.Add(1, () => SpellDetector.DeleteSpell(spell.SpellId));
+                            Aimtec.SDK.Util.DelayAction.Queue(100, ()=> SpellDetector.DeleteSpell(spell.SpellId), new CancellationToken(false));
+                           // DelayAction.Add(1, () => SpellDetector.DeleteSpell(spell.SpellId));
                         }
                         else
                         {
@@ -99,7 +101,7 @@
                             }
 
                             RenderObjects.Add(new RenderCircle(spellPos, 1000, Color.Red, (int) spell.Radius));
-                            DelayAction.Add(1, () => SpellDetector.DeleteSpell(spell.SpellId));
+                            Aimtec.SDK.Util.DelayAction.Queue(100, () => SpellDetector.DeleteSpell(spell.SpellId), new CancellationToken(false));
                         }
                         break;
                     case SpellType.Cone:
@@ -108,7 +110,7 @@
                         {
                             if (MyHero.ServerPosition.To2D().InSkillShot(spell, MyHero.BoundingRadius))
                             {
-                                DelayAction.Add(1, () => SpellDetector.DeleteSpell(spell.SpellId));
+                                Aimtec.SDK.Util.DelayAction.Queue(100, () => SpellDetector.DeleteSpell(spell.SpellId), new CancellationToken(false));
                             }
                         }
                         break;
