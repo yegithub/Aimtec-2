@@ -19,7 +19,7 @@
 
     class BaseUlt
     {
-        private static Menu Menu;
+        private static Menu _menu;
         private readonly float _delay;
         private readonly int _maxCollisionObjects;
         private readonly float _range;
@@ -28,7 +28,7 @@
         private readonly Spell _ultimate;
         private readonly float _width;
 
-        private readonly List<Obj_AI_Hero> lastEnemyChecked;
+        private readonly List<Obj_AI_Hero> _lastEnemyChecked;
 
         private Vector3 _lastSeenPosition;
 
@@ -55,12 +55,16 @@
             AttatchMenu();
             Global.Init();
 
-            lastEnemyChecked = new List<Obj_AI_Hero>();
+            _lastEnemyChecked = new List<Obj_AI_Hero>();
             foreach (var enemies in GameObjects.EnemyHeroes)
             {
-                lastEnemyChecked.Add(enemies);
+                _lastEnemyChecked.Add(enemies);
             }
 
+            Obj_AI_Base.OnTeleport += delegate(Obj_AI_Base sender, Obj_AI_BaseTeleportEventArgs args)
+            {
+                Console.WriteLine("new teleport");
+            };
             Teleport.OnTeleport += OnTeleport;
             Game.OnUpdate += OnUpdate;
             Render.OnRender += OnRender;
@@ -68,27 +72,27 @@
 
         private static void AttatchMenu()
         {
-            Menu = new Menu("hello", $"BaseUlt | {Global.Player.ChampionName}", true);
-            Menu.Attach();
+            _menu = new Menu("hello", $"BaseUlt | {Global.Player.ChampionName}", true);
+            _menu.Attach();
 
-            Menu.Add(new MenuBool("RandomUlt", "Use RandomUlt").SetToolTip("Will GUESS the enemy position and ult there"));
+            _menu.Add(new MenuBool("RandomUlt", "Use RandomUlt").SetToolTip("Will GUESS the enemy position and ult there"));
 
             if (Global.Player.ChampionName == "Draven")
             {
-                Menu.Add(new MenuBool("Draven", "Include R Back (Draven)"));
+                _menu.Add(new MenuBool("Draven", "Include R Back (Draven)"));
             }
 
-            Menu.Add(new MenuBool("Collision", "Check Collision"));
+            _menu.Add(new MenuBool("Collision", "Check Collision"));
 
-            Menu.Add(new MenuSeperator("yes", "Whitelist"));
+            _menu.Add(new MenuSeperator("yes", "Whitelist"));
 
             foreach (var hero in GameObjects.EnemyHeroes)
             {
-                Menu.Add(new MenuBool(hero.ChampionName, "ULT: " + hero.ChampionName));
+                _menu.Add(new MenuBool(hero.ChampionName, "ULT: " + hero.ChampionName));
             }
 
-            Menu.Add(new MenuSeperator("no"));
-            Menu.Add(new MenuSlider("Distance", "Max Distance | RandomUlt", 20000, 5000, 40000));
+            _menu.Add(new MenuSeperator("no"));
+            _menu.Add(new MenuSlider("Distance", "Max Distance | RandomUlt", 20000, 5000, 40000));
         }
 
         private void OnTeleport(Obj_AI_Base sender, Teleport.TeleportEventArgs args)
@@ -97,7 +101,7 @@
             {
                 return;
             }
-
+            Console.WriteLine("??????????");
             switch (args.Status)
             {
                 case TeleportStatus.Abort:
@@ -107,9 +111,10 @@
                     Reset();
                     break;
                 case TeleportStatus.Start:
-
+                    Console.WriteLine("Started");
                     if (args.Type == TeleportType.Recall && _target == null)
                     {
+                        Console.WriteLine("?");
                         Set(args.Duration, Environment.TickCount, (Obj_AI_Hero) sender);
                     }
 
@@ -119,9 +124,9 @@
 
         private void OnUpdate()
         {
-            if (Menu["RandomUlt"].Enabled)
+            if (_menu["RandomUlt"].Enabled)
             {
-                foreach (var enemy in lastEnemyChecked.Where(x => x.IsFloatingHealthBarActive && !x.IsDead && x.IsValidTarget()))
+                foreach (var enemy in _lastEnemyChecked.Where(x => x.IsFloatingHealthBarActive && !x.IsDead && x.IsValidTarget()))
                 {
                     if (Environment.TickCount - _lastSeenTick <= Game.Ping / 2f)
                     {
@@ -133,19 +138,20 @@
                 }
             }
 
-            if (_target == null || !Menu[_target.ChampionName].Enabled || !_ultimate.Ready || PlayerDamage() < TargetHealth())
+            if (_target == null || !_menu[_target.ChampionName].Enabled || !_ultimate.Ready || PlayerDamage() < TargetHealth())
             {
                 return;
             }
 
             if (GetCastTime(GetFountainPos(_target)) <= Game.Ping)
             {
+                Console.WriteLine("1");
                 _timeUntilCastingUlt = GetCastTime(GetFountainPos(_target));
                 CastUlt(GetFountainPos(_target));
             }
-            else if (Menu["RandomUlt"].Enabled)
+            else if (_menu["RandomUlt"].Enabled)
             {
-                var enemy = lastEnemyChecked.FirstOrDefault(x => x.NetworkId == _target.NetworkId);
+                var enemy = _lastEnemyChecked.FirstOrDefault(x => x.NetworkId == _target.NetworkId);
                 if (enemy == null)
                 {
                     return;
@@ -157,7 +163,7 @@
 
                 _predictedPosition = _lastSeenPosition.Extend(enemy.ServerPosition.Extend(direction, distance), distance);
 
-                if (distance > Menu["Distance"].Value)
+                if (distance > _menu["Distance"].Value)
                 {
                     return;
                 }
@@ -170,8 +176,8 @@
         private void CastUlt(Vector3 pos)
         {
             var rectangle = new Geometry.Rectangle(Global.Player.ServerPosition.To2D(), pos.To2D(), _width);
-
-            if (Menu["Collision"].Enabled &&
+            Console.WriteLine("2");
+            if (_menu["Collision"].Enabled &&
                 GameObjects.EnemyHeroes.Count(x => x.NetworkId != _target.NetworkId && rectangle.IsInside(x.ServerPosition.To2D())) > _maxCollisionObjects ||
                 pos.Distance(Global.Player) > _range ||
                 pos.Distance(Global.Player) > 15000)
@@ -250,7 +256,7 @@
             switch (Global.Player.ChampionName)
             {
                 case "Draven":
-                    if (Menu["Draven"].Enabled)
+                    if (_menu["Draven"].Enabled)
                     {
                         return (float) (Global.Player.GetSpellDamage(_target, SpellSlot.R, DamageStage.SecondForm) + Global.Player.GetSpellDamage(_target, SpellSlot.R));
                     }
@@ -268,7 +274,7 @@
             }
 
             var hpReg = _target.HPRegenRate;
-            var invisible = lastEnemyChecked.FirstOrDefault(x => x.NetworkId == _target.NetworkId);
+            var invisible = _lastEnemyChecked.FirstOrDefault(x => x.NetworkId == _target.NetworkId);
 
             var final = _target.Health + (hpReg * (invisible?.LifetimeTicks / 10000f ?? 0f) + TravelTime(GetFountainPos(_target)) / 1000);
 

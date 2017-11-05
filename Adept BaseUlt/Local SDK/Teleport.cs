@@ -19,6 +19,7 @@
 
         private static void OnUnitTeleport(Obj_AI_Base sender, Obj_AI_BaseTeleportEventArgs e)
         {
+          
             var eventArgs = new TeleportEventArgs
             {
                 Status = TeleportStatus.Unknown,
@@ -29,7 +30,7 @@
             {
                 return;
             }
-
+           
             if (!TeleportDataNetId.ContainsKey(sender.NetworkId))
             {
                 TeleportDataNetId[sender.NetworkId] = eventArgs;
