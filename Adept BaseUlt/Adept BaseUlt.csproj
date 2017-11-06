@@ -36,10 +36,12 @@
     <StartupObject>Adept_BaseUlt.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Aimtec">
+    <Reference Include="Aimtec, Version=1.0.6508.30396, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Users\Nechrito\AppData\Local\AimtecLoader\Data\System\Aimtec.dll</HintPath>
     </Reference>
-    <Reference Include="Aimtec.SDK">
+    <Reference Include="Aimtec.SDK, Version=1.0.1.61, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Users\Nechrito\AppData\Local\AimtecLoader\Data\System\Aimtec.SDK.dll</HintPath>
     </Reference>
     <Reference Include="System" />

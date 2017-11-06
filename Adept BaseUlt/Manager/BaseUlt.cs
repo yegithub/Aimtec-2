@@ -61,10 +61,6 @@
                 _lastEnemyChecked.Add(enemies);
             }
 
-            Obj_AI_Base.OnTeleport += delegate(Obj_AI_Base sender, Obj_AI_BaseTeleportEventArgs args)
-            {
-                Console.WriteLine("new teleport");
-            };
             Teleport.OnTeleport += OnTeleport;
             Game.OnUpdate += OnUpdate;
             Render.OnRender += OnRender;
@@ -101,20 +97,23 @@
             {
                 return;
             }
-            Console.WriteLine("??????????");
+         
             switch (args.Status)
             {
                 case TeleportStatus.Abort:
                 case TeleportStatus.Finish:
                 case TeleportStatus.Unknown:
-                    if(_target != null && _target.NetworkId == sender.NetworkId)
-                    Reset();
+                    if (_target != null && _target.NetworkId == sender.NetworkId)
+                    {
+                        Console.WriteLine("ABORT");
+                        Reset();
+                    }
                     break;
                 case TeleportStatus.Start:
-                    Console.WriteLine("Started");
+                    Console.WriteLine("START");
                     if (args.Type == TeleportType.Recall && _target == null)
                     {
-                        Console.WriteLine("?");
+                        Console.WriteLine("START VALID");
                         Set(args.Duration, Environment.TickCount, (Obj_AI_Hero) sender);
                     }
 
@@ -124,6 +123,12 @@
 
         private void OnUpdate()
         {
+            Console.WriteLine($"[DEBUG] [ADEPT BASEULT] MAP ID: {Game.MapId} | MODE: {Game.Mode}");
+            if (Game.MapId == 0)
+            {
+                Console.WriteLine("MAP ID IS ZERO, WAIT FOR CORE API TO GET FIXED...");
+            }
+
             if (_menu["RandomUlt"].Enabled)
             {
                 foreach (var enemy in _lastEnemyChecked.Where(x => x.IsFloatingHealthBarActive && !x.IsDead && x.IsValidTarget()))
@@ -143,10 +148,10 @@
                 return;
             }
 
-            if (GetCastTime(GetFountainPos(_target)) <= Game.Ping)
+            _timeUntilCastingUlt = GetCastTime(GetFountainPos(_target));
+            
+            if (_timeUntilCastingUlt <= Game.Ping)
             {
-                Console.WriteLine("1");
-                _timeUntilCastingUlt = GetCastTime(GetFountainPos(_target));
                 CastUlt(GetFountainPos(_target));
             }
             else if (_menu["RandomUlt"].Enabled)
@@ -175,6 +180,12 @@
 
         private void CastUlt(Vector3 pos)
         {
+            if (pos.IsZero)
+            {
+                Console.WriteLine("IS ZERO");
+                return;
+            }
+
             var rectangle = new Geometry.Rectangle(Global.Player.ServerPosition.To2D(), pos.To2D(), _width);
             Console.WriteLine("2");
             if (_menu["Collision"].Enabled &&
