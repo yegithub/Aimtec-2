@@ -1,5 +1,6 @@
 ﻿namespace Adept_AIO.Champions.Riven.Miscellaneous
 {
+    using System;
     using System.Threading;
     using Aimtec;
     using Aimtec.SDK.Extensions;
@@ -12,14 +13,14 @@
         public static void Reset()
         {
             Global.Orbwalker.AttackingEnabled = false;
-
+         
             var ultimateDelay = Global.Player.HasBuff("RivenFengShuiEngine") ? 100 : 50;
-            var qDelay = Extensions.CurrentQCount == 1 ? 140 : 30;
+            var qDelay = Extensions.CurrentQCount == 1 ? 180 : 80;
             var ping = Game.Ping / 2;
 
-            DelayAction.Queue(ping + ultimateDelay + qDelay, () => Global.Orbwalker.Move(Game.CursorPos), new CancellationToken(false));
+            DelayAction.Queue(ultimateDelay + qDelay, () => Global.Orbwalker.Move(Game.CursorPos), new CancellationToken(false));
 
-            DelayAction.Queue((int) GetDelay() + ping,
+            DelayAction.Queue((int) GetDelay() * 2 + ping,
                               () =>
                               {
                                   Global.Orbwalker.AttackingEnabled = true;
@@ -30,29 +31,30 @@
 
         private static float GetDelay()
         {
-            return (Extensions.CurrentQCount == 1 ? 460 : 330) - 3.333f * Global.Player.Level;
+            return (Extensions.CurrentQCount == 1 ? 460 : 400) - 3.333f * Global.Player.Level;
         }
 
         public static void OnPlayAnimation(Obj_AI_Base sender, Obj_AI_BasePlayAnimationEventArgs args)
         {
+            
             if (sender == null || !sender.IsMe)
             {
                 return;
             }
-
+            Console.WriteLine("Animation Check");
             switch (args.Animation)
             {
                 case "Spell1a":
                     Extensions.CurrentQCount = 2; // Q1
-                    Reset();
+                  //  Reset();
                     break;
                 case "Spell1b":
                     Extensions.CurrentQCount = 3; // Q2
-                    Reset();
+                //    Reset();
                     break;
                 case "Spell1c":
                     Extensions.CurrentQCount = 1; // Q3 
-                    Reset();
+                //    Reset();
                     break;
             }
         }

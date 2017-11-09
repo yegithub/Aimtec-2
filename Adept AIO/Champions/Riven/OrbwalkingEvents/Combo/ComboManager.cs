@@ -16,9 +16,9 @@
 
     class ComboManager
     {
-        public static void OnPostAttack(object sender, PostAttackEventArgs args)
+        public static void OnPostAttack()
         {
-            Combo2.OnPostAttack(sender, args);
+            Combo2.OnPostAttack();
             //switch (Enums.ComboPattern)
             //{
             //    case ComboPattern.MaximizeDmg:

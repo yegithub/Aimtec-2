@@ -9,7 +9,7 @@
 
     class Combo2
     {
-        public static void OnPostAttack(object sender, PostAttackEventArgs args)
+        public static void OnPostAttack()
         {
             var target = Global.TargetSelector.GetTarget(Extensions.EngageRange);
             if (target == null)

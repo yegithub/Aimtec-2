@@ -3,8 +3,9 @@
     using System.Collections.Generic;
     using Aimtec.SDK.Menu;
     using Aimtec.SDK.Menu.Components;
-    using Aimtec.SDK.Orbwalking;
+   // using Aimtec.SDK.Orbwalking;
     using Aimtec.SDK.Util;
+    using Orbwalker;
     using OrbwalkingEvents;
     using SDK.Delegates;
     using SDK.Menu_Extension;
@@ -27,10 +28,10 @@
             BurstMode.ModeBehaviour.Invoke();
             BurstMode.GetTargetImplementation.Invoke();
 
-            Global.Orbwalker.AddMode(BurstMode);
-            Global.Orbwalker.AddMode(FleeMode);
+            Orbwalker.Implementation.AddMode(BurstMode);
+            Orbwalker.Implementation.AddMode(FleeMode);
 
-            Global.Orbwalker.Attach(mainMenu);
+            Orbwalker.Implementation.Attach(mainMenu);
             Gapcloser.Attach(mainMenu, "Anti Gapcloser");
 
             Combo = new Menu("RivenCombo", "Combo")

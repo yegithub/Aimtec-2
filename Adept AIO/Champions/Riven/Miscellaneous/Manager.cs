@@ -8,6 +8,7 @@
     using OrbwalkingEvents;
     using OrbwalkingEvents.Combo;
     using SDK.Unit_Extensions;
+    using PostAttackEventArgs = Orbwalker.PostAttackEventArgs;
 
     class Manager
     {
@@ -55,6 +56,7 @@
 
         public static void OnPostAttack(object sender, PostAttackEventArgs args)
         {
+          
             if (Environment.TickCount - Extensions.LastQCastAttempt <= 400)
             {
                 return;
@@ -71,7 +73,7 @@
                 switch (Global.Orbwalker.Mode)
                 {
                     case OrbwalkingMode.Combo:
-                        ComboManager.OnPostAttack(sender, args);
+                        ComboManager.OnPostAttack();
                         break;
                     case OrbwalkingMode.Mixed:
                         Harass.OnProcessAutoAttack();

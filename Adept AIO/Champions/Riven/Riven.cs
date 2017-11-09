@@ -24,7 +24,7 @@
 
             Obj_AI_Base.OnPlayAnimation += Animation.OnPlayAnimation;
 
-            Global.Orbwalker.PostAttack += Manager.OnPostAttack;
+            Orbwalker.Orbwalker.Implementation.PostAttack += Manager.OnPostAttack;
             Render.OnRender += DrawManager.RenderBasics;
             Render.OnPresent += DrawManager.OnPresent;
         }

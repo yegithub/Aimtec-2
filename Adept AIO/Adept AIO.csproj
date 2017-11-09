@@ -44,6 +44,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Users\Nechrito\AppData\Local\AimtecLoader\Data\System\Aimtec.SDK.dll</HintPath>
     </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\Nechrito\AppData\Local\AimtecLoader\Data\System\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -187,6 +191,12 @@
     <Compile Include="Champions\Lucian\OrbwalkingEvents\LaneClear.cs" />
     <Compile Include="Champions\Riven\Core\Enums.cs" />
     <Compile Include="Champions\Riven\Miscellaneous\AntiGapcloser.cs" />
+    <Compile Include="Champions\Riven\Orbwalker\AOrbwalker.cs" />
+    <Compile Include="Champions\Riven\Orbwalker\IOrbwalker.cs" />
+    <Compile Include="Champions\Riven\Orbwalker\Orbwalker.cs" />
+    <Compile Include="Champions\Riven\Orbwalker\OrbwalkerImpl.cs" />
+    <Compile Include="Champions\Riven\Orbwalker\OrbwalkerMode.cs" />
+    <Compile Include="Champions\Riven\Orbwalker\OrbwalkingMode.cs" />
     <Compile Include="Champions\Riven\OrbwalkingEvents\Combo\Combo2.cs" />
     <Compile Include="Champions\Riven\OrbwalkingEvents\Combo\FastCombo.cs" />
     <Compile Include="Champions\Riven\OrbwalkingEvents\Combo\MaximizeDmg.cs" />

@@ -38,6 +38,7 @@
                     _canUseQ = false;
                     _canWq = false;
                     _serverPosition = false;
+                    Animation.Reset();
                     break;
                 case "RivenMartyr":
                     _canUseW = false;
