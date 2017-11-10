@@ -7,7 +7,7 @@
 
     class DashManager
     {
-        public static Vector3 DashKite(Obj_AI_Base target, float range, int enemyRange = 400)
+        public static Vector3 DashKite(Obj_AI_Base target, float range, int enemyRange = 410)
         {
             var pos = Vector3.Zero;
 

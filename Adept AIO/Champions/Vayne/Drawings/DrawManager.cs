@@ -38,7 +38,8 @@
                 if (target != null && target.IsValidTarget() && target.IsHero)
                 {
                     SpellManager.PredRect(target)?.Draw(Color.Cyan);
-                    SpellManager.Rect(target)?.Draw(Color.Crimson);
+                    SpellManager.Rect(target.ServerPosition)?.Draw(Color.Crimson);
+                    SpellManager.RectAfterDelay(target)?.Draw(Color.Blue);
                 }
 
                 if (!SpellManager.DrawingPred.IsZero)
