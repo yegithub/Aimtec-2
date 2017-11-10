@@ -7,6 +7,7 @@
     using Aimtec.SDK.Extensions;
     using Aimtec.SDK.Util;
     using Core;
+    using SDK.Generic;
     using SDK.Unit_Extensions;
     using SDK.Usables;
     using Geometry = SDK.Geometry_Related.Geometry;
@@ -141,8 +142,9 @@
                 }
             }
 
-            if (SpellConfig.R.Ready && KnockUpHelper.KnockedUp(target) && KnockUpHelper.IsItTimeToUlt(target))
+            if (SpellConfig.R.Ready && MenuConfig.Whitelist[target.ChampionName].Enabled && target.IsAirbone() && KnockUpHelper.IsItTimeToUlt(target))
             {
+              
                 var airbourneTargets = GameObjects.EnemyHeroes.Where(x => KnockUpHelper.KnockedUp(x) && x.Distance(Global.Player) <= SpellConfig.R.Range);
                 var targetCount = (airbourneTargets as Obj_AI_Hero[] ?? airbourneTargets.ToArray()).Length;
 

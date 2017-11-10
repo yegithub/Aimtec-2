@@ -2,6 +2,7 @@
 {
     using Aimtec;
     using Aimtec.SDK.Extensions;
+    using Aimtec.SDK.Prediction.Health;
     using Generic;
     using Unit_Extensions;
 
@@ -16,10 +17,14 @@
                 var dir = Global.Player.Orientation.To2D();
                 var angleRad = Maths.DegreeToRadian(i);
                 var rot = (Global.Player.ServerPosition.To2D() + range * dir.Rotated((float) angleRad)).To3D();
-                if (rot.CountEnemyHeroesInRange(enemyRange) != 0 || rot.PointUnderEnemyTurret())
+
+                var turret = TurretAttackManager.GetNearestTurretData(Global.Player, TurretAttackManager.TurretTeam.Enemy);
+                if (rot.CountEnemyHeroesInRange(enemyRange) != 0 || 
+                    turret != null && turret.TurretActive && !turret.LastTarget.IsHero && turret.Turret.ServerPosition.Distance(target.ServerPosition) <= 1500)
                 {
                     continue;
                 }
+
                 pos = rot;
             }
             return pos;

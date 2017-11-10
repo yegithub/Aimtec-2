@@ -3,6 +3,7 @@
     using System;
     using System.Threading;
     using Aimtec;
+    using Aimtec.SDK.Events;
     using Aimtec.SDK.Orbwalking;
     using Aimtec.SDK.Util;
     using Core;
@@ -80,7 +81,7 @@
                 switch (buff.Name)
                 {
                     case "YasuoQ3W":
-                        SpellConfig.SetSkill(Mode.Tornado);
+                        SpellConfig.SetSkill(Global.Player.IsDashing() ? Mode.DashingTornado : Mode.Tornado);
                         break;
                 }
             }

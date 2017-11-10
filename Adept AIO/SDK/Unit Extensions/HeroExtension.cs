@@ -16,18 +16,6 @@
             return unit.HasBuffOfType(BuffType.Knockup) || unit.HasBuffOfType(BuffType.Knockback);
         }
 
-        public static float RemainingAirboneTime(this Obj_AI_Base unit)
-        {
-            float result = 0;
-
-            foreach (var buff in unit.Buffs.Where(buff => buff.Type == BuffType.Knockback || buff.Type == BuffType.Knockup))
-            {
-                result = buff.EndTime - Game.ClockTime;
-            }
-
-            return result * 1000;
-        }
-
         public static bool HasTear()
         {
             return TearId.Any(u => Global.Player.HasItem(u));
