@@ -36,29 +36,15 @@
                 return null;
             }
             var temp = 0.5f * target.MoveSpeed;
-            var pred = target.Position + (target.Position - target.Path.FirstOrDefault()).Normalized() * temp; //position.Position.Extend(position.Orientation, temp);
-        
+            var pred = target.Position + (target.Position - target.Path.FirstOrDefault()).Normalized() * temp;
             return Rect(pred);
-        }
-
-        public static Geometry.Rectangle PredRect(Obj_AI_Base target)
-        {
-            if (!target.IsValidTarget(E.Range))
-            {
-                return null;
-            }
-
-            var pred = E.GetPrediction(target).CastPosition;
-            var endPos = pred + (pred - Global.Player.ServerPosition).Normalized() * 475;
-            return new Geometry.Rectangle(target.ServerPosition.To2D(), endPos.To2D(), target.BoundingRadius);
         }
 
         public static bool CanStun(Obj_AI_Base target)
         {
             var rect = Rect(target.ServerPosition);
-            var predRect = PredRect(target);
-
-            return WallExtension.IsWall(rect.Start.To3D(), rect.End.To3D()) && WallExtension.IsWall(predRect.Start.To3D(), predRect.End.To3D());
+           
+            return WallExtension.IsWall(rect.Start.To3D(), rect.End.To3D());
         }
 
         public static void CastE(Obj_AI_Base target)

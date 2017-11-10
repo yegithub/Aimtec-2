@@ -420,7 +420,7 @@
 
             Game.OnUpdate += delegate
             {
-                foreach (var enemy in ObjectManager.Get<Obj_AI_Base>().Where(x => x.Distance(Global.Player) <= 3000))
+                foreach (var enemy in ObjectManager.Get<Obj_AI_Base>().Where(x => x.Distance(Global.Player) <= 3000 && x.IsEnemy))
                 {
                     foreach (var s in NotViable)
                     {
