@@ -69,7 +69,7 @@
             }
             var rect = RectAfterDelay(target);
 
-            if (!CanStun(target) || rect == null || !WallExtension.IsWall(rect.Start.To3D(), rect.End.To3D()))
+            if (!CanStun(target) || rect != null && !WallExtension.IsWall(rect.Start.To3D(), rect.End.To3D()))
             {
                 return;
             }
