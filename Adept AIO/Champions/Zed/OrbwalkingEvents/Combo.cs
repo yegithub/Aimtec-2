@@ -10,7 +10,7 @@
     {
         public static void OnUpdate()
         {
-            var target = TargetSelector.GetTarget(SpellManager.WCastRange + SpellManager.Q.Range);
+            var target = Global.TargetSelector.GetTarget(SpellManager.WCastRange + SpellManager.Q.Range);
             if (target == null)
             {
                 return;
@@ -18,6 +18,11 @@
 
             if (SpellManager.R.Ready && target.IsValidTarget(SpellManager.R.Range) && !(MenuConfig.Combo["Killable"].Enabled && Dmg.Damage(target) < target.Health))
             {
+                if (target.HealthPercent() <= 30)
+                {
+                    return;
+                }
+                
                 if (!MenuConfig.Combo[target.ChampionName].Enabled)
                 {
                     return;

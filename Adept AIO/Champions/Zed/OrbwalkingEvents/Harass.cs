@@ -10,7 +10,7 @@
     {
         public static void OnUpdate()
         {
-            var target = TargetSelector.GetTarget(SpellManager.WCastRange + SpellManager.Q.Range);
+            var target = Global.TargetSelector.GetTarget(SpellManager.WCastRange + SpellManager.Q.Range);
             if (target == null || Maths.GetEnergyPercent() < MenuConfig.Harass["Energy"].Value)
             {
                 return;
