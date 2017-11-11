@@ -39,7 +39,15 @@
                 return 0;
             }
 
-            return Global.Player.GetSpellDamage(target, SpellSlot.E) + Global.Player.GetSpellDamage(target, SpellSlot.E, DamageStage.Buff);
+            var dmg = Global.Player.GetSpellDamage(target, SpellSlot.E) + Global.Player.GetSpellDamage(target, SpellSlot.E, DamageStage.Buff);
+
+            var legendary = GameObjects.JungleLegendary.FirstOrDefault(x => x.HasBuff("kalistaexpungemarker"));
+            if (legendary != null && legendary.NetworkId == target.NetworkId)
+            {
+                dmg *= 0.85f;
+            }
+          
+            return dmg;
         }
     }
 }
