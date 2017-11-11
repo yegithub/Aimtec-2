@@ -23,7 +23,13 @@
             "SivirE"
         };
 
-        private static readonly string[] ReviveBuffs = { "chronorevive", "zhonyasringshield", "AatroxPassiveDeath", "rebirth" };
+        private static readonly string[] ReviveBuffs =
+        {
+            "chronorevive",
+            "zhonyasringshield",
+            "AatroxPassiveDeath",
+            "rebirth"
+        };
 
         public static double EDmg(Obj_AI_Base target)
         {
@@ -31,7 +37,7 @@
             {
                 return 0;
             }
-        
+
 
             return Global.Player.GetSpellDamage(target, SpellSlot.E) + Global.Player.GetSpellDamage(target, SpellSlot.E, DamageStage.Buff);
         }

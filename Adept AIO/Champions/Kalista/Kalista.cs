@@ -1,8 +1,6 @@
 ﻿namespace Adept_AIO.Champions.Kalista
 {
-    using System;
     using Aimtec;
-    using Aimtec.SDK.Orbwalking;
     using Core;
     using Drawings;
     using Miscellaneous;

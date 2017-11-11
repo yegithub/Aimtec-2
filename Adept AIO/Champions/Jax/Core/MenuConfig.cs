@@ -28,7 +28,12 @@
                 new MenuBool("Check", "Check For Enemy Turrets")
             };
 
-            Harass = new Menu("Harass", "Harass") {new MenuBool("Q", "Use Q"), new MenuBool("W", "Use W"), new MenuBool("E", "E", false)};
+            Harass = new Menu("Harass", "Harass")
+            {
+                new MenuBool("Q", "Use Q"),
+                new MenuBool("W", "Use W"),
+                new MenuBool("E", "E", false)
+            };
 
             Clear = new Menu("Clear", "Clear")
             {
@@ -38,7 +43,10 @@
                 new MenuBool("E", "(E) After Auto")
             };
 
-            Killsteal = new Menu("Killsteal", "Killsteal") {new MenuBool("Q", "(Q)")};
+            Killsteal = new Menu("Killsteal", "Killsteal")
+            {
+                new MenuBool("Q", "(Q)")
+            };
 
             Drawings = new Menu("DrawManager", "DrawManager")
             {
@@ -48,7 +56,15 @@
                 new MenuBool("Dmg", "Draw Damage")
             };
 
-            foreach (var menu in new List<Menu> {Combo, Harass, Clear, Killsteal, Drawings, MenuShortcut.Credits})
+            foreach (var menu in new List<Menu>
+            {
+                Combo,
+                Harass,
+                Clear,
+                Killsteal,
+                Drawings,
+                MenuShortcut.Credits
+            })
             {
                 _mainMenu.Add(menu);
             }

@@ -37,7 +37,8 @@
                 }
             }
 
-            if (SpellConfig.E.Ready && MenuConfig.Harass["E"].Enabled && Global.Player.ManaPercent() >= 50 && target.IsValidTarget(SpellConfig.E.Range) && Dmg.Damage(target) >= target.Health)
+            if (SpellConfig.E.Ready && MenuConfig.Harass["E"].Enabled && Global.Player.ManaPercent() >= 50 && target.IsValidTarget(SpellConfig.E.Range) &&
+                Dmg.Damage(target) >= target.Health)
             {
                 SpellConfig.E.Cast(target);
             }

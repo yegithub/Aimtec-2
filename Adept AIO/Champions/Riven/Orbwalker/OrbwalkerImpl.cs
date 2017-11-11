@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace Adept_AIO.Champions.Riven.Orbwalker
+﻿namespace Adept_AIO.Champions.Riven.Orbwalker
 {
+    using System;
+    using System.Collections.Generic;
     using System.Drawing;
+    using System.Linq;
     using Aimtec;
     using Aimtec.SDK.Damage;
     using Aimtec.SDK.Extensions;
@@ -16,7 +15,7 @@ namespace Adept_AIO.Champions.Riven.Orbwalker
     using Aimtec.SDK.Util;
     using Aimtec.SDK.Util.Cache;
 
-    internal class OrbwalkingImpl : AOrbwalker
+    class OrbwalkingImpl : AOrbwalker
     {
         #region Fields
 
@@ -31,7 +30,7 @@ namespace Adept_AIO.Champions.Riven.Orbwalker
 
         internal OrbwalkingImpl()
         {
-            this.Initialize();
+            Initialize();
         }
 
         #endregion
@@ -53,7 +52,7 @@ namespace Adept_AIO.Champions.Riven.Orbwalker
                     attackDelay = (1.0740296828f * Player.AttackDelay - 0.7162381256175f) * 1000;
                 }
 
-                if (champion.Equals("Kalista") && !this.Config["Misc"]["KalistaFly"].Enabled)
+                if (champion.Equals("Kalista") && !Config["Misc"]["KalistaFly"].Enabled)
                 {
                     return attackDelay;
                 }
@@ -66,7 +65,7 @@ namespace Adept_AIO.Champions.Riven.Orbwalker
         {
             get
             {
-                var detectionTime = Math.Max(this.ServerAttackDetectionTick, this.LastAttackCommandSentTime);
+                var detectionTime = Math.Max(this.ServerAttackDetectionTick, LastAttackCommandSentTime);
                 return Game.TickCount + Game.Ping / 2 - detectionTime <= this.WindUpTime;
             }
         }
@@ -82,17 +81,17 @@ namespace Adept_AIO.Champions.Riven.Orbwalker
 
         private bool Attached { get; set; }
 
-        private int AttackDelayReduction => this.Config["Advanced"]["AttackDelayReduction"].Value;
+        private int AttackDelayReduction => Config["Advanced"]["AttackDelayReduction"].Value;
 
-        private int ExtraWindUp => this.Config["Attacking"]["ExtraWindup"].Value;
+        private int ExtraWindUp => Config["Attacking"]["ExtraWindup"].Value;
 
-        private int HoldPositionRadius => this.Config["Misc"]["HoldPositionRadius"].Value;
+        private int HoldPositionRadius => Config["Misc"]["HoldPositionRadius"].Value;
 
-        private bool DrawAttackRange => this.Config["Drawings"]["DrawAttackRange"].Enabled;
+        private bool DrawAttackRange => Config["Drawings"]["DrawAttackRange"].Enabled;
 
-        private bool DrawHoldPosition => this.Config["Drawings"]["DrawHoldRadius"].Enabled;
+        private bool DrawHoldPosition => Config["Drawings"]["DrawHoldRadius"].Enabled;
 
-        private bool DrawKillable => this.Config["Drawings"]["DrawKillableMinion"].Enabled;
+        private bool DrawKillable => Config["Drawings"]["DrawKillableMinion"].Enabled;
 
 
         /// <summary>
@@ -135,7 +134,11 @@ namespace Adept_AIO.Champions.Riven.Orbwalker
         /// <summary>
         ///     Champions whos attack is not wasted on invulnerable targets or when blinded
         /// </summary>
-        private readonly string[] _noWasteAttackChamps = { "Kalista", "Twitch" };
+        private readonly string[] _noWasteAttackChamps =
+        {
+            "Kalista",
+            "Twitch"
+        };
 
         private Obj_AI_Hero GangPlank { get; set; }
         private Obj_AI_Hero Jax { get; set; }
@@ -149,12 +152,12 @@ namespace Adept_AIO.Champions.Riven.Orbwalker
             if (!this.Attached)
             {
                 this.Attached = true;
-                menu.Add(this.Config);
-                Obj_AI_Base.OnProcessAutoAttack += this.ObjAiHeroOnProcessAutoAttack;
-                Obj_AI_Base.OnProcessSpellCast += this.Obj_AI_Base_OnProcessSpellCast;
-                Game.OnUpdate += this.Game_OnUpdate;
-                SpellBook.OnStopCast += this.SpellBook_OnStopCast;
-                Render.OnRender += this.RenderManager_OnRender;
+                menu.Add(Config);
+                Obj_AI_Base.OnProcessAutoAttack += ObjAiHeroOnProcessAutoAttack;
+                Obj_AI_Base.OnProcessSpellCast += Obj_AI_Base_OnProcessSpellCast;
+                Game.OnUpdate += Game_OnUpdate;
+                SpellBook.OnStopCast += SpellBook_OnStopCast;
+                Render.OnRender += RenderManager_OnRender;
             }
             else
             {
@@ -164,7 +167,7 @@ namespace Adept_AIO.Champions.Riven.Orbwalker
 
         public override bool Attack(AttackableUnit target)
         {
-            var preAttackargs = this.FirePreAttack(target);
+            var preAttackargs = FirePreAttack(target);
             if (preAttackargs.Cancel)
             {
                 return false;
@@ -182,7 +185,7 @@ namespace Adept_AIO.Champions.Riven.Orbwalker
                 return false;
             }
 
-            this.LastAttackCommandSentTime = Game.TickCount;
+            LastAttackCommandSentTime = Game.TickCount;
             return true;
         }
 
@@ -228,12 +231,12 @@ namespace Adept_AIO.Champions.Riven.Orbwalker
                 return false;
             }
 
-            if (!this.Config["Farming"]["AttackPlants"].Enabled && name.Contains("sru_plant_"))
+            if (!Config["Farming"]["AttackPlants"].Enabled && name.Contains("sru_plant_"))
             {
                 return false;
             }
 
-            if (!this.Config["Farming"]["AttackWards"].Enabled && name.Contains("ward"))
+            if (!Config["Farming"]["AttackWards"].Enabled && name.Contains("ward"))
             {
                 return false;
             }
@@ -248,7 +251,7 @@ namespace Adept_AIO.Champions.Riven.Orbwalker
                 return true;
             }
 
-            if (!this.Config["Farming"]["AttackBarrels"].Enabled)
+            if (!Config["Farming"]["AttackBarrels"].Enabled)
             {
                 return false;
             }
@@ -259,7 +262,7 @@ namespace Adept_AIO.Champions.Riven.Orbwalker
 
         public override bool CanAttack()
         {
-            return this.CanAttack(this.GetActiveMode());
+            return CanAttack(GetActiveMode());
         }
 
         public bool CanAttack(OrbwalkerMode mode)
@@ -280,7 +283,7 @@ namespace Adept_AIO.Champions.Riven.Orbwalker
             }
 
             if (Player.HasBuffOfType(BuffType.Blind) &&
-                !this._noWasteAttackChamps.Contains(Player.ChampionName))
+                !_noWasteAttackChamps.Contains(Player.ChampionName))
             {
                 return false;
             }
@@ -295,12 +298,12 @@ namespace Adept_AIO.Champions.Riven.Orbwalker
                 return false;
             }
 
-            if (!this.NoCancelChamps.Contains(Player.ChampionName))
+            if (!NoCancelChamps.Contains(Player.ChampionName))
             {
                 return !this.IsWindingUp && this.AttackReady;
             }
 
-            if (Player.ChampionName.Equals("Kalista") && this.Config["Misc"]["KalistaFly"].Enabled)
+            if (Player.ChampionName.Equals("Kalista") && Config["Misc"]["KalistaFly"].Enabled)
             {
                 return true;
             }
@@ -310,7 +313,7 @@ namespace Adept_AIO.Champions.Riven.Orbwalker
 
         public override bool CanMove()
         {
-            return this.CanMove(this.GetActiveMode());
+            return CanMove(GetActiveMode());
         }
 
         public bool CanMove(OrbwalkerMode mode)
@@ -330,7 +333,7 @@ namespace Adept_AIO.Champions.Riven.Orbwalker
                 return false;
             }
 
-            if (this.NoCancelChamps.Contains(Player.ChampionName))
+            if (NoCancelChamps.Contains(Player.ChampionName))
             {
                 return true;
             }
@@ -340,12 +343,12 @@ namespace Adept_AIO.Champions.Riven.Orbwalker
 
         public override void Dispose()
         {
-            this.Config.Dispose();
-            Obj_AI_Base.OnProcessAutoAttack -= this.ObjAiHeroOnProcessAutoAttack;
-            Obj_AI_Base.OnProcessSpellCast -= this.Obj_AI_Base_OnProcessSpellCast;
-            Game.OnUpdate -= this.Game_OnUpdate;
-            SpellBook.OnStopCast -= this.SpellBook_OnStopCast;
-            Render.OnRender -= this.RenderManager_OnRender;
+            Config.Dispose();
+            Obj_AI_Base.OnProcessAutoAttack -= ObjAiHeroOnProcessAutoAttack;
+            Obj_AI_Base.OnProcessSpellCast -= Obj_AI_Base_OnProcessSpellCast;
+            Game.OnUpdate -= Game_OnUpdate;
+            SpellBook.OnStopCast -= SpellBook_OnStopCast;
+            Render.OnRender -= RenderManager_OnRender;
             this.Attached = false;
         }
 
@@ -372,13 +375,13 @@ namespace Adept_AIO.Champions.Riven.Orbwalker
 
         public override bool Move(Vector3 movePosition)
         {
-            var preMoveArgs = this.FirePreMove(movePosition);
+            var preMoveArgs = FirePreMove(movePosition);
             return !preMoveArgs.Cancel && Player.IssueOrder(OrderType.MoveTo, preMoveArgs.MovePosition);
         }
 
         public override void Orbwalk()
         {
-            var mode = this.GetActiveMode();
+            var mode = GetActiveMode();
             if (mode == null)
             {
                 return;
@@ -402,25 +405,25 @@ namespace Adept_AIO.Champions.Riven.Orbwalker
                 return;
             }
 
-            if (this.CanAttack(mode))
+            if (CanAttack(mode))
             {
-                var target = this.LastTarget = this.FindTarget(mode);
+                var target = this.LastTarget = FindTarget(mode);
                 if (target != null)
                 {
-                    this.Attack(target);
+                    Attack(target);
                 }
             }
 
-            if (this.CanMove(mode))
+            if (CanMove(mode))
             {
-                this.Move(Game.CursorPos);
+                Move(Game.CursorPos);
             }
         }
 
         public override void ResetAutoAttackTimer()
         {
             this.ServerAttackDetectionTick = 0;
-            this.LastAttackCommandSentTime = 0;
+            LastAttackCommandSentTime = 0;
         }
 
         #endregion
@@ -434,7 +437,7 @@ namespace Adept_AIO.Champions.Riven.Orbwalker
                 return;
             }
 
-            this.Orbwalk();
+            Orbwalk();
         }
 
         protected void ObjAiHeroOnProcessAutoAttack(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
@@ -452,19 +455,19 @@ namespace Adept_AIO.Champions.Riven.Orbwalker
             this.ServerAttackDetectionTick = Game.TickCount - Game.Ping / 2;
             this.LastTarget = targ;
             this.ForcedTarget = null;
-            DelayAction.Queue((int)this.WindUpTime, () => this.FirePostAttack(targ));
+            DelayAction.Queue((int) this.WindUpTime, () => FirePostAttack(targ));
         }
 
         private bool CanKillMinion(Obj_AI_Base minion, int time = 0)
         {
-            var rtime = time == 0 ? this.TimeForAutoToReachTarget(minion) : time;
-            var pred = this.GetPredictedHealth(minion, rtime);
+            var rtime = time == 0 ? TimeForAutoToReachTarget(minion) : time;
+            var pred = GetPredictedHealth(minion, rtime);
             if (pred > 0)
             {
-                return pred <= this.GetRealAutoAttackDamage(minion);
+                return pred <= GetRealAutoAttackDamage(minion);
             }
 
-            this.FireNonKillableMinion(minion);
+            FireNonKillableMinion(minion);
             return false;
         }
 
@@ -480,21 +483,21 @@ namespace Adept_AIO.Champions.Riven.Orbwalker
             if (UnderTurretMode())
             {
                 //Temporarily...
-                return this.GetLastHitTarget();
+                return GetLastHitTarget();
             }
 
-            var attackable = ObjectManager.Get<AttackableUnit>().Where(this.IsValidAttackableObject);
+            var attackable = ObjectManager.Get<AttackableUnit>().Where(IsValidAttackableObject);
             var attackableUnits = attackable as AttackableUnit[] ?? attackable.ToArray();
             IEnumerable<Obj_AI_Base> minions = attackableUnits.Where(x => x is Obj_AI_Base).Cast<Obj_AI_Base>().OrderByDescending(x => x.MaxHealth);
 
             //Killable
-            AttackableUnit killableMinion = minions.FirstOrDefault(x => this.CanKillMinion(x));
+            AttackableUnit killableMinion = minions.FirstOrDefault(x => CanKillMinion(x));
             if (killableMinion != null)
             {
                 return killableMinion;
             }
 
-            var waitableMinion = minions.Any(this.ShouldWaitMinion);
+            var waitableMinion = minions.Any(ShouldWaitMinion);
             if (waitableMinion)
             {
                 Player.IssueOrder(OrderType.MoveTo, Game.CursorPos);
@@ -512,7 +515,7 @@ namespace Adept_AIO.Champions.Riven.Orbwalker
             {
                 if (this.LastTarget is Obj_AI_Base b)
                 {
-                    var predHealth = this.GetPredictedHealth(b);
+                    var predHealth = GetPredictedHealth(b);
 
                     //taking damage
                     if (Math.Abs(this.LastTarget.Health - predHealth) < 0)
@@ -524,7 +527,7 @@ namespace Adept_AIO.Champions.Riven.Orbwalker
 
             foreach (var minion in minions)
             {
-                var predHealth = this.GetPredictedHealth(minion);
+                var predHealth = GetPredictedHealth(minion);
 
                 //taking damage
                 if (minion.Health - predHealth > 0)
@@ -542,7 +545,7 @@ namespace Adept_AIO.Champions.Riven.Orbwalker
             }
 
             //Heros
-            var hero = this.GetHeroTarget();
+            var hero = GetHeroTarget();
             return hero;
         }
 
@@ -554,7 +557,7 @@ namespace Adept_AIO.Champions.Riven.Orbwalker
 
         public AttackableUnit GetUnderTurret()
         {
-            var attackable = ObjectManager.Get<AttackableUnit>().Where(this.IsValidAttackableObject);
+            var attackable = ObjectManager.Get<AttackableUnit>().Where(IsValidAttackableObject);
 
             var nearestTurret = TurretAttackManager.GetNearestTurretData(Player, TurretAttackManager.TurretTeam.Ally);
 
@@ -589,7 +592,7 @@ namespace Adept_AIO.Champions.Riven.Orbwalker
                     var tDmg = tData.Turret.GetAutoAttackDamage(tTarget);
 
                     //var tWillKill = tDmg > tTarget.Health;
-                    var numTurretAutosToKill = (int)Math.Ceiling(tTarget.Health / tDmg);
+                    var numTurretAutosToKill = (int) Math.Ceiling(tTarget.Health / tDmg);
                     var turretDistance = tData.Turret.Distance(tTarget) - Player.BoundingRadius - tTarget.BoundingRadius;
                     var tCastDelay = tData.Turret.AttackCastDelay * 1000;
                     var tTravTime = turretDistance / tData.Turret.BasicAttack.MissileSpeed * 1000;
@@ -600,7 +603,7 @@ namespace Adept_AIO.Champions.Riven.Orbwalker
                     //var minDelay = castDelay;
                     var dist = Player.Distance(tTarget) - Player.BoundingRadius - tTarget.BoundingRadius;
                     var travTime = dist / Player.BasicAttack.MissileSpeed * 1000;
-                    var totalTime = (int)(castDelay + travTime + Game.Ping / 2f);
+                    var totalTime = (int) (castDelay + travTime + Game.Ping / 2f);
 
                     //minion hpred
                     var tMinionDmgPredHealth = HealthPrediction.Instance.GetPrediction(tTarget, totalTime);
@@ -610,7 +613,7 @@ namespace Adept_AIO.Champions.Riven.Orbwalker
                     //if total time > turret attack arrival time by buffer (can be early/late)
                     var canReachSooner = totalTime - eta > extraBuffer;
 
-                    var myAutoDmg = this.GetRealAutoAttackDamage(tTarget);
+                    var myAutoDmg = GetRealAutoAttackDamage(tTarget);
 
                     //if my attk reach sooner than turret & my auto can kill it
                     if (canReachSooner && myAutoDmg >= tMinionDmgPredHealth)
@@ -669,9 +672,9 @@ namespace Adept_AIO.Champions.Riven.Orbwalker
                             var castDelay1 = Player.AttackCastDelay * 1000;
                             var dist1 = Player.Distance(min) - Player.BoundingRadius - min.BoundingRadius;
                             var travTime1 = dist1 / Player.BasicAttack.MissileSpeed * 1000;
-                            var totalTime1 = (int)(castDelay1 + travTime1 + Game.Ping / 2f);
+                            var totalTime1 = (int) (castDelay1 + travTime1 + Game.Ping / 2f);
 
-                            var dmg1 = this.GetRealAutoAttackDamage(minBase);
+                            var dmg1 = GetRealAutoAttackDamage(minBase);
                             var pred1 = HealthPrediction.Instance.GetPrediction(minBase, totalTime1);
                             if (dmg1 > pred1)
                             {
@@ -687,23 +690,19 @@ namespace Adept_AIO.Champions.Riven.Orbwalker
 
         private AttackableUnit GetLastHitTarget()
         {
-            return this.GetLastHitTarget(null);
+            return GetLastHitTarget(null);
         }
 
         private AttackableUnit GetLastHitTarget(IEnumerable<AttackableUnit> attackable)
         {
             if (attackable == null)
             {
-                attackable = ObjectManager.Get<AttackableUnit>().Where(this.IsValidAttackableObject);
+                attackable = ObjectManager.Get<AttackableUnit>().Where(IsValidAttackableObject);
             }
 
-            var availableMinionTargets = attackable
-                .OfType<Obj_AI_Base>().Where(x => this.CanKillMinion(x));
+            var availableMinionTargets = attackable.OfType<Obj_AI_Base>().Where(x => CanKillMinion(x));
 
-            var bestMinionTarget = availableMinionTargets
-                .OrderByDescending(x => x.MaxHealth)
-                .ThenBy(x => x.Health)
-                .FirstOrDefault();
+            var bestMinionTarget = availableMinionTargets.OrderByDescending(x => x.MaxHealth).ThenBy(x => x.Health).FirstOrDefault();
 
             return bestMinionTarget;
         }
@@ -711,11 +710,11 @@ namespace Adept_AIO.Champions.Riven.Orbwalker
         //In mixed mode we prioritize killable units, then structures, then heros. If none are found, then we don't attack anything.
         private AttackableUnit GetMixedModeTarget()
         {
-            var attackable = ObjectManager.Get<AttackableUnit>().Where(this.IsValidAttackableObject);
+            var attackable = ObjectManager.Get<AttackableUnit>().Where(IsValidAttackableObject);
 
             var attackableUnits = attackable as AttackableUnit[] ?? attackable.ToArray();
 
-            var killable = this.GetLastHitTarget(attackableUnits);
+            var killable = GetLastHitTarget(attackableUnits);
 
             //Killable unit 
             if (killable != null)
@@ -731,14 +730,14 @@ namespace Adept_AIO.Champions.Riven.Orbwalker
             }
 
             //Heros
-            var hero = this.GetHeroTarget();
+            var hero = GetHeroTarget();
             return hero;
         }
 
         private int GetPredictedHealth(Obj_AI_Base minion, int time = 0)
         {
-            var rtime = time == 0 ? this.TimeForAutoToReachTarget(minion) : time;
-            return (int)Math.Ceiling(HealthPrediction.Instance.GetPrediction(minion, rtime));
+            var rtime = time == 0 ? TimeForAutoToReachTarget(minion) : time;
+            return (int) Math.Ceiling(HealthPrediction.Instance.GetPrediction(minion, rtime));
         }
 
         //Gets a structure target based on the following order (Nexus, Turret, Inihibitor)
@@ -760,8 +759,7 @@ namespace Adept_AIO.Champions.Riven.Orbwalker
             }
 
             //Inhib
-            var inhib = attackableUnits.Where(x => x.Type == GameObjectType.obj_BarracksDampener)
-                                       .MinBy(x => x.Distance(Player));
+            var inhib = attackableUnits.Where(x => x.Type == GameObjectType.obj_BarracksDampener).MinBy(x => x.Distance(Player));
             if (inhib != null && inhib.IsValidAutoRange())
             {
                 return inhib;
@@ -773,46 +771,48 @@ namespace Adept_AIO.Champions.Riven.Orbwalker
         private void Initialize()
         {
             var advanced = new Menu("Advanced", "Advanced")
-                               {
-                                   new MenuSlider("AttackDelayReduction", "Attack Delay Reduction", 90, 0, 180, true)
-                               };
+            {
+                new MenuSlider("AttackDelayReduction", "Attack Delay Reduction", 90, 0, 180, true)
+            };
 
             var attacking = new Menu("Attacking", "Attacking")
-                                { new MenuSlider("ExtraWindup", "Additional Windup", Game.Ping / 2, 0, 200, true) };
+            {
+                new MenuSlider("ExtraWindup", "Additional Windup", Game.Ping / 2, 0, 200, true)
+            };
 
             var farming = new Menu("Farming", "Farming")
-                              {
-                                  new MenuBool("AttackPlants", "Attack Plants", false, true),
-                                  new MenuBool("AttackWards", "Attack Wards", true, true),
-                                  new MenuBool("AttackBarrels", "Attack Barrels", true, true)
-                              };
+            {
+                new MenuBool("AttackPlants", "Attack Plants", false, true),
+                new MenuBool("AttackWards", "Attack Wards", true, true),
+                new MenuBool("AttackBarrels", "Attack Barrels", true, true)
+            };
 
             var misc = new Menu("Misc", "Misc")
-                           {
-                               new MenuSlider("HoldPositionRadius", "Hold Radius", 50, 0, 400, true),
-                               Player.ChampionName.Equals("Kalista") ? new MenuBool("KalistaFly", "Kalista Fly", true, true) : null
-                           };
+            {
+                new MenuSlider("HoldPositionRadius", "Hold Radius", 50, 0, 400, true),
+                Player.ChampionName.Equals("Kalista") ? new MenuBool("KalistaFly", "Kalista Fly", true, true) : null
+            };
 
             var drawings = new Menu("Drawings", "Drawings")
-                               {
-                                   new MenuBool("DrawAttackRange", "Draw Attack Range"),
-                                   new MenuBool("DrawHoldRadius", "Draw Hold Radius"),
-                                   new MenuBool("DrawKillableMinion", "Indicate Killable")
-                               };
+            {
+                new MenuBool("DrawAttackRange", "Draw Attack Range"),
+                new MenuBool("DrawHoldRadius", "Draw Hold Radius"),
+                new MenuBool("DrawKillableMinion", "Indicate Killable")
+            };
 
-            this.Config.Add(advanced);
-            this.Config.Add(attacking);
-            this.Config.Add(farming);
-            this.Config.Add(misc);
-            this.Config.Add(drawings);
+            Config.Add(advanced);
+            Config.Add(attacking);
+            Config.Add(farming);
+            Config.Add(misc);
+            Config.Add(drawings);
 
 
-            this.AddMode(this.Combo = new OrbwalkerMode("Combo", GlobalKeys.ComboKey, this.GetHeroTarget, null));
-            this.AddMode(this.LaneClear = new OrbwalkerMode("Laneclear", GlobalKeys.WaveClearKey, this.GetLaneClearTarget, null));
-            this.AddMode(this.LastHit = new OrbwalkerMode("Lasthit", GlobalKeys.LastHitKey, this.GetLastHitTarget, null));
-            this.AddMode(this.Mixed = new OrbwalkerMode("Mixed", GlobalKeys.MixedKey, this.GetMixedModeTarget, null));
+            AddMode(this.Combo = new OrbwalkerMode("Combo", GlobalKeys.ComboKey, GetHeroTarget, null));
+            AddMode(this.LaneClear = new OrbwalkerMode("Laneclear", GlobalKeys.WaveClearKey, GetLaneClearTarget, null));
+            AddMode(this.LastHit = new OrbwalkerMode("Lasthit", GlobalKeys.LastHitKey, GetLastHitTarget, null));
+            AddMode(this.Mixed = new OrbwalkerMode("Mixed", GlobalKeys.MixedKey, GetMixedModeTarget, null));
 
-            this.CheckSpecialHeroes();
+            CheckSpecialHeroes();
         }
 
         private void CheckSpecialHeroes()
@@ -841,14 +841,14 @@ namespace Adept_AIO.Champions.Riven.Orbwalker
             }
 
             var name = e.SpellData.Name.ToLower();
-            if (this._specialAttacks.Any(x => name.StartsWith(x)))
+            if (_specialAttacks.Any(x => name.StartsWith(x)))
             {
-                this.ObjAiHeroOnProcessAutoAttack(sender, e);
+                ObjAiHeroOnProcessAutoAttack(sender, e);
             }
 
-            if (this.IsReset(name))
+            if (IsReset(name))
             {
-                this.ResetAutoAttackTimer();
+                ResetAutoAttackTimer();
             }
         }
 
@@ -866,7 +866,7 @@ namespace Adept_AIO.Champions.Riven.Orbwalker
 
             if (this.DrawKillable)
             {
-                foreach (var m in ObjectManager.Get<Obj_AI_Minion>().Where(x => this.IsValidAttackableObject(x) && x.Health <= this.GetRealAutoAttackDamage(x)))
+                foreach (var m in ObjectManager.Get<Obj_AI_Minion>().Where(x => IsValidAttackableObject(x) && x.Health <= GetRealAutoAttackDamage(x)))
                 {
                     Render.Circle(m.Position, 50, 30, Color.LimeGreen);
                 }
@@ -886,16 +886,16 @@ namespace Adept_AIO.Champions.Riven.Orbwalker
 
         private bool ShouldWaitMinion(Obj_AI_Base minion)
         {
-            var time = this.TimeForAutoToReachTarget(minion) + (int)Player.AttackDelay * 1000 + 100;
-            var pred = HealthPrediction.Instance.GetLaneClearHealthPrediction(minion, (int)(time * 2f));
-            return pred < this.GetRealAutoAttackDamage(minion);
+            var time = TimeForAutoToReachTarget(minion) + (int) Player.AttackDelay * 1000 + 100;
+            var pred = HealthPrediction.Instance.GetLaneClearHealthPrediction(minion, (int) (time * 2f));
+            return pred < GetRealAutoAttackDamage(minion);
         }
 
         private void SpellBook_OnStopCast(Obj_AI_Base sender, SpellBookStopCastEventArgs e)
         {
             if (sender.IsMe && (e.DestroyMissile || e.ForceStop)) // || e.StopAnimation
             {
-                this.ResetAutoAttackTimer();
+                ResetAutoAttackTimer();
             }
         }
 
@@ -911,8 +911,7 @@ namespace Adept_AIO.Champions.Riven.Orbwalker
                 case "Azir":
                 case "Velkoz":
                 case "Thresh":
-                case "Rakan":
-                    return float.MaxValue;
+                case "Rakan": return float.MaxValue;
 
                 case "Kayle":
                     if (hero.HasBuff("JudicatorRighteousFury"))
@@ -936,8 +935,8 @@ namespace Adept_AIO.Champions.Riven.Orbwalker
         private int TimeForAutoToReachTarget(AttackableUnit minion)
         {
             var dist = Player.ServerPosition.Distance(minion.ServerPosition);
-            var attackTravelTime = dist / (int)GetBasicAttackMissileSpeed(ObjectManager.GetLocalPlayer()) * 1000f;
-            var totalTime = (int)(this.AnimationTime + attackTravelTime + Game.Ping / 2f);
+            var attackTravelTime = dist / (int) GetBasicAttackMissileSpeed(ObjectManager.GetLocalPlayer()) * 1000f;
+            var totalTime = (int) (this.AnimationTime + attackTravelTime + Game.Ping / 2f);
             return totalTime;
         }
 

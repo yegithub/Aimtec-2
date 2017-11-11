@@ -10,7 +10,11 @@
         public bool CanBeRemoved = false;
         public bool Centered;
         public string ChampionName;
-        public CollisionableObjects[] CollisionObjects = { };
+
+        public CollisionableObjects[] CollisionObjects =
+        {
+        };
+
         public int DangerValue;
         public int Delay;
         public bool DisabledByDefault = false;
@@ -20,14 +24,26 @@
         public bool DontCross = false;
         public bool DontRemove = false;
         public int ExtraDuration;
-        public string[] ExtraMissileNames = { };
+
+        public string[] ExtraMissileNames =
+        {
+        };
+
         public int ExtraRange = -1;
-        public string[] ExtraSpellNames = { };
+
+        public string[] ExtraSpellNames =
+        {
+        };
+
         public bool FixedRange;
         public bool FollowCaster = false;
         public bool ForceRemove = false;
         public string FromObject = "";
-        public string[] FromObjects = { };
+
+        public string[] FromObjects =
+        {
+        };
+
         public int Id = -1;
         public bool Invert;
         public bool IsDangerous = false;
@@ -48,19 +64,22 @@
         public string ToggleParticleName = "";
         public SkillshotType Type;
 
-        public SpellData() { }
+        public SpellData()
+        {
+        }
 
-        public SpellData(string championName,
-                         string spellName,
-                         SpellSlot slot,
-                         SkillshotType type,
-                         int delay,
-                         int range,
-                         int radius,
-                         int missileSpeed,
-                         bool addHitbox,
-                         bool fixedRange,
-                         int defaultDangerValue)
+        public SpellData(
+            string championName,
+            string spellName,
+            SpellSlot slot,
+            SkillshotType type,
+            int delay,
+            int range,
+            int radius,
+            int missileSpeed,
+            bool addHitbox,
+            bool fixedRange,
+            int defaultDangerValue)
         {
             ChampionName = championName;
             SpellName = spellName;

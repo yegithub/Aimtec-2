@@ -4,10 +4,8 @@
     using System.Linq;
     using Aimtec;
     using Aimtec.SDK.Damage;
-    using Aimtec.SDK.Damage.JSON;
     using Aimtec.SDK.Extensions;
     using Aimtec.SDK.Orbwalking;
-    using Aimtec.SDK.Prediction.Health;
     using Core;
     using SDK.Generic;
     using SDK.Unit_Extensions;
@@ -67,35 +65,39 @@
                     return;
                 }
 
-                if (SpellManager.E.Ready && MenuConfig.Misc["E"].Enabled && GameObjects.EnemyHeroes.Any(x => x.HasBuff(KalistaBuffName)))
+                if (SpellManager.E.Ready)
                 {
-                    var m = GameObjects.EnemyMinions.FirstOrDefault(x => x.HasBuff(KalistaBuffName) && x.Health < Dmg.EDmg(x) && x.IsValidTarget(SpellManager.E.Range));
-                    if (m != null)
+                    if (MenuConfig.Misc["E"].Enabled && GameObjects.EnemyHeroes.Any(x => x.HasBuff(KalistaBuffName)))
+                    {
+                        var m = GameObjects.EnemyMinions.FirstOrDefault(x => x.HasBuff(KalistaBuffName) && x.Health < Dmg.EDmg(x) && x.IsValidTarget(SpellManager.E.Range));
+                        if (m != null)
+                        {
+                            SpellManager.E.Cast();
+                        }
+                    }
+
+                    if (GameObjects.Jungle.Count(x => x.HasBuff(KalistaBuffName) && Dmg.EDmg(x) > x.Health &&
+                                                      x.GetJungleType() != GameObjects.JungleType.Small) >= 1 && MenuConfig.JungleClear["E"].Enabled &&
+                        !(Global.Player.Level == 1 && Global.Player.CountAllyHeroesInRange(2000) >= 1))
+                    {
+                        SpellManager.E.Cast();
+                    }
+
+                    if (Global.HealthPrediction.GetPrediction(Global.Player, Game.Ping + 1000) <= 0)
                     {
                         SpellManager.E.Cast();
                     }
                 }
 
-                if (SpellManager.E.Ready &&
-                    GameObjects.Jungle.Count(x => x.HasBuff(KalistaBuffName) && Dmg.EDmg(x) > x.Health &&
-                                                  x.GetJungleType() != GameObjects.JungleType.Small) >= 1 && MenuConfig.JungleClear["E"].Enabled)
-                {
-                    if (Global.Player.Level == 1 && Global.Player.CountAllyHeroesInRange(2000) >= 1)
-                    {
-                        return;
-                    }
-                    SpellManager.E.Cast();
-                }
-
                 if (SpellManager.R.Ready && MenuConfig.Misc["R"].Enabled)
                 {
                     var soulBound = GameObjects.AllyHeroes.FirstOrDefault(x => x.NetworkId != Global.Player.NetworkId && x.HasBuff("kalistacoopstrikeally"));
-                  
+
                     if (soulBound == null)
                     {
                         return;
                     }
-            
+
                     if (soulBound.HealthPercent() <= MenuConfig.Misc["R"].Value ||
                         soulBound.ChampionName == "Blitzcrank" && GameObjects.EnemyHeroes.Any(x => x.HasBuff("rocketgrab2")))
                     {
@@ -137,7 +139,7 @@
                     break;
                 case OrbwalkingMode.Laneclear:
                 case OrbwalkingMode.Lasthit:
-                   
+
                     var minion = GameObjects.EnemyMinions.OrderBy(x => x.Health).FirstOrDefault(x => x.IsValidAutoRange());
                     if (minion == null || args.Target.NetworkId == minion.NetworkId || Global.Player.IsUnderAllyTurret() || Global.Player.IsUnderEnemyTurret() || args.Target.IsInhibitor)
                     {

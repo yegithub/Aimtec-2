@@ -43,7 +43,7 @@
         public static bool CanStun(Obj_AI_Base target)
         {
             var rect = Rect(target.ServerPosition);
-           
+
             return WallExtension.IsWall(rect.Start.To3D(), rect.End.To3D());
         }
 
@@ -59,7 +59,7 @@
             {
                 return;
             }
-        
+
             E.CastOnUnit(target);
         }
 

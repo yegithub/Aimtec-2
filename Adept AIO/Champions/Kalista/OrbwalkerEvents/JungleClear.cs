@@ -9,7 +9,8 @@
     {
         public static void OnUpdate()
         {
-            var mob = GameObjects.Jungle.OrderBy(x => x.Distance(Global.Player)).FirstOrDefault(x => x.GetJungleType() != GameObjects.JungleType.Small && x.IsValidTarget(SpellManager.Q.Range));
+            var mob = GameObjects.Jungle.OrderBy(x => x.Distance(Global.Player)).
+                FirstOrDefault(x => x.GetJungleType() != GameObjects.JungleType.Small && x.IsValidTarget(SpellManager.Q.Range));
 
             if (mob != null && MenuConfig.JungleClear["Q"].Enabled && SpellManager.Q.Ready)
             {

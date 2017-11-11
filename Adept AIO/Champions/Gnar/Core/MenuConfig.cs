@@ -28,7 +28,12 @@
                 new MenuBool("Flash", "Flash")
             };
 
-            Harass = new Menu("GnarHarass", "Harass") {new MenuBool("Q", "Use Q"), new MenuBool("W", "Use W"), new MenuBool("E", "Use E", false)};
+            Harass = new Menu("GnarHarass", "Harass")
+            {
+                new MenuBool("Q", "Use Q"),
+                new MenuBool("W", "Use W"),
+                new MenuBool("E", "Use E", false)
+            };
 
             LaneClear = new Menu("GnarLaneClear", "LaneClear")
             {
@@ -37,11 +42,22 @@
                 new MenuSliderBool("W", "Use W if hit count => ", true, 3, 1, 6)
             };
 
-            JungleClear = new Menu("GnarJngl", " JungleClear") {new MenuBool("Q", "Use Q"), new MenuBool("W", "Use W")};
+            JungleClear = new Menu("GnarJngl", " JungleClear")
+            {
+                new MenuBool("Q", "Use Q"),
+                new MenuBool("W", "Use W")
+            };
 
-            Killsteal = new Menu("GnarKS", "Killsteal") {new MenuBool("Q", "Use Q"), new MenuBool("W", "Use W")};
+            Killsteal = new Menu("GnarKS", "Killsteal")
+            {
+                new MenuBool("Q", "Use Q"),
+                new MenuBool("W", "Use W")
+            };
 
-            Misc = new Menu("GnarMisc", "Miscellaneous") {new MenuSliderBool("Auto", "Auto R if hit count => ", true, 3, 1, 5)};
+            Misc = new Menu("GnarMisc", "Miscellaneous")
+            {
+                new MenuSliderBool("Auto", "Auto R if hit count => ", true, 3, 1, 5)
+            };
 
             Drawings = new Menu("YDrawManager", "Drawings")
             {
@@ -51,7 +67,17 @@
                 new MenuBool("Debug", "Debug")
             };
 
-            foreach (var menu in new List<Menu> {Combo, Harass, LaneClear, JungleClear, Killsteal, Misc, Drawings, MenuShortcut.Credits})
+            foreach (var menu in new List<Menu>
+            {
+                Combo,
+                Harass,
+                LaneClear,
+                JungleClear,
+                Killsteal,
+                Misc,
+                Drawings,
+                MenuShortcut.Credits
+            })
             {
                 mainMenu.Add(menu);
             }

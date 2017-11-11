@@ -34,11 +34,13 @@
             {
                 SpellConfig.Q.Cast(target);
             }
-            else if (SpellConfig.W.Ready && target.Health < Global.Player.GetSpellDamage(target, SpellSlot.W) && target.IsValidTarget(SpellConfig.W.Range) && MenuConfig.Killsteal["W"].Enabled)
+            else if (SpellConfig.W.Ready && target.Health < Global.Player.GetSpellDamage(target, SpellSlot.W) && target.IsValidTarget(SpellConfig.W.Range) &&
+                     MenuConfig.Killsteal["W"].Enabled)
             {
                 SpellConfig.W.Cast(target);
             }
-            else if (SpellConfig.E.Ready && target.Health < Global.Player.GetSpellDamage(target, SpellSlot.E) && target.IsValidTarget(SpellConfig.E.Range) && MenuConfig.Killsteal["E"].Enabled)
+            else if (SpellConfig.E.Ready && target.Health < Global.Player.GetSpellDamage(target, SpellSlot.E) && target.IsValidTarget(SpellConfig.E.Range) &&
+                     MenuConfig.Killsteal["E"].Enabled)
             {
                 SpellConfig.E.Cast(target);
             }
@@ -46,7 +48,8 @@
                      MenuConfig.Killsteal["Range"].Enabled && target.Distance(Global.Player) > Global.Player.AttackRange + 275)
             {
                 var rectangle = new Geometry.Rectangle(Global.Player.ServerPosition.To2D(), target.ServerPosition.To2D(), SpellConfig.R.Width);
-                if (GameObjects.EnemyHeroes.Count(x => rectangle.IsInside(x.ServerPosition.To2D())) >= 2 && target.Health > Global.Player.GetSpellDamage(target, SpellSlot.R, DamageStage.AreaOfEffect))
+                if (GameObjects.EnemyHeroes.Count(x => rectangle.IsInside(x.ServerPosition.To2D())) >= 2 &&
+                    target.Health > Global.Player.GetSpellDamage(target, SpellSlot.R, DamageStage.AreaOfEffect))
                 {
                     return;
                 }

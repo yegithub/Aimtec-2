@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace Adept_AIO.Champions.Riven.Orbwalker
+﻿namespace Adept_AIO.Champions.Riven.Orbwalker
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using Aimtec;
     using Aimtec.SDK.Menu;
     using Aimtec.SDK.Menu.Config;
@@ -14,7 +13,7 @@ namespace Adept_AIO.Champions.Riven.Orbwalker
     {
         public AOrbwalker()
         {
-            this.Config = new Menu("Orbwalker", "Orbwalker");
+            Config = new Menu("Orbwalker", "Orbwalker");
         }
 
         #region Fields
@@ -22,107 +21,69 @@ namespace Adept_AIO.Champions.Riven.Orbwalker
         /// <summary>
         ///     Names of champions which cannot cancel their auto attacks
         /// </summary>
-        public string[] NoCancelChamps = { "Kalista" };
+        public string[] NoCancelChamps =
+        {
+            "Kalista"
+        };
 
         /// <summary>
         ///     The Orbwalker Menu
         /// </summary>
         protected Menu Config;
 
-        private string[] attackResets =
-            {
-                "dariusnoxiantacticsonh",
-                "garenq",
-                "gravesmove",
-                "jaxempowertwo",
-                "jaycehypercharge",
-                "leonashieldofdaybreak",
-                "luciane",
-                "monkeykingdoubleattack",
-                "mordekaisermaceofspades",
-                "nasusq",
-                "nautiluspiercinggaze",
-                "netherblade",
-                "gangplankqwrapper",
-                "powerfist",
-                "renektonpreexecute",
-                "rengarq",
-                "shyvanadoubleattack",
-                "sivirw",
-                "takedown",
-                "talonnoxiandiplomacy",
-                "trundletrollsmash",
-                "vaynetumble",
-                "vie",
-                "volibearq",
-                "xenzhaocombotarget",
-                "yorickspectral",
-                "reksaiq",
-                "itemtitanichydracleave",
-                "masochism",
-                "illaoiw",
-                "elisespiderw",
-                "fiorae",
-                "meditate",
-                "sejuaninorthernwinds",
-                "camilleq",
-                "camilleq2",
-                "vorpalspikes"
-            };
-
         /// <summary>
         ///     Spells that are attacks even if they don't have the "attack" word in their name.
         /// </summary>
         public static string[] SpecialAttacks =
-            {
-                "caitlynheadshotmissile",
-                "kennenmegaproc",
-                "masteryidoublestrike",
-                "quinnwenhanced",
-                "renektonexecute",
-                "renektonsuperexecute",
-                "trundleq",
-                "viktorqbuff",
-                "xenzhaothrust",
-                "xenzhaothrust2",
-                "xenzhaothrust3"
-            };
+        {
+            "caitlynheadshotmissile",
+            "kennenmegaproc",
+            "masteryidoublestrike",
+            "quinnwenhanced",
+            "renektonexecute",
+            "renektonsuperexecute",
+            "trundleq",
+            "viktorqbuff",
+            "xenzhaothrust",
+            "xenzhaothrust2",
+            "xenzhaothrust3"
+        };
 
         /// <summary>
         ///     Spells that are not attacks even if they have the "attack" word in their name.
         /// </summary>
         public static string[] NoAttacks =
-            {
-                "asheqattacknoonhit",
-                "volleyattackwithsound",
-                "volleyattack",
-                "annietibbersbasicattack",
-                "annietibbersbasicattack2",
-                "azirsoldierbasicattack",
-                "azirsundiscbasicattack",
-                "elisespiderlingbasicattack",
-                "gravesbasicattackspread",
-                "gravesautoattackrecoil",
-                "heimertyellowbasicattack",
-                "heimertyellowbasicattack2",
-                "heimertbluebasicattack",
-                "jarvanivcataclysmattack",
-                "kindredwolfbasicattack",
-                "malzaharvoidlingbasicattack",
-                "malzaharvoidlingbasicattack2",
-                "malzaharvoidlingbasicattack3",
-                "shyvanadoubleattack",
-                "shyvanadoubleattackdragon",
-                "sivirwattackbounce",
-                "monkeykingdoubleattack",
-                "yorickspectralghoulbasicattack",
-                "yorickdecayedghoulbasicattack",
-                "yorickravenousghoulbasicattack",
-                "zyragraspingplantattack",
-                "zyragraspingplantattack2",
-                "zyragraspingplantattackfire",
-                "zyragraspingplantattack2fire"
-            };
+        {
+            "asheqattacknoonhit",
+            "volleyattackwithsound",
+            "volleyattack",
+            "annietibbersbasicattack",
+            "annietibbersbasicattack2",
+            "azirsoldierbasicattack",
+            "azirsundiscbasicattack",
+            "elisespiderlingbasicattack",
+            "gravesbasicattackspread",
+            "gravesautoattackrecoil",
+            "heimertyellowbasicattack",
+            "heimertyellowbasicattack2",
+            "heimertbluebasicattack",
+            "jarvanivcataclysmattack",
+            "kindredwolfbasicattack",
+            "malzaharvoidlingbasicattack",
+            "malzaharvoidlingbasicattack2",
+            "malzaharvoidlingbasicattack3",
+            "shyvanadoubleattack",
+            "shyvanadoubleattackdragon",
+            "sivirwattackbounce",
+            "monkeykingdoubleattack",
+            "yorickspectralghoulbasicattack",
+            "yorickdecayedghoulbasicattack",
+            "yorickravenousghoulbasicattack",
+            "zyragraspingplantattack",
+            "zyragraspingplantattack2",
+            "zyragraspingplantattackfire",
+            "zyragraspingplantattack2fire"
+        };
 
         #endregion
 
@@ -148,11 +109,46 @@ namespace Adept_AIO.Champions.Riven.Orbwalker
         public virtual bool AttackingEnabled { get; set; } = true;
 
         /// <inheritdoc cref="IOrbwalker" />
-        public string[] AttackResets
+        public string[] AttackResets { get; set; } =
         {
-            get => this.attackResets;
-            set => this.attackResets = value;
-        }
+            "dariusnoxiantacticsonh",
+            "garenq",
+            "gravesmove",
+            "jaxempowertwo",
+            "jaycehypercharge",
+            "leonashieldofdaybreak",
+            "luciane",
+            "monkeykingdoubleattack",
+            "mordekaisermaceofspades",
+            "nasusq",
+            "nautiluspiercinggaze",
+            "netherblade",
+            "gangplankqwrapper",
+            "powerfist",
+            "renektonpreexecute",
+            "rengarq",
+            "shyvanadoubleattack",
+            "sivirw",
+            "takedown",
+            "talonnoxiandiplomacy",
+            "trundletrollsmash",
+            "vaynetumble",
+            "vie",
+            "volibearq",
+            "xenzhaocombotarget",
+            "yorickspectral",
+            "reksaiq",
+            "itemtitanichydracleave",
+            "masochism",
+            "illaoiw",
+            "elisespiderw",
+            "fiorae",
+            "meditate",
+            "sejuaninorthernwinds",
+            "camilleq",
+            "camilleq2",
+            "vorpalspikes"
+        };
 
         /// <inheritdoc cref="IOrbwalker" />
         public OrbwalkerMode Combo { get; set; }
@@ -174,7 +170,7 @@ namespace Adept_AIO.Champions.Riven.Orbwalker
         {
             get
             {
-                var activeMode = this.GetActiveMode();
+                var activeMode = GetActiveMode();
 
                 if (activeMode == null)
                 {
@@ -210,7 +206,7 @@ namespace Adept_AIO.Champions.Riven.Orbwalker
         {
             get
             {
-                var active = this.GetActiveMode();
+                var active = GetActiveMode();
                 if (active == null)
                 {
                     return "None";
@@ -265,7 +261,7 @@ namespace Adept_AIO.Champions.Riven.Orbwalker
 
             if (!mode.UsingGlobalKey)
             {
-                this.Config.Add(mode.MenuItem);
+                Config.Add(mode.MenuItem);
             }
         }
 
@@ -288,7 +284,7 @@ namespace Adept_AIO.Champions.Riven.Orbwalker
         public OrbwalkerMode DuplicateMode(OrbwalkerMode mode, string newName, KeyCode key)
         {
             var newMode = new OrbwalkerMode(newName, key, mode.GetTargetImplementation, mode.ModeBehaviour);
-            this.AddMode(newMode);
+            AddMode(newMode);
             return newMode;
         }
 
@@ -296,7 +292,7 @@ namespace Adept_AIO.Champions.Riven.Orbwalker
         public OrbwalkerMode DuplicateMode(OrbwalkerMode mode, string newName, GlobalKey key)
         {
             var newMode = new OrbwalkerMode(newName, key, mode.GetTargetImplementation, mode.ModeBehaviour);
-            this.AddMode(newMode);
+            AddMode(newMode);
             return newMode;
         }
 
@@ -317,7 +313,7 @@ namespace Adept_AIO.Champions.Riven.Orbwalker
         /// <inheritdoc cref="IOrbwalker" />
         public virtual AttackableUnit FindTarget()
         {
-            return this.FindTarget(this.GetActiveMode());
+            return FindTarget(GetActiveMode());
         }
 
         /// <inheritdoc cref="IOrbwalker" />
@@ -344,9 +340,12 @@ namespace Adept_AIO.Champions.Riven.Orbwalker
         /// </summary>
         protected NonKillableMinionEventArgs FireNonKillableMinion(AttackableUnit target)
         {
-            var args = new NonKillableMinionEventArgs { Target = target };
+            var args = new NonKillableMinionEventArgs
+            {
+                Target = target
+            };
 
-            this.OnNonKillableMinion?.Invoke(Player, args);
+            OnNonKillableMinion?.Invoke(Player, args);
 
             return args;
         }
@@ -356,9 +355,12 @@ namespace Adept_AIO.Champions.Riven.Orbwalker
         /// </summary>
         protected PostAttackEventArgs FirePostAttack(AttackableUnit target)
         {
-            var args = new PostAttackEventArgs { Target = target };
+            var args = new PostAttackEventArgs
+            {
+                Target = target
+            };
 
-            this.PostAttack?.Invoke(Player, args);
+            PostAttack?.Invoke(Player, args);
 
             return args;
         }
@@ -368,9 +370,12 @@ namespace Adept_AIO.Champions.Riven.Orbwalker
         /// </summary>
         protected PreAttackEventArgs FirePreAttack(AttackableUnit target)
         {
-            var args = new PreAttackEventArgs { Target = target };
+            var args = new PreAttackEventArgs
+            {
+                Target = target
+            };
 
-            this.PreAttack?.Invoke(Player, args);
+            PreAttack?.Invoke(Player, args);
 
             return args;
         }
@@ -380,9 +385,12 @@ namespace Adept_AIO.Champions.Riven.Orbwalker
         /// </summary>
         protected PreMoveEventArgs FirePreMove(Vector3 position)
         {
-            var args = new PreMoveEventArgs { MovePosition = position };
+            var args = new PreMoveEventArgs
+            {
+                MovePosition = position
+            };
 
-            this.PreMove?.Invoke(Player, args);
+            PreMove?.Invoke(Player, args);
 
             return args;
         }

@@ -18,7 +18,8 @@
 
             foreach (var target in GameObjects.EnemyHeroes.Where(x => x.IsValidTarget(1500)))
             {
-                if (MenuConfig.Automatic["Q"].Enabled && SpellManager.Q.Ready && SpellManager.Barrel != null && SpellManager.Barrel.Center.Distance(target) > SpellManager.Barrel.Radius - 150 &&
+                if (MenuConfig.Automatic["Q"].Enabled && SpellManager.Q.Ready && SpellManager.Barrel != null &&
+                    SpellManager.Barrel.Center.Distance(target) > SpellManager.Barrel.Radius - 150 &&
                     SpellManager.Barrel.Center.Distance(target) <= SpellManager.Barrel.Radius)
                 {
                     SpellManager.Q.Cast();

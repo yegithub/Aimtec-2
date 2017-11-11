@@ -27,7 +27,8 @@
                 foreach (var soldier in SoldierManager.Soldiers)
                 {
                     var enemy = GameObjects.Enemy.FirstOrDefault(x => x.Distance(soldier) <= 300 + x.BoundingRadius && !x.IsDead && x.MaxHealth > 10 &&
-                                                                      soldier.Distance(Global.Player) <= SpellConfig.Q.Range + 65 && soldier.Distance(Global.Player) > Global.Player.AttackRange);
+                                                                      soldier.Distance(Global.Player) <= SpellConfig.Q.Range + 65 &&
+                                                                      soldier.Distance(Global.Player) > Global.Player.AttackRange);
                     if (enemy == null || Environment.TickCount - _lastAa <= 1000)
                     {
                         continue;

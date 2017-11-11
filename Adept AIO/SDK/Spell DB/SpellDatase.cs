@@ -35,7 +35,12 @@
                 AddHitbox = true,
                 DangerValue = 3,
                 IsDangerous = false,
-                CollisionObjects = new[] {CollisionableObjects.Heroes, CollisionableObjects.Minions, CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.Heroes,
+                    CollisionableObjects.Minions,
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             Spells.Add(new SpellData
@@ -52,7 +57,12 @@
                 AddHitbox = true,
                 DangerValue = 3,
                 IsDangerous = false,
-                CollisionObjects = new[] {CollisionableObjects.Heroes, CollisionableObjects.Minions, CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.Heroes,
+                    CollisionableObjects.Minions,
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             #endregion
@@ -117,7 +127,10 @@
                 MissileSpellName = "AhriOrbMissile",
                 CanBeRemoved = true,
                 ForceRemove = true,
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             Spells.Add(new SpellData
@@ -141,7 +154,10 @@
                 CanBeRemoved = true,
                 ForceRemove = true,
                 MissileSpellName = "AhriOrbReturn",
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             Spells.Add(new SpellData
@@ -160,7 +176,12 @@
                 IsDangerous = true,
                 MissileSpellName = "AhriSeduceMissile",
                 CanBeRemoved = true,
-                CollisionObjects = new[] {CollisionableObjects.Heroes, CollisionableObjects.Minions, CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.Heroes,
+                    CollisionableObjects.Minions,
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             #endregion Ahri
@@ -224,7 +245,12 @@
                 IsDangerous = true,
                 MissileSpellName = "SadMummyBandageToss",
                 CanBeRemoved = true,
-                CollisionObjects = new[] {CollisionableObjects.Heroes, CollisionableObjects.Minions, CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.Heroes,
+                    CollisionableObjects.Minions,
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             Spells.Add(new SpellData
@@ -264,7 +290,10 @@
                 IsDangerous = true,
                 MissileSpellName = "FlashFrostSpell",
                 CanBeRemoved = true,
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             #endregion Anivia
@@ -327,7 +356,12 @@
                 MultipleNumber = 9,
                 MultipleAngle = 4.62f * (float) Math.PI / 180,
                 CanBeRemoved = true,
-                CollisionObjects = new[] {CollisionableObjects.Heroes, CollisionableObjects.YasuoWall, CollisionableObjects.Minions}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.Heroes,
+                    CollisionableObjects.YasuoWall,
+                    CollisionableObjects.Minions
+                }
             });
 
             Spells.Add(new SpellData
@@ -346,7 +380,11 @@
                 IsDangerous = true,
                 MissileSpellName = "EnchantedCrystalArrow",
                 CanBeRemoved = true,
-                CollisionObjects = new[] {CollisionableObjects.Heroes, CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.Heroes,
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             #endregion Ashe
@@ -369,7 +407,10 @@
                 IsDangerous = false,
                 MissileSpellName = "AurelionSolQMissile",
                 CanBeRemoved = true,
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             Spells.Add(new SpellData
@@ -388,7 +429,10 @@
                 IsDangerous = true,
                 MissileSpellName = "AurelionSolRBeamMissile",
                 CanBeRemoved = true,
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             #endregion Aurelion Sol
@@ -399,7 +443,10 @@
             {
                 ChampionName = "Azir",
                 SpellName = "AzirQSoldier",
-                ExtraSpellNames = new[] {"AzirQWrapper"},
+                ExtraSpellNames = new[]
+                {
+                    "AzirQWrapper"
+                },
                 Slot = SpellSlot.Q,
                 Type = SkillshotType.Line,
                 Delay = 250,
@@ -411,7 +458,10 @@
                 DangerValue = 3,
                 IsDangerous = false,
                 MissileSpellName = "",
-                FromObjects = new[] {"AzirSoldier"}
+                FromObjects = new[]
+                {
+                    "AzirSoldier"
+                }
             });
 
             Spells.Add(new SpellData
@@ -451,7 +501,11 @@
                 IsDangerous = true,
                 MissileSpellName = "BardQMissile",
                 CanBeRemoved = true,
-                CollisionObjects = new[] {CollisionableObjects.Heroes, CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.Heroes,
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             Spells.Add(new SpellData
@@ -491,7 +545,12 @@
                 IsDangerous = true,
                 MissileSpellName = "RocketGrabMissile",
                 CanBeRemoved = true,
-                CollisionObjects = new[] {CollisionableObjects.Heroes, CollisionableObjects.Minions, CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.Heroes,
+                    CollisionableObjects.Minions,
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             Spells.Add(new SpellData
@@ -531,7 +590,12 @@
                 IsDangerous = true,
                 MissileSpellName = "BrandQMissile",
                 CanBeRemoved = true,
-                CollisionObjects = new[] {CollisionableObjects.Heroes, CollisionableObjects.Minions, CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.Heroes,
+                    CollisionableObjects.Minions,
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             Spells.Add(new SpellData
@@ -571,7 +635,12 @@
                 IsDangerous = true,
                 MissileSpellName = "BraumQMissile",
                 CanBeRemoved = true,
-                CollisionObjects = new[] {CollisionableObjects.Heroes, CollisionableObjects.Minions, CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.Heroes,
+                    CollisionableObjects.Minions,
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             Spells.Add(new SpellData
@@ -589,7 +658,10 @@
                 DangerValue = 4,
                 IsDangerous = true,
                 MissileSpellName = "braumrmissile",
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             #endregion Braum
@@ -611,7 +683,10 @@
                 DangerValue = 2,
                 IsDangerous = false,
                 MissileSpellName = "CaitlynPiltoverPeacemaker",
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             Spells.Add(new SpellData
@@ -630,7 +705,12 @@
                 IsDangerous = false,
                 MissileSpellName = "CaitlynEntrapmentMissile",
                 CanBeRemoved = true,
-                CollisionObjects = new[] {CollisionableObjects.Heroes, CollisionableObjects.Minions, CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.Heroes,
+                    CollisionableObjects.Minions,
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             #endregion Caitlyn
@@ -711,7 +791,10 @@
                 ExtraDuration = 5000,
                 DontCross = true,
                 CanBeRemoved = false,
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             Spells.Add(new SpellData
@@ -787,7 +870,10 @@
                 DangerValue = 2,
                 IsDangerous = false,
                 MissileSpellName = "PhosphorusBombMissile",
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             Spells.Add(new SpellData
@@ -806,7 +892,12 @@
                 IsDangerous = false,
                 MissileSpellName = "MissileBarrageMissile",
                 CanBeRemoved = true,
-                CollisionObjects = new[] {CollisionableObjects.Heroes, CollisionableObjects.Minions, CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.Heroes,
+                    CollisionableObjects.Minions,
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             Spells.Add(new SpellData
@@ -825,7 +916,12 @@
                 IsDangerous = false,
                 MissileSpellName = "MissileBarrageMissile2",
                 CanBeRemoved = true,
-                CollisionObjects = new[] {CollisionableObjects.Heroes, CollisionableObjects.Minions, CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.Heroes,
+                    CollisionableObjects.Minions,
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             #endregion Corki
@@ -887,7 +983,10 @@
                 DangerValue = 3,
                 IsDangerous = true,
                 MissileSpellName = "DianaArcArc",
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             Spells.Add(new SpellData
@@ -907,7 +1006,10 @@
                 IsDangerous = true,
                 MissileSpellName = "DianaArcArc",
                 TakeClosestPath = true,
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             #endregion Diana
@@ -930,7 +1032,12 @@
                 IsDangerous = false,
                 MissileSpellName = "InfectedCleaverMissile",
                 CanBeRemoved = true,
-                CollisionObjects = new[] {CollisionableObjects.Heroes, CollisionableObjects.Minions, CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.Heroes,
+                    CollisionableObjects.Minions,
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             #endregion DrMundo
@@ -953,7 +1060,10 @@
                 IsDangerous = true,
                 MissileSpellName = "DravenDoubleShotMissile",
                 CanBeRemoved = true,
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             Spells.Add(new SpellData
@@ -971,7 +1081,10 @@
                 DangerValue = 5,
                 IsDangerous = true,
                 MissileSpellName = "DravenR",
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             #endregion Draven
@@ -994,7 +1107,10 @@
                 IsDangerous = true,
                 MissileSpellName = "ekkoqmis",
                 CanBeRemoved = true,
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             Spells.Add(new SpellData
@@ -1014,7 +1130,10 @@
                 MissileSpellName = "EkkoQReturn",
                 CanBeRemoved = true,
                 MissileFollowsUnit = true,
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             Spells.Add(new SpellData
@@ -1052,7 +1171,10 @@
                 IsDangerous = false,
                 MissileSpellName = "EkkoR",
                 CanBeRemoved = true,
-                FromObjects = new[] {"Ekko_Base_R_TrailEnd.troy"}
+                FromObjects = new[]
+                {
+                    "Ekko_Base_R_TrailEnd.troy"
+                }
             });
 
             #endregion Ekko
@@ -1075,7 +1197,12 @@
                 IsDangerous = true,
                 MissileSpellName = "EliseHumanE",
                 CanBeRemoved = true,
-                CollisionObjects = new[] {CollisionableObjects.Heroes, CollisionableObjects.Minions, CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.Heroes,
+                    CollisionableObjects.Minions,
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             #endregion Elise
@@ -1118,9 +1245,17 @@
                 DangerValue = 2,
                 IsDangerous = false,
                 MissileSpellName = "EzrealMysticShotMissile",
-                ExtraMissileNames = new[] {"EzrealMysticShotPulseMissile"},
+                ExtraMissileNames = new[]
+                {
+                    "EzrealMysticShotPulseMissile"
+                },
                 CanBeRemoved = true,
-                CollisionObjects = new[] {CollisionableObjects.Heroes, CollisionableObjects.Minions, CollisionableObjects.YasuoWall},
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.Heroes,
+                    CollisionableObjects.Minions,
+                    CollisionableObjects.YasuoWall
+                },
                 Id = 229
             });
 
@@ -1139,7 +1274,10 @@
                 DangerValue = 2,
                 IsDangerous = false,
                 MissileSpellName = "EzrealEssenceFluxMissile",
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             Spells.Add(new SpellData
@@ -1157,7 +1295,10 @@
                 DangerValue = 3,
                 IsDangerous = true,
                 MissileSpellName = "EzrealTrueshotBarrage",
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall},
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                },
                 Id = 245
             });
 
@@ -1180,7 +1321,10 @@
                 DangerValue = 2,
                 IsDangerous = false,
                 MissileSpellName = "FioraWMissile",
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             #endregion Fiora
@@ -1238,7 +1382,11 @@
                 MissileSpellName = "FizzRMissile",
                 ToggleParticleName = "Fizz_.+_R_OrbitFish",
                 ExtraDuration = 2300,
-                CollisionObjects = new[] {CollisionableObjects.Heroes, CollisionableObjects.YasuoWall},
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.Heroes,
+                    CollisionableObjects.YasuoWall
+                },
                 CanBeRemoved = true
             });
 
@@ -1261,7 +1409,10 @@
                 DangerValue = 2,
                 IsDangerous = false,
                 MissileSpellName = "GalioQMissile",
-                ExtraMissileNames = new[] {"GalioArcArc"},
+                ExtraMissileNames = new[]
+                {
+                    "GalioArcArc"
+                },
                 ExtraDuration = 1500,
                 DontCross = true
             });
@@ -1302,7 +1453,10 @@
                 DangerValue = 2,
                 IsDangerous = false,
                 MissileSpellName = "GalioE",
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             Spells.Add(new SpellData
@@ -1346,7 +1500,10 @@
                 CanBeRemoved = true,
                 ForceRemove = true,
                 MissileSpellName = "gnarqmissile",
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             Spells.Add(new SpellData
@@ -1371,7 +1528,10 @@
                 MissileSpellName = "GnarQMissileReturn",
                 DisableFowDetection = false,
                 DisabledByDefault = true,
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             Spells.Add(new SpellData
@@ -1389,7 +1549,10 @@
                 DangerValue = 2,
                 IsDangerous = false,
                 MissileSpellName = "GnarBigQMissile",
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             Spells.Add(new SpellData
@@ -1501,7 +1664,11 @@
                 MissileSpellName = "GragasE",
                 CanBeRemoved = true,
                 ExtraRange = 300,
-                CollisionObjects = new[] {CollisionableObjects.Heroes, CollisionableObjects.Minions}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.Heroes,
+                    CollisionableObjects.Minions
+                }
             });
 
             Spells.Add(new SpellData
@@ -1519,7 +1686,10 @@
                 DangerValue = 5,
                 IsDangerous = true,
                 MissileSpellName = "GragasRBoom",
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             #endregion Gragas
@@ -1541,8 +1711,14 @@
                 DangerValue = 3,
                 IsDangerous = false,
                 MissileSpellName = "GravesQLineMis",
-                ExtraMissileNames = new[] {"GravesQReturn"},
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                ExtraMissileNames = new[]
+                {
+                    "GravesQReturn"
+                },
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             Spells.Add(new SpellData
@@ -1595,7 +1771,12 @@
                 DangerValue = 5,
                 IsDangerous = true,
                 MissileSpellName = "GravesChargeShotShot",
-                CollisionObjects = new[] {CollisionableObjects.Heroes, CollisionableObjects.Minions, CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.Heroes,
+                    CollisionableObjects.Minions,
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             #endregion Graves
@@ -1617,7 +1798,13 @@
                 DangerValue = 4,
                 IsDangerous = true,
                 MissileSpellName = "hecarimultmissile",
-                ExtraMissileNames = new[] {"hecarimultmissileskn4r1", "hecarimultmissileskn4r2", "hecarimultmissileskn411", "hecarimultmissileskn412"}
+                ExtraMissileNames = new[]
+                {
+                    "hecarimultmissileskn4r1",
+                    "hecarimultmissileskn4r2",
+                    "hecarimultmissileskn411",
+                    "hecarimultmissileskn412"
+                }
             });
 
             #endregion
@@ -1639,7 +1826,10 @@
                 DangerValue = 2,
                 IsDangerous = false,
                 MissileSpellName = "",
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             Spells.Add(new SpellData
@@ -1657,7 +1847,10 @@
                 DangerValue = 3,
                 IsDangerous = true,
                 MissileSpellName = "",
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             Spells.Add(new SpellData
@@ -1675,7 +1868,10 @@
                 DangerValue = 2,
                 IsDangerous = false,
                 MissileSpellName = "HeimerdingerWAttack2",
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             Spells.Add(new SpellData
@@ -1693,8 +1889,16 @@
                 DangerValue = 2,
                 IsDangerous = false,
                 MissileSpellName = "heimerdingerespell",
-                ExtraMissileNames = new[] {"heimerdingerespell_ult", "heimerdingerespell_ult2", "heimerdingerespell_ult3"},
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                ExtraMissileNames = new[]
+                {
+                    "heimerdingerespell_ult",
+                    "heimerdingerespell_ult2",
+                    "heimerdingerespell_ult3"
+                },
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             #endregion
@@ -1716,7 +1920,10 @@
                 DangerValue = 3,
                 IsDangerous = true,
                 MissileSpellName = "illaoiemis",
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             Spells.Add(new SpellData
@@ -1734,7 +1941,10 @@
                 DangerValue = 3,
                 IsDangerous = true,
                 MissileSpellName = "illaoiemis",
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             Spells.Add(new SpellData
@@ -1773,7 +1983,10 @@
                 DangerValue = 2,
                 IsDangerous = false,
                 MissileSpellName = "IreliaTranscendentBlades",
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             #endregion Irelia
@@ -1795,7 +2008,12 @@
                 DangerValue = 3,
                 IsDangerous = true,
                 MissileSpellName = "IvernQ",
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall, CollisionableObjects.Minions, CollisionableObjects.Heroes}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall,
+                    CollisionableObjects.Minions,
+                    CollisionableObjects.Heroes
+                }
             });
 
             #endregion Ivern
@@ -1817,7 +2035,10 @@
                 DangerValue = 2,
                 IsDangerous = false,
                 MissileSpellName = "HowlingGaleSpell",
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             #endregion Janna
@@ -1893,7 +2114,12 @@
                 IsDangerous = false,
                 MissileSpellName = "JayceShockBlastMis",
                 CanBeRemoved = true,
-                CollisionObjects = new[] {CollisionableObjects.Heroes, CollisionableObjects.Minions, CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.Heroes,
+                    CollisionableObjects.Minions,
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             Spells.Add(new SpellData
@@ -1912,7 +2138,12 @@
                 IsDangerous = false,
                 MissileSpellName = "JayceShockBlastWallMis",
                 CanBeRemoved = true,
-                CollisionObjects = new[] {CollisionableObjects.Heroes, CollisionableObjects.Minions, CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.Heroes,
+                    CollisionableObjects.Minions,
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             #endregion Jayce
@@ -1935,7 +2166,11 @@
                 IsDangerous = true,
                 MissileSpellName = "JhinWMissile",
                 CanBeRemoved = true,
-                CollisionObjects = new[] {CollisionableObjects.Heroes, CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.Heroes,
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             Spells.Add(new SpellData
@@ -1953,9 +2188,16 @@
                 DangerValue = 3,
                 IsDangerous = true,
                 MissileSpellName = "JhinRShotMis",
-                ExtraMissileNames = new[] {"JhinRShotMis4"},
+                ExtraMissileNames = new[]
+                {
+                    "JhinRShotMis4"
+                },
                 CanBeRemoved = true,
-                CollisionObjects = new[] {CollisionableObjects.Heroes, CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.Heroes,
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             #endregion Jhin
@@ -1978,7 +2220,12 @@
                 IsDangerous = true,
                 MissileSpellName = "JinxWMissile",
                 CanBeRemoved = true,
-                CollisionObjects = new[] {CollisionableObjects.Heroes, CollisionableObjects.Minions, CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.Heroes,
+                    CollisionableObjects.Minions,
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             Spells.Add(new SpellData
@@ -2016,7 +2263,11 @@
                 IsDangerous = true,
                 MissileSpellName = "JinxR",
                 CanBeRemoved = true,
-                CollisionObjects = new[] {CollisionableObjects.Heroes, CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.Heroes,
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             #endregion Jinx
@@ -2038,9 +2289,17 @@
                 DangerValue = 2,
                 IsDangerous = false,
                 MissileSpellName = "kalistamysticshotmis",
-                ExtraMissileNames = new[] {"kalistamysticshotmistrue"},
+                ExtraMissileNames = new[]
+                {
+                    "kalistamysticshotmistrue"
+                },
                 CanBeRemoved = true,
-                CollisionObjects = new[] {CollisionableObjects.Heroes, CollisionableObjects.Minions, CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.Heroes,
+                    CollisionableObjects.Minions,
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             #endregion Kalista
@@ -2063,7 +2322,12 @@
                 IsDangerous = false,
                 MissileSpellName = "KarmaQMissile",
                 CanBeRemoved = true,
-                CollisionObjects = new[] {CollisionableObjects.Heroes, CollisionableObjects.Minions, CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.Heroes,
+                    CollisionableObjects.Minions,
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             Spells.Add(new SpellData
@@ -2082,7 +2346,12 @@
                 IsDangerous = false,
                 MissileSpellName = "KarmaQMissileMantra",
                 CanBeRemoved = true,
-                CollisionObjects = new[] {CollisionableObjects.Heroes, CollisionableObjects.Minions, CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.Heroes,
+                    CollisionableObjects.Minions,
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             #endregion Karma
@@ -2093,7 +2362,14 @@
             {
                 ChampionName = "Karthus",
                 SpellName = "KarthusLayWasteA2",
-                ExtraSpellNames = new[] {"karthuslaywastea3", "karthuslaywastea1", "karthuslaywastedeada1", "karthuslaywastedeada2", "karthuslaywastedeada3"},
+                ExtraSpellNames = new[]
+                {
+                    "karthuslaywastea3",
+                    "karthuslaywastea1",
+                    "karthuslaywastedeada1",
+                    "karthuslaywastedeada2",
+                    "karthuslaywastedeada3"
+                },
                 Slot = SpellSlot.Q,
                 Type = SkillshotType.Circle,
                 Delay = 625,
@@ -2165,7 +2441,12 @@
                 IsDangerous = false,
                 MissileSpellName = "KennenShurikenHurlMissile1",
                 CanBeRemoved = true,
-                CollisionObjects = new[] {CollisionableObjects.Heroes, CollisionableObjects.Minions, CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.Heroes,
+                    CollisionableObjects.Minions,
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             #endregion Kennen
@@ -2176,7 +2457,10 @@
             {
                 ChampionName = "Khazix",
                 SpellName = "KhazixW",
-                ExtraSpellNames = new[] {"khazixwlong"},
+                ExtraSpellNames = new[]
+                {
+                    "khazixwlong"
+                },
                 Slot = SpellSlot.W,
                 Type = SkillshotType.Line,
                 Delay = 250,
@@ -2191,7 +2475,12 @@
                 CanBeRemoved = true,
                 MultipleNumber = 3,
                 MultipleAngle = 22f * (float) Math.PI / 180,
-                CollisionObjects = new[] {CollisionableObjects.Heroes, CollisionableObjects.Minions, CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.Heroes,
+                    CollisionableObjects.Minions,
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             Spells.Add(new SpellData
@@ -2231,7 +2520,11 @@
                 IsDangerous = true,
                 MissileSpellName = "KledQMissile",
                 CanBeRemoved = true,
-                CollisionObjects = new[] {CollisionableObjects.Heroes, CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.Heroes,
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             Spells.Add(new SpellData
@@ -2250,7 +2543,11 @@
                 IsDangerous = true,
                 MissileSpellName = "",
                 CanBeRemoved = true,
-                CollisionObjects = new[] {CollisionableObjects.Heroes, CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.Heroes,
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             Spells.Add(new SpellData
@@ -2271,7 +2568,10 @@
                 MultipleNumber = 5,
                 MultipleAngle = 5 * (float) Math.PI / 180,
                 CanBeRemoved = true,
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             #endregion Kled
@@ -2294,7 +2594,12 @@
                 IsDangerous = false,
                 MissileSpellName = "KogMawQ",
                 CanBeRemoved = true,
-                CollisionObjects = new[] {CollisionableObjects.Heroes, CollisionableObjects.Minions, CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.Heroes,
+                    CollisionableObjects.Minions,
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             Spells.Add(new SpellData
@@ -2312,7 +2617,10 @@
                 DangerValue = 2,
                 IsDangerous = false,
                 MissileSpellName = "KogMawVoidOozeMissile",
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             Spells.Add(new SpellData
@@ -2386,7 +2694,12 @@
                 IsDangerous = true,
                 MissileSpellName = "LeblancE",
                 CanBeRemoved = true,
-                CollisionObjects = new[] {CollisionableObjects.Heroes, CollisionableObjects.Minions, CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.Heroes,
+                    CollisionableObjects.Minions,
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             Spells.Add(new SpellData
@@ -2405,7 +2718,12 @@
                 IsDangerous = true,
                 MissileSpellName = "LeblancEM",
                 CanBeRemoved = true,
-                CollisionObjects = new[] {CollisionableObjects.Heroes, CollisionableObjects.Minions, CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.Heroes,
+                    CollisionableObjects.Minions,
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             #endregion Leblanc
@@ -2428,7 +2746,12 @@
                 IsDangerous = true,
                 MissileSpellName = "BlindMonkQOne",
                 CanBeRemoved = true,
-                CollisionObjects = new[] {CollisionableObjects.Heroes, CollisionableObjects.Minions, CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.Heroes,
+                    CollisionableObjects.Minions,
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             #endregion LeeSin
@@ -2451,7 +2774,10 @@
                 IsDangerous = true,
                 TakeClosestPath = true,
                 MissileSpellName = "LeonaZenithBladeMissile",
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             Spells.Add(new SpellData
@@ -2490,7 +2816,10 @@
                 DangerValue = 2,
                 IsDangerous = false,
                 MissileSpellName = "LissandraQMissile",
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             Spells.Add(new SpellData
@@ -2508,7 +2837,10 @@
                 DangerValue = 2,
                 IsDangerous = false,
                 MissileSpellName = "lissandraqshards",
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             Spells.Add(new SpellData
@@ -2542,7 +2874,10 @@
                 DangerValue = 2,
                 IsDangerous = false,
                 MissileSpellName = "LissandraEMissile",
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             #endregion Lulu
@@ -2598,7 +2933,10 @@
                 DangerValue = 2,
                 IsDangerous = false,
                 MissileSpellName = "lucianrmissileoffhand",
-                ExtraMissileNames = new[] {"lucianrmissile"},
+                ExtraMissileNames = new[]
+                {
+                    "lucianrmissile"
+                },
                 DontCheckForDuplicates = true,
                 DisabledByDefault = true
             });
@@ -2622,7 +2960,10 @@
                 DangerValue = 2,
                 IsDangerous = false,
                 MissileSpellName = "LuluQMissile",
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             Spells.Add(new SpellData
@@ -2640,7 +2981,10 @@
                 DangerValue = 2,
                 IsDangerous = false,
                 MissileSpellName = "LuluQMissileTwo",
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             #endregion Lulu
@@ -2684,7 +3028,10 @@
                 DontCross = true,
                 CanBeRemoved = true,
                 DisabledByDefault = true,
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             Spells.Add(new SpellData
@@ -2789,7 +3136,12 @@
                 IsDangerous = true,
                 MissileSpellName = "DarkBindingMissile",
                 CanBeRemoved = true,
-                CollisionObjects = new[] {CollisionableObjects.Heroes, CollisionableObjects.Minions, CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.Heroes,
+                    CollisionableObjects.Minions,
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             #endregion Morgana
@@ -2828,7 +3180,10 @@
                 DangerValue = 2,
                 IsDangerous = false,
                 MissileSpellName = "NamiRMissile",
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             #endregion Nami
@@ -2851,7 +3206,12 @@
                 IsDangerous = true,
                 MissileSpellName = "NautilusAnchorDragMissile",
                 CanBeRemoved = true,
-                CollisionObjects = new[] {CollisionableObjects.Heroes, CollisionableObjects.Minions, CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.Heroes,
+                    CollisionableObjects.Minions,
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             #endregion Nautilus
@@ -2871,7 +3231,10 @@
                 DangerValue = 2,
                 IsDangerous = false,
                 MissileSpellName = "NocturneDuskbringer",
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             #endregion Nocturne
@@ -2894,7 +3257,12 @@
                 IsDangerous = true,
                 MissileSpellName = "JavelinToss",
                 CanBeRemoved = true,
-                CollisionObjects = new[] {CollisionableObjects.Heroes, CollisionableObjects.Minions, CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.Heroes,
+                    CollisionableObjects.Minions,
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             #endregion Nidalee
@@ -2918,7 +3286,10 @@
                 IsDangerous = false,
                 MissileSpellName = "olafaxethrow",
                 CanBeRemoved = true,
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             #endregion Olaf
@@ -2940,7 +3311,10 @@
                 DangerValue = 2,
                 IsDangerous = false,
                 MissileSpellName = "orianaizuna",
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             Spells.Add(new SpellData
@@ -2958,7 +3332,10 @@
                 DangerValue = 2,
                 IsDangerous = false,
                 MissileSpellName = "",
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             Spells.Add(new SpellData
@@ -2995,7 +3372,10 @@
                 DangerValue = 2,
                 IsDangerous = false,
                 MissileSpellName = "orianaredact",
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             Spells.Add(new SpellData
@@ -3037,7 +3417,12 @@
                 IsDangerous = false,
                 MissileSpellName = "QuinnQ",
                 CanBeRemoved = true,
-                CollisionObjects = new[] {CollisionableObjects.Heroes, CollisionableObjects.Minions, CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.Heroes,
+                    CollisionableObjects.Minions,
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             #endregion Quinn
@@ -3098,7 +3483,12 @@
                 IsDangerous = true,
                 MissileSpellName = "PoppyRMissile",
                 CanBeRemoved = true,
-                CollisionObjects = new[] {CollisionableObjects.Heroes, CollisionableObjects.Minions, CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.Heroes,
+                    CollisionableObjects.Minions,
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             #endregion Poppy
@@ -3121,7 +3511,12 @@
                 IsDangerous = true,
                 MissileSpellName = "RengarEFinal",
                 CanBeRemoved = true,
-                CollisionObjects = new[] {CollisionableObjects.Heroes, CollisionableObjects.Minions, CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.Heroes,
+                    CollisionableObjects.Minions,
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             #endregion Rengar
@@ -3143,7 +3538,12 @@
                 DangerValue = 3,
                 IsDangerous = false,
                 MissileSpellName = "RekSaiQBurrowedMis",
-                CollisionObjects = new[] {CollisionableObjects.Heroes, CollisionableObjects.Minions, CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.Heroes,
+                    CollisionableObjects.Minions,
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             #endregion RekSai
@@ -3167,7 +3567,10 @@
                 MultipleNumber = 3,
                 MultipleAngle = 15 * (float) Math.PI / 180,
                 MissileSpellName = "RivenLightsaberMissile",
-                ExtraMissileNames = new[] {"RivenLightsaberMissileSide"}
+                ExtraMissileNames = new[]
+                {
+                    "RivenLightsaberMissileSide"
+                }
             });
 
             #endregion Riven
@@ -3190,7 +3593,12 @@
                 IsDangerous = false,
                 MissileSpellName = "RumbleGrenade",
                 CanBeRemoved = true,
-                CollisionObjects = new[] {CollisionableObjects.Heroes, CollisionableObjects.Minions, CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.Heroes,
+                    CollisionableObjects.Minions,
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             Spells.Add(new SpellData
@@ -3232,7 +3640,12 @@
                 IsDangerous = false,
                 MissileSpellName = "RyzeQ",
                 CanBeRemoved = true,
-                CollisionObjects = new[] {CollisionableObjects.Heroes, CollisionableObjects.Minions, CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.Heroes,
+                    CollisionableObjects.Minions,
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             #endregion
@@ -3255,7 +3668,12 @@
                 IsDangerous = true,
                 MissileSpellName = "",
                 ExtraRange = 200,
-                CollisionObjects = new[] {CollisionableObjects.Heroes, CollisionableObjects.Minions, CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.Heroes,
+                    CollisionableObjects.Minions,
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             Spells.Add(new SpellData
@@ -3274,7 +3692,11 @@
                 IsDangerous = true,
                 MissileSpellName = "sejuaniglacialprison",
                 CanBeRemoved = true,
-                CollisionObjects = new[] {CollisionableObjects.Heroes, CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.Heroes,
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             #endregion Sejuani
@@ -3296,7 +3718,11 @@
                 DangerValue = 3,
                 IsDangerous = true,
                 MissileSpellName = "SionEMissile",
-                CollisionObjects = new[] {CollisionableObjects.Heroes, CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.Heroes,
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             Spells.Add(new SpellData
@@ -3313,7 +3739,10 @@
                 AddHitbox = true,
                 DangerValue = 3,
                 IsDangerous = true,
-                CollisionObjects = new[] {CollisionableObjects.Heroes}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.Heroes
+                }
             });
 
             #endregion Sion
@@ -3335,7 +3764,10 @@
                 DangerValue = 2,
                 IsDangerous = false,
                 MissileSpellName = "",
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             #endregion Soraka
@@ -3358,7 +3790,12 @@
                 IsDangerous = true,
                 MissileSpellName = "ShenE",
                 ExtraRange = 200,
-                CollisionObjects = new[] {CollisionableObjects.Heroes, CollisionableObjects.Minions, CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.Heroes,
+                    CollisionableObjects.Minions,
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             #endregion Shen
@@ -3380,7 +3817,12 @@
                 DangerValue = 2,
                 IsDangerous = false,
                 MissileSpellName = "ShyvanaFireballMissile",
-                CollisionObjects = new[] {CollisionableObjects.Heroes, CollisionableObjects.Minions, CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.Heroes,
+                    CollisionableObjects.Minions,
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             Spells.Add(new SpellData
@@ -3442,7 +3884,10 @@
                 MissileSpellName = "SivirQMissileReturn",
                 DisableFowDetection = false,
                 MissileFollowsUnit = true,
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             Spells.Add(new SpellData
@@ -3460,7 +3905,10 @@
                 DangerValue = 2,
                 IsDangerous = false,
                 MissileSpellName = "SivirQMissile",
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             #endregion Sivir
@@ -3482,7 +3930,10 @@
                 DangerValue = 2,
                 IsDangerous = false,
                 MissileSpellName = "SkarnerFractureMissile",
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             #endregion Skarner
@@ -3504,7 +3955,10 @@
                 DangerValue = 5,
                 IsDangerous = true,
                 MissileSpellName = "SonaR",
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             #endregion Sona
@@ -3621,7 +4075,12 @@
                 DangerValue = 2,
                 IsDangerous = false,
                 MissileSpellName = "TaliyahQMis",
-                CollisionObjects = new[] {CollisionableObjects.Heroes, CollisionableObjects.Minions, CollisionableObjects.YasuoWall},
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.Heroes,
+                    CollisionableObjects.Minions,
+                    CollisionableObjects.YasuoWall
+                },
                 DisabledByDefault = true
             });
 
@@ -3704,7 +4163,12 @@
                 IsDangerous = true,
                 MissileSpellName = "tahmkenchqmissile",
                 CanBeRemoved = true,
-                CollisionObjects = new[] {CollisionableObjects.Heroes, CollisionableObjects.Minions, CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.Heroes,
+                    CollisionableObjects.Minions,
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             #endregion Tahm Kench
@@ -3748,7 +4212,12 @@
                 IsDangerous = true,
                 MissileSpellName = "ThreshQMissile",
                 CanBeRemoved = true,
-                CollisionObjects = new[] {CollisionableObjects.Heroes, CollisionableObjects.Minions, CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.Heroes,
+                    CollisionableObjects.Minions,
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             Spells.Add(new SpellData
@@ -3832,7 +4301,10 @@
                 MissileSpellName = "SealFateMissile",
                 MultipleNumber = 3,
                 MultipleAngle = 28 * (float) Math.PI / 180,
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             #endregion TwistedFate
@@ -3855,14 +4327,20 @@
                 IsDangerous = false,
                 MissileSpellName = "TwitchVenomCaskMissile",
                 ExtraDuration = 3000,
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             Spells.Add(new SpellData
             {
                 ChampionName = "Twitch",
                 SpellName = "TwitchSprayandPrayAttack",
-                ExtraSpellNames = new[] {"TwitchFullAutomatic"},
+                ExtraSpellNames = new[]
+                {
+                    "TwitchFullAutomatic"
+                },
                 Slot = SpellSlot.R,
                 Type = SkillshotType.Line,
                 Delay = 250,
@@ -3874,7 +4352,10 @@
                 DangerValue = 2,
                 IsDangerous = false,
                 MissileSpellName = "",
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             #endregion Twitch
@@ -3902,7 +4383,10 @@
                 DangerValue = 2,
                 IsDangerous = false,
                 MissileSpellName = "VarusQMissile",
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             Spells.Add(new SpellData
@@ -3938,7 +4422,11 @@
                 IsDangerous = true,
                 MissileSpellName = "VarusRMissile",
                 CanBeRemoved = true,
-                CollisionObjects = new[] {CollisionableObjects.Heroes, CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.Heroes,
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             #endregion Varus
@@ -3960,7 +4448,10 @@
                 DangerValue = 2,
                 IsDangerous = false,
                 MissileSpellName = "VeigarBalefulStrikeMis",
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             Spells.Add(new SpellData
@@ -4021,7 +4512,12 @@
                 IsDangerous = false,
                 MissileSpellName = "VelkozQMissile",
                 CanBeRemoved = true,
-                CollisionObjects = new[] {CollisionableObjects.Heroes, CollisionableObjects.Minions, CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.Heroes,
+                    CollisionableObjects.Minions,
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             Spells.Add(new SpellData
@@ -4040,7 +4536,12 @@
                 IsDangerous = false,
                 MissileSpellName = "VelkozQMissileSplit",
                 CanBeRemoved = true,
-                CollisionObjects = new[] {CollisionableObjects.Heroes, CollisionableObjects.Minions, CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.Heroes,
+                    CollisionableObjects.Minions,
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             Spells.Add(new SpellData
@@ -4133,9 +4634,15 @@
                 DangerValue = 3,
                 IsDangerous = true,
                 MissileSpellName = "ViktorDeathRayMissile",
-                ExtraMissileNames = new[] {"viktoreaugmissile"},
+                ExtraMissileNames = new[]
+                {
+                    "viktoreaugmissile"
+                },
                 ExtraDuration = 1000,
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             #endregion Viktor
@@ -4157,7 +4664,12 @@
                 DangerValue = 1,
                 IsDangerous = false,
                 MissileSpellName = "RakanQMis",
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall, CollisionableObjects.Heroes, CollisionableObjects.Minions}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall,
+                    CollisionableObjects.Heroes,
+                    CollisionableObjects.Minions
+                }
             });
 
             Spells.Add(new SpellData
@@ -4234,7 +4746,11 @@
                 DangerValue = 1,
                 IsDangerous = false,
                 MissileSpellName = "OrnnQ",
-                CollisionObjects = new[] {CollisionableObjects.Heroes, CollisionableObjects.Minions}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.Heroes,
+                    CollisionableObjects.Minions
+                }
             });
 
             Spells.Add(new SpellData
@@ -4252,7 +4768,10 @@
                 DangerValue = 2,
                 IsDangerous = false,
                 MissileSpellName = "OrnnE",
-                CollisionObjects = new[] {CollisionableObjects.Minions}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.Minions
+                }
             });
 
             #endregion
@@ -4274,7 +4793,10 @@
                 DangerValue = 2,
                 IsDangerous = false,
                 MissileSpellName = "XayahQMissile",
-                ExtraMissileNames = new[] {"XayahQMissile2"},
+                ExtraMissileNames = new[]
+                {
+                    "XayahQMissile2"
+                },
                 ToggleParticleName = "Xayah_.+_Passive_Dagger_(Enemy|Ally)"
             });
 
@@ -4371,7 +4893,12 @@
                 IsDangerous = true,
                 MissileSpellName = "XerathMageSpearMissile",
                 CanBeRemoved = true,
-                CollisionObjects = new[] {CollisionableObjects.Heroes, CollisionableObjects.Minions, CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.Heroes,
+                    CollisionableObjects.Minions,
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             Spells.Add(new SpellData
@@ -4410,7 +4937,11 @@
                 DangerValue = 5,
                 IsDangerous = true,
                 MissileSpellName = "WarwickRMissile",
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall, CollisionableObjects.Heroes}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall,
+                    CollisionableObjects.Heroes
+                }
             });
 
             #endregion Warwick
@@ -4450,7 +4981,10 @@
                 DangerValue = 3,
                 IsDangerous = true,
                 MissileSpellName = "yasuoq3w",
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             Spells.Add(new SpellData
@@ -4529,8 +5063,15 @@
                 IsDangerous = false,
                 MissileSpellName = "ZedQMissile",
                 //FromObjects = new[] { "Zed_Clone_idle.troy", "Zed_Clone_Idle.troy" },
-                FromObjects = new[] {"Zed_Base_W_tar.troy", "Zed_Base_W_cloneswap_buf.troy"},
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                FromObjects = new[]
+                {
+                    "Zed_Base_W_tar.troy",
+                    "Zed_Base_W_cloneswap_buf.troy"
+                },
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             #endregion Zed
@@ -4571,7 +5112,10 @@
                 DangerValue = 2,
                 IsDangerous = false,
                 MissileSpellName = "ZiggsQSpell2",
-                ExtraMissileNames = new[] {"ZiggsQSpell2"},
+                ExtraMissileNames = new[]
+                {
+                    "ZiggsQSpell2"
+                },
                 CanBeRemoved = false,
                 DisableFowDetection = true
             });
@@ -4591,7 +5135,10 @@
                 DangerValue = 2,
                 IsDangerous = false,
                 MissileSpellName = "ZiggsQSpell3",
-                ExtraMissileNames = new[] {"ZiggsQSpell3"},
+                ExtraMissileNames = new[]
+                {
+                    "ZiggsQSpell3"
+                },
                 CanBeRemoved = false,
                 DisableFowDetection = true
             });
@@ -4612,7 +5159,10 @@
                 IsDangerous = false,
                 MissileSpellName = "ZiggsW",
                 DisableFowDetection = true,
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             Spells.Add(new SpellData
@@ -4671,7 +5221,10 @@
                 DangerValue = 2,
                 IsDangerous = false,
                 MissileSpellName = "ZileanQMissile",
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             #endregion Zilean
@@ -4710,7 +5263,10 @@
                 DangerValue = 3,
                 IsDangerous = true,
                 MissileSpellName = "ZyraE",
-                CollisionObjects = new[] {CollisionableObjects.YasuoWall}
+                CollisionObjects = new[]
+                {
+                    CollisionableObjects.YasuoWall
+                }
             });
 
             Spells.Add(new SpellData

@@ -63,9 +63,17 @@
                 new MenuSlider("EHit", "Min Hit By E", 4, 1, 7)
             };
 
-            Jungle = new Menu("AzirJungle", "Jungle") {new MenuSliderBool("Q", "Use Q (min. Mana%)", true, 40), new MenuSliderBool("W", "Use W (min. Mana%)", true, 25)};
+            Jungle = new Menu("AzirJungle", "Jungle")
+            {
+                new MenuSliderBool("Q", "Use Q (min. Mana%)", true, 40),
+                new MenuSliderBool("W", "Use W (min. Mana%)", true, 25)
+            };
 
-            Killsteal = new Menu("AzirKillsteal", "Killsteal") {new MenuBool("Q", "Use Q"), new MenuBool("E", "Use E")};
+            Killsteal = new Menu("AzirKillsteal", "Killsteal")
+            {
+                new MenuBool("Q", "Use Q"),
+                new MenuBool("E", "Use E")
+            };
 
             Drawings = new Menu("AzirDrawManager", "DrawManager")
             {
@@ -76,7 +84,17 @@
                 new MenuBool("R", "Draw R Range")
             };
 
-            foreach (var menu in new List<Menu> {InsecMenu, Combo, Harass, Lane, Jungle, Killsteal, Drawings, MenuShortcut.Credits})
+            foreach (var menu in new List<Menu>
+            {
+                InsecMenu,
+                Combo,
+                Harass,
+                Lane,
+                Jungle,
+                Killsteal,
+                Drawings,
+                MenuShortcut.Credits
+            })
             {
                 mainMenu.Add(menu);
             }

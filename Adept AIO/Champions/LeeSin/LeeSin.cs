@@ -70,8 +70,22 @@
             var insecF = new MenuBool("Flash", "Enable Flash");
             var insecObject = new MenuBool("Object", "Use Q On Minions").SetToolTip("Uses Q to gapclose to every minion");
             var insecQLast = new MenuBool("Last", "Use Q After Insec").SetToolTip("Only possible if no minions near target");
-            var insecPosition = new MenuList("Position", "Insec Position", new[] {"Ally Turret", "Ally Hero"}, 0);
-            var insecKick = new MenuList("Kick", "Kick Type: ", new[] {"Flash R", "R Flash"}, 1);
+            var insecPosition = new MenuList("Position",
+                "Insec Position",
+                new[]
+                {
+                    "Ally Turret",
+                    "Ally Hero"
+                },
+                0);
+            var insecKick = new MenuList("Kick",
+                "Kick Type: ",
+                new[]
+                {
+                    "Flash R",
+                    "R Flash"
+                },
+                1);
 
             insecMenu.Add(insecBk);
             insecMenu.Add(insecF);
@@ -108,7 +122,15 @@
             var comboWard = new MenuBool("Ward", "Use Wards");
             var comboE = new MenuBool("E", "Use E");
 
-            foreach (var b in new List<MenuBool> {comboTurret, comboQ, comboQ2, comboW, comboWard, comboE})
+            foreach (var b in new List<MenuBool>
+            {
+                comboTurret,
+                comboQ,
+                comboQ2,
+                comboW,
+                comboWard,
+                comboE
+            })
             {
                 comboMenu.Add(b);
             }
@@ -131,7 +153,14 @@
             var harassMenu = new Menu("Harass", "Harass");
             var harassQ = new MenuBool("Q", "Use Q");
             var harassQ2 = new MenuBool("Q2", "Use Q2");
-            var harassMode = new MenuList("Mode", "W Mode: ", new[] {"Away", "W Self"}, 0);
+            var harassMode = new MenuList("Mode",
+                "W Mode: ",
+                new[]
+                {
+                    "Away",
+                    "W Self"
+                },
+                0);
             var harassE = new MenuBool("E", "Use E");
             var harassE2 = new MenuBool("E2", "Use E2");
 
@@ -162,7 +191,15 @@
             var jungleW = new MenuBool("W", "W");
             var jungleE = new MenuBool("E", "E");
 
-            foreach (var b in new List<MenuBool> {jungleSteal, jungleSmite, jungleBlue, jungleQ, jungleW, jungleE})
+            foreach (var b in new List<MenuBool>
+            {
+                jungleSteal,
+                jungleSmite,
+                jungleBlue,
+                jungleQ,
+                jungleW,
+                jungleE
+            })
             {
                 jungleMenu.Add(b);
             }
@@ -188,7 +225,13 @@
             var laneW = new MenuBool("W", "W");
             var laneE = new MenuBool("E", "E");
 
-            foreach (var b in new List<MenuBool> {laneCheck, laneQ, laneW, laneE})
+            foreach (var b in new List<MenuBool>
+            {
+                laneCheck,
+                laneQ,
+                laneW,
+                laneE
+            })
             {
                 laneMenu.Add(b);
             }
@@ -219,7 +262,14 @@
             var ksE = new MenuBool("E", "E");
             var ksR = new MenuBool("R", "R");
 
-            foreach (var b in new List<MenuBool> {ksIgnite, ksSmite, ksQ, ksE, ksR})
+            foreach (var b in new List<MenuBool>
+            {
+                ksIgnite,
+                ksSmite,
+                ksQ,
+                ksE,
+                ksR
+            })
             {
                 ksMenu.Add(b);
             }

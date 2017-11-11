@@ -57,7 +57,8 @@
                     Global.Player.SpellBook.CastSpell(SpellSlot.Q, target.ServerPosition);
                     DelayAction.Queue(500, () => Items.CastTiamat(), new CancellationToken(false));
                 }
-                else if (SpellConfig.R.Ready && MenuConfig.Combo["Beyblade"].Enabled && SummonerSpells.IsValid(SummonerSpells.Flash) && target.Distance(Global.Player) > SpellConfig.Q.Range &&
+                else if (SpellConfig.R.Ready && MenuConfig.Combo["Beyblade"].Enabled && SummonerSpells.IsValid(SummonerSpells.Flash) &&
+                         target.Distance(Global.Player) > SpellConfig.Q.Range &&
                          Dmg.Damage(target) * 1.5f >= target.Health)
                 {
                     SummonerSpells.Flash.Cast(target.ServerPosition);
@@ -65,7 +66,8 @@
                 }
             }
 
-            if (SpellConfig.R.Ready && MenuConfig.Combo["R"].Enabled && (MenuConfig.Combo["R"].Value >= Global.Player.HealthPercent() || MenuConfig.Combo["R"].Value >= target.HealthPercent() ||
+            if (SpellConfig.R.Ready && MenuConfig.Combo["R"].Enabled && (MenuConfig.Combo["R"].Value >= Global.Player.HealthPercent() ||
+                                                                         MenuConfig.Combo["R"].Value >= target.HealthPercent() ||
                                                                          Dmg.Damage(target) * 1.5 > target.Health))
             {
                 if (MenuConfig.Whitelist[target.ChampionName].Enabled)

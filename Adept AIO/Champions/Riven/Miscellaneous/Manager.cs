@@ -3,12 +3,12 @@
     using System;
     using Aimtec;
     using Aimtec.SDK.Extensions;
-    using Aimtec.SDK.Orbwalking;
     using Core;
+    using Orbwalker;
     using OrbwalkingEvents;
     using OrbwalkingEvents.Combo;
     using SDK.Unit_Extensions;
-    using PostAttackEventArgs = Orbwalker.PostAttackEventArgs;
+    using OrbwalkingMode = Aimtec.SDK.Orbwalking.OrbwalkingMode;
 
     class Manager
     {
@@ -39,7 +39,8 @@
                 }
 
                 if (!SpellConfig.Q.Ready || Extensions.CurrentQCount == 1 || !MenuConfig.Miscellaneous["Active"].Enabled || Global.Player.HasBuff("Recall") ||
-                    Global.Orbwalker.Mode == OrbwalkingMode.Laneclear || Global.Orbwalker.Mode == OrbwalkingMode.Lasthit || Environment.TickCount - Extensions.LastQCastAttempt < 3580 + Game.Ping / 2 ||
+                    Global.Orbwalker.Mode == OrbwalkingMode.Laneclear || Global.Orbwalker.Mode == OrbwalkingMode.Lasthit ||
+                    Environment.TickCount - Extensions.LastQCastAttempt < 3580 + Game.Ping / 2 ||
                     Environment.TickCount - Extensions.LastQCastAttempt > 3700 + Game.Ping / 2)
                 {
                     return;
@@ -56,7 +57,6 @@
 
         public static void OnPostAttack(object sender, PostAttackEventArgs args)
         {
-          
             if (Environment.TickCount - Extensions.LastQCastAttempt <= 400)
             {
                 return;

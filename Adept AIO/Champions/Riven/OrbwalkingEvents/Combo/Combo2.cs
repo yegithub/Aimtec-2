@@ -2,7 +2,6 @@
 {
     using Aimtec.SDK.Events;
     using Aimtec.SDK.Extensions;
-    using Aimtec.SDK.Orbwalking;
     using Core;
     using Miscellaneous;
     using SDK.Unit_Extensions;
@@ -17,7 +16,8 @@
                 return;
             }
 
-            if (!SpellConfig.W.Ready && (!SpellConfig.Q.Ready || Extensions.CurrentQCount == 3) && SpellConfig.R2.Ready && Enums.UltimateMode == UltimateMode.Second && MenuConfig.Combo["R2"].Enabled && target.HealthPercent() <= 40)
+            if (!SpellConfig.W.Ready && (!SpellConfig.Q.Ready || Extensions.CurrentQCount == 3) && SpellConfig.R2.Ready && Enums.UltimateMode == UltimateMode.Second &&
+                MenuConfig.Combo["R2"].Enabled && target.HealthPercent() <= 40)
             {
                 SpellManager.CastR2(target);
             }
@@ -26,7 +26,6 @@
             {
                 SpellManager.CastQ(target);
             }
-
         }
 
         public static void OnUpdate()

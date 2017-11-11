@@ -34,10 +34,24 @@
         };
 
         // Melee's who are weak with CC
-        private static readonly string[] Melee = {"Fiora", "Irelia", "Akali", "Udyr", "Rengar", "Jarvan IV"};
+        private static readonly string[] Melee =
+        {
+            "Fiora",
+            "Irelia",
+            "Akali",
+            "Udyr",
+            "Rengar",
+            "Jarvan IV"
+        };
 
         // Mostly fighters
-        private static readonly string[] SemiCombo = {"Yasuo", "LeeSin", "XinZhao", "Aatrox"};
+        private static readonly string[] SemiCombo =
+        {
+            "Yasuo",
+            "LeeSin",
+            "XinZhao",
+            "Aatrox"
+        };
 
         public static void OnProcessAutoAttack()
         {

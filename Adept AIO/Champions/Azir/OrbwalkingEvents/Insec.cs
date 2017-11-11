@@ -70,7 +70,8 @@
                     }
                 }
 
-                if (SummonerSpells.IsValid(SummonerSpells.Flash) && MenuConfig.InsecMenu["Flash"].Enabled && SpellConfig.R.Ready && !SpellConfig.Q.Ready && !SpellConfig.E.Ready && dist > 450 &&
+                if (SummonerSpells.IsValid(SummonerSpells.Flash) && MenuConfig.InsecMenu["Flash"].Enabled && SpellConfig.R.Ready && !SpellConfig.Q.Ready && !SpellConfig.E.Ready &&
+                    dist > 450 &&
                     soldierPos.Distance(target) > 450 && !Global.Player.IsDashing())
                 {
                     if (Environment.TickCount - AzirHelper.LastE <= 900 || Environment.TickCount - AzirHelper.LastQ <= 900)

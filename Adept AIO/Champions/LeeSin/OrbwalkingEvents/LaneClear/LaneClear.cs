@@ -24,7 +24,8 @@
 
         public void OnPostAttack()
         {
-            var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.Distance(Global.Player) < Global.Player.AttackRange + x.BoundingRadius && x.Health > Global.Player.GetAutoAttackDamage(x));
+            var minion = GameObjects.EnemyMinions.FirstOrDefault(x =>
+                x.Distance(Global.Player) < Global.Player.AttackRange + x.BoundingRadius && x.Health > Global.Player.GetAutoAttackDamage(x));
 
             if (minion == null || this.CheckEnabled && Global.Player.CountEnemyHeroesInRange(2000) >= 1)
             {

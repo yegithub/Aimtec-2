@@ -24,7 +24,9 @@
                 return;
             }
 
-            var minion = GameObjects.Minions.Where(x => x.Distance(Global.Player) <= SpellConfig.E.Range && !x.HasBuff("YasuoDashWrapper")).OrderBy(x => x.Distance(Game.CursorPos)).FirstOrDefault();
+            var minion = GameObjects.Minions.Where(x => x.Distance(Global.Player) <= SpellConfig.E.Range && !x.HasBuff("YasuoDashWrapper")).
+                OrderBy(x => x.Distance(Game.CursorPos)).
+                FirstOrDefault();
 
             if (args.End.Distance(Global.Player.ServerPosition) <= 140 && SpellConfig.E.Ready && minion != null)
             {

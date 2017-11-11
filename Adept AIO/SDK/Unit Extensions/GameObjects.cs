@@ -147,12 +147,26 @@
         /// <summary>
         ///     The large name regex list.
         /// </summary>
-        private static readonly string[] LargeNameRegex = {"SRU_Murkwolf[0-9.]{1,}", "Sru_Crab", "SRU_Gromp", "SRU_Blue[0-9.]{1,}", "SRU_Razorbeak[0-9.]{1,}", "SRU_Red[0-9.]{1,}", "SRU_Krug[0-9]{1,}"};
+        private static readonly string[] LargeNameRegex =
+        {
+            "SRU_Murkwolf[0-9.]{1,}",
+            "Sru_Crab",
+            "SRU_Gromp",
+            "SRU_Blue[0-9.]{1,}",
+            "SRU_Razorbeak[0-9.]{1,}",
+            "SRU_Red[0-9.]{1,}",
+            "SRU_Krug[0-9]{1,}"
+        };
 
         /// <summary>
         ///     The legendary name regex list.
         /// </summary>
-        private static readonly string[] LegendaryNameRegex = {"SRU_Dragon", "SRU_Baron", "SRU_RiftHerald"};
+        private static readonly string[] LegendaryNameRegex =
+        {
+            "SRU_Dragon",
+            "SRU_Baron",
+            "SRU_RiftHerald"
+        };
 
         /// <summary>
         ///     The minions list.
@@ -162,7 +176,10 @@
         /// <summary>
         ///     The small name regex list.
         /// </summary>
-        private static readonly string[] SmallNameRegex = {"SRU_[a-zA-Z](.*?)Mini"};
+        private static readonly string[] SmallNameRegex =
+        {
+            "SRU_[a-zA-Z](.*?)Mini"
+        };
 
         /// <summary>
         ///     The turrets list.
@@ -346,7 +363,6 @@
         /// </returns>
         public static JungleType GetJungleType(this Obj_AI_Minion minion)
         {
-
             if (SmallNameRegex.Any(regex => Regex.IsMatch(minion.Name, regex)))
             {
                 return JungleType.Small;
@@ -388,7 +404,8 @@
             HeroesList.AddRange(ObjectManager.Get<Obj_AI_Hero>());
             MinionsList.AddRange(ObjectManager.Get<Obj_AI_Minion>().Where(o => o.Team != GameObjectTeam.Neutral && !o.Name.Contains("ward")));
             TurretsList.AddRange(ObjectManager.Get<Obj_AI_Turret>());
-            JungleList.AddRange(ObjectManager.Get<Obj_AI_Minion>().Where(o => o.Team == GameObjectTeam.Neutral && o.Name != "WardCorpse" && o.Name != "Barrel" && !o.Name.Contains("SRU_Plant_")));
+            JungleList.AddRange(ObjectManager.Get<Obj_AI_Minion>().
+                Where(o => o.Team == GameObjectTeam.Neutral && o.Name != "WardCorpse" && o.Name != "Barrel" && !o.Name.Contains("SRU_Plant_")));
             WardsList.AddRange(ObjectManager.Get<Obj_AI_Minion>().Where(o => o.Name.Contains("ward")));
             SpawnPointsList.AddRange(ObjectManager.Get<GameObject>().Where(o => o.Type == GameObjectType.obj_SpawnPoint));
 
@@ -454,7 +471,17 @@
             };
         }
 
-        private static readonly string[] NotViable = {"shadow", "soldier", "dagger", "axe", "plant", "ward", "barrel", "trap"};
+        private static readonly string[] NotViable =
+        {
+            "shadow",
+            "soldier",
+            "dagger",
+            "axe",
+            "plant",
+            "ward",
+            "barrel",
+            "trap"
+        };
 
         private static void OnCreate(GameObject sender)
         {

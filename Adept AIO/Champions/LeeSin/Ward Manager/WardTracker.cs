@@ -13,7 +13,12 @@
     {
         private readonly ISpellConfig _spellConfig;
 
-        private readonly IEnumerable<string> _wardNames = new List<string> {"TrinketTotemLvl1", "ItemGhostWard", "JammerDevice"};
+        private readonly IEnumerable<string> _wardNames = new List<string>
+        {
+            "TrinketTotemLvl1",
+            "ItemGhostWard",
+            "JammerDevice"
+        };
 
         public WardTracker(ISpellConfig spellConfig)
         {

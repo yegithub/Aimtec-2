@@ -33,7 +33,12 @@
                 Combo.Add(new MenuBool(target.ChampionName, "Use E On: " + target.ChampionName));
             }
 
-            Harass = new Menu("Harass", "Harass") {new MenuBool("Q", "Use Q"), new MenuBool("E", "Use E"), new MenuSeperator("Whitelist", "Whitelist")};
+            Harass = new Menu("Harass", "Harass")
+            {
+                new MenuBool("Q", "Use Q"),
+                new MenuBool("E", "Use E"),
+                new MenuSeperator("Whitelist", "Whitelist")
+            };
 
             foreach (var target in GameObjects.EnemyHeroes)
             {
@@ -48,9 +53,19 @@
                 new MenuBool("Turret", "Use E At Turret")
             };
 
-            JungleClear = new Menu("JungleClear", "JungleClear") {new MenuBool("Avoid", "Don't Use Anything At Lvl 1"), new MenuBool("Q", "Use Q"), new MenuBool("E", "Use E")};
+            JungleClear = new Menu("JungleClear", "JungleClear")
+            {
+                new MenuBool("Avoid", "Don't Use Anything At Lvl 1"),
+                new MenuBool("Q", "Use Q"),
+                new MenuBool("E", "Use E")
+            };
 
-            Killsteal = new Menu("Killsteal", "Killsteal") {new MenuBool("W", "Use W", false), new MenuBool("E", "Use E"), new MenuBool("R", "Use R")};
+            Killsteal = new Menu("Killsteal", "Killsteal")
+            {
+                new MenuBool("W", "Use W", false),
+                new MenuBool("E", "Use E"),
+                new MenuBool("R", "Use R")
+            };
 
             Drawings = new Menu("DrawManager", "DrawManager")
             {
@@ -59,7 +74,16 @@
                 new MenuBool("W", "W Range")
             };
 
-            foreach (var menu in new List<Menu> {Combo, Harass, LaneClear, JungleClear, Killsteal, Drawings, MenuShortcut.Credits})
+            foreach (var menu in new List<Menu>
+            {
+                Combo,
+                Harass,
+                LaneClear,
+                JungleClear,
+                Killsteal,
+                Drawings,
+                MenuShortcut.Credits
+            })
             {
                 mainMenu.Add(menu);
             }

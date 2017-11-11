@@ -1,7 +1,6 @@
-﻿using System;
-
-namespace Adept_AIO.Champions.Riven.Orbwalker
+﻿namespace Adept_AIO.Champions.Riven.Orbwalker
 {
+    using System;
     using Aimtec;
     using Aimtec.SDK.Menu.Components;
     using Aimtec.SDK.Menu.Config;
@@ -45,8 +44,8 @@ namespace Adept_AIO.Champions.Riven.Orbwalker
             }
 
             this.Name = name;
-            this.ModeBehaviour = orbwalkBehaviour;
-            this.GetTargetImplementation = targetDelegate;
+            ModeBehaviour = orbwalkBehaviour;
+            GetTargetImplementation = targetDelegate;
             this.MenuItem = key.KeyBindItem;
             key.Activate();
             this.UsingGlobalKey = true;
@@ -62,8 +61,8 @@ namespace Adept_AIO.Champions.Riven.Orbwalker
             OrbwalkModeDelegate orbwalkBehaviour)
         {
             this.Name = name ?? throw new Exception("There was an error creating the Orbwalker Mode");
-            this.ModeBehaviour = orbwalkBehaviour;
-            this.GetTargetImplementation = targetDelegate;
+            ModeBehaviour = orbwalkBehaviour;
+            GetTargetImplementation = targetDelegate;
             this.MenuItem = new MenuKeyBind(name, name, key, KeybindType.Press);
         }
 
@@ -129,12 +128,12 @@ namespace Adept_AIO.Champions.Riven.Orbwalker
         /// </summary>
         public void Execute()
         {
-            this.ModeBehaviour?.Invoke();
+            ModeBehaviour?.Invoke();
         }
 
         public AttackableUnit GetTarget()
         {
-            return this.GetTargetImplementation?.Invoke();
+            return GetTargetImplementation?.Invoke();
         }
 
         #endregion

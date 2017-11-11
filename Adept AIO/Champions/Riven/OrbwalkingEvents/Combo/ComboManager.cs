@@ -1,12 +1,10 @@
 ﻿namespace Adept_AIO.Champions.Riven.OrbwalkingEvents.Combo
 {
-    using System;
     using System.Linq;
     using System.Threading;
     using Aimtec;
     using Aimtec.SDK.Damage;
     using Aimtec.SDK.Extensions;
-    using Aimtec.SDK.Orbwalking;
     using Aimtec.SDK.Util;
     using Core;
     using Miscellaneous;
@@ -133,7 +131,8 @@
                 return;
             }
 
-            Extensions.AllIn = MenuConfig.Combo["Flash"].Enabled && SummonerSpells.Flash.Ready && CanFlashKill(target) && target.Distance(Global.Player) > 500 && target.Distance(Global.Player) < 720;
+            Extensions.AllIn = MenuConfig.Combo["Flash"].Enabled && SummonerSpells.Flash.Ready && CanFlashKill(target) && target.Distance(Global.Player) > 500 &&
+                               target.Distance(Global.Player) < 720;
 
             if (!Extensions.AllIn)
             {

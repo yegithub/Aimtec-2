@@ -90,7 +90,8 @@
 
         public static void OnProcessSpellCast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
         {
-            if (sender == null || args.Target == null || !sender.IsAlly || !args.Target.IsEnemy || !sender.UnitSkinName.ToLower().Contains("turret") || !args.Target.Name.ToLower().Contains("minion"))
+            if (sender == null || args.Target == null || !sender.IsAlly || !args.Target.IsEnemy || !sender.UnitSkinName.ToLower().Contains("turret") ||
+                !args.Target.Name.ToLower().Contains("minion"))
             {
                 return;
             }

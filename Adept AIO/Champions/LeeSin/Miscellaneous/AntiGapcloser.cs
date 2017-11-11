@@ -22,7 +22,8 @@
 
         public void OnGapcloser(Obj_AI_Hero sender, GapcloserArgs args)
         {
-            if (sender.IsMe || !sender.IsEnemy || !_spellConfig.W.Ready || !_spellConfig.IsFirst(_spellConfig.W) || !_wardTracker.IsWardReady() || args.EndPosition.Distance(Global.Player) > 425)
+            if (sender.IsMe || !sender.IsEnemy || !_spellConfig.W.Ready || !_spellConfig.IsFirst(_spellConfig.W) || !_wardTracker.IsWardReady() ||
+                args.EndPosition.Distance(Global.Player) > 425)
             {
                 return;
             }

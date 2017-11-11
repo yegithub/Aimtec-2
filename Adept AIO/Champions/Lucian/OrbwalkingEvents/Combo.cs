@@ -44,7 +44,8 @@
                 {
                     SpellManager.CastQExtended(target);
                 }
-                else if (SpellManager.R.Ready && MenuConfig.Combo["Last"].Enabled && !SpellManager.Q.Ready && !SpellManager.W.Ready && !SpellManager.E.Ready && Global.Player.ManaPercent() >= 35)
+                else if (SpellManager.R.Ready && MenuConfig.Combo["Last"].Enabled && !SpellManager.Q.Ready && !SpellManager.W.Ready && !SpellManager.E.Ready &&
+                         Global.Player.ManaPercent() >= 35)
                 {
                     SpellManager.CastR(target);
                 }

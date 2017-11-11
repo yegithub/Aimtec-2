@@ -1,7 +1,6 @@
-﻿using System;
-
-namespace Adept_AIO.Champions.Riven.Orbwalker
+﻿namespace Adept_AIO.Champions.Riven.Orbwalker
 {
+    using System;
     using Aimtec;
     using Aimtec.SDK.Menu;
     using Aimtec.SDK.Menu.Config;

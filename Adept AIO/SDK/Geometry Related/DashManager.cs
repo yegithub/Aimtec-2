@@ -19,7 +19,7 @@
                 var rot = (Global.Player.ServerPosition.To2D() + range * dir.Rotated((float) angleRad)).To3D();
 
                 var turret = TurretAttackManager.GetNearestTurretData(Global.Player, TurretAttackManager.TurretTeam.Enemy);
-                if (rot.CountEnemyHeroesInRange(enemyRange) != 0 || 
+                if (rot.CountEnemyHeroesInRange(enemyRange) != 0 ||
                     turret != null && turret.TurretActive && !turret.LastTarget.IsHero && turret.Turret.ServerPosition.Distance(target.ServerPosition) <= 1500)
                 {
                     continue;

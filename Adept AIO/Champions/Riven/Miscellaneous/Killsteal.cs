@@ -30,7 +30,8 @@
                     SpellManager.CastR2(target);
                 }
             }
-            else if (SpellConfig.W.Ready && MenuConfig.Killsteal["W"].Enabled && target.Health <= Global.Player.GetSpellDamage(target, SpellSlot.W) && target.IsValidTarget(SpellConfig.W.Range))
+            else if (SpellConfig.W.Ready && MenuConfig.Killsteal["W"].Enabled && target.Health <= Global.Player.GetSpellDamage(target, SpellSlot.W) &&
+                     target.IsValidTarget(SpellConfig.W.Range))
             {
                 SpellManager.CastW(target);
             }

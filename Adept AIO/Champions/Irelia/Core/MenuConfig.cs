@@ -26,7 +26,14 @@
                 new MenuBool("Killable", "Q Target If Killable"),
                 new MenuBool("Force", "Force Q To Stun (When Getting Ganked)"),
                 new MenuSlider("Range", "Min. Range For Q", 450, 0, 650),
-                new MenuList("Mode", "Dash Mode: ", new[] {"Cursor", "Player Position"}, 0),
+                new MenuList("Mode",
+                    "Dash Mode: ",
+                    new[]
+                    {
+                        "Cursor",
+                        "Player Position"
+                    },
+                    0),
                 new MenuBool("Turret", "Dash Turret When Killable")
             };
 
@@ -48,7 +55,12 @@
                 new MenuSliderBool("E", "(E) Min. Mana %", true, 50)
             };
 
-            Killsteal = new Menu("Killsteal", "Killsteal") {new MenuBool("Q", "Q"), new MenuBool("E", "E"), new MenuBool("R", "R")};
+            Killsteal = new Menu("Killsteal", "Killsteal")
+            {
+                new MenuBool("Q", "Q"),
+                new MenuBool("E", "E"),
+                new MenuBool("R", "R")
+            };
 
             Drawings = new Menu("DrawManager", "DrawManager")
             {
@@ -59,7 +71,15 @@
                 new MenuBool("R", "R Range")
             };
 
-            foreach (var menu in new List<Menu> {Combo, Harass, Clear, Killsteal, Drawings, MenuShortcut.Credits})
+            foreach (var menu in new List<Menu>
+            {
+                Combo,
+                Harass,
+                Clear,
+                Killsteal,
+                Drawings,
+                MenuShortcut.Credits
+            })
             {
                 _mainMenu.Add(menu);
             }

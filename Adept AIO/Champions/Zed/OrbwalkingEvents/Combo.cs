@@ -2,7 +2,6 @@
 {
     using System.Linq;
     using Aimtec.SDK.Extensions;
-    using Aimtec.SDK.TargetSelector;
     using Core;
     using SDK.Unit_Extensions;
 
@@ -22,7 +21,7 @@
                 {
                     return;
                 }
-                
+
                 if (!MenuConfig.Combo[target.ChampionName].Enabled)
                 {
                     return;

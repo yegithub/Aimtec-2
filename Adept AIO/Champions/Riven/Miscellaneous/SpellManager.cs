@@ -22,7 +22,13 @@
 
         public static float LastR;
 
-        private static readonly string[] InvulnerableSpells = {"FioraW", "kindrednodeathbuff", "Undying Rage", "JudicatorIntervention"};
+        private static readonly string[] InvulnerableSpells =
+        {
+            "FioraW",
+            "kindrednodeathbuff",
+            "Undying Rage",
+            "JudicatorIntervention"
+        };
 
         public static void OnProcessSpellCast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
         {

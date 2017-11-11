@@ -9,7 +9,8 @@
     {
         public static void OnPostAttack()
         {
-            if (SpellConfig.Q.Ready && (Extension.CurrentMode != Mode.Tornado || MenuConfig.JungleClear["Q3"].Enabled) && (Extension.CurrentMode != Mode.Normal || MenuConfig.JungleClear["Q"].Enabled))
+            if (SpellConfig.Q.Ready && (Extension.CurrentMode != Mode.Tornado || MenuConfig.JungleClear["Q3"].Enabled) &&
+                (Extension.CurrentMode != Mode.Normal || MenuConfig.JungleClear["Q"].Enabled))
             {
                 var qminion = GameObjects.Jungle.FirstOrDefault(x => x.Distance(Global.Player) <= SpellConfig.Q.Range);
 

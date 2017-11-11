@@ -84,18 +84,18 @@
                     if (Extensions.AllIn && target.Distance(Global.Player) > SpellConfig.E.Range + Global.Player.AttackRange && SummonerSpells.IsValid(SummonerSpells.Flash))
                     {
                         DelayAction.Queue(Game.Ping / 2 + 50,
-                                          delegate
-                                          {
-                                              Global.Player.SpellBook.CastSpell(SpellSlot.W);
-                                          },
-                                          new CancellationToken(false));
+                            delegate
+                            {
+                                Global.Player.SpellBook.CastSpell(SpellSlot.W);
+                            },
+                            new CancellationToken(false));
 
                         DelayAction.Queue(150,
-                                          delegate
-                                          {
-                                              SummonerSpells.Flash.Cast(target.ServerPosition);
-                                          },
-                                          new CancellationToken(false));
+                            delegate
+                            {
+                                SummonerSpells.Flash.Cast(target.ServerPosition);
+                            },
+                            new CancellationToken(false));
                     }
                     break;
 
@@ -111,19 +111,19 @@
                         SpellConfig.R2.Cast(target.ServerPosition);
 
                         DelayAction.Queue(100,
-                                          () =>
-                                          {
-                                              SummonerSpells.Flash.Cast(target.ServerPosition);
-                                          },
-                                          new CancellationToken(false));
+                            () =>
+                            {
+                                SummonerSpells.Flash.Cast(target.ServerPosition);
+                            },
+                            new CancellationToken(false));
 
                         DelayAction.Queue(500,
-                                          () =>
-                                          {
-                                              SpellConfig.W.Cast();
-                                              SpellManager.CastQ(target);
-                                          },
-                                          new CancellationToken(false));
+                            () =>
+                            {
+                                SpellConfig.W.Cast();
+                                SpellManager.CastQ(target);
+                            },
+                            new CancellationToken(false));
                     }
 
                     break;

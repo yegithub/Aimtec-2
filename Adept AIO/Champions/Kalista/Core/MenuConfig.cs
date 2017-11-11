@@ -24,7 +24,10 @@
                 new MenuSliderBool("R", "Use R If X Enemies Nearby", true, 3, 0, 5)
             };
 
-            Harass = new Menu("KalistaHarass", "Harass") {new MenuBool("Q", "Use Q")};
+            Harass = new Menu("KalistaHarass", "Harass")
+            {
+                new MenuBool("Q", "Use Q")
+            };
 
             LaneClear = new Menu("KalistaLaneClear", "Lane")
             {
@@ -33,13 +36,21 @@
                 new MenuBool("E", "Use E")
             };
 
-            JungleClear = new Menu("KalistaJungle", "Jungle") {new MenuBool("Q", "Use Q"), new MenuBool("E", "Use E")};
+            JungleClear = new Menu("KalistaJungle", "Jungle")
+            {
+                new MenuBool("Q", "Use Q"),
+                new MenuBool("E", "Use E")
+            };
 
-            Killsteal = new Menu("KalistaKillsteal", "Killsteal") {new MenuBool("E", "Use E"), new MenuBool("Q", "Use Q")};
+            Killsteal = new Menu("KalistaKillsteal", "Killsteal")
+            {
+                new MenuBool("E", "Use E"),
+                new MenuBool("Q", "Use Q")
+            };
 
             Misc = new Menu("KalistaMisc", "Miscellaneous")
             {
-                new MenuSliderBool("Soulbound", "Use R If Soulbound Health % <=", true, 10),
+                new MenuSliderBool("R", "Use R If Soulbound Health % <=", true, 10),
                 new MenuBool("E", "Use E on minions when enemy has E stacks"),
                 new MenuBool("W", "Use W Automatically")
             };
@@ -51,7 +62,17 @@
                 new MenuBool("Debug", "Debug")
             };
 
-            foreach (var menu in new List<Menu> {Combo, Harass, LaneClear, JungleClear, Killsteal, Misc, Drawings, MenuShortcut.Credits})
+            foreach (var menu in new List<Menu>
+            {
+                Combo,
+                Harass,
+                LaneClear,
+                JungleClear,
+                Killsteal,
+                Misc,
+                Drawings,
+                MenuShortcut.Credits
+            })
             {
                 mainMenu.Add(menu);
             }

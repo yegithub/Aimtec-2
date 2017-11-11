@@ -23,7 +23,8 @@
             {
                 SpellConfig.Q.Cast(target);
             }
-            else if (SpellConfig.W.Ready && target.Health < Global.Player.GetSpellDamage(target, SpellSlot.W) && target.IsValidTarget(SpellConfig.W.Range) && MenuConfig.Killsteal["W"].Enabled)
+            else if (SpellConfig.W.Ready && target.Health < Global.Player.GetSpellDamage(target, SpellSlot.W) && target.IsValidTarget(SpellConfig.W.Range) &&
+                     MenuConfig.Killsteal["W"].Enabled)
             {
                 SpellConfig.W.Cast(target);
             }

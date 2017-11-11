@@ -7,7 +7,6 @@
     using Aimtec.SDK.Extensions;
     using Aimtec.SDK.Util;
     using Core;
-    using SDK.Generic;
     using SDK.Unit_Extensions;
     using SDK.Usables;
     using Geometry = SDK.Geometry_Related.Geometry;
@@ -51,7 +50,8 @@
                 }
                 SpellConfig.E.CastOnUnit(minion);
             }
-            else if (!target.HasBuff("YasuoDashWrapper") && target.Distance(Global.Player) <= SpellConfig.E.Range && target.Distance(Global.Player) > SpellConfig.E.Range - target.BoundingRadius)
+            else if (!target.HasBuff("YasuoDashWrapper") && target.Distance(Global.Player) <= SpellConfig.E.Range &&
+                     target.Distance(Global.Player) > SpellConfig.E.Range - target.BoundingRadius)
             {
                 SpellConfig.CastE(target);
             }
@@ -112,18 +112,18 @@
                             (Dmg.Damage(target) * 1.25 > target.Health || target.ServerPosition.CountEnemyHeroesInRange(220) >= 2))
                         {
                             DelayAction.Queue(Game.Ping / 2,
-                                              () =>
-                                              {
-                                                  SpellConfig.Q.Cast();
-                                              },
-                                              new CancellationToken(false));
+                                () =>
+                                {
+                                    SpellConfig.Q.Cast();
+                                },
+                                new CancellationToken(false));
 
                             DelayAction.Queue(Game.Ping / 2 + 50,
-                                              () =>
-                                              {
-                                                  SummonerSpells.Flash.Cast(target.Position);
-                                              },
-                                              new CancellationToken(false));
+                                () =>
+                                {
+                                    SummonerSpells.Flash.Cast(target.Position);
+                                },
+                                new CancellationToken(false));
                         }
                         else
                         {
@@ -144,7 +144,6 @@
 
             if (SpellConfig.R.Ready && MenuConfig.Whitelist[target.ChampionName].Enabled && target.IsAirbone() && KnockUpHelper.IsItTimeToUlt(target))
             {
-              
                 var airbourneTargets = GameObjects.EnemyHeroes.Where(x => KnockUpHelper.KnockedUp(x) && x.Distance(Global.Player) <= SpellConfig.R.Range);
                 var targetCount = (airbourneTargets as Obj_AI_Hero[] ?? airbourneTargets.ToArray()).Length;
 

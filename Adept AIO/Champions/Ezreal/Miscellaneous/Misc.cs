@@ -27,11 +27,11 @@
                 if (MenuConfig.Miscellaneous["TH"].Enabled)
                 {
                     DelayAction.Queue(GetRandom.Next(400, 1200),
-                                      () =>
-                                      {
-                                          SpellConfig.Q.Cast(objects != null ? objects.ServerPosition : Game.CursorPos);
-                                      },
-                                      new CancellationToken(false));
+                        () =>
+                        {
+                            SpellConfig.Q.Cast(objects != null ? objects.ServerPosition : Game.CursorPos);
+                        },
+                        new CancellationToken(false));
                 }
                 else
                 {

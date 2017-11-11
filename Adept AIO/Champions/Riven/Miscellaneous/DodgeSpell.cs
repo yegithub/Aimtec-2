@@ -39,7 +39,14 @@
             "TeemoQ"
         };
 
-        private static readonly string[] InterrupterSpell = {"RenektonPreExecute", "TalonCutthroat", "XenZhaoThrust3", "KatarinaRTrigger", "KatarinaE"};
+        private static readonly string[] InterrupterSpell =
+        {
+            "RenektonPreExecute",
+            "TalonCutthroat",
+            "XenZhaoThrust3",
+            "KatarinaRTrigger",
+            "KatarinaE"
+        };
 
         public static void OnProcessSpellCast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
         {

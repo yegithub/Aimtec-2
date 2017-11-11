@@ -58,9 +58,9 @@
             if (MenuConfig.Drawings["Range"].Enabled)
             {
                 Render.Circle(Global.Player.Position,
-                              SpellManager.WCastRange + (Global.Orbwalker.Mode == OrbwalkingMode.Combo ? SpellManager.R.Range : Global.Player.AttackRange),
-                              (uint) MenuConfig.Drawings["Segments"].Value,
-                              Color.Crimson);
+                    SpellManager.WCastRange + (Global.Orbwalker.Mode == OrbwalkingMode.Combo ? SpellManager.R.Range : Global.Player.AttackRange),
+                    (uint) MenuConfig.Drawings["Segments"].Value,
+                    Color.Crimson);
             }
 
             if (SpellManager.Q.Ready && MenuConfig.Drawings["Q"].Enabled)

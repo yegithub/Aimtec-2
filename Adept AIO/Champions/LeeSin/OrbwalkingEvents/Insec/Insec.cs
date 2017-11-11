@@ -54,7 +54,8 @@
         // R Flash
         public void OnProcessSpellCast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
         {
-            if (!this.Enabled || !this.FlashReady || sender == null || !sender.IsMe || _insecManager.InsecKickValue != 1 || this.CanWardJump && !_wardTracker.DidJustWard || _wardTracker.DidJustWard ||
+            if (!this.Enabled || !this.FlashReady || sender == null || !sender.IsMe || _insecManager.InsecKickValue != 1 || this.CanWardJump && !_wardTracker.DidJustWard ||
+                _wardTracker.DidJustWard ||
                 Global.Player.Distance(GetInsecPosition()) <= 220 || Target == null || args.SpellSlot != SpellSlot.R || Global.Player.Distance(GetInsecPosition()) <= 80)
             {
                 return;
