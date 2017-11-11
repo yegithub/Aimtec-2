@@ -89,9 +89,15 @@
 
                 if (SpellManager.R.Ready && MenuConfig.Misc["R"].Enabled)
                 {
-                    var soulbound = ObjectManager.Get<GameObject>().FirstOrDefault(x => x.Name == "Kalista_Base_P_LinkIcon.troy") as Obj_AI_Hero;
-                    if (soulbound != null && (soulbound.HealthPercent() <= MenuConfig.Misc["R"].Value ||
-                                              soulbound.ChampionName == "Blitzcrank" && GameObjects.EnemyHeroes.Any(x => x.HasBuff("rocketgrab2"))))
+                    var soulBound = GameObjects.AllyHeroes.FirstOrDefault(x => x.NetworkId != Global.Player.NetworkId && x.HasBuff("kalistacoopstrikeally"));
+                  
+                    if (soulBound == null)
+                    {
+                        return;
+                    }
+            
+                    if (soulBound.HealthPercent() <= MenuConfig.Misc["R"].Value ||
+                        soulBound.ChampionName == "Blitzcrank" && GameObjects.EnemyHeroes.Any(x => x.HasBuff("rocketgrab2")))
                     {
                         SpellManager.R.Cast();
                     }
