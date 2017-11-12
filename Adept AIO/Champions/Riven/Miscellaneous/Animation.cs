@@ -14,24 +14,20 @@
         {
             Global.Orbwalker.AttackingEnabled = false;
 
-            var ultimateDelay = Global.Player.HasBuff("RivenFengShuiEngine") ? 100 : 50;
-            var qDelay = Extensions.CurrentQCount == 1 ? 180 : 80;
-            var ping = Game.Ping / 2;
+            var qDelay = (Extensions.CurrentQCount == 1 ? 0b111101010 : 0b101011110) - 3.333f * Global.Player.Level;
+            var moveDelay = (int)qDelay / 2;
+         
 
-            DelayAction.Queue(ultimateDelay + qDelay, () => Global.Orbwalker.Move(Game.CursorPos), new CancellationToken(false));
+            var ping = Game.Ping / 0b10;
+            Console.WriteLine($"{Extensions.CurrentQCount} {qDelay + ping}");
+            DelayAction.Queue(moveDelay, () => Global.Orbwalker.Move(Game.CursorPos));
 
-            DelayAction.Queue((int) GetDelay() * 2 + ping,
+            DelayAction.Queue((int) qDelay + ping,
                 () =>
                 {
                     Global.Orbwalker.AttackingEnabled = true;
                     Global.Orbwalker.ResetAutoAttackTimer();
-                },
-                new CancellationToken(false));
-        }
-
-        private static float GetDelay()
-        {
-            return (Extensions.CurrentQCount == 1 ? 460 : 400) - 3.333f * Global.Player.Level;
+                });
         }
 
         public static void OnPlayAnimation(Obj_AI_Base sender, Obj_AI_BasePlayAnimationEventArgs args)
@@ -44,15 +40,15 @@
             switch (args.Animation)
             {
                 case "Spell1a":
-                    Extensions.CurrentQCount = 2; // Q1
+                    Extensions.CurrentQCount = 0b10; // Q1
                     //  Reset();
                     break;
                 case "Spell1b":
-                    Extensions.CurrentQCount = 3; // Q2
+                    Extensions.CurrentQCount = 0b11; // Q2
                     //    Reset();
                     break;
                 case "Spell1c":
-                    Extensions.CurrentQCount = 1; // Q3 
+                    Extensions.CurrentQCount = 0b1; // Q3 
                     //    Reset();
                     break;
             }

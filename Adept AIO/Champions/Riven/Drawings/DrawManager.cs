@@ -77,11 +77,7 @@
 
                 switch (Global.Orbwalker.Mode)
                 {
-                    case OrbwalkingMode.Combo:
-                        RenderHelper.RenderArrowFromPlayer(Global.TargetSelector.GetTarget(Extensions.EngageRange + 800));
-                        Render.Text("PATTERN: " + Enums.ComboPattern, new Vector2(playerV2.X - 65, playerV2.Y + 30), RenderTextFlags.Center, Color.Aqua);
-                        break;
-
+                 
                     case OrbwalkingMode.Mixed:
                         RenderHelper.RenderArrowFromPlayer(Global.TargetSelector.GetTarget(Extensions.EngageRange + 800));
                         Render.Text("PATTERN: " + Enums.Current, new Vector2(playerV2.X - 65, playerV2.Y + 30), RenderTextFlags.Center, Color.Aqua);

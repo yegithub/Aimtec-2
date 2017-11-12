@@ -199,9 +199,6 @@
     <Compile Include="Champions\Riven\Orbwalker\OrbwalkerImpl.cs" />
     <Compile Include="Champions\Riven\Orbwalker\OrbwalkerMode.cs" />
     <Compile Include="Champions\Riven\Orbwalker\OrbwalkingMode.cs" />
-    <Compile Include="Champions\Riven\OrbwalkingEvents\Combo\Combo2.cs" />
-    <Compile Include="Champions\Riven\OrbwalkingEvents\Combo\FastCombo.cs" />
-    <Compile Include="Champions\Riven\OrbwalkingEvents\Combo\MaximizeDmg.cs" />
     <Compile Include="Champions\Tristana\Core\Dmg.cs" />
     <Compile Include="Champions\Tristana\Core\MenuConfig.cs" />
     <Compile Include="Champions\Tristana\Core\SpellConfig.cs" />
@@ -317,7 +314,7 @@
     <Compile Include="Champions\Riven\Miscellaneous\DodgeSpell.cs" />
     <Compile Include="Champions\Riven\Miscellaneous\SpellManager.cs" />
     <Compile Include="Champions\Riven\OrbwalkingEvents\Burst.cs" />
-    <Compile Include="Champions\Riven\OrbwalkingEvents\Combo\ComboManager.cs" />
+    <Compile Include="Champions\Riven\OrbwalkingEvents\ComboManager.cs" />
     <Compile Include="Champions\Riven\OrbwalkingEvents\Flee.cs" />
     <Compile Include="Champions\Riven\OrbwalkingEvents\Harass.cs" />
     <Compile Include="Champions\Riven\OrbwalkingEvents\Jungle.cs" />

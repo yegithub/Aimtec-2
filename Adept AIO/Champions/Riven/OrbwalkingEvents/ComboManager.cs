@@ -1,14 +1,14 @@
-﻿namespace Adept_AIO.Champions.Riven.OrbwalkingEvents.Combo
+﻿namespace Adept_AIO.Champions.Riven.OrbwalkingEvents
 {
     using System.Linq;
     using System.Threading;
     using Aimtec;
     using Aimtec.SDK.Damage;
+    using Aimtec.SDK.Events;
     using Aimtec.SDK.Extensions;
     using Aimtec.SDK.Util;
     using Core;
     using Miscellaneous;
-    using SDK.Generic;
     using SDK.Unit_Extensions;
     using SDK.Usables;
 
@@ -16,21 +16,22 @@
     {
         public static void OnPostAttack()
         {
-            Combo2.OnPostAttack();
-            //switch (Enums.ComboPattern)
-            //{
-            //    case ComboPattern.MaximizeDmg:
-            //        MaximizeDmg.OnPostAttack(sender, args);
-            //        break;
+            var target = Global.TargetSelector.GetTarget(Extensions.EngageRange);
+            if (target == null)
+            {
+                return;
+            }
 
-            //    case ComboPattern.Normal: break;
+            if (!SpellConfig.W.Ready && (!SpellConfig.Q.Ready || Extensions.CurrentQCount == 3) && SpellConfig.R2.Ready && Enums.UltimateMode == UltimateMode.Second &&
+                MenuConfig.Combo["R2"].Enabled && target.HealthPercent() <= 40)
+            {
+                SpellManager.CastR2(target);
+            }
 
-            //    case ComboPattern.FastCombo:
-            //        FastCombo.OnPostAttack(sender, args);
-            //        break;
-
-            //    default: throw new ArgumentOutOfRangeException();
-            //}
+            if (SpellConfig.Q.Ready)
+            {
+                SpellManager.CastQ(target);
+            }
         }
 
         public static void OnUpdate()
@@ -42,52 +43,31 @@
 
         private static void Manage()
         {
-            //Enums.ComboPattern = Generate();
-
             var target = Global.TargetSelector.GetTarget(Extensions.EngageRange);
             if (target == null)
             {
                 return;
             }
-            Combo2.OnUpdate();
-            //switch (Enums.ComboPattern)
-            //{
-            //    case ComboPattern.MaximizeDmg:
-            //        MaximizeDmg.OnUpdate(target);
-            //        break;
 
-            //    case ComboPattern.Normal: break;
-
-            //    case ComboPattern.FastCombo:
-            //        FastCombo.OnUpdate(target);
-            //        break;
-
-            //    default: throw new ArgumentOutOfRangeException();
-            //}
-        }
-
-        private static ComboPattern Generate()
-        {
-            var target = Global.TargetSelector.GetTarget(Extensions.EngageRange + 700);
-            if (target == null)
+            if (target.IsValidAutoRange() && SpellConfig.W.Ready)
             {
-                return ComboPattern.MaximizeDmg;
+                SpellManager.CastW(target);
             }
 
-            switch (MenuConfig.Combo["Mode"].Value)
+            if (SpellConfig.E.Ready && !target.IsValidAutoRange())
             {
-                case 0:
-
-                    if (Maths.Percent(target.Health, Dmg.Damage(target)) >= MenuConfig.Combo["Change"].Value)
-                    {
-                        return ComboPattern.FastCombo;
-                    }
-                    return ComboPattern.MaximizeDmg;
-
-                case 1: return ComboPattern.MaximizeDmg;
-                case 2: return ComboPattern.FastCombo;
+                SpellConfig.E.Cast(target.ServerPosition);
             }
-            return ComboPattern.MaximizeDmg;
+
+            else if (SpellConfig.R.Ready && Enums.UltimateMode == UltimateMode.First && ComboManager.CanCastR1(target))
+            {
+                if (Global.Player.IsDashing() && Global.Player.GetDashInfo().EndPos.Distance(target) <= Global.Player.AttackRange + 50)
+                {
+                    return;
+                }
+
+                SpellConfig.R.Cast();
+            }
         }
 
         private static void ChaseTarget()

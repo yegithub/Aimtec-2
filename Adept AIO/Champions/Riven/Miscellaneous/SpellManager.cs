@@ -44,6 +44,13 @@
                     _canUseQ = false;
                     _canWq = false;
                     _serverPosition = false;
+
+                    Extensions.CurrentQCount++;
+                    if (Extensions.CurrentQCount > 3)
+                    {
+                        Extensions.CurrentQCount = 1;
+                    }
+
                     Animation.Reset();
                     break;
                 case "RivenMartyr":

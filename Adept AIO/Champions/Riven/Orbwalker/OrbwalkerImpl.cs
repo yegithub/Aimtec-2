@@ -491,13 +491,14 @@
             IEnumerable<Obj_AI_Base> minions = attackableUnits.Where(x => x is Obj_AI_Base).Cast<Obj_AI_Base>().OrderByDescending(x => x.MaxHealth);
 
             //Killable
-            AttackableUnit killableMinion = minions.FirstOrDefault(x => CanKillMinion(x));
+            var enumerable = minions.ToArray();
+            AttackableUnit killableMinion = enumerable.FirstOrDefault(x => CanKillMinion(x));
             if (killableMinion != null)
             {
                 return killableMinion;
             }
 
-            var waitableMinion = minions.Any(ShouldWaitMinion);
+            var waitableMinion = enumerable.Any(ShouldWaitMinion);
             if (waitableMinion)
             {
                 Player.IssueOrder(OrderType.MoveTo, Game.CursorPos);
@@ -525,7 +526,7 @@
                 }
             }
 
-            foreach (var minion in minions)
+            foreach (var minion in enumerable)
             {
                 var predHealth = GetPredictedHealth(minion);
 
@@ -538,7 +539,7 @@
                 return minion;
             }
 
-            var first = minions.MaxBy(x => x.Health);
+            var first = enumerable.MaxBy(x => x.Health);
             if (first != null)
             {
                 return first;

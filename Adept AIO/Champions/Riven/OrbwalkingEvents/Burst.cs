@@ -15,27 +15,15 @@
     {
         public static void OnProcessAutoAttack()
         {
-            var target = Global.Orbwalker.GetOrbwalkingTarget() as Obj_AI_Base;
+            var target = Global.TargetSelector.GetTarget(Global.Player.AttackRange + 200);
             if (target == null)
             {
                 return;
             }
-            switch (Enums.BurstPattern)
+
+            if (SpellConfig.Q.Ready)
             {
-                case BurstPattern.TheShy:
-
-                    if (SpellConfig.Q.Ready)
-                    {
-                        SpellManager.CastQ(target);
-                    }
-                    break;
-
-                case BurstPattern.Execution:
-                    if (SpellConfig.Q.Ready)
-                    {
-                        SpellManager.CastQ(target);
-                    }
-                    break;
+                SpellManager.CastQ(target);
             }
         }
 
