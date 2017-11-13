@@ -26,6 +26,11 @@
                 return;
             }
 
+            if (_spellConfig.E.Ready && _menuConfig.Combo["E"].Enabled && _menuConfig.Combo[target.ChampionName].Enabled)
+            {
+                _spellConfig.E.CastOnUnit(target);
+            }
+
             if (_spellConfig.Q.Ready && _menuConfig.Combo["Q"].Enabled)
             {
                 _spellConfig.Q.Cast();
@@ -35,16 +40,6 @@
                 Global.Player.CountEnemyHeroesInRange(2000) <= 2 && target.ServerPosition.CountAllyHeroesInRange(900) == 0)
             {
                 _spellConfig.W.Cast(target);
-            }
-
-            if (_spellConfig.E.Ready && _menuConfig.Combo["E"].Enabled)
-            {
-                if (!_menuConfig.Combo[target.ChampionName].Enabled)
-                {
-                    return;
-                }
-
-                _spellConfig.E.CastOnUnit(target);
             }
         }
     }

@@ -9,7 +9,7 @@
     {
         public static void OnUpdate()
         {
-            var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsValidTarget() && x.MaxHealth > 20);
+            var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsValidTarget(1000) && x.MaxHealth > 20);
             if (minion == null || MenuConfig.Lane["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(2000) >= 1)
             {
                 return;

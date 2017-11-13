@@ -30,6 +30,7 @@
 
             Game.OnUpdate += manager.OnUpdate;
             Game.OnUpdate += killsteal.OnUpdate;
+            Game.OnUpdate += spellConfig.Update;
 
             Global.Orbwalker.PostAttack += manager.OnPostAttack;
             Global.Orbwalker.PreAttack += manager.OnPreAttack;

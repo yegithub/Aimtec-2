@@ -22,13 +22,19 @@
             R = new Spell(SpellSlot.R, this.FullRange);
         }
 
+        public void Update()
+        {
+            E.Range = this.FullRange;
+            R.Range = this.FullRange;
+        }
+
         public int FullRange
         {
             get
             {
                 var target = Global.Orbwalker.GetOrbwalkingTarget();
 
-                return (int) (target == null ? Global.Player.AttackRange : Global.Player.GetFullAttackRange(target) + 65);
+                return (int) (target == null ? Global.Player.AttackRange : Global.Player.GetFullAttackRange(target) + 85);
             }
         }
     }
