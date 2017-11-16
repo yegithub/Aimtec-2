@@ -44,7 +44,7 @@
             var legendary = GameObjects.JungleLegendary.FirstOrDefault(x => x.HasBuff("kalistaexpungemarker"));
             if (legendary != null && legendary.NetworkId == target.NetworkId)
             {
-                dmg *= 0.85f;
+                dmg *= 0.9f;
             }
           
             return dmg;

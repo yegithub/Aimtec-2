@@ -93,7 +93,7 @@
                 {
                     var soulBound = GameObjects.AllyHeroes.FirstOrDefault(x => x.NetworkId != Global.Player.NetworkId && x.HasBuff("kalistacoopstrikeally"));
 
-                    if (soulBound == null)
+                    if (soulBound == null || soulBound.CountAllyHeroesInRange(1500) == 0)
                     {
                         return;
                     }

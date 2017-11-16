@@ -75,13 +75,9 @@
             {
                 Q.Cast(InsecManager.QInsecPos(target));
             }
-            else
+            else if(Q.GetPrediction(target).HitChance >= HitChance.High)
             {
-                var pred = Q.GetPrediction(target);
-                if (pred.HitChance >= HitChance.High)
-                {
-                    Q.Cast(target);
-                }
+                Q.Cast(target);
             }
         }
 

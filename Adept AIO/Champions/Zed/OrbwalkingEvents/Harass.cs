@@ -20,7 +20,7 @@
                 SpellManager.CastE(target);
             }
 
-            if (SpellManager.W.Ready && target.IsValidTarget(SpellManager.WCastRange))
+            if (SpellManager.W.Ready && target.IsValidTarget(SpellManager.WCastRange + SpellManager.E.Range))
             {
                 if (ShadowManager.CanCastW1() && MenuConfig.Harass["W"].Enabled)
                 {

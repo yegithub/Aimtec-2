@@ -59,7 +59,7 @@
                 SpellConfig.E.Cast(target.ServerPosition);
             }
 
-            else if (SpellConfig.R.Ready && Enums.UltimateMode == UltimateMode.First && ComboManager.CanCastR1(target))
+            else if (SpellConfig.R.Ready && Enums.UltimateMode == UltimateMode.First && CanCastR1(target))
             {
                 if (Global.Player.IsDashing() && Global.Player.GetDashInfo().EndPos.Distance(target) <= Global.Player.AttackRange + 50)
                 {

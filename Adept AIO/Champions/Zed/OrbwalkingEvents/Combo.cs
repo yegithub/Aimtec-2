@@ -34,11 +34,12 @@
             {
                 if (ShadowManager.CanCastW1())
                 {
-                    if (!target.IsValidTarget(SpellManager.R.Range))
+                    if (target.IsValidTarget(SpellManager.R.Range + 200))
                     {
                         SpellManager.W.Cast(target.ServerPosition);
                     }
-                    else if (MenuConfig.Combo["Extend"].Enabled)
+
+                    if (MenuConfig.Combo["Extend"].Enabled)
                     {
                         foreach (var shadow in ShadowManager.Shadows)
                         {

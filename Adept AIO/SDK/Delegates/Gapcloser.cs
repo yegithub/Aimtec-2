@@ -669,7 +669,7 @@
 
         private static void OnProcessAutoAttack(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
         {
-            if (sender == null || sender.Type != GameObjectType.obj_AI_Hero || !sender.IsEnemy || !sender.IsMelee)
+            if (sender == null || sender.IsHero || !sender.IsEnemy || !sender.IsMelee)
             {
                 return;
             }
@@ -697,7 +697,7 @@
 
         private static void OnNewPath(Obj_AI_Base sender, Obj_AI_BaseNewPathEventArgs args)
         {
-            if (sender == null || sender.Type != GameObjectType.obj_AI_Hero || !sender.IsEnemy)
+            if (sender == null || !sender.IsHero || !sender.IsEnemy)
             {
                 return;
             }
@@ -791,8 +791,11 @@
 
         private static void OnProcessSpellCast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
         {
-            if (sender == null || args.Sender == null || args.SpellData == null || !sender.IsValid || sender.Type != GameObjectType.obj_AI_Hero || !sender.IsEnemy ||
-                string.IsNullOrEmpty(args.SpellData.Name) || args.SpellData.Name.ToLower().Contains("attack") || args.SpellData.Name.ToLower().Contains("crit"))
+            if (sender == null ||
+                sender.IsHero || 
+                !sender.IsEnemy ||
+                string.IsNullOrEmpty(args.SpellData.Name) || 
+                args.SpellData.Name.ToLower().Contains("attack") || args.SpellData.Name.ToLower().Contains("crit"))
             {
                 return;
             }
