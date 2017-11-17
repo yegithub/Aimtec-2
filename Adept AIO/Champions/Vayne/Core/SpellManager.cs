@@ -23,7 +23,7 @@
             R = new Spell(SpellSlot.R);
         }
 
-        public static Geometry.Rectangle Rect(Vector3 position)
+        private static Geometry.Rectangle Rect(Vector3 position)
         {
             var endPos = position + (position - Global.Player.ServerPosition).Normalized() * 475;
             return new Geometry.Rectangle(position.To2D(), endPos.To2D(), 65);
@@ -42,9 +42,10 @@
 
         public static bool CanStun(Obj_AI_Base target)
         {
+            var rectAfterDelay = RectAfterDelay(target);
             var rect = Rect(target.ServerPosition);
 
-            return WallExtension.IsWall(rect.Start.To3D(), rect.End.To3D());
+            return WallExtension.IsWall(rectAfterDelay.Start.To3D(), rectAfterDelay.End.To3D()) && WallExtension.IsWall(rect.Start.To3D(), rect.End.To3D());
         }
 
         public static void CastE(Obj_AI_Base target)
@@ -53,9 +54,8 @@
             {
                 return;
             }
-            var rect = RectAfterDelay(target);
-
-            if (!CanStun(target) || rect != null && !WallExtension.IsWall(rect.Start.To3D(), rect.End.To3D()))
+         
+            if (!CanStun(target))
             {
                 return;
             }

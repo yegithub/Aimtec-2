@@ -12,17 +12,18 @@
     {
         public static void Reset()
         {
-           
-            var qDelay = (Extensions.CurrentQCount == 1 ? 550 : 350) - 2 * Global.Player.Level;
-            var moveDelay = (int)qDelay / 2 + 50;
+
+            var qDelay = (Extensions.CurrentQCount == 1 ? 500 : 300) - 2 * Global.Player.Level;
+            var moveDelay = qDelay / 2 + 100;
             var ping = Game.Ping / 2;
 
-            DelayAction.Queue(moveDelay, () =>
-            {
-                Global.Orbwalker.Move(Game.CursorPos);
-            });
+            DelayAction.Queue(moveDelay,
+                () =>
+                {
+                    Global.Orbwalker.Move(Game.CursorPos);
+                });
 
-            DelayAction.Queue((int) qDelay + ping,
+            DelayAction.Queue(qDelay + ping,
                 () =>
                 {
                     Global.Orbwalker.ResetAutoAttackTimer();

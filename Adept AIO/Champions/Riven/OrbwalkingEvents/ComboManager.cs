@@ -22,6 +22,11 @@
                 return;
             }
 
+            if (SpellConfig.E.Ready && target.IsValidAutoRange())
+            {
+                SpellConfig.E.Cast(target.ServerPosition);
+            }
+
             if (!SpellConfig.W.Ready && (!SpellConfig.Q.Ready || Extensions.CurrentQCount == 3) && SpellConfig.R2.Ready && Enums.UltimateMode == UltimateMode.Second &&
                 MenuConfig.Combo["R2"].Enabled && target.HealthPercent() <= 40)
             {
@@ -56,14 +61,14 @@
                 return;
             }
 
-            if (target.IsValidAutoRange() && SpellConfig.W.Ready)
-            {
-                SpellManager.CastW(target);
-            }
-
             if (SpellConfig.E.Ready && !target.IsValidAutoRange())
             {
                 SpellConfig.E.Cast(target.ServerPosition);
+            }
+
+            else if (target.IsValidAutoRange() && SpellConfig.W.Ready && !SpellConfig.Q.Ready)
+            {
+                SpellManager.CastW(target);
             }
 
             else if (SpellConfig.R.Ready && Enums.UltimateMode == UltimateMode.First && CanCastR1(target))

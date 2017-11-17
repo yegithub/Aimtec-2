@@ -37,7 +37,6 @@
                 var target = Global.Orbwalker.GetOrbwalkingTarget() as Obj_AI_Base;
                 if (target != null && target.IsValidTarget() && target.IsHero)
                 {
-                    SpellManager.Rect(target.ServerPosition)?.Draw(Color.Crimson);
                     SpellManager.RectAfterDelay(target)?.Draw(Color.Blue);
                 }
 

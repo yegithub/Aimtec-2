@@ -18,7 +18,7 @@
         {
             get
             {
-                var range = 65f;
+                var range = 0f;
 
                 if (AllIn)
                 {
