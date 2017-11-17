@@ -1,11 +1,14 @@
 ﻿namespace Adept_AIO.Champions.Zed.Core
 {
+    using System.Linq;
     using Aimtec;
     using Aimtec.SDK.Damage;
+    using Aimtec.SDK.Extensions;
     using SDK.Unit_Extensions;
 
     class Dmg
     {
+     
         public static double Damage(Obj_AI_Base target)
         {
             if (target == null)
@@ -14,6 +17,16 @@
             }
 
             var dmg = 0d;
+            var shadowCount = ShadowManager.Shadows.Count;
+            if (shadowCount <= 0)
+            {
+                shadowCount = 1;
+            }
+
+            if (ShadowManager.CanCastW1())
+            {
+                shadowCount += 1;
+            }
 
             if (Global.Orbwalker.CanAttack())
             {
@@ -22,17 +35,17 @@
 
             if (SpellManager.Q.Ready)
             {
-                dmg += Global.Player.GetSpellDamage(target, SpellSlot.Q) + dmg;
+                dmg += Global.Player.GetSpellDamage(target, SpellSlot.Q) * shadowCount + dmg;
             }
 
             if (SpellManager.E.Ready)
             {
-                dmg += Global.Player.GetSpellDamage(target, SpellSlot.E);
+                dmg += Global.Player.GetSpellDamage(target, SpellSlot.E) * shadowCount;
             }
 
             if (SpellManager.R.Ready)
             {
-                dmg += Global.Player.GetSpellDamage(target, SpellSlot.R);
+                dmg += Global.Player.GetSpellDamage(target, SpellSlot.R) + dmg;
             }
             return dmg;
         }

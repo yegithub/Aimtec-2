@@ -1,5 +1,6 @@
 ﻿namespace Adept_AIO.Champions.Zed.Miscellaneous
 {
+    using System;
     using System.Linq;
     using Aimtec.SDK.Extensions;
     using Aimtec.SDK.Orbwalking;
@@ -11,31 +12,39 @@
     {
         public static void OnUpdate()
         {
-            if (Global.Player.IsDead || Global.Orbwalker.IsWindingUp)
+            try
             {
-                return;
-            }
+                if (Global.Player.IsDead || Global.Orbwalker.IsWindingUp || Global.Player.IsRecalling())
+                {
+                    return;
+                }
 
-            switch (Global.Orbwalker.Mode)
-            {
-                case OrbwalkingMode.Combo:
-                    Combo.OnUpdate();
-                    break;
-                case OrbwalkingMode.Mixed:
-                    Harass.OnUpdate();
-                    break;
-                case OrbwalkingMode.Laneclear:
-                    LaneClear.OnUpdate();
-                    JungleClear.OnUpdate();
-                    break;
-                case OrbwalkingMode.Lasthit:
-                    Lasthit.OnUpdate();
-                    break;
-            }
+                switch (Global.Orbwalker.Mode)
+                {
+                    case OrbwalkingMode.Combo:
+                        Combo.OnUpdate();
+                        break;
+                    case OrbwalkingMode.Mixed:
+                        Harass.OnUpdate();
+                        break;
+                    case OrbwalkingMode.Laneclear:
+                        LaneClear.OnUpdate();
+                        JungleClear.OnUpdate();
+                        break;
+                    case OrbwalkingMode.Lasthit:
+                        Lasthit.OnUpdate();
+                        break;
+                }
 
-            if (Global.Orbwalker.Mode != OrbwalkingMode.Mixed && !Global.Player.IsRecalling())
+                if (Global.Orbwalker.Mode != OrbwalkingMode.Mixed)
+                {
+                    PermaSpells();
+                }
+            }
+            catch (Exception e)
             {
-                PermaSpells();
+                Console.WriteLine(e);
+                throw;
             }
         }
 

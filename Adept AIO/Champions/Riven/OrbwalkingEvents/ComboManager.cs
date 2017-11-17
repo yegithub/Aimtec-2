@@ -28,6 +28,13 @@
                 SpellManager.CastR2(target);
             }
 
+            if (SpellConfig.Q.Ready &&
+                SpellConfig.W.Ready &&
+                target.IsValidAutoRange())
+            {
+                SpellManager.CastWq(target);
+            }
+
             if (SpellConfig.Q.Ready)
             {
                 SpellManager.CastQ(target);

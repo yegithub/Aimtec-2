@@ -12,20 +12,19 @@
     {
         public static void Reset()
         {
-            Global.Orbwalker.AttackingEnabled = false;
+           
+            var qDelay = (Extensions.CurrentQCount == 1 ? 550 : 350) - 2 * Global.Player.Level;
+            var moveDelay = (int)qDelay / 2 + 50;
+            var ping = Game.Ping / 2;
 
-            var qDelay = (Extensions.CurrentQCount == 1 ? 0b111101010 : 0b101011110) - 3.333f * Global.Player.Level;
-            var moveDelay = (int)qDelay / 2;
-         
-
-            var ping = Game.Ping / 0b10;
-            Console.WriteLine($"{Extensions.CurrentQCount} {qDelay + ping}");
-            DelayAction.Queue(moveDelay, () => Global.Orbwalker.Move(Game.CursorPos));
+            DelayAction.Queue(moveDelay, () =>
+            {
+                Global.Orbwalker.Move(Game.CursorPos);
+            });
 
             DelayAction.Queue((int) qDelay + ping,
                 () =>
                 {
-                    Global.Orbwalker.AttackingEnabled = true;
                     Global.Orbwalker.ResetAutoAttackTimer();
                 });
         }
@@ -40,15 +39,15 @@
             switch (args.Animation)
             {
                 case "Spell1a":
-                    Extensions.CurrentQCount = 0b10; // Q1
+                    Extensions.CurrentQCount = 2; // Q1
                     //  Reset();
                     break;
                 case "Spell1b":
-                    Extensions.CurrentQCount = 0b11; // Q2
+                    Extensions.CurrentQCount = 3; // Q2
                     //    Reset();
                     break;
                 case "Spell1c":
-                    Extensions.CurrentQCount = 0b1; // Q3 
+                    Extensions.CurrentQCount = 1; // Q3 
                     //    Reset();
                     break;
             }
