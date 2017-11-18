@@ -14,8 +14,8 @@
         {
 
             var qDelay = (Extensions.CurrentQCount == 1 ? 500 : 300) - 2 * Global.Player.Level;
-            var moveDelay = qDelay / 2 + 100;
-            var ping = Game.Ping / 2;
+            var moveDelay = (int)(qDelay * 0.8);
+            var ping = Game.Ping   / 2;
 
             DelayAction.Queue(moveDelay,
                 () =>
