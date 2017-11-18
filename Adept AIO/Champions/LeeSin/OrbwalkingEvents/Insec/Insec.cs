@@ -23,7 +23,7 @@
 
         private Obj_AI_Base _lastQUnit;
 
-        private bool IsBKActive;
+        private bool _isBkActive;
 
         public Insec(IWardTracker wardTracker, IWardManager wardManager, ISpellConfig spellConfig, IInsecManager insecManager)
         {
@@ -128,7 +128,7 @@
             {
                 if (dist <= 125 || this.FlashReady)
                 {
-                    if (IsBKActive)
+                    if (_isBkActive)
                     {
                         var enemy = GameObjects.EnemyHeroes.FirstOrDefault(x => x.IsValidTarget(_spellConfig.R.Range) && x.NetworkId != Target.NetworkId);
                         if (enemy != null)
@@ -182,10 +182,10 @@
         {
             if (this.Bk && _insecManager.BkPosition(Target) != Vector3.Zero)
             {
-                IsBKActive = true;
+                _isBkActive = true;
                 return _insecManager.BkPosition(Target);
             }
-            IsBKActive = false;
+            _isBkActive = false;
             return _insecManager.InsecPosition(Target);
         }
     }

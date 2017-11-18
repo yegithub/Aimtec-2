@@ -13,7 +13,8 @@
     {
         public static void OnPresent()
         {
-            if (Global.Player.IsDead || !MenuConfig.Drawings["Dmg"].Enabled)
+            if (Global.Player.IsDead ||
+                !MenuConfig.Drawings["Dmg"].Enabled)
             {
                 return;
             }
@@ -34,10 +35,23 @@
                 return;
             }
 
-            if (MenuConfig.Drawings["Pred"].Enabled && SpellManager.Q.Ready)
+            if (MenuConfig.Drawings["Pred"].Enabled &&
+                SpellManager.Q.Ready)
             {
                 foreach (var shadow in ShadowManager.Shadows.Where(ShadowManager.IsShadow))
                 {
+                    if (shadow.Distance(Global.Player) > 1300)
+                    {
+                        continue;
+                    }
+
+                    if ((!ShadowManager.CanCastFirst(SpellSlot.W) && SpellManager.W.Ready || !ShadowManager.CanCastFirst(SpellSlot.R) && SpellManager.R.Ready) && 
+                        Render.WorldToScreen(Global.Player.ServerPosition, out var playerVector2) &&
+                        Render.WorldToScreen(shadow.ServerPosition, out var shadowVector2))
+                    {
+                        Render.Line(playerVector2, shadowVector2, 3, true, Color.White);
+                    }
+
                     var enemy = GameObjects.Enemy.FirstOrDefault(x => x.Distance(shadow) <= SpellManager.Q.Range);
                     if (enemy == null)
                     {
@@ -63,7 +77,8 @@
                     Color.Crimson);
             }
 
-            if (SpellManager.Q.Ready && MenuConfig.Drawings["Q"].Enabled)
+            if (SpellManager.Q.Ready &&
+                MenuConfig.Drawings["Q"].Enabled)
             {
                 Render.Circle(Global.Player.Position, SpellManager.Q.Range, (uint) MenuConfig.Drawings["Segments"].Value, Color.Cyan);
             }

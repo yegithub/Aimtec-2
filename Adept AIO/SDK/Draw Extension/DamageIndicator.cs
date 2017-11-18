@@ -43,7 +43,7 @@
             var from = EndPosition(0);
             var to = EndPosition(dmg);
 
-            if (from.IsZero || to.IsZero || this.Unit == null)
+            if (from.IsZero || to.IsZero || this.Unit == null || !this.Unit.IsVisible)
             {
                 return;
             }

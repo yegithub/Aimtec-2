@@ -23,7 +23,12 @@
                 shadowCount = 1;
             }
 
-            if (ShadowManager.CanCastW1())
+            if (ShadowManager.CanCastFirst(SpellSlot.W))
+            {
+                shadowCount += 1;
+            }
+
+            if (ShadowManager.CanCastFirst(SpellSlot.R))
             {
                 shadowCount += 1;
             }

@@ -10,7 +10,7 @@
         {
             Global.Orbwalker.Move(Game.CursorPos);
 
-            if (ShadowManager.CanCastW1())
+            if (ShadowManager.CanCastFirst(SpellSlot.W))
             {
                 SpellManager.W.Cast(Game.CursorPos);
             }

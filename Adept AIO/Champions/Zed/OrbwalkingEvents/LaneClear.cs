@@ -70,7 +70,7 @@
                 {
                     if (GameObjects.EnemyMinions.Count(x => x.IsValidTarget(1300)) >= 6 && Global.Player.Level >= 12 && Maths.GetEnergyPercent() >= 70)
                     {
-                        if (ShadowManager.CanCastW1())
+                        if (ShadowManager.CanCastFirst(SpellSlot.W))
                         {
                             SpellManager.W.Cast(minion.ServerPosition);
                         }

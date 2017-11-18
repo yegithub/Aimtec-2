@@ -34,8 +34,8 @@
                 new MenuBool("W", "Use W"),
                 new MenuBool("E", "Use E"),
                 new MenuBool("R", "Use R"),
+                new MenuList("Style", "Shadow Style", new []{"Triangle", "Line", "Cursor"}, 0),
                 new MenuBool("Killable", "Only Use R When Killable"),
-                new MenuBool("Extend", "Max Range (The Line)"),
                 new MenuSeperator("Whitelist")
             };
 

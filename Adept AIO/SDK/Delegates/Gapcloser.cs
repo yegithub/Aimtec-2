@@ -657,7 +657,7 @@
 
             Game.OnUpdate += OnUpdate;
             //GameObject.OnCreate += OnCreate;
-            Obj_AI_Base.OnProcessAutoAttack += OnProcessAutoAttack;
+           // Obj_AI_Base.OnProcessAutoAttack += OnProcessAutoAttack;
             Obj_AI_Base.OnProcessSpellCast += OnProcessSpellCast;
             Obj_AI_Base.OnNewPath += OnNewPath;
         }

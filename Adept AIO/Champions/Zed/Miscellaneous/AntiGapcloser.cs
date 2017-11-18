@@ -11,7 +11,7 @@
     {
         public static void OnGapcloser(Obj_AI_Hero sender, GapcloserArgs args)
         {
-            if (sender.IsMe || !sender.IsEnemy || args.EndPosition.Distance(Global.Player) > SpellManager.E.Range)
+            if (sender.IsMe || !sender.IsEnemy || args.EndPosition.Distance(Global.Player) > 1000)
             {
                 return;
             }
@@ -19,13 +19,13 @@
             if (SpellManager.W.Ready && MenuConfig.Misc["W"].Enabled)
             {
                 var allyT = GameObjects.AllyTurrets.FirstOrDefault(x => x.IsValid);
-                if (allyT != null && ShadowManager.CanCastW1())
+                if (allyT != null && ShadowManager.CanCastFirst(SpellSlot.W))
                 {
                     SpellManager.W.Cast(allyT.ServerPosition);
                 }
-                else if (ShadowManager.CanSwitchToShadow())
+                else 
                 {
-                    SpellManager.W.Cast();
+                    ShadowManager.SwitchToShadows();
                 }
             }
 

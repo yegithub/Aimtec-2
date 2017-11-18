@@ -13,23 +13,31 @@
     {
         public static List<Obj_AI_Minion> Shadows;
 
-        public static bool CanSwitchToShadow()
+        public static void SwitchToShadows()
         {
-            return Global.Player.GetSpell(SpellSlot.W).ToggleState != 0 && Shadows.Any(x => x.Distance(Global.Player) <= 1300);
+            if (CanSwitchToShadow(SpellSlot.W))
+            {
+                SpellManager.W.Cast();
+            }
+            else if (CanSwitchToShadow(SpellSlot.R))
+            {
+                SpellManager.R.Cast();
+            }
         }
 
-        public static bool CanCastW1()
+        public static bool CanSwitchToShadow(SpellSlot spellSlot)
         {
-            return Global.Player.GetSpell(SpellSlot.W).ToggleState == 0;
+            return Global.Player.GetSpell(spellSlot).ToggleState != 0 && Shadows.Any(x => x.Distance(Global.Player) <= 1300);
+        }
+
+        public static bool CanCastFirst(SpellSlot spellSlot)
+        {
+            return Global.Player.GetSpell(spellSlot).ToggleState == 0;
         }
 
         public static bool IsShadow(Obj_AI_Minion shadow)
         {
-            if (shadow == null)
-            {
-                return false;
-            }
-            return shadow.IsAlly && !shadow.IsDead && shadow.IsValid && shadow.UnitSkinName.ToLower().Contains("shadow");
+            return shadow != null && shadow.IsAlly && shadow.UnitSkinName.ToLower().Contains("shadow");
         }
 
         public static void OnDelete(GameObject sender)

@@ -53,11 +53,11 @@
                 return;
             }
 
-            if (switchToShadow && ShadowManager.CanSwitchToShadow())
+            if (switchToShadow && ShadowManager.CanSwitchToShadow(SpellSlot.W))
             {
                 W.Cast();
             }
-            else if (ShadowManager.CanCastW1() && Environment.TickCount - LastW > Game.Ping + 100)
+            else if (ShadowManager.CanCastFirst(SpellSlot.W) && Environment.TickCount - LastW > Game.Ping + 100)
             {
                 LastW = Environment.TickCount;
                 W.Cast(target.ServerPosition);

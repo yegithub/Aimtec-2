@@ -1,5 +1,6 @@
 ﻿namespace Adept_AIO.Champions.Zed.OrbwalkingEvents
 {
+    using Aimtec;
     using Aimtec.SDK.Extensions;
     using Core;
     using SDK.Generic;
@@ -22,12 +23,12 @@
 
             if (SpellManager.W.Ready && target.IsValidTarget(SpellManager.WCastRange + SpellManager.E.Range))
             {
-                if (ShadowManager.CanCastW1() && MenuConfig.Harass["W"].Enabled)
+                if (ShadowManager.CanCastFirst(SpellSlot.W) && MenuConfig.Harass["W"].Enabled)
                 {
                     SpellManager.CastW(target);
                 }
 
-                else if (ShadowManager.CanSwitchToShadow() && MenuConfig.Harass["W2"].Enabled && Global.Player.HealthPercent() >= MenuConfig.Harass["Health"].Value &&
+                else if (ShadowManager.CanSwitchToShadow(SpellSlot.W) && MenuConfig.Harass["W2"].Enabled && Global.Player.HealthPercent() >= MenuConfig.Harass["Health"].Value &&
                          !target.IsUnderEnemyTurret())
                 {
                     SpellManager.CastW(target, true);

@@ -1,6 +1,8 @@
 ﻿namespace Adept_AIO.Champions.Zed.OrbwalkingEvents
 {
+    using System;
     using System.Linq;
+    using Aimtec;
     using Aimtec.SDK.Extensions;
     using Core;
     using SDK.Unit_Extensions;
@@ -15,14 +17,12 @@
                 return;
             }
 
-            if (SpellManager.R.Ready && target.IsValidTarget(SpellManager.R.Range) && !(MenuConfig.Combo["Killable"].Enabled && Dmg.Damage(target) < target.Health))
+            if (SpellManager.R.Ready &&
+                target.IsValidTarget(SpellManager.R.Range) &&
+                !(MenuConfig.Combo["Killable"].Enabled && Dmg.Damage(target) < target.Health))
             {
-                if (target.HealthPercent() <= 30)
-                {
-                    return;
-                }
-
-                if (!MenuConfig.Combo[target.ChampionName].Enabled)
+                if (target.HealthPercent() <= 25 ||
+                    !MenuConfig.Combo[target.ChampionName].Enabled)
                 {
                     return;
                 }
@@ -30,35 +30,63 @@
                 SpellManager.CastR(target);
             }
 
-            if (SpellManager.W.Ready && MenuConfig.Combo["W"].Enabled && target.IsValidTarget(SpellManager.WCastRange + SpellManager.R.Range))
+            if (SpellManager.W.Ready &&
+                MenuConfig.Combo["W"].Enabled &&
+                target.IsValidTarget(SpellManager.WCastRange + SpellManager.R.Range))
             {
-                if (ShadowManager.CanCastW1())
+                if (ShadowManager.CanCastFirst(SpellSlot.W))
                 {
-                    if (target.IsValidTarget(SpellManager.R.Range + 200))
-                    {
-                        SpellManager.W.Cast(target.ServerPosition);
-                    }
-
-                    if (MenuConfig.Combo["Extend"].Enabled)
+                    if (Environment.TickCount - SpellManager.LastR < 1500)
                     {
                         foreach (var shadow in ShadowManager.Shadows)
                         {
-                            SpellManager.W.Cast(target.ServerPosition.Extend(shadow.ServerPosition, -2000f));
+                            if (shadow == null)
+                            {
+                                continue;
+                            }
+
+                            switch (MenuConfig.Combo["Style"].Value)
+                            {
+                                case 0:
+                                    var trianglePos = (target.ServerPosition + (target.ServerPosition - shadow.ServerPosition).To2D().Perpendicular().To3D().Normalized() * 350);
+                                    if (trianglePos.Distance(target) > SpellManager.WCastRange)
+                                    {
+                                        goto case 1;
+                                    }
+
+                                    SpellManager.W.Cast(trianglePos);
+                                    break;
+                                case 1:
+                                    SpellManager.W.Cast(target.ServerPosition.Extend(shadow.ServerPosition, -2000f));
+                                    break;
+                                case 2:
+                                    SpellManager.W.Cast(Game.CursorPos);
+                                    break;
+                            }
                         }
                     }
+
+                    else if (target.IsValidTarget(SpellManager.R.Range + 200))
+                    {
+                        SpellManager.W.Cast(target.ServerPosition);
+                    }
                 }
-                else if (ShadowManager.CanSwitchToShadow() && ShadowManager.Shadows.FirstOrDefault().Distance(target) <= Global.Player.Distance(target) &&
+                else if (ShadowManager.CanSwitchToShadow(SpellSlot.W) &&
+                         ShadowManager.Shadows.FirstOrDefault().Distance(target) <= Global.Player.Distance(target) &&
                          target.Distance(Global.Player) > Global.Player.AttackRange + 65)
                 {
                     SpellManager.W.Cast();
                 }
             }
-            else if (SpellManager.Q.Ready && MenuConfig.Combo["Q"].Enabled)
+
+            else if (SpellManager.Q.Ready &&
+                     MenuConfig.Combo["Q"].Enabled)
             {
                 SpellManager.CastQ(target);
             }
 
-            if (SpellManager.E.Ready && MenuConfig.Combo["E"].Enabled)
+            if (SpellManager.E.Ready &&
+                MenuConfig.Combo["E"].Enabled)
             {
                 SpellManager.CastE(target);
             }
