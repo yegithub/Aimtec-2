@@ -66,7 +66,7 @@
                         }
                     }
 
-                    else if (target.IsValidTarget(SpellManager.R.Range + 200))
+                    else if (target.IsValidTarget(SpellManager.WCastRange) && ShadowManager.CanCastFirst(SpellSlot.W) && !SpellManager.R.Ready)
                     {
                         SpellManager.W.Cast(target.ServerPosition);
                     }

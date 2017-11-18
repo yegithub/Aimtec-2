@@ -45,17 +45,18 @@
                         continue;
                     }
 
-                    if ((!ShadowManager.CanCastFirst(SpellSlot.W) && SpellManager.W.Ready || !ShadowManager.CanCastFirst(SpellSlot.R) && SpellManager.R.Ready) && 
+                    if ((Global.Player.GetSpell(SpellSlot.W).ToggleState != 0 || Global.Player.GetSpell(SpellSlot.R).ToggleState != 0) && 
+
                         Render.WorldToScreen(Global.Player.ServerPosition, out var playerVector2) &&
-                        Render.WorldToScreen(shadow.ServerPosition, out var shadowVector2))
+                        Render.WorldToScreen(shadow.ServerPosition,        out var shadowVector2))
                     {
                         Render.Line(playerVector2, shadowVector2, 3, true, Color.White);
                     }
 
                     var enemy = GameObjects.Enemy.FirstOrDefault(x => x.Distance(shadow) <= SpellManager.Q.Range);
-                    if (enemy == null)
+                    if (enemy == null || !enemy.IsValidTarget())
                     {
-                        continue;
+                        return;
                     }
 
                     var pred = SpellManager.Q.GetPrediction(enemy, shadow.ServerPosition, shadow.ServerPosition);
