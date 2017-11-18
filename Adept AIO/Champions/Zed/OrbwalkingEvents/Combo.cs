@@ -3,6 +3,7 @@
     using System;
     using System.Linq;
     using Aimtec;
+    using Aimtec.SDK.Events;
     using Aimtec.SDK.Extensions;
     using Core;
     using SDK.Unit_Extensions;
@@ -43,6 +44,11 @@
                             if (shadow == null)
                             {
                                 continue;
+                            }
+
+                            if (target.IsDashing())
+                            {
+                                SpellManager.W.Cast(target.GetDashInfo().EndPos);
                             }
 
                             switch (MenuConfig.Combo["Style"].Value)

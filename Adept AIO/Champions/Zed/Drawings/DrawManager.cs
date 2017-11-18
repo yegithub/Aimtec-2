@@ -21,6 +21,7 @@
 
             foreach (var target in GameObjects.EnemyHeroes.Where(x => x.IsVisible && !x.IsDead))
             {
+             
                 var damage = Dmg.Damage(target);
 
                 Global.DamageIndicator.Unit = target;
@@ -73,7 +74,7 @@
             if (MenuConfig.Drawings["Range"].Enabled)
             {
                 Render.Circle(Global.Player.Position,
-                    SpellManager.WCastRange + (Global.Orbwalker.Mode == OrbwalkingMode.Combo ? SpellManager.R.Range : Global.Player.AttackRange),
+                    Global.Orbwalker.Mode == OrbwalkingMode.Mixed ? SpellManager.WCastRange + Global.Player.AttackRange : SpellManager.R.Range,
                     (uint) MenuConfig.Drawings["Segments"].Value,
                     Color.Crimson);
             }

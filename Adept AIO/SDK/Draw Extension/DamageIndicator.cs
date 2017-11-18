@@ -1,5 +1,6 @@
 ﻿namespace Adept_AIO.SDK.Draw_Extension
 {
+    using System;
     using System.Drawing;
     using Aimtec;
 
@@ -43,7 +44,7 @@
             var from = EndPosition(0);
             var to = EndPosition(dmg);
 
-            if (from.IsZero || to.IsZero || this.Unit == null || !this.Unit.IsVisible)
+            if (from.IsZero || to.IsZero || this.Unit == null || from.X <= 200)
             {
                 return;
             }
