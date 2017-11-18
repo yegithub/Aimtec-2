@@ -63,7 +63,7 @@
                                     SpellManager.W.Cast(trianglePos);
                                     break;
                                 case 1:
-                                    SpellManager.W.Cast(target.ServerPosition.Extend(shadow.ServerPosition, -2000f));
+                                    SpellManager.W.Cast(target.ServerPosition.Extend(shadow.ServerPosition, -SpellManager.WCastRange));
                                     break;
                                 case 2:
                                     SpellManager.W.Cast(Game.CursorPos);
@@ -72,7 +72,7 @@
                         }
                     }
 
-                    else if (target.IsValidTarget(SpellManager.WCastRange) && ShadowManager.CanCastFirst(SpellSlot.W) && !SpellManager.R.Ready)
+                    else if (target.IsValidTarget(SpellManager.WCastRange) && ShadowManager.CanCastFirst(SpellSlot.W) && !(SpellManager.R.Ready && target.HealthPercent() > 25))
                     {
                         SpellManager.W.Cast(target.ServerPosition);
                     }
