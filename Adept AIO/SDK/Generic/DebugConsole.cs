@@ -11,7 +11,7 @@
             _messageState = messageState;
 
             Console.ForegroundColor = GetForeGroundColor();
-            Console.WriteLine($"[{DateTime.Now}] [{messageState}] {message}");
+            Console.WriteLine($"[{DateTime.Now}] [ADEPT AIO] [{messageState}] {message}");
             Console.ResetColor();
         }
 
@@ -20,7 +20,7 @@
             _messageState = messageState;
 
             Console.ForegroundColor = GetForeGroundColor();
-            Console.Write($"[{DateTime.Now}] [{messageState}] {message}");
+            Console.Write($"[{DateTime.Now}] [ADEPT AIO] [{messageState}] {message}");
             Console.ResetColor();
         }
 
