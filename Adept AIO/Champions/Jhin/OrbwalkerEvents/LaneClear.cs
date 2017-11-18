@@ -3,6 +3,7 @@
     using System.Linq;
     using Aimtec.SDK.Extensions;
     using Core;
+    using SDK.Geometry_Related;
     using SDK.Unit_Extensions;
 
     class LaneClear
@@ -22,7 +23,14 @@
 
             if(MenuConfig.LaneClear["Q"].Enabled && SpellManager.Q.Ready)
             {
-                SpellManager.Q.Cast(minion, true, MenuConfig.LaneClear["Q"].Value); // todo: Check if this works, else tryhard a bit. ZzzZz...
+                var range = SpellManager.Q.Range * 2;
+                var circle = new Geometry.Circle(minion.ServerPosition.To2D(), range);
+                var possible = GameObjects.EnemyMinions.Where(x => x.Distance(circle.Center) < range).OrderBy(x => x.Distance(minion));
+
+                if (possible.Count() >= MenuConfig.LaneClear["Q"].Value)
+                {
+                    SpellManager.Q.Cast(minion); 
+                }
             }
 
             if (MenuConfig.LaneClear["E"].Enabled && SpellManager.E.Ready)
