@@ -1,5 +1,9 @@
 ﻿namespace Adept_AIO.Champions.Jhin.OrbwalkerEvents
 {
+    using System;
+    using Aimtec;
+    using Aimtec.SDK.Damage;
+    using Aimtec.SDK.Extensions;
     using Core;
     using SDK.Unit_Extensions;
 
@@ -7,7 +11,7 @@
     {
         public static void OnUpdate()
         {
-            var target = Global.TargetSelector.GetTarget(Global.Player.AttackRange + 200);
+            var target = Global.TargetSelector.GetTarget(SpellManager.R.Range);
             if (target == null)
             {
                 return;
@@ -23,7 +27,7 @@
                 SpellManager.CastE(target);
             }
 
-            if (SpellManager.R.Ready && MenuConfig.Combo["R"].Enabled)
+            if (MenuConfig.Combo["R"].Enabled && (SpellManager.R.Ready && Global.Player.GetSpellDamage(target, SpellSlot.R) > target.Health || Global.Player.SpellBook.GetSpell(SpellSlot.R).Name.Equals("JhinRShot")))
             {
                 SpellManager.CastR(target);
             }

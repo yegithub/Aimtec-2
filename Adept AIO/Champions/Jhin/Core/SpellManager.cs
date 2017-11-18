@@ -1,5 +1,6 @@
 ﻿namespace Adept_AIO.Champions.Jhin.Core
 {
+    using System;
     using Aimtec;
     using Aimtec.SDK.Extensions;
     using Aimtec.SDK.Prediction.Skillshots;
@@ -25,7 +26,7 @@
             E = new Spell(SpellSlot.E, 750f);
             E.SetSkillshot(1f, 260f, 1000f, false, SkillshotType.Circle);
 
-            R = new Spell(SpellSlot.R, 1200f);
+            R = new Spell(SpellSlot.R, 3500f);
             R.SetSkillshot(0.25f, 80f, 5000f, false, SkillshotType.Line);
         }
 
@@ -62,11 +63,6 @@
 
         public static void CastR(Obj_AI_Base target)
         {
-            if (Global.Player.CountEnemyHeroesInRange(Global.Player.AttackRange + 1000) > 0)
-            {
-                return;
-            }
-
             R.Cast(target);
         }
     }
