@@ -30,7 +30,7 @@
                     MenuConfig.Misc["W"].Enabled)
                 {
                     var target = GameObjects.EnemyHeroes.FirstOrDefault(x => x.IsValidTarget(SpellManager.W.Range) && x.HasBuff("jhinespotteddebuff"));
-                    if (target != null && target.Distance(Global.Player) > Global.Player.AttackRange)
+                    if (target != null && target.Distance(Global.Player) > Global.Player.AttackRange + 200)
                     {
                         SpellManager.CastW(target);
                     }
