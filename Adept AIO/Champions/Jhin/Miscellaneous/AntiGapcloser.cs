@@ -20,11 +20,6 @@
                 return;
             }
 
-            if (SpellManager.W.Ready && MenuConfig.Misc["W"].Enabled && sender.IsValidTarget(SpellManager.W.Range))
-            {
-                SpellManager.W.Cast(args.EndPosition);
-            }
-
             if (SpellManager.E.Ready && MenuConfig.Misc["E"].Enabled && sender.IsValidTarget(SpellManager.E.Range))
             {
                 SpellManager.E.Cast(args.EndPosition);

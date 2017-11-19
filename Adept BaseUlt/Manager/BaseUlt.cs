@@ -287,8 +287,6 @@
 
         private static Vector3 GetFountainPos(GameObject target)
         {
-          
-
             switch (Game.Type)
             {
                 case (GameType) 11:
@@ -306,7 +304,6 @@
                     }
                     break;
             }
-
             return Vector3.Zero;
         }
 
