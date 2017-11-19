@@ -105,15 +105,13 @@
                 case TeleportStatus.Unknown:
                     if (_target != null && _target.NetworkId == sender.NetworkId)
                     {
-                        Console.WriteLine("ABORT");
                         Reset();
                     }
                     break;
                 case TeleportStatus.Start:
-                    Console.WriteLine("START");
+                  
                     if (args.Type == TeleportType.Recall && _target == null)
                     {
-                        Console.WriteLine("START VALID");
                         Set(args.Duration, Environment.TickCount, (Obj_AI_Hero) sender);
                     }
 
@@ -123,7 +121,6 @@
 
         private void OnUpdate()
         {
-            Console.WriteLine(Game.Type);
             if (_menu["RandomUlt"].Enabled)
             {
                 foreach (var enemy in _lastEnemyChecked.Where(x => x.IsFloatingHealthBarActive && !x.IsDead && x.IsValidTarget()))
