@@ -35,7 +35,14 @@
 
             if (MenuConfig.LaneClear["E"].Enabled && SpellManager.E.Ready)
             {
-                SpellManager.E.Cast(minion, true, MenuConfig.LaneClear["E"].Value);
+                var range = SpellManager.E.Range;
+                var circle = new Geometry.Circle(minion.ServerPosition.To2D(), range);
+                var count = GameObjects.EnemyMinions.Count(x => x.IsValidTarget(range, false, true, circle.Center.To3D()));
+
+                if (count >= MenuConfig.LaneClear["E"].Value)
+                {
+                    SpellManager.E.Cast(minion);
+                }
             }
         }
     }

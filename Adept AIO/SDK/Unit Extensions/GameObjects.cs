@@ -347,7 +347,7 @@
         /// <returns>
         ///     The List containing the requested type.
         /// </returns>
-        public static IEnumerable<T> Get<T>() where T : GameObject, new()
+        public static IEnumerable<T> Get<T>() where T : GameObject
         {
             return AllGameObjects.OfType<T>();
         }

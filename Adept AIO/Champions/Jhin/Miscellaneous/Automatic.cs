@@ -6,8 +6,7 @@
     using Aimtec.SDK.Extensions;
     using Core;
     using SDK.Unit_Extensions;
-    using GameObjects = Aimtec.SDK.Util.Cache.GameObjects;
-
+    
     class Automatic
     {
         public Automatic()
