@@ -72,7 +72,7 @@
                         }
                     }
 
-                    else if (target.IsValidTarget(SpellManager.WCastRange) && ShadowManager.CanCastFirst(SpellSlot.W) && !(SpellManager.R.Ready && target.HealthPercent() > 25))
+                    else if (target.IsValidTarget(SpellManager.WCastRange + 200) && ShadowManager.CanCastFirst(SpellSlot.W) && !(SpellManager.R.Ready && target.HealthPercent() > 25))
                     {
                         SpellManager.W.Cast(target.ServerPosition);
                     }

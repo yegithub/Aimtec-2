@@ -5,6 +5,7 @@
     using Aimtec.SDK.Damage;
     using Aimtec.SDK.Extensions;
     using SDK.Unit_Extensions;
+    using SDK.Usables;
 
     class Dmg
     {
@@ -17,18 +18,14 @@
             }
 
             var dmg = 0d;
-            var shadowCount = ShadowManager.Shadows.Count;
-            if (shadowCount <= 0)
-            {
-                shadowCount = 1;
-            }
+            var shadowCount = ShadowManager.Shadows.Count + 1;
 
-            if (ShadowManager.CanCastFirst(SpellSlot.W))
+            if (SpellManager.W.Ready && ShadowManager.CanCastFirst(SpellSlot.W))
             {
                 shadowCount += 1;
             }
 
-            if (ShadowManager.CanCastFirst(SpellSlot.R))
+            if (SpellManager.R.Ready && ShadowManager.CanCastFirst(SpellSlot.R))
             {
                 shadowCount += 1;
             }
@@ -40,17 +37,22 @@
 
             if (SpellManager.Q.Ready)
             {
-                dmg += Global.Player.GetSpellDamage(target, SpellSlot.Q) * shadowCount + dmg;
+                dmg += Global.Player.GetSpellDamage(target, SpellSlot.Q) * shadowCount;
             }
 
             if (SpellManager.E.Ready)
             {
-                dmg += Global.Player.GetSpellDamage(target, SpellSlot.E) * shadowCount;
+                dmg += Global.Player.GetSpellDamage(target, SpellSlot.E);
             }
 
             if (SpellManager.R.Ready)
             {
                 dmg += Global.Player.GetSpellDamage(target, SpellSlot.R) + dmg;
+            }
+
+            if (SummonerSpells.IsValid(SummonerSpells.Ignite))
+            {
+                dmg += SummonerSpells.IgniteDamage(target);
             }
             return dmg;
         }
