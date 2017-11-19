@@ -42,15 +42,6 @@
                     }
                 }
 
-                if (MenuConfig.Killsteal["R"].Enabled && SpellManager.R.Ready)
-                {
-                    var t = GameObjects.EnemyHeroes.FirstOrDefault(x => x.Health < Global.Player.GetSpellDamage(x, SpellSlot.R) && x.IsValidTarget(SpellManager.R.Range));
-                    if (t != null)
-                    {
-                        SpellManager.CastR(t);
-                    }
-                }
-
                 if (MenuConfig.Killsteal["Q"].Enabled && SpellManager.Q.Ready)
                 {
                     var t = GameObjects.EnemyHeroes.FirstOrDefault(x => x.Health < Global.Player.GetSpellDamage(x, SpellSlot.Q) && x.IsValidTarget(SpellManager.Q.Range));

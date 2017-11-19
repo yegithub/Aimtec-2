@@ -27,7 +27,7 @@
                 SpellManager.CastE(target);
             }
 
-            if (MenuConfig.Combo["R"].Enabled && (SpellManager.R.Ready && target.HealthPercent() <= 40 && target.IsHardCc() || Global.Player.SpellBook.GetSpell(SpellSlot.R).Name == "JhinRShot"))
+            if (MenuConfig.Combo["R"].Enabled && (target.CountAllyHeroesInRange(1000) == 0 && SpellManager.R.Ready && target.HealthPercent() <= 40 && target.IsHardCc() || Global.Player.SpellBook.GetSpell(SpellSlot.R).Name == "JhinRShot"))
             {
                 SpellManager.CastR(target);
             }

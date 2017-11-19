@@ -43,7 +43,8 @@
         public static void CastW(Obj_AI_Base target)
         {
             if (!target.HasBuff("jhinespotteddebuff") ||
-                !target.IsValidTarget(W.Range))
+                !target.IsValidTarget(W.Range) ||
+                Global.Player.SpellBook.GetSpell(SpellSlot.R).Name == "JhinRShot")
             {
                 return;
             }

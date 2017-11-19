@@ -51,7 +51,6 @@
                 new MenuBool("Q", "Use Q"),
                 new MenuBool("W", "Use W"),
                 new MenuBool("E", "Use E"),
-                new MenuBool("R", "Use R (Semi)")
             };
 
             Misc = new Menu("JhinMisc", "Miscellaneous")
