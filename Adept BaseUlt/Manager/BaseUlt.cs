@@ -123,12 +123,6 @@
 
         private void OnUpdate()
         {
-            Console.WriteLine($"[DEBUG] [ADEPT BASEULT] MAP ID: {Game.MapId} | MODE: {Game.Mode}");
-            if (Game.MapId == 0)
-            {
-                Console.WriteLine("MAP ID IS ZERO, WAIT FOR CORE API TO GET FIXED...");
-            }
-
             if (_menu["RandomUlt"].Enabled)
             {
                 foreach (var enemy in _lastEnemyChecked.Where(x => x.IsFloatingHealthBarActive && !x.IsDead && x.IsValidTarget()))
@@ -295,12 +289,19 @@
 
         private static Vector3 GetFountainPos(GameObject target)
         {
-            switch (Game.MapId)
+            switch (target.Team)
             {
-                case GameMapId.SummonersRift: return target.Team == GameObjectTeam.Order ? new Vector3(396, 185.1325f, 462) : new Vector3(14340, 171.9777f, 14390);
-
-                case GameMapId.TwistedTreeline: return target.Team == GameObjectTeam.Order ? new Vector3(1058, 150.8638f, 7297) : new Vector3(14320, 151.9291f, 7235);
+                case GameObjectTeam.Order: return new Vector3(396, 185.1325f, 462);
+                case GameObjectTeam.Chaos: return new Vector3(14340, 171.9777f, 14390);
             }
+            //switch (Game.Type)
+            //{
+            //    case GameType.Normal:
+            //    {
+
+            //    }
+            //        break;
+            //}
             return Vector3.Zero;
         }
 
