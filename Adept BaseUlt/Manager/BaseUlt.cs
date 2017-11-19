@@ -165,7 +165,7 @@
                     return;
                 }
 
-                Console.WriteLine("RANDOM ULT SUCCESS");
+                Console.WriteLine("RANDOM ULT");
                 CastUlt(_predictedPosition);
             }
         }
@@ -183,12 +183,15 @@
             if (_menu["Collision"].Enabled &&
                 GameObjects.EnemyHeroes.Count(x => x.NetworkId != _target.NetworkId && rectangle.IsInside(x.ServerPosition.To2D())) > _maxCollisionObjects ||
                 pos.Distance(Global.Player) > _range ||
-                pos.Distance(Global.Player) > 15000)
+                pos.Distance(Global.Player) > 2000)
             {
                 return;
             }
 
             Console.WriteLine($"BASEULT SUCCESS | {_target.ChampionName}");
+
+            _ultimate.Cast(pos);
+            Reset();
 
             DelayAction.Queue(1500,
                               () =>
@@ -197,10 +200,6 @@
                                   _predictedPosition = Vector3.Zero;
                               },
                               new CancellationToken(false));
-
-            _ultimate.Cast(pos);
-
-            Reset();
         }
 
         private int GetCastTime(Vector3 pos)
