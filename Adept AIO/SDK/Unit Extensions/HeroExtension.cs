@@ -9,7 +9,11 @@
     {
         private static readonly BuffType[] HardCc =
         {
-            BuffType.Invulnerability,
+            BuffType.Flee,
+            BuffType.Taunt,
+            BuffType.Suppression,
+            BuffType.Snare,
+            BuffType.Stun,
             BuffType.Charm,
             BuffType.Blind,
             BuffType.Fear,

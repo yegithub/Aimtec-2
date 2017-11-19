@@ -27,7 +27,7 @@
                 SpellManager.CastE(target);
             }
 
-            if (MenuConfig.Combo["R"].Enabled && (SpellManager.R.Ready && Global.Player.GetSpellDamage(target, SpellSlot.R) * 4 > target.Health || Global.Player.SpellBook.GetSpell(SpellSlot.R).Name.Equals("JhinRShot")))
+            if (MenuConfig.Combo["R"].Enabled && (SpellManager.R.Ready && target.HealthPercent() <= 40 && target.IsHardCc() || Global.Player.SpellBook.GetSpell(SpellSlot.R).Name == "JhinRShot"))
             {
                 SpellManager.CastR(target);
             }
