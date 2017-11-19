@@ -22,12 +22,12 @@
                 SpellManager.CastQ(target);
             }
 
-            if (SpellManager.E.Ready && MenuConfig.Combo["E"].Enabled)
+            if (SpellManager.E.Ready && MenuConfig.Combo["E"].Enabled && Game.TickCount - SpellManager.E.LastCastAttemptT > 5000)
             {
                 SpellManager.CastE(target);
             }
 
-            if (MenuConfig.Combo["R"].Enabled && (SpellManager.R.Ready && Global.Player.GetSpellDamage(target, SpellSlot.R) > target.Health || Global.Player.SpellBook.GetSpell(SpellSlot.R).Name.Equals("JhinRShot")))
+            if (MenuConfig.Combo["R"].Enabled && (SpellManager.R.Ready && Global.Player.GetSpellDamage(target, SpellSlot.R) * 4 > target.Health || Global.Player.SpellBook.GetSpell(SpellSlot.R).Name.Equals("JhinRShot")))
             {
                 SpellManager.CastR(target);
             }

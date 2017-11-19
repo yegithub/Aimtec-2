@@ -23,9 +23,9 @@
 
             if(MenuConfig.LaneClear["Q"].Enabled && SpellManager.Q.Ready)
             {
-                var range = SpellManager.Q.Range * 2;
+                var range = SpellManager.Q.Range;
                 var circle = new Geometry.Circle(minion.ServerPosition.To2D(), range);
-                var possible = GameObjects.EnemyMinions.Where(x => x.Distance(circle.Center) < range).OrderBy(x => x.Distance(minion));
+                var possible = GameObjects.EnemyMinions.Where(x => x.IsValidTarget(range, false, true, circle.Center.To3D())).OrderBy(x => x.Distance(minion));
 
                 if (possible.Count() >= MenuConfig.LaneClear["Q"].Value)
                 {

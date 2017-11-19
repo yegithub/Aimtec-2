@@ -19,13 +19,13 @@
         {
             try
             {
-                if (Global.Player.IsRecalling())
+                if (Global.Player.IsRecalling() || Global.Orbwalker.IsWindingUp)
                 {
                     return;
                 }
-
+             
                 Global.Orbwalker.MovingEnabled = Global.Player.SpellBook.GetSpell(SpellSlot.R).Name != "JhinRShot";
-
+               
                 if (SpellManager.W.Ready &&
                     MenuConfig.Misc["W"].Enabled)
                 {

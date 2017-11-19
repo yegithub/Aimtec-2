@@ -35,7 +35,7 @@
             LaneClear = new Menu("JhinLaneClear", "Lane")
             {
                 new MenuBool("Check", "Dont' Clear When Enemies Nearby"),
-                new MenuSliderBool("Q", "Min. Q Hit", true,  4, 1, 7),
+                new MenuSliderBool("Q", "Min. Q Hit", true,  4, 1, 4),
                 new MenuSliderBool("E", "Min. E Hit", false, 4, 1, 7),
             };
 
