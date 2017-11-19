@@ -8,7 +8,7 @@
 
     class DashManager
     {
-        public static Vector3 DashKite(Obj_AI_Base target, float range, int enemyRange = 410)
+        public static Vector3 DashKite(Obj_AI_Base target, float range, int enemyRange = 400)
         {
             var pos = Vector3.Zero;
 
@@ -19,8 +19,7 @@
                 var rot = (Global.Player.ServerPosition.To2D() + range * dir.Rotated((float) angleRad)).To3D();
 
                 var turret = TurretAttackManager.GetNearestTurretData(Global.Player, TurretAttackManager.TurretTeam.Enemy);
-                if (rot.CountEnemyHeroesInRange(enemyRange) != 0 ||
-                    turret != null && turret.TurretActive && !turret.LastTarget.IsHero && turret.Turret.ServerPosition.Distance(target.ServerPosition) <= 1500)
+                if (rot.CountEnemyHeroesInRange(enemyRange) != 0) //|| turret != null && turret.TurretActive && !turret.LastTarget.IsHero && turret.Turret.ServerPosition.Distance(target.ServerPosition) <= 1500)
                 {
                     continue;
                 }
