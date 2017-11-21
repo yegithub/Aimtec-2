@@ -105,7 +105,7 @@
             }
 
             if (GameObjects.EnemyMinions.Any(x => BodySlam.IsInside(x.ServerPosition.To2D()) && x.Distance(BodySlam.Start) <= target.Distance(BodySlam.Start) &&
-                                                  x.Distance(target) >= Global.Player.BoundingRadius))
+                                                  x.Distance(target) >= Global.Player.BoundingRadius + 200))
             {
                 return;
             }

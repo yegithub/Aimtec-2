@@ -183,7 +183,7 @@
             if (_menu["Collision"].Enabled &&
                 GameObjects.EnemyHeroes.Count(x => x.NetworkId != _target.NetworkId && rectangle.IsInside(x.ServerPosition.To2D())) > _maxCollisionObjects ||
                 pos.Distance(Global.Player) > _range ||
-                pos.Distance(Global.Player) > 2000)
+                pos.Distance(Global.Player) < 1200)
             {
                 return;
             }
