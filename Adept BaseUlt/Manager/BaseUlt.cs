@@ -93,7 +93,7 @@
 
         private void OnTeleport(Obj_AI_Base sender, Teleport.TeleportEventArgs args)
         {
-            if (!sender.IsEnemy || sender.IsDead)
+            if (sender == null || !sender.IsEnemy || args.Type != TeleportType.Recall)
             {
                 return;
             }
@@ -110,7 +110,7 @@
                     break;
                 case TeleportStatus.Start:
                   
-                    if (args.Type == TeleportType.Recall && _target == null)
+                    if (_target == null)
                     {
                         Set(args.Duration, Environment.TickCount, (Obj_AI_Hero) sender);
                     }
