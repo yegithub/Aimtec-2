@@ -12,7 +12,7 @@
             {
                 return;
             }
-
+           
             switch (Global.Orbwalker.Mode)
             {
                 case OrbwalkingMode.Combo:

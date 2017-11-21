@@ -1,11 +1,13 @@
 ﻿namespace Adept_AIO.Champions.Riven.Miscellaneous
 {
     using System;
+    using System.Diagnostics;
     using Aimtec;
     using Aimtec.SDK.Extensions;
     using Core;
     using Orbwalker;
     using OrbwalkingEvents;
+    using SDK.Generic;
     using SDK.Unit_Extensions;
     using OrbwalkingMode = Aimtec.SDK.Orbwalking.OrbwalkingMode;
 
@@ -19,7 +21,7 @@
                 {
                     return;
                 }
-
+                DebugConsole.WriteLine($"Q STATE: {Global.Player.GetSpell(SpellSlot.Q).State} | If random numbers, CORE IS OUT OF DATE.", MessageState.Debug);
                 switch (Global.Orbwalker.Mode)
                 {
                     case OrbwalkingMode.Combo:
