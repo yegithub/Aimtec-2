@@ -43,20 +43,18 @@
 
         public static void OnProcessSpellCast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
         {
-            if (!sender.IsMe)
+            if (!sender.IsMe || args.SpellSlot != SpellSlot.Q || args.SpellData.Name != "GragasQ")
             {
                 return;
             }
 
-            if (args.SpellSlot == SpellSlot.Q && args.SpellData.Name == "GragasQ")
-            {
-                Barrel = new Geometry.Circle(args.End.To2D(), QRadius);
-            }
+            Barrel = new Geometry.Circle(args.End.To2D(), QRadius);
+            DelayAction.Queue(4000, ()=> Barrel = null);
         }
 
         public static void OnDestroy(GameObject sender)
         {
-            if (sender.Name != "Gragas_Base_Q_Ally.troy")
+            if (sender.Name != "Gragas_Base_Q_Ally.troy" || Barrel == null)
             {
                 return;
             }

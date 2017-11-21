@@ -179,7 +179,7 @@
             }
 
             var rectangle = new Geometry.Rectangle(Global.Player.ServerPosition.To2D(), pos.To2D(), _width);
-            Console.WriteLine("2");
+           
             if (_menu["Collision"].Enabled &&
                 GameObjects.EnemyHeroes.Count(x => x.NetworkId != _target.NetworkId && rectangle.IsInside(x.ServerPosition.To2D())) > _maxCollisionObjects ||
                 pos.Distance(Global.Player) > _range ||
@@ -316,6 +316,7 @@
 
         private void Reset()
         {
+            Console.WriteLine($"BASEULT RESET | {_target.ChampionName}");
             _recallTime = 0;
             _recallStartTick = 0;
             _target = null;
