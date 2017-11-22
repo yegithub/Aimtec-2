@@ -130,12 +130,22 @@
 
         public static void CastQ(Obj_AI_Base target)
         {
-            if (Environment.TickCount - lastCastTime < 1000 - Game.Ping / 2)
+            if (Environment.TickCount - lastCastTime < 800 - Game.Ping / 2)
             {
                 return;
             }
 
-            if (PaddleStar != Vector3.Zero)
+            if (PaddleStar == Vector3.Zero)
+            {
+                var paddleStarPrediction = GeneratePaddleStarPrediction(target, Q);
+                if (paddleStarPrediction.IsZero)
+                {
+                    return;
+                }
+
+                Q.Cast(paddleStarPrediction);
+            }
+            else if (target.IsValidTarget(Q.Range + 80))
             {
                 var pred = Q.GetPrediction(target, PaddleStar, Global.Player.ServerPosition);
                 if (pred.CastPosition.IsZero)
@@ -143,16 +153,7 @@
                     return;
                 }
                 Q.Cast(pred.CastPosition);
-            }
-            else if (target.IsValidTarget(Q.Range + 80))
-            {
-                var paddleStar = GeneratePaddleStarPrediction(target, Q);
-                if (paddleStar.IsZero)
-                {
-                    return;
-                }
-
-                Q.Cast(paddleStar);
+               
             }
         }
 
