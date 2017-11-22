@@ -14,6 +14,12 @@
                 return;
             }
 
+            if (SpellManager.E.Ready &&
+                MenuConfig.Combo["E"].Enabled)
+            {
+                SpellManager.CastE(target);
+            }
+
             if (SpellManager.Q.Ready &&
                 MenuConfig.Combo["Q"].Enabled)
             {
@@ -24,12 +30,6 @@
                 }
 
                 SpellManager.CastQ(target);
-            }
-
-            if (SpellManager.E.Ready &&
-                MenuConfig.Combo["E"].Enabled)
-            {
-                SpellManager.CastE(target);
             }
 
             if (SpellManager.W.Ready &&

@@ -43,7 +43,7 @@
                 return;
             }
 
-            var target = Global.TargetSelector.GetTarget(2000);
+            var target = Global.TargetSelector.GetTarget(2500);
             if (target == null)
             {
                 return;
@@ -52,11 +52,15 @@
             var generated = SpellManager.GeneratePaddleStarPrediction(target, SpellManager.Q);
             Render.Circle(generated, 50, 100, Color.BlueViolet);
 
-            if (Render.WorldToScreen(generated, out var generatedV2) && Render.WorldToScreen(target.ServerPosition, out var targetV2) && Render.WorldToScreen(Global.Player.ServerPosition, out var playerV2))
+            if (!Render.WorldToScreen(generated, out var generatedV2) ||
+                !Render.WorldToScreen(target.ServerPosition, out var targetV2) ||
+                !Render.WorldToScreen(Global.Player.ServerPosition, out var playerV2))
             {
-                Render.Line(playerV2, generatedV2, 3, false, Color.Aqua);
-                Render.Line(generatedV2, targetV2, 3, false, Color.Crimson);
+                return;
             }
+
+            Render.Line(playerV2, generatedV2, 4, false, Color.Aqua);
+            Render.Line(generatedV2, targetV2, 4, false, Color.Crimson);
         }
     }
 }

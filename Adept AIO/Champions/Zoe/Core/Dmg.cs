@@ -2,6 +2,7 @@
 {
     using Aimtec;
     using Aimtec.SDK.Damage;
+    using Aimtec.SDK.Damage.JSON;
     using SDK.Unit_Extensions;
     using SDK.Usables;
 
@@ -29,7 +30,7 @@
 
             if (SpellManager.E.Ready)
             {
-                dmg += Global.Player.GetSpellDamage(target, SpellSlot.E);
+                dmg += Global.Player.GetSpellDamage(target, SpellSlot.E) + Global.Player.GetSpellDamage(target, SpellSlot.E, DamageStage.Collision);
             }
 
             if (SummonerSpells.IsValid(SummonerSpells.Ignite))
