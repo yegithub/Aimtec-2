@@ -63,7 +63,7 @@
                 var rotated = (pos.To2D() + spell.Range * dir.Rotated((float) angleRad)).To3D();
 
                 var rectBefore = new Geometry.Rectangle(Global.Player.ServerPosition.To2D(), rotated.To2D(), Q.Width + target.BoundingRadius);
-                var rectAfter = new Geometry.Rectangle(rotated.To2D(), target.ServerPosition.To2D(), Q.Width + target.BoundingRadius);
+                var rectAfter = new Geometry.Rectangle(rotated.To2D(), target.ServerPosition.To2D(), Q.Width + target.BoundingRadius + 100);
 
                 if (GameObjects.Enemy.OrderBy(x => x.Distance(Global.Player)).
                     Where(x => x.NetworkId != target.NetworkId).
@@ -83,13 +83,11 @@
             return Vector3.Zero;
         }
 
-        public static void CastW(Obj_AI_Base target)
+        private static Spell GetWSpell()
         {
             var spellName = Global.Player.SpellBook.GetSpell(SpellSlot.W).Name.ToLower();
             Spell spell = null;
-            var isFlash = spellName == "summonerflash";
-            var isDefensive = spellName == "summonerheal" || spellName == "summonerbarrier";
-
+           
             switch (spellName)
             {
                 case "summonerflash":
@@ -104,25 +102,42 @@
                 case "s5_summonersmiteplayerganker":
                 case "hextechgunblade":
                 case "itemwillboltspellbase":
+                case "itemredemption":
+                case "itemsofboltspellbase":
+                case "zoew":
                     spell = new Spell(SpellSlot.W, 700);
                     break;
             }
 
             if (spell == null)
             {
-                Console.WriteLine(spellName);
+              DebugConsole.WriteLine($"Zoe: This (W) is NOT supported! | {spellName}", MessageState.Warn);
+            }
+            return spell;
+        }
+
+        public static void CastW(Vector3 pos)
+        {
+            var spell = GetWSpell();
+
+            if (spell == null || Global.Player.SpellBook.GetSpell(SpellSlot.W).Name.ToLower() != "summonerflash")
+            {
                 return;
             }
 
-            if (isFlash)
+            W.Cast(pos);
+        }
+
+        public static void CastW(Obj_AI_Base target)
+        {
+            var spell = GetWSpell();
+         
+            if (spell == null)
             {
-                // todo: combo code
+                return;
             }
-            else if (isDefensive)
-            {
-                W.Cast();
-            }
-            else if (target.IsValidTarget(spell.Range))
+
+            if (target.IsValidTarget(spell.Range))
             {
                 W.CastOnUnit(target);
             }
@@ -153,19 +168,20 @@
                     return;
                 }
                 Q.Cast(pred.CastPosition);
-               
             }
         }
 
         public static void CastE(Obj_AI_Base target)
         {
-            if (target.IsValidTarget(E.Range))
+            var rect = new Geometry.Rectangle(Global.Player.ServerPosition.To2D(), target.ServerPosition.To2D(), 100 + E.Width);
+
+            if (target.IsValidTarget(E.Range) && !GameObjects.Enemy.OrderBy(x => x.Distance(Global.Player)).Any(x => x.NetworkId != target.NetworkId && rect.IsInside(x.ServerPosition.To2D())))
             {
                 E.Cast(target);
             }
         }
 
-        public static void CastR(Obj_AI_Base target)
+        public static void CastR(Obj_AI_Base target, bool flash = false)
         {
             var paddleStar = GeneratePaddleStarPrediction(target, R);
             if (paddleStar.IsZero)
@@ -174,6 +190,16 @@
             }
 
             R.Cast(paddleStar);
+
+            if (!flash)
+            {
+                return;
+            }
+
+            DelayAction.Queue(500, delegate
+            {
+                CastW(paddleStar);
+            }, new CancellationToken(false));
         }
 
         public static Geometry.Rectangle QRectBefore(Obj_AI_Base target)
