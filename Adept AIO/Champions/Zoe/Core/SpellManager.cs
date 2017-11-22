@@ -45,7 +45,7 @@
 
             PaddleStar = args.End;
             lastCastTime = Environment.TickCount;
-            DelayAction.Queue(1000, () => PaddleStar = Vector3.Zero);
+            DelayAction.Queue(1500, () => PaddleStar = Vector3.Zero, new CancellationToken(false));
         }
 
         public static Vector3 GeneratePaddleStarPrediction(Obj_AI_Base target, Spell spell)
