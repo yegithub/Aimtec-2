@@ -103,7 +103,7 @@
                     DebugConsole.WriteLine("IS EXHAUST", MessageState.Debug);
                     spell = new Spell(SpellSlot.W, 650);
                     break;
-                case "summonersmite":
+                case "s5_summonersmiteplayerganker":
                     DebugConsole.WriteLine("IS SMITE", MessageState.Debug);
                     spell = new Spell(SpellSlot.W, 700);
                     break;
