@@ -131,10 +131,6 @@
             }
 
             R.Cast(paddleStar);
-            DelayAction.Queue(900, delegate
-            {
-                Q.Cast(paddleStar);
-            }, new CancellationToken(false));
         }
 
         public static Geometry.Rectangle QRectBefore(Obj_AI_Base target)
