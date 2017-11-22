@@ -92,21 +92,34 @@
             switch (spellName)
             {
                 case "summonerflash":
-                    spell = new Spell(SpellSlot.Summoner1, 425);
+                    DebugConsole.WriteLine("IS FLASH", MessageState.Debug);
+                    spell = new Spell(SpellSlot.W, 425);
                     break;
                 case "summonerdot":
-                    spell = new Spell(SpellSlot.Summoner1, 600);
+                    DebugConsole.WriteLine("IS IGNITE", MessageState.Debug);
+                    spell = new Spell(SpellSlot.W, 600);
                     break;
                 case "summonerexhaust":
-                    spell = new Spell(SpellSlot.Summoner1, 650);
+                    DebugConsole.WriteLine("IS EXHAUST", MessageState.Debug);
+                    spell = new Spell(SpellSlot.W, 650);
                     break;
                 case "summonersmite":
-                    spell = new Spell(SpellSlot.Summoner1, 700);
+                    DebugConsole.WriteLine("IS SMITE", MessageState.Debug);
+                    spell = new Spell(SpellSlot.W, 700);
+                    break;
+                case "hextechgunblade":
+                    DebugConsole.WriteLine("IS HEXTECHGUNBLADE", MessageState.Debug);
+                    spell = new Spell(SpellSlot.W, 700);
+                    break;
+                case "itemwillboltspellbase":
+                    DebugConsole.WriteLine("IS HEXTECHGUNBLADE", MessageState.Debug);
+                    spell = new Spell(SpellSlot.W, 700);
                     break;
             }
 
             if (spell == null)
             {
+                Console.WriteLine(spellName);
                 return;
             }
 
