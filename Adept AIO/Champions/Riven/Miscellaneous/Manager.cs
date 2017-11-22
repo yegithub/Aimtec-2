@@ -21,6 +21,7 @@
                 {
                     return;
                 }
+
                 DebugConsole.WriteLine($"Q STATE: {Global.Player.GetSpell(SpellSlot.Q).State} | If random numbers, CORE IS OUT OF DATE.", MessageState.Debug);
                 switch (Global.Orbwalker.Mode)
                 {

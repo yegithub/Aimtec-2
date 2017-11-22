@@ -288,14 +288,14 @@
         {
             switch (Game.Type)
             {
-                case (GameType) 11:
+                case GameType.Normal:
                     switch (target.Team)
                     {
                         case GameObjectTeam.Order: return new Vector3(396, 185.1325f, 462);
                         case GameObjectTeam.Chaos: return new Vector3(14340, 171.9777f, 14390);
                     }
                     break;
-                case (GameType) 10:
+                default:
                     switch (target.Team)
                     {
                         case GameObjectTeam.Order: return new Vector3(1058, 150.8638f, 7297);
