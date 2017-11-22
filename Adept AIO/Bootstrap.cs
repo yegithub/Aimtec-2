@@ -21,6 +21,7 @@
     using Champions.Vayne;
     using Champions.Yasuo;
     using Champions.Zed;
+    using Champions.Zoe;
     using SDK.Generic;
     using SDK.Unit_Extensions;
     using SDK.Usables;
@@ -29,6 +30,7 @@
     {
         private static readonly string[] Valid =
         {
+            "Zoe",
             "Jhin",
             "Gnar",
             "Kalista",
@@ -69,6 +71,9 @@
 
             switch (Global.Player.ChampionName)
             {
+                case "Zoe":
+                    new Zoe();
+                    break;
                 case "Jhin":
                     new Jhin();
                     break;
