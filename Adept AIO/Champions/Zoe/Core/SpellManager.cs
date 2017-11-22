@@ -92,27 +92,21 @@
             switch (spellName)
             {
                 case "summonerflash":
-                    DebugConsole.WriteLine("IS FLASH", MessageState.Debug);
+               
                     spell = new Spell(SpellSlot.W, 425);
                     break;
                 case "summonerdot":
-                    DebugConsole.WriteLine("IS IGNITE", MessageState.Debug);
+                 
                     spell = new Spell(SpellSlot.W, 600);
                     break;
                 case "summonerexhaust":
-                    DebugConsole.WriteLine("IS EXHAUST", MessageState.Debug);
+               
                     spell = new Spell(SpellSlot.W, 650);
                     break;
                 case "s5_summonersmiteplayerganker":
-                    DebugConsole.WriteLine("IS SMITE", MessageState.Debug);
-                    spell = new Spell(SpellSlot.W, 700);
-                    break;
                 case "hextechgunblade":
-                    DebugConsole.WriteLine("IS HEXTECHGUNBLADE", MessageState.Debug);
-                    spell = new Spell(SpellSlot.W, 700);
-                    break;
                 case "itemwillboltspellbase":
-                    DebugConsole.WriteLine("IS HEXTECHGUNBLADE", MessageState.Debug);
+                    DebugConsole.WriteLine("Zoe got Smite", MessageState.Debug);
                     spell = new Spell(SpellSlot.W, 700);
                     break;
             }
