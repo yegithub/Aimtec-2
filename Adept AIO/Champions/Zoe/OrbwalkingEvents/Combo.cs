@@ -18,7 +18,7 @@
                 MenuConfig.Combo["Q"].Enabled)
             {
                 if (SpellManager.R.Ready &&
-                    MenuConfig.Combo["R"].Enabled && target.Distance(Global.Player) < Global.Player.AttackRange)
+                    MenuConfig.Combo["R"].Enabled && target.Distance(Global.Player) < Global.Player.AttackRange && SpellManager.PaddleStar.IsZero)
                 {
                     SpellManager.CastR(target);
                 }

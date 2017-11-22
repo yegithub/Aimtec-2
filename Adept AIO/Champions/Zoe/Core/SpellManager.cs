@@ -27,7 +27,7 @@
             W = new Spell(SpellSlot.W, 600);
 
             E = new Spell(SpellSlot.E, 800);
-            E.SetSkillshot(0.25f, 80, 1400, true, SkillshotType.Line);
+            E.SetSkillshot(0.25f, 40, 1700, true, SkillshotType.Line);
 
             R = new Spell(SpellSlot.R, 575);
         }
@@ -60,21 +60,17 @@
 
             for (var i = 0; i < 360; i += 10)
             {
-               
                 var angleRad = Maths.DegreeToRadian(i);
-           
-                var rotaded = (pos.To2D() + spell.Range * dir.Rotated((float) angleRad)).To3D();
+                var rotated = (pos.To2D() + spell.Range * dir.Rotated((float) angleRad)).To3D();
 
-                var rectBefore = new Geometry.Rectangle(Global.Player.ServerPosition.To2D(), rotaded.To2D(), Q.Width + target.BoundingRadius);
-                var rectAfter  = new Geometry.Rectangle(rotaded.To2D(), target.ServerPosition.To2D(), Q.Width + target.BoundingRadius);
+                var rectBefore = new Geometry.Rectangle(Global.Player.ServerPosition.To2D(), rotated.To2D(), Q.Width + target.BoundingRadius);
+                var rectAfter  = new Geometry.Rectangle(rotated.To2D(), target.ServerPosition.To2D(), Q.Width + target.BoundingRadius);
 
                 if (GameObjects.Enemy.OrderBy(x => x.Distance(Global.Player)).Where(x => x.NetworkId != target.NetworkId).Any(x => x.MaxHealth > 20 && (rectAfter.IsInside(x.ServerPosition.To2D()) || rectBefore.IsInside(x.ServerPosition.To2D()))))
                 {
                     continue;
                 }
-             
-                if (rotaded.Distance(target) > 100)
-                    return rotaded;
+                return rotated;
             }
 
             return Vector3.Zero;

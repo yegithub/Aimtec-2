@@ -3,6 +3,8 @@
     using System;
     using Aimtec.SDK.Extensions;
     using Aimtec.SDK.Orbwalking;
+    using Aimtec.SDK.Prediction.Skillshots;
+    using Core;
     using OrbwalkingEvents;
     using SDK.Unit_Extensions;
 
@@ -16,6 +18,8 @@
                 {
                     return;
                 }
+
+                SpellManager.Q.SetSkillshot(0.25f, 60, SpellManager.PaddleStar.IsZero ? 1200 : 1700, true, SkillshotType.Line);
 
                 switch (Global.Orbwalker.Mode)
                 {
