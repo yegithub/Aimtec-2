@@ -295,13 +295,6 @@
                         case GameObjectTeam.Chaos: return new Vector3(14340, 171.9777f, 14390);
                     }
                     break;
-                default:
-                    switch (target.Team)
-                    {
-                        case GameObjectTeam.Order: return new Vector3(1058, 150.8638f, 7297);
-                        case GameObjectTeam.Chaos: return new Vector3(14320, 151.9291f, 7235);
-                    }
-                    break;
             }
             return Vector3.Zero;
         }
