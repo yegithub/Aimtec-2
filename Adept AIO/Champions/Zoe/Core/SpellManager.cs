@@ -88,25 +88,22 @@
             var spellName = Global.Player.SpellBook.GetSpell(SpellSlot.W).Name.ToLower();
             Spell spell = null;
             var isFlash = spellName == "summonerflash";
+            var isDefensive = spellName == "summonerheal" || spellName == "summonerbarrier";
 
             switch (spellName)
             {
                 case "summonerflash":
-               
                     spell = new Spell(SpellSlot.W, 425);
                     break;
                 case "summonerdot":
-                 
                     spell = new Spell(SpellSlot.W, 600);
                     break;
                 case "summonerexhaust":
-               
                     spell = new Spell(SpellSlot.W, 650);
                     break;
                 case "s5_summonersmiteplayerganker":
                 case "hextechgunblade":
                 case "itemwillboltspellbase":
-                    DebugConsole.WriteLine("Zoe got Smite", MessageState.Debug);
                     spell = new Spell(SpellSlot.W, 700);
                     break;
             }
@@ -120,6 +117,10 @@
             if (isFlash)
             {
                 // todo: combo code
+            }
+            else if (isDefensive)
+            {
+                W.Cast();
             }
             else if (target.IsValidTarget(spell.Range))
             {
