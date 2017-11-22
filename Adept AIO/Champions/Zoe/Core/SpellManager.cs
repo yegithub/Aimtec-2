@@ -85,12 +85,39 @@
 
         public static void CastW(Obj_AI_Base target)
         {
-            if (!target.IsValidTarget(W.Range))
+            var spellName = Global.Player.SpellBook.GetSpell(SpellSlot.W).Name.ToLower();
+            Spell spell = null;
+            var isFlash = spellName == "summonerflash";
+
+            switch (spellName)
+            {
+                case "summonerflash":
+                    spell = new Spell(SpellSlot.Summoner1, 425);
+                    break;
+                case "summonerdot":
+                    spell = new Spell(SpellSlot.Summoner1, 600);
+                    break;
+                case "summonerexhaust":
+                    spell = new Spell(SpellSlot.Summoner1, 650);
+                    break;
+                case "summonersmite":
+                    spell = new Spell(SpellSlot.Summoner1, 700);
+                    break;
+            }
+
+            if (spell == null)
             {
                 return;
             }
 
-           // W.CastOnUnit(target);
+            if (isFlash)
+            {
+                // todo: combo code
+            }
+            else if (target.IsValidTarget(spell.Range))
+            {
+                W.CastOnUnit(target);
+            }
         }
 
         public static void CastQ(Obj_AI_Base target)

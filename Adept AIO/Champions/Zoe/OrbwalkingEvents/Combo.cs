@@ -33,7 +33,8 @@
             }
 
             if (SpellManager.W.Ready &&
-                MenuConfig.Combo["W"].Enabled)
+                MenuConfig.Combo["W"].Enabled && 
+                target.HealthPercent() <= MenuConfig.Combo["W"].Value)
             {
                 SpellManager.CastW(target);
             }

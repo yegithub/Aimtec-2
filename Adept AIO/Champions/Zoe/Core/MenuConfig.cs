@@ -23,7 +23,7 @@
             Combo = new Menu("ZoeCombo", "Combo")
             {
                 new MenuBool("Q", "Use Q"),
-                new MenuBool("W", "Use W"),
+                new MenuSliderBool("W", "Use W | When HP % <= ", true, 40),
                 new MenuBool("E", "Use E"),
                 new MenuBool("R", "Use R"),
             };
