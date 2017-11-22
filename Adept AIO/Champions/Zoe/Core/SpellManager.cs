@@ -9,7 +9,6 @@
     using Aimtec.SDK.Util;
     using SDK.Generic;
     using SDK.Unit_Extensions;
-    using SDK.Usables;
     using Geometry = SDK.Geometry_Related.Geometry;
     using Spell = Aimtec.SDK.Spell;
 
@@ -64,12 +63,20 @@
                 var rotated = (pos.To2D() + spell.Range * dir.Rotated((float) angleRad)).To3D();
 
                 var rectBefore = new Geometry.Rectangle(Global.Player.ServerPosition.To2D(), rotated.To2D(), Q.Width + target.BoundingRadius);
-                var rectAfter  = new Geometry.Rectangle(rotated.To2D(), target.ServerPosition.To2D(), Q.Width + target.BoundingRadius);
+                var rectAfter = new Geometry.Rectangle(rotated.To2D(), target.ServerPosition.To2D(), Q.Width + target.BoundingRadius);
 
-                if (GameObjects.Enemy.OrderBy(x => x.Distance(Global.Player)).Where(x => x.NetworkId != target.NetworkId).Any(x => x.MaxHealth > 20 && (rectAfter.IsInside(x.ServerPosition.To2D()) || rectBefore.IsInside(x.ServerPosition.To2D()))))
+                if (GameObjects.Enemy.OrderBy(x => x.Distance(Global.Player)).
+                    Where(x => x.NetworkId != target.NetworkId).
+                    Any(x => x.MaxHealth > 20 && (rectAfter.IsInside(x.ServerPosition.To2D()) || rectBefore.IsInside(x.ServerPosition.To2D()))))
                 {
                     continue;
                 }
+
+                if (rotated.Distance(target) < Global.Player.Distance(target))
+                {
+                    continue;
+                }
+
                 return rotated;
             }
 
@@ -102,7 +109,7 @@
                 }
                 Q.Cast(pred.CastPosition);
             }
-            else if(target.IsValidTarget(Q.Range + 80))
+            else if (target.IsValidTarget(Q.Range + 80))
             {
                 var paddleStar = GeneratePaddleStarPrediction(target, Q);
                 if (paddleStar.IsZero)
