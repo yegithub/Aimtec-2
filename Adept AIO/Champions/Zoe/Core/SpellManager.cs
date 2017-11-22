@@ -90,7 +90,7 @@
                 return;
             }
 
-            W.CastOnUnit(target);
+           // W.CastOnUnit(target);
         }
 
         public static void CastQ(Obj_AI_Base target)
