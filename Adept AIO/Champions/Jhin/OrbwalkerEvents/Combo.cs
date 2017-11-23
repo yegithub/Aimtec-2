@@ -1,8 +1,6 @@
 ﻿namespace Adept_AIO.Champions.Jhin.OrbwalkerEvents
 {
-    using System;
     using Aimtec;
-    using Aimtec.SDK.Damage;
     using Aimtec.SDK.Extensions;
     using Core;
     using SDK.Unit_Extensions;

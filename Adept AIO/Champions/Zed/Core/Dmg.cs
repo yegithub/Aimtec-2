@@ -1,9 +1,7 @@
 ﻿namespace Adept_AIO.Champions.Zed.Core
 {
-    using System.Linq;
     using Aimtec;
     using Aimtec.SDK.Damage;
-    using Aimtec.SDK.Extensions;
     using SDK.Unit_Extensions;
     using SDK.Usables;
 

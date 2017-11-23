@@ -142,8 +142,16 @@
 
             if (target.IsValidAutoRange())
             {
-                Items.CastTiamat();
-                DelayAction.Queue(300, () => SpellConfig.R2.Cast(target), new CancellationToken(false));
+                if (Items.CanUseTiamat())
+                {
+                    Items.CastTiamat();
+                    DelayAction.Queue(1000, () => SpellConfig.R2.Cast(target));
+                }
+                else
+                {
+                    DelayAction.Queue(500, () => SpellConfig.R2.Cast(target));
+                }
+                
             }
             else
             {

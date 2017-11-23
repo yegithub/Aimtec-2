@@ -1,6 +1,5 @@
 ﻿namespace Adept_AIO.SDK.Draw_Extension
 {
-    using System;
     using System.Drawing;
     using Aimtec;
 

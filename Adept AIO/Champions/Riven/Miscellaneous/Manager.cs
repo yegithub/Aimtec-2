@@ -1,15 +1,12 @@
 ﻿namespace Adept_AIO.Champions.Riven.Miscellaneous
 {
     using System;
-    using System.Diagnostics;
     using System.Threading;
     using Aimtec;
     using Aimtec.SDK.Extensions;
     using Aimtec.SDK.Util;
     using Core;
-    using Orbwalker;
     using OrbwalkingEvents;
-    using SDK.Generic;
     using SDK.Unit_Extensions;
     using OrbwalkingMode = Aimtec.SDK.Orbwalking.OrbwalkingMode;
 
@@ -25,7 +22,7 @@
                     return;
                 }
 
-                DelayAction.Queue(250 + Game.Ping / 2, ()=> Action(args), CancellationToken.None);
+                DelayAction.Queue(Game.Ping / 2 + (Global.Player.HasBuff("RivenFengShuiEngine") ? 325 : 210), ()=> Action(args), CancellationToken.None);
             }
             catch (Exception e)
             {
@@ -51,7 +48,7 @@
                 switch (Global.Orbwalker.Mode)
                 {
                     case OrbwalkingMode.Combo:
-                        ComboManager.OnPostAttack();
+                        Combo.OnPostAttack();
                         break;
                     case OrbwalkingMode.Mixed:
                         Harass.OnProcessAutoAttack();
@@ -83,7 +80,7 @@
                 switch (Global.Orbwalker.Mode)
                 {
                     case OrbwalkingMode.Combo:
-                        ComboManager.OnUpdate();
+                        Combo.OnUpdate();
                         break;
                     case OrbwalkingMode.Mixed:
                         Harass.OnUpdate();

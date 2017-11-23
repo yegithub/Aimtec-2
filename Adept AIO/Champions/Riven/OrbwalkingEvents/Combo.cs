@@ -12,7 +12,7 @@
     using SDK.Unit_Extensions;
     using SDK.Usables;
 
-    class ComboManager
+    class Combo
     {
         public static void OnPostAttack()
         {
@@ -20,11 +20,6 @@
             if (target == null)
             {
                 return;
-            }
-
-            if (SpellConfig.E.Ready && target.IsValidAutoRange())
-            {
-                SpellConfig.E.Cast(target.ServerPosition);
             }
 
             if (!SpellConfig.W.Ready && (!SpellConfig.Q.Ready || Extensions.CurrentQCount == 3) && SpellConfig.R2.Ready && Enums.UltimateMode == UltimateMode.Second &&
@@ -40,7 +35,7 @@
                 SpellManager.CastWq(target);
             }
 
-            if (SpellConfig.Q.Ready)
+            else if (SpellConfig.Q.Ready)
             {
                 SpellManager.CastQ(target);
             }
@@ -55,13 +50,23 @@
 
         private static void Manage()
         {
+            if (SpellConfig.R2.Ready && Enums.UltimateMode == UltimateMode.Second &&
+                MenuConfig.Combo["R2"].Enabled)
+            {
+                var t = GameObjects.EnemyHeroes.OrderBy(x => x.Health).ThenBy(x => x.Distance(Global.Player)).FirstOrDefault(x => x.IsValidTarget(SpellConfig.R2.Range));
+                if (t != null && !t.IsValidAutoRange() && t.HealthPercent() <= 40)
+                {
+                    SpellManager.CastR2(t);
+                }
+            }
+
             var target = Global.TargetSelector.GetTarget(Extensions.EngageRange);
             if (target == null)
             {
                 return;
             }
 
-            if (SpellConfig.E.Ready && !target.IsValidAutoRange())
+            if (SpellConfig.E.Ready)
             {
                 SpellConfig.E.Cast(target.ServerPosition);
             }

@@ -3,7 +3,6 @@
     using System.Linq;
     using Aimtec.SDK.Extensions;
     using Core;
-    using SDK.Generic;
     using SDK.Unit_Extensions;
 
     class JungleClear

@@ -1,6 +1,5 @@
 ﻿namespace Adept_AIO.Champions.Jhin.Core
 {
-    using System;
     using Aimtec;
     using Aimtec.SDK.Extensions;
     using Aimtec.SDK.Prediction.Skillshots;

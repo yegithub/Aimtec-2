@@ -1,7 +1,5 @@
 ﻿namespace Adept_AIO.Champions.Riven.Miscellaneous
 {
-    using System;
-    using System.Threading;
     using Aimtec;
     using Aimtec.SDK.Extensions;
     using Aimtec.SDK.Util;
@@ -12,8 +10,8 @@
     {
         public static void Reset()
         {
-
             var qDelay = (Extensions.CurrentQCount == 1 ? 450 : 380) - 3 * Global.Player.Level;
+       
             var moveDelay = (int)(qDelay * 0.65);
             var ping = Game.Ping / 2;
 

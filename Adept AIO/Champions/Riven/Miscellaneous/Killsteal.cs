@@ -21,8 +21,8 @@
 
             if (SpellConfig.R2.Ready && Enums.UltimateMode == UltimateMode.Second && MenuConfig.Killsteal["R2"].Enabled)
             {
-                var killable = target.Health <= Global.Player.GetSpellDamage(target, SpellSlot.R) ||
-                               target.Health <= Global.Player.GetSpellDamage(target, SpellSlot.R) + Global.Player.GetAutoAttackDamage(target) &&
+                var killable = target.Health <= Global.Player.GetSpellDamage(target, SpellSlot.R) * 1.5f ||
+                               target.Health <= Global.Player.GetSpellDamage(target, SpellSlot.R) * 1.5f + Global.Player.GetAutoAttackDamage(target) &&
                                target.Distance(Global.Player) <= Global.Player.AttackRange + 65;
 
                 if (killable)
