@@ -15,8 +15,8 @@
     class SpellManager
     {
         public static Spell Q, W, E, R;
-        public static Vector3 PaddleStar;
-        private static float lastCastTime;
+        public static Vector3 PaddleStarPosition;
+        private static float _lastCastTime;
 
         public SpellManager()
         {
@@ -26,7 +26,7 @@
             W = new Spell(SpellSlot.W, 600);
 
             E = new Spell(SpellSlot.E, 800);
-            E.SetSkillshot(0.25f, 40, 1700, true, SkillshotType.Line);
+            E.SetSkillshot(0.25f, 50, 1600, true, SkillshotType.Line);
 
             R = new Spell(SpellSlot.R, 575);
         }
@@ -40,21 +40,19 @@
                 return;
             }
 
-            DebugConsole.WriteLine($"NAME: {args.SpellData.Name}", MessageState.Debug);
-
-            PaddleStar = args.End;
-            lastCastTime = Environment.TickCount;
-            DelayAction.Queue(1500, () => PaddleStar = Vector3.Zero, new CancellationToken(false));
+            PaddleStarPosition = args.End;
+            _lastCastTime = Environment.TickCount;
+            DelayAction.Queue(1500, () => PaddleStarPosition = Vector3.Zero, new CancellationToken(false));
         }
 
         public static Vector3 GeneratePaddleStarPrediction(Obj_AI_Base target, Spell spell)
         {
-            if (PaddleStar != Vector3.Zero)
+            if (PaddleStarPosition != Vector3.Zero)
             {
                 return Vector3.Zero;
             }
 
-            var dir = target.Orientation.To2D(); // <- todo: This isn't what we're looking for. (Implement Quaterion?)
+            var dir = target.Orientation.To2D(); 
             var pos = target.ServerPosition + (target.ServerPosition - Global.Player.ServerPosition).Normalized();
 
             for (var i = 0; i < 360; i += 10)
@@ -182,12 +180,12 @@
 
         public static void CastQ(Obj_AI_Base target)
         {
-            if (Environment.TickCount - lastCastTime < 800 - Game.Ping / 2)
+            if (Environment.TickCount - _lastCastTime < 800 - Game.Ping / 2)
             {
                 return;
             }
 
-            if (PaddleStar == Vector3.Zero)
+            if (PaddleStarPosition == Vector3.Zero)
             {
                 var paddleStarPrediction = GeneratePaddleStarPrediction(target, Q);
                 if (paddleStarPrediction.IsZero)
@@ -199,7 +197,7 @@
             }
             else if (target.IsValidTarget(Q.Range + 80))
             {
-                var pred = Q.GetPrediction(target, PaddleStar, Global.Player.ServerPosition);
+                var pred = Q.GetPrediction(target, PaddleStarPosition, Global.Player.ServerPosition);
                 if (pred.CastPosition.IsZero)
                 {
                     return;

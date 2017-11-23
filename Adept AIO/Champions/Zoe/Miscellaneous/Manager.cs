@@ -19,7 +19,7 @@
                     return;
                 }
 
-                SpellManager.Q.SetSkillshot(0.25f, 60, SpellManager.PaddleStar.IsZero ? 1200 : 1700, true, SkillshotType.Line);
+                SpellManager.Q.SetSkillshot(0.25f, 60, SpellManager.PaddleStarPosition.IsZero ? 1200 : 1700, true, SkillshotType.Line);
 
                 switch (Global.Orbwalker.Mode)
                 {

@@ -8,7 +8,7 @@
     {
         public static void OnUpdate()
         {
-            var target = Global.TargetSelector.GetTarget(SpellManager.PaddleStar.IsZero ? SpellManager.Q.Range + 400 : 3000);
+            var target = Global.TargetSelector.GetTarget(SpellManager.PaddleStarPosition.IsZero ? SpellManager.Q.Range + 400 : 3000);
             if (target == null)
             {
                 return;
@@ -55,7 +55,7 @@
 
             if (SpellManager.R.Ready &&
                 MenuConfig.Combo["R"].Enabled && 
-                SpellManager.PaddleStar.IsZero && target.Distance(Global.Player) <= Global.Player.AttackRange)
+                SpellManager.PaddleStarPosition.IsZero && target.Distance(Global.Player) <= Global.Player.AttackRange)
             {
                 SpellManager.CastR(target, MenuConfig.Combo["Flash"].Enabled);
             }
