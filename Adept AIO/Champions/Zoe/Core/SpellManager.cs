@@ -55,7 +55,7 @@
             }
 
             var dir = target.Orientation.To2D(); // <- todo: This isn't what we're looking for. (Implement Quaterion?)
-            var pos = Global.Player.ServerPosition + (Global.Player.ServerPosition - target.ServerPosition).Normalized();
+            var pos = target.ServerPosition + (target.ServerPosition - Global.Player.ServerPosition).Normalized();
 
             for (var i = 0; i < 360; i += 10)
             {
@@ -66,6 +66,13 @@
                 var rectAfter = new Geometry.Rectangle(rotated.To2D(), target.ServerPosition.To2D(), Q.Width + target.BoundingRadius + 100);
 
                 if (GameObjects.Enemy.OrderBy(x => x.Distance(Global.Player)).
+                    Where(x => x.NetworkId != target.NetworkId).
+                    Any(x => x.MaxHealth > 20 && (rectAfter.IsInside(x.ServerPosition.To2D()) || rectBefore.IsInside(x.ServerPosition.To2D()))))
+                {
+                    continue;
+                }
+
+                if (GameObjects.Jungle.OrderBy(x => x.Distance(Global.Player)).
                     Where(x => x.NetworkId != target.NetworkId).
                     Any(x => x.MaxHealth > 20 && (rectAfter.IsInside(x.ServerPosition.To2D()) || rectBefore.IsInside(x.ServerPosition.To2D()))))
                 {
@@ -83,7 +90,7 @@
             return Vector3.Zero;
         }
 
-        private static Spell GetWSpell()
+        public static Spell GetAggressiveWSpell()
         {
             var spellName = Global.Player.SpellBook.GetSpell(SpellSlot.W).Name.ToLower();
             Spell spell = null;
@@ -109,18 +116,48 @@
                     break;
             }
 
+            if (spell != null)
+            {
+                return spell;
+            }
+
+            DebugConsole.WriteLine($"Zoe: This (W) spell is NOT supported yet! (AGGRESIVE) | {spellName}", MessageState.Warn);
+            return null;
+        }
+
+        public static Spell GetDefensiveWSpell()
+        {
+            var spellName = Global.Player.SpellBook.GetSpell(SpellSlot.W).Name.ToLower();
+            Spell spell = null;
+
+            switch (spellName)
+            {
+                case "summonerbarrier":
+                case "summonerheal":
+                case "summonerhaste":
+                case "itemredemption":
+                    spell = new Spell(SpellSlot.W, 700);
+                    break;
+            }
+
             if (spell == null)
             {
-              DebugConsole.WriteLine($"Zoe: This (W) is NOT supported! | {spellName}", MessageState.Warn);
+                DebugConsole.WriteLine($"Zoe: This (W) spell is NOT supported yet! (DEFENSIVE) | {spellName}", MessageState.Warn);
             }
             return spell;
         }
 
         public static void CastW(Vector3 pos)
         {
-            var spell = GetWSpell();
+            var spellName = Global.Player.SpellBook.GetSpell(SpellSlot.W).Name.ToLower();
+            Spell spell = null;
 
-            if (spell == null || Global.Player.SpellBook.GetSpell(SpellSlot.W).Name.ToLower() != "summonerflash")
+            if (spellName == "summonerflash")
+            {
+                spell = new Spell(SpellSlot.W, 425);
+            }
+
+            if (spell == null)
             {
                 return;
             }
@@ -130,8 +167,8 @@
 
         public static void CastW(Obj_AI_Base target)
         {
-            var spell = GetWSpell();
-         
+            var spell = target.IsMe ? GetDefensiveWSpell() : GetAggressiveWSpell();
+       
             if (spell == null)
             {
                 return;
@@ -139,7 +176,7 @@
 
             if (target.IsValidTarget(spell.Range))
             {
-                W.CastOnUnit(target);
+                W.Cast(target);
             }
         }
 

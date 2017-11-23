@@ -14,11 +14,26 @@
                 return;
             }
         
-            if (SpellManager.W.Ready &&
-                MenuConfig.Combo["W"].Enabled &&
-                target.HealthPercent() <= MenuConfig.Combo["W"].Value)
+            if (SpellManager.W.Ready)
             {
-                SpellManager.CastW(target);
+                var defensive = SpellManager.GetDefensiveWSpell();
+                var aggressive = SpellManager.GetAggressiveWSpell();
+
+                if (aggressive != null)
+                {
+                    if (target.HealthPercent() <= MenuConfig.Combo["W"].Value && MenuConfig.Combo["W"].Enabled)
+                    {
+                        aggressive.CastOnUnit(target);
+                    }
+                }
+
+                if(defensive != null)
+                {
+                    if (Global.Player.HealthPercent() <= MenuConfig.Combo["WP"].Value && MenuConfig.Combo["WP"].Enabled)
+                    {
+                        defensive.CastOnUnit(Global.Player);
+                    }
+                }
             }
 
             if (SpellManager.E.Ready &&

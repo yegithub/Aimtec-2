@@ -24,7 +24,8 @@
             {
                 new MenuBool("Q", "Use Q"),
                 new MenuBool("QHit", "Q ONLY if target has CC", false),
-                new MenuSliderBool("W", "Use W | When HP % <= ", true, 40),
+                new MenuSliderBool("W", "Use Aggressive W | When target HP % <= ", true, 70),
+                new MenuSliderBool("WP", "Use Defensive W | When Player HP % <= ", true, 70),
                 new MenuBool("Flash", "Flash (W) After Ult"),
                 new MenuBool("E", "Use E"),
                 new MenuBool("R", "Use R"),
