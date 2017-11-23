@@ -55,7 +55,7 @@
 
             if (SpellManager.R.Ready &&
                 MenuConfig.Combo["R"].Enabled && 
-                SpellManager.PaddleStar.IsZero)
+                SpellManager.PaddleStar.IsZero && target.Distance(Global.Player) <= Global.Player.AttackRange)
             {
                 SpellManager.CastR(target, MenuConfig.Combo["Flash"].Enabled);
             }
