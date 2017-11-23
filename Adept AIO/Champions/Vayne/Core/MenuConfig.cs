@@ -121,14 +121,7 @@
                         "Engage"
                     },
                     0),
-                new MenuList("Mode",
-                    "Q To:",
-                    new[]
-                    {
-                        "Cursor",
-                        "Side"
-                    },
-                    0),
+                new MenuList("Mode", "Q To:", new[] {"Cursor", "Side"}, 0),
                 new MenuBool("E", "Use E")
             };
 

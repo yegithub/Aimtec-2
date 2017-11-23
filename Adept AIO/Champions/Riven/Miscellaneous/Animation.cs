@@ -13,7 +13,7 @@
         public static void Reset()
         {
 
-            var qDelay = (Extensions.CurrentQCount == 1 ? 500 : 300) - 2 * Global.Player.Level;
+            var qDelay = (Extensions.CurrentQCount == 1 ? 450 : 330) - 2 * Global.Player.Level;
             var moveDelay = (int)(qDelay * 0.8);
             var ping = Game.Ping   / 2;
 
@@ -52,6 +52,11 @@
                     //    Reset();
                     break;
             }
+        }
+
+        public static void OnPlayAnimation(Obj_AI_Base sender, Obj_AI_BaseChangeAnimationStateEventArgs e)
+        {
+            
         }
     }
 }

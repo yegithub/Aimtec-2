@@ -2,8 +2,10 @@
 {
     using System;
     using System.Diagnostics;
+    using System.Threading;
     using Aimtec;
     using Aimtec.SDK.Extensions;
+    using Aimtec.SDK.Util;
     using Core;
     using Orbwalker;
     using OrbwalkingEvents;
@@ -13,42 +15,17 @@
 
     class Manager
     {
-        public static void OnUpdate()
+        public static void OnProcessAutoAttack(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
         {
+          
             try
             {
-                if (Global.Player.IsDead || Global.Orbwalker.IsWindingUp)
+                if (!sender.IsMe || !args.Sender.IsMe)
                 {
                     return;
                 }
 
-                DebugConsole.WriteLine($"Q STATE: {Global.Player.GetSpell(SpellSlot.Q).State} | If random numbers, CORE IS OUT OF DATE.", MessageState.Debug);
-                switch (Global.Orbwalker.Mode)
-                {
-                    case OrbwalkingMode.Combo:
-                        ComboManager.OnUpdate();
-                        break;
-                    case OrbwalkingMode.Mixed:
-                        Harass.OnUpdate();
-                        break;
-                    case OrbwalkingMode.Laneclear:
-                        Lane.OnUpdate();
-                        Jungle.OnUpdate();
-                        break;
-                    case OrbwalkingMode.None:
-                        Extensions.AllIn = false;
-                        break;
-                }
-
-                if (!SpellConfig.Q.Ready || Extensions.CurrentQCount == 1 || !MenuConfig.Miscellaneous["Active"].Enabled || Global.Player.HasBuff("Recall") ||
-                    Global.Orbwalker.Mode == OrbwalkingMode.Laneclear || Global.Orbwalker.Mode == OrbwalkingMode.Lasthit ||
-                    Environment.TickCount - Extensions.LastQCastAttempt < 3580 + Game.Ping / 2 ||
-                    Environment.TickCount - Extensions.LastQCastAttempt > 3700 + Game.Ping / 2)
-                {
-                    return;
-                }
-
-                SpellConfig.Q.Cast();
+                DelayAction.Queue(200 + Game.Ping / 2, ()=> Action(args), CancellationToken.None);
             }
             catch (Exception e)
             {
@@ -57,13 +34,12 @@
             }
         }
 
-        public static void OnPostAttack(object sender, PostAttackEventArgs args)
+        private static void Action(Obj_AI_BaseMissileClientDataEventArgs args)
         {
-            if (Environment.TickCount - Extensions.LastQCastAttempt <= 400)
+            if (Environment.TickCount - Extensions.LastQCastAttempt < 600)
             {
                 return;
             }
-
             Extensions.DidJustAuto = true;
 
             if (MenuConfig.BurstMode.Active)
@@ -92,6 +68,49 @@
                         }
                         break;
                 }
+            }
+        }
+
+        public static void OnUpdate()
+        {
+            try
+            {
+                if (Global.Player.IsDead || Global.Orbwalker.IsWindingUp)
+                {
+                    return;
+                }
+
+                switch (Global.Orbwalker.Mode)
+                {
+                    case OrbwalkingMode.Combo:
+                        ComboManager.OnUpdate();
+                        break;
+                    case OrbwalkingMode.Mixed:
+                        Harass.OnUpdate();
+                        break;
+                    case OrbwalkingMode.Laneclear:
+                        Lane.OnUpdate();
+                        Jungle.OnUpdate();
+                        break;
+                    case OrbwalkingMode.None:
+                        Extensions.AllIn = false;
+                        break;
+                }
+
+                if (!SpellConfig.Q.Ready || Extensions.CurrentQCount == 1 || !MenuConfig.Miscellaneous["Active"].Enabled || Global.Player.HasBuff("Recall") ||
+                    Global.Orbwalker.Mode == OrbwalkingMode.Laneclear || Global.Orbwalker.Mode == OrbwalkingMode.Lasthit ||
+                    Environment.TickCount - Extensions.LastQCastAttempt < 3500 + Game.Ping / 2 ||
+                    Environment.TickCount - Extensions.LastQCastAttempt > 3700 + Game.Ping / 2)
+                {
+                    return;
+                }
+
+                SpellConfig.Q.Cast();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
             }
         }
     }

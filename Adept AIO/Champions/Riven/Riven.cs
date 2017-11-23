@@ -1,5 +1,6 @@
 ﻿namespace Adept_AIO.Champions.Riven
 {
+    using System;
     using Aimtec;
     using Core;
     using Drawings;
@@ -23,7 +24,8 @@
 
             Obj_AI_Base.OnPlayAnimation += Animation.OnPlayAnimation;
 
-            Orbwalker.Orbwalker.Implementation.PostAttack += Manager.OnPostAttack;
+            //Orbwalker.Orbwalker.Implementation.PostAttack += Manager.OnPostAttack;
+            Obj_AI_Base.OnProcessAutoAttack += Manager.OnProcessAutoAttack;
             Render.OnRender += DrawManager.RenderBasics;
             Render.OnPresent += DrawManager.OnPresent;
         }
