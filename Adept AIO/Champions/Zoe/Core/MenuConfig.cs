@@ -23,6 +23,7 @@
             Combo = new Menu("ZoeCombo", "Combo")
             {
                 new MenuBool("Q", "Use Q"),
+                new MenuBool("QHit", "Q ONLY if target has CC", false),
                 new MenuSliderBool("W", "Use W | When HP % <= ", true, 40),
                 new MenuBool("Flash", "Flash (W) After Ult"),
                 new MenuBool("E", "Use E"),

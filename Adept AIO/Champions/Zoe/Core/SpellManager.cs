@@ -72,7 +72,7 @@
                     continue;
                 }
 
-                if (rotated.Distance(target) < Global.Player.Distance(target))
+                if (rotated.Distance(target) < Global.Player.Distance(target) || rotated.Distance(Global.Player) > Q.Range + 200)
                 {
                     continue;
                 }
@@ -196,7 +196,7 @@
                 return;
             }
 
-            DelayAction.Queue(500, delegate
+            DelayAction.Queue(250, delegate
             {
                 CastW(paddleStar);
             }, new CancellationToken(false));

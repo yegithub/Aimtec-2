@@ -42,7 +42,7 @@
 
         public static bool IsHardCc(this Obj_AI_Hero target)
         {
-            return HardCc.Select(target.HasBuffOfType).FirstOrDefault();
+            return HardCc.Select(target.HasBuffOfType).FirstOrDefault() || target.HasBuff("ZoeESleepStun") || target.HasBuff("ZoeESleepCountdownSlow");
         }
 
         public static Vector3 GetFountainPos(this GameObject target)

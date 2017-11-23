@@ -2,6 +2,7 @@
 {
     using Aimtec.SDK.Extensions;
     using Core;
+    using SDK.Generic;
     using SDK.Unit_Extensions;
 
     class Combo
@@ -13,7 +14,7 @@
             {
                 return;
             }
-
+        
             if (SpellManager.W.Ready &&
                 MenuConfig.Combo["W"].Enabled &&
                 target.HealthPercent() <= MenuConfig.Combo["W"].Value)
@@ -33,8 +34,14 @@
                 return;
             }
 
+            if (MenuConfig.Combo["QHit"].Enabled && !target.IsHardCc())
+            {
+               return;
+            }
+
             if (SpellManager.R.Ready &&
-                MenuConfig.Combo["R"].Enabled && SpellManager.PaddleStar.IsZero)
+                MenuConfig.Combo["R"].Enabled && 
+                SpellManager.PaddleStar.IsZero)
             {
                 SpellManager.CastR(target, MenuConfig.Combo["Flash"].Enabled);
             }
