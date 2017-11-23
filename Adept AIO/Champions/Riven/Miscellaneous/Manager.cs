@@ -25,7 +25,7 @@
                     return;
                 }
 
-                DelayAction.Queue(200 + Game.Ping / 2, ()=> Action(args), CancellationToken.None);
+                DelayAction.Queue(250 + Game.Ping / 2, ()=> Action(args), CancellationToken.None);
             }
             catch (Exception e)
             {
@@ -36,7 +36,7 @@
 
         private static void Action(Obj_AI_BaseMissileClientDataEventArgs args)
         {
-            if (Environment.TickCount - Extensions.LastQCastAttempt < 600)
+            if (Environment.TickCount - Extensions.LastQCastAttempt < 500 + Game.Ping / 2)
             {
                 return;
             }

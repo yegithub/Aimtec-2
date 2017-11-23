@@ -17,13 +17,22 @@
 
             var dmg = Global.Player.GetAutoAttackDamage(target);
 
-            dmg += Global.Player.GetSpellDamage(target, SpellSlot.R, DamageStage.SecondCast);
+            if (SpellConfig.R.Ready)
+            {
+                dmg += Global.Player.GetSpellDamage(target, SpellSlot.R, DamageStage.SecondCast);
+            }
 
-            dmg += Global.Player.GetSpellDamage(target, SpellSlot.W);
+            if (SpellConfig.W.Ready)
+            {
+                dmg += Global.Player.GetSpellDamage(target, SpellSlot.W);
+            }
 
-            var count = 4 - Extensions.CurrentQCount;
-            dmg += (Global.Player.GetSpellDamage(target, SpellSlot.Q) + dmg) * count;
-
+            if (SpellConfig.Q.Ready)
+            {
+                var count = 4 - Extensions.CurrentQCount;
+                dmg += (Global.Player.GetSpellDamage(target, SpellSlot.Q) + dmg) * count;
+            }
+        
             if (SummonerSpells.IsValid(SummonerSpells.Ignite))
             {
                 dmg += SummonerSpells.IgniteDamage(target);
