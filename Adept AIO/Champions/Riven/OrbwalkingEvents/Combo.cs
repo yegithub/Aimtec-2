@@ -22,7 +22,7 @@
                 return;
             }
 
-            if (!SpellConfig.W.Ready && (!SpellConfig.Q.Ready || Extensions.CurrentQCount == 3) && SpellConfig.R2.Ready && Enums.UltimateMode == UltimateMode.Second &&
+            if (!SpellConfig.W.Ready && (!SpellConfig.Q.Ready || Extensions.CurrentQCount == 1) && SpellConfig.R2.Ready && Enums.UltimateMode == UltimateMode.Second &&
                 MenuConfig.Combo["R2"].Enabled && target.HealthPercent() <= 40)
             {
                 SpellManager.CastR2(target);

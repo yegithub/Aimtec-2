@@ -84,7 +84,7 @@
                     {
                         Global.Orbwalker.ResetAutoAttackTimer();
                         Global.Orbwalker.Attack(_unit);
-                    });
+                    }, new CancellationToken(false));
             }
 
             if (_canUseW && _unit.IsValidTarget(SpellConfig.W.Range))
@@ -94,7 +94,7 @@
                 if (Items.CanUseTiamat())
                 {
                     Items.CastTiamat();
-                    DelayAction.Queue(300, () => SpellConfig.W.Cast(_unit));
+                    DelayAction.Queue(300, () => SpellConfig.W.Cast(_unit), new CancellationToken(false));
                 }
 
                 SpellConfig.W.Cast(_unit);

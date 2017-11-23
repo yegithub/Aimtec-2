@@ -22,7 +22,7 @@
                     return;
                 }
 
-                DelayAction.Queue(Game.Ping / 2 + (Global.Player.HasBuff("RivenFengShuiEngine") ? 325 : 210), ()=> Action(args), CancellationToken.None);
+                DelayAction.Queue(Game.Ping / 2 + (Global.Player.HasBuff("RivenFengShuiEngine") ? 350 : 225), ()=> Action(args), CancellationToken.None);
             }
             catch (Exception e)
             {
