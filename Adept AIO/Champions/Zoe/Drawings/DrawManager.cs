@@ -50,6 +50,11 @@
             }
 
             var generated = SpellManager.GeneratePaddleStarPrediction(target, SpellManager.Q);
+            if (generated.IsZero)
+            {
+                return;
+            }
+
             Render.Circle(generated, 50, 100, Color.BlueViolet);
 
             if (!Render.WorldToScreen(generated, out var generatedV2) ||

@@ -47,9 +47,7 @@
             switch (Enums.BurstPattern)
             {
                 case BurstPattern.TheShy: return 700;
-
                 case BurstPattern.Execution: return 750;
-
                 default: throw new ArgumentOutOfRangeException();
             }
         }
