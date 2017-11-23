@@ -212,7 +212,7 @@
         {
             var rect = new Geometry.Rectangle(Global.Player.ServerPosition.To2D(), target.ServerPosition.To2D(), 100 + E.Width);
 
-            if (target.IsValidTarget(E.Range) && !GameObjects.Enemy.OrderBy(x => x.Distance(Global.Player)).Any(x => x.NetworkId != target.NetworkId && rect.IsInside(x.ServerPosition.To2D())))
+            if (target.IsValidTarget(E.Range) && !GameObjects.Enemy.OrderBy(x => x.Distance(Global.Player)).Any(x => x.NetworkId != target.NetworkId && rect.IsInside(x.ServerPosition.To2D()) && Global.Player.Distance(x) < Global.Player.Distance(target)))
             {
                 E.Cast(target);
             }
