@@ -96,7 +96,8 @@
                     new[]
                     {
                         "After Auto",
-                        "Engage"
+                        "Engage",
+                        "Disabled"
                     },
                     0),
                 new MenuList("QMode",
@@ -106,7 +107,8 @@
                         "Cursor",
                         "Side"
                     },
-                    0)
+                    0),
+                new MenuBool("Turret", "Q After AA Turret", false)
             };
 
             JungleClear = new Menu("VayneJungle", "Jungle")

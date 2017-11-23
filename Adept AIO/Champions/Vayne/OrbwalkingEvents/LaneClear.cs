@@ -12,12 +12,12 @@
     {
         public static void PostAttack(object sender, PostAttackEventArgs args)
         {
-            if (!SpellManager.Q.Ready || Global.Player.ManaPercent() <= 35)
+            if (!SpellManager.Q.Ready || Global.Player.ManaPercent() <= 35 || MenuConfig.LaneClear["Q"].Value == 2)
             {
                 return;
             }
 
-            if (Global.Player.CountEnemyHeroesInRange(900) == 0)
+            if (Global.Player.CountEnemyHeroesInRange(900) == 0 && MenuConfig.LaneClear["Turret"].Enabled)
             {
                 var t = args.Target as Obj_AI_Base;
 
@@ -46,7 +46,7 @@
         public static void OnUpdate()
         {
             var minion = GameObjects.EnemyMinions.FirstOrDefault(x => x.IsValidTarget(SpellManager.Q.Range + Global.Player.AttackRange) && x.MaxHealth > 30);
-            if (minion == null || !SpellManager.Q.Ready || Global.Player.ManaPercent() <= 35)
+            if (minion == null || !SpellManager.Q.Ready || Global.Player.ManaPercent() <= 35 || MenuConfig.LaneClear["Q"].Value == 2)
             {
                 return;
             }
