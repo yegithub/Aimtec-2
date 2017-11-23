@@ -21,7 +21,12 @@
                 return;
             }
 
-            if (SpellConfig.Q.Ready)
+            if (SpellConfig.W.Ready && SpellConfig.Q.Ready)
+            {
+                SpellManager.CastWq(target);
+            }
+
+            else if (SpellConfig.Q.Ready)
             {
                 SpellManager.CastQ(target);
             }
@@ -29,7 +34,7 @@
 
         public static void OnUpdate()
         {
-            var target = MenuConfig.BurstMode.GetTarget() as Obj_AI_Hero;
+            var target = Global.TargetSelector.GetSelectedTarget();
 
             if (target == null || !MenuConfig.BurstMenu[target.ChampionName].Enabled)
             {
@@ -45,14 +50,9 @@
                 return;
             }
 
-            if (SpellConfig.R2.Ready && Enums.UltimateMode == UltimateMode.Second)
+            if (SpellConfig.R2.Ready && Enums.UltimateMode == UltimateMode.Second && (Extensions.CurrentQCount == 3 || !SpellConfig.Q.Ready))
             {
                 SpellManager.CastR2(target);
-            }
-
-            if (target.IsValidSpellTarget(SpellConfig.W.Range) && SpellConfig.W.Ready)
-            {
-                Global.Player.SpellBook.CastSpell(SpellSlot.W);
             }
 
             if (SpellConfig.R.Ready && Enums.UltimateMode == UltimateMode.First && SpellConfig.E.Ready)
@@ -71,19 +71,25 @@
 
                     if (Extensions.AllIn && target.Distance(Global.Player) > SpellConfig.E.Range + Global.Player.AttackRange && SummonerSpells.IsValid(SummonerSpells.Flash))
                     {
-                        DelayAction.Queue(Game.Ping / 2 + 50,
-                            delegate
-                            {
-                                Global.Player.SpellBook.CastSpell(SpellSlot.W);
-                            },
-                            new CancellationToken(false));
-
-                        DelayAction.Queue(150,
-                            delegate
-                            {
-                                SummonerSpells.Flash.Cast(target.ServerPosition);
-                            },
-                            new CancellationToken(false));
+                        if (Items.CanUseTiamat())
+                        {
+                            DelayAction.Queue(300,
+                                delegate
+                                {
+                                    Items.CastTiamat();
+                                    SummonerSpells.Flash.Cast(target.ServerPosition);
+                                },
+                                new CancellationToken(false));
+                        }
+                        else
+                        {
+                            DelayAction.Queue(200,
+                                delegate
+                                {
+                                    SummonerSpells.Flash.Cast(target.ServerPosition);
+                                },
+                                new CancellationToken(false));
+                        }
                     }
                     break;
 

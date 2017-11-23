@@ -151,7 +151,7 @@
                 {
                     DelayAction.Queue(500, () => SpellConfig.R2.Cast(target));
                 }
-                
+                _canUseQ = true;
             }
             else
             {

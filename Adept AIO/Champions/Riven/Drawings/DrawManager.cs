@@ -87,7 +87,7 @@
 
             if (MenuConfig.Drawings["Engage"].Enabled)
             {
-                if (Extensions.AllIn)
+                if (Extensions.AllIn || MenuConfig.BurstMode.Active)
                 {
                     Render.Circle(Global.Player.Position, Extensions.FlashRange(), (uint) MenuConfig.Drawings["Segments"].Value, Color.Yellow);
                 }

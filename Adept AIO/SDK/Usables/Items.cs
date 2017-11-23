@@ -59,10 +59,10 @@
             Global.Player.SpellBook.CastSpell((SpellSlot) slot);
             TiamatCastTime = Environment.TickCount;
 
-            if (cancelAa)
-            {
-                Global.Orbwalker.ResetAutoAttackTimer();
-            }
+            //if (cancelAa)
+            //{
+            //    Global.Orbwalker.ResetAutoAttackTimer();
+            //}
         }
 
         public static void WardJump(Vector3 position)
