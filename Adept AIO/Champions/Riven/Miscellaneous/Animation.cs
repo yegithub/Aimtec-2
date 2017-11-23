@@ -10,9 +10,9 @@
     {
         public static void Reset()
         {
-            var qDelay = (Extensions.CurrentQCount == 1 ? 450 : 380) - 3 * Global.Player.Level;
+            var qDelay = (int)(((Extensions.CurrentQCount == 1 ? 450 : 380) - 3 * Global.Player.Level) * (Global.Player.HasBuff("RivenFengShuiEngine") ? 1.5 : 1));
        
-            var moveDelay = (int)(qDelay * 0.65);
+            var moveDelay = (int)(qDelay * 0.7);
             var ping = Game.Ping / 2;
 
             DelayAction.Queue(moveDelay,
