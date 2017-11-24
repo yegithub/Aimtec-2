@@ -29,7 +29,7 @@
             }
             else if (SpellManager.W.Ready && target.Health < Global.Player.GetSpellDamage(target, SpellSlot.W) && MenuConfig.Killsteal["W"].Enabled && target.IsValidTarget(SpellManager.W.Range))
             {
-                SpellManager.CastE(target);
+                SpellManager.CastW(target);
             }
             else if (SpellManager.E.Ready && target.Health < Global.Player.GetSpellDamage(target, SpellSlot.E) && MenuConfig.Killsteal["E"].Enabled && target.IsValidTarget(SpellManager.E.Range))
             {
