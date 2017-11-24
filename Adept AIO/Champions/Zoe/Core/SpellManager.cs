@@ -34,7 +34,7 @@
         public static void OnProcessSpellCast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
         {
             if (sender == null ||
-                sender.IsEnemy ||
+                !sender.IsMe ||
                 args.SpellData.Name != "ZoeQ")
             {
                 return;

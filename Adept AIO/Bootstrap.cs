@@ -19,6 +19,7 @@
     using Champions.Tristana;
     using Champions.Twitch;
     using Champions.Vayne;
+    using Champions.Xerath;
     using Champions.Yasuo;
     using Champions.Zed;
     using Champions.Zoe;
@@ -30,6 +31,7 @@
     {
         private static readonly string[] Valid =
         {
+            "Xerath",
             "Zoe",
             "Jhin",
             "Gnar",
@@ -71,6 +73,9 @@
 
             switch (Global.Player.ChampionName)
             {
+                case "Xerath":
+                    new Xerath();
+                    break;
                 case "Zoe":
                     new Zoe();
                     break;
