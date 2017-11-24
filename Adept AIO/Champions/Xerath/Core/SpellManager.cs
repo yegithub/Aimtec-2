@@ -99,7 +99,7 @@
         {
             if (!CastingUltimate)
             {
-                if (Global.Player.CountEnemyHeroesInRange(1000) != 0)
+                if (Global.Player.CountEnemyHeroesInRange(1000) == 0)
                 {
                     R.Cast();
                 }
