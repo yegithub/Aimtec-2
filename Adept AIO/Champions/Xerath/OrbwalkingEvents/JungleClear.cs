@@ -24,7 +24,7 @@
             {
                 if (SpellManager.Q.IsCharging && SpellManager.Q.ChargePercent > 60)
                 {
-                    SpellManager.Q.Cast(creep);
+                    SpellManager.Q.Cast(creep.ServerPosition);
                     return;
                 }
                 SpellManager.CastQ(creep);

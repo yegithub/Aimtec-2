@@ -29,7 +29,7 @@
             {
                 if (SpellManager.Q.IsCharging && SpellManager.Q.ChargePercent > 60)
                 {
-                    SpellManager.Q.Cast(minion);
+                    SpellManager.Q.Cast(minion.ServerPosition);
                 }
                 else 
                 {
