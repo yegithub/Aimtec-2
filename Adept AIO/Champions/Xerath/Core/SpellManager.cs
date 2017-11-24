@@ -55,7 +55,7 @@
 
             if (rect.IsInside(target.ServerPosition.To2D()) && Q.ChargePercent >= 50)
             {
-                Q.Cast(target.ServerPosition);
+                Q.Cast(Q.GetPrediction(target).CastPosition);
             }
             else
             {

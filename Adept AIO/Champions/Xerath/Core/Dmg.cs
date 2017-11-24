@@ -21,7 +21,7 @@
                 dmg += Global.Player.GetAutoAttackDamage(target);
             }
 
-            if (SpellManager.Q.Ready)
+            if (SpellManager.Q.Ready || SpellManager.Q.IsCharging)
             {
                 dmg += Global.Player.GetSpellDamage(target, SpellSlot.Q);
             }
@@ -36,10 +36,10 @@
                 dmg += Global.Player.GetSpellDamage(target, SpellSlot.E);
             }
 
-            if (SpellManager.R.Ready)
-            {
-                dmg += Global.Player.GetSpellDamage(target, SpellSlot.R) * SpellManager.GetUltiShots();
-            }
+            //if (SpellManager.R.Ready)
+            //{
+            //    dmg += Global.Player.GetSpellDamage(target, SpellSlot.R) * SpellManager.GetUltiShots();
+            //}
 
             return dmg;
         }
