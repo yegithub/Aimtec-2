@@ -27,7 +27,7 @@
         public SpellManager()
         {
             Q = new Spell(SpellSlot.Q, 1550);
-            Q.SetSkillshot(0.6f, 95f, float.MaxValue, false, SkillshotType.Line);
+            Q.SetSkillshot(0.6f, 95f, 1900, false, SkillshotType.Line);
             Q.SetCharged("XerathArcanopulseChargeUp", "XerathArcanopulseChargeUp", 750, 1550, 3.0f);
 
             W = new Spell(SpellSlot.W, 1100);
