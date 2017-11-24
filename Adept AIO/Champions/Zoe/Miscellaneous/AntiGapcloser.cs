@@ -11,7 +11,7 @@
     {
         public static void OnGapcloser(Obj_AI_Hero sender, GapcloserArgs args)
         {
-            if (sender.IsMe || !SpellManager.R.Ready || !sender.IsEnemy || args.EndPosition.Distance(Global.Player) > 350 || Global.Player.Distance(args.EndPosition) > Global.Player.Distance(args.StartPosition))
+            if (!SpellManager.R.Ready || !sender.IsEnemy || args.EndPosition.Distance(Global.Player) > 350 || Global.Player.Distance(args.EndPosition) > Global.Player.Distance(args.StartPosition))
             {
                 return;
             }
