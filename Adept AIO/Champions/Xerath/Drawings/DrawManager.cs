@@ -13,7 +13,7 @@
         public static void OnPresent()
         {
             if (Global.Player.IsDead ||
-                !MenuConfig.Drawings["Dmg"].Enabled)
+                MenuConfig.Drawings["Dmg"].Value == 0)
             {
                 return;
             }

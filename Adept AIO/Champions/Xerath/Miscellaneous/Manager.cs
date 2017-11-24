@@ -45,7 +45,7 @@
 
                 SpellManager.R.Range = new float[] { 3520, 4840, 6160 }[Math.Max(0, Global.Player.SpellBook.GetSpell(SpellSlot.R).Level - 1)];
 
-                if (SpellManager.CastingUltimate)
+                if (SpellManager.CastingUltimate && MenuConfig.Misc["Mode"].Value == 1)
                 {
                     var target = Global.TargetSelector.GetTarget(SpellManager.R.Range);
                     if (target != null)
