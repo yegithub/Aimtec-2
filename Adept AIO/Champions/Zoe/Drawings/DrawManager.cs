@@ -37,7 +37,7 @@
             {
                 Render.Circle(Global.Player.Position, SpellManager.Q.Range, (uint)MenuConfig.Drawings["Segments"].Value, Color.Cyan);
             }
-
+            Render.Circle(Global.Player.Position, SpellManager.E.Range, (uint)MenuConfig.Drawings["Segments"].Value, Color.Crimson);
             if (!MenuConfig.Drawings["Pred"].Enabled)
             {
                 return;

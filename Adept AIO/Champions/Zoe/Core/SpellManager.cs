@@ -26,7 +26,7 @@
             W = new Spell(SpellSlot.W, 600);
 
             E = new Spell(SpellSlot.E, 800);
-            E.SetSkillshot(0.25f, 50, 1600, true, SkillshotType.Line);
+            E.SetSkillshot(0.25f, 30, 1600, true, SkillshotType.Line);
 
             R = new Spell(SpellSlot.R, 575);
         }
@@ -42,7 +42,7 @@
 
             PaddleStarPosition = args.End;
             _lastCastTime = Environment.TickCount;
-            DelayAction.Queue(1500, () => PaddleStarPosition = Vector3.Zero, new CancellationToken(false));
+            DelayAction.Queue(1200, () => PaddleStarPosition = Vector3.Zero, new CancellationToken(false));
         }
 
         public static Vector3 GeneratePaddleStarPrediction(Obj_AI_Base target, Spell spell)
@@ -208,7 +208,7 @@
 
         public static void CastE(Obj_AI_Base target)
         {
-            var rect = new Geometry.Rectangle(Global.Player.ServerPosition.To2D(), target.ServerPosition.To2D(), 100 + E.Width);
+            var rect = new Geometry.Rectangle(Global.Player.ServerPosition.To2D(), target.ServerPosition.To2D(), 80 + E.Width);
 
             if (target.IsValidTarget(E.Range) && !GameObjects.Enemy.OrderBy(x => x.Distance(Global.Player)).Any(x => x.NetworkId != target.NetworkId && rect.IsInside(x.ServerPosition.To2D()) && Global.Player.Distance(x) < Global.Player.Distance(target)))
             {
@@ -235,16 +235,6 @@
             {
                 CastW(paddleStar);
             }, new CancellationToken(false));
-        }
-
-        public static Geometry.Rectangle QRectBefore(Obj_AI_Base target)
-        {
-            return null;
-        }
-
-        public static Geometry.Rectangle QRectAfter(Obj_AI_Base target)
-        {
-            return null;
         }
     }
 }
