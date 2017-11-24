@@ -9,7 +9,7 @@
     {
         public static void OnUpdate()
         {
-            var creep = GameObjects.Jungle.OrderBy(x => x.MaxHealth).ThenBy(x => x.Distance(Global.Player)).FirstOrDefault(x => x.IsValidTarget(SpellManager.Q.ChargedMaxRange) && x.MaxHealth > 15);
+            var creep = GameObjects.Jungle.OrderByDescending(x => x.MaxHealth).ThenBy(x => x.Distance(Global.Player)).FirstOrDefault(x => x.IsValidTarget(SpellManager.Q.ChargedMaxRange) && x.MaxHealth > 15);
             if (creep == null )
             {
                 return;
