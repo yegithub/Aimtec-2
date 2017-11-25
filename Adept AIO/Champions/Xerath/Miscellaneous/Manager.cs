@@ -28,7 +28,7 @@
 
         private static void PreAttack(object sender, PreAttackEventArgs args)
         {
-            if (SpellManager.CastingUltimate)
+            if (SpellManager.CastingUltimate || SpellManager.Q.IsCharging)
             {
                 args.Cancel = true;
             }
