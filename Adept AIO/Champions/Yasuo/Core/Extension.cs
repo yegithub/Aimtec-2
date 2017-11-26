@@ -47,7 +47,7 @@
                 return false;
             }
 
-            var time = Environment.TickCount - (buff.StartTime * 1000 - buff.Full);
+            var time = Game.TickCount - (buff.StartTime * 1000 - buff.Full);
 
             return time >= timeUntilValid - Game.Ping / 2 && time <= 1200;
         }

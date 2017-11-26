@@ -692,7 +692,7 @@
             Gapclosers[sender.NetworkId].SpellName = args.SpellData.Name;
             Gapclosers[sender.NetworkId].StartPosition = args.Start;
             Gapclosers[sender.NetworkId].EndPosition = args.End;
-            Gapclosers[sender.NetworkId].StartTick = Environment.TickCount;
+            Gapclosers[sender.NetworkId].StartTick = Game.TickCount;
         }
 
         private static void OnNewPath(Obj_AI_Base sender, Obj_AI_BaseNewPathEventArgs args)
@@ -724,7 +724,7 @@
                 Gapclosers[sender.NetworkId].SpellName = sender.UnitSkinName + "_Dash";
                 Gapclosers[sender.NetworkId].StartPosition = sender.ServerPosition;
                 Gapclosers[sender.NetworkId].EndPosition = args.Path.Last();
-                Gapclosers[sender.NetworkId].StartTick = Environment.TickCount;
+                Gapclosers[sender.NetworkId].StartTick = Game.TickCount;
                 Gapclosers[sender.NetworkId].EndTick =
                     (int) (Gapclosers[sender.NetworkId].EndPosition.DistanceSqr(Gapclosers[sender.NetworkId].StartPosition) / args.Speed * args.Speed * 1000) +
                     Gapclosers[sender.NetworkId].StartTick;
@@ -735,7 +735,7 @@
 
         private static void OnUpdate()
         {
-            if (Gapclosers.Values.Any(x => Environment.TickCount - x.StartTick > 900 + Game.Ping))
+            if (Gapclosers.Values.Any(x => Game.TickCount - x.StartTick > 900 + Game.Ping))
             {
                 Gapclosers.Clear();
             }
@@ -817,7 +817,7 @@
             Gapclosers[sender.NetworkId].SpellName = args.SpellData.Name;
             Gapclosers[sender.NetworkId].StartPosition = args.Start;
             Gapclosers[sender.NetworkId].EndPosition = args.End;
-            Gapclosers[sender.NetworkId].StartTick = Environment.TickCount;
+            Gapclosers[sender.NetworkId].StartTick = Game.TickCount;
             Gapclosers[sender.NetworkId].HaveShield = HaveShiledBuff(sender);
         }
 

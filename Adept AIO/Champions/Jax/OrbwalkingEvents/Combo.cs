@@ -2,6 +2,7 @@
 {
     using System;
     using System.Linq;
+    using Aimtec;
     using Aimtec.SDK.Extensions;
     using Core;
     using Miscellaneous;
@@ -49,7 +50,7 @@
             }
 
             if (MenuConfig.Combo["Jump"].Enabled && !(SpellConfig.E.Ready || Dmg.Damage(target) > target.Health * 0.75f) || MenuConfig.Combo["Delay"].Enabled &&
-                (Environment.TickCount - SpellConfig.E.LastCastAttemptT < 800 || SpellConfig.E.Ready && SpellConfig.E.LastCastAttemptT == 0))
+                (Game.TickCount - SpellConfig.E.LastCastAttemptT < 800 || SpellConfig.E.Ready && SpellConfig.E.LastCastAttemptT == 0))
             {
                 return;
             }

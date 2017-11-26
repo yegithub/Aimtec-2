@@ -40,7 +40,7 @@
             switch (args.SpellData.Name)
             {
                 case "RivenTriCleave":
-                    Extensions.LastQCastAttempt = Environment.TickCount;
+                    Extensions.LastQCastAttempt = Game.TickCount;
                     _canUseQ = false;
                     _canWq = false;
                     _serverPosition = false;
@@ -57,7 +57,7 @@
                     _canUseW = false;
                     break;
                 case "RivenFengShuiEngine":
-                    LastR = Environment.TickCount;
+                    LastR = Game.TickCount;
                     Enums.UltimateMode = UltimateMode.Second;
                     Maths.DisableAutoAttack(200);
                     break;

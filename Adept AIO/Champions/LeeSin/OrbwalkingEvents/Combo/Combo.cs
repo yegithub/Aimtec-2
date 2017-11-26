@@ -116,7 +116,7 @@
             if (_spellConfig.W.Ready && _spellConfig.IsFirst(_spellConfig.W) && _wardTracker.IsWardReady() && this.WEnabled && this.WardEnabled &&
                 distance > (_spellConfig.Q.Ready ? 1000 : _spellConfig.WardRange))
             {
-                if (Environment.TickCount - _spellConfig.Q.LastCastAttemptT <= 3000 || target.Position.CountEnemyHeroesInRange(2000) > 1)
+                if (Game.TickCount - _spellConfig.Q.LastCastAttemptT <= 3000 || target.Position.CountEnemyHeroesInRange(2000) > 1)
                 {
                     return;
                 }

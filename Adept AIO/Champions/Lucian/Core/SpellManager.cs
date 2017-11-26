@@ -93,7 +93,7 @@
 
         public static void CastR(Obj_AI_Base target)
         {
-            if (GameObjects.EnemyMinions.Count(x => GetRRectangle(x).IsInside(x.ServerPosition.To2D())) <= 2 && Environment.TickCount - R.LastCastAttemptT >= 5000)
+            if (GameObjects.EnemyMinions.Count(x => GetRRectangle(x).IsInside(x.ServerPosition.To2D())) <= 2 && Game.TickCount - R.LastCastAttemptT >= 5000)
             {
                 R.Cast(target);
             }

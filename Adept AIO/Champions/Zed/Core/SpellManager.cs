@@ -38,10 +38,10 @@
             switch (args.SpellSlot)
             {
                 case SpellSlot.R:
-                    LastR = Environment.TickCount;
+                    LastR = Game.TickCount;
                     break;
                 case SpellSlot.W:
-                    LastW = Environment.TickCount;
+                    LastW = Game.TickCount;
                     break;
             }
         }
@@ -57,9 +57,9 @@
             {
                 W.Cast();
             }
-            else if (ShadowManager.CanCastFirst(SpellSlot.W) && Environment.TickCount - LastW > Game.Ping + 100)
+            else if (ShadowManager.CanCastFirst(SpellSlot.W) && Game.TickCount - LastW > Game.Ping + 100)
             {
-                LastW = Environment.TickCount;
+                LastW = Game.TickCount;
                 W.Cast(target.ServerPosition);
             }
         }

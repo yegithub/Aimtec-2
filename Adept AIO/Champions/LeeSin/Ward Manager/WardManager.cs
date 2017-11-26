@@ -20,7 +20,7 @@
 
         public void WardJump(Vector3 position, int range)
         {
-            if (Environment.TickCount - _wardTracker.LastWardCreated < 500)
+            if (Game.TickCount - _wardTracker.LastWardCreated < 500)
             {
                 return;
             }
@@ -35,8 +35,8 @@
 
             position = Global.Player.ServerPosition.Extend(position, range);
 
-            this.LastTimeCasted = Environment.TickCount;
-            _wardTracker.LastWardCreated = Environment.TickCount;
+            this.LastTimeCasted = Game.TickCount;
+            _wardTracker.LastWardCreated = Game.TickCount;
             _wardTracker.WardPosition = position;
 
             Items.CastItem(ward, position);

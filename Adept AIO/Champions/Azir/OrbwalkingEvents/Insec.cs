@@ -74,7 +74,7 @@
                     dist > 450 &&
                     soldierPos.Distance(target) > 450 && !Global.Player.IsDashing())
                 {
-                    if (Environment.TickCount - AzirHelper.LastE <= 900 || Environment.TickCount - AzirHelper.LastQ <= 900)
+                    if (Game.TickCount - AzirHelper.LastE <= 900 || Game.TickCount - AzirHelper.LastQ <= 900)
                     {
                         return;
                     }

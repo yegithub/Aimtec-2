@@ -25,7 +25,7 @@
             _spellConfig = spellConfig;
         }
 
-        public bool DidJustWard => Environment.TickCount - this.LastWardCreated <= 800 + Game.Ping / 2f;
+        public bool DidJustWard => Game.TickCount - this.LastWardCreated <= 800 + Game.Ping / 2f;
 
         public bool IsWardReady()
         {
@@ -59,7 +59,7 @@
                 return;
             }
 
-            this.LastWardCreated = Environment.TickCount;
+            this.LastWardCreated = Game.TickCount;
             this.WardName = ward.Name;
             this.WardPosition = ward.ServerPosition;
 

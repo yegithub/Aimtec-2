@@ -17,7 +17,7 @@
 
         public static void Jump(Vector3 pos)
         {
-            if (SpellConfig.W.Ready || Environment.TickCount - AzirHelper.LastW <= 1000)
+            if (SpellConfig.W.Ready || Game.TickCount - AzirHelper.LastW <= 1000)
             {
                 var extend = Global.Player.ServerPosition.Extend(pos, SpellConfig.W.Range);
                 if (SoldierManager.Soldiers.Count == 0)

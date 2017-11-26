@@ -33,7 +33,7 @@
         public static void OnCreate(GameObject sender)
         {
             var soldier = sender as Obj_AI_Minion;
-            if (soldier != null && IsSoldier(soldier) && Environment.TickCount - AzirHelper.LastR >= 100)
+            if (soldier != null && IsSoldier(soldier) && Game.TickCount - AzirHelper.LastR >= 100)
             {
                 Soldiers.Add(soldier);
                 DelayAction.Queue(9000 - Game.Ping / 2, () => Soldiers.RemoveAll(x => x.NetworkId == soldier.NetworkId), new CancellationToken(false));

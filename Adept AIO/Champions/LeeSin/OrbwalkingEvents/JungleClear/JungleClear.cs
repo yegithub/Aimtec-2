@@ -216,7 +216,7 @@
                 Global.Player.SpellBook.CastSpell(SpellSlot.Q);
             }
 
-            if (!_spellConfig.IsQ2() && Environment.TickCount - _spellConfig.LastQ1CastAttempt > 500)
+            if (!_spellConfig.IsQ2() && Game.TickCount - _spellConfig.LastQ1CastAttempt > 500)
             {
                 Global.Player.SpellBook.CastSpell(SpellSlot.Q, mob.Position);
             }
@@ -255,7 +255,7 @@
                 return;
             }
 
-            if (_q2Time > 0 && Environment.TickCount - _q2Time <= 1500 && SummonerSpells.IsValid(SummonerSpells.Smite) && StealDamage(mob) > mob.Health)
+            if (_q2Time > 0 && Game.TickCount - _q2Time <= 1500 && SummonerSpells.IsValid(SummonerSpells.Smite) && StealDamage(mob) > mob.Health)
             {
                 if (_spellConfig.W.Ready && _spellConfig.IsFirst(_spellConfig.W) && Global.Player.Distance(mob) <= 500)
                 {
@@ -267,7 +267,7 @@
             if (mob.Position.CountAllyHeroesInRange(700) <= 1 && _spellConfig.Q.Ready && _spellConfig.IsQ2() && StealDamage(mob) > mob.Health)
             {
                 _spellConfig.Q.Cast();
-                _q2Time = Environment.TickCount;
+                _q2Time = Game.TickCount;
             }
         }
 

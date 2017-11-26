@@ -71,7 +71,7 @@
             if (sender.IsEnemy && (buff.Type == BuffType.Knockup || buff.Type == BuffType.Knockback))
             {
                 KnockUpHelper.Sender = sender;
-                KnockUpHelper.KnockedUpTick = Environment.TickCount;
+                KnockUpHelper.KnockedUpTick = Game.TickCount;
                 KnockUpHelper.BuffStart = (int) buff.StartTime;
                 KnockUpHelper.BuffEnd = (int) buff.EndTime;
             }

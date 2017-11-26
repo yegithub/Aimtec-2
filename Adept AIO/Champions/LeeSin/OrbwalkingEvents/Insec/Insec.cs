@@ -90,14 +90,14 @@
                         _spellConfig.QSmite(Target);
                         _spellConfig.Q.Cast(Target);
                     }
-
+                    
                     if (!this.ObjectEnabled || this.EnemyObject == null)
                     {
                         return;
                     }
 
                     _lastQUnit = this.EnemyObject;
-                    _spellConfig.Q.Cast(this.EnemyObject.ServerPosition);
+                    _spellConfig.Q.Cast(this.EnemyObject);
                 }
             }
 
@@ -107,15 +107,14 @@
                 {
                     _wardManager.WardJump(GetInsecPosition(), (int) dist);
                 }
-                else
+                else if(this.FlashReady)
                 {
-                    if (Environment.TickCount - _spellConfig.LastQ1CastAttempt <= 900 || _lastQUnit != null && _spellConfig.IsQ2() && InsecInRange(_lastQUnit.ServerPosition) ||
-                        this.ObjectEnabled && _spellConfig.Q.Ready)
+                    if (Game.TickCount - _spellConfig.LastQ1CastAttempt <= 900 || _lastQUnit != null && _spellConfig.IsQ2() && InsecInRange(_lastQUnit.ServerPosition))
                     {
                         return;
                     }
 
-                    if (!this.FlashReady || Environment.TickCount - _spellConfig.Q.LastCastAttemptT <= 1000)
+                    if (Game.TickCount - _spellConfig.Q.LastCastAttemptT <= 1000)
                     {
                         return;
                     }

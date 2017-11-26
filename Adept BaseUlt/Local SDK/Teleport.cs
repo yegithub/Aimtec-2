@@ -41,14 +41,14 @@
                 eventArgs.Status = TeleportStatus.Start;
                 eventArgs.Duration = GetDuration(e);
                 eventArgs.Type = GetType(e);
-                eventArgs.Start = Environment.TickCount;
+                eventArgs.Start = Game.TickCount;
 
                 TeleportDataNetId[sender.NetworkId] = eventArgs;
             }
             else
             {
                 eventArgs = TeleportDataNetId[sender.NetworkId];
-                eventArgs.Status = Environment.TickCount - eventArgs.Start < eventArgs.Duration - 250 ? TeleportStatus.Abort : TeleportStatus.Finish;
+                eventArgs.Status = Game.TickCount - eventArgs.Start < eventArgs.Duration - 250 ? TeleportStatus.Abort : TeleportStatus.Finish;
             }
 
             OnTeleport?.Invoke(sender, eventArgs);

@@ -33,7 +33,7 @@
                 return;
             }
 
-            if (Environment.TickCount - SpellConfig.E.LastCastAttemptT > 1700 || _unit.Distance(Global.Player) <= SpellConfig.E.Range + _unit.BoundingRadius)
+            if (Game.TickCount - SpellConfig.E.LastCastAttemptT > 1700 || _unit.Distance(Global.Player) <= SpellConfig.E.Range + _unit.BoundingRadius)
             {
                 SpellConfig.E.Cast(_unit);
             }

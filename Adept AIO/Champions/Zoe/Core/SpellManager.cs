@@ -41,7 +41,7 @@
             }
 
             PaddleStarPosition = args.End;
-            _lastCastTime = Environment.TickCount;
+            _lastCastTime = Game.TickCount;
             DelayAction.Queue(1200, () => PaddleStarPosition = Vector3.Zero, new CancellationToken(false));
         }
 
@@ -180,7 +180,7 @@
 
         public static void CastQ(Obj_AI_Base target)
         {
-            if (Environment.TickCount - _lastCastTime < 800 - Game.Ping / 2)
+            if (Game.TickCount - _lastCastTime < 800 - Game.Ping / 2)
             {
                 return;
             }

@@ -15,7 +15,7 @@
         private const string PassiveName = "blindmonkpassive_cosmetic";
         public float LastQ1CastAttempt { get; set; }
 
-        public bool QAboutToEnd => Environment.TickCount - this.LastQ1CastAttempt >= 3100 - Game.Ping / 2f;
+        public bool QAboutToEnd => Game.TickCount - this.LastQ1CastAttempt >= 3100 - Game.Ping / 2f;
 
         public bool IsQ2()
         {
@@ -99,7 +99,7 @@
 
             if (args.SpellSlot == SpellSlot.Q && args.SpellData.Name.ToLower().Contains("one"))
             {
-                this.LastQ1CastAttempt = Environment.TickCount;
+                this.LastQ1CastAttempt = Game.TickCount;
             }
         }
     }

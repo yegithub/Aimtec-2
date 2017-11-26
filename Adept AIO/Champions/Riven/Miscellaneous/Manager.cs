@@ -33,7 +33,7 @@
 
         private static void Action(Obj_AI_BaseMissileClientDataEventArgs args)
         {
-            if (Environment.TickCount - Extensions.LastQCastAttempt < 500 + Game.Ping / 2)
+            if (Game.TickCount - Extensions.LastQCastAttempt < 500 + Game.Ping / 2)
             {
                 return;
             }
@@ -96,8 +96,8 @@
 
                 if (!SpellConfig.Q.Ready || Extensions.CurrentQCount == 1 || !MenuConfig.Miscellaneous["Active"].Enabled || Global.Player.HasBuff("Recall") ||
                     Global.Orbwalker.Mode == OrbwalkingMode.Laneclear || Global.Orbwalker.Mode == OrbwalkingMode.Lasthit ||
-                    Environment.TickCount - Extensions.LastQCastAttempt < 3500 + Game.Ping / 2 ||
-                    Environment.TickCount - Extensions.LastQCastAttempt > 3700 + Game.Ping / 2)
+                    Game.TickCount - Extensions.LastQCastAttempt < 3500 + Game.Ping / 2 ||
+                    Game.TickCount - Extensions.LastQCastAttempt > 3700 + Game.Ping / 2)
                 {
                     return;
                 }

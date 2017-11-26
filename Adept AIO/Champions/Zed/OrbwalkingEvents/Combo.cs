@@ -37,7 +37,7 @@
             {
                 if (ShadowManager.CanCastFirst(SpellSlot.W))
                 {
-                    if (Environment.TickCount - SpellManager.LastR < 1500)
+                    if (Game.TickCount - SpellManager.LastR < 1500)
                     {
                         foreach (var shadow in ShadowManager.Shadows)
                         {

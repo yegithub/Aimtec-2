@@ -29,12 +29,12 @@
                     var enemy = GameObjects.Enemy.FirstOrDefault(x => x.Distance(soldier) <= 300 + x.BoundingRadius && !x.IsDead && x.MaxHealth > 10 &&
                                                                       soldier.Distance(Global.Player) <= SpellConfig.Q.Range + 65 &&
                                                                       soldier.Distance(Global.Player) > Global.Player.AttackRange);
-                    if (enemy == null || Environment.TickCount - _lastAa <= 1000)
+                    if (enemy == null || Game.TickCount - _lastAa <= 1000)
                     {
                         continue;
                     }
 
-                    _lastAa = Environment.TickCount;
+                    _lastAa = Game.TickCount;
                     Global.Player.IssueOrder(OrderType.AttackUnit, enemy);
                     DelayAction.Queue(300, () => Global.Player.IssueOrder(OrderType.MoveTo, Game.CursorPos), new CancellationToken(false));
                 }

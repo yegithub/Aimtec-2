@@ -57,7 +57,7 @@
             }
 
             Global.Player.SpellBook.CastSpell((SpellSlot) slot);
-            TiamatCastTime = Environment.TickCount;
+            TiamatCastTime = Game.TickCount;
 
             //if (cancelAa)
             //{

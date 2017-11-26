@@ -112,7 +112,7 @@
                   
                     if (_target == null)
                     {
-                        Set(args.Duration, Environment.TickCount, (Obj_AI_Hero) sender);
+                        Set(args.Duration, Game.TickCount, (Obj_AI_Hero) sender);
                     }
 
                     break;
@@ -125,12 +125,12 @@
             {
                 foreach (var enemy in _lastEnemyChecked.Where(x => x.IsFloatingHealthBarActive && !x.IsDead && x.IsValidTarget()))
                 {
-                    if (Environment.TickCount - _lastSeenTick <= Game.Ping / 2f)
+                    if (Game.TickCount - _lastSeenTick <= Game.Ping / 2f)
                     {
                         return;
                     }
 
-                    _lastSeenTick = Environment.TickCount;
+                    _lastSeenTick = Game.TickCount;
                     _lastSeenPosition = enemy.ServerPosition;
                 }
             }
@@ -204,7 +204,7 @@
 
         private int GetCastTime(Vector3 pos)
         {
-            return (int) (-(Environment.TickCount - (_recallStartTick + _recallTime)) - TravelTime(pos));
+            return (int) (-(Game.TickCount - (_recallStartTick + _recallTime)) - TravelTime(pos));
         }
 
         private void OnRender()
@@ -227,7 +227,7 @@
                 return;
             }
             var ts = TimeSpan.FromMilliseconds(_timeUntilCastingUlt);
-            var percent = (_recallStartTick - Environment.TickCount + _recallTime) / _recallTime;
+            var percent = (_recallStartTick - Game.TickCount + _recallTime) / _recallTime;
 
             var xpos = 650;
 

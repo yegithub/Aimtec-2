@@ -32,7 +32,7 @@
                 return;
             }
 
-            if (Environment.TickCount - SpellConfig.E.LastCastAttemptT > 2000 + Game.Ping / 2)
+            if (Game.TickCount - SpellConfig.E.LastCastAttemptT > 2000 + Game.Ping / 2)
             {
                 SpellConfig.E.LastCastAttemptT = 0;
             }

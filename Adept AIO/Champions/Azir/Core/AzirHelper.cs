@@ -22,16 +22,16 @@
             switch (args.SpellSlot)
             {
                 case SpellSlot.Q:
-                    LastQ = Environment.TickCount;
+                    LastQ = Game.TickCount;
                     break;
                 case SpellSlot.W:
-                    LastW = Environment.TickCount;
+                    LastW = Game.TickCount;
                     break;
                 case SpellSlot.E:
-                    LastE = Environment.TickCount;
+                    LastE = Game.TickCount;
                     break;
                 case SpellSlot.R:
-                    LastR = Environment.TickCount;
+                    LastR = Game.TickCount;
                     break;
             }
         }

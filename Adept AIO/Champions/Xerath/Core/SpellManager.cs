@@ -104,7 +104,7 @@
                     R.Cast();
                 }
             }
-            else if (Environment.TickCount - _lastRCast > 700)
+            else if (Game.TickCount - _lastRCast > 700)
             {
                 R.Cast(target);
             }
@@ -138,7 +138,7 @@
                 return;
             }
 
-            _lastRCast = Environment.TickCount;
+            _lastRCast = Game.TickCount;
         }
     }
 }
