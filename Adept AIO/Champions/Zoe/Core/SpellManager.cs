@@ -21,12 +21,12 @@
         public SpellManager()
         {
             Q = new Spell(SpellSlot.Q, 800);
-            Q.SetSkillshot(0.25f, 60, 1200, true, SkillshotType.Line);
+            Q.SetSkillshot(0.25f, 50, 1700, true, SkillshotType.Line);
 
             W = new Spell(SpellSlot.W, 600);
 
             E = new Spell(SpellSlot.E, 800);
-            E.SetSkillshot(0.25f, 30, 1600, true, SkillshotType.Line);
+            E.SetSkillshot(0.25f, 40, 1700, true, SkillshotType.Line);
 
             R = new Spell(SpellSlot.R, 575);
         }

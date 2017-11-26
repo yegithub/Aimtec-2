@@ -28,7 +28,7 @@
             {
                 return;
             }
-
+            
             if (SpellConfig.E.Ready && MenuConfig.Harass["E"].Enabled)
             {
                 SpellManager.CastE(target);
