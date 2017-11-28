@@ -5,14 +5,24 @@
     class DebugConsole
     {
         private static MessageState _messageState;
+        private static float _lastTick;
+        private static string _lastMessage;
 
-        public static void WriteLine(string message, MessageState messageState)
+        public static void WriteLine(string message, MessageState messageState, bool onlyOnce = true)
         {
+            if (onlyOnce && message == _lastMessage && Environment.TickCount - _lastTick <= 2500)
+            {
+                return;
+            }
+
             _messageState = messageState;
 
             Console.ForegroundColor = GetForeGroundColor();
             Console.WriteLine($"[{DateTime.Now}] [ADEPT AIO] [{messageState}] {message}");
             Console.ResetColor();
+
+            _lastTick = Environment.TickCount;
+            _lastMessage = message;
         }
 
         public static void Write(string message, MessageState messageState)

@@ -96,7 +96,6 @@
                 var target = Global.TargetSelector.GetTarget(Global.Player.AttackRange + 300);
                 if (target != null && target.Health < Global.Player.GetAutoAttackDamage(target) * 3)
                 {
-                    Console.WriteLine("TARGET KILLABLE, NOT CATCHING AXES");
                     return;
                 }
             }
