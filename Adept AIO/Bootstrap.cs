@@ -3,6 +3,7 @@
     using System.Linq;
     using Aimtec.SDK.Events;
     using Champions.Azir;
+    using Champions.Draven;
     using Champions.Ezreal;
     using Champions.Gnar;
     using Champions.Gragas;
@@ -31,6 +32,7 @@
     {
         private static readonly string[] Valid =
         {
+            "Draven",
             "Xerath",
             "Zoe",
             "Jhin",
@@ -73,6 +75,10 @@
 
             switch (Global.Player.ChampionName)
             {
+                case "Draven":
+                    new Draven();
+                    break;
+
                 case "Xerath":
                     new Xerath();
                     break;
