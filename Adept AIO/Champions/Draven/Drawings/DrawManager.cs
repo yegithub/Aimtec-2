@@ -35,7 +35,7 @@
 
             if (MenuConfig.Drawings["Catch"].Enabled)
             {
-                Render.Circle(Global.Player.Position, MenuConfig.Misc["Range"].Value, 100, Color.Violet);
+                Render.Circle(Game.CursorPos, MenuConfig.Misc["Range"].Value, 100, Color.Violet);
             }
           
             if (!MenuConfig.Drawings["Axe"].Enabled)
@@ -43,9 +43,9 @@
                 return;
             }
 
-            foreach (var i in SpellManager.AxeList.Keys)
+            foreach (var i in SpellManager.AxeList)
             {
-                Render.Circle(i.ServerPosition, 120, 100, i.ServerPosition.Distance(Game.CursorPos) <= MenuConfig.Misc["Range"].Value ? Color.LimeGreen : Color.Crimson);
+                Render.Circle(i.Key.ServerPosition, 120, 100, i.Key.ServerPosition.Distance(Game.CursorPos) <= MenuConfig.Misc["Range"].Value ? Color.LimeGreen : Color.Crimson);
             }
         }
     }

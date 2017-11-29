@@ -20,7 +20,7 @@
 
         public SpellManager()
         {
-            Q = new Spell(SpellSlot.Q, 800);
+            Q = new Spell(SpellSlot.Q, 900);
             Q.SetSkillshot(0.25f, 50, 1700, true, SkillshotType.Line);
 
             W = new Spell(SpellSlot.W, 600);
@@ -195,7 +195,7 @@
 
                 Q.Cast(paddleStarPrediction);
             }
-            else if (target.IsValidTarget(Q.Range + 80))
+            else if (target.IsValidTarget(Q.Range + 150))
             {
                 var pred = Q.GetPrediction(target, PaddleStarPosition, Global.Player.ServerPosition);
                 if (pred.CastPosition.IsZero)

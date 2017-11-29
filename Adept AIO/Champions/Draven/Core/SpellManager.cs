@@ -10,6 +10,7 @@
     using Aimtec.SDK.Orbwalking;
     using Aimtec.SDK.Prediction.Skillshots;
     using Aimtec.SDK.Util;
+    using SDK.Generic;
     using SDK.Unit_Extensions;
     using Geometry = SDK.Geometry_Related.Geometry;
     using Spell = Aimtec.SDK.Spell;
@@ -49,11 +50,13 @@
 
         private static void OnCreate(GameObject sender)
         {
-            if (!sender.Name.Contains("Draven_Base_Q_reticle_self"))
+        
+            if (!sender.Name.ToLower().Contains("draven") || !sender.Name.ToLower().Contains("reticle_self"))
             {
                 return;
             }
 
+            DebugConsole.WriteLine($"GOT AXE!", MessageState.Debug);
             AxeList.Add(sender, Game.TickCount + 1800);
         }
 
@@ -81,7 +84,7 @@
 
             var axe = AxeObject().Key;
 
-            if (axe == null || Global.Player.Distance(axe) < 70)
+            if (axe == null || Global.Player.Distance(axe) < 100)
             {
                 return;
             }

@@ -57,7 +57,7 @@
             Misc = new Menu("DravenMisc", "Miscellaneous")
             {
                 new MenuList("Catch", "Catch Mode:", new []{"Always", "Combo Only", "Disabled"}, 0),
-                new MenuSlider("Range", "Catch Range (From Cursor)", 400, 100, 1200),
+                new MenuSlider("Range", "Catch Range (From Cursor)", 600, 300, 1000),
                 new MenuBool("W", "Use W If Axe Too Far Away")
             };
 
