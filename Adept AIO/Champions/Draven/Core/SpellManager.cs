@@ -138,7 +138,8 @@
 
         public static void CastR(Obj_AI_Base target)
         {
-          
+            if(target.IsValidTarget(R.Range))
+            R.Cast(target);
         }
 
         public static Geometry.Rectangle ERect(Obj_AI_Base target)

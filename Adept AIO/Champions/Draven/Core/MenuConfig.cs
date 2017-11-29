@@ -24,7 +24,7 @@
                 new MenuBool("Q", "Use Q"),
                 new MenuBool("W", "Use W").SetToolTip("To Catch Axe OR Kite"),
                 new MenuBool("E", "Use E"),
-                new MenuBool("R", "Use R")
+                new MenuSliderBool("R", "Use R | If Target Health % <=", true, 30)
             };
 
             Harass = new Menu("DravenHarass", "Harass")

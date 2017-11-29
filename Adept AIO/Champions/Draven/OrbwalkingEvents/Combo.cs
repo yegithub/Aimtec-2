@@ -9,7 +9,7 @@
     {
         public static void OnUpdate()
         {
-            var target = Global.TargetSelector.GetTarget(SpellManager.E.Range);
+            var target = Global.TargetSelector.GetTarget(SpellManager.R.Range);
             if (target == null)
             {
                 return;
@@ -28,6 +28,11 @@
             if (SpellManager.W.Ready && MenuConfig.Combo["W"].Enabled && (!target.IsValidAutoRange() || Global.Player.HasBuffOfType(BuffType.Slow)))
             {
                 SpellManager.CastW();
+            }
+
+            if (SpellManager.R.Ready && MenuConfig.Combo["R"].Enabled && target.HealthPercent() <= MenuConfig.Combo["R"].Value && !target.IsValidAutoRange())
+            {
+                SpellManager.CastR(target);
             }
         }
     }
