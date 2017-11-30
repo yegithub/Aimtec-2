@@ -20,7 +20,7 @@
                 SpellManager.CastE(target);
             }
 
-            if ((SpellManager.Q.Ready || SpellManager.Q.IsCharging) && MenuConfig.Harass["Q"].Enabled && Global.Player.ManaPercent() >= MenuConfig.Harass["Q"].Value)
+            if (SpellManager.Q.Ready && MenuConfig.Harass["Q"].Enabled && Global.Player.ManaPercent() >= MenuConfig.Harass["Q"].Value)
             {
                 SpellManager.CastQ();
             }

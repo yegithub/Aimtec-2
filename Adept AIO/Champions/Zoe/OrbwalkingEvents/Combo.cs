@@ -8,7 +8,7 @@
     {
         public static void OnUpdate()
         {
-            var target = Global.TargetSelector.GetTarget(SpellManager.PaddleStarPosition.IsZero ? SpellManager.Q.Range + 400 : 2500);
+            var target = Global.TargetSelector.GetTarget(SpellManager.PaddleStarPosition.IsZero ? SpellManager.Q.Range + 100 : 2500);
             if (target == null)
             {
                 return;

@@ -96,7 +96,7 @@
 
             if (Global.Orbwalker.Mode == OrbwalkingMode.Combo || Global.Orbwalker.Mode == OrbwalkingMode.Mixed)
             {
-                var target = Global.TargetSelector.GetTarget(Global.Player.AttackRange + 300);
+                var target = Global.TargetSelector.GetTarget(Global.Player.AttackRange + 100);
                 if (target != null && target.Health < Global.Player.GetAutoAttackDamage(target) * 3)
                 {
                     return;

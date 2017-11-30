@@ -7,6 +7,7 @@
     using Champions.Ezreal;
     using Champions.Gnar;
     using Champions.Gragas;
+    using Champions.Graves;
     using Champions.Irelia;
     using Champions.Jax;
     using Champions.Jhin;
@@ -32,6 +33,7 @@
     {
         private static readonly string[] Valid =
         {
+            "Graves",
             "Draven",
             "Xerath",
             "Zoe",
@@ -75,10 +77,12 @@
 
             switch (Global.Player.ChampionName)
             {
+                case "Graves":
+                    new Graves();
+                    break;
                 case "Draven":
                     new Draven();
                     break;
-
                 case "Xerath":
                     new Xerath();
                     break;

@@ -54,7 +54,7 @@
                             switch (MenuConfig.Combo["Style"].Value)
                             {
                                 case 0:
-                                    var trianglePos = (target.ServerPosition + (target.ServerPosition - shadow.ServerPosition).To2D().Perpendicular().To3D().Normalized() * 350);
+                                    var trianglePos = target.ServerPosition + (target.ServerPosition - shadow.ServerPosition).To2D().Perpendicular().To3D().Normalized() * 350;
                                     if (trianglePos.Distance(target) > SpellManager.WCastRange)
                                     {
                                         goto case 1;

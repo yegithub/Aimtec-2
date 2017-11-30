@@ -14,31 +14,19 @@
                 return 0;
             }
 
-            var dmg = 0d;
-
-            if (SpellManager.Q.Ready || SpellManager.Q.IsCharging)
-            {
-                dmg += Global.Player.GetSpellDamage(target, SpellSlot.Q);
-            }
+            var dmg = Global.Orbwalker.CanAttack() ? Global.Player.GetAutoAttackDamage(target) : 0d;
 
             if (SpellManager.E.Ready)
             {
                 dmg += Global.Player.GetSpellDamage(target, SpellSlot.E);
             }
 
-            return dmg;
+            return dmg + Ult(target);
         }
 
         public static double Ult(Obj_AI_Base target)
         {
-            var dmg = 0d;
-
-            if (SpellManager.R.Ready)
-            {
-                dmg += Global.Player.GetSpellDamage(target, SpellSlot.R) + Global.Player.GetSpellDamage(target, SpellSlot.R, DamageStage.SecondForm);
-            }
-
-            return dmg;
+            return SpellManager.R.Ready ? Global.Player.GetSpellDamage(target, SpellSlot.R) + Global.Player.GetSpellDamage(target, SpellSlot.R, DamageStage.SecondForm) : 0d;
         }
     }
 }
