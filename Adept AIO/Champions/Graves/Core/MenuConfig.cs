@@ -18,7 +18,7 @@
 
             Global.Orbwalker.Attach(mainMenu);
 
-            Combo = new Menu("DravenCombo", "Combo")
+            Combo = new Menu("GravesCombo", "Combo")
             {
                 new MenuBool("Q", "Use Q"),
                 new MenuBool("W", "Use W"),
