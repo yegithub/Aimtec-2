@@ -1,5 +1,6 @@
 ﻿namespace Adept_AIO.Champions.Xerath.OrbwalkingEvents
 {
+    using System;
     using Aimtec.SDK.Extensions;
     using Core;
     using SDK.Unit_Extensions;
@@ -21,6 +22,7 @@
 
             if ((SpellManager.Q.Ready || SpellManager.Q.IsCharging) && MenuConfig.Combo["Q"].Enabled)
             {
+                Console.WriteLine("???");
                 SpellManager.CastQ(target);
             }
 
