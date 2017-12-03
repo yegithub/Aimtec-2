@@ -37,7 +37,7 @@
                 return;
             }
 
-            if (MenuConfig.Drawings["Shove"].Enabled && Render.WorldToScreen(Global.Player.ServerPosition, out var playerScreen))
+            if (MenuConfig.Drawings["Shove"].Enabled && Render.WorldToScreen(Global.Player.Position, out var playerScreen))
             {
                 var status = MenuConfig.LaneClear["Shove"].Enabled;
                 Render.Text($"Shove Status: {status}", playerScreen, RenderTextFlags.Center, status ? Color.LimeGreen : Color.Crimson);
