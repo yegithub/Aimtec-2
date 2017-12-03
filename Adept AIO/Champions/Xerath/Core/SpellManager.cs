@@ -40,7 +40,7 @@
             R = new Spell(SpellSlot.R, 2500);
             R.SetSkillshot(0.7f, 130f, float.MaxValue, false, SkillshotType.Circle);
         }
-
+        
         public static void CastQ(Obj_AI_Base target)
         {
             if (!target.IsValidTarget(Q.ChargedMaxRange))
@@ -60,7 +60,7 @@
             }
             var targetPosIn250ms = target.Position + (target.Position - Q.GetPrediction(target).CastPosition).Normalized() * (0.25f * target.MoveSpeed);
 
-            if(rect.IsInside(targetPosIn250ms.To2D()))
+            if(rect.IsInside(targetPosIn250ms.To2D()) && rect.End.Distance(targetPosIn250ms) > 90)
             Q.ShootChargedSpell(Q.GetPrediction(target).CastPosition);
         }
 
