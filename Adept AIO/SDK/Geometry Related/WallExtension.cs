@@ -1,13 +1,15 @@
 ﻿namespace Adept_AIO.SDK.Geometry_Related
 {
+    using System.Collections.Generic;
+    using System.Linq;
     using Aimtec;
     using Aimtec.SDK.Extensions;
     using Generic;
+    using Unit_Extensions;
 
     class WallExtension
     {
-        public static Vector3 EndPoint = Vector3.Zero;
-
+       
         public static bool IsWallAt(Vector3 pos)
         {
             return NavMesh.WorldToCell(pos).Flags.HasFlag(NavCellFlags.Wall) || NavMesh.WorldToCell(pos).Flags.HasFlag(NavCellFlags.Building);
@@ -21,7 +23,7 @@
 
                 if (IsWallAt(newPoint))
                 {
-                    EndPoint = end.Extend(start, i);
+                  
                     return newPoint;
                 }
             }
@@ -36,7 +38,6 @@
 
                 if (IsWallAt(newPoint))
                 {
-                    EndPoint = end.Extend(start, i);
                     return true;
                 }
             }
@@ -97,6 +98,29 @@
                 }
             }
             return thickness;
+        }
+
+        public static Vector3 GetBestWallHopPos(Vector3 start, float range)
+        {
+            var spots = new Dictionary<Vector3, float>();
+            float thickness = 0f;
+
+            for (int i = 0; i < range; i+= 1)
+            {
+                var end = start.Extend(Game.CursorPos, i);
+                if (IsWallAt(end))
+                {
+                    thickness+= 10;
+                    continue;
+                }
+
+                if(!spots.ContainsKey(end))
+                spots.Add(end, thickness);
+            }
+
+            var spot = spots.OrderBy(x => x.Key.Distance(Game.CursorPos)).ThenBy(x => x.Value).FirstOrDefault(x => x.Value > 50 && x.Value < range);
+            DebugConsole.WriteLine($"THICK: {spot.Value}", MessageState.Warn);
+            return spot.Key;
         }
     }
 }

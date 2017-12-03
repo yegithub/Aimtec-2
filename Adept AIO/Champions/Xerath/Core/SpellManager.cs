@@ -28,7 +28,7 @@
         public SpellManager()
         {
             Q = new Spell(SpellSlot.Q, 1600);
-            Q.SetSkillshot(0.6f, 95f, 3000f, false, SkillshotType.Line);
+            Q.SetSkillshot(0.6f, 95f, 3000f, false, SkillshotType.Line, false, HitChance.Medium);
             Q.SetCharged("XerathArcanopulseChargeUp", "XerathArcanopulseChargeUp", 750, 1400, 1.5f);
 
             W = new Spell(SpellSlot.W, 1100);
@@ -54,11 +54,13 @@
             }
 
             var rect = QRealRect(target);
-            if (rect == null || !rect.IsInside(target.ServerPosition.To2D()) || !Q.IsCharging)
+            if (rect == null || !Q.IsCharging)
             {
                 return;
             }
+            var targetPosIn250ms = target.Position + (target.Position - Q.GetPrediction(target).CastPosition).Normalized() * (0.25f * target.MoveSpeed);
 
+            if(rect.IsInside(targetPosIn250ms.To2D()))
             Q.ShootChargedSpell(Q.GetPrediction(target).CastPosition);
         }
 
@@ -111,10 +113,8 @@
 
         public static Geometry.Rectangle QRealRect(Obj_AI_Base target)
         {
-            var targetPosIn250ms = target.Position + (target.Position - Q.GetPrediction(target).CastPosition).Normalized() * (0.25f * target.MoveSpeed);
-
             return new Geometry.Rectangle(Global.Player.ServerPosition.To2D(),
-                Global.Player.ServerPosition.Extend(targetPosIn250ms, Q.Range).To2D(),
+                Global.Player.ServerPosition.Extend(Q.GetPrediction(target).CastPosition, Q.Range).To2D(),
                 Q.Width);
         }
 

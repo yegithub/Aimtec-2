@@ -1,6 +1,7 @@
 ﻿namespace Adept_AIO.Champions.Riven.Miscellaneous
 {
     using System;
+    using System.Linq;
     using System.Threading;
     using Aimtec;
     using Aimtec.SDK.Extensions;
@@ -96,13 +97,17 @@
 
                 if (!SpellConfig.Q.Ready || Extensions.CurrentQCount == 1 || !MenuConfig.Miscellaneous["Active"].Enabled || Global.Player.HasBuff("Recall") ||
                     Global.Orbwalker.Mode == OrbwalkingMode.Laneclear || Global.Orbwalker.Mode == OrbwalkingMode.Lasthit ||
-                    Game.TickCount - Extensions.LastQCastAttempt < 3500 + Game.Ping / 2 ||
+                    Game.TickCount - Extensions.LastQCastAttempt < 3400 + Game.Ping / 2 ||
                     Game.TickCount - Extensions.LastQCastAttempt > 3700 + Game.Ping / 2)
                 {
                     return;
                 }
 
-                SpellConfig.Q.Cast();
+                var path = Global.Player.Path.FirstOrDefault();
+                Global.Orbwalker.Move(path);
+                SpellConfig.Q.Cast(path); // fuck this shit.
+              
+
             }
             catch (Exception e)
             {

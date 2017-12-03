@@ -35,16 +35,17 @@
                 return;
             }
 
-            if (MenuConfig.FleeMode.Active && !Extensions.FleePos.IsZero)
+            if (MenuConfig.FleeMode.Active)
             {
-                Render.Circle(Extensions.FleePos, 50, (uint) MenuConfig.Drawings["Segments"].Value, Color.White);
+                var spot = WallExtension.GetBestWallHopPos(Global.Player.ServerPosition, 275);
 
-                if (!WallExtension.EndPoint.IsZero)
+                if (!spot.IsZero)
                 {
-                    Render.WorldToScreen(Extensions.FleePos, out var startPointVector2);
-                    Render.WorldToScreen(WallExtension.EndPoint, out var endPointVector2);
+                 
+                    Render.WorldToScreen(spot.Extend(Global.Player.ServerPosition, 65), out var startPointVector2);
+                    Render.WorldToScreen(spot, out var endPointVector2);
                     Render.Line(startPointVector2, endPointVector2, Color.Orange);
-                    Render.Circle(WallExtension.EndPoint, 50, (uint) MenuConfig.Drawings["Segments"].Value, Color.White);
+                    Render.Circle(spot, 50, (uint) MenuConfig.Drawings["Segments"].Value, Color.White);
                 }
             }
 

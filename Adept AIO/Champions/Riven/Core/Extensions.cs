@@ -12,8 +12,6 @@
         public static int CurrentQCount = 1;
         public static int LastQCastAttempt;
 
-        public static Vector3 FleePos;
-
         public static int EngageRange
         {
             get
