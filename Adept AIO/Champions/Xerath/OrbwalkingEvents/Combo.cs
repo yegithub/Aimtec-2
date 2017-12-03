@@ -20,9 +20,9 @@
                 SpellManager.CastE(target);
             }
 
-            if ((SpellManager.Q.Ready || SpellManager.Q.IsCharging) && MenuConfig.Combo["Q"].Enabled)
+            if (SpellManager.Q.Ready && MenuConfig.Combo["Q"].Enabled)
             {
-                Console.WriteLine("???");
+              
                 SpellManager.CastQ(target);
             }
 

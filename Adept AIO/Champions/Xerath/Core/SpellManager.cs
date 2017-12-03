@@ -5,6 +5,7 @@
     using Aimtec;
     using Aimtec.SDK.Extensions;
     using Aimtec.SDK.Prediction.Skillshots;
+    using SDK.Generic;
     using SDK.Geometry_Related;
     using SDK.Unit_Extensions;
     using Spell = Aimtec.SDK.Spell;
@@ -27,8 +28,8 @@
         public SpellManager()
         {
             Q = new Spell(SpellSlot.Q, 1600);
-            Q.SetSkillshot(0.6f, 95f, float.MaxValue, false, SkillshotType.Line);
-            Q.SetCharged("XerathArcanopulseChargeUp", "XerathArcanopulseChargeUp", 750, 1550, 3.0f);
+            Q.SetSkillshot(0.6f, 95f, 3000f, false, SkillshotType.Line);
+            Q.SetCharged("XerathArcanopulseChargeUp", "XerathArcanopulseChargeUp", 750, 1400, 1.5f);
 
             W = new Spell(SpellSlot.W, 1100);
             W.SetSkillshot(0.7f, 125f, float.MaxValue, false, SkillshotType.Circle);
@@ -47,20 +48,18 @@
                 return;
             }
 
+            if (!Q.IsCharging)
+            {
+                Q.StartCharging(target.ServerPosition);
+            }
+
             var rect = QRealRect(target);
-            if (rect == null)
+            if (rect == null || !rect.IsInside(target.ServerPosition.To2D()) || !Q.IsCharging)
             {
                 return;
             }
-            
-            if (rect.IsInside(target.ServerPosition.To2D()))
-            {
-               Global.Player.SpellBook.CastSpell(SpellSlot.Q, rect.End.To3D());
-            }
-            else
-            {
-                Q.Cast(target);
-            }
+
+            Q.ShootChargedSpell(Q.GetPrediction(target).CastPosition);
         }
 
         public static void CastW(Obj_AI_Base target)
@@ -113,7 +112,7 @@
         public static Geometry.Rectangle QRealRect(Obj_AI_Base target)
         {
             var temp = 0.5f * target.MoveSpeed;
-            var targetPosIn500ms = target.Position + (target.Position - target.Path.FirstOrDefault()).Normalized() * temp;
+            var targetPosIn500ms = target.Position + (target.Position - Q.GetPrediction(target).CastPosition).Normalized() * temp;
 
             return new Geometry.Rectangle(Global.Player.ServerPosition.To2D(),
                 Global.Player.ServerPosition.Extend(targetPosIn500ms, Q.Range).To2D(),
