@@ -1,8 +1,7 @@
-﻿namespace Adept_AIO.Champions.Template.Core
+﻿namespace Adept_AIO.Champions._1._Template.Core
 {
     using Aimtec;
     using Aimtec.SDK.Damage;
-    using Aimtec.SDK.Damage.JSON;
     using SDK.Unit_Extensions;
 
     class Dmg

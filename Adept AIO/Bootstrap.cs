@@ -23,6 +23,7 @@
     using Champions.Vayne;
     using Champions.Xerath;
     using Champions.Yasuo;
+    using Champions.Yorick;
     using Champions.Zed;
     using Champions.Zoe;
     using SDK.Generic;
@@ -33,6 +34,7 @@
     {
         private static readonly string[] Valid =
         {
+            "Yorick",
             "Graves",
             "Draven",
             "Xerath",
@@ -77,6 +79,9 @@
 
             switch (Global.Player.ChampionName)
             {
+                case "Yorick":
+                    new Yorick();
+                    break;
                 case "Graves":
                     new Graves();
                     break;

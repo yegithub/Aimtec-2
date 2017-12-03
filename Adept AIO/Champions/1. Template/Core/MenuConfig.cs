@@ -1,4 +1,4 @@
-﻿namespace Adept_AIO.Champions.Graves.Core
+﻿namespace Adept_AIO.Champions._1._Template.Core
 {
     using System.Collections.Generic;
     using Aimtec.SDK.Menu;
@@ -18,43 +18,42 @@
 
             Global.Orbwalker.Attach(mainMenu);
 
-            Combo = new Menu("GravesCombo", "Combo")
+            Combo = new Menu("TemplateCombo", "Combo")
             {
                 new MenuBool("Q", "Use Q"),
                 new MenuBool("W", "Use W"),
                 new MenuBool("E", "Use E"),
-                new MenuSliderBool("RHealth", "Use R | If Target Health % <=", true, 30),
-                new MenuSliderBool("RCount", "Use R | If Enemies Count >=", true, 2, 1, 5)
+                new MenuBool("Q", "Use Q"),
             };
 
-            Harass = new Menu("GravesHarass", "Harass")
+            Harass = new Menu("TemplateHarass", "Harass")
             {
                 new MenuSliderBool("Q", "Use Q | If Mana % >=", true, 15),
                 new MenuSliderBool("W", "Use W | If Mana % >=", true, 30),
                 new MenuSliderBool("E", "Use E | If Mana % >=", true, 50),
             };
 
-            LaneClear = new Menu("GravesLane", "LaneClear")
+            LaneClear = new Menu("TemplateLane", "LaneClear")
             {
                 new MenuBool("Check", "Don't Clear When Enemies Nearby"),
                 new MenuSliderBool("Q", "Use Q | If Mana % >=", true, 25),
                 new MenuSliderBool("E", "Use E | If Mana % >=", true, 20)
             };
 
-            JungleClear = new Menu("GravesJungle", "JungleClear")
+            JungleClear = new Menu("TemplateJungle", "JungleClear")
             {
                 new MenuSliderBool("Q", "Use Q | If Mana % >=", true, 25),
                 new MenuSliderBool("W", "Use W | If Mana % >=", true, 35),
                 new MenuSliderBool("E", "Use E | If Mana % >=", true, 20),
             };
 
-            Killsteal = new Menu("GravesKillsteal", "Killsteal")
+            Killsteal = new Menu("TemplateKillsteal", "Killsteal")
             {
                 new MenuBool("Q", "Use Q"),
                 new MenuBool("R", "Use R"),
             };
 
-            Drawings = new Menu("GravesDrawManager", "DrawManager")
+            Drawings = new Menu("TemplateDrawManager", "DrawManager")
             {
                 new MenuBool("Dmg", "Damage"),
             };

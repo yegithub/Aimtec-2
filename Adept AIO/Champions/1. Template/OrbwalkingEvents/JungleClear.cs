@@ -1,4 +1,4 @@
-﻿namespace Adept_AIO.Champions.Template.OrbwalkingEvents
+﻿namespace Adept_AIO.Champions._1._Template.OrbwalkingEvents
 {
     using System.Linq;
     using Aimtec;

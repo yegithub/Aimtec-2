@@ -1,11 +1,7 @@
-﻿namespace Adept_AIO.Champions.Template.Core
+﻿namespace Adept_AIO.Champions._1._Template.Core
 {
     using Aimtec;
-    using Aimtec.SDK.Extensions;
     using Aimtec.SDK.Prediction.Skillshots;
-    using SDK.Geometry_Related;
-    using SDK.Unit_Extensions;
-    using Geometry = SDK.Geometry_Related.Geometry;
     using Spell = Aimtec.SDK.Spell;
 
     class SpellManager

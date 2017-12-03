@@ -1,4 +1,4 @@
-﻿namespace Adept_AIO.Champions.Template.Miscellaneous
+﻿namespace Adept_AIO.Champions._1._Template.Miscellaneous
 {
     using System;
     using Aimtec;

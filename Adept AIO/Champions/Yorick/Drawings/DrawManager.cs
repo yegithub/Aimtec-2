@@ -1,4 +1,4 @@
-﻿namespace Adept_AIO.Champions.Template.Drawings
+﻿namespace Adept_AIO.Champions.Yorick.Drawings
 {
     using System.Drawing;
     using System.Linq;
@@ -11,6 +11,7 @@
         public DrawManager()
         {
             Render.OnPresent += OnPresent;
+            Render.OnRender += OnRender;
         }
 
         public static void OnPresent()
@@ -26,6 +27,20 @@
 
                 Global.DamageIndicator.Unit = target;
                 Global.DamageIndicator.DrawDmg((float) damage, Color.FromArgb(153, 12, 177, 28));
+            }
+        }
+
+        public static void OnRender()
+        {
+            if (Global.Player.IsDead)
+            {
+                return;
+            }
+
+            if (MenuConfig.Drawings["Shove"].Enabled && Render.WorldToScreen(Global.Player.ServerPosition, out var playerScreen))
+            {
+                var status = MenuConfig.LaneClear["Shove"].Enabled;
+                Render.Text($"Shove Status: {status}", playerScreen, RenderTextFlags.Center, status ? Color.LimeGreen : Color.Crimson);
             }
         }
     }

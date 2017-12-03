@@ -1,18 +1,17 @@
-﻿namespace Adept_AIO.Champions.Template
+﻿namespace Adept_AIO.Champions.Yorick
 {
     using Core;
     using Drawings;
     using Miscellaneous;
     using SDK.Delegates;
 
-    class Template
+    class Yorick
     {
-        public Template()
+        public Yorick()
         {
             new MenuConfig();
             new SpellManager();
 
-            new Killsteal();
             new Manager();
 
             new DrawManager();
