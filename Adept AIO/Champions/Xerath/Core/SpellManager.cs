@@ -111,8 +111,7 @@
 
         public static Geometry.Rectangle QRealRect(Obj_AI_Base target)
         {
-            var temp = 0.25f * target.MoveSpeed;
-            var targetPosIn250ms = target.Position + (target.Position - Q.GetPrediction(target).CastPosition).Normalized() * temp;
+            var targetPosIn250ms = target.Position + (target.Position - Q.GetPrediction(target).CastPosition).Normalized() * (0.25f * target.MoveSpeed);
 
             return new Geometry.Rectangle(Global.Player.ServerPosition.To2D(),
                 Global.Player.ServerPosition.Extend(targetPosIn250ms, Q.Range).To2D(),
