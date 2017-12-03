@@ -56,8 +56,7 @@
                 return;
             }
 
-            SpellManager.QRealRect(target)?.Draw(SpellManager.Q.GetPrediction(target).HitChance >= HitChance.High ? Color.LimeGreen : Color.Crimson);
-            SpellManager.QRect(target)?.Draw(Color.Crimson);
+            SpellManager.QRealRect(target)?.Draw(Color.LimeGreen);
         }
     }
 }

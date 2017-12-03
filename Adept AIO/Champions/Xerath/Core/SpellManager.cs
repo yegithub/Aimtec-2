@@ -119,13 +119,6 @@
                 Q.Width);
         }
 
-        public static Geometry.Rectangle QRect(Obj_AI_Base target)
-        {
-            return new Geometry.Rectangle(Global.Player.ServerPosition.To2D(),
-                                          Global.Player.ServerPosition.Extend(Q.GetPrediction(target).CastPosition, Q.ChargedMaxRange).To2D(),
-                                          Q.Width);
-        }
-
         public static Geometry.Rectangle ERect(Obj_AI_Base target)
         {
             return new Geometry.Rectangle(Global.Player.ServerPosition.To2D(),

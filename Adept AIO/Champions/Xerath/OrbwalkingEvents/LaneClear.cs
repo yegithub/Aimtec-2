@@ -33,9 +33,9 @@
                 }
                 else 
                 {
-                    var qRect = SpellManager.QRect(minion);
+                    var qRect = SpellManager.QRealRect(minion);
 
-                    if (qRect != null && GameObjects.EnemyMinions.Count(x => qRect.IsInside(x.ServerPosition.To2D())) >= 2)
+                    if (qRect != null && GameObjects.EnemyMinions.Count(x => qRect.IsInside(x.ServerPosition.To2D())) >= 3)
                     {
                         SpellManager.Q.Cast(minion);
                     }
