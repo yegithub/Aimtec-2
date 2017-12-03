@@ -7,7 +7,6 @@
 
     class SpellManager
     {
-        public static Vector3 WallForQ;
         public static Spell Q, W, E, R;
 
         public SpellManager()

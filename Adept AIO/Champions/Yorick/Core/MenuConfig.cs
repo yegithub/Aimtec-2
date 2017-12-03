@@ -10,7 +10,7 @@
 
     class MenuConfig
     {
-        public static Menu Combo, Harass, LaneClear, JungleClear, Lasthit, Misc, Drawings;
+        public static Menu Combo, Harass, LaneClear, JungleClear, Lasthit, Drawings;
 
         public MenuConfig()
         {
@@ -68,7 +68,6 @@
                 Harass,
                 LaneClear,
                 JungleClear,
-                
                 Drawings,
                 MenuShortcut.Credits
             })
