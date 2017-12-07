@@ -43,7 +43,7 @@
                 SpellManager.CastQ(target);
             }
 
-            if (SpellManager.W.Ready && MenuConfig.Combo["W"].Enabled && target.IsHardCc())
+            if (SpellManager.W.Ready && MenuConfig.Combo["W"].Enabled)
             {
                 SpellManager.CastW(target);
             }
