@@ -227,25 +227,20 @@
                 return;
             }
 
-            var ts = TimeSpan.FromMilliseconds(_timeUntilCastingUlt);
-            var percent = (_recallStartTick - Environment.TickCount + _recallTime) / _recallTime;
+            var barY = Render.Height * 0.8f;
+            const int barHeight = 6;
 
-            var xpos = 650;
+            var barX = Render.Width * 0.425f;
+            var barWidth = Render.Width - 2 * barX;
 
-            Render.Line(xpos, 80, xpos + 200, 80, 18, false, Color.LightSlateGray);
-            Render.Line(xpos, 80, xpos + 200 * percent, 80, 16, false, Color.LightSeaGreen);
+            const int i = 5;
+            var scale = barWidth / 8000;
 
-            var temp = TravelTime(GetFountainPos(_target)) / 100 + 55;
+            Render.Rectangle(barX + scale * _timeUntilCastingUlt, barY + i + barHeight - 3, 1, 10, Color.Orange);
 
-            Render.Line(xpos + 5 + temp, 80, xpos + 10 + temp, 80, 16, false, Color.Red);
+            Render.Rectangle(barX, barY, (int)(scale * _recallTime), barHeight, Color.Crimson);
 
-            Render.Text(_target.ChampionName, new Vector2(xpos + 100, 75), RenderTextFlags.Center, Color.White);
-            Render.WorldToScreen(Global.Player.ServerPosition, out var player);
-
-            Render.Text($"Ulting ({_target.ChampionName}) In {ts.Seconds}:{ts.Milliseconds / 10}",
-                        new Vector2(player.X - 60, player.Y + 70),
-                        RenderTextFlags.Center,
-                        Color.Cyan);
+            Render.Rectangle(barX + scale * _recallTime - 1, barY + i + barHeight - 3, 1, barHeight, Color.IndianRed);
         }
 
         private float TravelTime(Vector3 pos)
