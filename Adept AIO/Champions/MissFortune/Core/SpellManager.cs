@@ -56,7 +56,7 @@
         public static Geometry.Sector Cone(Obj_AI_Base target)
         {
             var dir = target.ServerPosition + (target.ServerPosition - Global.Player.ServerPosition).Normalized();
-            return new Geometry.Sector(target.ServerPosition.To2D(), dir.To2D(), Q.Width, 500 - target.BoundingRadius, 300);
+            return new Geometry.Sector(target.ServerPosition.To2D(), dir.To2D(), Q.Width, 475 - target.BoundingRadius, 300);
         }
 
         public static void CastQ(Obj_AI_Base target)
@@ -91,7 +91,7 @@
 
             var position = minion.ServerPosition + (minion.ServerPosition - target.ServerPosition).Normalized() * 140;
 
-            var isValid = position.Distance(ObjectManager.GetLocalPlayer()) < 300;
+            var isValid = position.Distance(ObjectManager.GetLocalPlayer()) < 250;
             if (isValid)
             {
                 return position;
