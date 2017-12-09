@@ -18,7 +18,7 @@
         public SpellManager()
         {
             Q = new Spell(SpellSlot.Q, 650f);
-            Q.SetSkillshot(0.25f, (float)(60f * Math.PI / 160f), 1000f, false, SkillshotType.Cone);
+            Q.SetSkillshot(0.25f, (float)(50f * Math.PI / 160f), 1000f, false, SkillshotType.Cone);
 
             W = new Spell(SpellSlot.W);
 
@@ -26,7 +26,7 @@
             E.SetSkillshot(0.5f, 350f, 500f, false, SkillshotType.Circle);
 
             R = new Spell(SpellSlot.R, 1000f);
-            R.SetSkillshot(0.25f, 100f, 2000f, false, SkillshotType.Line);
+            R.SetSkillshot(0.5f, 100f, 2000f, false, SkillshotType.Line);
 
             Global.Orbwalker.PreMove += OnPreMove;
             Global.Orbwalker.PreAttack += OnPreAttack;
@@ -56,7 +56,7 @@
         public static Geometry.Sector Cone(Obj_AI_Base target)
         {
             var dir = target.ServerPosition + (target.ServerPosition - Global.Player.ServerPosition).Normalized();
-            return new Geometry.Sector(target.ServerPosition.To2D(), dir.To2D(), Q.Width, 380);
+            return new Geometry.Sector(target.ServerPosition.To2D(), dir.To2D(), Q.Width, 500 - target.BoundingRadius, 300);
         }
 
         public static void CastQ(Obj_AI_Base target)
@@ -80,7 +80,7 @@
                     (x.IsMinion || x.IsHero) &&
                     x.NetworkId != target.NetworkId)
 
-                .OrderBy(x => x.Distance(target))
+                .OrderBy(x => x.Distance(Global.Player))
                 .ThenBy(x => x.Health)
                 .FirstOrDefault();
 
@@ -91,7 +91,7 @@
 
             var position = minion.ServerPosition + (minion.ServerPosition - target.ServerPosition).Normalized() * 140;
 
-            var isValid = position.Distance(ObjectManager.GetLocalPlayer()) < 150;
+            var isValid = position.Distance(ObjectManager.GetLocalPlayer()) < 300;
             if (isValid)
             {
                 return position;
@@ -111,6 +111,7 @@
                 Cone(x).IsInside(Q.GetPrediction(target, x.ServerPosition, x.ServerPosition).CastPosition.To2D()))
 
                 .OrderBy(x => x.Health)
+                .ThenBy(x => x.Distance(target))
                 .FirstOrDefault();
         }
 

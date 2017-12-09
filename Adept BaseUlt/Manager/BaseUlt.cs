@@ -237,9 +237,7 @@
             var scale = barWidth / 8000;
 
             Render.Rectangle(barX + scale * _timeUntilCastingUlt, barY + i + barHeight - 3, 1, 10, Color.Orange);
-
             Render.Rectangle(barX, barY, (int)(scale * _recallTime), barHeight, Color.Crimson);
-
             Render.Rectangle(barX + scale * _recallTime - 1, barY + i + barHeight - 3, 1, barHeight, Color.IndianRed);
         }
 
