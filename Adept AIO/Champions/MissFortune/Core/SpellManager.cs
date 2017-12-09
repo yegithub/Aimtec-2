@@ -14,6 +14,7 @@
     class SpellManager
     {
         public static Spell Q, W, E, R;
+        private static float _lastR;
 
         public SpellManager()
         {
@@ -30,6 +31,17 @@
 
             Global.Orbwalker.PreMove += OnPreMove;
             Global.Orbwalker.PreAttack += OnPreAttack;
+            Obj_AI_Base.OnProcessSpellCast += ObjAiBaseOnOnProcessSpellCast;
+        }
+
+        private void ObjAiBaseOnOnProcessSpellCast(Obj_AI_Base sender, Obj_AI_BaseMissileClientDataEventArgs args)
+        {
+            if (!sender.IsMe || args.SpellSlot != SpellSlot.R)
+            {
+                return;
+            }
+
+            _lastR = Environment.TickCount;
         }
 
         private static void OnPreAttack(object sender, PreAttackEventArgs args)
@@ -50,7 +62,7 @@
 
         public static bool IsUlting()
         {
-            return Global.Player.HasBuff("missfortunebulletsound") || Game.TickCount - R.LastCastAttemptT <= 500;
+            return Global.Player.HasBuff("missfortunebulletsound") || Environment.TickCount - _lastR <= 700;
         }
 
         public static Geometry.Sector Cone(Obj_AI_Base target)
@@ -92,7 +104,7 @@
             var position = minion.ServerPosition + (minion.ServerPosition - target.ServerPosition).Normalized() * 140;
 
             var isValid = position.Distance(ObjectManager.GetLocalPlayer()) < 250;
-            if (isValid)
+            if (isValid && !position.PointUnderEnemyTurret() && position.CountEnemyHeroesInRange(600) <= 1)
             {
                 return position;
             }

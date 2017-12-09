@@ -51,8 +51,8 @@
                 return;
             }
 
-            if (MenuConfig.Automatic["RCC"].Enabled && target.IsHardCc() && target.Distance(Global.Player) > Global.Player.AttackRange + 200 && target.CountAllyHeroesInRange(1000) >= 1
-                || target.Health < Dmg.Ult(target) && MenuConfig.Automatic["R"].Enabled)
+            if (MenuConfig.Automatic["RCC"].Enabled && target.IsHardCc() && target.Distance(Global.Player) > Global.Player.AttackRange + 200 && target.CountAllyHeroesInRange(1000) >= 1)
+               // || target.Health < Dmg.Ult(target) && MenuConfig.Automatic["R"].Enabled)
             {
                 if (SpellManager.E.Ready && target.IsValidTarget(SpellManager.E.Range))
                 {
