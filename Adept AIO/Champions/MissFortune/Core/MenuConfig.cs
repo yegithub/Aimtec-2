@@ -1,4 +1,4 @@
-﻿namespace Adept_AIO.Champions._1._Template.Core
+﻿namespace Adept_AIO.Champions.MissFortune.Core
 {
     using System.Collections.Generic;
     using Aimtec.SDK.Menu;
@@ -9,7 +9,7 @@
 
     class MenuConfig
     {
-        public static Menu Combo, Harass, LaneClear, JungleClear, Killsteal, Drawings;
+        public static Menu Combo, Harass, LaneClear, JungleClear, Automatic, Drawings;
 
         public MenuConfig()
         {
@@ -18,44 +18,50 @@
 
             Global.Orbwalker.Attach(mainMenu);
 
-            Combo = new Menu("TemplateCombo", "Combo")
+            Combo = new Menu("MissFortuneCombo", "Combo")
             {
+                new MenuBool("AutoQ", "Auto Q"),
                 new MenuBool("Q", "Use Q"),
                 new MenuBool("W", "Use W"),
-                new MenuBool("E", "Use E"),
-                new MenuBool("R", "Use R"),
+                new MenuBool("E", "Use E")
             };
 
-            Harass = new Menu("TemplateHarass", "Harass")
+            Harass = new Menu("MissFortuneHarass", "Harass")
             {
                 new MenuSliderBool("Q", "Use Q | If Mana % >=", true, 15),
                 new MenuSliderBool("W", "Use W | If Mana % >=", true, 30),
                 new MenuSliderBool("E", "Use E | If Mana % >=", true, 50),
             };
 
-            LaneClear = new Menu("TemplateLane", "LaneClear")
+            LaneClear = new Menu("MissFortuneLane", "LaneClear")
             {
                 new MenuBool("Check", "Don't Clear When Enemies Nearby"),
                 new MenuSliderBool("Q", "Use Q | If Mana % >=", true, 25),
+                new MenuSliderBool("W", "Use W | If Mana % >=", true, 20),
                 new MenuSliderBool("E", "Use E | If Mana % >=", true, 20)
             };
 
-            JungleClear = new Menu("TemplateJungle", "JungleClear")
+            JungleClear = new Menu("MissFortuneJungle", "JungleClear")
             {
                 new MenuSliderBool("Q", "Use Q | If Mana % >=", true, 25),
                 new MenuSliderBool("W", "Use W | If Mana % >=", true, 35),
                 new MenuSliderBool("E", "Use E | If Mana % >=", true, 20),
             };
 
-            Killsteal = new Menu("TemplateKillsteal", "Killsteal")
+            Automatic = new Menu("MissFortuneAuto", "Automatic")
             {
-                new MenuBool("Q", "Use Q"),
-                new MenuBool("R", "Use R"),
+                new MenuBool("Path", "Auto Path To Q Extend"),
+                new MenuBool("Q", "Use Q (Killable"),
+                new MenuBool("QAuto", "Use Q (When Enemy Can Be Hit)"),
+                new MenuBool("R", "Use R (Killable)"),
+                new MenuBool("RCC", "Use R (Hard CC")
             };
 
-            Drawings = new Menu("TemplateDrawManager", "DrawManager")
+            Drawings = new Menu("MissFortuneDrawManager", "DrawManager")
             {
                 new MenuBool("Dmg", "Damage"),
+                new MenuBool("Q", "Q Range"),
+                new MenuBool("Cone", "Q Cone")
             };
 
             Gapcloser.Attach(mainMenu, "Anti Gapcloser");
@@ -66,7 +72,7 @@
                 Harass,
                 LaneClear,
                 JungleClear,
-                Killsteal,
+                Automatic,
                 Drawings,
                 MenuShortcut.Credits
             })

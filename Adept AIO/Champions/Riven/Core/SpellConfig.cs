@@ -18,9 +18,8 @@
             E = new Spell(SpellSlot.E, 325);
             E.SetSkillshot(0.1f, 325, int.MaxValue, false, SkillshotType.Line);
 
-            R = new Spell(SpellSlot.R, int.MaxValue);
-            R.SetSkillshot(0.5f, 100, int.MaxValue, false, SkillshotType.Line, false, HitChance.None);
-
+            R = new Spell(SpellSlot.R);
+          
             R2 = new Spell(SpellSlot.R, 1100);
             R2.SetSkillshot(0.25f, 100, 1600, false, SkillshotType.Cone, false, HitChance.VeryHigh);
 

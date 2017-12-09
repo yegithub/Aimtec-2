@@ -16,6 +16,7 @@
     using Champions.Kayn;
     using Champions.LeeSin;
     using Champions.Lucian;
+    using Champions.MissFortune;
     using Champions.Rengar;
     using Champions.Riven;
     using Champions.Tristana;
@@ -34,6 +35,7 @@
     {
         private static readonly string[] Valid =
         {
+            "MissFortune",
             "Yorick",
             "Graves",
             "Draven",
@@ -79,6 +81,9 @@
 
             switch (Global.Player.ChampionName)
             {
+                case "MissFortune":
+                    new MissFortune();
+                    break;
                 case "Yorick":
                     new Yorick();
                     break;

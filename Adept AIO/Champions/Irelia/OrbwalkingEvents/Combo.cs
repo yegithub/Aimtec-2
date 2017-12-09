@@ -13,13 +13,15 @@
     {
         public static void OnPreAttack(AttackableUnit target, PreAttackEventArgs preAttackEventArgs)
         {
-            if (SpellConfig.E.Ready)
+            if (!SpellConfig.E.Ready)
             {
-                if (((Obj_AI_Base) target).HealthPercent() <= Global.Player.HealthPercent() || Dmg.Damage((Obj_AI_Base) target) * 2 > target.Health)
-                {
-                    preAttackEventArgs.Cancel = true;
-                    SpellConfig.E.CastOnUnit(target);
-                }
+                return;
+            }
+
+            if (((Obj_AI_Base) target).HealthPercent() <= Global.Player.HealthPercent() || Dmg.Damage((Obj_AI_Base) target) * 2 > target.Health)
+            {
+                preAttackEventArgs.Cancel = true;
+                SpellConfig.E.CastOnUnit(target);
             }
         }
 
@@ -36,11 +38,6 @@
 
         public static void OnUpdate()
         {
-            if (Global.Orbwalker.IsWindingUp)
-            {
-                return;
-            }
-
             var ganked = MenuConfig.Combo["Force"].Enabled &&
                          GameObjects.AllyHeroes.FirstOrDefault(x => x.SpellBook.GetSpell(SpellSlot.Summoner1).Name.ToLower().Contains("smite") ||
                                                                     x.SpellBook.GetSpell(SpellSlot.Summoner2).Name.ToLower().Contains("smite")) != null;
@@ -61,8 +58,7 @@
                 }
 
                 var minion = GameObjects.EnemyMinions.
-                    Where(x => x.Distance(Global.Player) < SpellConfig.Q.Range && x.Distance(longRangeTarget) < Global.Player.Distance(longRangeTarget) &&
-                               x.Distance(longRangeTarget) < SpellConfig.Q.Range * 3).
+                    Where(x => x.Distance(Global.Player) < SpellConfig.Q.Range && x.Distance(longRangeTarget) < Global.Player.Distance(longRangeTarget)).
                     OrderBy(x => x.Distance(longRangeTarget)).
                     FirstOrDefault();
 

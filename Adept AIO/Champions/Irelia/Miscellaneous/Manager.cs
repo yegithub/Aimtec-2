@@ -39,7 +39,7 @@
 
         public static void OnUpdate()
         {
-            if (Global.Player.IsDead)
+            if (Global.Player.IsDead || Global.Orbwalker.IsWindingUp)
             {
                 return;
             }
