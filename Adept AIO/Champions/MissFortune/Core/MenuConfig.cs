@@ -28,24 +28,24 @@
 
             Harass = new Menu("MissFortuneHarass", "Harass")
             {
-                new MenuSliderBool("Q", "Use Q | If Mana % >=", true, 15),
-                new MenuSliderBool("W", "Use W | If Mana % >=", true, 30),
-                new MenuSliderBool("E", "Use E | If Mana % >=", true, 50),
+                new MenuSliderBool("Q", "Use Q | If Mana % >=", true, 50),
+                new MenuSliderBool("W", "Use W | If Mana % >=", false, 50),
+                new MenuSliderBool("E", "Use E | If Mana % >=", false, 50),
             };
 
             LaneClear = new Menu("MissFortuneLane", "LaneClear")
             {
                 new MenuBool("Check", "Don't Clear When Enemies Nearby"),
-                new MenuSliderBool("Q", "Use Q | If Mana % >=", true, 25),
-                new MenuSliderBool("W", "Use W | If Mana % >=", true, 20),
-                new MenuSliderBool("E", "Use E | If Mana % >=", true, 20)
+                new MenuSliderBool("Q", "Use Q | If Mana % >=", true, 50),
+                new MenuSliderBool("W", "Use W | If Mana % >=", true, 50),
+                new MenuSliderBool("E", "Use E | If Mana % >=", true, 50)
             };
 
             JungleClear = new Menu("MissFortuneJungle", "JungleClear")
             {
-                new MenuSliderBool("Q", "Use Q | If Mana % >=", true, 25),
+                new MenuSliderBool("Q", "Use Q | If Mana % >=", true, 35),
                 new MenuSliderBool("W", "Use W | If Mana % >=", true, 35),
-                new MenuSliderBool("E", "Use E | If Mana % >=", true, 20),
+                new MenuSliderBool("E", "Use E | If Mana % >=", true, 50),
             };
 
             Automatic = new Menu("MissFortuneAuto", "Automatic")
