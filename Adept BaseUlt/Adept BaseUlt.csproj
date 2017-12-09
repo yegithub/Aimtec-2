@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Local SDK\DebugConsole.cs" />
     <Compile Include="Local SDK\Geometry.cs" />
     <Compile Include="Local SDK\Teleport.cs" />
     <Compile Include="Manager\BaseUlt.cs" />

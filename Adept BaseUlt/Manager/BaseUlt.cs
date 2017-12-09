@@ -112,7 +112,7 @@
                   
                     if (_target == null)
                     {
-                        Set(args.Duration, Game.TickCount, (Obj_AI_Hero) sender);
+                        Set(args.Duration, Environment.TickCount, (Obj_AI_Hero) sender);
                     }
 
                     break;
@@ -123,14 +123,14 @@
         {
             if (_menu["RandomUlt"].Enabled)
             {
-                foreach (var enemy in _lastEnemyChecked.Where(x => x.IsFloatingHealthBarActive && !x.IsDead && x.IsValidTarget()))
+                foreach (var enemy in _lastEnemyChecked.Where(x => x.IsValidTarget()))
                 {
-                    if (Game.TickCount - _lastSeenTick <= Game.Ping / 2f)
+                    if (Environment.TickCount - _lastSeenTick <= Game.Ping / 2f)
                     {
                         return;
                     }
 
-                    _lastSeenTick = Game.TickCount;
+                    _lastSeenTick = Environment.TickCount;
                     _lastSeenPosition = enemy.ServerPosition;
                 }
             }
@@ -146,7 +146,8 @@
             {
                 CastUlt(GetFountainPos(_target));
             }
-            else if (_menu["RandomUlt"].Enabled)
+
+            if (_menu["RandomUlt"].Enabled)
             {
                 var enemy = _lastEnemyChecked.FirstOrDefault(x => x.NetworkId == _target.NetworkId);
                 if (enemy == null)
@@ -165,7 +166,6 @@
                     return;
                 }
 
-                Console.WriteLine("RANDOM ULT");
                 CastUlt(_predictedPosition);
             }
         }
@@ -174,7 +174,7 @@
         {
             if (pos.IsZero)
             {
-                Console.WriteLine("IS ZERO");
+                DebugConsole.WriteLine("POSITION IS ZERO, CORE IS LIKELY BROKEN", MessageState.Warn);
                 return;
             }
 
@@ -188,8 +188,8 @@
                 return;
             }
 
-            Console.WriteLine($"BASEULT SUCCESS | {_target.ChampionName}");
-
+            DebugConsole.WriteLine($"Successfully Fired At: {_target.ChampionName}", MessageState.Debug);
+           
             _ultimate.Cast(pos);
             Reset();
 
@@ -204,7 +204,7 @@
 
         private int GetCastTime(Vector3 pos)
         {
-            return (int) (-(Game.TickCount - (_recallStartTick + _recallTime)) - TravelTime(pos));
+            return (int) (-(Environment.TickCount - (_recallStartTick + _recallTime)) - TravelTime(pos));
         }
 
         private void OnRender()
@@ -226,13 +226,13 @@
             {
                 return;
             }
+
             var ts = TimeSpan.FromMilliseconds(_timeUntilCastingUlt);
-            var percent = (_recallStartTick - Game.TickCount + _recallTime) / _recallTime;
+            var percent = (_recallStartTick - Environment.TickCount + _recallTime) / _recallTime;
 
             var xpos = 650;
 
             Render.Line(xpos, 80, xpos + 200, 80, 18, false, Color.LightSlateGray);
-
             Render.Line(xpos, 80, xpos + 200 * percent, 80, 16, false, Color.LightSeaGreen);
 
             var temp = TravelTime(GetFountainPos(_target)) / 100 + 55;
@@ -272,15 +272,21 @@
         {
             if (_target == null)
             {
-                return 0;
+                return 0f;
             }
 
             var hpReg = _target.HPRegenRate;
             var invisible = _lastEnemyChecked.FirstOrDefault(x => x.NetworkId == _target.NetworkId);
 
+            if (invisible == null)
+            {
+                return 0f;
+            }
+
             var final = _target.Health + (hpReg * (invisible?.LifetimeTicks / 10000f ?? 0f) + TravelTime(GetFountainPos(_target)) / 1000);
 
-            Console.WriteLine($"Health: {(int) final} DMG: {(int) PlayerDamage()}");
+            DebugConsole.WriteLine($"Target Health: {final} | Damage: {PlayerDamage()}", MessageState.Debug);
+          
             return final;
         }
 
@@ -309,7 +315,8 @@
 
         private void Reset()
         {
-            Console.WriteLine($"BASEULT RESET | {_target.ChampionName}");
+            DebugConsole.WriteLine($"Reset Baseult", MessageState.Debug);
+            
             _recallTime = 0;
             _recallStartTick = 0;
             _target = null;
