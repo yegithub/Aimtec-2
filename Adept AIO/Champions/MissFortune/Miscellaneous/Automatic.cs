@@ -17,7 +17,7 @@
 
         private static void OnUpdate()
         {
-            var target = GameObjects.EnemyHeroes.OrderBy(x => x.Distance(Global.Player)).ThenBy(x => x.Health).FirstOrDefault(x => x.IsValidTarget(SpellManager.R.Range));
+            var target = Global.TargetSelector.GetTarget(1000);
 
             if (target == null || Global.Player.IsDead || Global.Orbwalker.IsWindingUp || SpellManager.IsUlting())
             {
@@ -30,14 +30,17 @@
                 {
                     SpellManager.CastQ(target);
                 }
-
+              
                 if (MenuConfig.Automatic["QAuto"].Enabled)
                 {
+                   
                     if (MenuConfig.Automatic["Path"].Enabled)
                     {
+                        
                         var wM = SpellManager.WalkBehindMinion(target);
                         if (!wM.IsZero)
                         {
+                            DebugConsole.WriteLine($"TEST 3", MessageState.Debug);
                             Global.Orbwalker.Move(wM);
                         }
                     }

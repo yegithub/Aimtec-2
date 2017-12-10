@@ -18,8 +18,7 @@
 
             if (SpellManager.Q.Ready)
             {
-                dmg += Global.Player.GetSpellDamage(target, SpellSlot.Q) + 
-                       Global.Player.GetSpellDamage(target, SpellSlot.Q, DamageStage.Empowered);
+                dmg += Global.Player.GetSpellDamage(target, SpellSlot.Q, DamageStage.Empowered);
             }
 
             return dmg;

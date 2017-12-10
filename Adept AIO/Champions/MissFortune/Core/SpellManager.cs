@@ -102,10 +102,10 @@
                 return Vector3.Zero;
             }
 
-            var position = minion.ServerPosition + (minion.ServerPosition - target.ServerPosition).Normalized() * 140;
+            var position = minion.ServerPosition + (minion.ServerPosition - target.ServerPosition).Normalized() * Global.Player.Distance(minion) / 2;
 
-            var isValid = position.Distance(ObjectManager.GetLocalPlayer()) < 280;
-            if (isValid && !position.PointUnderEnemyTurret() && position.CountEnemyHeroesInRange(600) <= 1)
+            var isValid = position.Distance(ObjectManager.GetLocalPlayer()) < 350;
+            if (isValid && !position.PointUnderEnemyTurret())
             {
                 return position;
             }
