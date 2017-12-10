@@ -188,7 +188,7 @@
                 return;
             }
 
-            DebugConsole.WriteLine($"Successfully Fired At: {_target.ChampionName}", MessageState.Debug);
+            DebugConsole.WriteLine($"Successfully Fired At: {_target.ChampionName} With The Distance: {Global.Player.Distance(pos)}", MessageState.Debug);
            
             _ultimate.Cast(pos);
             Reset();
