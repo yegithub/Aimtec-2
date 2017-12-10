@@ -2,6 +2,7 @@
 {
     using System.Linq;
     using Aimtec;
+    using Aimtec.SDK.Damage;
     using Aimtec.SDK.Extensions;
     using Aimtec.SDK.Orbwalking;
     using Core;
@@ -9,25 +10,6 @@
 
     class LaneClear
     {
-        public static void PostAttack(object sender, PostAttackEventArgs args)
-        {
-            if (MenuConfig.LaneClear["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(2000) > 0)
-            {
-                return;
-            }
-
-            var target = args.Target as Obj_AI_Base;
-            if (target == null)
-            {
-                return;
-            }
-
-            if (SpellManager.Q.Ready && MenuConfig.LaneClear["Q"].Enabled && Global.Player.ManaPercent() >= MenuConfig.LaneClear["Q"].Value)
-            {
-                SpellManager.CastQ(target);
-            }
-        }
-
         public static void OnUpdate()
         {
             if (MenuConfig.LaneClear["Check"].Enabled && Global.Player.CountEnemyHeroesInRange(2000) > 0)
@@ -40,6 +22,11 @@
             if (minion == null)
             {
                 return;
+            }
+
+            if (SpellManager.Q.Ready && MenuConfig.LaneClear["Q"].Enabled && Global.Player.ManaPercent() >= MenuConfig.LaneClear["Q"].Value && minion.Health < Global.Player.GetSpellDamage(minion, SpellSlot.Q))
+            {
+                SpellManager.CastQ(minion);
             }
 
             if (MenuConfig.LaneClear["Shove"].Enabled)

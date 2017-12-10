@@ -28,7 +28,6 @@
                         Harass.PostAttack(sender, args);
                         break;
                     case OrbwalkingMode.Laneclear:
-                        LaneClear.PostAttack(sender, args);
                         JungleClear.PostAttack(sender, args);
                         break;
                 }

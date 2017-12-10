@@ -38,7 +38,7 @@
             this.LastTimeCasted = Game.TickCount;
             _wardTracker.LastWardCreated = Game.TickCount;
             _wardTracker.WardPosition = position;
-
+        
             Items.CastItem(ward, position);
 
             if (NavMesh.WorldToCell(position).Flags.HasFlag(NavCellFlags.Wall))
