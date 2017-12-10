@@ -1,5 +1,6 @@
 ﻿namespace Adept_AIO.Champions.MissFortune.OrbwalkingEvents
 {
+    using System.Linq;
     using Aimtec;
     using Aimtec.SDK.Extensions;
     using Aimtec.SDK.Orbwalking;
@@ -38,6 +39,11 @@
             if (SpellManager.Q.Ready && MenuConfig.Combo["Q"].Enabled && target.IsValidTarget(SpellManager.Q.Range))
             {
                 SpellManager.CastExtendedQ(target);
+
+                if (!GameObjects.EnemyMinions.Any(x => x.IsValidTarget(800, false, false, target.ServerPosition)))
+                {
+                    SpellManager.CastQ(target);
+                }
             }
         }
     }
