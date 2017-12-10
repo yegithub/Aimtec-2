@@ -38,32 +38,32 @@
                 return;
             }
 
-            if (SpellManager.Q.Ready)
+            if (!SpellManager.Q.Ready)
             {
-                if (MenuConfig.Drawings["Cone"].Enabled)
-                {
-                    var target = Global.TargetSelector.GetTarget(1000);
-                    if (target != null)
-                    {
-                        var wM = SpellManager.WalkBehindMinion(target);
-                        if (!wM.IsZero)
-                        {
-                            Render.Circle(wM, 60, 100, Color.Yellow);
-                        }
+                return;
+            }
 
-                        var m = SpellManager.ExtendedTarget(target);
-                        if (m != null)
-                        {
-                            SpellManager.Cone(m).Draw(Color.Yellow, 8);
-                        }
-                    }
-                }
-              
+            if (!MenuConfig.Drawings["Cone"].Enabled)
+            {
+                return;
+            }
 
-                if (MenuConfig.Drawings["Q"].Enabled)
-                {
-                    Render.Circle(Global.Player.Position, SpellManager.Q.Range, 100, Color.Crimson);
-                }
+            var target = Global.TargetSelector.GetTarget(1000);
+            if (target == null)
+            {
+                return;
+            }
+
+            var wM = SpellManager.WalkBehindMinion(target);
+            if (!wM.IsZero)
+            {
+                Render.Circle(wM, 60, 100, Color.Yellow);
+            }
+
+            var m = SpellManager.ExtendedTarget(target);
+            if (m != null)
+            {
+                SpellManager.Cone(m).Draw(Color.Yellow, 8);
             }
         }
     }

@@ -18,7 +18,7 @@
 
         public SpellManager()
         {
-            Q = new Spell(SpellSlot.Q, 650f);
+            Q = new Spell(SpellSlot.Q, 600f);
             Q.SetSkillshot(0.25f, (float)(50f * Math.PI / 160f), 1000f, false, SkillshotType.Cone);
 
             W = new Spell(SpellSlot.W);
@@ -90,8 +90,9 @@
                 .Where(x =>
                     x.IsValidTarget(Q.Range) &&
                     (x.IsMinion || x.IsHero) &&
+                    Cone(x).IsInside(Q.GetPrediction(target).CastPosition.To2D()) &&
                     x.NetworkId != target.NetworkId)
-
+                    
                 .OrderBy(x => x.Distance(Global.Player))
                 .ThenBy(x => x.Health)
                 .FirstOrDefault();
@@ -103,7 +104,7 @@
 
             var position = minion.ServerPosition + (minion.ServerPosition - target.ServerPosition).Normalized() * 140;
 
-            var isValid = position.Distance(ObjectManager.GetLocalPlayer()) < 250;
+            var isValid = position.Distance(ObjectManager.GetLocalPlayer()) < 280;
             if (isValid && !position.PointUnderEnemyTurret() && position.CountEnemyHeroesInRange(600) <= 1)
             {
                 return position;
@@ -120,7 +121,7 @@
                 (x.IsMinion || x.IsHero) &&
                 x.NetworkId != target.NetworkId &&
                 Cone(x).IsInside(target.ServerPosition.To2D()) &&
-                Cone(x).IsInside(Q.GetPrediction(target, x.ServerPosition, x.ServerPosition).CastPosition.To2D()))
+                Cone(x).IsInside(Q.GetPrediction(target).CastPosition.To2D()))
 
                 .OrderBy(x => x.Health)
                 .ThenBy(x => x.Distance(target))

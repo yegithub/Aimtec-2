@@ -20,7 +20,6 @@
 
             Combo = new Menu("MissFortuneCombo", "Combo")
             {
-                new MenuBool("AutoQ", "Auto Q"),
                 new MenuBool("Q", "Use Q"),
                 new MenuBool("W", "Use W"),
                 new MenuBool("E", "Use E")
@@ -60,7 +59,6 @@
             Drawings = new Menu("MissFortuneDrawManager", "DrawManager")
             {
                 new MenuBool("Dmg", "Damage"),
-                new MenuBool("Q", "Q Range"),
                 new MenuBool("Cone", "Q Cone")
             };
 
