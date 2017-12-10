@@ -32,21 +32,31 @@
                 return;
             }
 
-            var minion = GameObjects.EnemyMinions
-                .OrderBy(x => x.Health)
-                .ThenBy(x => x.Distance(Global.Player))
-                .FirstOrDefault(x => x.IsValidAutoRange() && x.Health < Global.Player.GetSpellDamage(x, SpellSlot.Q, DamageStage.Empowered));
-
-            if (minion == null)
-            {
-                return;
-            }
-
             if (SpellManager.Q.Ready &&
                 MenuConfig.LaneClear["Q"].Enabled &&
                 Global.Player.ManaPercent() >= MenuConfig.LaneClear["Q"].Value)
             {
-                SpellManager.CastExtendedQ(minion);
+                var qMinion = GameObjects.EnemyMinions.OrderBy(x => x.Health)
+                    .FirstOrDefault(x => x.IsValidTarget(SpellManager.Q.Range) && x.Health < Global.Player.GetSpellDamage(x, SpellSlot.Q) &&
+                                         GameObjects.EnemyMinions.Any(y => y.NetworkId != x.NetworkId &&
+                                                                           SpellManager.Cone(x).IsInside(y.ServerPosition.To2D()) &&
+                                                                           y.Health < Global.Player.GetSpellDamage(y, SpellSlot.Q, DamageStage.Empowered)));
+
+                if (qMinion == null)
+                {
+                    return;
+                }
+
+                SpellManager.CastQ(qMinion);
+            }
+
+            var minion = GameObjects.EnemyMinions.OrderBy(x => x.Health).
+                ThenBy(x => x.Distance(Global.Player)).
+                FirstOrDefault(x => x.IsValidAutoRange());
+
+            if (minion == null)
+            {
+                return;
             }
 
             if (SpellManager.E.Ready &&

@@ -61,6 +61,9 @@
                     case OrbwalkingMode.Laneclear:
                         LaneClear.OnUpdate();
                         break;
+                    case OrbwalkingMode.Lasthit:
+                        Lasthit.OnUpdate();
+                        break;
                 }
             }
             catch (Exception e)
