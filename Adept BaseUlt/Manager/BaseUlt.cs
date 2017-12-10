@@ -88,7 +88,7 @@
             }
 
             _menu.Add(new MenuSeperator("no"));
-            _menu.Add(new MenuSlider("Distance", "Max Distance | RandomUlt", 20000, 5000, 40000));
+            _menu.Add(new MenuSlider("Distance", "Max Distance | RandomUlt", 10000, 5000, 20000));
         }
 
         private void OnTeleport(Obj_AI_Base sender, Teleport.TeleportEventArgs args)
