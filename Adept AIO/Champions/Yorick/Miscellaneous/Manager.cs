@@ -30,6 +30,9 @@
                     case OrbwalkingMode.Laneclear:
                         JungleClear.PostAttack(sender, args);
                         break;
+                    case OrbwalkingMode.Lasthit:
+                        Lasthit.PostAttack(sender, args);
+                        break;
                 }
             }
             catch (Exception e)
