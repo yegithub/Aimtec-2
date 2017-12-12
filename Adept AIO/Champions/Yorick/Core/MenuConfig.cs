@@ -68,6 +68,7 @@
                 Harass,
                 LaneClear,
                 JungleClear,
+                Lasthit,
                 Drawings,
                 MenuShortcut.Credits
             })
